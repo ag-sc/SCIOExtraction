@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%msg%n" />
+			<!-- PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} 
+				- %msg%n" / -->
+		</Console>
+		<File name="LogFile" fileName="log/system.log"
+			immediateFlush="false" append="false">
+			<!-- <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level 
+				- %msg%n" /> -->
+			<PatternLayout pattern="%msg%n" />
+			<!-- pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} -->
+			<!-- - %msg%n" /> -->
+		</File>
+	</Appenders>
+	<Loggers>
+		<Root level="WARN">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Root>
+
+		<Logger name="de.hterhors.semanticmr.tokenizer.RegExTokenizer"
+			level="WARN" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger
+			name="de.hterhors.semanticmr.tokenizer.StandardDocumentTokenizer"
+			level="WARN" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+
+		<Logger name="de.hterhors.semanticmr.json.JsonNerlaProvider"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger name="de.hterhors.semanticmr.json.JsonInstancesReader"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger
+			name="de.hterhors.semanticmr.json.converter.JsonInstanceWrapperToInstance"
+			level="WARN" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger name="de.hterhors.semanticmr.corpus.InstanceProvider"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger
+			name="de.hterhors.semanticmr.init.specifications.SystemScope"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+		<Logger name="de.hterhors.semanticmr.crf.factor.Model"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger name="de.hterhors.semanticmr.crf.SemanticParsingCRF"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+		<Logger
+			name="de.hterhors.semanticmr.eval.EvaluationResultPrinter"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+		<Logger
+			name="de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.OrgModelSlotFilling"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+		<Logger
+			name="de.hterhors.semanticmr.crf.sampling.stopcrit.impl.NoEvalChangeCrit"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+		<Logger
+			name="de.hterhors.semanticmr.crf.sampling.stopcrit.impl.NoModelChangeCrit"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+		<Logger
+			name="de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.NumericInterpretationTemplate"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+		<Logger
+			name="de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
+	</Loggers>
+
+</Configuration>
