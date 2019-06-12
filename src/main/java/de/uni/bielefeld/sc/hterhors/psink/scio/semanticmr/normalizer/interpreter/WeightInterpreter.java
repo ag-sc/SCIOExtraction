@@ -22,6 +22,18 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter
  * 
  */
 public class WeightInterpreter extends AbstractNumericInterpreter {
+
+	public static void main(String[] args) {
+
+		System.out.println(WeightInterpreter.PATTERN);
+		WeightInterpreter wi = new WeightInterpreter("200 g");
+		WeightInterpreter wi2 = new WeightInterpreter("~200 g");
+
+		System.out.println(wi.normalize().surfaceForm);
+		System.out.println(wi2.normalize().surfaceForm);
+
+	}
+
 	/**
 	 * 
 	 */
@@ -57,8 +69,8 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 	 * 100g - 300g
 	 */
 	final static String pattern1_ = "(?<" + p1Numbers1 + ">" + numbers_ + ")" + freeSpaceQuestionMark_ + "(?<" + p1Unit1
-			+ ">" + unit_ + ")" + connection_ + "(?<" + p1Numbers2 + ">" + numbers_ + ")" + freeSpaceQuestionMark_
-			+ "(?<" + p1Unit2 + ">" + unit_ + ")?";
+			+ ">" + unit_ + ")" + connection_ + "(?<" + p1Numbers2 + ">" + numbers_ + ")(" + freeSpaceQuestionMark_
+			+ "(?<" + p1Unit2 + ">" + unit_ + "))?";
 
 	/**
 	 * 100 - 300g
@@ -67,10 +79,12 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 			+ numbers_ + ")" + freeSpaceQuestionMark_ + "(?<" + p2Unit1 + ">" + unit_ + ")";
 
 	/**
-	 * 100g +- 300
+	 * 100g
 	 */
 	final static String pattern3_ = "(?<" + p3Numbers1 + ">" + numbers_ + ")" + freeSpaceQuestionMark_ + "(?<" + p3Unit1
 			+ ">" + unit_ + ")";
+//	public final static Pattern PATTERN = Pattern.compile("(?<" + aboutGroupName + ">" + about_ + ")((?<"
+//			+ pattern1GrouName + ">" + pattern1_ + "))" + POST_BOUNDS, PATTERN_BITMASK);
 
 	public final static Pattern PATTERN = Pattern.compile("(?<" + aboutGroupName + ">" + about_ + ")((?<"
 			+ pattern1GrouName + ">" + pattern1_ + ")|(?<" + pattern2GrouName + ">" + pattern2_ + ")|(?<"
@@ -129,73 +143,80 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 
 		if (matcher.find()) {
 
-			about = matcher.group(WeightInterpreter.aboutGroupName) != null
-					&& !matcher.group(WeightInterpreter.aboutGroupName).trim().isEmpty();
+			if (matcher.group(0).equals(surfaceForm)) {
+				interpretable = true;
 
-			if (matcher.group(WeightInterpreter.pattern1GrouName) != null) {
-				double fromValue_ = defaultFromValue;
-				if (matcher.group(WeightInterpreter.p1Unit1) != null)
-					unit = EWeightUnits.valueOf(mapVariation(matcher.group(WeightInterpreter.p1Unit1).toLowerCase()));
-				if (matcher.group(WeightInterpreter.p1Numbers1) != null)
-					fromValue_ = Double.valueOf(matcher.group(WeightInterpreter.p1Numbers1));
-				if (matcher.group(WeightInterpreter.p1Numbers2) != null) {
-					EWeightUnits unit_;
-					if (matcher.group(WeightInterpreter.p1Unit2) != null) {
-						unit_ = EWeightUnits
-								.valueOf(mapVariation(matcher.group(WeightInterpreter.p1Unit2).toLowerCase()));
-					} else {
-						unit_ = unit;
-					}
-					double toValue_ = WeightInterpreter
-							.convertValue(Double.valueOf(matcher.group(WeightInterpreter.p1Numbers2)), unit_, unit);
+				about = matcher.group(WeightInterpreter.aboutGroupName) != null
+						&& !matcher.group(WeightInterpreter.aboutGroupName).trim().isEmpty();
 
-					/*
-					 * Since there are only positive weights we either set the variance and mean or
-					 * from to values.
-					 */
-					if (toValue_ > fromValue_) {
-						toValue = toValue_;
-						fromValue = fromValue_;
-					} else {
-						varianceValue = toValue_;
-						meanValue = fromValue_;
+				if (matcher.group(WeightInterpreter.pattern1GrouName) != null) {
+					double fromValue_ = defaultFromValue;
+					if (matcher.group(WeightInterpreter.p1Unit1) != null)
+						unit = EWeightUnits
+								.valueOf(mapVariation(matcher.group(WeightInterpreter.p1Unit1).toLowerCase()));
+					if (matcher.group(WeightInterpreter.p1Numbers1) != null)
+						fromValue_ = Double.valueOf(matcher.group(WeightInterpreter.p1Numbers1));
+					if (matcher.group(WeightInterpreter.p1Numbers2) != null) {
+						EWeightUnits unit_;
+						if (matcher.group(WeightInterpreter.p1Unit2) != null) {
+							unit_ = EWeightUnits
+									.valueOf(mapVariation(matcher.group(WeightInterpreter.p1Unit2).toLowerCase()));
+						} else {
+							unit_ = unit;
+						}
+						double toValue_ = WeightInterpreter
+								.convertValue(Double.valueOf(matcher.group(WeightInterpreter.p1Numbers2)), unit_, unit);
+
+						/*
+						 * Since there are only positive weights we either set the variance and mean or
+						 * from to values.
+						 */
+						if (toValue_ > fromValue_) {
+							toValue = toValue_;
+							fromValue = fromValue_;
+						} else {
+							varianceValue = toValue_;
+							meanValue = fromValue_;
+						}
 					}
-				}
-			} else if (matcher.group(WeightInterpreter.pattern2GrouName) != null) {
-				double fromValue_ = defaultFromValue;
-				if (matcher.group(WeightInterpreter.p2Unit1) != null)
-					unit = EWeightUnits.valueOf(mapVariation(matcher.group(WeightInterpreter.p2Unit1).toLowerCase()));
-				if (matcher.group(WeightInterpreter.p2Numbers1) != null)
-					fromValue_ = Double.valueOf(matcher.group(WeightInterpreter.p2Numbers1));
-				if (matcher.group(WeightInterpreter.p2Numbers2) != null) {
-					double toValue_ = Double.valueOf(matcher.group(WeightInterpreter.p2Numbers2));
-					/*
-					 * Since there are only positive weights we either set the variance and mean or
-					 * from to values.
-					 */
-					if (toValue_ > fromValue_) {
-						toValue = toValue_;
-						fromValue = fromValue_;
-					} else {
-						varianceValue = toValue_;
-						meanValue = fromValue_;
+				} else if (matcher.group(WeightInterpreter.pattern2GrouName) != null) {
+					double fromValue_ = defaultFromValue;
+					if (matcher.group(WeightInterpreter.p2Unit1) != null)
+						unit = EWeightUnits
+								.valueOf(mapVariation(matcher.group(WeightInterpreter.p2Unit1).toLowerCase()));
+					if (matcher.group(WeightInterpreter.p2Numbers1) != null)
+						fromValue_ = Double.valueOf(matcher.group(WeightInterpreter.p2Numbers1));
+					if (matcher.group(WeightInterpreter.p2Numbers2) != null) {
+						double toValue_ = Double.valueOf(matcher.group(WeightInterpreter.p2Numbers2));
+						/*
+						 * Since there are only positive weights we either set the variance and mean or
+						 * from to values.
+						 */
+						if (toValue_ > fromValue_) {
+							toValue = toValue_;
+							fromValue = fromValue_;
+						} else {
+							varianceValue = toValue_;
+							meanValue = fromValue_;
+						}
 					}
+				} else if (matcher.group(WeightInterpreter.pattern3GrouName) != null) {
+					if (matcher.group(WeightInterpreter.p3Unit1) != null)
+						unit = EWeightUnits
+								.valueOf(mapVariation(matcher.group(WeightInterpreter.p3Unit1).toLowerCase()));
+					if (matcher.group(WeightInterpreter.p3Numbers1) != null)
+						meanValue = Double.valueOf(matcher.group(WeightInterpreter.p3Numbers1));
 				}
-			} else if (matcher.group(WeightInterpreter.pattern3GrouName) != null) {
-				if (matcher.group(WeightInterpreter.p3Unit1) != null)
-					unit = EWeightUnits.valueOf(mapVariation(matcher.group(WeightInterpreter.p3Unit1).toLowerCase()));
-				if (matcher.group(WeightInterpreter.p3Numbers1) != null)
-					meanValue = Double.valueOf(matcher.group(WeightInterpreter.p3Numbers1));
+				double _meanValue = meanValue == defaultMeanValue ? (fromValue + toValue) / 2 : meanValue;
+				double _fromValue = fromValue == defaultFromValue ? (meanValue - varianceValue) : fromValue;
+				double _toValue = toValue == defaultToValue ? (meanValue + varianceValue) : toValue;
+
+				meanValue = _meanValue;
+				fromValue = _fromValue;
+				toValue = _toValue;
 			}
-			double _meanValue = meanValue == defaultMeanValue ? (fromValue + toValue) / 2 : meanValue;
-			double _fromValue = fromValue == defaultFromValue ? (meanValue - varianceValue) : fromValue;
-			double _toValue = toValue == defaultToValue ? (meanValue + varianceValue) : toValue;
 
-			meanValue = _meanValue;
-			fromValue = _fromValue;
-			toValue = _toValue;
 		}
-
 		this.unit = unit;
 		this.meanValue = meanValue;
 		this.about = about;
@@ -204,18 +225,19 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 	}
 
 	private WeightInterpreter(String surfaceForm, EWeightUnits unit, double meanValue, boolean about, double fromValue,
-			double toValue) {
+			double toValue, boolean interpretable) {
 		super(surfaceForm);
 		this.unit = unit;
 		this.meanValue = meanValue;
 		this.about = about;
 		this.fromValue = fromValue;
 		this.toValue = toValue;
+		this.interpretable = interpretable;
 	}
 
 	public WeightInterpreter convertTo(EWeightUnits toWeightUnit) {
 		return new WeightInterpreter(surfaceForm, toWeightUnit, convertValue(meanValue, toWeightUnit), about,
-				convertValue(fromValue, toWeightUnit), convertValue(toValue, toWeightUnit));
+				convertValue(fromValue, toWeightUnit), convertValue(toValue, toWeightUnit), this.interpretable);
 	}
 
 	public static double convertValue(double value, EWeightUnits fromWeightUnit, EWeightUnits toWeightUnit) {
@@ -266,8 +288,9 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 
 	@Override
 	public String toString() {
-		return "SemanticWeight [surfaceForm=" + surfaceForm + ", unit=" + unit + ", meanValue=" + meanValue + ", about="
-				+ about + ", fromValue=" + fromValue + ", toValue=" + toValue + "]";
+		return "WeightInterpreter [surfaceForm=" + surfaceForm + ", interpretable=" + interpretable + ", about=" + about
+				+ ", meanValue=" + meanValue + ", unit=" + unit + ", fromValue=" + fromValue + ", toValue=" + toValue
+				+ "]";
 	}
 
 	@Override
@@ -283,6 +306,11 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 	@Override
 	public String asFormattedString() {
 		return (about ? "about " : "") + DECIMAL_FORMAT.format(meanValue) + " " + unit;
+	}
+
+	@Override
+	public String asSimpleString() {
+		return DECIMAL_FORMAT.format(meanValue) + " " + unit;
 	}
 
 	@Override

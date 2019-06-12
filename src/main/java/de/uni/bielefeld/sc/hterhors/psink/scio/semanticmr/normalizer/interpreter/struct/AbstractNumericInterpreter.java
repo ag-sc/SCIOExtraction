@@ -30,6 +30,8 @@ public abstract class AbstractNumericInterpreter extends AbstractInterpreter imp
 		super(surfaceForm);
 	}
 
+	protected boolean interpretable = false;
+
 	public static final int PATTERN_BITMASK = Pattern.CASE_INSENSITIVE + Pattern.DOTALL;
 
 	/**
@@ -195,7 +197,7 @@ public abstract class AbstractNumericInterpreter extends AbstractInterpreter imp
 	}
 
 	@Override
-	public boolean exists() {
-		return surfaceForm != null;
+	public boolean isInterpretable() {
+		return interpretable;
 	}
 }

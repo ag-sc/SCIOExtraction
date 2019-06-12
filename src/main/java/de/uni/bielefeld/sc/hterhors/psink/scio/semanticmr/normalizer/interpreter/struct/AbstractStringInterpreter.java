@@ -158,7 +158,7 @@ public abstract class AbstractStringInterpreter extends AbstractInterpreter impl
 	}
 
 	@Override
-	public boolean exists() {
+	public boolean isInterpretable() {
 		return surfaceForm != null;
 	}
 }

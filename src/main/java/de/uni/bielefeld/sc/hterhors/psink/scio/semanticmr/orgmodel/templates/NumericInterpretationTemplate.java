@@ -50,7 +50,7 @@ public class NumericInterpretationTemplate extends AbstractFeatureTemplate<Numer
 
 	public ILiteralInterpreter getInterpreterFromAnnotation(LiteralAnnotation obieClass) {
 		return ((SCIONormalization) obieClass.getEntityType().getNormalizationFunction())
-				.getInterpreter(obieClass.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm)
+				.getInterpreter(obieClass.textualContent.surfaceForm)
 				.normalize();
 	}
 

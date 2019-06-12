@@ -15,8 +15,8 @@ abstract public class SCIONormalization extends AbstractNormalizationFunction {
 
 		final ILiteralInterpreter wi = getInterpreter(annotation);
 
-		if (wi.exists())
-			return wi.normalize().asFormattedString();
+		if (wi.isInterpretable())
+			return wi.normalize().asSimpleString();
 		else
 			return annotation;
 

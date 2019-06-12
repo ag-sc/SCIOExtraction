@@ -23,6 +23,12 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter
  */
 public class AgeInterpreter extends AbstractNumericInterpreter {
 
+	public static void main(String[] args) {
+		System.out.println(AgeInterpreter.PATTERN);
+
+		System.out.println(new AgeInterpreter("10–12 weeks"));
+	}
+
 	/**
 	 * 
 	 */
@@ -31,7 +37,7 @@ public class AgeInterpreter extends AbstractNumericInterpreter {
 	// final private static String digits = "\\d\\.?\\d{0,2}";
 	// final private static String writtenNumbers = PRE_BOUNDS +
 	// "(one|two|three|four|five|six|seven|eight|nine|ten)";
-	final private static String connectionPart = "\\W?(\\Wto\\W|\\W?-\\W?)";
+	final private static String connectionPart = "\\W?(\\Wto\\W|\\W?-\\W?|\\W?" + BAD_CHAR + "\\W?)";
 	final private static String units = "d(ays?)?|w(eeks?)?|months?|y(ears?)?";
 
 	final private static String toGroupName2 = "toGroup2";
@@ -111,45 +117,50 @@ public class AgeInterpreter extends AbstractNumericInterpreter {
 
 		if (matcher.find()) {
 
-			if (matcher.group(AgeInterpreter.agePattern1GroupName) != null) {
-				if (matcher.group(AgeInterpreter.unitsGroup) != null)
-					unit = EAgeUnits.valueOf(mapVariation(matcher.group(AgeInterpreter.unitsGroup).toLowerCase()));
-				if (matcher.group(AgeInterpreter.pattern1Full) != null) {
-					if (matcher.group(AgeInterpreter.digitsFromGroup) != null)
-						fromValue = Double.valueOf(matcher.group(AgeInterpreter.digitsFromGroup));
-					if (matcher.group(AgeInterpreter.digitsToGroup) != null)
-						toValue = Double.valueOf(matcher.group(AgeInterpreter.digitsToGroup));
-					if (matcher.group(AgeInterpreter.writtenFromGroup) != null) {
-						fromValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenFromGroup));
+			if (matcher.group(0).equals(surfaceForm)) {
+
+				interpretable = true;
+
+				if (matcher.group(AgeInterpreter.agePattern1GroupName) != null) {
+					if (matcher.group(AgeInterpreter.unitsGroup) != null)
+						unit = EAgeUnits.valueOf(mapVariation(matcher.group(AgeInterpreter.unitsGroup).toLowerCase()));
+					if (matcher.group(AgeInterpreter.pattern1Full) != null) {
+						if (matcher.group(AgeInterpreter.digitsFromGroup) != null)
+							fromValue = Double.valueOf(matcher.group(AgeInterpreter.digitsFromGroup));
+						if (matcher.group(AgeInterpreter.digitsToGroup) != null)
+							toValue = Double.valueOf(matcher.group(AgeInterpreter.digitsToGroup));
+						if (matcher.group(AgeInterpreter.writtenFromGroup) != null) {
+							fromValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenFromGroup));
+						}
+						if (matcher.group(AgeInterpreter.writtenToGroup) != null)
+							toValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenToGroup));
+					} else {
+						if (matcher.group(AgeInterpreter.digitsToGroup) != null)
+							meanValue = Double.valueOf(matcher.group(AgeInterpreter.digitsToGroup));
+						if (matcher.group(AgeInterpreter.writtenToGroup) != null)
+							meanValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenToGroup));
 					}
-					if (matcher.group(AgeInterpreter.writtenToGroup) != null)
-						toValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenToGroup));
-				} else {
-					if (matcher.group(AgeInterpreter.digitsToGroup) != null)
-						meanValue = Double.valueOf(matcher.group(AgeInterpreter.digitsToGroup));
-					if (matcher.group(AgeInterpreter.writtenToGroup) != null)
-						meanValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenToGroup));
+				} else if (matcher.group(AgeInterpreter.agePattern2GroupName) != null) {
+					if (matcher.group(AgeInterpreter.unitsGroup2) != null)
+						unit = EAgeUnits.valueOf(mapVariation(matcher.group(AgeInterpreter.unitsGroup2).toLowerCase()));
+					if (matcher.group(AgeInterpreter.digitsFromGroup2) != null)
+						fromValue = Double.valueOf(matcher.group(AgeInterpreter.digitsFromGroup2));
+					if (matcher.group(AgeInterpreter.digitsToGroup2) != null)
+						toValue = Double.valueOf(matcher.group(AgeInterpreter.digitsToGroup2));
+					if (matcher.group(AgeInterpreter.writtenFromGroup2) != null)
+						fromValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenFromGroup2));
+					if (matcher.group(AgeInterpreter.writtenToGroup2) != null)
+						toValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenToGroup2));
 				}
-			} else if (matcher.group(AgeInterpreter.agePattern2GroupName) != null) {
-				if (matcher.group(AgeInterpreter.unitsGroup2) != null)
-					unit = EAgeUnits.valueOf(mapVariation(matcher.group(AgeInterpreter.unitsGroup2).toLowerCase()));
-				if (matcher.group(AgeInterpreter.digitsFromGroup2) != null)
-					fromValue = Double.valueOf(matcher.group(AgeInterpreter.digitsFromGroup2));
-				if (matcher.group(AgeInterpreter.digitsToGroup2) != null)
-					toValue = Double.valueOf(matcher.group(AgeInterpreter.digitsToGroup2));
-				if (matcher.group(AgeInterpreter.writtenFromGroup2) != null)
-					fromValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenFromGroup2));
-				if (matcher.group(AgeInterpreter.writtenToGroup2) != null)
-					toValue = mapWrittenNumbertoInt(matcher.group(AgeInterpreter.writtenToGroup2));
+				double _meanValue = meanValue == defaultMeanValue ? (fromValue + toValue) / 2 : meanValue;
+				double _fromValue = fromValue == defaultFromValue ? (meanValue - varianceValue) : fromValue;
+				double _toValue = toValue == defaultToValue ? (meanValue + varianceValue) : toValue;
+
+				meanValue = _meanValue;
+				fromValue = _fromValue;
+				toValue = _toValue;
+
 			}
-			double _meanValue = meanValue == defaultMeanValue ? (fromValue + toValue) / 2 : meanValue;
-			double _fromValue = fromValue == defaultFromValue ? (meanValue - varianceValue) : fromValue;
-			double _toValue = toValue == defaultToValue ? (meanValue + varianceValue) : toValue;
-
-			meanValue = _meanValue;
-			fromValue = _fromValue;
-			toValue = _toValue;
-
 		}
 		this.unit = unit;
 		this.meanValue = meanValue;
@@ -157,17 +168,20 @@ public class AgeInterpreter extends AbstractNumericInterpreter {
 		this.toValue = toValue;
 	}
 
-	private AgeInterpreter(String surfaceForm, EAgeUnits unit, double meanValue, double fromValue, double toValue) {
+	private AgeInterpreter(String surfaceForm, EAgeUnits unit, double meanValue, double fromValue, double toValue,
+			boolean interpretable) {
 		super(surfaceForm);
 		this.unit = unit;
 		this.meanValue = meanValue;
 		this.fromValue = fromValue;
 		this.toValue = toValue;
+		this.interpretable = interpretable;
 	}
 
 	public AgeInterpreter convertTo(EAgeUnits toWeightUnit) {
 		return new AgeInterpreter(surfaceForm, toWeightUnit, convertValue(meanValue, unit, toWeightUnit),
-				convertValue(fromValue, unit, toWeightUnit), convertValue(toValue, unit, toWeightUnit));
+				convertValue(fromValue, unit, toWeightUnit), convertValue(toValue, unit, toWeightUnit),
+				this.interpretable);
 	}
 
 	@Override
@@ -182,12 +196,17 @@ public class AgeInterpreter extends AbstractNumericInterpreter {
 
 	@Override
 	public String toString() {
-		return "SemanticAge [surfaceForm=" + surfaceForm + ", unit=" + unit + ", meanValue=" + meanValue
-				+ ", fromValue=" + fromValue + ", toValue=" + toValue + "]";
+		return "AgeInterpreter [surfaceForm=" + surfaceForm + ", interpretable=" + interpretable + ", meanValue="
+				+ meanValue + ", unit=" + unit + ", fromValue=" + fromValue + ", toValue=" + toValue + "]";
 	}
 
 	@Override
 	public String asFormattedString() {
+		return DECIMAL_FORMAT.format(meanValue) + " " + unit;
+	}
+
+	@Override
+	public String asSimpleString() {
 		return DECIMAL_FORMAT.format(meanValue) + " " + unit;
 	}
 

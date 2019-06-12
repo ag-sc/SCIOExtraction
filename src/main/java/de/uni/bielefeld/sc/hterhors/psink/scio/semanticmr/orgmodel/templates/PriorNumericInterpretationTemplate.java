@@ -192,6 +192,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 
 		for (Instance internalInstance : train) {
 			for (AbstractAnnotation internalAnnotation : internalInstance.getGoldAnnotations().getAnnotations()) {
+
 				Map<SlotType, Set<AbstractAnnotation>> x = internalAnnotation.asInstanceOfEntityTemplate().filter()
 						.docLinkedAnnoation().literalAnnoation().merge().singleSlots().multiSlots().nonEmpty().build()
 						.getMergedAnnotations();
@@ -228,7 +229,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 		/*
 		 * Only for Numeric data type Values.
 		 */
-		if (interpreter.isNumeric() && interpreter.exists()) {
+		if (interpreter.isNumeric() && interpreter.isInterpretable()) {
 
 			IUnit unit = ((INumericInterpreter) interpreter).getUnit();
 
@@ -236,24 +237,23 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 			values.get(entityType).putIfAbsent(obieClass.getEntityType(), new HashMap<>());
 			values.get(entityType).get(obieClass.getEntityType()).putIfAbsent(unit, new ArrayList<>());
 			values.get(entityType).get(obieClass.getEntityType()).get(unit)
-					.add(((INumericInterpreter) interpreter.normalize()).getMeanValue());
+					.add(((INumericInterpreter) interpreter).getMeanValue());
 
-			final Set<EntityType> rootTypes = entityType.getTransitiveClosureSuperEntityTypes();
+			final Set<EntityType> rootTypes = entityType.getDirectSuperEntityTypes();
 
 			for (EntityType rootClassType : rootTypes) {
 				values.putIfAbsent(rootClassType, new HashMap<>());
 				values.get(rootClassType).putIfAbsent(obieClass.getEntityType(), new HashMap<>());
 				values.get(rootClassType).get(obieClass.getEntityType()).putIfAbsent(unit, new ArrayList<>());
 				values.get(rootClassType).get(obieClass.getEntityType()).get(unit)
-						.add(((INumericInterpreter) interpreter.normalize()).getMeanValue());
+						.add(((INumericInterpreter) interpreter).getMeanValue());
 			}
 		}
 	}
 
 	public ILiteralInterpreter getInterpreterFromAnnotation(LiteralAnnotation obieClass) {
 		return ((SCIONormalization) obieClass.getEntityType().getNormalizationFunction())
-				.getInterpreter(obieClass.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm)
-				.normalize();
+				.getInterpreter(obieClass.textualContent.surfaceForm).normalize();
 	}
 
 	/**
@@ -411,10 +411,10 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 	public void generateFeatureVector(Factor<NumericInterpretationScope> factor) {
 		DoubleVector featureVector = factor.getFeatureVector();
 
-//		addFeatures(factor.getFactorScope().parentScioClass, factor.getFactorScope().scioClass, featureVector,
-//				factor.getFactorScope().interpretation);
+		addFeatures(factor.getFactorScope().parentScioClass, factor.getFactorScope().scioClass, featureVector,
+				factor.getFactorScope().interpretation);
 
-		final Set<EntityType> rootClassTypes = factor.getFactorScope().parentScioClass.getTransitiveClosureSuperEntityTypes();
+		final Set<EntityType> rootClassTypes = factor.getFactorScope().parentScioClass.getDirectSuperEntityTypes();
 
 		for (EntityType rootClassType : rootClassTypes) {
 			addFeatures(rootClassType, factor.getFactorScope().scioClass, featureVector,
@@ -481,6 +481,9 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 			final INumericInterpreter semantics) {
 		final String parentClassName = parentClassType.entityName;
 		final String className = propertyClassType.entityName;
+
+		if (!semantics.isInterpretable())
+			return;
 
 		if (meanValues.containsKey(parentClassType)) {
 			final IUnit unit = semantics.getUnit();

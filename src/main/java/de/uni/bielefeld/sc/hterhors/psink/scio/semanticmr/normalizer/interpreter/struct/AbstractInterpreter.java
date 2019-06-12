@@ -160,7 +160,7 @@ public abstract class AbstractInterpreter implements ILiteralInterpreter {
 	}
 
 	@Override
-	public boolean exists() {
+	public boolean isInterpretable() {
 		return surfaceForm != null;
 	}
 }

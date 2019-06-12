@@ -7,15 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.swing.text.html.parser.Entity;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
@@ -31,7 +29,6 @@ import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -52,7 +49,6 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.EntityTypeContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate;
 
 /**
@@ -96,7 +92,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 	 * search space exploration.
 	 */
 	private final File externalNerlaAnnotations = new File(
-			"src/main/resources/slotfilling/organism_model/corpus/nerla/nerla.json");
+			"src/main/resources/slotfilling/organism_model/corpus/nerla/");
 
 	public OrgModelSlotFilling() {
 
@@ -106,7 +102,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(SystemScope.Builder.getSpecsHandler()
+		super(SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -132,8 +128,6 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 				 */
 				.build());
 
-		System.out.println(EntityType.get("RatModel").getDirectSuperEntityTypes());
-
 		/**
 		 * Read and distribute the corpus.
 		 * 
@@ -145,8 +139,9 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * instance assignment during development.
 		 * 
 		 */
-		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
-				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(100L).build();
+		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().build();
+//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
+//				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(100L).build();
 
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
@@ -173,9 +168,10 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 */
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-		instanceProvider = new InstanceProvider(instanceDirectory, shuffleCorpusDistributor);
+		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		List<Instance> trainingInstances = instanceProvider.getRedistributedTrainingInstances();
+		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
 		/**
 		 * The choice of the objective function is crucial for interpreting the systems
@@ -205,7 +201,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 *
 		 */
 		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**
 		 * The provision of existing entities is an important part in slot filling for
@@ -268,7 +264,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: find best alpha value in combination with L2-regularization.
 		 */
-		AdvancedLearner learner = new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
+		AdvancedLearner learner = new AdvancedLearner(new SGD(0.005, 0), new L2(0.0001));
 
 		/**
 		 * Next, we need to specify the actual feature templates. In this example we
@@ -286,7 +282,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 //		featureTemplates.add(new EntityTypeContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
-//		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
+		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
 
 		/**
@@ -301,7 +297,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: Find perfect number of epochs.
 		 */
-		int numberOfEpochs = 10;
+		int numberOfEpochs = 1;
 
 		/**
 		 * Sampling strategy that defines how the system should be trained. We
@@ -354,7 +350,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * NOTE: Make sure that the base model directory exists!
 		 */
 		final File modelBaseDir = new File("models/slotfilling/org_model/");
-		final String modelName = "OrgModel" + new Random().nextInt(1000000);
+		final String modelName = "OrgModel" + new Random().nextInt(100000);
 
 		Model model;
 
@@ -402,12 +398,20 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * in this case. This method returns for each instances a final state (best
 		 * state based on the trained model) that contains annotations.
 		 */
-		Map<Instance, State> testResults = crf.test(testInstances, maxStepCrit, noModelChangeCrit);
+		Map<Instance, State> testResults = crf.predict(devInstances, maxStepCrit, noModelChangeCrit);
+
+		/**
+		 * Chose a different evaluation for prediction than for training. During
+		 * training we are interested in finding the correct document linked annotation
+		 * but for prediction we are only interested in the entity type.
+		 */
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
-		evaluate(log, testResults);
+		evaluate(log, testResults, predictionOF);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
