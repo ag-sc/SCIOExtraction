@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,6 +16,8 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
+import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
@@ -261,6 +264,9 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
 				constraintsProvider);
 
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(objectiveFunction,
+				candidateRetrieval, AnnotationBuilder.toAnnotation("OrganismModel"));
+
 		/**
 		 * The learner defines the update strategy of learned weights. parameters are
 		 * the alpha value that is specified in the SGD (first parameter) and the
@@ -373,10 +379,25 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
+		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorer, sampler, stateInitializer, objectiveFunction);
+		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
+				objectiveFunction);
+
+		/**
+		 * Computes the coverage of the given instances. The coverage is defined by the
+		 * objective mean score that can be reached relying on greedy objective function
+		 * sampling strategy. The coverage can be seen as the upper bound of the system.
+		 * The upper bound depends only on the exploration strategy, e.g. the provided
+		 * NER-annotations during slot-filling.
+		 */
+		final Score cov = crf.computeCoverage(true, devInstances);
+		log.info("Coverage: " + cov);
+		log.info(modelName);
+
+		System.exit(1);
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
