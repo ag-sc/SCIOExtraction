@@ -49,6 +49,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.OlfactoryContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate;
 
 /**
@@ -201,7 +202,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 *
 		 */
 		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+				new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 		/**
 		 * The provision of existing entities is an important part in slot filling for
@@ -281,6 +282,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		featureTemplates.add(new TokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 //		featureTemplates.add(new EntityTypeContextTemplate());
+//		featureTemplates.add(new OlfactoryContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
@@ -297,7 +299,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: Find perfect number of epochs.
 		 */
-		int numberOfEpochs = 1;
+		int numberOfEpochs = 10;
 
 		/**
 		 * Sampling strategy that defines how the system should be trained. We
