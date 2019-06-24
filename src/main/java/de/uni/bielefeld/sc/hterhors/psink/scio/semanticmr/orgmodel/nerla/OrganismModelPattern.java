@@ -33,7 +33,7 @@ public class OrganismModelPattern extends BasicRegExPattern {
 			PATTERN_BITMASK);
 
 	private static Pattern SPRAGUE_DAWLEY_RAT_MODEL_PATTERN_1 = Pattern.compile(PRE_BOUNDS
-			+ buildRegExpr("sprague", "dawley", new String[] { "albino.?rats?", "rats?" }, "strains?") + POST_BOUNDS,
+			+ buildRegExpr("sprague", "dawle?y", new String[] { "albino.?rats?", "rats?" }, "strains?") + POST_BOUNDS,
 			PATTERN_BITMASK);
 
 	private static Pattern WISTAR_RAT_MODEL_PATTERN_1 = Pattern.compile(

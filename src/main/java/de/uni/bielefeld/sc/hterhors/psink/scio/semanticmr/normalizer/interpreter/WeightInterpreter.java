@@ -61,7 +61,7 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 	final private static String freeSpaceQuestionMark_ = freeSpace_ + "?";
 	final private static String unit_ = "(((m(milli)?|(k(ilo)?)))?g((ra)?ms?)?|kilo|lbs)(?!" + freeSpaceQuestionMark_
 			+ "/)";
-	final private static String about_ = "(~|" + PRE_BOUNDS + "about" + freeSpace_ + ")?";
+	final private static String about_ = "(~|<|>|" + PRE_BOUNDS + "about" + freeSpace_ + ")?";
 	final private static String connection_ = "(" + freeSpace_ + "(to|and)" + freeSpace_ + "|" + freeSpaceQuestionMark_
 			+ "((\\+?-)|\\+(/|\\\\)-|±|" + freeSpace_ + ")" + freeSpaceQuestionMark_ + ")";
 

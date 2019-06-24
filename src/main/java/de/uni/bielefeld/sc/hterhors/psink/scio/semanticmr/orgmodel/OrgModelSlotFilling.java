@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,6 +16,8 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
+import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
@@ -29,12 +32,17 @@ import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
+import de.hterhors.semanticmr.crf.templates.et.LocalityTemplate;
+import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -45,10 +53,11 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.EntityTypeContextTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.OlfactoryContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate;
 
 /**
@@ -257,6 +266,9 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
 				constraintsProvider);
 
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(objectiveFunction,
+				candidateRetrieval, AnnotationBuilder.toAnnotation("OrganismModel"));
+
 		/**
 		 * The learner defines the update strategy of learned weights. parameters are
 		 * the alpha value that is specified in the SGD (first parameter) and the
@@ -264,7 +276,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: find best alpha value in combination with L2-regularization.
 		 */
-		AdvancedLearner learner = new AdvancedLearner(new SGD(0.005, 0), new L2(0.0001));
+		AdvancedLearner learner = new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
 
 		/**
 		 * Next, we need to specify the actual feature templates. In this example we
@@ -279,10 +291,16 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
 //		featureTemplates.add(new TokenContextTemplate());
+		featureTemplates.add(new NGramTokenContextTemplate());
+		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
 //		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new ClusterTemplate());
+//		featureTemplates.add(new EntityTypeContextTemplate());
+		featureTemplates.add(new OlfactoryContextTemplate());
+		featureTemplates.add(new LocalityTemplate());
+		featureTemplates.add(new SlotIsFilledTemplate());
 		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
 
@@ -367,10 +385,25 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
+		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorer, sampler, stateInitializer, objectiveFunction);
+		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
+				objectiveFunction);
+
+		/**
+		 * Computes the coverage of the given instances. The coverage is defined by the
+		 * objective mean score that can be reached relying on greedy objective function
+		 * sampling strategy. The coverage can be seen as the upper bound of the system.
+		 * The upper bound depends only on the exploration strategy, e.g. the provided
+		 * NER-annotations during slot-filling.
+		 */
+		final Score cov = crf.computeCoverage(true, devInstances);
+		log.info("Coverage: " + cov);
+		log.info(modelName);
+
+		System.exit(1);
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -399,7 +432,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * in this case. This method returns for each instances a final state (best
 		 * state based on the trained model) that contains annotations.
 		 */
-		Map<Instance, State> testResults = crf.predict(devInstances, maxStepCrit, noModelChangeCrit);
+		Map<Instance, State> results = crf.predict(devInstances, maxStepCrit, noModelChangeCrit);
 
 		/**
 		 * Chose a different evaluation for prediction than for training. During
@@ -412,10 +445,20 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
-		evaluate(log, testResults, predictionOF);
+		evaluate(log, results, predictionOF);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
+
+		/**
+		 * Computes the coverage of the given instances. The coverage is defined by the
+		 * objective mean score that can be reached relying on greedy objective function
+		 * sampling strategy. The coverage can be seen as the upper bound of the system.
+		 * The upper bound depends only on the exploration strategy, e.g. the provided
+		 * NER-annotations during slot-filling.
+		 */
+		final Score coverage = crf.computeCoverage(false, devInstances);
+		log.info("Coverage: " + coverage);
 		log.info(modelName);
 		/**
 		 * TODO: Compare results with results when changing some parameter. Implement
