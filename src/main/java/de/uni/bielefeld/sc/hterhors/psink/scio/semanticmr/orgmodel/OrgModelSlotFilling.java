@@ -32,10 +32,9 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
+import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
-import de.hterhors.semanticmr.crf.templates.et.LocalityTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
-import de.hterhors.semanticmr.crf.templates.shared.TokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -49,6 +48,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.EntityTypeContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate;
 
 /**
@@ -201,7 +201,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 *
 		 */
 		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+				new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 		/**
 		 * The provision of existing entities is an important part in slot filling for
@@ -278,10 +278,11 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
-		featureTemplates.add(new TokenContextTemplate());
+//		featureTemplates.add(new TokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
-//		featureTemplates.add(new EntityTypeContextTemplate());
-		featureTemplates.add(new LocalityTemplate());
+		featureTemplates.add(new EntityTypeContextTemplate());
+//		featureTemplates.add(new LocalityTemplate());
+		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
 
@@ -297,7 +298,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: Find perfect number of epochs.
 		 */
-		int numberOfEpochs = 1;
+		int numberOfEpochs = 10;
 
 		/**
 		 * Sampling strategy that defines how the system should be trained. We

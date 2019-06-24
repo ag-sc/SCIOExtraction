@@ -148,9 +148,9 @@ public class EntityTypeContextTemplate extends AbstractFeatureTemplate<EntityTyp
 	public void generateFeatureVector(Factor<EntityTypeContextScope> factor) {
 
 		List<EntityType> superLeftContext = factor.getFactorScope().leftContext.stream()
-				.flatMap(e -> e.getTransitiveClosureSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
+				.flatMap(e -> e.getDirectSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
 		List<EntityType> superRightContext = factor.getFactorScope().rightContext.stream()
-				.flatMap(e -> e.getTransitiveClosureSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
+				.flatMap(e -> e.getDirectSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
 
 		factor.getFeatureVector()
 				.set(superLeftContext.stream().map(e -> " " + e.entityName).reduce("", String::concat).trim() + "<->"
