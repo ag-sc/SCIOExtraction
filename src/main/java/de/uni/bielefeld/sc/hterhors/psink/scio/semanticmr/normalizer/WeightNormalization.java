@@ -5,7 +5,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.normalization.AbstractNo
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.WeightInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.ILiteralInterpreter;
 
-public class WeightNormalization extends SCIONormalization {
+public class WeightNormalization extends AbstractSCIONormalization {
 
 	public WeightNormalization() {
 		super(EntityType.get("Weight"));

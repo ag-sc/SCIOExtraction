@@ -11,8 +11,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.crf.factor.AbstractFactorScope;
-import de.hterhors.semanticmr.crf.factor.Factor;
+import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
+import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
@@ -22,7 +22,7 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.SCIONormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AbstractSCIONormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.ILiteralInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.INumericInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.IUnit;
@@ -214,7 +214,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 	private void collectLiterals(Map<EntityType, Map<EntityType, Map<IUnit, List<Double>>>> values,
 			AbstractAnnotation internalAnnotation, LiteralAnnotation obieClass) {
 
-		if (!(obieClass.getEntityType().getNormalizationFunction() instanceof SCIONormalization))
+		if (!(obieClass.getEntityType().getNormalizationFunction() instanceof AbstractSCIONormalization))
 			return;
 		ILiteralInterpreter interpreter = getInterpreterFromAnnotation(obieClass);
 
@@ -252,7 +252,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 	}
 
 	public ILiteralInterpreter getInterpreterFromAnnotation(LiteralAnnotation obieClass) {
-		return ((SCIONormalization) obieClass.getEntityType().getNormalizationFunction())
+		return ((AbstractSCIONormalization) obieClass.getEntityType().getNormalizationFunction())
 				.getInterpreter(obieClass.textualContent.surfaceForm).normalize();
 	}
 
@@ -273,7 +273,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 //			}
 //		});
 
-	static class NumericInterpretationScope extends AbstractFactorScope<NumericInterpretationScope> {
+	static class NumericInterpretationScope extends AbstractFactorScope {
 
 		final EntityType parentScioClass;
 		final EntityType scioClass;
@@ -352,7 +352,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 
 				for (AbstractAnnotation childEntity : a.getValue()) {
 
-					if (!(childEntity.getEntityType().getNormalizationFunction() instanceof SCIONormalization))
+					if (!(childEntity.getEntityType().getNormalizationFunction() instanceof AbstractSCIONormalization))
 						continue;
 
 					ILiteralInterpreter interpretation = getInterpreterFromAnnotation(

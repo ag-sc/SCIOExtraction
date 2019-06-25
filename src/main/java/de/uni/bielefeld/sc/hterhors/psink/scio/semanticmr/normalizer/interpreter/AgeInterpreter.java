@@ -23,12 +23,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter
  */
 public class AgeInterpreter extends AbstractNumericInterpreter {
 
-	public static void main(String[] args) {
-		System.out.println(AgeInterpreter.PATTERN);
-
-		System.out.println(new AgeInterpreter("10–12 weeks"));
-	}
-
 	/**
 	 * 
 	 */
@@ -48,10 +42,10 @@ public class AgeInterpreter extends AbstractNumericInterpreter {
 	final private static String digitsToGroup2 = "digitsTo2";
 	final private static String unitsGroup2 = "unitsGroup2";
 
-	final private static String agePattern2 = "((?<" + fromGroupName2 + ">(?<" + writtenFromGroup2 + ">"
-			+ writtenNumbers + ")|(?<" + digitsFromGroup2 + ">" + digits + "))(\\W?(?<" + unitsGroup2 + ">" + units
-			+ ")(\\W?old|\\Wof\\Wage)?)" + connectionPart + ")(?<" + toGroupName2 + ">(?<" + writtenToGroup2 + ">"
-			+ writtenNumbers + ")|(?<" + digitsToGroup2 + ">" + digits + "))\\W?(\\k<" + unitsGroup2 + ">)s?";
+	final private static String agePattern2 = "((?<" + fromGroupName2 + ">((aged|age of)\\W)?(?<" + writtenFromGroup2
+			+ ">" + writtenNumbers + ")|(?<" + digitsFromGroup2 + ">" + digits + "))(\\W?(?<" + unitsGroup2 + ">"
+			+ units + ")(\\W?old|\\Wof\\Wage)?)" + connectionPart + ")(?<" + toGroupName2 + ">(?<" + writtenToGroup2
+			+ ">" + writtenNumbers + ")|(?<" + digitsToGroup2 + ">" + digits + "))\\W?(\\k<" + unitsGroup2 + ">)s?";
 
 	final private static String fromGroupName = "fromGroup";
 	final private static String toGroupName = "toGroup";
@@ -65,10 +59,10 @@ public class AgeInterpreter extends AbstractNumericInterpreter {
 	final private static String agePattern1GroupName = "pattern1GN";
 	final private static String agePattern2GroupName = "pattern2GN";
 
-	final private static String agePattern1 = "(?<" + pattern1Full + ">(?<" + fromGroupName + ">(?<" + writtenFromGroup
-			+ ">" + writtenNumbers + ")|(?<" + digitsFromGroup + ">" + digits + "))" + connectionPart + ")?(?<"
-			+ toGroupName + ">(?<" + writtenToGroup + ">" + writtenNumbers + ")|(?<" + digitsToGroup + ">" + digits
-			+ "))(\\W?(?<" + unitsGroup + ">" + units + ")(\\W?old|\\Wof\\Wage)?)";
+	final private static String agePattern1 = "(?<" + pattern1Full + ">((aged|age of)\\W)?(?<" + fromGroupName + ">(?<"
+			+ writtenFromGroup + ">" + writtenNumbers + ")|(?<" + digitsFromGroup + ">" + digits + "))" + connectionPart
+			+ ")?((aged|age of)\\W)?(?<" + toGroupName + ">(?<" + writtenToGroup + ">" + writtenNumbers + ")|(?<" + digitsToGroup + ">"
+			+ digits + "))(\\W?(?<" + unitsGroup + ">" + units + ")(\\W?old|\\Wof\\Wage)?)";
 
 	public static final Pattern PATTERN = Pattern.compile(PRE_BOUNDS + "(?<" + agePattern2GroupName + ">" + agePattern2
 			+ ")|(?<" + agePattern1GroupName + ">" + agePattern1 + ")" + POST_BOUNDS, PATTERN_BITMASK);

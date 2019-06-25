@@ -89,6 +89,12 @@
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="LogFile" />
 		</Logger>
+		<Logger
+			name="de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.InjurySlotFilling"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
 
 		<Logger
 			name="de.hterhors.semanticmr.crf.sampling.stopcrit.impl.NoEvalChangeCrit"

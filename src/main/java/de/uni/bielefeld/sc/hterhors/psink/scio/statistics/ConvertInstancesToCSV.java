@@ -82,7 +82,7 @@ public class ConvertInstancesToCSV {
 			columnIndicies.put(coloumnName, columnIndicies.size());
 		}
 
-		PrintStream ps = new PrintStream(new File("results_CORRUPTED.csv"));
+		PrintStream ps = new PrintStream(new File("results.csv"));
 
 		String header = "Document" + SPLITTER;
 		for (String string : columnNames) {

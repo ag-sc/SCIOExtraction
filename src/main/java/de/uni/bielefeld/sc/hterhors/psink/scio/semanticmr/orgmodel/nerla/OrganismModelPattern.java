@@ -96,55 +96,56 @@ public class OrganismModelPattern extends BasicRegExPattern {
 	private static Pattern AGE_CATEGORY_AGED_PATTERN_1 = Pattern.compile(PRE_BOUNDS + "aged" + POST_BOUNDS,
 			PATTERN_BITMASK);
 
-	private static final Set<Pattern> AGE_REG_EXP = new HashSet<>(Arrays.asList(AgeInterpreter.PATTERN));
+	public static final Set<Pattern> AGE_REG_EXP = new HashSet<>(Arrays.asList(AgeInterpreter.PATTERN));
 
-	private static final Set<Pattern> WEIGHT_REG_EXP = new HashSet<>(Arrays.asList(WeightInterpreter.PATTERN));
+	public static final Set<Pattern> WEIGHT_REG_EXP = new HashSet<>(Arrays.asList(WeightInterpreter.PATTERN));
 
-	private static final Set<Pattern> CD1_MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(CD1_MOUSE_MODEL_PATTERN_1));
+	public static final Set<Pattern> CD1_MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(CD1_MOUSE_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> CD2_MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(CD2_MOUSE_MODEL_PATTERN_1));
+	public static final Set<Pattern> CD2_MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(CD2_MOUSE_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> BALB_C_MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(BALB_C_MOUSE_PATTERN_1));
+	public static final Set<Pattern> BALB_C_MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(BALB_C_MOUSE_PATTERN_1));
 
-	private static final Set<Pattern> C57_BL6_MOUSE_MODEL_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> C57_BL6_MOUSE_MODEL_REG_EXP = new HashSet<>(
 			Arrays.asList(C57_BL6_MOUSE_PATTERN_1));
 
-	private static final Set<Pattern> GUINEA_PIG_MODEL_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> GUINEA_PIG_MODEL_REG_EXP = new HashSet<>(
 			Arrays.asList(GUINEA_PIG_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> HARTLEY_GUINEA_PIG_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> HARTLEY_GUINEA_PIG_REG_EXP = new HashSet<>(
 			Arrays.asList(HARTLEY_GUINEA_PIG_PATTERN_1));
 
-	private static final Set<Pattern> SPRAGUE_DAWLEY_RAT_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> SPRAGUE_DAWLEY_RAT_REG_EXP = new HashSet<>(
 			Arrays.asList(SPRAGUE_DAWLEY_RAT_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> WISTAR_RAT_REG_EXP = new HashSet<>(Arrays.asList(WISTAR_RAT_MODEL_PATTERN_1));
+	public static final Set<Pattern> WISTAR_RAT_REG_EXP = new HashSet<>(Arrays.asList(WISTAR_RAT_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> RAT_MODEL_REG_EXP = new HashSet<>(Arrays.asList(RAT_MODEL_PATTERN_1));
+	public static final Set<Pattern> RAT_MODEL_REG_EXP = new HashSet<>(Arrays.asList(RAT_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(MOUSE_MODEL_PATTERN_1));
+	public static final Set<Pattern> MOUSE_MODEL_REG_EXP = new HashSet<>(Arrays.asList(MOUSE_MODEL_PATTERN_1));
 
-	private static final Set<Pattern> GENDER_FEMALE_REG_EXP = new HashSet<>(Arrays.asList(GENDER_FEMALE_PATTERN_1));
+	public static final Set<Pattern> GENDER_FEMALE_REG_EXP = new HashSet<>(Arrays.asList(GENDER_FEMALE_PATTERN_1));
 
-	private static final Set<Pattern> GENDER_MALE_REG_EXP = new HashSet<>(Arrays.asList(GENDER_MALE_PATTERN_1));
+	public static final Set<Pattern> GENDER_MALE_REG_EXP = new HashSet<>(Arrays.asList(GENDER_MALE_PATTERN_1));
 
-	private static final Set<Pattern> GENDER_MIXED_REG_EXP = new HashSet<>(Arrays.asList(GENDER_MIXED_PATTERN_1));
+	public static final Set<Pattern> GENDER_MIXED_REG_EXP = new HashSet<>(Arrays.asList(GENDER_MIXED_PATTERN_1));
 
-	private static final Set<Pattern> AGE_CATEGORY_ADULT_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> AGE_CATEGORY_ADULT_REG_EXP = new HashSet<>(
 			Arrays.asList(AGE_CATEGORY_ADULT_PATTERN_1));
 
-	private static final Set<Pattern> AGE_CATEGORY_YOUNG_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> AGE_CATEGORY_YOUNG_REG_EXP = new HashSet<>(
 			Arrays.asList(AGE_CATEGORY_YOUNG_PATTERN_1));
 
-	private static final Set<Pattern> AGE_CATEGORY_AGED_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> AGE_CATEGORY_AGED_REG_EXP = new HashSet<>(
 			Arrays.asList(AGE_CATEGORY_AGED_PATTERN_1));
 
-	private static final Set<Pattern> LONG_EVANS_RAT_REG_EXP = new HashSet<>(
+	public static final Set<Pattern> LONG_EVANS_RAT_REG_EXP = new HashSet<>(
 			Arrays.asList(LONG_EVANS_RAT_MODEL_PATTERN_1));
 
 	private Map<EntityType, Set<Pattern>> pattern = new HashMap<>();
 
 	public OrganismModelPattern() {
+		
 		/**
 		 * All models are of type OrganismModel so we do not need to add this here
 		 */

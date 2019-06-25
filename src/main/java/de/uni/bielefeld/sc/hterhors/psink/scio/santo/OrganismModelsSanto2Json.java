@@ -32,7 +32,7 @@ public class OrganismModelsSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "29052019";
+	final static private String exportDate = "24062019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 

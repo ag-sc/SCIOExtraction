@@ -4,39 +4,35 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
+import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.OrgModelSlotFilling;
 
 public class ResultSanto2Json {
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger(ResultSanto2Json.class);
 
-//	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
-//	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
-//	private static final File structures = new File(
-//			"src/main/resources/slotfilling/result/specifications/structures.csv");
-//	private static final File hierarchies = new File(
-//			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
-	private static final File entities = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/entities.csv");
-	private static final File slots = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/slots.csv");
+	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
+	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
 	private static final File structures = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/structures.csv");
+			"src/main/resources/slotfilling/result/specifications/structures.csv");
 	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/hierarchies.csv");
+			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "24052019";
+	final static private String exportDate = "24062019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -72,11 +68,10 @@ public class ResultSanto2Json {
 			converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 			converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 
-//			converter.convert(new File("test/" + name + "_Result.json"), "Result", true, true);
-			converter.convert(EInstanceContext.UNSPECIFIED, new File(
-					"src/main/resources/slotfilling/organism_model/corpus/instances/" + name + "_OrganismModel.json"),
-					"OrganismModel", true, true);
+			converter.convert(EInstanceContext.UNSPECIFIED, new File("test/" + name + "_Result.json"), "Result", true,
+					true);
 
 		}
 	}
+
 }

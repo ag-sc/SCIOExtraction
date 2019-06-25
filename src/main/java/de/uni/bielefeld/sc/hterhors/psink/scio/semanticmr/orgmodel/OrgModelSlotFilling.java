@@ -21,10 +21,10 @@ import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
-import de.hterhors.semanticmr.crf.factor.Model;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
+import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
@@ -148,7 +148,8 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * instance assignment during development.
 		 * 
 		 */
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().build();
+		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+				.build();
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
 //				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(100L).build();
 
@@ -269,6 +270,10 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(objectiveFunction,
 				candidateRetrieval, AnnotationBuilder.toAnnotation("OrganismModel"));
 
+		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
+//				, cardExplorer
+				);
+
 		/**
 		 * The learner defines the update strategy of learned weights. parameters are
 		 * the alpha value that is specified in the SGD (first parameter) and the
@@ -286,18 +291,14 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * TODO: Implement further templates / features to solve your problem.
 		 * 
 		 */
-		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-
+		List<AbstractFeatureTemplate> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
-//		featureTemplates.add(new TokenContextTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
-		featureTemplates.add(new EntityTypeContextTemplate());
-//		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new ClusterTemplate());
-//		featureTemplates.add(new EntityTypeContextTemplate());
+		featureTemplates.add(new EntityTypeContextTemplate());
 		featureTemplates.add(new OlfactoryContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
@@ -353,14 +354,16 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * example we set the maximum chain length to 10. That means, only 10 changes
 		 * (annotations) can be added to each document.
 		 */
-		ISamplingStoppingCriterion maxStepCrit = new MaxChainLengthCrit(10);
+		ISamplingStoppingCriterion maxStepCrit = new MaxChainLengthCrit(15);
 		/**
 		 * The next stopping criterion checks for no or only little (based on a
 		 * threshold) changes in the model score of the produced chain. In this case, if
 		 * the last three states were scored equally, we assume the system to be
 		 * converged.
 		 */
-		ISamplingStoppingCriterion noModelChangeCrit = new ConverganceCrit(3, s -> s.getModelScore());
+
+		ISamplingStoppingCriterion noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(),
+				s -> s.getModelScore());
 		ISamplingStoppingCriterion[] sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit,
 				noModelChangeCrit };
 		/**
@@ -385,25 +388,11 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
 		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
 				objectiveFunction);
-
-		/**
-		 * Computes the coverage of the given instances. The coverage is defined by the
-		 * objective mean score that can be reached relying on greedy objective function
-		 * sampling strategy. The coverage can be seen as the upper bound of the system.
-		 * The upper bound depends only on the exploration strategy, e.g. the provided
-		 * NER-annotations during slot-filling.
-		 */
-		final Score cov = crf.computeCoverage(true, devInstances);
-		log.info("Coverage: " + cov);
-		log.info(modelName);
-
-		System.exit(1);
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -457,7 +446,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * The upper bound depends only on the exploration strategy, e.g. the provided
 		 * NER-annotations during slot-filling.
 		 */
-		final Score coverage = crf.computeCoverage(false, devInstances);
+		final Score coverage = crf.computeCoverage(false, predictionOF, devInstances);
 		log.info("Coverage: " + coverage);
 		log.info(modelName);
 		/**

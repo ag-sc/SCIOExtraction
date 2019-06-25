@@ -1,15 +1,12 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import de.hterhors.semanticmr.crf.factor.AbstractFactorScope;
-import de.hterhors.semanticmr.crf.factor.Factor;
+import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
+import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -27,7 +24,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.Olf
  */
 public class OlfactoryContextTemplate extends AbstractFeatureTemplate<EntityTypeContextScope> {
 
-	static class EntityTypeContextScope extends AbstractFactorScope<EntityTypeContextScope> {
+	static class EntityTypeContextScope extends AbstractFactorScope {
 
 		public final Instance instance;
 		public final int sentenceIndex;
