@@ -74,7 +74,7 @@ public class OrganismModelsSanto2Json {
 
 			converter.convert(context, new File(
 					"src/main/resources/slotfilling/organism_model/corpus/instances/" + name + "_OrganismModel.json"),
-					"OrganismModel", true, true);
+					"OrganismModel", true, true, false);
 
 		}
 	}

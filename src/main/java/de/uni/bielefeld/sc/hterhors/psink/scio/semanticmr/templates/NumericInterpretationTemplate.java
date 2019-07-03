@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AbstractSCI
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.ILiteralInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.INumericInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.IUnit;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.NumericInterpretationTemplate.NumericInterpretationScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.NumericInterpretationTemplate.NumericInterpretationScope;
 
 /**
  * Captures the semantics of datatype properties.

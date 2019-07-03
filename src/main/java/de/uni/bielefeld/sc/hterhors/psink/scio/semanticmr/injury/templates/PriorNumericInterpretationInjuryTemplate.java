@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.templates;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,11 +22,11 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.templates.PriorNumericInterpretationInjuryTemplate.NumericInterpretationScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AbstractSCIONormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.ILiteralInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.INumericInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.struct.IUnit;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate.NumericInterpretationScope;
 
 /**
  * Captures the semantics of datatype properties.
@@ -39,7 +39,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.Pri
  *
  * @date May 12, 2017
  */
-public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<NumericInterpretationScope>
+public class PriorNumericInterpretationInjuryTemplate extends AbstractFeatureTemplate<NumericInterpretationScope>
 		implements Serializable {
 
 	/**
@@ -47,7 +47,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LogManager.getFormatterLogger(PriorNumericInterpretationTemplate.class);
+	private static Logger log = LogManager.getFormatterLogger(PriorNumericInterpretationInjuryTemplate.class);
 
 	// final private static String GREATER_OR_EQUAL_TEMPLATE = "Mean_%s_of_%s >=
 	// %s %s";
@@ -61,7 +61,7 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 	final private Map<EntityType, Map<EntityType, Map<IUnit, Double>>> stdDeviations;
 	final private Map<EntityType, Map<EntityType, Map<IUnit, Double>>> meanValues;
 
-	public PriorNumericInterpretationTemplate(List<Instance> trainingInstances) {
+	public PriorNumericInterpretationInjuryTemplate(List<Instance> trainingInstances) {
 
 		Map<EntityType, Map<EntityType, Map<IUnit, List<Double>>>> values = extractLiteralValues(trainingInstances);
 
@@ -218,13 +218,13 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 			return;
 		ILiteralInterpreter interpreter = getInterpreterFromAnnotation(obieClass);
 
-		SingleFillerSlot sfs = internalAnnotation.asInstanceOfEntityTemplate()
-				.getSingleFillerSlot(SlotType.get("hasOrganismSpecies"));
+//		SingleFillerSlot sfs = internalAnnotation.asInstanceOfEntityTemplate()
+//				.getSingleFillerSlot(SlotType.get("hasOrganismSpecies"));
+//
+//		if (!sfs.containsSlotFiller())
+//			return;
 
-		if (!sfs.containsSlotFiller())
-			return;
-
-		EntityType entityType = sfs.getSlotFiller().getEntityType();
+		EntityType entityType = internalAnnotation.asInstanceOfEntityTemplate().getEntityType();
 
 		/*
 		 * Only for Numeric data type Values.
@@ -365,13 +365,13 @@ public class PriorNumericInterpretationTemplate extends AbstractFeatureTemplate<
 					 * Take species instead of root entity type. because root entity type is always
 					 * organism model for animal models.
 					 */
-					SingleFillerSlot sfs = entity.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasOrganismSpecies"));
+//					SingleFillerSlot sfs = entity.asInstanceOfEntityTemplate()
+//							.getSingleFillerSlot(SlotType.get("hasOrganismSpecies"));
+//
+//					if (!sfs.containsSlotFiller())
+//						continue;
 
-					if (!sfs.containsSlotFiller())
-						continue;
-
-					EntityType entityType = sfs.getSlotFiller().getEntityType();
+					EntityType entityType = entity.asInstanceOfEntityTemplate().getEntityType();
 
 					factors.add(new NumericInterpretationScope(this, entityType, childEntity.getEntityType(),
 							(INumericInterpreter) interpretation));

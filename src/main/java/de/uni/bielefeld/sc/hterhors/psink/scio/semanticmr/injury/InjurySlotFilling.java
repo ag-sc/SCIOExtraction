@@ -40,6 +40,7 @@ import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
 import de.hterhors.semanticmr.crf.templates.et.LocalityTemplate;
 import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.LevenshteinTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
@@ -54,11 +55,14 @@ import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.specs.InjurySpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.templates.PriorNumericInterpretationInjuryTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.EntityTypeContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.OlfactoryContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.MultiValueSlotSizeTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.NumericInterpretationTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
 
 /**
  * Slot filling for organism models.
@@ -151,7 +155,8 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
-//				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(100L).build();
+//				.setCorpusSizeFraction(0.025F).setTrainingProportion(80).setDevelopmentProportion(20)
+//				.setTestProportion(20).setSeed(100L).build();
 
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
@@ -267,11 +272,13 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
 				constraintsProvider);
 
-		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(objectiveFunction,
-				candidateRetrieval, AnnotationBuilder.toAnnotation("Injury"));
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
+				AnnotationBuilder.toAnnotation("Injury"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
+//				
 //				, cardExplorer
+//			
 		);
 
 		/**
@@ -281,7 +288,7 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: find best alpha value in combination with L2-regularization.
 		 */
-		AdvancedLearner learner = new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
+		AdvancedLearner learner = new AdvancedLearner(new SGD(0.00001, 0), new L2(0.00));
 
 		/**
 		 * Next, we need to specify the actual feature templates. In this example we
@@ -294,23 +301,28 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		List<AbstractFeatureTemplate> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
+		featureTemplates.add(new DistinctMultiValueSlotsTemplate());
+		featureTemplates.add(new MultiValueSlotSizeTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
 		featureTemplates.add(new OlfactoryContextTemplate());
-		featureTemplates.add(new LocalityTemplate());
+//		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
-		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
-//		featureTemplates.add(new NumericInterpretationTemplate());
+		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));
+		featureTemplates.add(new NumericInterpretationTemplate());
 
 		/**
 		 * During exploration we initialize each state with an empty
 		 * OrganismModel-annotation.
 		 */
-		IStateInitializer stateInitializer = ((instance) -> new State(instance,
-				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")))));
+		IStateInitializer stateInitializer = ((instance) -> new State(instance, new Annotations(
+				//
+				new EntityTemplate(AnnotationBuilder.toAnnotation("Injury"))
+		//
+		)));
 
 		/**
 		 * Number of epochs, the system should train.
@@ -394,12 +406,12 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
 				objectiveFunction);
 
-		final Score coverage2 = crf.computeCoverage(true,
-				new SlotFillingObjectiveFunction(new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE)), devInstances);
-		log.info("Coverage: " + coverage2);
-		log.info(modelName);
-
-		System.exit(1);
+//		final Score coverage2 = crf.computeCoverage(true,
+//				new SlotFillingObjectiveFunction(new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE)), trainingInstances);
+//		log.info("Coverage: " + coverage2);
+//		log.info(modelName);
+//
+//		System.exit(1);
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.

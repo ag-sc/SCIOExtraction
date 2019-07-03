@@ -32,7 +32,7 @@ public class ResultSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "24062019";
+	final static private String exportDate = "25062019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -50,26 +50,30 @@ public class ResultSanto2Json {
 //				Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath()));
 
 		for (String name : fileNames) {
+			try {
 
 //			if (!organismModelDocs.contains(name)) {
 //				log.info(name + "... not part of the corpus!");
 //				continue;
 //			}
-			log.info(name + " start processing...");
-			Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
+				log.info(name + " start processing...");
+				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
 //					new File("rawData/test/" + name + "_export.csv"),
 //					new File("rawData/test/" + name + "_Jessica.annodb"),
 //					new File("rawData/test/" + name + "_Jessica.n-triples"), scioNameSpace,
-					new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
-					new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
-					new File("rawData/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
-					resourceNameSpace);
+						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
+						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
+						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
+						resourceNameSpace);
 
-			converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
-			converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
+				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
+				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 
-			converter.convert(EInstanceContext.UNSPECIFIED, new File("test/" + name + "_Result.json"), "Result", true,
-					true);
+				converter.convert(EInstanceContext.UNSPECIFIED, new File("test/" + name + "_Result.json"), "Result",
+						true, true, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
 	}

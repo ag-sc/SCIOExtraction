@@ -4,14 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
+import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
@@ -43,9 +46,12 @@ public class InjuriesSanto2Json {
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
 
-//		Set<String> organismModelDocs = new HashSet<>(
-//				Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath()));
 		Random random = new Random(10000L);
+
+		Set<SlotType> slotTypes = new HashSet<>();
+		slotTypes.add(SlotType.get("hasInjuryDevice"));
+		slotTypes.add(SlotType.get("hasInjuryLocation"));
+		slotTypes.add(SlotType.get("hasInjuryAnaesthesia"));
 
 		for (String name : fileNames) {
 			try {
@@ -54,7 +60,7 @@ public class InjuriesSanto2Json {
 //				continue;
 //			}
 				log.info(name + " convert...");
-				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
+				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
 						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
 						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
@@ -72,7 +78,7 @@ public class InjuriesSanto2Json {
 
 				converter.convert(context,
 						new File("src/main/resources/slotfilling/injury/corpus/instances/" + name + "_Injury.json"),
-						"Injury", true, true);
+						"Injury", true, true, false);
 
 			} catch (Exception e) {
 				e.printStackTrace();

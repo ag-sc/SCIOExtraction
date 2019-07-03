@@ -56,9 +56,9 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.EntityTypeContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.OlfactoryContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationOrgModelTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
 
 /**
  * Slot filling for organism models.
@@ -150,8 +150,8 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 */
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
-//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
-//				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(100L).build();
+//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//				.setTrainingProportion(80).setTestProportion(20).setDevelopmentProportion(20).setSeed(300L).build();
 
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
@@ -267,12 +267,12 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
 				constraintsProvider);
 
-		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(objectiveFunction,
-				candidateRetrieval, AnnotationBuilder.toAnnotation("OrganismModel"));
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
+				AnnotationBuilder.toAnnotation("OrganismModel"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
-//				, cardExplorer
-				);
+				, cardExplorer
+		);
 
 		/**
 		 * The learner defines the update strategy of learned weights. parameters are
@@ -302,7 +302,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		featureTemplates.add(new OlfactoryContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
-		featureTemplates.add(new PriorNumericInterpretationTemplate(trainingInstances));
+		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
 
 		/**
