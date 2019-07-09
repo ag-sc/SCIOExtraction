@@ -271,7 +271,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 				AnnotationBuilder.toAnnotation("OrganismModel"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
-				, cardExplorer
+//				, cardExplorer
 		);
 
 		/**

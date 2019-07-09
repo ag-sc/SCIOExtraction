@@ -88,6 +88,8 @@ public class EntityTypeContextTemplate extends AbstractFeatureTemplate<EntityTyp
 
 	}
 
+	private static final String PREFIX = "ETCT\t";
+
 	@Override
 	public List<EntityTypeContextScope> generateFactorScopes(State state) {
 		List<EntityTypeContextScope> factors = new ArrayList<>();
@@ -153,8 +155,8 @@ public class EntityTypeContextTemplate extends AbstractFeatureTemplate<EntityTyp
 				.flatMap(e -> e.getDirectSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
 
 		factor.getFeatureVector()
-				.set(superLeftContext.stream().map(e -> " " + e.entityName).reduce("", String::concat).trim() + "<->"
-						+ factor.getFactorScope().slotTypeContext.slotName + "<->"
+				.set(PREFIX + superLeftContext.stream().map(e -> " " + e.entityName).reduce("", String::concat).trim()
+						+ "<->" + factor.getFactorScope().slotTypeContext.slotName + "<->"
 						+ superRightContext.stream().map(e -> " " + e.entityName).reduce("", String::concat).trim(),
 						true);
 

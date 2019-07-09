@@ -269,8 +269,9 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
-				constraintsProvider);
+		SlotFillingExplorer explorer = new SlotFillingExplorer(
+				new SlotFillingObjectiveFunction(new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE)),
+				candidateRetrieval, constraintsProvider);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
 				AnnotationBuilder.toAnnotation("Injury"));

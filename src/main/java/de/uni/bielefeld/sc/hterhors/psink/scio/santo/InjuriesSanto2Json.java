@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -78,7 +79,7 @@ public class InjuriesSanto2Json {
 
 				converter.convert(context,
 						new File("src/main/resources/slotfilling/injury/corpus/instances/" + name + "_Injury.json"),
-						"Injury", true, true, false);
+						EntityType.get("Injury"), true, true, false);
 
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
@@ -74,7 +75,7 @@ public class OrganismModelsSanto2Json {
 
 			converter.convert(context, new File(
 					"src/main/resources/slotfilling/organism_model/corpus/instances/" + name + "_OrganismModel.json"),
-					"OrganismModel", true, true, false);
+					EntityType.get("OrganismModel"), true, true, false);
 
 		}
 	}

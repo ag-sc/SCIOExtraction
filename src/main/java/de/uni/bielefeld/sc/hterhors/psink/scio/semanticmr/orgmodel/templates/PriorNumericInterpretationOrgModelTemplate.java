@@ -55,6 +55,8 @@ public class PriorNumericInterpretationOrgModelTemplate extends AbstractFeatureT
 	final private static String MEAN_STD_DEVIATION_TEMPLATE = "%s of %s is within %s x std deviation(%s) of mean(%s) unit(%s)";
 	final private static String NOT_MEAN_STD_DEVIATION_TEMPLATE = "%s of %s is NOT within %s x std deviation (%s) of mean(%s) unit(%s)";
 
+	private static final String PREFIX = "PNIOMT\t";
+
 	/**
 	 * Parent class type, property class type, unit, value
 	 */
@@ -501,8 +503,8 @@ public class PriorNumericInterpretationOrgModelTemplate extends AbstractFeatureT
 				 * Add only the feature which is the farthest away from mean.
 				 */
 				if (!within) {
-					featureVector.set(String.format(NOT_MEAN_STD_DEVIATION_TEMPLATE, className, parentClassName, i,
-							stdDeviation, meanValue, semantics.getUnit().getName()), !within);
+					featureVector.set(PREFIX + String.format(NOT_MEAN_STD_DEVIATION_TEMPLATE, className,
+							parentClassName, i, stdDeviation, meanValue, semantics.getUnit().getName()), !within);
 					// System.out.println(
 					// String.format(NOT_MEAN_STD_DEVIATION_TEMPLATE,
 					// className,parentClassName, i, stdDeviation, meanValue,
@@ -520,7 +522,7 @@ public class PriorNumericInterpretationOrgModelTemplate extends AbstractFeatureT
 				 * Add only the feature which is the nearest to the mean.
 				 */
 				if (within) {
-					featureVector.set(String.format(MEAN_STD_DEVIATION_TEMPLATE, className, parentClassName, i,
+					featureVector.set(PREFIX + String.format(MEAN_STD_DEVIATION_TEMPLATE, className, parentClassName, i,
 							stdDeviation, meanValue, semantics.getUnit().getName()), within);
 					// System.out.println(
 					// String.format(MEAN_STD_DEVIATION_TEMPLATE, className,

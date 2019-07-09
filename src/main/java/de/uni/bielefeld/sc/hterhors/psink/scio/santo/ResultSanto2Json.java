@@ -69,7 +69,8 @@ public class ResultSanto2Json {
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 
-				converter.convert(EInstanceContext.UNSPECIFIED, new File("test/" + name + "_Result.json"), "Result",
+				converter.convert(EInstanceContext.UNSPECIFIED, new File("test/" + name + "_Result.json"),
+						EntityType.get("Result"),
 						true, true, true);
 			} catch (Exception e) {
 				e.printStackTrace();

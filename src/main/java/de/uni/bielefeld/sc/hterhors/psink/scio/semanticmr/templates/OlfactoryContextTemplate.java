@@ -84,6 +84,8 @@ public class OlfactoryContextTemplate extends AbstractFeatureTemplate<EntityType
 
 	}
 
+	private static final String PREFIX = "OCT\t";
+
 	@Override
 	public List<EntityTypeContextScope> generateFactorScopes(State state) {
 		List<EntityTypeContextScope> factors = new ArrayList<>();
@@ -127,9 +129,10 @@ public class OlfactoryContextTemplate extends AbstractFeatureTemplate<EntityType
 		if (!olfactory)
 			return;
 
-		factor.getFeatureVector().set("ContextOfOlfactory " + factor.getFactorScope().entityType.entityName, true);
+		factor.getFeatureVector().set(PREFIX + "ContextOfOlfactory " + factor.getFactorScope().entityType.entityName,
+				true);
 		for (EntityType superET : factor.getFactorScope().entityType.getDirectSuperEntityTypes()) {
-			factor.getFeatureVector().set("ContextOfOlfactory " + superET.entityName, true);
+			factor.getFeatureVector().set(PREFIX + "ContextOfOlfactory " + superET.entityName, true);
 		}
 
 	}
