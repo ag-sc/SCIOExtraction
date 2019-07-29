@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.nerla;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.treatment.nerla;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,19 +15,17 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.specs.VertebralAreaSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.treatment.specs.TreatmentSpecs;
 
-public class VertebralAreaNERLAnnotator {
+public class TreatmentNERLAnnotator {
 
 	public static void main(String[] args) {
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(SystemScope.Builder
-				.getScopeHandler().addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build(),
-				new VertebralAreaPattern());
+				.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScopeReader).build(),
+				new TreatmentPattern());
 
-		File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
+		File instanceDirectory = new File("src/main/resources/slotfilling/treatment/corpus/instances/");
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory);
 
@@ -45,7 +43,7 @@ public class VertebralAreaNERLAnnotator {
 						.flatMap(v -> v.stream()).map(d -> new JsonEntityAnnotationWrapper(d))
 						.collect(Collectors.toList());
 
-				io.writeNerlas(new File("src/main/resources/slotfilling/vertebral_area/corpus/nerla/"
+				io.writeNerlas(new File("src/main/resources/slotfilling/treatment/corpus/nerla/"
 						+ instance.getName() + ".nerla.json"), wrappedAnnotation);
 
 			} catch (IOException e) {

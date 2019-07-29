@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.templates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.templates.VertebralLocationConditionTemplate.VertebralLocationScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.templates.VertebralLocationConditionTemplate.VertebralLocationScope;
 
 /**
  * @author hterhors

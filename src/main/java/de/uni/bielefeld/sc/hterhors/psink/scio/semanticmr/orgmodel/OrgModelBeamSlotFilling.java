@@ -1,9 +1,10 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,10 +16,11 @@ import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
-import de.hterhors.semanticmr.crf.SemanticParsingCRF;
+import de.hterhors.semanticmr.crf.SemanticParsingBeamCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
@@ -26,18 +28,16 @@ import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
-import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
-import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
+import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
+import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
+import de.hterhors.semanticmr.crf.sampling.stopcrit.IBeamSamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
-import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
-import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
-import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
+import de.hterhors.semanticmr.crf.templates.et.LocalityTemplate;
 import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
@@ -52,14 +52,13 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.templates.PriorNumericInterpretationInjuryTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
+import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationOrgModelTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.MultiValueSlotSizeTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.NumericInterpretationTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.specs.VertebralAreaSpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.templates.VertebralLocationConditionTemplate;
 
 /**
  * Slot filling for organism models.
@@ -67,7 +66,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.template
  * @author hterhors
  *
  */
-public class VertebralAreaFilling extends AbstractSemReadProject {
+public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 
 	/**
 	 * Start the slot filling procedure.
@@ -76,16 +75,25 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) {
-		new VertebralAreaFilling();
+		new OrgModelBeamSlotFilling();
 	}
 
-	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
+	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+
+	/**
+	 * File of additional hard constraints during exploration. There are different
+	 * types of hard constraints (not all of them are implemented yet). This file
+	 * contains slot pair exclusion pairs. E.g. if Slot A is filled by Value X than
+	 * Slot B must not be filled with value Y.
+	 */
+	private final File slotPairConstraitsSpecifications = new File(
+			"src/main/resources/slotfilling/organism_model/constraints/slotPairExclusionConstraints.csv");
 
 	/**
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
+	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
 
 	/**
 	 * A file that contains named entity recognition and linking annotations for
@@ -93,9 +101,21 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 	 * search space exploration.
 	 */
 	private final File externalNerlaAnnotations = new File(
-			"src/main/resources/slotfilling/vertebral_area/corpus/nerla/");
+			"src/main/resources/slotfilling/organism_model/corpus/nerla/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/Normal/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall5/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall10/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
-	public VertebralAreaFilling() {
+	public OrgModelBeamSlotFilling() {
 
 		/**
 		 * Initialize the system.
@@ -107,12 +127,23 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(VertebralAreaSpecs.systemsScopeReader)
+				.addScopeSpecification(OrgModelSpecs.systemsScopeReader)
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
 				 */
 				.apply()
+				/**
+				 * Now normalization functions can be added. A normalization function is
+				 * especially used for literal-based annotations. In case a normalization
+				 * function is provided for a specific entity type, the normalized value is
+				 * compared during evaluation instead of the actual surface form. A
+				 * normalization function normalizes different surface forms so that e.g. the
+				 * weights "500 g", "0.5kg", "500g" are all equal. Each normalization function
+				 * is bound to exactly one entity type.
+				 */
+				.registerNormalizationFunction(new WeightNormalization())
+				.registerNormalizationFunction(new AgeNormalization())
 				/**
 				 * Finally, we build the systems scope.
 				 */
@@ -131,9 +162,8 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 */
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
-//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
-//				.setCorpusSizeFraction(0.025F).setTrainingProportion(80).setDevelopmentProportion(20)
-//				.setTestProportion(20).setSeed(100L).build();
+//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//				.setTrainingProportion(80).setTestProportion(20).setDevelopmentProportion(20).setSeed(300L).build();
 
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
@@ -226,7 +256,21 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * each slot.
 		 *
 		 */
+//		AnnotationCandidateRetrievalCollection candidateRetrieval = new AnnotationCandidateRetrievalCollection(
+//				instanceProvider.getInstances());
 		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
+
+//		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
+//
+//		for (Instance instance : instanceProvider.getInstances()) {
+//			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+//
+//			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
+//					trainDictionary)) {
+//				ap.addSlotFiller(annotation);
+//			}
+//			candidateRetrieval.registerCandidateProvider(ap);
+//		}
 
 		/**
 		 * To further increase the systems performance, we can specify a set of hard
@@ -237,8 +281,8 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * 
 		 */
 		HardConstraintsProvider constraintsProvider = new HardConstraintsProvider();
-//		constraintsProvider.addHardConstraints(EHardConstraintType.SLOT_PAIR_EXCLUSION,
-//				slotPairConstraitsSpecifications);
+		constraintsProvider.addHardConstraints(EHardConstraintType.SLOT_PAIR_EXCLUSION,
+				slotPairConstraitsSpecifications);
 
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
@@ -246,17 +290,14 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(
-				new SlotFillingObjectiveFunction(new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE)),
-				candidateRetrieval, constraintsProvider);
+		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
+				constraintsProvider);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
-				AnnotationBuilder.toAnnotation("VertebralArea"));
+				AnnotationBuilder.toAnnotation("OrganismModel"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
-//				
 //				, cardExplorer
-//			
 		);
 
 		/**
@@ -266,7 +307,7 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: find best alpha value in combination with L2-regularization.
 		 */
-		AdvancedLearner learner = new AdvancedLearner(new SGD(0.00001, 0), new L2(0.00));
+		AdvancedLearner learner = new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
 
 		/**
 		 * Next, we need to specify the actual feature templates. In this example we
@@ -276,7 +317,7 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * TODO: Implement further templates / features to solve your problem.
 		 * 
 		 */
-		List<AbstractFeatureTemplate> featureTemplates = new ArrayList<>();
+		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
@@ -284,24 +325,33 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
-		featureTemplates.add(new VertebralLocationConditionTemplate());
-//		featureTemplates.add(new LocalityTemplate());
+		featureTemplates.add(new OlfactoryContextTemplate());
+		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
+		featureTemplates.add(new DocumentPartTemplate());
+		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate());
+//		featureTemplates.add(new NumericInterpretationTemplate());
+
+		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
+		parameter.put(PriorNumericInterpretationOrgModelTemplate.class, new Object[] { trainingInstances });
 
 		/**
 		 * During exploration we initialize each state with an empty
 		 * OrganismModel-annotation.
 		 */
-		IStateInitializer stateInitializer = (instance -> {
+		IStateInitializer stateInitializer = ((instance) -> new State(instance,
+				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("OrganismModel")))));
 
-			List<AbstractAnnotation> as = new ArrayList<>();
-
-			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("VertebralArea")));
-			}
-			return new State(instance, new Annotations(as));
-			//
-		});
+//		IStateInitializer stateInitializer = (instance -> {
+//
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//
+//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("OrganismModel")));
+//			}
+//			return new State(instance, new Annotations(as));
+//			//
+//		});
 
 		/**
 		 * Number of epochs, the system should train.
@@ -336,7 +386,7 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 */
 //		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
 //		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
-		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
+		AbstractBeamSampler sampler = new EpochSwitchBeamSampler(epoch -> epoch % 2 == 0);
 //		AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
 //		AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
 		/**
@@ -345,7 +395,14 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * example we set the maximum chain length to 10. That means, only 10 changes
 		 * (annotations) can be added to each document.
 		 */
-		ISamplingStoppingCriterion maxStepCrit = new MaxChainLengthCrit(15);
+		IBeamSamplingStoppingCriterion maxStepCrit = new IBeamSamplingStoppingCriterion() {
+
+			@Override
+			public boolean meetsCondition(List<List<State>> producedStateChain) {
+				return producedStateChain.size() == 15;
+			}
+
+		};
 		/**
 		 * The next stopping criterion checks for no or only little (based on a
 		 * threshold) changes in the model score of the produced chain. In this case, if
@@ -353,17 +410,17 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * converged.
 		 */
 
-		ISamplingStoppingCriterion noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(),
-				s -> s.getModelScore());
-		ISamplingStoppingCriterion[] sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit,
-				noModelChangeCrit };
+//		IBeamSamplingStoppingCriterion noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(),
+//				s -> s.getModelScore());
+//		IBeamSamplingStoppingCriterion[] sampleStoppingCrits = new IBeamSamplingStoppingCriterion[] { maxStepCrit,
+//				noModelChangeCrit };
 		/**
 		 * Finally, we chose a model base directory and a name for the model.
 		 * 
 		 * NOTE: Make sure that the base model directory exists!
 		 */
-		final File modelBaseDir = new File("models/slotfilling/vertebral_area/");
-		final String modelName = "VertebralArea" + new Random().nextInt(100000);
+		final File modelBaseDir = new File("models/slotfilling/org_model/");
+		final String modelName = "OrgModel" + new Random().nextInt(100000);
 
 		Model model;
 
@@ -379,19 +436,20 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
+		model.setParameter(parameter);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
-				objectiveFunction);
+		SemanticParsingBeamCRF crf = new SemanticParsingBeamCRF(model, explorerList, sampler, stateInitializer,
+				objectiveFunction, 10);
 
-		final Score coverage2 = crf.computeCoverage(false,
-				new SlotFillingObjectiveFunction(new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE)),
-				trainingInstances);
-		log.info("Coverage: " + coverage2);
-		log.info(modelName);
-
-//		System.exit(1);
+		/**
+		 * Chose a different evaluation for prediction than for training. During
+		 * training we are interested in finding the correct document linked annotation
+		 * but for prediction we are only interested in the entity type.
+		 */
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -400,7 +458,7 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 			/**
 			 * Train the CRF.
 			 */
-			crf.train(learner, trainingInstances, numberOfEpochs, sampleStoppingCrits);
+			crf.train(learner, trainingInstances, numberOfEpochs, maxStepCrit);
 
 			/**
 			 * Save the model as binary. Do not override, in case a file already exists for
@@ -420,15 +478,7 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * in this case. This method returns for each instances a final state (best
 		 * state based on the trained model) that contains annotations.
 		 */
-		Map<Instance, State> results = crf.predict(devInstances, maxStepCrit, noModelChangeCrit);
-
-		/**
-		 * Chose a different evaluation for prediction than for training. During
-		 * training we are interested in finding the correct document linked annotation
-		 * but for prediction we are only interested in the entity type.
-		 */
-		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+		Map<Instance, State> results = crf.predict(devInstances, maxStepCrit);
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
@@ -445,13 +495,10 @@ public class VertebralAreaFilling extends AbstractSemReadProject {
 		 * The upper bound depends only on the exploration strategy, e.g. the provided
 		 * NER-annotations during slot-filling.
 		 */
-		final Score coverage = crf.computeCoverage(false, predictionOF, devInstances);
-		log.info("Coverage: " + coverage);
-		log.info(modelName);
+		log.info("modelName: " + modelName);
 		/**
 		 * TODO: Compare results with results when changing some parameter. Implement
 		 * more sophisticated feature-templates.
 		 */
 	}
-
 }

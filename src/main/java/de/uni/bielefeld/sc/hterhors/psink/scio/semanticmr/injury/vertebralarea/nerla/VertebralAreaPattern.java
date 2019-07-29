@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.vertebralarea.nerla;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.nerla;
 
 import java.util.Arrays;
 import java.util.HashMap;

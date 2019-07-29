@@ -16,13 +16,12 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.EInstanceContext;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
-import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.specs.VertebralAreaSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.OrgModelSlotFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.treatment.deliverymethod.specs.DeliveryMethodSpecs;
 
-public class VertebralAreaSanto2Json {
+public class DeliveryMethodSanto2Json {
 
 	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
 
@@ -33,7 +32,7 @@ public class VertebralAreaSanto2Json {
 	public static void main(String[] args) throws IOException {
 
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build();
+				.addScopeSpecification(DeliveryMethodSpecs.systemsScopeReader).build();
 
 		final String dir = "rawData/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
@@ -69,9 +68,9 @@ public class VertebralAreaSanto2Json {
 
 				converter
 						.convert(
-								context, new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/"
-										+ name + "_VertebralArea.json"),
-								EntityType.get("VertebralArea"), true, true, true);
+								context, new File("src/main/resources/slotfilling/delivery_method/corpus/instances/"
+										+ name + "_DeliveryMethod.json"),
+								EntityType.get("DeliveryMethod"), true, true, true);
 
 			} catch (Exception e) {
 				e.printStackTrace();

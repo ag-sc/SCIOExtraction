@@ -60,10 +60,13 @@ public class PriorNumericInterpretationOrgModelTemplate extends AbstractFeatureT
 	/**
 	 * Parent class type, property class type, unit, value
 	 */
-	final private Map<EntityType, Map<EntityType, Map<IUnit, Double>>> stdDeviations;
-	final private Map<EntityType, Map<EntityType, Map<IUnit, Double>>> meanValues;
+	private Map<EntityType, Map<EntityType, Map<IUnit, Double>>> stdDeviations;
+	private Map<EntityType, Map<EntityType, Map<IUnit, Double>>> meanValues;
 
-	public PriorNumericInterpretationOrgModelTemplate(List<Instance> trainingInstances) {
+	@Override
+	public void initalize(Object[] parameter) {
+		
+		List<Instance> trainingInstances = (List<Instance>) parameter[0];
 
 		Map<EntityType, Map<EntityType, Map<IUnit, List<Double>>>> values = extractLiteralValues(trainingInstances);
 

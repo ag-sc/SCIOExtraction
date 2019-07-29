@@ -52,7 +52,7 @@ public class ExtractNERLADataFromSlotFillingData {
 
 			}
 
-			newInstances.add(new Instance(EInstanceContext.UNSPECIFIED, instance.getDocument(),
+			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
 
 			InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(newInstances);

@@ -32,7 +32,7 @@ public class ResultSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "25062019";
+	final static private String exportDate = "24072019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 

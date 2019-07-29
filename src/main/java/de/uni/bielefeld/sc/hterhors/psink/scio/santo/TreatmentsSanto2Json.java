@@ -19,12 +19,21 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.specs.VertebralAreaSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.OrgModelSlotFilling;
 
-public class VertebralAreaSanto2Json {
+public class TreatmentsSanto2Json {
 
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger(OrganismModelsSanto2Json.class);
+
+	private static final File entities = new File(
+			"src/main/resources/slotfilling/treatment/specifications/entities.csv");
+	private static final File slots = new File("src/main/resources/slotfilling/treatment/specifications/slots.csv");
+	private static final File structures = new File(
+			"src/main/resources/slotfilling/treatment/specifications/structures.csv");
+	private static final File hierarchies = new File(
+			"src/main/resources/slotfilling/treatment/specifications/hierarchies.csv");
+
+	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
 	final static private String exportDate = "24072019";
 	final static private String scioNameSpace = "http://psink.de/scio";
@@ -32,8 +41,7 @@ public class VertebralAreaSanto2Json {
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
 
 		final String dir = "rawData/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
@@ -43,14 +51,23 @@ public class VertebralAreaSanto2Json {
 		Random random = new Random(10000L);
 
 		Set<SlotType> slotTypes = new HashSet<>();
+		slotTypes.add(SlotType.get("hasDeliveryMethod"));
+		slotTypes.add(SlotType.get("hasCompound"));
+		slotTypes.add(SlotType.get("hasDirection"));
+		slotTypes.add(SlotType.get("hasLocation"));
+		slotTypes.add(SlotType.get("hasDosage"));
 
 		for (String name : fileNames) {
 			try {
+//			if (!organismModelDocs.contains(name)) {
+//				log.info(name + "... not part of the corpus!");
+//				continue;
+//			}
 
-//				if (!name.startsWith("N221"))
+//				if (!name.startsWith("N092 Cot"))
 //					continue;
+				System.out.println(name);
 				log.info(name + " convert...");
-
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
 						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
@@ -67,11 +84,9 @@ public class VertebralAreaSanto2Json {
 
 				log.info("context = " + context);
 
-				converter
-						.convert(
-								context, new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/"
-										+ name + "_VertebralArea.json"),
-								EntityType.get("VertebralArea"), true, true, true);
+				converter.convert(context, new File(
+						"src/main/resources/slotfilling/treatment/corpus/instances/" + name + "_Treatment.json"),
+						EntityType.get("Treatment"), true, true, true);
 
 			} catch (Exception e) {
 				e.printStackTrace();

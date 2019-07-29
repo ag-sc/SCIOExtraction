@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -57,6 +58,7 @@ import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.templates.PriorNumericInterpretationOrgModelTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
 
@@ -102,6 +104,18 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 	 */
 	private final File externalNerlaAnnotations = new File(
 			"src/main/resources/slotfilling/organism_model/corpus/nerla/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/Normal/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall5/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall10/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
 	public OrgModelSlotFilling() {
 
@@ -244,7 +258,21 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * each slot.
 		 *
 		 */
+//		AnnotationCandidateRetrievalCollection candidateRetrieval = new AnnotationCandidateRetrievalCollection(
+//				instanceProvider.getInstances());
 		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
+
+//		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
+//
+//		for (Instance instance : instanceProvider.getInstances()) {
+//			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+//
+//			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
+//					trainDictionary)) {
+//				ap.addSlotFiller(annotation);
+//			}
+//			candidateRetrieval.registerCandidateProvider(ap);
+//		}
 
 		/**
 		 * To further increase the systems performance, we can specify a set of hard
@@ -291,7 +319,7 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * TODO: Implement further templates / features to solve your problem.
 		 * 
 		 */
-		List<AbstractFeatureTemplate> featureTemplates = new ArrayList<>();
+		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
@@ -302,8 +330,12 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		featureTemplates.add(new OlfactoryContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
-		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate(trainingInstances));
+		featureTemplates.add(new DocumentPartTemplate());
+		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate());
 //		featureTemplates.add(new NumericInterpretationTemplate());
+
+		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
+		parameter.put(PriorNumericInterpretationOrgModelTemplate.class, new Object[] { trainingInstances });
 
 		/**
 		 * During exploration we initialize each state with an empty
@@ -311,6 +343,17 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 */
 		IStateInitializer stateInitializer = ((instance) -> new State(instance,
 				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("OrganismModel")))));
+
+//		IStateInitializer stateInitializer = (instance -> {
+//
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//
+//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("OrganismModel")));
+//			}
+//			return new State(instance, new Annotations(as));
+//			//
+//		});
 
 		/**
 		 * Number of epochs, the system should train.
@@ -387,12 +430,21 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 			 */
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
+		model.setParameter(parameter);
 
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
 		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
 				objectiveFunction);
+
+		/**
+		 * Chose a different evaluation for prediction than for training. During
+		 * training we are interested in finding the correct document linked annotation
+		 * but for prediction we are only interested in the entity type.
+		 */
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -424,14 +476,6 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		Map<Instance, State> results = crf.predict(devInstances, maxStepCrit, noModelChangeCrit);
 
 		/**
-		 * Chose a different evaluation for prediction than for training. During
-		 * training we are interested in finding the correct document linked annotation
-		 * but for prediction we are only interested in the entity type.
-		 */
-		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
-
-		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 		evaluate(log, results, predictionOF);
@@ -446,13 +490,20 @@ public class OrgModelSlotFilling extends AbstractSemReadProject {
 		 * The upper bound depends only on the exploration strategy, e.g. the provided
 		 * NER-annotations during slot-filling.
 		 */
-		final Score coverage = crf.computeCoverage(false, predictionOF, devInstances);
-		log.info("Coverage: " + coverage);
-		log.info(modelName);
+		final Score trainCoverage = crf.computeCoverage(false, predictionOF, trainingInstances);
+		log.info("Training Coverage: " + trainCoverage);
+		final Score devCoverage = crf.computeCoverage(false, predictionOF, devInstances);
+		log.info("Development Coverage: " + devCoverage);
+		log.info("modelName: " + modelName);
 		/**
 		 * TODO: Compare results with results when changing some parameter. Implement
 		 * more sophisticated feature-templates.
 		 */
 	}
-
+//	Mean Score: Score [getF1()=0.890, getPrecision()=0.950, getRecall()=0.836, tp=153, fp=8, fn=30, tn=0]
+//			CRFStatistics [context=Train, getTotalDuration()=70950]
+//			CRFStatistics [context=Test, getTotalDuration()=3646]
+//			Compute coverage...
+//			Coverage: Score [getF1()=0.963, getPrecision()=1.000, getRecall()=0.929, tp=170, fp=0, fn=13, tn=0]
+//			OrgModel46571
 }

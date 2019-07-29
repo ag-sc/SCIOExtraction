@@ -23,17 +23,17 @@ public class OrganismModelsSanto2Json {
 	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
 
 	private static final File entities = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/entities.csv");
+			"src/main/resources/slotfilling/organism_model/specifications/entities.csv");
 	private static final File slots = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/slots.csv");
+			"src/main/resources/slotfilling/organism_model/specifications/slots.csv");
 	private static final File structures = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/structures.csv");
+			"src/main/resources/slotfilling/organism_model/specifications/structures.csv");
 	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/csv/hierarchies.csv");
+			"src/main/resources/slotfilling/organism_model/specifications/hierarchies.csv");
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "24062019";
+	final static private String exportDate = "24072019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 

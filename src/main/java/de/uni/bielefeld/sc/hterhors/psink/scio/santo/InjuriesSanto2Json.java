@@ -34,7 +34,7 @@ public class InjuriesSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "24062019";
+	final static private String exportDate = "24072019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -53,6 +53,8 @@ public class InjuriesSanto2Json {
 		slotTypes.add(SlotType.get("hasInjuryDevice"));
 		slotTypes.add(SlotType.get("hasInjuryLocation"));
 		slotTypes.add(SlotType.get("hasInjuryAnaesthesia"));
+		slotTypes.add(SlotType.get("hasLowerVertebrae"));
+		slotTypes.add(SlotType.get("hasUpperVertebrae"));
 
 		for (String name : fileNames) {
 			try {
@@ -60,6 +62,10 @@ public class InjuriesSanto2Json {
 //				log.info(name + "... not part of the corpus!");
 //				continue;
 //			}
+
+//				if (!name.startsWith("N092 Cot"))
+//					continue;
+
 				log.info(name + " convert...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
@@ -79,7 +85,7 @@ public class InjuriesSanto2Json {
 
 				converter.convert(context,
 						new File("src/main/resources/slotfilling/injury/corpus/instances/" + name + "_Injury.json"),
-						EntityType.get("Injury"), true, true, false);
+						EntityType.get("Injury"), true, true, true);
 
 			} catch (Exception e) {
 				e.printStackTrace();

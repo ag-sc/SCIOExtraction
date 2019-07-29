@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.treatment;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,6 @@ import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
-import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -58,35 +57,33 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.hterhors.semanticmr.projects.examples.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.VertebralAreaPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.MultiValueSlotSizeTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.treatment.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.treatment.specs.TreatmentSpecs;
 
 /**
- * Slot filling for injuries.
+ * Slot filling for organism models.
+ *
  * 
+ * Mean Score: Score [getF1()=0.396, getPrecision()=0.587, getRecall()=0.299,
+ * tp=148, fp=104, fn=347, tn=0]
+ *
+ * CRFStatistics [context=Train, getTotalDuration()=2534645]
  * 
- * Mean Score: Score [getF1()=0.416, getPrecision()=0.521, getRecall()=0.347,
- * tp=76, fp=70, fn=143, tn=0] CRFStatistics [context=Train,
- * getTotalDuration()=200631] CRFStatistics [context=Test,
- * getTotalDuration()=6597] Compute coverage... Coverage Training: Score
- * [getF1()=0.950, getPrecision()=0.985, getRecall()=0.917, tp=719, fp=11,
- * fn=65, tn=0] Compute coverage... No states were generated for instance: N156
- * Kalincik 2010 2 Coverage Development: Score [getF1()=0.814,
- * getPrecision()=0.905, getRecall()=0.740, tp=162, fp=17, fn=57, tn=0]
- * Injury-520642072
+ * CRFStatistics [context=Test, getTotalDuration()=133857]
+ * 
+ * Coverage Training: Score [getF1()=0.844, getPrecision()=0.985,
+ * getRecall()=0.739, tp=1207, fp=19, fn=426, tn=0]
+ * 
+ * Coverage Development: Score [getF1()=0.836, getPrecision()=0.994,
+ * getRecall()=0.721, tp=357, fp=2, fn=138, tn=0]
  * 
  * 
  * @author hterhors
  *
  */
-public class InjurySlotFilling extends AbstractSemReadProject {
+public class TreatmentFilling extends AbstractSemReadProject {
 
 	/**
 	 * Start the slot filling procedure.
@@ -95,44 +92,25 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) {
-		new InjurySlotFilling();
+		new TreatmentFilling();
 	}
 
-	private static Logger log = LogManager.getFormatterLogger(InjurySlotFilling.class);
-
-	/**
-	 * File of additional hard constraints during exploration. There are different
-	 * types of hard constraints (not all of them are implemented yet). This file
-	 * contains slot pair exclusion pairs. E.g. if Slot A is filled by Value X than
-	 * Slot B must not be filled with value Y.
-	 */
-	private final File slotPairConstraitsSpecifications = new File(
-			"src/main/resources/slotfilling/injury/constraints/slotPairExclusionConstraints.csv");
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	/**
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
+	private final File instanceDirectory = new File("src/main/resources/slotfilling/treatment/corpus/instances/");
 
 	/**
 	 * A file that contains named entity recognition and linking annotations for
 	 * each instance. These annotations are used as candidate retrieval during the
 	 * search space exploration.
 	 */
-	private final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
-//	private final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
-//	private final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
+	private final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/treatment/corpus/nerla/");
 
-	/**
-	 * Chose a different evaluation for prediction than for training. During
-	 * training we are interested in finding the correct document linked annotation
-	 * but for prediction we are only interested in the entity type.
-	 */
-	private final IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
-
-	public InjurySlotFilling() {
+	public TreatmentFilling() {
 
 		/**
 		 * Initialize the system.
@@ -144,24 +122,12 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(InjurySpecs.systemsScopeReader)
+				.addScopeSpecification(TreatmentSpecs.systemsScopeReader)
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
 				 */
 				.apply()
-				/**
-				 * Now normalization functions can be added. A normalization function is
-				 * especially used for literal-based annotations. In case a normalization
-				 * function is provided for a specific entity type, the normalized value is
-				 * compared during evaluation instead of the actual surface form. A
-				 * normalization function normalizes different surface forms so that e.g. the
-				 * weights "500 g", "0.5kg", "500g" are all equal. Each normalization function
-				 * is bound to exactly one entity type.
-				 */
-				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new DosageNormalization())
-				.registerNormalizationFunction(new DurationNormalization())
 				/**
 				 * Finally, we build the systems scope.
 				 */
@@ -178,8 +144,12 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * instance assignment during development.
 		 * 
 		 */
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.build();
+		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
+				.setCorpusSizeFraction(1F).build();
+
+//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
+//				.setCorpusSizeFraction(0.025F).setTrainingProportion(80).setDevelopmentProportion(20)
+//				.setTestProportion(20).setSeed(100L).build();
 
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
@@ -189,12 +159,19 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * ShuffleCorpusDistributor, we initially set a limit to the number of files
 		 * that should be read.
 		 */
-		InstanceProvider instanceProvider;
 
 		/**
 		 * We chose to remove all empty instances from the corpus.
 		 */
 		InstanceProvider.removeEmptyInstances = true;
+//		InstanceProvider corpusDistributor = new InstanceProvider(instanceDirectory, originalCorpusDistributor);
+
+//		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
+//				.setTrainingInstanceNames(instanceProviderF.getInstances().stream()
+//						.filter(i -> i.getName().startsWith("N173")).map(i -> i.getName()).collect(Collectors.toList()))
+//				.setDevelopInstanceNames(instanceProviderF.getInstances().stream()
+//						.filter(i -> i.getName().startsWith("N171")).map(i -> i.getName()).collect(Collectors.toList()))
+//				.build();
 
 		/**
 		 * Further, we chose to remove all instances that exceeds a specific number
@@ -206,7 +183,8 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 */
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+		InstanceProvider instanceProvider;
+		instanceProvider = new InstanceProvider(instanceDirectory, originalCorpusDistributor);
 
 		List<Instance> trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
@@ -239,7 +217,7 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 *
 		 */
 		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+				new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 		/**
 		 * The provision of existing entities is an important part in slot filling for
@@ -259,18 +237,6 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
 		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(externalNerlaAnnotations));
 
-		int rand = new Random().nextInt();
-		final String modelName = "Injury" + rand;
-
-		String vertebralAreaModelName = "VertebralArea" + rand;
-
-		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
-				trainingInstances.stream().map(t -> t.getName()).collect(Collectors.toList()),
-				devInstances.stream().map(t -> t.getName()).collect(Collectors.toList()),
-				testInstances.stream().map(t -> t.getName()).collect(Collectors.toList()));
-
-		vertebralAreaPrediction.trainOrLoadModel();
-
 		/**
 		 * We can add more candidate provider if necessary.
 		 * 
@@ -286,29 +252,31 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 */
 		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
+		int rand = new Random().nextInt();
+		String deliveryMethodModelName = "DeliveryMethod" + rand;
+
+		DeliveryMethodPredictor deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, scope,
+				instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
+						.collect(Collectors.toList()),
+				instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
+						.collect(Collectors.toList()),
+				instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+						.collect(Collectors.toList()));
+
+		deliveryMethodPrediction.trainOrLoadModel();
+
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
-			ap.addBatchSlotFiller(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+			ap.addBatchSlotFiller(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+			ap.addSlotFiller(AnnotationBuilder.toAnnotation(EntityType.get("CompoundTreatment")));
 			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
 					trainDictionary)) {
 				ap.addSlotFiller(annotation);
 			}
 			candidateRetrieval.registerCandidateProvider(ap);
 		}
-
-		/**
-		 * To further increase the systems performance, we can specify a set of hard
-		 * constraints that are considered during exploration.
-		 * 
-		 * E.g. if Slot A is filled by Value X than Slot B must not be filled with value
-		 * Y.
-		 * 
-		 */
-		HardConstraintsProvider constraintsProvider = new HardConstraintsProvider();
-//		constraintsProvider.addHardConstraints(EHardConstraintType.SLOT_PAIR_EXCLUSION,
-//				slotPairConstraitsSpecifications);
 
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
@@ -318,10 +286,10 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 */
 		SlotFillingExplorer explorer = new SlotFillingExplorer(
 				new SlotFillingObjectiveFunction(new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE)),
-				candidateRetrieval, constraintsProvider);
+				candidateRetrieval);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
-				AnnotationBuilder.toAnnotation("Injury"));
+				AnnotationBuilder.toAnnotation("Treatment"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
 //				
@@ -349,37 +317,25 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
-		featureTemplates.add(new DistinctMultiValueSlotsTemplate());
-		featureTemplates.add(new MultiValueSlotSizeTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
-//		featureTemplates.add(new OlfactoryContextTemplate());
 		featureTemplates.add(new DocumentPartTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
-//		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));
-//		featureTemplates.add(new NumericInterpretationTemplate());
 
 		/**
 		 * During exploration we initialize each state with an empty
 		 * OrganismModel-annotation.
 		 */
-//		IStateInitializer stateInitializer =
-//				((instance) -> new State(instance, new Annotations(
-//				//
-//				new EntityTemplate(AnnotationBuilder.toAnnotation("Injury"))
-//		//
-//		)));
-
 		IStateInitializer stateInitializer = (instance -> {
 
 			List<AbstractAnnotation> as = new ArrayList<>();
 
 			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
+				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Treatment")));
 			}
 			return new State(instance, new Annotations(as));
 			//
@@ -444,7 +400,8 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * 
 		 * NOTE: Make sure that the base model directory exists!
 		 */
-		final File modelBaseDir = new File("models/slotfilling/injury/");
+		final File modelBaseDir = new File("models/slotfilling/treatment/");
+		final String modelName = "Treatment_" + rand;
 
 		Model model;
 
@@ -465,6 +422,13 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 */
 		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, stateInitializer,
 				objectiveFunction);
+		/**
+		 * Chose a different evaluation for prediction than for training. During
+		 * training we are interested in finding the correct document linked annotation
+		 * but for prediction we are only interested in the entity type.
+		 */
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -493,7 +457,7 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * in this case. This method returns for each instances a final state (best
 		 * state based on the trained model) that contains annotations.
 		 */
-//		Map<Instance, State> results = crf.predictHighRecall(devInstances, 5, maxStepCrit, noModelChangeCrit);
+//		Map<Instance, State> results = crf.predictHighRecall(devInstances, 2, maxStepCrit, noModelChangeCrit);
 		Map<Instance, State> results = crf.predict(devInstances, maxStepCrit, noModelChangeCrit);
 
 		/**
@@ -511,16 +475,13 @@ public class InjurySlotFilling extends AbstractSemReadProject {
 		 * The upper bound depends only on the exploration strategy, e.g. the provided
 		 * NER-annotations during slot-filling.
 		 */
+		log.info("modelName: " + modelName);
 
 		final Score trainCoverage = crf.computeCoverage(false, predictionOF, trainingInstances);
 		log.info("Coverage Training: " + trainCoverage);
 		final Score devCoverage = crf.computeCoverage(false, predictionOF, devInstances);
 		log.info("Coverage Development: " + devCoverage);
 
-		log.info(modelName);
-		/**
-		 * TODO: Compare results with results when changing some parameter. Implement
-		 * more sophisticated feature-templates.
-		 */
 	}
+
 }

@@ -31,23 +31,6 @@ public class InjuryPattern extends BasicRegExPattern {
 	private static final Set<Pattern> DOSAGE_REG_EXP = new HashSet<>(Arrays.asList(DosageInterpreter.PATTERN));
 	private static final Set<Pattern> DURATION_REG_EXP = new HashSet<>(Arrays.asList(DurationInterpreter.PATTERN));
 
-	final protected static String numbers = "([0-9]{1,2}|(" + PRE_BOUNDS
-			+ "(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelfth|thirteenth|forteenth|fifteenth)))";
-
-	private static final Pattern VERTBERAL_AREA_PATTERN1 = Pattern
-			.compile("(T|L|C)-?" + numbers + "\\W?(T|L|C)?-?" + numbers);
-	private static final Pattern VERTBERAL_AREA_PATTERN2 = Pattern
-			.compile("(thoracic|lumbar|cervical) levels " + numbers + " and " + numbers);
-	private static final Pattern VERTBERAL_AREA_PATTERN3 = Pattern
-			.compile(numbers + "\\Wand\\W" + numbers + "\\W(thoracic|lumbar|cervical)");
-	private static final Pattern VERTBERAL_AREA_PATTERN4 = Pattern
-			.compile("(T|L|C)-?" + numbers + "\\W?(T|L|C)-?" + numbers);
-	private static final Pattern VERTBERAL_AREA_PATTERN5 = Pattern
-			.compile("(T|L|C)-?" + numbers + "\\Wand\\W(T|L|C)-?" + numbers + "(\\Wvertebrae)?");
-
-	private static final Set<Pattern> VERTEBRAL_AREA_REG_EXP = new HashSet<>(Arrays.asList(VERTBERAL_AREA_PATTERN1,
-			VERTBERAL_AREA_PATTERN2, VERTBERAL_AREA_PATTERN3, VERTBERAL_AREA_PATTERN4, VERTBERAL_AREA_PATTERN5));
-
 	private static final Pattern NYUIMPACTOR_PATTERN_1 = Pattern
 			.compile(PRE_BOUNDS + "new.york(.university)?(.impactor)?" + POST_BOUNDS, PATTERN_BITMASK);
 
@@ -85,7 +68,6 @@ public class InjuryPattern extends BasicRegExPattern {
 		pattern.put(EntityType.get("WistarRat"), OrganismModelPattern.WISTAR_RAT_REG_EXP);
 		pattern.put(EntityType.get("SpragueDawleyRat"), OrganismModelPattern.SPRAGUE_DAWLEY_RAT_REG_EXP);
 		pattern.put(EntityType.get("LongEvansRat"), OrganismModelPattern.LONG_EVANS_RAT_REG_EXP);
-		pattern.put(EntityType.get("VertebralArea"), VERTEBRAL_AREA_REG_EXP);
 	}
 
 	public Map<EntityType, Set<Pattern>> getHandMadePattern() {
