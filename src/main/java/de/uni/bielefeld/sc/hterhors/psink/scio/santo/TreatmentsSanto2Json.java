@@ -19,21 +19,11 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.OrgModelSlotFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.classes.treatment.specs.TreatmentSpecs;
 
 public class TreatmentsSanto2Json {
 
 	private static Logger log = LogManager.getFormatterLogger(OrganismModelsSanto2Json.class);
-
-	private static final File entities = new File(
-			"src/main/resources/slotfilling/treatment/specifications/entities.csv");
-	private static final File slots = new File("src/main/resources/slotfilling/treatment/specifications/slots.csv");
-	private static final File structures = new File(
-			"src/main/resources/slotfilling/treatment/specifications/structures.csv");
-	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/treatment/specifications/hierarchies.csv");
-
-	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
 	final static private String exportDate = "24072019";
 	final static private String scioNameSpace = "http://psink.de/scio";
@@ -41,7 +31,8 @@ public class TreatmentsSanto2Json {
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(TreatmentSpecs.systemsScopeReader).build();
 
 		final String dir = "rawData/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))

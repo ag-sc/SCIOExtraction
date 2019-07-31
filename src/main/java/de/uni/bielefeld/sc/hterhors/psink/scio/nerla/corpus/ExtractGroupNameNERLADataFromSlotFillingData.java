@@ -7,30 +7,36 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.filter.EntityTemplateAnnotationFilter;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.Annotations;
+import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.classes.orgmodel.specs.OrgModelSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.classes.result.specifications.ResultSpecifications;
 
-public class ExtractNERLADataFromSlotFillingData {
+public class ExtractGroupNameNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractNERLADataFromSlotFillingData("organism_model", OrgModelSpecs.systemsScopeReader);
+		new ExtractGroupNameNERLADataFromSlotFillingData("experimental_group", ResultSpecifications.systemsScope);
 	}
 
-	public ExtractNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
+	public ExtractGroupNameNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(specs).build();
 
 		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
@@ -50,6 +56,9 @@ public class ExtractNERLADataFromSlotFillingData {
 				add(annotations, annotation);
 
 			}
+			System.out.println("Found annotations: " + annotations.size());
+
+			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
@@ -64,18 +73,54 @@ public class ExtractNERLADataFromSlotFillingData {
 		}
 	}
 
+	/**
+	 * Projects existing annotations into the whole document.
+	 * 
+	 * @param document
+	 * @param annotations
+	 */
+	private void projectAnnotationsIntoDocument(Document document, Set<AbstractAnnotation> annotations) {
+
+		Set<AbstractAnnotation> additionalAnnotations = new HashSet<>();
+
+		for (AbstractAnnotation abstractAnnotation : annotations) {
+
+			Matcher m = Pattern
+					.compile(Pattern.quote(abstractAnnotation.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
+					.matcher(document.documentContent);
+
+			while (m.find()) {
+				try {
+
+					additionalAnnotations.add(AnnotationBuilder.toAnnotation(document,
+							abstractAnnotation.getEntityType().entityName, m.group(), m.start()));
+				} catch (RuntimeException e) {
+					System.out.println("Could not map annotation to tokens!");
+				}
+			}
+		}
+		System.out.println("Found additional annotations: " + additionalAnnotations.size());
+		annotations.addAll(additionalAnnotations);
+
+	}
+
 	public void add(Set<AbstractAnnotation> annotations, EntityTemplate annotation) {
 		EntityTemplateAnnotationFilter filter = annotation.filter().docLinkedAnnoation().nonEmpty().merge().multiSlots()
 				.singleSlots().build();
 
 		if (annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
-			DocumentLinkedAnnotation a = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation();
-			annotations.add(a);
+			if (annotation.getRootAnnotation().getEntityType() == EntityType.get("DefinedExperimentalGroup")
+					|| annotation.getRootAnnotation().getEntityType() == EntityType.get("AnalyzedExperimentalGroup")) {
+				DocumentLinkedAnnotation a = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation();
+				annotations.add(AnnotationBuilder.toAnnotation(a.document, "GroupName", a.getSurfaceForm(),
+						a.getStartDocCharOffset()));
+			}
 		}
 
 		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter.getMergedAnnotations().entrySet()) {
 
-			annotations.addAll(a.getValue());
+			if (a.getKey().equals(SlotType.get("hasGroupName")))
+				annotations.addAll(a.getValue());
 
 		}
 

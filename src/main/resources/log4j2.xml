@@ -139,6 +139,13 @@
 			<AppenderRef ref="LogFile" />
 		</Logger>
 
+		<Logger
+			name="NERL"
+			level="INFO" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="LogFile" />
+		</Logger>
+
 	</Loggers>
 
 </Configuration>

@@ -19,8 +19,8 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.injury.vertebralarea.specs.VertebralAreaSpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.orgmodel.OrgModelSlotFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.classes.injury.vertebralarea.specs.VertebralAreaSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.classes.orgmodel.OrgModelSlotFilling;
 
 public class VertebralAreaSanto2Json {
 
