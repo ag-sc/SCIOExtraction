@@ -28,7 +28,7 @@ import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.classes.result.specifications.ResultSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
 public class ExtractGroupNameNERLADataFromSlotFillingData {
 
