@@ -12,9 +12,9 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
@@ -53,7 +53,7 @@ public class OrgModelSlotFilling {
 		new OrgModelSlotFilling();
 	}
 
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	/**
 	 * The directory of the corpus instances. In this example each instance is
@@ -95,8 +95,11 @@ public class OrgModelSlotFilling {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.build();
+//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//				.build();
+
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
