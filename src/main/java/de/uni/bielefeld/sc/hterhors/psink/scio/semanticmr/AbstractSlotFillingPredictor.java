@@ -71,6 +71,12 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	protected final List<String> developInstanceNames;
 	protected final List<String> testInstanceNames;
 
+	private final ISamplingStoppingCriterion maxStepCrit;
+	private final ISamplingStoppingCriterion noModelChangeCrit;
+	private final ISamplingStoppingCriterion[] sampleStoppingCrits;
+
+	private final List<IExplorationStrategy> explorerList;
+	
 	public AbstractSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
 		super(scope);
@@ -142,7 +148,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 		explorerList = Arrays.asList(explorer);
 
-		maxStepCrit = new MaxChainLengthCrit(15);
+		maxStepCrit = new MaxChainLengthCrit(100);
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
 	}
@@ -151,11 +157,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return Collections.emptyList();
 	}
 
-	ISamplingStoppingCriterion maxStepCrit;
-	ISamplingStoppingCriterion noModelChangeCrit;
-	ISamplingStoppingCriterion[] sampleStoppingCrits;
 
-	List<IExplorationStrategy> explorerList;
 
 	abstract protected File getExternalNerlaAnnotations();
 

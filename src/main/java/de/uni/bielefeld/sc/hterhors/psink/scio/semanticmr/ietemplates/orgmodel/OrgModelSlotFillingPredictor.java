@@ -81,10 +81,11 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-//		featureTemplates.add(new LevenshteinTemplate());
+
 		featureTemplates.add(new IntraTokenTemplate());
-		featureTemplates.add(new NGramTokenContextTemplate());
-		featureTemplates.add(new SingleTokenContextTemplate());
+
+		 featureTemplates.add(new NGramTokenContextTemplate());
+		 featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
@@ -93,6 +94,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new SlotIsFilledTemplate());
 		featureTemplates.add(new DocumentPartTemplate());
 		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate());
+
+//		featureTemplates.add(new LevenshteinTemplate());
 //		featureTemplates.add(new NumericInterpretationTemplate());
 		return featureTemplates;
 	}
@@ -130,6 +133,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected AbstractSampler getSampler() {
+//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(100);
 //		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
 //		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
 		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
