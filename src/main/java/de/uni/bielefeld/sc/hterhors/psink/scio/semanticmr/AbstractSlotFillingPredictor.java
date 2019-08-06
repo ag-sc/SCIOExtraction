@@ -148,7 +148,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 		explorerList = Arrays.asList(explorer);
 
-		maxStepCrit = new MaxChainLengthCrit(100);
+		maxStepCrit = new MaxChainLengthCrit(10);
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
 	}
