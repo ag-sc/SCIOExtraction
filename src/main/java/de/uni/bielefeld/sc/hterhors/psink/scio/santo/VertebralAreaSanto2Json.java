@@ -24,9 +24,9 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.O
 
 public class VertebralAreaSanto2Json {
 
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	final static private String exportDate = "24072019";
+	final static private String exportDate = "14082019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 

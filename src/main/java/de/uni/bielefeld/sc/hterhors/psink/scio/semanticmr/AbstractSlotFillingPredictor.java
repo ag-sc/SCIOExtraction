@@ -76,7 +76,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	private final ISamplingStoppingCriterion[] sampleStoppingCrits;
 
 	private final List<IExplorationStrategy> explorerList;
-	
+
 	public AbstractSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
 		super(scope);
@@ -156,8 +156,6 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
 		return Collections.emptyList();
 	}
-
-
 
 	abstract protected File getExternalNerlaAnnotations();
 

@@ -20,7 +20,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.O
 
 public class OrganismModelsSanto2Json {
 
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	private static final File entities = new File(
 			"src/main/resources/slotfilling/organism_model/specifications/entities.csv");
@@ -33,7 +33,7 @@ public class OrganismModelsSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "24072019";
+	final static private String exportDate = "14082019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 

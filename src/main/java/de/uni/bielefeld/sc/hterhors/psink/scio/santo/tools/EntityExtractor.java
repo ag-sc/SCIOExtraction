@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.santo;
+package de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class EntityExtractor {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
 
-		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("GroupName"));
+		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("InvestigationMethod"));
 
 		x.forEach(System.out::println);
 
@@ -48,7 +48,7 @@ public class EntityExtractor {
 
 		types.add(rootE);
 		x.add(rootE.entityName + "\t" + rootE.isLiteral);
-		for (EntityType et : rootE.getTransitiveClosureSubEntityTypes()) {
+		for (EntityType et : rootE.getHierarchicalEntityTypes()) {
 
 			if (types.contains(et))
 				continue;

@@ -16,23 +16,33 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.EInstanceContext;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod.specs.DeliveryMethodSpecs;
 
-public class DeliveryMethodSanto2Json {
+public class InvestigationMethodSanto2Json {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	final static private String exportDate = "24072019";
+	private static final File entities = new File(
+			"src/main/resources/slotfilling/investigationmethod/specifications/entities.csv");
+	private static final File slots = new File(
+			"src/main/resources/slotfilling/investigationmethod/specifications/slots.csv");
+	private static final File structures = new File(
+			"src/main/resources/slotfilling/investigationmethod/specifications/structures.csv");
+	private static final File hierarchies = new File(
+			"src/main/resources/slotfilling/investigationmethod/specifications/hierarchies.csv");
+
+	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
+
+	final static private String exportDate = "14082019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DeliveryMethodSpecs.systemsScopeReader).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
 
 		final String dir = "rawData/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
@@ -42,14 +52,19 @@ public class DeliveryMethodSanto2Json {
 		Random random = new Random(10000L);
 
 		Set<SlotType> slotTypes = new HashSet<>();
+		slotTypes.add(SlotType.get("hasLocation"));
 
 		for (String name : fileNames) {
 			try {
+//			if (!organismModelDocs.contains(name)) {
+//				log.info(name + "... not part of the corpus!");
+//				continue;
+//			}
 
-//				if (!name.startsWith("N221"))
+//				if (!name.startsWith("N092 Cot"))
 //					continue;
-				log.info(name + " convert...");
 
+				log.info(name + " convert...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
 						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
@@ -66,11 +81,10 @@ public class DeliveryMethodSanto2Json {
 
 				log.info("context = " + context);
 
-				converter
-						.convert(
-								context, new File("src/main/resources/slotfilling/delivery_method/corpus/instances/"
-										+ name + "_DeliveryMethod.json"),
-								EntityType.get("DeliveryMethod"), true, true, true);
+				converter.convert(context,
+						new File("src/main/resources/slotfilling/investigationmethod/corpus/instances/" + name
+								+ "_InvestigationMethod.json"),
+						EntityType.get("InvestigationMethod"), true, true, true);
 
 			} catch (Exception e) {
 				e.printStackTrace();

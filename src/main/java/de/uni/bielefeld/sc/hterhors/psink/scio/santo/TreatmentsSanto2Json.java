@@ -23,9 +23,9 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.
 
 public class TreatmentsSanto2Json {
 
-	private static Logger log = LogManager.getFormatterLogger(OrganismModelsSanto2Json.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	final static private String exportDate = "24072019";
+	final static private String exportDate = "14082019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -57,7 +57,6 @@ public class TreatmentsSanto2Json {
 
 //				if (!name.startsWith("N092 Cot"))
 //					continue;
-				System.out.println(name);
 				log.info(name + " convert...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
