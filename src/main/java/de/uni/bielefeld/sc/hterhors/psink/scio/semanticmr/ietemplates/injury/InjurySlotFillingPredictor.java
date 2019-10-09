@@ -92,6 +92,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
+//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/InjuryNew/Normal/");
+//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/InjuryNew/HighRecall20/");
 		return externalNerlaAnnotations;
 	}
 
@@ -170,3 +172,45 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		return new File("models/slotfilling/injury/");
 	}
 }
+
+//Mean Score: Score [getF1()=0.427, getPrecision()=0.467, getRecall()=0.393, tp=86, fp=98, fn=133, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=154358]
+//CRFStatistics [context=Test, getTotalDuration()=4171]
+//Compute coverage...
+//Compute coverage...
+//No states were generated for instance: N156 Kalincik 2010 2
+
+
+
+//Mean Score: Score [getF1()=0.432, getPrecision()=0.537, getRecall()=0.361, tp=79, fp=68, fn=140, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=67438]
+//CRFStatistics [context=Test, getTotalDuration()=151]
+//Compute coverage...
+//Compute coverage...
+//No states were generated for instance: N092 Cote, Hanna et al. 2010
+//No states were generated for instance: N141 Deng 2008
+//No states were generated for instance: N144 Ferrero-Gutierrez 2013
+//No states were generated for instance: N145 Fouad 2005
+//No states were generated for instance: N156 Kalincik 2010 2
+//No states were generated for instance: N158 Kang 2015
+//No states were generated for instance: N189 Novikova 2011
+//No states were generated for instance: N209 Tharion 2011
+
+
+//Mean Score: Score [getF1()=0.432, getPrecision()=0.537, getRecall()=0.361, tp=79, fp=68, fn=140, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=70968]
+//CRFStatistics [context=Test, getTotalDuration()=177]
+//Compute coverage...
+//Compute coverage...
+//No states were generated for instance: N092 Cote, Hanna et al. 2010
+//No states were generated for instance: N141 Deng 2008
+//No states were generated for instance: N144 Ferrero-Gutierrez 2013
+//No states were generated for instance: N145 Fouad 2005
+//No states were generated for instance: N156 Kalincik 2010 2
+//No states were generated for instance: N158 Kang 2015
+//No states were generated for instance: N189 Novikova 2011
+//No states were generated for instance: N209 Tharion 2011
+
+//Mean Score: Score [getF1()=0.465, getPrecision()=0.536, getRecall()=0.411, tp=90, fp=78, fn=129, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=71492]
+//CRFStatistics [context=Test, getTotalDuration()=244]
