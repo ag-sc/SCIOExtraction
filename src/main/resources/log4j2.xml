@@ -62,7 +62,7 @@
 
 		<Logger
 			name="de.hterhors.semanticmr.init.specifications.SystemScope"
-			level="INFO" additivity="false">
+			level="DEBUG" additivity="false">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="LogFile" />
 		</Logger>

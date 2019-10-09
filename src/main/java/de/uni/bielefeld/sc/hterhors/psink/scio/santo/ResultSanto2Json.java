@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class ResultSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "14082019";
+	final static public String exportDate = "25092019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -40,38 +41,45 @@ public class ResultSanto2Json {
 
 		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
 
-		final String dir = "rawData/export_" + exportDate + "/";
-//		final String dir = "rawData/test/";
+		/**
+		 * TODO: To generate the unrolled data , you need to convert the rawData first,
+		 * unroll and convert with unroll again..
+		 */
+
+		String data = "unroll";
+//		String data = "rawData";
+
+		final String dir = data + "/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
 
 //		Set<String> organismModelDocs = new HashSet<>(
 //				Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath()));
+		Random random = new Random(10000L);
 
 		for (String name : fileNames) {
 			try {
 
-//			if (!organismModelDocs.contains(name)) {
-//				log.info(name + "... not part of the corpus!");
-//				continue;
-//			}
 				log.info(name + " start processing...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
-//					new File("rawData/test/" + name + "_export.csv"),
-//					new File("rawData/test/" + name + "_Jessica.annodb"),
-//					new File("rawData/test/" + name + "_Jessica.n-triples"), scioNameSpace,
-						new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
-						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
-						new File("rawData/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
+						new File(data + "/export_" + exportDate + "/" + name + "_export.csv"),
+						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.annodb"),
+						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
 						resourceNameSpace);
 
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
+				double rand = random.nextDouble();
 
-				converter.convert(EInstanceContext.UNSPECIFIED, new File("test/" + name + "_Result.json"),
-						EntityType.get("Result"),
-						true, true, true);
+				EInstanceContext context = rand < 0.6 ? EInstanceContext.TRAIN
+						: rand < 0.8 ? EInstanceContext.DEVELOPMENT : EInstanceContext.TEST;
+
+				log.info("context = " + context);
+
+				converter.convert(context,
+						new File("src/main/resources/slotfilling/result/corpus/instances/" + name + "_Result.json"),
+						EntityType.get("Result"), true, true, true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

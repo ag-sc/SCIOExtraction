@@ -35,6 +35,11 @@ public class EntityExtractor {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
 
+		
+		
+		
+		System.exit(1);
+
 		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("InvestigationMethod"));
 
 		x.forEach(System.out::println);

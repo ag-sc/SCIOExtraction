@@ -65,7 +65,7 @@ public class PriorNumericInterpretationOrgModelTemplate extends AbstractFeatureT
 
 	@Override
 	public void initalize(Object[] parameter) {
-		
+
 		List<Instance> trainingInstances = (List<Instance>) parameter[0];
 
 		Map<EntityType, Map<EntityType, Map<IUnit, List<Double>>>> values = extractLiteralValues(trainingInstances);
@@ -260,23 +260,6 @@ public class PriorNumericInterpretationOrgModelTemplate extends AbstractFeatureT
 		return ((AbstractSCIONormalization) obieClass.getEntityType().getNormalizationFunction())
 				.getInterpreter(obieClass.textualContent.surfaceForm).normalize();
 	}
-
-	/**
-	 * TODO: make it deep!
-	 */
-//		ReflectionUtils.getFields(obieClass.getClass(), obieClass.getInvestigationRestriction()).forEach(field -> {
-//			try {
-//				if (field.isAnnotationPresent(RelationTypeCollection.class)) {
-//					for (IOBIEThing element : (List<IOBIEThing>) field.get(obieClass)) {
-//						collectDataTypes(values, obieClass.getClass(), element);
-//					}
-//				} else {
-//					collectDataTypes(values, obieClass.getClass(), (IOBIEThing) field.get(obieClass));
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		});
 
 	static class NumericInterpretationScope extends AbstractFactorScope {
 

@@ -26,6 +26,7 @@ import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
@@ -144,7 +145,8 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval);
+		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval,
+				getHardConstraints());
 
 		explorerList = Arrays.asList(explorer);
 
@@ -152,6 +154,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
 	}
+
+	public HardConstraintsProvider getHardConstraints() {
+		return new HardConstraintsProvider();
+	};
 
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
 		return Collections.emptyList();

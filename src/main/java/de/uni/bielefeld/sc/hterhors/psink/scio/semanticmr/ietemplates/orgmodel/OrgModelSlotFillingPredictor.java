@@ -9,13 +9,19 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
+import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
-import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
+import de.hterhors.semanticmr.crf.sampling.impl.SamplerCollection;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
+import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
@@ -25,6 +31,7 @@ import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
+import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -84,8 +91,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 		featureTemplates.add(new IntraTokenTemplate());
 
-		 featureTemplates.add(new NGramTokenContextTemplate());
-		 featureTemplates.add(new SingleTokenContextTemplate());
+		featureTemplates.add(new NGramTokenContextTemplate());
+		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
@@ -133,10 +140,10 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected AbstractSampler getSampler() {
-//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(100);
-//		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
+//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
+		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
 //		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
-		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
+//		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
 //		AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
 //		AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
 		return sampler;
@@ -145,5 +152,92 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected File getModelBaseDir() {
 		return new File("models/slotfilling/org_model/");
+	}
+
+	@Override
+	public HardConstraintsProvider getHardConstraints() {
+		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
+
+		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(EntityTemplate entityTemplate) {
+				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasAge"));
+
+				if (sfs.containsSlotFiller()) {
+
+					DocumentLinkedAnnotation a = sfs.getSlotFiller().asInstanceOfDocumentLinkedAnnotation();
+					List<DocumentToken> sentence = a.document
+							.getSentenceByIndex(a.relatedTokens.get(0).getSentenceIndex());
+
+					for (DocumentToken token : sentence) {
+						if (token.getText().equals("OECs")) {
+
+							return true;
+						}
+
+					}
+				}
+
+				return false;
+			}
+		});
+
+		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(EntityTemplate entityTemplate) {
+				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasAge"));
+
+				if (sfs.containsSlotFiller()) {
+
+					DocumentLinkedAnnotation a = sfs.getSlotFiller().asInstanceOfDocumentLinkedAnnotation();
+
+					List<DocumentToken> l = a.document.tokenList.subList(a.relatedTokens.get(0).getDocTokenIndex() - 4,
+							a.relatedTokens.get(a.relatedTokens.size() - 1).getDocTokenIndex() + 4);
+
+					for (DocumentToken token : l) {
+						if (token.getText().equals("treated")) {
+							return true;
+						}
+					}
+
+				}
+
+				return false;
+			}
+		});
+		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(EntityTemplate entityTemplate) {
+				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasGender"));
+
+				if (sfs.containsSlotFiller()) {
+
+					DocumentLinkedAnnotation a = sfs.getSlotFiller().asInstanceOfDocumentLinkedAnnotation();
+
+					if (a.getEntityType() == EntityType.get("Male") || a.getEntityType() == EntityType.get("Female")) {
+
+						List<DocumentToken> l = a.document.tokenList.subList(
+								a.relatedTokens.get(0).getDocTokenIndex() - 2,
+								a.relatedTokens.get(a.relatedTokens.size() - 1).getDocTokenIndex() + 2);
+
+						for (DocumentToken token : l) {
+							if (token.getText().equals("and")) {
+								return true;
+							}
+						}
+
+					} else {
+						return false;
+					}
+
+				}
+
+				return false;
+			}
+		});
+		return hardConstraintsProvider;
 	}
 }

@@ -2,8 +2,16 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,12 +20,14 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools.AnnotationsToSantoAnnotations;
+import de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools.SantoAnnotations;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 
 /**
  * Slot filling for organism models.
@@ -49,7 +59,7 @@ public class OrgModelSlotFilling {
 	 * @param args
 	 * @throws IOException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new OrgModelSlotFilling();
 	}
 
@@ -61,7 +71,7 @@ public class OrgModelSlotFilling {
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
 
-	public OrgModelSlotFilling() {
+	public OrgModelSlotFilling() throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -131,6 +141,7 @@ public class OrgModelSlotFilling {
 		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
 		log.info("Coverage Development: " + devCoverage);
 
+		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictAllInstances();
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the
 		 * objective mean score that can be reached relying on greedy objective function
@@ -143,5 +154,36 @@ public class OrgModelSlotFilling {
 		 * TODO: Compare results with results when changing some parameter. Implement
 		 * more sophisticated feature-templates.
 		 */
+
+		int docID = 0;
+		for (Entry<String, Set<AbstractAnnotation>> annotations : organismModelAnnotations.entrySet()) {
+
+			SantoAnnotations collectRDF = new SantoAnnotations(new HashSet<>(), new HashMap<>());
+			for (AbstractAnnotation annotation : annotations.getValue()) {
+
+				AnnotationsToSantoAnnotations.collectRDF(annotation, collectRDF, "http://scio/data/",
+						"http://psink.de/scio/");
+
+			}
+			PrintStream psRDF = new PrintStream(
+					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.n-triples");
+			PrintStream psAnnotation = new PrintStream(
+					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.annodb");
+//			PrintStream psDocument = new PrintStream("unroll/organismmodel/" + annotations.getKey() + "_export.csv");
+
+			List<String> c = new ArrayList<>(collectRDF.getRdf().stream().collect(Collectors.toList()));
+			List<String> c2 = new ArrayList<>(collectRDF.getAnnodb().stream().collect(Collectors.toList()));
+			Collections.sort(c);
+			Collections.sort(c2);
+			c.forEach(psRDF::println);
+			c2.forEach(psAnnotation::println);
+			psAnnotation.close();
+			psRDF.close();
+
+//			psDocument.print(toCSV(docID, instance.getDocument().tokenList));
+//			psDocument.close();
+			docID++;
+		}
+
 	}
 }
