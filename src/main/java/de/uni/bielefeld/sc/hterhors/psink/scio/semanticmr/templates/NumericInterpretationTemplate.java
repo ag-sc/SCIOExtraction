@@ -52,23 +52,6 @@ public class NumericInterpretationTemplate extends AbstractFeatureTemplate<Numer
 				.normalize();
 	}
 
-	/**
-	 * TODO: make it deep!
-	 */
-//		ReflectionUtils.getFields(obieClass.getClass(), obieClass.getInvestigationRestriction()).forEach(field -> {
-//			try {
-//				if (field.isAnnotationPresent(RelationTypeCollection.class)) {
-//					for (IOBIEThing element : (List<IOBIEThing>) field.get(obieClass)) {
-//						collectDataTypes(values, obieClass.getClass(), element);
-//					}
-//				} else {
-//					collectDataTypes(values, obieClass.getClass(), (IOBIEThing) field.get(obieClass));
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		});
-
 	static class NumericInterpretationScope extends AbstractFactorScope {
 
 		final EntityType parentScioClass;
@@ -164,28 +147,6 @@ public class NumericInterpretationTemplate extends AbstractFeatureTemplate<Numer
 
 			}
 
-			/**
-			 * TODO: make it deep!
-			 */
-//			/*
-//			 * Add factors for object type properties.
-//			 */
-//			Arrays.stream(obieClass.getClass().getDeclaredFields())
-//					.filter(f -> f.isAnnotationPresent(OntologyModelContent.class)).forEach(field -> {
-//						field.setAccessible(true);
-//						try {
-//							if (field.isAnnotationPresent(RelationTypeCollection.class)) {
-//								for (IOBIEThing element : (List<IOBIEThing>) field.get(obieClass)) {
-//									factors.addAll(addFactorRecursive(rootClassType, obieClass.getClass(), element));
-//								}
-//							} else {
-//								factors.addAll(addFactorRecursive(rootClassType, obieClass.getClass(),
-//										(IOBIEThing) field.get(obieClass)));
-//							}
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					});
 		}
 
 		return factors;

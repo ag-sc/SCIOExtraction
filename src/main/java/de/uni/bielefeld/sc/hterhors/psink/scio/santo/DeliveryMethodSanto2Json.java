@@ -23,7 +23,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.
 
 public class DeliveryMethodSanto2Json {
 
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	final static private String exportDate = "24072019";
 	final static private String scioNameSpace = "http://psink.de/scio";

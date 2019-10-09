@@ -57,24 +57,23 @@ public class HeuristicExperimentalGroupBuilder {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		String rand = String.valueOf(new Random().nextInt());
+		String rand = "392547881";// String.valueOf(new Random().nextInt());
 
 		/**
 		 * Predict GroupNames.
 		 */
 
-//
-//		GroupNameNERLPredictor groupNamePredictor = new GroupNameNERLPredictor("GroupName" + rand, scope,
-//				trainingInstanceNames, developInstanceNames, testInstanceNames);
-//
-//		groupNamePredictor.trainOrLoadModel();
-//
-//		Map<String, Set<AbstractAnnotation>> groupNameAnnotations = groupNamePredictor.predictAllInstances();
-//
-//		/**
-//		 * Predict OrganismModels
-//		 */
-//
+		GroupNameNERLPredictor groupNamePredictor = new GroupNameNERLPredictor("GroupName" + rand, scope,
+				trainingInstanceNames, developInstanceNames, testInstanceNames);
+
+		groupNamePredictor.trainOrLoadModel();
+
+		Map<String, Set<AbstractAnnotation>> groupNameAnnotations = groupNamePredictor.predictBatchInstances();
+
+		/**
+		 * Predict OrganismModels
+		 */
+
 //		OrgModelSlotFillingPredictor organismModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel" + rand,
 //				scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
 //
@@ -97,17 +96,17 @@ public class HeuristicExperimentalGroupBuilder {
 		 * Predict Treatments
 		 */
 
-		TreatmentSlotFillingPredictor treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment" + rand, scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames);
+//		TreatmentSlotFillingPredictor treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment" + rand, scope,
+//				trainingInstanceNames, developInstanceNames, testInstanceNames);
+//
+//		treatmentPredictor.trainOrLoadModel();
+//
+//		Map<String, Set<AbstractAnnotation>> treatmentAnnotations = treatmentPredictor.predictAllInstances();
 
-		treatmentPredictor.trainOrLoadModel();
-
-		Map<String, Set<AbstractAnnotation>> treatmentAnnotations = treatmentPredictor.predictAllInstances();
-
-//		print(groupNameAnnotations);
+		print(groupNameAnnotations);
 //		print(organismModelAnnotations);
 //		print(injuryAnnotations);
-		print(treatmentAnnotations);
+//		print(treatmentAnnotations);
 	}
 
 	public void print(Map<String, Set<AbstractAnnotation>> annotations) {

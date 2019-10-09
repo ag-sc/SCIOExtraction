@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.jena.ext.com.google.common.collect.Streams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,6 +67,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 		super(scope);
 		this.modelName = modelName;
+
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setDevelopInstanceNames(developInstanceNames)
 				.setTestInstanceNames(testInstanceNames).build();
@@ -76,6 +78,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.maxNumberOfAnnotations = 50;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
+
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
 		 * the distributor in the constructor. If not all instances should be read from
@@ -243,6 +246,55 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		return annotations.getOrDefault(name, Collections.emptySet());
 	}
 
+	final public Map<String, Set<AbstractAnnotation>> predictBatchInstanceByNames(Set<String> names) {
+
+		List<String> remainingNames = names.stream().filter(name -> !annotations.containsKey(name))
+				.collect(Collectors.toList());
+
+		Map<Instance, State> results = crf.predict(instanceProvider.getInstances().stream()
+				.filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), maxStepCrit,
+				noModelChangeCrit);
+
+		for (Entry<Instance, State> result : results.entrySet()) {
+
+			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {
+
+				annotations.putIfAbsent(result.getKey().getName(), new HashSet<>());
+				annotations.get(result.getKey().getName()).add(aa.asInstanceOfDocumentLinkedAnnotation());
+
+			}
+
+		}
+
+		final Map<String, Set<AbstractAnnotation>> batchAnnotations = new HashMap<>();
+		for (String instanceName : names) {
+			batchAnnotations.put(instanceName, annotations.getOrDefault(instanceName, Collections.emptySet()));
+		}
+
+		return batchAnnotations;
+	}
+
+	final public Set<AbstractAnnotation> predictInstanceByName(String name) {
+
+		if (annotations.containsKey(name))
+			return annotations.get(name);
+
+		Map<Instance, State> results = crf.predict(instanceProvider.getInstances().stream()
+				.filter(i -> name.equals(i.getName())).collect(Collectors.toList()), maxStepCrit, noModelChangeCrit);
+
+		for (Entry<Instance, State> result : results.entrySet()) {
+
+			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {
+
+				annotations.putIfAbsent(result.getKey().getName(), new HashSet<>());
+				annotations.get(result.getKey().getName()).add(aa.asInstanceOfEntityTemplate());
+
+			}
+
+		}
+		return annotations.getOrDefault(name, Collections.emptySet());
+	}
+
 	final public void evaluateOnDevelopment() {
 
 		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedDevelopmentInstances(), maxStepCrit,
@@ -254,13 +306,16 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		log.info(crf.getTestStatistics());
 	}
 
-	final public Set<AbstractAnnotation> predictInstanceByName(String name) {
-		return predictHighRecallInstanceByName(name, 1);
+	final public Map<String, Set<AbstractAnnotation>> predictBatchInstances() {
+		return predictBatchInstanceByNames(Streams.concat(trainingInstances.stream().map(i -> i.getName()),
+				developmentInstances.stream().map(i -> i.getName()), testInstances.stream().map(i -> i.getName()))
+				.collect(Collectors.toSet()));
 	}
 
-	final public Map<String, Set<AbstractAnnotation>> predictAllInstances() {
-		return predictBatchHighRecallInstanceByNames(
-				instanceProvider.getInstances().stream().map(i -> i.getName()).collect(Collectors.toSet()), 1);
+	final public Map<String, Set<AbstractAnnotation>> predictBatchHighRecallInstances(int n) {
+		return predictBatchHighRecallInstanceByNames(Streams.concat(trainingInstances.stream().map(i -> i.getName()),
+				developmentInstances.stream().map(i -> i.getName()), testInstances.stream().map(i -> i.getName()))
+				.collect(Collectors.toSet()), n);
 	}
 
 }
