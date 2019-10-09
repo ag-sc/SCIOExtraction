@@ -16,7 +16,6 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
 
@@ -50,7 +49,7 @@ public class InjurySlotFilling {
 		new InjurySlotFilling();
 	}
 
-	private static Logger log = LogManager.getFormatterLogger(InjurySlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
@@ -82,9 +81,9 @@ public class InjurySlotFilling {
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope, trainingInstanceNames,
 				developInstanceNames, testInstanceNames);
 
-		predictor.trainOrLoadModel();
+//		predictor.trainOrLoadModel();
 
-		predictor.evaluateOnDevelopment();
+//		predictor.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
