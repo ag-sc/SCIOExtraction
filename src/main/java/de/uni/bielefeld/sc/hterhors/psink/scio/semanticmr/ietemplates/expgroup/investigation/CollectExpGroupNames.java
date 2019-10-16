@@ -13,31 +13,31 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.beanutils.converters.AbstractArrayConverter;
-import org.apache.commons.collections.set.SynchronizedSet;
-
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
-import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
-import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
 import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
+import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 
@@ -72,11 +72,11 @@ public class CollectExpGroupNames {
 	}
 
 	static class Finding {
-		final public String finding;
+		final public String term;
 		final public PatternIndexPair pattern;
 
 		public Finding(String finding, PatternIndexPair pattern) {
-			this.finding = finding;
+			this.term = finding;
 			this.pattern = pattern;
 		}
 
@@ -84,7 +84,7 @@ public class CollectExpGroupNames {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((finding == null) ? 0 : finding.hashCode());
+			result = prime * result + ((term == null) ? 0 : term.hashCode());
 			return result;
 		}
 
@@ -97,24 +97,25 @@ public class CollectExpGroupNames {
 			if (getClass() != obj.getClass())
 				return false;
 			Finding other = (Finding) obj;
-			if (finding == null) {
-				if (other.finding != null)
+			if (term == null) {
+				if (other.term != null)
 					return false;
-			} else if (!finding.equals(other.finding))
+			} else if (!term.equals(other.term))
 				return false;
 			return true;
 		}
 
 		@Override
 		public String toString() {
-			return finding + "\t" + pattern.index;
+			return term + "\t" + pattern.index;
 		}
 
 	}
 
 	public static void main(String[] args) throws Exception {
 		CollectExpGroupNames pg = new CollectExpGroupNames(new File("src/main/resources/slotfilling/corpus_docs.csv"));
-		Map<String, HashMap<Integer, Entry<Set<Finding>, Integer>>> clusters = pg.collectClusters();
+
+		Map<String, HashMap<Integer, Cluster>> clusters = pg.collectClusters();
 		Map<String, Set<AbstractAnnotation>> treatments = pg.getTreatments();
 		Map<String, Set<AbstractAnnotation>> orgModels = pg.getOrganismModels();
 		Map<String, Set<AbstractAnnotation>> injuries = pg.getInjuryModels();
@@ -127,7 +128,8 @@ public class CollectExpGroupNames {
 
 			Set<AbstractAnnotation> treatments = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-				treatments.addAll(expGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller());
+				treatments.addAll(expGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream()
+						.filter(a -> a != null).collect(Collectors.toList()));
 			}
 
 			treatmentsPerDocument.put(instance.getName(), treatments);
@@ -143,7 +145,8 @@ public class CollectExpGroupNames {
 
 			Set<AbstractAnnotation> orgModels = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-				orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
+				if (expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).containsSlotFiller())
+					orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
 			}
 
 			orgModelsPerDocument.put(instance.getName(), orgModels);
@@ -159,7 +162,8 @@ public class CollectExpGroupNames {
 
 			Set<AbstractAnnotation> injuries = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-				injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
+				if (expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller())
+					injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
 			}
 
 			injuriesPerDocument.put(instance.getName(), injuries);
@@ -169,13 +173,39 @@ public class CollectExpGroupNames {
 		return injuriesPerDocument;
 	}
 
-	private static final Set<String> SPECIAL_KEEPWORDS = new HashSet<>(Arrays.asList("control", "sham", "low", "high"));
+	static private final Map<String, String> syns = new HashMap<>();
+	static {
+		syns.put("mock", "sham");
+		syns.put("loaded", "encapsulated");
+		syns.put("media", "vehicle");
+		syns.put("medium", "vehicle");
+		syns.put("veh", "vehicle");
+		syns.put("schwann", "SC");
+		syns.put("ensheating", "OEC");
+		syns.put("EC", "OEC");
+		syns.put("hOEC", "OEC");
+		syns.put("POEG", "OEC");
+		syns.put("OMPC", "OEC");
+		syns.put("NSC", "OEC");
+		syns.put("OEC-M", "OEC");
+		syns.put("OECM", "OEC");
+	}
 
-	private static final Set<String> ADDITIONAL_STOPWORDS = new HashSet<>(Arrays.asList("transection", "grafts",
-			"normal", "injection", "injections", "cultured", "uninfected", "injected", "additional", "ca", "observed",
-			"grafted", "cells", "are", "effects", "gray", "cord", "spinal", "identifi", "cation", "n", "treated",
-			"treatment", "", "received", "the", "injured", "all", "lesioned", "fi", "rst", "first", "second", "third",
-			"fourth", "group", "animals", "rats", "in", "same", "individual", "groups", "were"));
+	static private final Map<String, String> treatMappings = new HashMap<>();
+	static {
+//		treatMappings.put("control", "vehicle");
+		treatMappings.put("saline", "vehicle");
+	}
+
+	private static final Set<String> SPECIAL_KEEPWORDS = new HashSet<>(
+			Arrays.asList("media", "single", "alone", "only", "control", "sham", "low", "high"));
+
+	private static final Set<String> ADDITIONAL_STOPWORDS = new HashSet<>(Arrays.asList("untreated", "is", "untrained",
+			"blank", "transplanted", "transection", "grafts", "normal", "injection", "injections", "cultured", "cords",
+			"uninfected", "injected", "additional", "ca", "observed", "grafted", "graft", "cells", "are", "effects",
+			"gray", "cord", "spinal", "identifi", "cation", "n", "treated", "treatment", "", "received", "the",
+			"injured", "all", "lesioned", "fi", "rst", "first", "second", "third", "fourth", "group", "animals", "rats",
+			"in", "same", "individual", "groups", "were"));
 
 	private static Set<String> ALL_STOPWORDS;
 
@@ -249,26 +279,29 @@ public class CollectExpGroupNames {
 
 	}
 
-	private void merge(Map<String, HashMap<Integer, Entry<Set<Finding>, Integer>>> clusters,
-			Map<String, Set<AbstractAnnotation>> treatments, Map<String, Set<AbstractAnnotation>> organismModels,
-			Map<String, Set<AbstractAnnotation>> injuryModels) {
+	private final static boolean includeOrganismModels = false;
+	private final static boolean includeInjuryModels = false;
+
+	private void merge(Map<String, HashMap<Integer, Cluster>> clusters, Map<String, Set<AbstractAnnotation>> treatments,
+			Map<String, Set<AbstractAnnotation>> organismModels, Map<String, Set<AbstractAnnotation>> injuryModels) {
+		Score overallFullRandomScore = new Score();
+		Score overallFullHeuristicsScore = new Score();
+
+		Score overallSimpleEvalRandomScore = new Score();
+		Score overallSimpleEvalHeuristicsScore = new Score();
+		final NerlaEvaluator simpleEval = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
+		final CartesianEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE);
 
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 
-			if (!instance.getName().startsWith("N075"))
-				continue;
+//			if (!instance.getName().startsWith("N137"))
+//				continue;
 
 			System.out.println("########\t" + instance.getName() + "\t########");
 			System.out.println("Number of Exp Groups :" + countExpGroups.get(instance.getName()));
 			System.out.println("Number of Treatments :" + countTreatments.get(instance.getName()));
 			System.out.println("Number of OrganismModels :" + countOrganismModels.get(instance.getName()));
 			System.out.println("Number of Injuries :" + countInjuries.get(instance.getName()));
-
-			System.out.println(countTreatments.get(instance.getName()));
-			System.out.println(countOrganismModels.get(instance.getName()));
-			System.out.println(countInjuries.get(instance.getName()));
-
-			final CartesianEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE);
 
 			List<EntityTemplate> goldAnnotations = instance.getGoldAnnotations().<EntityTemplate>getAnnotations()
 					.stream()
@@ -280,104 +313,466 @@ public class CollectExpGroupNames {
 									.containsSlotFiller()))
 					.collect(Collectors.toList());
 
-			List<EntityTemplate> predictedAnnotations = goldAnnotations
-					.stream().map(a -> {
-						EntityTemplate clone = a.deepCopy();
-						clone.getSingleFillerSlot("hasOrganismModel").removeFiller();
-						clone.getSingleFillerSlot("hasInjuryModel").removeFiller();
-						clone.getMultiFillerSlot("hasTreatmentType").removeAll();
-						return clone;
-					}).collect(Collectors.toList());
+			goldAnnotations.forEach(a -> a.getMultiFillerSlot("hasGroupName").removeFillers());
+			goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasNNumber").removeFiller());
 
-			fillRandom(predictedAnnotations, clusters.get(instance.getName()), treatments.get(instance.getName()),
-					organismModels.get(instance.getName()), injuryModels.get(instance.getName()));
+			if (!includeInjuryModels)
+				goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasInjuryModel").removeFiller());
+			if (!includeOrganismModels)
+				goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasOrganismModel").removeFiller());
 
-			System.out.println(evaluator.scoreMultiValues(goldAnnotations, predictedAnnotations));
-			System.exit(1);
+			List<EntityTemplate> predictedAnnotationsBaseline = goldAnnotations.stream().map(a -> {
+				EntityTemplate clone = a.deepCopy();
+				clone.getSingleFillerSlot("hasNNumber").removeFiller();
+				clone.getMultiFillerSlot("hasGroupName").removeFillers();
+				clone.getSingleFillerSlot("hasInjuryModel").removeFiller();
+				clone.getSingleFillerSlot("hasOrganismModel").removeFiller();
+				clone.getMultiFillerSlot("hasTreatmentType").removeFillers();
+				return clone;
+			}).collect(Collectors.toList());
 
-			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+			List<EntityTemplate> predictedAnnotationsHeuristics = predictedAnnotationsBaseline.stream()
+					.map(a -> a.deepCopy()).collect(Collectors.toList());
 
-				if (!(expGroup.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInjuryModel"))
-						.containsSlotFiller()
-						|| expGroup.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
-								.containsSlotFiller()
-						|| expGroup.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
-								.containsSlotFiller()))
-					continue;
+			fillRandom(predictedAnnotationsBaseline, clusters.get(instance.getName()),
+					treatments.get(instance.getName()), organismModels.get(instance.getName()),
+					injuryModels.get(instance.getName()));
 
-				System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+			fillHeuristics(predictedAnnotationsHeuristics, clusters.get(instance.getName()),
+					treatments.get(instance.getName()), organismModels.get(instance.getName()),
+					injuryModels.get(instance.getName()));
 
-				String expSurfaceForm = "";
-				if (expGroup.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
-					DocumentLinkedAnnotation expRoot = expGroup.getRootAnnotation()
-							.asInstanceOfDocumentLinkedAnnotation();
-					expSurfaceForm = expRoot.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm();
-					System.out.println("ExpRoot: "
-							+ expRoot.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex()
-							+ "\t" + expRoot.getEntityType().entityName + "\t" + expSurfaceForm);
-					System.out.println();
-					System.out.println(expRoot.getSentenceOfAnnotation());
-					System.out.println();
-				}
-				Set<AbstractAnnotation> groupNames = expGroup.getMultiFillerSlot("hasGroupName").getSlotFiller();
-				System.out.println("GroupNames:");
-				groupNames.stream().map(g -> "GroupName: " + g.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm())
-						.forEach(System.out::println);
+//			goldAnnotations.forEach(g -> System.out.println(g.toPrettyString()));
+//			System.out.println("--------");
+//			predictedAnnotationsBaseline.forEach(g -> System.out.println(g.toPrettyString()));
+//			System.out.println("--------");
+//			predictedAnnotationsHeuristics.forEach(g -> System.out.println(g.toPrettyString()));
 
-				System.out.println("------------treatments-------------");
-				for (AbstractAnnotation treatment : treatments.get(instance.getName())) {
-					AbstractAnnotation treatRoot;
-					if (treatment.getEntityType() == EntityType.get("CompoundTreatment")) {
-						treatRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound")
-								.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
-					} else {
-						treatRoot = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
-					}
+			List<Integer> randomBestAssignemnt = evaluator.getBestAssignment(goldAnnotations,
+					predictedAnnotationsBaseline);
+			Score simpleRandomS = simpleEvaluate(simpleEval, randomBestAssignemnt, goldAnnotations,
+					predictedAnnotationsBaseline);
+			overallSimpleEvalRandomScore.add(simpleRandomS);
+			System.out.println("---");
+			List<Integer> heuristicBestAssignment = evaluator.getBestAssignment(goldAnnotations,
+					predictedAnnotationsHeuristics);
+			Score simpleHeuristicS = simpleEvaluate(simpleEval, heuristicBestAssignment, goldAnnotations,
+					predictedAnnotationsHeuristics);
+			overallSimpleEvalHeuristicsScore.add(simpleHeuristicS);
 
-					if (treatRoot.isInstanceOfDocumentLinkedAnnotation()) {
-						System.out.println(
-								treatRoot.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex()
-										+ "\t" + treatRoot.getEntityType().entityName + "\t"
-										+ treatRoot.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm() + "\t"
-										+ contains(expSurfaceForm,
-												treatRoot.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()));
-					}
+			System.out.println("Simple Random: " + simpleRandomS);
+			System.out.println("Simple Heuristics: " + simpleHeuristicS);
 
-				}
+			Score fullRandomS = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotationsBaseline);
+			overallFullRandomScore.add(fullRandomS);
 
-				System.out.println();
-			}
+			Score fullHeuristicS = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotationsHeuristics);
+			overallFullHeuristicsScore.add(fullHeuristicS);
+
+			System.out.println("Full Random: " + fullRandomS);
+			System.out.println("Full Heuristics: " + fullHeuristicS);
 
 		}
+		System.out.println();
+		System.out.println();
+		System.out.println("******************SIMPLE************************");
+		System.out.println("overall simple RandomScore = " + overallSimpleEvalRandomScore);
+		System.out.println("overall simple HeuristicsScore = " + overallSimpleEvalHeuristicsScore);
+		System.out.println("******************************************");
+		System.out.println();
+		System.out.println("******************FULL************************");
+		System.out.println("overall full RandomScore = " + overallFullRandomScore);
+		System.out.println("overall full HeuristicsScore = " + overallFullHeuristicsScore);
+		System.out.println("******************************************");
+
 	}
 
-	private void fillRandom(List<EntityTemplate> predictedAnnotations,
-			HashMap<Integer, Entry<Set<Finding>, Integer>> clusters, Set<AbstractAnnotation> treatments,
-			Set<AbstractAnnotation> orgModels, Set<AbstractAnnotation> injuries) {
+	private Score simpleEvaluate(NerlaEvaluator evaluator, List<Integer> bestAssignment,
+			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotationsBaseline) {
+		Score simpleScore = new Score();
+
+		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
+			final int predictIndex = bestAssignment.get(goldIndex);
+			/*
+			 * Treatments
+			 */
+			List<AbstractAnnotation> goldTreatments = new ArrayList<>(
+					goldAnnotations.get(goldIndex).getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+			List<AbstractAnnotation> predictTreatments = new ArrayList<>(predictedAnnotationsBaseline.get(predictIndex)
+					.getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+
+			simpleScore.add(evaluator.prf1(goldTreatments, predictTreatments));
+
+			/*
+			 * OrganismModel
+			 */
+			List<AbstractAnnotation> goldOrganismModel = Arrays
+					.asList(goldAnnotations.get(goldIndex).getSingleFillerSlot("hasOrganismModel").getSlotFiller())
+					.stream().filter(a -> a != null).collect(Collectors.toList());
+			List<AbstractAnnotation> predictOrganismModel = Arrays.asList(predictedAnnotationsBaseline.get(predictIndex)
+					.getSingleFillerSlot("hasOrganismModel").getSlotFiller()).stream().filter(a -> a != null)
+					.collect(Collectors.toList());
+
+			simpleScore.add(evaluator.prf1(goldOrganismModel, predictOrganismModel));
+
+			/*
+			 * InjuryModel
+			 */
+			List<AbstractAnnotation> goldInjuryModel = Arrays
+					.asList(goldAnnotations.get(goldIndex).getSingleFillerSlot("hasInjuryModel").getSlotFiller())
+					.stream().filter(a -> a != null).collect(Collectors.toList());
+			List<AbstractAnnotation> predictInjuryModel = Arrays.asList(predictedAnnotationsBaseline.get(predictIndex)
+					.getSingleFillerSlot("hasInjuryModel").getSlotFiller()).stream().filter(a -> a != null)
+					.collect(Collectors.toList());
+
+			simpleScore.add(evaluator.prf1(goldInjuryModel, predictInjuryModel));
+
+		}
+
+		return simpleScore;
+	}
+
+	private void fillRandom(List<EntityTemplate> predictedAnnotations, HashMap<Integer, Cluster> clusters,
+			Set<AbstractAnnotation> treatments, Set<AbstractAnnotation> orgModels, Set<AbstractAnnotation> injuries) {
 
 		List<AbstractAnnotation> tr = new ArrayList<>(treatments);
 		List<AbstractAnnotation> or = new ArrayList<>(orgModels);
 		List<AbstractAnnotation> in = new ArrayList<>(injuries);
-		for (int i = 0; i < predictedAnnotations.size(); i++) {
-
-			Collections.shuffle(tr);
-			Collections.shuffle(or);
-			Collections.shuffle(in);
+		for (int i = 0; i < predictedAnnotations.size() && i < clusters.size(); i++) {
+			Collections.shuffle(or, new Random());
+			Collections.shuffle(in, new Random());
 
 			EntityTemplate t = predictedAnnotations.get(i);
 
-			t.setSingleSlotFiller(SlotType.get("hasInjuryModel"), in.get(0));
-			t.setSingleSlotFiller(SlotType.get("hasOrganismModel"), or.get(0));
+			if (includeInjuryModels)
+				t.setSingleSlotFiller(SlotType.get("hasInjuryModel"), in.get(0));
+			if (includeOrganismModels)
+				t.setSingleSlotFiller(SlotType.get("hasOrganismModel"), or.get(0));
 
-			for (int j = 0; j < clusters.get(i).getKey().size(); j++) {
-				t.addMultiSlotFiller(SlotType.get("hasTreatmentType"), tr.get(j));
-			}
+//			for (int j = 0; j < clusters.get(i).terms.size() && j < tr.size(); j++) {
+			Collections.shuffle(tr, new Random());
+			t.addMultiSlotFiller(SlotType.get("hasTreatmentType"), tr.get(0));
+//			}
 
 		}
 
 	}
 
-	private Map<String, HashMap<Integer, Entry<Set<Finding>, Integer>>> collectClusters() throws Exception {
+	/**
+	 * Fills slots by heuristics.
+	 * 
+	 * @param predictedAnnotations
+	 * @param clusters
+	 * @param treatments
+	 * @param orgModels
+	 * @param injuries
+	 */
+	private void fillHeuristics(List<EntityTemplate> predictedAnnotations, HashMap<Integer, Cluster> clusters,
+			Set<AbstractAnnotation> treatments, Set<AbstractAnnotation> orgModels, Set<AbstractAnnotation> injuries) {
+
+		List<AbstractAnnotation> tr = new ArrayList<>(treatments);
+		List<AbstractAnnotation> or = new ArrayList<>(orgModels);
+		List<AbstractAnnotation> in = new ArrayList<>(injuries);
+
+		/*
+		 * Create mapping from clusters to expGroup.
+		 */
+		final Map<Set<Finding>, EntityTemplate> remainingPredictedAnnotations = new HashMap<>();
+
+		for (Entry<Integer, Cluster> cluster : clusters.entrySet()) {
+			remainingPredictedAnnotations.put(cluster.getValue().terms, predictedAnnotations.get(cluster.getKey()));
+		}
+
+		for (EntityTemplate expGroup : remainingPredictedAnnotations.values()) {
+			if (includeInjuryModels)
+				expGroup.setSingleSlotFiller(SlotType.get("hasInjuryModel"), pickRandom(in, new Random()));
+			if (includeOrganismModels)
+				expGroup.setSingleSlotFiller(SlotType.get("hasOrganismModel"), pickRandom(or, new Random()));
+		}
+
+		/**
+		 * HEUSRISTIC CyclosporinA used in every group if it exists.
+		 */
+		{
+			Optional<AbstractAnnotation> cycloOpt = tr.stream().filter(a -> {
+				if (a.asInstanceOfEntityTemplate().getEntityType() == EntityType.get("CompoundTreatment")) {
+					return a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound").getSlotFiller()
+							.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType
+									.get("CyclosporineA");
+				} else {
+					return a.asInstanceOfEntityTemplate().getRootAnnotation().getEntityType() == EntityType
+							.get("CyclosporineA");
+				}
+			}).findFirst();
+
+			if (cycloOpt.isPresent()) {
+				System.out.println("Found Cyclosporine Treatment...");
+				AbstractAnnotation cyclo = cycloOpt.get();
+				for (EntityTemplate abstractAnnotation : remainingPredictedAnnotations.values()) {
+					abstractAnnotation.addMultiSlotFiller(SlotType.get("hasTreatmentType"), cyclo);
+				}
+
+				tr.remove(cyclo);
+			}
+		}
+
+		/**
+		 * HEURISTIC medium/media = vehicle treatment && USE vehicle only once! Only for
+		 * single keyword clusters.
+		 */
+//		{
+//			Optional<AbstractAnnotation> vehicleOpt = tr.stream().filter(a -> {
+//				if (a.asInstanceOfEntityTemplate().getEntityType() == EntityType.get("CompoundTreatment")) {
+//					return a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound").getSlotFiller()
+//							.asInstanceOfEntityTemplate().getRootAnnotation().entityType
+//									.getTransitiveClosureSuperEntityTypes().contains(EntityType.get("Vehicle"));
+//				}
+//				return false;
+//			}).findFirst();
+//
+//			if (vehicleOpt.isPresent()) {
+//				System.out.println("Found Vehicle Treatment...");
+//				AbstractAnnotation vehicle = vehicleOpt.get();
+//
+//				for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet()
+//						.iterator(); it.hasNext();) {
+//					Entry<Set<Finding>, EntityTemplate> e = it.next();
+//					final Set<String> keyWords = e.getKey().stream().map(f -> f.term).collect(Collectors.toSet());
+//					if (keyWords.size() == 1 && (keyWords.contains("media") || keyWords.contains("medium")
+//							|| keyWords.contains("vehicle") || keyWords.contains("veh"))) {
+//						e.getValue().addMultiSlotFiller(SlotType.get("hasTreatmentType"), vehicle);
+//
+//						/*
+//						 * remove vehicle from exp groups.
+//						 */
+//						it.remove();
+//					}
+//
+//				}
+//				/*
+//				 * remove vehicle from treatments.
+//				 */
+//				tr.remove(vehicle);
+//			}
+//		}
+
+		/**
+		 * HEURISTIC findings contains injury/lesion & only/alone / non
+		 * 
+		 */
+		for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet().iterator(); it
+				.hasNext();) {
+
+			final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term).collect(Collectors.toSet());
+			if (keyWords.contains("non") || ((keyWords.contains("lesion") || keyWords.contains("injury"))
+					&& (keyWords.contains("only") || keyWords.contains("alone")))) {
+				it.remove();
+			}
+
+		}
+
+		if (remainingPredictedAnnotations.size() == 1) {
+			/**
+			 * HEURISTIC if just one remains add all treatments
+			 */
+
+			for (EntityTemplate expGroup : remainingPredictedAnnotations.values()) {
+				for (AbstractAnnotation treatment : tr) {
+					expGroup.addMultiSlotFiller(SlotType.get("hasTreatmentType"), treatment);
+				}
+			}
+			return;
+
+		} else if (tr.size() == 2 && remainingPredictedAnnotations.size() == 2) {
+
+			/**
+			 * HEURISTIC If treatments = 2 and exp group = 2 than each exp group receive
+			 * exactly one treatment.
+			 */
+			int i = 0;
+			for (AbstractAnnotation expGroup : remainingPredictedAnnotations.values()) {
+				expGroup.asInstanceOfEntityTemplate().addMultiSlotFiller(SlotType.get("hasTreatmentType"), tr.get(i++));
+			}
+
+			return;
+		} else {
+
+			for (Entry<Set<Finding>, EntityTemplate> pair : remainingPredictedAnnotations.entrySet()) {
+
+				/**
+				 * HEURISTIC: Select by heuristics
+				 */
+				Set<AbstractAnnotation> picked = selectByHeuristic(pair.getKey(), tr);
+
+				for (AbstractAnnotation treatment : picked) {
+					pair.getValue().addMultiSlotFiller(SlotType.get("hasTreatmentType"), treatment);
+				}
+
+			}
+			return;
+		}
+	}
+
+	/**
+	 * HEURISTIC pick from treatments based on several heuristics.
+	 * 
+	 * @param key
+	 * @param tr
+	 * @return
+	 */
+	private Set<AbstractAnnotation> selectByHeuristic(Set<Finding> key, List<AbstractAnnotation> tr) {
+
+		List<AbstractAnnotation> sortedTreatments = new ArrayList<>(tr);
+
+		Set<String> keyWords = unify(key.stream().map(k -> k.term).collect(Collectors.toSet()));
+
+		Collections.sort(sortedTreatments, new Comparator<AbstractAnnotation>() {
+
+			@Override
+			public int compare(AbstractAnnotation o1, AbstractAnnotation o2) {
+				Set<String> treatment1 = unify(getTreatmentTerms(o1));
+				Set<String> treatment2 = unify(getTreatmentTerms(o2));
+				return -Double.compare(keyWords.stream().filter(k -> treatment1.contains(k)).count(),
+						keyWords.stream().filter(k -> treatment2.contains(k)).count());
+			}
+
+		});
+		System.out.println("Match: ");
+		System.out.println(keyWords);
+		sortedTreatments.subList(0, Math.min(key.size(), sortedTreatments.size()))
+				.forEach(g -> System.out.println(g.toPrettyString()));
+		System.out.println("------------------");
+		return new HashSet<>(sortedTreatments.subList(0, Math.min(key.size(), sortedTreatments.size())));
+	}
+
+	/**
+	 * Unifies a set of strings. this includes e.g. synonym replacements lowercasing
+	 * etc.
+	 * 
+	 * @param strings
+	 * @return unified set of string
+	 */
+	private Set<String> unify(Set<String> strings) {
+		return strings.stream().map(s -> toLowerIfNotUpper(s)).map(s -> toSingular(s))
+				.map(s -> treatMappings.getOrDefault(s, s)).collect(Collectors.toSet());
+	}
+
+	/**
+	 * HEURISTIC
+	 * 
+	 * @param finding
+	 * @return
+	 */
+	private String toSingular(String finding) {
+		if (finding.endsWith("s"))
+			return finding.substring(0, finding.length() - 1);
+		if (finding.endsWith("ies"))
+			return finding.substring(0, finding.length() - 3) + "y";
+		return finding;
+	}
+
+	/**
+	 * Converts a string to lowercase if it is not in uppercase
+	 * 
+	 * @param s
+	 * @return
+	 */
+	private String toLowerIfNotUpper(String s) {
+		if (s.matches("[a-z]?[A-Z\\d\\W]+s?"))
+			return s;
+
+		return s.toLowerCase();
+	}
+
+	private Set<String> getTreatmentTerms(AbstractAnnotation treatment) {
+		Set<String> treatmentTerms = new HashSet<>();
+
+		if (treatment.asInstanceOfEntityTemplate().getEntityType() == EntityType.get("CompoundTreatment")) {
+
+			AbstractAnnotation compoundRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound")
+					.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
+
+			if (compoundRoot.isInstanceOfLiteralAnnotation()) {
+				treatmentTerms.addAll(Arrays
+						.asList(compoundRoot.asInstanceOfLiteralAnnotation().textualContent.surfaceForm.split(" ")));
+			}
+			treatmentTerms.add(compoundRoot.getEntityType().entityName);
+
+		}
+		if (treatmentTerms.isEmpty()) {
+			AbstractAnnotation treatmentRoot = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
+
+			if (treatmentRoot.isInstanceOfLiteralAnnotation()) {
+				treatmentTerms.addAll(Arrays
+						.asList(treatmentRoot.asInstanceOfLiteralAnnotation().textualContent.surfaceForm.split(" ")));
+			}
+
+			treatmentTerms.add(treatment.getEntityType().entityName);
+		}
+
+		return treatmentTerms;
+	}
+
+	private AbstractAnnotation pickRandom(List<AbstractAnnotation> or, Random random) {
+		Collections.shuffle(or, random);
+		return or.get(0);
+	}
+
+	private static class Cluster implements Comparable<Cluster> {
+
+		final Set<Finding> terms;
+		int value;
+
+		public Cluster(Set<Finding> finding, int value) {
+			this.terms = finding;
+			this.value = value;
+		}
+
+		public Cluster(Entry<Set<Finding>, Integer> e) {
+			this(e.getKey(), e.getValue());
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((terms == null) ? 0 : terms.hashCode());
+			result = prime * result + value;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Cluster other = (Cluster) obj;
+			if (terms == null) {
+				if (other.terms != null)
+					return false;
+			} else if (!terms.equals(other.terms))
+				return false;
+			if (value != other.value)
+				return false;
+			return true;
+		}
+
+		@Override
+		public int compareTo(Cluster o) {
+			return -Integer.compare(this.value, o.value);
+		}
+
+		@Override
+		public String toString() {
+			return "Cluster [terms=" + terms + ", value=" + value + "]";
+		}
+
+	}
+
+	private Map<String, HashMap<Integer, Cluster>> collectClusters() throws Exception {
 
 		String number = "(one|two|three|four|five|six|seven|eight|nine|ten|\\d{1,2})";
 		PatternIndexPair[] pattern = new PatternIndexPair[] {
@@ -385,7 +780,7 @@ public class CollectExpGroupNames {
 						"(\\W)[\\w-\\+ '[^\\x20-\\x7E]]{3,20} (treated|grafted|transplanted|(un)?trained)(?=\\W)",
 						Pattern.CASE_INSENSITIVE)),
 				new PatternIndexPair(1, Pattern.compile(
-						" ([\\w']+?( with | and | plus | ?(\\+|-|/) ?))*[\\w']+?(-|[^\\x20-\\x7E])(animals|mice|rats|cats|dogs)",
+						" ([\\w']+?( with | and | plus | ?(\\+|-|/) ?))*[\\w']+?(-|[^\\x20-\\x7E])(animals|mice|rats|cats|dogs|transplantation)",
 						Pattern.CASE_INSENSITIVE)),
 				new PatternIndexPair(2,
 						Pattern.compile("[^ ]+? (with|and|plus| ?(\\+|-|/) ?) [^ ]+? ?\\((n)\\W?=\\W?\\d{1,2}\\)",
@@ -398,12 +793,16 @@ public class CollectExpGroupNames {
 						Pattern.compile("((only|or) )?[a-z][^ ]+? ?\\((n)\\W?=\\W?\\d{1,2}\\)",
 								Pattern.CASE_INSENSITIVE),
 						5),
-				new PatternIndexPair(5, Pattern.compile(
-						"(a|the|in) [\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs)", Pattern.CASE_INSENSITIVE)),
+				new PatternIndexPair(5,
+						Pattern.compile(
+								"(a|the|in) [\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs|transplantation)",
+								Pattern.CASE_INSENSITIVE)),
 //				Pattern.compile("\\([A-Z][\\w-\\+']{2,30}\\)"),
 				new PatternIndexPair(6,
-						Pattern.compile("(,|;)[\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs)",
-								Pattern.CASE_INSENSITIVE)),
+						Pattern.compile(
+								"(,( ?and ?)?|;)[\\w-\\+ ']{3,20} ?(group|animals|mice|rats|cats|dogs|transplantation)",
+								Pattern.CASE_INSENSITIVE),
+						2),
 				new PatternIndexPair(7, Pattern.compile(
 						"(\\)|;|:) ?(\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100}(\\( ?)?n\\W?=\\W?\\d{1,2}( ?\\))?(?=(,|\\.|;))",
 //						"(\\)|;|:) ?(\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100}(\\( ?)?((n\\W?=\\W?\\d{1,2})|("+number +" ?(animals|mice|rats|cats|dogs)))( ?\\))?(?=(,|\\.|;))",
@@ -412,10 +811,10 @@ public class CollectExpGroupNames {
 						"in(jured)? (animals|mice|rats|cats|dogs).{1,10}receiv.{3,20}(,|;|\\.| injections?| treatments?)",
 						Pattern.CASE_INSENSITIVE)),
 				new PatternIndexPair(9, Pattern.compile(
-						"(the|a|\\)|in) [\\w-\\+ ']{3,20} (treated|grafted|transplanted|(un)?trained) ((control |sham )?((injury )?(only )?))? (group|animals|mice|rats|cats|dogs)",
+						"(the|a|\\)|in) [\\w-\\+ ']{3,20} (treated|grafted|transplanted|(un)?trained) ((control |sham )?((injury )?(only )?))? (group|animals|mice|rats|cats|dogs|transplantation)",
 						Pattern.CASE_INSENSITIVE)),
 				new PatternIndexPair(10, Pattern.compile(
-						"([\\w']+?( and | plus | ?(\\+|-|/|[^\\x20-\\x7E]) ?))*[\\w']+?(-|[^\\x20-\\x7E]| ){1,2}(treated\\W|grafted\\W|transplanted\\W|(un)?trained\\W)((control |sham )?((injury )?(only )?))?(group|animals|mice|rats|cats|dogs)",
+						"([\\w']+?( and | plus | ?(\\+|-|/|[^\\x20-\\x7E]) ?))*[\\w']+?(-|[^\\x20-\\x7E]| ){1,2}(treated\\W|grafted\\W|transplanted\\W|(un)?trained\\W)((control |sham )?((injury )?(only )?))?(group|transplantation|animals|mice|rats|cats|dogs)",
 						Pattern.CASE_INSENSITIVE)),
 				new PatternIndexPair(11, Pattern.compile(
 						"((control |sham )?((injury )?(only )?))?(group|animals|mice|rats|cats|dogs) that were (treated|grafted|transplanted|(un)?trained) with.+? ",
@@ -429,12 +828,12 @@ public class CollectExpGroupNames {
 
 		Pattern etAlPattern = Pattern.compile("et al");
 		Map<String, Integer> countWords = new HashMap<>();
-		Map<String, HashMap<Integer, Entry<Set<Finding>, Integer>>> clustersPerInstance = new HashMap<>();
+		Map<String, HashMap<Integer, Cluster>> clustersPerInstance = new HashMap<>();
 
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
-//			if (!instance.getName().startsWith("N075"))
+//			if (!instance.getName().startsWith("N137"))
 //				continue;
 
 			List<Finding> findings = new ArrayList<>();
@@ -465,35 +864,40 @@ public class CollectExpGroupNames {
 					try {
 						int senIndex = instance.getDocument().getTokenByCharOffset(m.start()).getSentenceIndex();
 
-						boolean cont = false;
-						for (Integer keyPoint : keyPoints) {
-							if (senIndex >= keyPoint && senIndex < referencePoint) {
-//								&& senIndex < keyPoint + 50) {
-								cont = true;
-								break;
-							}
+//						if(senIndex > referencePoint)
+//						continue;
 
-						}
-
-						if (!cont) {
-							System.out.println("OOB Discard: " + senIndex + "\t" + finding.finding);
-							continue;
-						}
+//						boolean cont = false;
+//						for (Integer keyPoint : keyPoints) {
+//							if (
+//									senIndex >= keyPoint 
+//									) {
+////								&& senIndex < keyPoint + 50) {
+//								cont = true;
+//								break;
+//							}
+//
+//						}
+//
+//						if (!cont) {
+//							System.out.println("OOB Discard: " + senIndex + "\t" + finding.term);
+//							continue;
+//						}
 
 						String sentence = listToString(instance.getDocument().getSentenceByIndex(senIndex));
 						if (etAlPattern.matcher(sentence).find()) {
-							System.out.println("ETAL Discard: " + senIndex + "\t" + finding.finding);
+							System.out.println("ETAL Discard: " + senIndex + "\t" + finding.term);
 							continue;
 						}
 
-						for (String splits : finding.finding.split("\\W")) {
+						for (String splits : finding.term.split("\\W")) {
 							countWords.put(splits, countWords.getOrDefault(splits, 0) + 1);
 						}
 
 						/**
 						 * HEURISTIC 0
 						 */
-						if (finding.finding.matches("(the|with) (treated|grafted|transplanted|(un)?trained)")) {
+						if (finding.term.matches("(the|with) (treated|grafted|transplanted|(un)?trained)")) {
 							continue;
 						}
 
@@ -501,7 +905,7 @@ public class CollectExpGroupNames {
 						 * HEURISTIC 1
 						 */
 						List<Finding> splitFindings = new ArrayList<>();
-						for (String split : finding.finding.trim().split("\\Wor\\W")) {
+						for (String split : finding.term.trim().split("\\Wor\\W")) {
 							splitFindings.add(new Finding(split, finding.pattern));
 							System.out.println(senIndex + "\t" + split);
 						}
@@ -516,7 +920,7 @@ public class CollectExpGroupNames {
 								 */
 								findings.add(splitF);
 							else
-								for (String split : splitF.finding.trim().split("\\Wand\\W")) {
+								for (String split : splitF.term.trim().split("\\Wand\\W")) {
 									findings.add(new Finding(split, finding.pattern));
 									System.out.println(senIndex + "\t" + split);
 								}
@@ -532,85 +936,251 @@ public class CollectExpGroupNames {
 			}
 
 			List<Set<Finding>> BOWFindings = toBOWFindings(findings);
-			for (Set<Finding> set : BOWFindings) {
-				System.out.println(set);
+
+			BOWFindings.forEach(System.out::println);
+
+			Set<String> increaseImpact = new HashSet<>(Arrays.asList("sham", "control", "vehicle"));
+			HashMap<Set<Finding>, Integer> countBOW = new HashMap<>();
+
+			/**
+			 * HEURISTIC: Increase sham / control groups.
+			 */
+			boolean containsSham = false;
+			boolean containsVehicle = false;
+			for (Set<Finding> bow : BOWFindings) {
+				if (bow.size() == 1 && increaseImpact.contains(bow.iterator().next().term))
+					containsSham |= bow.iterator().next().term.equals("sham");
+				if (bow.size() == 1 && increaseImpact.contains(bow.iterator().next().term))
+					containsVehicle |= bow.iterator().next().term.equals("control");
+			}
+			/**
+			 * HEURISTIC Favor sham over control
+			 */
+			if (containsSham)
+				increaseImpact.remove("control");
+
+			/**
+			 * HEURISTIC Favor control over vehicle
+			 */
+			if (containsVehicle)
+				increaseImpact.remove("vehicle");
+
+			for (Set<Finding> bow : BOWFindings) {
+				int impact = bow.iterator().next().pattern.impact;
+
+				Set<String> findingStrings = bow.stream().map(f -> f.term).collect(Collectors.toSet());
+
+				if (bow.size() == 1 && increaseImpact.contains(bow.iterator().next().term)) {
+					impact = 10;
+				}
+
+				if (findingStrings.contains("injury")
+						&& (findingStrings.contains("only") || findingStrings.contains("alone"))) {
+					PatternIndexPair p = bow.iterator().next().pattern;
+					bow.clear();
+					bow.add(new Finding("sham", p));
+				}
+
+				/**
+				 * HEURISTIC unify findings
+				 */
+				Set<Finding> unifiedFindings = unifyFindings(bow);
+
+				if (unifiedFindings.isEmpty())
+					continue;
+
+				countBOW.put(unifiedFindings, countBOW.getOrDefault(unifiedFindings, 0) + impact);
 			}
 
-			HashMap<Set<Finding>, Integer> countBOW = new HashMap<>();
-			for (Set<Finding> bow : BOWFindings) {
-				countBOW.put(bow, countBOW.getOrDefault(bow, 0) + bow.iterator().next().pattern.impact);
+			List<Cluster> sortCountBow = new ArrayList<>();
+
+			for (Entry<Set<Finding>, Integer> e : countBOW.entrySet()) {
+				sortCountBow.add(new Cluster(e));
 			}
-			List<Entry<Set<Finding>, Integer>> sortCountBow = new ArrayList<>(countBOW.entrySet());
-			Collections.sort(sortCountBow, new Comparator<Entry<Set<Finding>, Integer>>() {
-				@Override
-				public int compare(Entry<Set<Finding>, Integer> o1, Entry<Set<Finding>, Integer> o2) {
-					return -Integer.compare(o1.getValue(), o2.getValue());
-				}
-			});
+
+			Collections.sort(sortCountBow);
 
 			System.out.println("----------------");
-			for (Entry<Set<Finding>, Integer> e : sortCountBow) {
-				System.out.println(e.getKey() + "\t" + e.getValue());
+			for (Cluster e : sortCountBow) {
+				System.out.println(e.terms + "\t" + e.value);
 			}
 
 			/**
 			 * TODO: Implement cluster rules
 			 *
+			 *
 			 * CLUSTER RULES:
 			 * 
-			 * sham / control -> must include
-			 * 
-			 * schwann -> = SC
-			 * 
-			 * remove plural s
-			 * 
-			 * ensheating -> OEC
-			 * 
-			 * more impact to pairs
-			 * 
-			 * single DMEM / saline = sham or control ?
+			 * control is often vehicle only?
 			 * 
 			 * single terms remove: encapsul*, transplantat*
 			 * 
-			 * co or combinatorial = pairs of treatments.
+			 * 
+			 * transplantation as group in regex
 			 * 
 			 */
 
 			System.out.println("----------------");
-			HashMap<Integer, Entry<Set<Finding>, Integer>> clusters = new HashMap<>();
-
+			HashMap<Integer, Cluster> clusters = new HashMap<>();
 			for (int c = 0; c < countExpGroups.get(instance.getName()) && c < sortCountBow.size(); c++)
 				clusters.put(c, sortCountBow.get(c));
+
+			/**
+			 * HEURISTIC resolve co / combinatorial co or combinatorial = pairs of
+			 * treatments. = combination of highest ranking (without control and sham) in
+			 * the sorted cluster list.
+			 */
+			{
+				final Set<String> combinatorialTerms = new HashSet<>(
+						Arrays.asList("co", "combinatorial", "combination", "combine", "combined"));
+
+				/*
+				 * Find first combination.
+				 */
+				Optional<Entry<Integer, Cluster>> o = clusters.entrySet().stream()
+						.filter(e -> e.getValue().terms.size() > 1).findFirst();
+
+				Optional<Integer> combClusterImpact = sortCountBow.stream()
+						.filter(e -> e.terms.size() == 1 && combinatorialTerms.contains(e.terms.iterator().next().term))
+						.map(e -> e.value).reduce(Integer::sum);
+
+				if (combClusterImpact.isPresent() && combClusterImpact.get() > 0) {
+
+					if (o.isPresent()) {
+						int combinatorialIndex = o.get().getKey();
+
+						sortCountBow.get(combinatorialIndex).value += combClusterImpact.get();
+
+						for (Iterator<Cluster> iterator = sortCountBow.iterator(); iterator.hasNext();) {
+							Cluster cluster = iterator.next();
+							if (cluster.terms.size() == 1
+									&& combinatorialTerms.contains(cluster.terms.iterator().next().term)) {
+								System.out.println("Remove: " + cluster);
+								iterator.remove();
+							}
+						}
+					} else {
+
+						for (Iterator<Cluster> iterator = sortCountBow.iterator(); iterator.hasNext();) {
+							Cluster cluster = iterator.next();
+							if (cluster.terms.size() == 1
+									&& combinatorialTerms.contains(cluster.terms.iterator().next().term)) {
+								System.out.println("Remove: " + cluster);
+								iterator.remove();
+							}
+						}
+
+						Collections.sort(sortCountBow);
+						for (int c = 0; c < countExpGroups.get(instance.getName()) && c < sortCountBow.size(); c++)
+							clusters.put(c, sortCountBow.get(c));
+						/*
+						 * HEURISTIC Create new combination from two best non control cluster terms.
+						 */
+						Set<Finding> combineTerms = new HashSet<>();
+						for (Entry<Integer, Cluster> cluster : clusters.entrySet()) {
+							if (isControl(cluster.getValue()))
+								continue;
+							else
+								// contains only 1 term
+								combineTerms.addAll(cluster.getValue().terms);
+							if (combineTerms.size() == 2) {
+								sortCountBow.add(new Cluster(combineTerms, combClusterImpact.get()));
+								break;
+							}
+						}
+					}
+
+					Collections.sort(sortCountBow);
+					System.out.println("-------Resolve Combinatorial---------");
+					for (Cluster e : sortCountBow) {
+						System.out.println(e.terms + "\t" + e.value);
+					}
+
+					for (int c = 0; c < countExpGroups.get(instance.getName()) && c < sortCountBow.size(); c++)
+						clusters.put(c, sortCountBow.get(c));
+				}
+
+			}
+
+//			Set<Finding>, Integer> combinatorial =
 
 			clusters.entrySet().forEach(e -> System.out.println(e.getKey() + "\t" + e.getValue()));
 			System.out.println("########\t" + instance.getName() + "\t########");
 			clustersPerInstance.put(instance.getName(), clusters);
 		}
-//		countWords.entrySet().forEach(e -> System.out.println(e.getKey() + "\t" + e.getValue()));
+//		countWords.entrySet().forEach(e -> System.)out.println(e.getKey() + "\t" + e.getValue()));
 		return clustersPerInstance;
 	}
 
-	final private static String references = "references";
+	private boolean isControl(Cluster cluster) {
+		return cluster.terms.stream().map(f -> f.term).filter(a -> a.equals("control") || a.equals("sham")).findAny()
+				.isPresent();
+	}
+
+	private Set<Finding> unifyFindings(Set<Finding> findings) {
+
+		Set<Finding> unified = new HashSet<>();
+
+		for (Finding finding : findings) {
+
+			String findingString = finding.term;
+
+			if (findingString.equals("only"))
+				continue;
+			if (findingString.equals("alone"))
+				continue;
+			/*
+			 * Unify
+			 */
+			findingString = toLowerIfNotUpper(findingString);
+			findingString = toSingular(findingString);
+			findingString = syns.getOrDefault(findingString, findingString);
+
+			/*
+			 * Keep pattern
+			 */
+			unified.add(new Finding(findingString, finding.pattern));
+		}
+		return unified;
+	}
+
+	final private static String referencesKeypointTerm = "references";
+	final private static String resultsKeyPointTerm = "results";
 
 	private Integer getReferencePoint(Instance instance) {
 		/*
 		 * Search for mentioned references point
 		 */
 		int refPoint = 0;
-		int i = 0;
+		int iRef = 0;
+		int iRes = 0;
 		for (DocumentToken docToken : instance.getDocument().tokenList) {
 			if (docToken.getText().matches("R(E|e)(F|f)(E|e)(R|r)(E|e)(N|n)(C|c)(E|e)(S|s)")) {
 
 				refPoint = update(refPoint, docToken.getSentenceIndex());
 			}
+			if (docToken.getText().matches("R(E|e)(S|s)(U|u)(L|l)(T|t)(S|s)")) {
 
-			if (docToken.getText().toLowerCase().equals(String.valueOf(references.charAt(i))))
-				i++;
+				refPoint = update(refPoint, docToken.getSentenceIndex());
+			}
+
+			if (docToken.getText().toLowerCase().equals(String.valueOf(referencesKeypointTerm.charAt(iRef))))
+				iRef++;
 			else
-				i = 0;
+				iRef = 0;
 
-			if (i == references.length()) {
-				i = 0;
+			if (iRef == referencesKeypointTerm.length()) {
+				iRef = 0;
+				refPoint = update(refPoint, docToken.getSentenceIndex());
+			}
+
+			if (docToken.getText().toLowerCase().equals(String.valueOf(resultsKeyPointTerm.charAt(iRes))))
+				iRes++;
+			else
+				iRes = 0;
+
+			if (iRes == resultsKeyPointTerm.length()) {
+				iRes = 0;
 				refPoint = update(refPoint, docToken.getSentenceIndex());
 			}
 
@@ -632,7 +1202,7 @@ public class CollectExpGroupNames {
 		for (Finding finding : findings) {
 
 			Set<Finding> tokens = new HashSet<>();
-			for (String token : Arrays.asList(finding.finding.split("\\W"))) {
+			for (String token : Arrays.asList(finding.term.split("\\W"))) {
 
 				/**
 				 * HEURISTIC 3
@@ -643,11 +1213,7 @@ public class CollectExpGroupNames {
 				/**
 				 * HEURISTIC 4
 				 */
-				if (token.matches("[A-Z\\d]+s?")) {
-					tokens.add(new Finding(token, finding.pattern));
-				} else {
-					tokens.add(new Finding(token.toLowerCase(), finding.pattern));
-				}
+				tokens.add(new Finding(toLowerIfNotUpper(token), finding.pattern));
 			}
 
 			/**
@@ -655,7 +1221,7 @@ public class CollectExpGroupNames {
 			 */
 			for (Iterator<Finding> fi = tokens.iterator(); fi.hasNext();) {
 				Finding f = fi.next();
-				if (ALL_STOPWORDS.contains(f.finding)) {
+				if (ALL_STOPWORDS.contains(f.term)) {
 					fi.remove();
 				}
 
@@ -753,128 +1319,6 @@ public class CollectExpGroupNames {
 		}
 
 		return sb.toString().trim();
-	}
-
-	private void checkForCommonPhrases(Integer numberOfExpGroups, Instance instance) {
-
-		System.out.println("Searched number: " + numberOfExpGroups);
-
-		Pattern p1 = Pattern.compile("\\(n\\W?=\\W?[0-9]{1,2}(,|;)\\W?[A-Z]{2,5}(\\)|,|;)|n\\W?=\\W?[0-9]{1,2}");
-		Matcher m1 = p1.matcher(instance.getDocument().documentContent);
-		int n = 0;
-		while (m1.find()) {
-			n++;
-			System.out.println(m1.group());
-		}
-		System.out.println("Count n = x : " + n);
-
-		Pattern pg1 = Pattern.compile("\\W.{3,30}\\(n\\W?=\\W?[0-9]{1,2}\\)");
-		Matcher mg1 = pg1.matcher(instance.getDocument().documentContent);
-
-		Set<String> groups1 = new HashSet<>();
-		while (mg1.find()) {
-			n++;
-			System.out.println(mg1.group());
-			groups1.add(mg1.group());
-		}
-		System.out.println("Count groups1 : " + groups1.size());
-
-		Pattern p2 = Pattern.compile("(the|a|,|;|and)\\W.{3,30}\\W((((un)?treated|injured)(mice|rats|animals))|group)");
-		Matcher m2 = p2.matcher(instance.getDocument().documentContent);
-		Map<Set<String>, Integer> countBOW = new HashMap<>();
-		Set<String> groups = new HashSet<>();
-		while (m2.find()) {
-//			if (m2.group().length() > 30)
-//				continue;
-			System.out.println(m2.group());
-
-			groups.add(m2.group());
-
-			// if (m2.group().contains("the") && m2.group().contains("and"))
-//				continue;
-
-			Set<String> groupBOW = new HashSet<>(Arrays.asList(m2.group().split("\\s")));
-
-//			groupBOW.removeAll(STOPWORDS);
-
-//			if (groupBOW.contains("or"))
-//				continue;
-
-			countBOW.put(groupBOW, countBOW.getOrDefault(groupBOW, 0) + 1);
-
-		}
-		System.out.println("Count Groups : " + groups.size());
-
-		List<Entry<Set<String>, Integer>> sortBOW = new ArrayList<>(countBOW.entrySet());
-
-		Collections.sort(sortBOW, new Comparator<Entry<Set<String>, Integer>>() {
-
-			@Override
-			public int compare(Entry<Set<String>, Integer> o1, Entry<Set<String>, Integer> o2) {
-				return -Integer.compare(o1.getValue(), o2.getValue());
-			}
-
-		});
-		System.out.println("----------------");
-		sortBOW.forEach(System.out::println);
-
-		System.out.println("----------------");
-
-		Pattern p3 = Pattern.compile("\\(([1-9]|[ivIV]{1,2}|[a-zA-Z])\\)");
-		Matcher m3 = p3.matcher(instance.getDocument().documentContent);
-		Set<String> listings = new HashSet<>();
-		while (m3.find()) {
-			System.out.println(m3.group());
-			listings.add(m3.group());
-
-		}
-		System.out.println("Count listings : " + listings.size());
-
-		Pattern p4 = Pattern.compile("((fi)?rst|second|third|fourth|(fi)?fth|sixth|seventh)\\Wgroup");
-		Matcher m4 = p4.matcher(instance.getDocument().documentContent);
-		Set<String> enumerations = new HashSet<>();
-		while (m4.find()) {
-			System.out.println(m4.group());
-			enumerations.add(m4.group());
-
-		}
-		System.out.println("Count enumerations : " + enumerations.size());
-
-		Pattern p5 = Pattern.compile("(two|three|four|five|six|seven)\\W(experimental\\W)?groups");
-		Matcher m5 = p5.matcher(instance.getDocument().documentContent);
-		int c = 0;
-		while (m5.find()) {
-			System.out.println(m5.group());
-			c++;
-		}
-		System.out.println("Count Counts : " + c);
-
-		Pattern p6 = Pattern.compile("(sham|control)(\\((.{1,15})\\))?\\W(group|animals|controls?|)");
-		Matcher m6 = p6.matcher(instance.getDocument().documentContent);
-		Set<String> shams = new HashSet<>();
-		while (m6.find()) {
-			System.out.println(m6.group());
-			shams.add(m6.group());
-		}
-		System.out.println("Count Shams : " + shams.size());
-
-		Pattern p7 = Pattern.compile("(g|G)roup\\W\\(?([A-Z]?[1-9]|[ivIV]{1,2}|\\([a-zA-Z]\\))\\)? ");
-		Matcher m7 = p7.matcher(instance.getDocument().documentContent);
-		Set<String> gn = new HashSet<>();
-		while (m7.find()) {
-			System.out.println(m7.group());
-			gn.add(m7.group());
-		}
-		System.out.println("Count GroupNames : " + gn.size());
-
-		Pattern p8 = Pattern.compile("received.{1,20}inject.{1,5}");
-		Matcher m8 = p8.matcher(instance.getDocument().documentContent);
-		int rec = 0;
-		while (m8.find()) {
-			System.out.println(m8.group());
-			rec++;
-		}
-		System.out.println("Count received : " + rec);
 	}
 
 	public static boolean contains(String expSurfaceForm, String treatSurfaceForm) {
