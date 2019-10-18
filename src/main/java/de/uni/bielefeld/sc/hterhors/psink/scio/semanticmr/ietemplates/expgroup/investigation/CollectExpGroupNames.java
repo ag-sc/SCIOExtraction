@@ -193,7 +193,7 @@ public class CollectExpGroupNames {
 
 	static private final Map<String, String> treatMappings = new HashMap<>();
 	static {
-//		treatMappings.put("control", "vehicle");
+		treatMappings.put("control", "vehicle");
 		treatMappings.put("saline", "vehicle");
 	}
 
@@ -201,7 +201,7 @@ public class CollectExpGroupNames {
 			Arrays.asList("media", "single", "alone", "only", "control", "sham", "low", "high"));
 
 	private static final Set<String> ADDITIONAL_STOPWORDS = new HashSet<>(Arrays.asList("untreated", "is", "untrained",
-			"blank", "transplanted", "transection", "grafts", "normal", "injection", "injections", "cultured", "cords",
+			"transplantation","blank", "transplanted", "transection", "grafts", "normal", "injection", "injections", "cultured", "cords",
 			"uninfected", "injected", "additional", "ca", "observed", "grafted", "graft", "cells", "are", "effects",
 			"gray", "cord", "spinal", "identifi", "cation", "n", "treated", "treatment", "", "received", "the",
 			"injured", "all", "lesioned", "fi", "rst", "first", "second", "third", "fourth", "group", "animals", "rats",
