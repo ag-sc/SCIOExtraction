@@ -191,21 +191,15 @@ public class CollectExpGroupNames {
 		syns.put("OECM", "OEC");
 	}
 
-	static private final Map<String, String> treatMappings = new HashMap<>();
-	static {
-		treatMappings.put("control", "vehicle");
-		treatMappings.put("saline", "vehicle");
-	}
-
 	private static final Set<String> SPECIAL_KEEPWORDS = new HashSet<>(
 			Arrays.asList("media", "single", "alone", "only", "control", "sham", "low", "high"));
 
-	private static final Set<String> ADDITIONAL_STOPWORDS = new HashSet<>(Arrays.asList("untreated", "is", "untrained",
-			"transplantation","blank", "transplanted", "transection", "grafts", "normal", "injection", "injections", "cultured", "cords",
-			"uninfected", "injected", "additional", "ca", "observed", "grafted", "graft", "cells", "are", "effects",
-			"gray", "cord", "spinal", "identifi", "cation", "n", "treated", "treatment", "", "received", "the",
-			"injured", "all", "lesioned", "fi", "rst", "first", "second", "third", "fourth", "group", "animals", "rats",
-			"in", "same", "individual", "groups", "were"));
+	private static final Set<String> ADDITIONAL_STOPWORDS = new HashSet<>(Arrays.asList("transplantation", "untreated",
+			"is", "untrained", "blank", "transplanted", "transection", "grafts", "normal", "injection", "injections",
+			"cultured", "cords", "uninfected", "injected", "additional", "ca", "observed", "grafted", "graft", "cells",
+			"are", "effects", "gray", "cord", "spinal", "identifi", "cation", "n", "treated", "treatment", "",
+			"received", "the", "injured", "all", "lesioned", "fi", "rst", "first", "second", "third", "fourth", "group",
+			"animals", "rats", "in", "same", "individual", "groups", "were"));
 
 	private static Set<String> ALL_STOPWORDS;
 
@@ -294,7 +288,7 @@ public class CollectExpGroupNames {
 
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 
-//			if (!instance.getName().startsWith("N137"))
+//			if (!instance.getName().startsWith("N253"))
 //				continue;
 
 			System.out.println("########\t" + instance.getName() + "\t########");
@@ -344,19 +338,19 @@ public class CollectExpGroupNames {
 
 //			goldAnnotations.forEach(g -> System.out.println(g.toPrettyString()));
 //			System.out.println("--------");
-//			predictedAnnotationsBaseline.forEach(g -> System.out.println(g.toPrettyString()));
-//			System.out.println("--------");
 //			predictedAnnotationsHeuristics.forEach(g -> System.out.println(g.toPrettyString()));
+//			System.out.println("--------");
+//			predictedAnnotationsBaseline.forEach(g -> System.out.println(g.toPrettyString()));
 
 			List<Integer> randomBestAssignemnt = evaluator.getBestAssignment(goldAnnotations,
 					predictedAnnotationsBaseline);
-			Score simpleRandomS = simpleEvaluate(simpleEval, randomBestAssignemnt, goldAnnotations,
+			Score simpleRandomS = simpleEvaluate(false, simpleEval, randomBestAssignemnt, goldAnnotations,
 					predictedAnnotationsBaseline);
 			overallSimpleEvalRandomScore.add(simpleRandomS);
 			System.out.println("---");
 			List<Integer> heuristicBestAssignment = evaluator.getBestAssignment(goldAnnotations,
 					predictedAnnotationsHeuristics);
-			Score simpleHeuristicS = simpleEvaluate(simpleEval, heuristicBestAssignment, goldAnnotations,
+			Score simpleHeuristicS = simpleEvaluate(true, simpleEval, heuristicBestAssignment, goldAnnotations,
 					predictedAnnotationsHeuristics);
 			overallSimpleEvalHeuristicsScore.add(simpleHeuristicS);
 
@@ -387,7 +381,7 @@ public class CollectExpGroupNames {
 
 	}
 
-	private Score simpleEvaluate(NerlaEvaluator evaluator, List<Integer> bestAssignment,
+	private Score simpleEvaluate(boolean print, NerlaEvaluator evaluator, List<Integer> bestAssignment,
 			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotationsBaseline) {
 		Score simpleScore = new Score();
 
@@ -398,11 +392,25 @@ public class CollectExpGroupNames {
 			 */
 			List<AbstractAnnotation> goldTreatments = new ArrayList<>(
 					goldAnnotations.get(goldIndex).getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+
 			List<AbstractAnnotation> predictTreatments = new ArrayList<>(predictedAnnotationsBaseline.get(predictIndex)
 					.getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+			Score s;
+			if (goldTreatments.isEmpty() && predictTreatments.isEmpty())
+				s = new Score(1, 0, 0);
+			else
+				s = evaluator.prf1(goldTreatments, predictTreatments);
 
-			simpleScore.add(evaluator.prf1(goldTreatments, predictTreatments));
+			if (print && s.getF1() != 1.0D) {
+				System.out.println("Compare: g" + goldIndex);
+				goldTreatments.forEach(g -> System.out.println(g.toPrettyString()));
+				System.out.println("With: p" + predictIndex);
+				predictTreatments.forEach(p -> System.out.println(p.toPrettyString()));
+				System.out.println("Score: " + s);
+				System.out.println("-----");
+			}
 
+			simpleScore.add(s);
 			/*
 			 * OrganismModel
 			 */
@@ -488,6 +496,66 @@ public class CollectExpGroupNames {
 				expGroup.setSingleSlotFiller(SlotType.get("hasInjuryModel"), pickRandom(in, new Random()));
 			if (includeOrganismModels)
 				expGroup.setSingleSlotFiller(SlotType.get("hasOrganismModel"), pickRandom(or, new Random()));
+
+		}
+
+		/**
+		 * HEURISTIC findings contains injury/lesion & only/alone / non
+		 * 
+		 */
+		for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet().iterator(); it
+				.hasNext();) {
+
+			final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term).collect(Collectors.toSet());
+			if (keyWords.contains("non") || ((keyWords.contains("lesion") || keyWords.contains("injury"))
+					&& (keyWords.contains("only") || keyWords.contains("alone")))) {
+				it.remove();
+			}
+
+		}
+
+		/**
+		 * HEURISTIC if control + vehicle exist control is sham and vehicle is control.
+		 */
+		{
+			boolean containsVehicle = false;
+			boolean containsControl = false;
+			boolean containsSham = false;
+			for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet()
+					.iterator(); it.hasNext();) {
+
+				final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term).collect(Collectors.toSet());
+				containsVehicle |= keyWords.contains("vehicle");
+				containsControl |= keyWords.contains("control");
+				containsSham |= keyWords.contains("sham");
+
+			}
+			if (containsSham) {
+				for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet()
+						.iterator(); it.hasNext();) {
+					/*
+					 * Remove sham -> no treatment
+					 */
+					final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term)
+							.collect(Collectors.toSet());
+					if (keyWords.contains("sham"))
+						it.remove();
+
+				}
+			} else {
+				if (containsVehicle && containsControl) {
+					for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet()
+							.iterator(); it.hasNext();) {
+						final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term)
+								.collect(Collectors.toSet());
+						/*
+						 * remove control if vehicle also exists
+						 */
+						if (keyWords.contains("control"))
+							it.remove();
+					}
+				}
+			}
 		}
 
 		/**
@@ -556,21 +624,6 @@ public class CollectExpGroupNames {
 //			}
 //		}
 
-		/**
-		 * HEURISTIC findings contains injury/lesion & only/alone / non
-		 * 
-		 */
-		for (Iterator<Entry<Set<Finding>, EntityTemplate>> it = remainingPredictedAnnotations.entrySet().iterator(); it
-				.hasNext();) {
-
-			final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term).collect(Collectors.toSet());
-			if (keyWords.contains("non") || ((keyWords.contains("lesion") || keyWords.contains("injury"))
-					&& (keyWords.contains("only") || keyWords.contains("alone")))) {
-				it.remove();
-			}
-
-		}
-
 		if (remainingPredictedAnnotations.size() == 1) {
 			/**
 			 * HEURISTIC if just one remains add all treatments
@@ -622,9 +675,34 @@ public class CollectExpGroupNames {
 	 */
 	private Set<AbstractAnnotation> selectByHeuristic(Set<Finding> key, List<AbstractAnnotation> tr) {
 
-		List<AbstractAnnotation> sortedTreatments = new ArrayList<>(tr);
+		Set<String> keyWords = key.stream().map(k -> k.term).collect(Collectors.toSet());
 
-		Set<String> keyWords = unify(key.stream().map(k -> k.term).collect(Collectors.toSet()));
+		if (keyWords.contains("control")) {
+			keyWords.remove("control");
+			keyWords.add("vehicle");
+		}
+
+		/**
+		 * HEURISTIC Saline = Vehicle if vehicle does not exist.
+		 */
+		{
+			boolean containsVehicle = false;
+
+			for (AbstractAnnotation treatment : tr) {
+				Set<String> terms = unify(getTreatmentTerms(treatment));
+				containsVehicle |= terms.contains("vehicle");
+			}
+
+			/*
+			 * If no vehicle treatment exists take saline...
+			 */
+			if (!containsVehicle && keyWords.contains("vehicle")) {
+				keyWords.remove("vehicle");
+				keyWords.add("saline");
+			}
+		}
+
+		List<AbstractAnnotation> sortedTreatments = new ArrayList<>(tr);
 
 		Collections.sort(sortedTreatments, new Comparator<AbstractAnnotation>() {
 
@@ -654,7 +732,8 @@ public class CollectExpGroupNames {
 	 */
 	private Set<String> unify(Set<String> strings) {
 		return strings.stream().map(s -> toLowerIfNotUpper(s)).map(s -> toSingular(s))
-				.map(s -> treatMappings.getOrDefault(s, s)).collect(Collectors.toSet());
+				.map(term -> syns.getOrDefault(term, term)).collect(Collectors.toSet());
+
 	}
 
 	/**
@@ -833,7 +912,7 @@ public class CollectExpGroupNames {
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
-//			if (!instance.getName().startsWith("N137"))
+//			if (!instance.getName().startsWith("N253"))
 //				continue;
 
 			List<Finding> findings = new ArrayList<>();
@@ -1011,12 +1090,7 @@ public class CollectExpGroupNames {
 			 *
 			 * CLUSTER RULES:
 			 * 
-			 * control is often vehicle only?
-			 * 
 			 * single terms remove: encapsul*, transplantat*
-			 * 
-			 * 
-			 * transplantation as group in regex
 			 * 
 			 */
 
