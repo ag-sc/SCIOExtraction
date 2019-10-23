@@ -157,7 +157,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	public HardConstraintsProvider getHardConstraints() {
 		return new HardConstraintsProvider();
-	};
+	}
 
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
 		return Collections.emptyList();

@@ -71,8 +71,8 @@ public class FindInvestigationDuplicates {
 					String Id2 = a2.asInstanceOfEntityTemplate().getSingleFillerSlot("hasID").getSlotFiller()
 							.asInstanceOfLiteralAnnotation().getSurfaceForm();
 
-					a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasID")).removeFiller();
-					a2.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasID")).removeFiller();
+					a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasID")).clear();
+					a2.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasID")).clear();
 
 					if (a.equals(a2)) {
 						dups.putIfAbsent(Id1, new HashSet<>());

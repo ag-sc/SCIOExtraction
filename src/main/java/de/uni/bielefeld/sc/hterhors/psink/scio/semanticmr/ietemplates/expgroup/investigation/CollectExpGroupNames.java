@@ -20,6 +20,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.set.SynchronizedSet;
+
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -30,28 +32,56 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
 public class CollectExpGroupNames {
-	static class PatternIndexPair {
+	public static class PatternIndexPair {
 		public final int impact;
 		public final Pattern pattern;
 		public final int index;
 		private static Set<Integer> indicies = new HashSet<>();
+		public final List<Integer> groups;
+
+		public PatternIndexPair(int index, Set<Integer> groups, Pattern pattern) {
+			this.pattern = pattern;
+			this.index = index;
+			this.impact = 1;
+			this.groups = new ArrayList<>(groups);
+			Collections.sort(this.groups);
+			if (!indicies.add(index)) {
+				throw new IllegalArgumentException("Duplicate index: " + index);
+			}
+
+		}
+
+		public PatternIndexPair(int index, Set<Integer> groups, Pattern pattern, int impact) {
+			this.pattern = pattern;
+			this.impact = impact;
+//			this.impact = 1;
+			this.index = index;
+			this.groups = new ArrayList<>(groups);
+			Collections.sort(this.groups);
+			if (!indicies.add(index)) {
+				throw new IllegalArgumentException("Duplicate index: " + index);
+			}
+
+		}
 
 		public PatternIndexPair(int index, Pattern pattern) {
 			this.pattern = pattern;
 			this.index = index;
 			this.impact = 1;
+			this.groups = new ArrayList<>(new HashSet<>(Arrays.asList(0)));
+			Collections.sort(this.groups);
 			if (!indicies.add(index)) {
 				throw new IllegalArgumentException("Duplicate index: " + index);
 			}
@@ -61,8 +91,11 @@ public class CollectExpGroupNames {
 		public PatternIndexPair(int index, Pattern pattern, int impact) {
 			this.pattern = pattern;
 			this.impact = impact;
+//			this.impact = 1;
 			this.index = index;
+			this.groups = new ArrayList<>(new HashSet<>(Arrays.asList(0)));
 
+			Collections.sort(this.groups);
 			if (!indicies.add(index)) {
 				throw new IllegalArgumentException("Duplicate index: " + index);
 			}
@@ -115,7 +148,11 @@ public class CollectExpGroupNames {
 	public static void main(String[] args) throws Exception {
 		CollectExpGroupNames pg = new CollectExpGroupNames(new File("src/main/resources/slotfilling/corpus_docs.csv"));
 
+		/**
+		 * Based on regex
+		 */
 		Map<String, HashMap<Integer, Cluster>> clusters = pg.collectClusters();
+
 		Map<String, Set<AbstractAnnotation>> treatments = pg.getTreatments();
 		Map<String, Set<AbstractAnnotation>> orgModels = pg.getOrganismModels();
 		Map<String, Set<AbstractAnnotation>> injuries = pg.getInjuryModels();
@@ -148,7 +185,7 @@ public class CollectExpGroupNames {
 				if (expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).containsSlotFiller())
 					orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
 			}
-
+		
 			orgModelsPerDocument.put(instance.getName(), orgModels);
 
 		}
@@ -165,7 +202,7 @@ public class CollectExpGroupNames {
 				if (expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller())
 					injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
 			}
-
+			
 			injuriesPerDocument.put(instance.getName(), injuries);
 
 		}
@@ -307,21 +344,21 @@ public class CollectExpGroupNames {
 									.containsSlotFiller()))
 					.collect(Collectors.toList());
 
-			goldAnnotations.forEach(a -> a.getMultiFillerSlot("hasGroupName").removeFillers());
-			goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasNNumber").removeFiller());
+			goldAnnotations.forEach(a -> a.getMultiFillerSlot("hasGroupName").clear());
+			goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasNNumber").clear());
 
 			if (!includeInjuryModels)
-				goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasInjuryModel").removeFiller());
+				goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasInjuryModel").clear());
 			if (!includeOrganismModels)
-				goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasOrganismModel").removeFiller());
+				goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasOrganismModel").clear());
 
 			List<EntityTemplate> predictedAnnotationsBaseline = goldAnnotations.stream().map(a -> {
 				EntityTemplate clone = a.deepCopy();
-				clone.getSingleFillerSlot("hasNNumber").removeFiller();
-				clone.getMultiFillerSlot("hasGroupName").removeFillers();
-				clone.getSingleFillerSlot("hasInjuryModel").removeFiller();
-				clone.getSingleFillerSlot("hasOrganismModel").removeFiller();
-				clone.getMultiFillerSlot("hasTreatmentType").removeFillers();
+				clone.getSingleFillerSlot("hasNNumber").clear();
+				clone.getMultiFillerSlot("hasGroupName").clear();
+				clone.getSingleFillerSlot("hasInjuryModel").clear();
+				clone.getSingleFillerSlot("hasOrganismModel").clear();
+				clone.getMultiFillerSlot("hasTreatmentType").clear();
 				return clone;
 			}).collect(Collectors.toList());
 
@@ -507,7 +544,7 @@ public class CollectExpGroupNames {
 				.hasNext();) {
 
 			final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term).collect(Collectors.toSet());
-			if (keyWords.contains("non") || ((keyWords.contains("lesion") || keyWords.contains("injury"))
+			if (keyWords.contains("non") || ((keyWords.contains("laminectomy") || keyWords.contains("lesion") || keyWords.contains("injury"))
 					&& (keyWords.contains("only") || keyWords.contains("alone")))) {
 				it.remove();
 			}
@@ -851,64 +888,60 @@ public class CollectExpGroupNames {
 
 	}
 
+	public static final PatternIndexPair[] pattern = new PatternIndexPair[] { new PatternIndexPair(0,
+			Pattern.compile("(\\W)[\\w-\\+ '[^\\x20-\\x7E]]{3,20} (treated|grafted|transplanted|(un)?trained)(?=\\W)",
+					Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(1, Pattern.compile(
+					" ([\\w']+?( with | and | plus | ?(\\+|-|/) ?))*[\\w']+?(-|[^\\x20-\\x7E])(animals|mice|rats|cats|dogs|transplantation)",
+					Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(2, new HashSet<>(Arrays.asList(0, 1)),
+					Pattern.compile("([^ ]+? (with|and|plus| ?(\\+|-|/) ?) [^ ]+?) ?\\((n)\\W?=\\W?\\d{1,2}\\)",
+							Pattern.CASE_INSENSITIVE),
+					3),
+			new PatternIndexPair(3, new HashSet<>(Arrays.asList(0, 1)),
+					Pattern.compile("received both ([^ ]+ (with|/|and|plus| ?(\\+|-) ?) [^ ]+)",
+							Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(4, new HashSet<>(Arrays.asList(0, 3)),
+					Pattern.compile("((only|or) )?([a-z][^ ]+?) ?\\((n)\\W?=\\W?\\d{1,2}\\)", Pattern.CASE_INSENSITIVE),
+					5),
+			new PatternIndexPair(5, new HashSet<>(Arrays.asList(0, 2)),
+					Pattern.compile(
+							"(a|the|in) ([\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs|transplantation))",
+							Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(6, new HashSet<>(Arrays.asList(0, 3)),
+					Pattern.compile(
+							"(,( ?and ?)?|;)([\\w-\\+ ']{3,20} ?(group|animals|mice|rats|cats|dogs|transplantation))",
+							Pattern.CASE_INSENSITIVE),
+					2),
+			new PatternIndexPair(7, new HashSet<>(Arrays.asList(0, 2)), Pattern.compile(
+					"(\\)|;|:) ?((\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100})(\\( ?)?n\\W?=\\W?\\d{1,2}( ?\\))?(?=(,|\\.|;))",
+					Pattern.CASE_INSENSITIVE), 5),
+			new PatternIndexPair(8, new HashSet<>(Arrays.asList(0, 3)), Pattern.compile(
+					"in(jured)? (animals|mice|rats|cats|dogs).{1,10}(receiv.{3,20}(,|;|\\.| injections?| treatments?))",
+					Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(9, new HashSet<>(Arrays.asList(0, 2)), Pattern.compile(
+					"(the|a|\\)|in) ([\\w-\\+ ']{3,20} (treated|grafted|transplanted|(un)?trained) ((control |sham )?((injury )?(only )?))? (group|animals|mice|rats|cats|dogs|transplantation))",
+					Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(10, Pattern.compile(
+					"([\\w']+?( and | plus | ?(\\+|-|/|[^\\x20-\\x7E]) ?))*[\\w']+?(-|[^\\x20-\\x7E]| ){1,2}(treated\\W|grafted\\W|transplanted\\W|(un)?trained\\W)((control |sham )?((injury )?(only )?))?(group|transplantation|animals|mice|rats|cats|dogs)",
+					Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(11, Pattern.compile(
+					"((control |sham )?((injury )?(only )?))?(group|animals|mice|rats|cats|dogs) that were (treated|grafted|transplanted|(un)?trained) with.+? ",
+					Pattern.CASE_INSENSITIVE)),
+			new PatternIndexPair(12,
+					Pattern.compile("([\\w']+?( with | and | plus | ?(\\+|-|/) ?))*[\\w']+? ?treatment")),
+			new PatternIndexPair(13, Pattern.compile(
+					"((control|sham) ((injury )?(only )?))(treatment|grafting|transplantation|training|operation)")),
+
+	};
+
+	Pattern etAlPattern = Pattern.compile("et al");
+
 	private Map<String, HashMap<Integer, Cluster>> collectClusters() throws Exception {
 
-		String number = "(one|two|three|four|five|six|seven|eight|nine|ten|\\d{1,2})";
-		PatternIndexPair[] pattern = new PatternIndexPair[] {
-				new PatternIndexPair(0, Pattern.compile(
-						"(\\W)[\\w-\\+ '[^\\x20-\\x7E]]{3,20} (treated|grafted|transplanted|(un)?trained)(?=\\W)",
-						Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(1, Pattern.compile(
-						" ([\\w']+?( with | and | plus | ?(\\+|-|/) ?))*[\\w']+?(-|[^\\x20-\\x7E])(animals|mice|rats|cats|dogs|transplantation)",
-						Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(2,
-						Pattern.compile("[^ ]+? (with|and|plus| ?(\\+|-|/) ?) [^ ]+? ?\\((n)\\W?=\\W?\\d{1,2}\\)",
-								Pattern.CASE_INSENSITIVE),
-						3),
-				new PatternIndexPair(3,
-						Pattern.compile("received both [^ ]+ (with|/|and|plus| ?(\\+|-) ?) [^ ]+",
-								Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(4,
-						Pattern.compile("((only|or) )?[a-z][^ ]+? ?\\((n)\\W?=\\W?\\d{1,2}\\)",
-								Pattern.CASE_INSENSITIVE),
-						5),
-				new PatternIndexPair(5,
-						Pattern.compile(
-								"(a|the|in) [\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs|transplantation)",
-								Pattern.CASE_INSENSITIVE)),
-//				Pattern.compile("\\([A-Z][\\w-\\+']{2,30}\\)"),
-				new PatternIndexPair(6,
-						Pattern.compile(
-								"(,( ?and ?)?|;)[\\w-\\+ ']{3,20} ?(group|animals|mice|rats|cats|dogs|transplantation)",
-								Pattern.CASE_INSENSITIVE),
-						2),
-				new PatternIndexPair(7, Pattern.compile(
-						"(\\)|;|:) ?(\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100}(\\( ?)?n\\W?=\\W?\\d{1,2}( ?\\))?(?=(,|\\.|;))",
-//						"(\\)|;|:) ?(\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100}(\\( ?)?((n\\W?=\\W?\\d{1,2})|("+number +" ?(animals|mice|rats|cats|dogs)))( ?\\))?(?=(,|\\.|;))",
-						Pattern.CASE_INSENSITIVE), 5),
-				new PatternIndexPair(8, Pattern.compile(
-						"in(jured)? (animals|mice|rats|cats|dogs).{1,10}receiv.{3,20}(,|;|\\.| injections?| treatments?)",
-						Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(9, Pattern.compile(
-						"(the|a|\\)|in) [\\w-\\+ ']{3,20} (treated|grafted|transplanted|(un)?trained) ((control |sham )?((injury )?(only )?))? (group|animals|mice|rats|cats|dogs|transplantation)",
-						Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(10, Pattern.compile(
-						"([\\w']+?( and | plus | ?(\\+|-|/|[^\\x20-\\x7E]) ?))*[\\w']+?(-|[^\\x20-\\x7E]| ){1,2}(treated\\W|grafted\\W|transplanted\\W|(un)?trained\\W)((control |sham )?((injury )?(only )?))?(group|transplantation|animals|mice|rats|cats|dogs)",
-						Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(11, Pattern.compile(
-						"((control |sham )?((injury )?(only )?))?(group|animals|mice|rats|cats|dogs) that were (treated|grafted|transplanted|(un)?trained) with.+? ",
-						Pattern.CASE_INSENSITIVE)),
-				new PatternIndexPair(12,
-						Pattern.compile("([\\w']+?( with | and | plus | ?(\\+|-|/) ?))*[\\w']+? ?treatment")),
-				new PatternIndexPair(13, Pattern.compile(
-						"((control|sham) ((injury )?(only )?))(treatment|grafting|transplantation|training|operation)")),
-
-		};
-
-		Pattern etAlPattern = Pattern.compile("et al");
-		Map<String, Integer> countWords = new HashMap<>();
 		Map<String, HashMap<Integer, Cluster>> clustersPerInstance = new HashMap<>();
 
+		PatternIndexPair nullPattern = new PatternIndexPair(10000, Pattern.compile(""));
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
@@ -934,85 +967,49 @@ public class CollectExpGroupNames {
 			System.out.println("Number of OrganismModels :" + countOrganismModels.get(instance.getName()));
 			System.out.println("Number of Injuries :" + countInjuries.get(instance.getName()));
 			int i = 0;
-			for (PatternIndexPair p : pattern) {
-				System.out.println("Pattern " + p.index + ":\t" + p.pattern.pattern());
-				Matcher m = p.pattern.matcher(instance.getDocument().documentContent);
 
-				while (m.find()) {
-					Finding finding = new Finding(m.group(), p);
-					try {
-						int senIndex = instance.getDocument().getTokenByCharOffset(m.start()).getSentenceIndex();
-
-//						if(senIndex > referencePoint)
-//						continue;
-
-//						boolean cont = false;
-//						for (Integer keyPoint : keyPoints) {
-//							if (
-//									senIndex >= keyPoint 
-//									) {
-////								&& senIndex < keyPoint + 50) {
-//								cont = true;
-//								break;
-//							}
+			/**
+			 * TODO: Use Regexp or NPChunker
+			 */
+//			List<TermIndexPair> doubleGroupNames = new ArrayList<>();
 //
-//						}
+//			for (int j = 0; j < groupNames.size() - 1; j++) {
+//				for (int k = j + 1; k < groupNames.size(); k++) {
+//					if (groupNames.get(j).term.toLowerCase().equals(groupNames.get(k).term.toLowerCase())) {
+//						doubleGroupNames.add(groupNames.get(j));
+//						break;
+//					}
+//				}
+//			}
 //
-//						if (!cont) {
-//							System.out.println("OOB Discard: " + senIndex + "\t" + finding.term);
-//							continue;
-//						}
-
-						String sentence = listToString(instance.getDocument().getSentenceByIndex(senIndex));
-						if (etAlPattern.matcher(sentence).find()) {
-							System.out.println("ETAL Discard: " + senIndex + "\t" + finding.term);
-							continue;
-						}
-
-						for (String splits : finding.term.split("\\W")) {
-							countWords.put(splits, countWords.getOrDefault(splits, 0) + 1);
-						}
-
-						/**
-						 * HEURISTIC 0
-						 */
-						if (finding.term.matches("(the|with) (treated|grafted|transplanted|(un)?trained)")) {
-							continue;
-						}
-
-						/**
-						 * HEURISTIC 1
-						 */
-						List<Finding> splitFindings = new ArrayList<>();
-						for (String split : finding.term.trim().split("\\Wor\\W")) {
-							splitFindings.add(new Finding(split, finding.pattern));
-							System.out.println(senIndex + "\t" + split);
-						}
-
-						for (Finding splitF : splitFindings) {
-							/**
-							 * HEURISTIC 2
-							 */
-							if (p.index == 3)
-								/*
-								 * do not split and for explicit "and"-groups
-								 */
-								findings.add(splitF);
-							else
-								for (String split : splitF.term.trim().split("\\Wand\\W")) {
-									findings.add(new Finding(split, finding.pattern));
-									System.out.println(senIndex + "\t" + split);
-								}
-
-						}
-
-					} catch (DocumentLinkedAnnotationMismatchException ex) {
-
-					}
-
-				}
-				i++;
+//			doubleGroupNames.forEach(System.out::println);
+//
+			/**
+			 * HEURISTIC NPCHUNKS
+			 */
+			List<TermIndexPair> groupNames = new NPChunker(instance.getDocument()).getNPs();
+			for (TermIndexPair groupName : groupNames) {
+				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
+					addFinding(keyPoints, referencePoint, instance, findings, nullPattern, groupName.term,
+							groupName.index);
 			}
+
+//			/**
+//			 * HEURISTIC REG EX
+//			 */
+//			for (PatternIndexPair p : pattern) {
+//				System.out.println("Pattern i = " + p.index + ", group = " + p.groups + ":\t" + p.pattern.pattern());
+//				Matcher m = p.pattern.matcher(instance.getDocument().documentContent);
+//
+//				while (m.find()) {
+//					for (Integer group : p.groups) {
+//						System.out.print("Group: " + group + "\t");
+//						addFinding(keyPoints, referencePoint, instance, findings, p, m.group(group), m.start(group));
+//					}
+//
+//				}
+//				i++;
+//			}
 
 			List<Set<Finding>> BOWFindings = toBOWFindings(findings);
 
@@ -1084,16 +1081,6 @@ public class CollectExpGroupNames {
 				System.out.println(e.terms + "\t" + e.value);
 			}
 
-			/**
-			 * TODO: Implement cluster rules
-			 *
-			 *
-			 * CLUSTER RULES:
-			 * 
-			 * single terms remove: encapsul*, transplantat*
-			 * 
-			 */
-
 			System.out.println("----------------");
 			HashMap<Integer, Cluster> clusters = new HashMap<>();
 			for (int c = 0; c < countExpGroups.get(instance.getName()) && c < sortCountBow.size(); c++)
@@ -1147,7 +1134,7 @@ public class CollectExpGroupNames {
 						Collections.sort(sortCountBow);
 						for (int c = 0; c < countExpGroups.get(instance.getName()) && c < sortCountBow.size(); c++)
 							clusters.put(c, sortCountBow.get(c));
-						/*
+						/**
 						 * HEURISTIC Create new combination from two best non control cluster terms.
 						 */
 						Set<Finding> combineTerms = new HashSet<>();
@@ -1184,6 +1171,88 @@ public class CollectExpGroupNames {
 		}
 //		countWords.entrySet().forEach(e -> System.)out.println(e.getKey() + "\t" + e.getValue()));
 		return clustersPerInstance;
+	}
+
+	public void addFinding(Set<Integer> keyPoints, Integer referencePoint, Instance instance, List<Finding> findings,
+			PatternIndexPair p, String group, int start) {
+		Finding finding = new Finding(group, p);
+		try {
+			int senIndex = instance.getDocument().getTokenByCharOffset(start).getSentenceIndex();
+
+			/**
+			 * HEURISTIC reference
+			 */
+//			if (senIndex > referencePoint)
+//				return;
+
+			/**
+			 * HEURISTIC keypoints
+			 */
+//			boolean cont = false;
+//			for (Integer keyPoint : keyPoints) {
+//				if (senIndex >= keyPoint
+////						) {
+//						&& senIndex < keyPoint + 50) {
+//					cont = true;
+//					break;
+//				}
+//
+//			}
+//
+//			if (!cont) {
+//				System.out.println("OOB Discard: " + senIndex + "\t" + finding.term);
+//				return;
+//			}
+
+			/**
+			 * HEURISTIC et al discard
+			 */
+			String sentence = listToString(instance.getDocument().getSentenceByIndex(senIndex));
+			if (etAlPattern.matcher(sentence).find()) {
+//				System.out.println("ETAL Discard: " + senIndex + "\t" + finding.term);
+				return;
+			}
+
+			/**
+			 * HEURISTIC 0
+			 */
+			if (finding.term.matches("(the|with) (treated|grafted|transplanted|(un)?trained)")) {
+				return;
+			}
+
+			/**
+			 * HEURISTIC 1
+			 */
+			List<Finding> splitFindings = new ArrayList<>();
+//			if (false) {
+//				for (String split : finding.term.trim().split("\\Wor\\W")) {
+//					splitFindings.add(new Finding(split, finding.pattern));
+////				System.out.println(senIndex + "\t" + split);
+//				}
+//			} else {
+			splitFindings.add(finding);
+//			}
+
+			for (Finding splitF : splitFindings) {
+				/**
+				 * HEURISTIC 2
+				 */
+				if (p != null && p.index == 3)
+					/*
+					 * do not split and for explicit "and"-groups
+					 */
+					findings.add(splitF);
+				else
+					for (String split : splitF.term.trim().split("\\Wand\\W")) {
+						findings.add(new Finding(split, finding.pattern));
+//						System.out.println(senIndex + "\t" + split);
+					}
+
+			}
+
+		} catch (DocumentLinkedAnnotationMismatchException ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 
 	private boolean isControl(Cluster cluster) {
