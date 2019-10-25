@@ -61,9 +61,12 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.BOWCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrAllUsedTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrBOWTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.SlotIsFilledTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
@@ -97,7 +100,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
-//		Collections.shuffle(docs, new Random(100L));
+//		Collections.shuffle(docs, new Random());
 
 		List<String> trainingInstanceNames = docs.subList(0, 50);
 		List<String> testInstanceNames = docs.subList(50, docs.size());
@@ -190,13 +193,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		AdvancedLearner learner = getLearner();
 
-		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-
-		featureTemplates.add(new ExGrBOWTemplate());
-
-		featureTemplates.add(new ExGrAllUsedTemplate());
-
-		featureTemplates.add(new SlotIsFilledTemplate());
+		List<AbstractFeatureTemplate<?>> featureTemplates = getFeatureTemplates();
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
 
@@ -335,6 +332,24 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		System.out.println("Overall score = " + s);
 
 	}
+//	Overall score = Score [getF1()=0.729, getPrecision()=0.757, getRecall()=0.704, tp=202, fp=65, fn=85, tn=0]
+
+	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
+		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
+
+		featureTemplates.add(new TreatmentPriorTemplate());
+
+		featureTemplates.add(new TreatmentCardinalityTemplate());
+
+		featureTemplates.add(new ExGrBOWTemplate());
+
+		featureTemplates.add(new ExGrAllUsedTemplate());
+
+		featureTemplates.add(new SlotIsFilledTemplate());
+
+		featureTemplates.add(new BOWCardinalityTemplate());
+		return featureTemplates;
+	}
 
 	private Map<Instance, List<DocumentLinkedAnnotation>> annotateGroupNamesWithNPCHunksAndPattern(
 			List<Instance> instances) throws IOException {
@@ -426,15 +441,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //			a.asInstanceOfEntityTemplate().reduceRootToEntityType();
 //			return a;
 //		});
-//		goldModificationRules.add(a -> {
-//			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
-//			return a;
-//		});
 
-//		goldModificationRules.add(a -> {
-//			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
-//			return a;
-//		});
+		goldModificationRules.add(a -> {
+			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
+			return a;
+		});
+
+		goldModificationRules.add(a -> {
+			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
+			return a;
+		});
 
 //		goldModificationRules.add(a -> {
 //			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
@@ -542,7 +558,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private AdvancedLearner getLearner() {
-		return new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
+		return new AdvancedLearner(new SGD(0.0001, 0), new L2(0.0000000));
 	}
 
 	public void extractCandidatesFromGold(AnnotationCandidateRetrievalCollection candidateRetrieval,

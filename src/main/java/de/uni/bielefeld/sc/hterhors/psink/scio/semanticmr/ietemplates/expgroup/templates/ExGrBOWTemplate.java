@@ -1,6 +1,10 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +29,27 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
  * @date Nov 15, 2017
  */
 public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
+
+	private static final Set<String> SPECIAL_KEEPWORDS = new HashSet<>(
+			Arrays.asList("media", "single", "alone", "only", "control", "sham", "low", "high"));
+
+	private static final Set<String> ADDITIONAL_STOPWORDS = new HashSet<>(Arrays.asList("transplantation", "untreated",
+			"is", "untrained", "blank", "transplanted", "transection", "grafts", "normal", "injection", "injections",
+			"cultured", "cords", "uninfected", "injected", "additional", "ca", "observed", "grafted", "graft", "cells",
+			"are", "effects", "gray", "cord", "spinal", "identifi", "cation", "n", "treated", "treatment", "",
+			"received", "the", "injured", "all", "lesioned", "fi", "rst", "first", "second", "third", "fourth", "group",
+			"animals", "rats", "in", "same", "individual", "groups", "were"));
+	private static Set<String> ALL_STOPWORDS;
+
+	static {
+		try {
+			ALL_STOPWORDS = new HashSet<>(Files.readAllLines(new File("src/main/resources/top1000.csv").toPath()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ALL_STOPWORDS.addAll(ADDITIONAL_STOPWORDS);
+		ALL_STOPWORDS.removeAll(SPECIAL_KEEPWORDS);
+	}
 
 	static class BOWScope extends AbstractFactorScope {
 
@@ -147,47 +172,77 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 	public void generateFeatureVector(Factor<BOWScope> factor) {
 
 		/*
-		 * Overlap
-		 */
-		for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
-			int countOverlap = 0;
-			for (String expBOWTerm : factor.getFactorScope().expGroupBOW) {
-				if (typedBOW.bow.contains(expBOWTerm)) {
-//					factor.getFeatureVector().set("Cntxt: " + factor.getFactorScope().slotTypeContext.slotName
-//							+ ", OvrlpTrm: " + expBOWTerm + "-", true);
-//					factor.getFeatureVector().set("Cntxt: " + factor.getFactorScope().slotTypeContext.slotName
-//							+ ", Orgn: " + getOrigin(factor, typedBOW) + ", OvrlpTrm: " + expBOWTerm, true);
-					countOverlap++;
-				}
-			}
-
-			factor.getFeatureVector().set(
-					"Cntxt: " + factor.getFactorScope().slotTypeContext.slotName + ", CntOvrlp: " + countOverlap, true);
-
-		}
-
-		/*
 		 * Pair All
 		 */
-		for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
-			for (String typedBOWTerm : typedBOW.bow) {
-				for (String expBOWTerm : factor.getFactorScope().expGroupBOW) {
-					factor.getFeatureVector().set("Cntxt: " + factor.getFactorScope().slotTypeContext.slotName
-							+ ", TrmPr: " + expBOWTerm + "-" + typedBOWTerm, true);
+		for (String expBOWTerm : factor.getFactorScope().expGroupBOW) {
+			/*
+			 * Worse performance.
+			 */
+//			expBOWTerm = normalize(expBOWTerm);
 
-					factor.getFeatureVector()
-							.set("Cntxt: " + factor.getFactorScope().slotTypeContext.slotName + ", Orgn: "
-									+ getOrigin(factor, typedBOW) + ", TrmPr: (Ex)" + expBOWTerm + "\t" + typedBOWTerm,
-									true);
+			if (ALL_STOPWORDS.contains(expBOWTerm))
+				continue;
+
+			for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
+				for (String typedBOWTerm : typedBOW.bow) {
+
+//					typedBOWTerm = normalize(typedBOWTerm);
+
+					if (ALL_STOPWORDS.contains(typedBOWTerm))
+						continue;
+
+					factor.getFeatureVector().set("Context: " + factor.getFactorScope().slotTypeContext.slotName
+							+ ", TermPair: " + expBOWTerm + "\t" + typedBOWTerm, true);
+
+					/*
+					 * Worse performance.
+					 */
+//					factor.getFeatureVector()
+//							.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + "."
+//									+ getOrigin(factor, typedBOW) + ", TermPair: " + expBOWTerm + "\t" + typedBOWTerm,
+//									true);
 				}
 			}
 		}
-
 	}
 
-	public String getOrigin(Factor<BOWScope> factor, TypedBOW typedBOW) {
+	private String normalize(String expBOWTerm) {
+		return cutOff(toSingular(toLowerIfNotUpper(expBOWTerm)));
+	}
+
+	/**
+	 * TODO: Works as a simple stemmer / lemmatizer...
+	 * 
+	 * @param singular
+	 * @return
+	 */
+	private String cutOff(String singular) {
+		return singular.substring(0, Math.min(5, singular.length()));
+	}
+
+	private String toSingular(String finding) {
+		if (finding.endsWith("s"))
+			return finding.substring(0, finding.length() - 1);
+		if (finding.endsWith("ies"))
+			return finding.substring(0, finding.length() - 3) + "y";
+		return finding;
+	}
+
+	/**
+	 * Converts a string to lowercase if it is not in uppercase
+	 * 
+	 * @param s
+	 * @return
+	 */
+	private String toLowerIfNotUpper(String s) {
+		if (s.matches("[a-z]?[A-Z\\d\\W]+s?"))
+			return s;
+
+		return s.toLowerCase();
+	}
+
+	private String getOrigin(Factor<BOWScope> factor, TypedBOW typedBOW) {
 		return typedBOW.slotType != null ? typedBOW.slotType.slotName
 				: factor.getFactorScope().slotTypeContext.slotName;
 	}
-
 }

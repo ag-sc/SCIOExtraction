@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -19,17 +20,19 @@ public class BOWExtractor {
 
 		AbstractAnnotation rootAnnotation = annotation.getRootAnnotation();
 
+		final Set<String> bow = extractEntityTypeBOW(rootAnnotation.getEntityType());
 		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
-			typedBOW.add(
-					new TypedBOW(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()), null));
+			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));
 		}
+		typedBOW.add(new TypedBOW(bow, null));
 
 		final Map<SlotType, Set<AbstractAnnotation>> propertyAnnotations = annotation.filter().docLinkedAnnoation()
 				.multiSlots().singleSlots().merge().nonEmpty().build().getMergedAnnotations();
 
 		for (Entry<SlotType, Set<AbstractAnnotation>> prop : propertyAnnotations.entrySet()) {
 
-			Set<String> tmp = new HashSet<>();
+			Set<String> tmp = extractEntityTypeBOW(rootAnnotation.getEntityType());
+
 			for (AbstractAnnotation val : prop.getValue()) {
 				tmp.addAll(extractDocLinkedBOW(val.asInstanceOfDocumentLinkedAnnotation()));
 			}
@@ -41,12 +44,12 @@ public class BOWExtractor {
 		/*
 		 * Recursive search for terms.
 		 */
-//		for (Set<AbstractAnnotation> props : annotation.filter().entityTemplateAnnoation().multiSlots().singleSlots()
-//				.merge().nonEmpty().build().getMergedAnnotations().values()) {
-//			for (AbstractAnnotation prop : props) {
-//				typedBOW.addAll(extractTypedBOW(prop.asInstanceOfEntityTemplate()));
-//			}
-//		}
+		for (Set<AbstractAnnotation> props : annotation.filter().entityTemplateAnnoation().multiSlots().singleSlots()
+				.merge().nonEmpty().build().getMergedAnnotations().values()) {
+			for (AbstractAnnotation prop : props) {
+				typedBOW.addAll(extractTypedBOW(prop.asInstanceOfEntityTemplate()));
+			}
+		}
 
 		return typedBOW;
 	}
@@ -56,9 +59,17 @@ public class BOWExtractor {
 		for (DocumentToken docToken : docLinkedAnnotation.relatedTokens) {
 			bow.add(docToken.getText());
 		}
+		for (String docToken : docLinkedAnnotation.textualContent.surfaceForm.split("\\W")) {
+			bow.add(docToken);
+		}
+		return bow;
 
-		if (!docLinkedAnnotation.entityType.isLiteral) {
-			for (String part : camelCaseSplit(docLinkedAnnotation.entityType.entityName)) {
+	}
+
+	public static Set<String> extractEntityTypeBOW(EntityType entityType) {
+		Set<String> bow = new HashSet<>();
+		if (!entityType.isLiteral) {
+			for (String part : camelCaseSplit(entityType.entityName)) {
 				bow.add(part);
 			}
 		}
@@ -73,21 +84,20 @@ public class BOWExtractor {
 
 	public static Set<String> getExpGroupBOW(EntityTemplate experimentalGroup) {
 
-		final Set<String> bow;
-
 		final AbstractAnnotation rootAnnotation = experimentalGroup.getRootAnnotation();
 
+		final Set<String> bow = extractEntityTypeBOW(rootAnnotation.getEntityType());
+
 		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation())
-			bow = BOWExtractor.extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation());
-		else
-			bow = new HashSet<>();
+			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));
 
 		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot("hasGroupName").getSlotFiller()) {
-
 			if (groupName.isInstanceOfDocumentLinkedAnnotation())
 				bow.addAll(BOWExtractor.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation()));
 		}
 
 		return bow;
 	}
+	
+	
 }

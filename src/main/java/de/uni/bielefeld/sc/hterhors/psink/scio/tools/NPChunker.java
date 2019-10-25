@@ -46,7 +46,7 @@ public class NPChunker {
 
 	public static void main(String[] args) throws IOException {
 
-		NPChunker chunker = new NPChunker(new Document("test",
+		NPChunker chunker = new NPChunker(new Document("test2",
 				"Intrathecal spinal progenitor cell transplantation for the treatment of neurotrophic pain."));
 
 		chunker.getNPs().forEach(System.out::println);
