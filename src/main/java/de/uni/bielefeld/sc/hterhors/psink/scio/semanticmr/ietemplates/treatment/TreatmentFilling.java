@@ -111,8 +111,8 @@ public class TreatmentFilling {
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(TreatmentSpecs.systemsScopeReader).build();
 
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(0.1F)
-				.build();
+		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+				.setCorpusSizeFraction(0.1F).build();
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
@@ -125,24 +125,24 @@ public class TreatmentFilling {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		String modelName = "Treatment-2130861201";// + new Random().nextInt();
+		String modelName = "Treatment" + new Random().nextInt();
 
 		TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-//		predictor.trainOrLoadModel();
+		predictor.trainOrLoadModel();
 //
-//		predictor.evaluateOnDevelopment();
+		predictor.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(true);
+		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
 		log.info("Coverage Training: " + trainCoverage);
 
-//		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-//		log.info("Coverage Development: " + devCoverage);
+		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+		log.info("Coverage Development: " + devCoverage);
 
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the
