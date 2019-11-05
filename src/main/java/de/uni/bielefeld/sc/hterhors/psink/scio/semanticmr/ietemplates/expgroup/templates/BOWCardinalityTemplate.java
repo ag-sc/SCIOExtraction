@@ -89,15 +89,15 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 				continue;
 
 			final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
-//			Overall score = Score [getF1()=0.741, getPrecision()=0.767, getRecall()=0.716, tp=207, fp=63, fn=82, tn=0]
 
-//			if (expGroupBOW.contains("non") ||expGroupBOW.contains("sham") ||  ((expGroupBOW.contains("laminectomy") || expGroupBOW.contains("lesion")
-//					|| expGroupBOW.contains("injury"))
-//					&& (expGroupBOW.contains("only") || expGroupBOW.contains("alone")))) {
-			if (expGroupBOW.contains("non") || expGroupBOW.contains("control") || expGroupBOW.contains("sham")
-					|| expGroupBOW.contains("injury") || expGroupBOW.contains("lesion")
-					|| expGroupBOW.contains("laminectomy") || expGroupBOW.contains("only")
-					|| expGroupBOW.contains("alone") || expGroupBOW.contains("sham")) {
+			if (expGroupBOW.contains("non") || expGroupBOW.contains("sham")
+					|| ((expGroupBOW.contains("laminectomy") || expGroupBOW.contains("lesion")
+							|| expGroupBOW.contains("injury"))
+							&& (expGroupBOW.contains("only") || expGroupBOW.contains("alone")))) {
+//			if (expGroupBOW.contains("non") || expGroupBOW.contains("control") || expGroupBOW.contains("sham")
+//					|| expGroupBOW.contains("injury") || expGroupBOW.contains("lesion")
+//					|| expGroupBOW.contains("laminectomy") || expGroupBOW.contains("only")
+//					|| expGroupBOW.contains("alone") || expGroupBOW.contains("sham")) {
 
 				factors.add(new BOWCardScope(this, expGroupBOW,
 						experimentalGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().size()));

@@ -178,7 +178,7 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 			/*
 			 * Worse performance.
 			 */
-//			expBOWTerm = normalize(expBOWTerm);
+			expBOWTerm = normalize(expBOWTerm);
 
 			if (ALL_STOPWORDS.contains(expBOWTerm))
 				continue;
@@ -186,7 +186,7 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 			for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
 				for (String typedBOWTerm : typedBOW.bow) {
 
-//					typedBOWTerm = normalize(typedBOWTerm);
+					typedBOWTerm = normalize(typedBOWTerm);
 
 					if (ALL_STOPWORDS.contains(typedBOWTerm))
 						continue;
@@ -194,30 +194,13 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 					factor.getFeatureVector().set("Context: " + factor.getFactorScope().slotTypeContext.slotName
 							+ ", TermPair: " + expBOWTerm + "\t" + typedBOWTerm, true);
 
-					/*
-					 * Worse performance.
-					 */
-//					factor.getFeatureVector()
-//							.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + "."
-//									+ getOrigin(factor, typedBOW) + ", TermPair: " + expBOWTerm + "\t" + typedBOWTerm,
-//									true);
 				}
 			}
 		}
 	}
 
 	private String normalize(String expBOWTerm) {
-		return cutOff(toSingular(toLowerIfNotUpper(expBOWTerm)));
-	}
-
-	/**
-	 * TODO: Works as a simple stemmer / lemmatizer...
-	 * 
-	 * @param singular
-	 * @return
-	 */
-	private String cutOff(String singular) {
-		return singular.substring(0, Math.min(5, singular.length()));
+		return toSingular(toLowerIfNotUpper(expBOWTerm));
 	}
 
 	private String toSingular(String finding) {

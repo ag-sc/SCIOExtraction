@@ -57,11 +57,13 @@ public class BOWExtractor {
 	public static Set<String> extractDocLinkedBOW(DocumentLinkedAnnotation docLinkedAnnotation) {
 		Set<String> bow = new HashSet<>();
 		for (DocumentToken docToken : docLinkedAnnotation.relatedTokens) {
+//			if (docToken.isPunctuation() || docToken.isStopWord())
+//				continue;
 			bow.add(docToken.getText());
 		}
-		for (String docToken : docLinkedAnnotation.textualContent.surfaceForm.split("\\W")) {
-			bow.add(docToken);
-		}
+//		for (String docToken : docLinkedAnnotation.textualContent.surfaceForm.split("\\W")) {
+//			bow.add(docToken);
+//		}
 		return bow;
 
 	}
@@ -98,6 +100,5 @@ public class BOWExtractor {
 
 		return bow;
 	}
-	
-	
+
 }

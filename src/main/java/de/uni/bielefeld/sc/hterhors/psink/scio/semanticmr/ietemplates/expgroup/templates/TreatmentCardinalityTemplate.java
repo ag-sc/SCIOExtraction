@@ -9,16 +9,16 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate.ContainsCycloprospineScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate.TreatmentCardinalityScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<ContainsCycloprospineScope> {
+public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<TreatmentCardinalityScope> {
 
-	static class ContainsCycloprospineScope extends AbstractFactorScope {
+	static class TreatmentCardinalityScope extends AbstractFactorScope {
 
 		final EntityType entityType;
 		final int numOfTreatments;
@@ -40,7 +40,7 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Contai
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			ContainsCycloprospineScope other = (ContainsCycloprospineScope) obj;
+			TreatmentCardinalityScope other = (TreatmentCardinalityScope) obj;
 			if (entityType == null) {
 				if (other.entityType != null)
 					return false;
@@ -51,7 +51,7 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Contai
 			return true;
 		}
 
-		public ContainsCycloprospineScope(AbstractFeatureTemplate<?> template, EntityType entityType,
+		public TreatmentCardinalityScope(AbstractFeatureTemplate<?> template, EntityType entityType,
 				int numOfTreatments) {
 			super(template);
 			this.entityType = entityType;
@@ -75,8 +75,8 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Contai
 	private static final String PREFIX = "TrtPr\t";
 
 	@Override
-	public List<ContainsCycloprospineScope> generateFactorScopes(State state) {
-		List<ContainsCycloprospineScope> factors = new ArrayList<>();
+	public List<TreatmentCardinalityScope> generateFactorScopes(State state) {
+		List<TreatmentCardinalityScope> factors = new ArrayList<>();
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
@@ -87,13 +87,13 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Contai
 					.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
 					.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound"))
 					.filter(s -> s.containsSlotFiller()).forEach(a -> {
-						factors.add(new ContainsCycloprospineScope(this, a.getSlotFiller().getEntityType(),
+						factors.add(new TreatmentCardinalityScope(this, a.getSlotFiller().getEntityType(),
 								experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().size()));
 					});
 
 			experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().stream()
 					.filter(a -> a.getEntityType() != EntityType.get("CompoundTreatment")).forEach(a -> {
-						factors.add(new ContainsCycloprospineScope(this, a.getEntityType(),
+						factors.add(new TreatmentCardinalityScope(this, a.getEntityType(),
 								experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().size()));
 					});
 
@@ -103,8 +103,10 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Contai
 	}
 
 	@Override
-	public void generateFeatureVector(Factor<ContainsCycloprospineScope> factor) {
+	public void generateFeatureVector(Factor<TreatmentCardinalityScope> factor) {
 
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.entityName + ", num > 1",
+				factor.getFactorScope().numOfTreatments > 1);
 		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.entityName + ", num != 1",
 				factor.getFactorScope().numOfTreatments != 1);
 		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.entityName + ", num == "

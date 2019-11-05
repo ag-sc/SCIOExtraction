@@ -58,7 +58,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaAnnotations() {
-		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/organism_model/corpus/nerla/");
+//		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/organism_model/corpus/nerla/");
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/Normal/");
 //		 final File externalNerlaAnnotations = new File(
@@ -69,8 +69,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 //				"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
-//		 final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
+		 final File externalNerlaAnnotations = new File(
+				"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
 		return externalNerlaAnnotations;
 	}

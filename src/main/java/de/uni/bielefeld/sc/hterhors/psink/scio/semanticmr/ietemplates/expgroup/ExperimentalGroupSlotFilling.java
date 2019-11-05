@@ -66,7 +66,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrBOWTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.SlotIsFilledTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.Word2VecClusterTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
@@ -120,7 +120,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
 
-		String rand = String.valueOf(new Random().nextInt());
+		Set<String> terms = new HashSet<>();
+
+		terms.addAll(trainingInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
+				.collect(Collectors.toSet()));
+		terms.addAll(devInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
+				.collect(Collectors.toSet()));
+		terms.addAll(testInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
+				.collect(Collectors.toSet()));
+
+		String rand = String.valueOf(new Random().nextInt(100000));
 
 		/*
 		 * Initialize candidate provider for search space exploration.
@@ -195,8 +204,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<AbstractFeatureTemplate<?>> featureTemplates = getFeatureTemplates();
 
-		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
-
 		Map<Instance, Map<SlotType, Integer>> numberToPredictParameter = new HashMap<>();
 		for (Instance instance : instanceProvider.getInstances()) {
 			numberToPredictParameter.put(instance, new HashMap<>());
@@ -207,8 +214,22 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			numberToPredictParameter.get(instance).put(SlotType.get("hasTreatmentType"),
 					extractGoldTreatments(instance).size());
 		}
-
+		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
 		parameter.put(ExGrAllUsedTemplate.class, new Object[] { numberToPredictParameter });
+//		Overall score = Score [getF1()=0.706, getPrecision()=0.702, getRecall()=0.710, tp=203, fp=86, fn=83, tn=0]
+//		parameter.put(Word2VecClusterTemplate.class,
+//				new Object[] { new File("wordvector/kmeans_200_ranking_old.vec") });
+
+//		Overall score = Score [getF1()=0.687, getPrecision()=0.669, getRecall()=0.706, tp=202, fp=100, fn=84, tn=0]
+//		parameter.put(Word2VecClusterTemplate.class,
+//				new Object[] { new File("wordvector/small_kmeans_200_ranking_old.vec") });
+
+//		Overall score = Score [getF1()=0.636, getPrecision()=0.677, getRecall()=0.599, tp=172, fp=82, fn=115, tn=0]
+		parameter.put(Word2VecClusterTemplate.class, new Object[] { new File("wordvector/kmeans_200_ranking.vec"),
+				new File("wordvector/kmeans_200_distances.vec") });
+
+//		 parameter.put(Word2VecClusterTemplate.class,
+//				new Object[] { new File("wordvector/kmeans_1000_ranking.vec"),new File("wordvector/kmeans_1000_distances.vec") });
 		/**
 		 * Number of epochs, the system should train.
 		 * 
@@ -227,7 +248,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * NOTE: Make sure that the base model directory exists!
 		 */
 		final File modelBaseDir = getModelBaseDir();
-		final String modelName = "ExperimentalGroup" + new Random().nextInt(100000);
+		final String modelName = "ExperimentalGroup" + rand;
 
 		Model model;
 
@@ -332,22 +353,25 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		System.out.println("Overall score = " + s);
 
 	}
-//	Overall score = Score [getF1()=0.729, getPrecision()=0.757, getRecall()=0.704, tp=202, fp=65, fn=85, tn=0]
 
 	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
+//		Overall score = Score [getF1()=0.740, getPrecision()=0.766, getRecall()=0.715, tp=206, fp=63, fn=82, tn=0]
+		featureTemplates.add(new BOWCardinalityTemplate());
+//		featureTemplates.add(new TreatmentPriorTemplate());
 
-		featureTemplates.add(new TreatmentPriorTemplate());
-
+//		Overall score = Score [getF1()=0.707, getPrecision()=0.731, getRecall()=0.685, tp=198, fp=73, fn=91, tn=0]
 		featureTemplates.add(new TreatmentCardinalityTemplate());
 
+//		Overall score = Score [getF1()=0.697, getPrecision()=0.682, getRecall()=0.712, tp=208, fp=97, fn=84, tn=0]
 		featureTemplates.add(new ExGrBOWTemplate());
 
+//		Overall score = Score [getF1()=0.713, getPrecision()=0.742, getRecall()=0.685, tp=196, fp=68, fn=90, tn=0]
 		featureTemplates.add(new ExGrAllUsedTemplate());
-
 		featureTemplates.add(new SlotIsFilledTemplate());
 
-		featureTemplates.add(new BOWCardinalityTemplate());
+//		featureTemplates.add(new Word2VecClusterTemplate());
+
 		return featureTemplates;
 	}
 

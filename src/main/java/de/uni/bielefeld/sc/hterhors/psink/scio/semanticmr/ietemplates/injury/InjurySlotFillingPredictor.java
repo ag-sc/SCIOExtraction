@@ -89,11 +89,9 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaAnnotations() {
-		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
-//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
+//		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
+		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
-//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/InjuryNew/Normal/");
-//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/InjuryNew/HighRecall20/");
 		return externalNerlaAnnotations;
 	}
 

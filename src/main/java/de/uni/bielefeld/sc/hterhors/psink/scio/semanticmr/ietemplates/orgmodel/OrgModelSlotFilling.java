@@ -141,7 +141,6 @@ public class OrgModelSlotFilling {
 		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
 		log.info("Coverage Development: " + devCoverage);
 
-		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictAllInstances();
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the
 		 * objective mean score that can be reached relying on greedy objective function
@@ -155,35 +154,36 @@ public class OrgModelSlotFilling {
 		 * more sophisticated feature-templates.
 		 */
 
-		int docID = 0;
-		for (Entry<String, Set<AbstractAnnotation>> annotations : organismModelAnnotations.entrySet()) {
-
-			SantoAnnotations collectRDF = new SantoAnnotations(new HashSet<>(), new HashMap<>());
-			for (AbstractAnnotation annotation : annotations.getValue()) {
-
-				AnnotationsToSantoAnnotations.collectRDF(annotation, collectRDF, "http://scio/data/",
-						"http://psink.de/scio/");
-
-			}
-			PrintStream psRDF = new PrintStream(
-					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.n-triples");
-			PrintStream psAnnotation = new PrintStream(
-					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.annodb");
-//			PrintStream psDocument = new PrintStream("unroll/organismmodel/" + annotations.getKey() + "_export.csv");
-
-			List<String> c = new ArrayList<>(collectRDF.getRdf().stream().collect(Collectors.toList()));
-			List<String> c2 = new ArrayList<>(collectRDF.getAnnodb().stream().collect(Collectors.toList()));
-			Collections.sort(c);
-			Collections.sort(c2);
-			c.forEach(psRDF::println);
-			c2.forEach(psAnnotation::println);
-			psAnnotation.close();
-			psRDF.close();
-
-//			psDocument.print(toCSV(docID, instance.getDocument().tokenList));
-//			psDocument.close();
-			docID++;
-		}
+//		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictAllInstances();
+//		int docID = 0;
+//		for (Entry<String, Set<AbstractAnnotation>> annotations : organismModelAnnotations.entrySet()) {
+//
+//			SantoAnnotations collectRDF = new SantoAnnotations(new HashSet<>(), new HashMap<>());
+//			for (AbstractAnnotation annotation : annotations.getValue()) {
+//
+//				AnnotationsToSantoAnnotations.collectRDF(annotation, collectRDF, "http://scio/data/",
+//						"http://psink.de/scio/");
+//
+//			}
+//			PrintStream psRDF = new PrintStream(
+//					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.n-triples");
+//			PrintStream psAnnotation = new PrintStream(
+//					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.annodb");
+////			PrintStream psDocument = new PrintStream("unroll/organismmodel/" + annotations.getKey() + "_export.csv");
+//
+//			List<String> c = new ArrayList<>(collectRDF.getRdf().stream().collect(Collectors.toList()));
+//			List<String> c2 = new ArrayList<>(collectRDF.getAnnodb().stream().collect(Collectors.toList()));
+//			Collections.sort(c);
+//			Collections.sort(c2);
+//			c.forEach(psRDF::println);
+//			c2.forEach(psAnnotation::println);
+//			psAnnotation.close();
+//			psRDF.close();
+//
+////			psDocument.print(toCSV(docID, instance.getDocument().tokenList));
+////			psDocument.close();
+//			docID++;
+//		}
 
 	}
 }

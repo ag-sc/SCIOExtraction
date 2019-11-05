@@ -81,9 +81,9 @@ public class InjurySlotFilling {
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope, trainingInstanceNames,
 				developInstanceNames, testInstanceNames);
 
-//		predictor.trainOrLoadModel();
+		predictor.trainOrLoadModel();
 
-//		predictor.evaluateOnDevelopment();
+		predictor.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
