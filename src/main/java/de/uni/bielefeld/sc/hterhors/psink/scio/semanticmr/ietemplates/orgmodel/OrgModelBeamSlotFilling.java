@@ -32,7 +32,6 @@ import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
 import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.IBeamSamplingStoppingCriterion;
-import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -79,7 +78,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		new OrgModelBeamSlotFilling();
 	}
 
-	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFilling.class);
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	/**
 	 * File of additional hard constraints during exploration. There are different
@@ -101,8 +100,8 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 	 * each instance. These annotations are used as candidate retrieval during the
 	 * search space exploration.
 	 */
-	private final File externalNerlaAnnotations = new File(
-			"src/main/resources/slotfilling/organism_model/corpus/nerla/");
+//	private final File externalNerlaAnnotations = new File(
+//			"src/main/resources/slotfilling/organism_model/corpus/nerla/");
 //	private final File externalNerlaAnnotations = new File(
 //			"src/main/resources/slotfilling/organism_model/corpus/Normal/");
 //	private final File externalNerlaAnnotations = new File(
@@ -113,8 +112,8 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 //			"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
 //	private final File externalNerlaAnnotations = new File(
 //			"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
-//	private final File externalNerlaAnnotations = new File(
-//			"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
+	private final File externalNerlaAnnotations = new File(
+			"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
 	public OrgModelBeamSlotFilling() {
 
@@ -161,8 +160,8 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * instance assignment during development.
 		 * 
 		 */
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.build();
+		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+				.setCorpusSizeFraction(1F).build();
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.setTrainingProportion(80).setTestProportion(20).setDevelopmentProportion(20).setSeed(300L).build();
 
@@ -359,7 +358,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * 
 		 * TODO: Find perfect number of epochs.
 		 */
-		int numberOfEpochs = 10;
+		int numberOfEpochs = 2;
 
 		/**
 		 * Sampling strategy that defines how the system should be trained. We
@@ -437,7 +436,6 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 			}
 
 			public boolean check(List<State> producedStateChain) {
-				
 
 				final double latestValue = f.apply(producedStateChain.get(producedStateChain.size() - 1));
 
@@ -487,7 +485,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
 		SemanticParsingBeamCRF crf = new SemanticParsingBeamCRF(model, explorerList, sampler, stateInitializer,
-				objectiveFunction, 4);
+				objectiveFunction, 10);
 
 		/**
 		 * Chose a different evaluation for prediction than for training. During

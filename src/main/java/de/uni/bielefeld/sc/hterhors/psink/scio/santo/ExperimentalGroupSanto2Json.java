@@ -29,13 +29,12 @@ public class ExperimentalGroupSanto2Json {
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
-
 	public static void main(String[] args) throws IOException {
 
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(ResultSpecifications.systemsScope).build();
 
-		final String dir = "rawData/export_" +ResultSanto2Json.exportDate + "/";
+		final String dir = "rawData/export_" + ResultSanto2Json.exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
@@ -49,14 +48,14 @@ public class ExperimentalGroupSanto2Json {
 
 //				if (!name.startsWith("N001"))
 //					continue;
-				
+
 				log.info(name + " convert...");
 
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_export.csv"),
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
-						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
-						resourceNameSpace);
+						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"),
+						scioNameSpace, resourceNameSpace);
 
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");

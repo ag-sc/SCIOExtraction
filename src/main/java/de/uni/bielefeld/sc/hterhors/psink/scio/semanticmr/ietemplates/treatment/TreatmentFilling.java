@@ -67,22 +67,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPart
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
 /**
- * Slot filling for organism models.
- *
- * 
- * Mean Score: Score [getF1()=0.396, getPrecision()=0.587, getRecall()=0.299,
- * tp=148, fp=104, fn=347, tn=0]
- *
- * CRFStatistics [context=Train, getTotalDuration()=2534645]
- * 
- * CRFStatistics [context=Test, getTotalDuration()=133857]
- * 
- * Coverage Training: Score [getF1()=0.844, getPrecision()=0.985,
- * getRecall()=0.739, tp=1207, fp=19, fn=426, tn=0]
- * 
- * Coverage Development: Score [getF1()=0.836, getPrecision()=0.994,
- * getRecall()=0.721, tp=357, fp=2, fn=138, tn=0]
- * 
  * 
  * @author hterhors
  *
@@ -112,7 +96,7 @@ public class TreatmentFilling {
 				.addScopeSpecification(TreatmentSpecs.systemsScopeReader).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
-				.setCorpusSizeFraction(0.1F).build();
+				.setCorpusSizeFraction(1F).build();
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
@@ -125,21 +109,22 @@ public class TreatmentFilling {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		String modelName = "Treatment" + new Random().nextInt();
+		String modelName = "Treatment819785968";
+//		String modelName = "Treatment" + new Random().nextInt();
 
 		TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
 		predictor.trainOrLoadModel();
-//
+
 		predictor.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-		log.info("Coverage Training: " + trainCoverage);
+//		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//		log.info("Coverage Training: " + trainCoverage);
 
 		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
 		log.info("Coverage Development: " + devCoverage);

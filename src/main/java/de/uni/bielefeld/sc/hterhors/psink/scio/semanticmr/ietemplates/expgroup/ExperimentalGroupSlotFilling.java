@@ -1,7 +1,11 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,6 +95,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private InstanceProvider instanceProvider;
 
+	
 	public ExperimentalGroupSlotFilling() throws IOException {
 		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.apply().registerNormalizationFunction(new WeightNormalization())
@@ -119,15 +124,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<Instance> trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
-
-		Set<String> terms = new HashSet<>();
-
-		terms.addAll(trainingInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
-				.collect(Collectors.toSet()));
-		terms.addAll(devInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
-				.collect(Collectors.toSet()));
-		terms.addAll(testInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
-				.collect(Collectors.toSet()));
 
 		String rand = String.valueOf(new Random().nextInt(100000));
 
@@ -225,7 +221,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //				new Object[] { new File("wordvector/small_kmeans_200_ranking_old.vec") });
 
 //		Overall score = Score [getF1()=0.636, getPrecision()=0.677, getRecall()=0.599, tp=172, fp=82, fn=115, tn=0]
-		parameter.put(Word2VecClusterTemplate.class, new Object[] { new File("wordvector/kmeans_200_ranking.vec"),
+		parameter.put(Word2VecClusterTemplate.class, new Object[] { new File("wordvector/small_kmeans++_200_ranking.vec"),
 				new File("wordvector/kmeans_200_distances.vec") });
 
 //		 parameter.put(Word2VecClusterTemplate.class,
@@ -370,7 +366,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		featureTemplates.add(new ExGrAllUsedTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
 
-//		featureTemplates.add(new Word2VecClusterTemplate());
+		featureTemplates.add(new Word2VecClusterTemplate());
 
 		return featureTemplates;
 	}
@@ -466,16 +462,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //			return a;
 //		});
 
-		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
-			return a;
-		});
-
-		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
-			return a;
-		});
-
+//		goldModificationRules.add(a -> {
+//			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
+//			return a;
+//		});
+//
+//		goldModificationRules.add(a -> {
+//			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
+//			return a;
+//		});
+//
 //		goldModificationRules.add(a -> {
 //			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
 //			return a;

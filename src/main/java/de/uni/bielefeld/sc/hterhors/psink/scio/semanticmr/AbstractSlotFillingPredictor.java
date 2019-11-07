@@ -42,6 +42,7 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -61,11 +62,18 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	public final String modelName;
 	public final Map<String, Set<AbstractAnnotation>> annotations = new HashMap<>();
+
 	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED, 10));
 
 	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
+//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+//	
+//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+
 	protected final InstanceProvider instanceProvider;
 
 	protected final List<String> trainingInstanceNames;
@@ -98,7 +106,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
 		 */
-		InstanceProvider.maxNumberOfAnnotations = CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE;
+//		InstanceProvider.maxNumberOfAnnotations = CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE;
 
 		/**
 		 * And remove all instances that exceeds the maximum number.

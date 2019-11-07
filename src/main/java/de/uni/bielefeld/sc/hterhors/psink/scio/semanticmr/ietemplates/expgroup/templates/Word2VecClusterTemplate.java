@@ -34,11 +34,20 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow.TypedBOW;
 
 public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
-
+//	Set<String> terms = new HashSet<>();
+//
+//	terms.addAll(trainingInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
+//			.collect(Collectors.toSet()));
+//	terms.addAll(devInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
+//			.collect(Collectors.toSet()));
+//	terms.addAll(testInstances.stream().flatMap(t -> t.getDocument().tokenList.stream()).map(t -> t.getText())
+//			.collect(Collectors.toSet()));
+//
+//	wordVecReduce(terms);
 //	private void wordVecReduce(Set<String> terms) throws FileNotFoundException {
-//		PrintStream ps = new PrintStream(new File("wordvector/small_kmeans_200_ranking_old.vec"));
+//		PrintStream ps = new PrintStream(new File("wordvector/small_kmeans++_200_ranking.vec"));
 //		try {
-//			BufferedReader br = new BufferedReader(new FileReader(new File("wordvector/kmeans_200_ranking_old.vec")));
+//			BufferedReader br = new BufferedReader(new FileReader(new File("wordvector/kmeans++_200_ranking.vec")));
 //
 //			String line = null;
 //
@@ -245,31 +254,6 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 		factors.add(new W2VScope(this, slotType, expGroupBOW, propertyBOW));
 	}
 
-	private String normalize(String expBOWTerm) {
-		return toSingular(toLowerIfNotUpper(expBOWTerm));
-	}
-
-	private String toSingular(String finding) {
-		if (finding.endsWith("s"))
-			return finding.substring(0, finding.length() - 1);
-		if (finding.endsWith("ies"))
-			return finding.substring(0, finding.length() - 3) + "y";
-		return finding;
-	}
-
-	/**
-	 * Converts a string to lowercase if it is not in uppercase
-	 * 
-	 * @param s
-	 * @return
-	 */
-	private String toLowerIfNotUpper(String s) {
-		if (s.matches("[a-z]?[A-Z\\d\\W]+s?"))
-			return s;
-
-		return s.toLowerCase();
-	}
-
 	@Override
 	public void generateFeatureVector(Factor<W2VScope> factor) {
 
@@ -318,6 +302,31 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 				}
 			}
 		}
+	}
+
+	private String normalize(String expBOWTerm) {
+		return toSingular(toLowerIfNotUpper(expBOWTerm));
+	}
+
+	private String toSingular(String finding) {
+		if (finding.endsWith("s"))
+			return finding.substring(0, finding.length() - 1);
+		if (finding.endsWith("ies"))
+			return finding.substring(0, finding.length() - 3) + "y";
+		return finding;
+	}
+
+	/**
+	 * Converts a string to lowercase if it is not in uppercase
+	 * 
+	 * @param s
+	 * @return
+	 */
+	private String toLowerIfNotUpper(String s) {
+		if (s.matches("[a-z]?[A-Z\\d\\W]+s?"))
+			return s;
+
+		return s.toLowerCase();
 	}
 
 	private String getOrigin(Factor<W2VScope> factor, TypedBOW typedBOW) {
