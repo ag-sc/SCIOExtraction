@@ -11,7 +11,7 @@ import java.util.Set;
 public class MergeNTriples {
 
 	public static void main(String[] args) throws IOException {
-		new MergeNTriples(new File("unroll/export_14082019/"), new File("unroll/merge_export_14082019.n-triples"));
+		new MergeNTriples(new File("unroll/export_25092019/"), new File("unroll/merge_export_25092019.n-triples"));
 	}
 
 	final public static String resultType = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .";

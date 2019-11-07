@@ -90,10 +90,10 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 
 			final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
 
-			if (expGroupBOW.contains("non") || expGroupBOW.contains("sham")
-					|| ((expGroupBOW.contains("laminectomy") || expGroupBOW.contains("lesion")
-							|| expGroupBOW.contains("injury"))
-							&& (expGroupBOW.contains("only") || expGroupBOW.contains("alone")))) {
+//			if (expGroupBOW.contains("non") || expGroupBOW.contains("sham")
+//					|| ((expGroupBOW.contains("laminectomy") || expGroupBOW.contains("lesion")
+//							|| expGroupBOW.contains("injury"))
+//							&& (expGroupBOW.contains("only") || expGroupBOW.contains("alone")))) {
 //			if (expGroupBOW.contains("non") || expGroupBOW.contains("control") || expGroupBOW.contains("sham")
 //					|| expGroupBOW.contains("injury") || expGroupBOW.contains("lesion")
 //					|| expGroupBOW.contains("laminectomy") || expGroupBOW.contains("only")
@@ -101,7 +101,7 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 
 				factors.add(new BOWCardScope(this, expGroupBOW,
 						experimentalGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().size()));
-			}
+//			}
 
 		}
 
@@ -111,6 +111,18 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 
 	@Override
 	public void generateFeatureVector(Factor<BOWCardScope> factor) {
+
+		List<String> set = new ArrayList<>(factor.getFactorScope().expGroupBOW);
+
+		for (int i = 0; i < set.size() - 1; i++) {
+			for (int j = i+1; j < set.size(); j++) {
+
+				factor.getFeatureVector().set(
+						PREFIX + set.get(i) + "--" + set.get(j) + ", num = " + factor.getFactorScope().numOfTreatments,
+						true);
+
+			}
+		}
 
 		for (String expBOWTerm : factor.getFactorScope().expGroupBOW) {
 			factor.getFeatureVector().set(PREFIX + expBOWTerm + ", num = " + factor.getFactorScope().numOfTreatments,
