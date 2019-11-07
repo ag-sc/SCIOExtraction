@@ -59,7 +59,7 @@ public class PairwiseComparedGroupsRollOutToRDF {
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-		InstanceProvider instanceProviderO = new InstanceProvider(observationInstanceDirectory, corpusDistributor);
+//		InstanceProvider instanceProviderO = new InstanceProvider(observationInstanceDirectory, corpusDistributor);
 
 		InstanceProvider instanceProvider = new InstanceProvider(resultInstanceDirectory, corpusDistributor);
 
@@ -78,7 +78,7 @@ public class PairwiseComparedGroupsRollOutToRDF {
 			/*
 			 * Add Observations cause they are not direct connected to results.
 			 */
-			annotations.addAll(collectObservations(instanceProviderO, instance));
+//			annotations.addAll(collectObservations(instanceProviderO, instance));
 
 			SantoAnnotations collectRDF = collectDataAsRDF(annotations);
 

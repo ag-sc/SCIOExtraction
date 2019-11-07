@@ -72,6 +72,17 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNorma
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
+
+/***
+ * 
+ * 
+ * 
+ * @author hterhors
+ *
+ */
+
+
+
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public static void main(String[] args) throws IOException {
