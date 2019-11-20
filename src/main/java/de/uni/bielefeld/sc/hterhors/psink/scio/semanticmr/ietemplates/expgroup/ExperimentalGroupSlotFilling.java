@@ -1,11 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +64,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.s
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.BOWCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrAllUsedTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrBOWTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExpGroupTreatmentLocalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.SlotIsFilledTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.Word2VecClusterTemplate;
@@ -76,16 +73,14 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNorma
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
-
 /***
  * 
- * 
+ * Overall score = Score [getF1()=0.790, getPrecision()=0.843,
+ * getRecall()=0.744, tp=215, fp=40, fn=74, tn=0]
  * 
  * @author hterhors
  *
  */
-
-
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
@@ -106,7 +101,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private InstanceProvider instanceProvider;
 
-	
 	public ExperimentalGroupSlotFilling() throws IOException {
 		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.apply().registerNormalizationFunction(new WeightNormalization())
@@ -116,7 +110,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
-//		Collections.shuffle(docs, new Random());
+//		Collections.shuffle(docs, new Random(100L));
 
 		List<String> trainingInstanceNames = docs.subList(0, 50);
 		List<String> testInstanceNames = docs.subList(50, docs.size());
@@ -194,20 +188,17 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
-			extractCandidatesFromGold(candidateRetrieval, instance);
+			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
 		}
 		for (Instance instance : instanceProvider.getRedistributedDevelopmentInstances()) {
-			extractCandidatesFromGold(candidateRetrieval, instance);
+			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
 		}
-
 		for (Instance instance : instanceProvider.getRedistributedTestInstances()) {
-			extractCandidatesFromGold(candidateRetrieval, instance);
+			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
 		}
 
 		List<IExplorationStrategy> explorerList = Arrays
 				.asList(new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval));
-
-		AdvancedLearner learner = getLearner();
 
 		List<AbstractFeatureTemplate<?>> featureTemplates = getFeatureTemplates();
 
@@ -221,29 +212,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			numberToPredictParameter.get(instance).put(SlotType.get("hasTreatmentType"),
 					extractGoldTreatments(instance).size());
 		}
-		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
-		parameter.put(ExGrAllUsedTemplate.class, new Object[] { numberToPredictParameter });
-//		Overall score = Score [getF1()=0.706, getPrecision()=0.702, getRecall()=0.710, tp=203, fp=86, fn=83, tn=0]
-//		parameter.put(Word2VecClusterTemplate.class,
-//				new Object[] { new File("wordvector/kmeans_200_ranking_old.vec") });
+		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = getParameter(numberToPredictParameter);
 
-//		Overall score = Score [getF1()=0.687, getPrecision()=0.669, getRecall()=0.706, tp=202, fp=100, fn=84, tn=0]
-//		parameter.put(Word2VecClusterTemplate.class,
-//				new Object[] { new File("wordvector/small_kmeans_200_ranking_old.vec") });
-
-//		Overall score = Score [getF1()=0.636, getPrecision()=0.677, getRecall()=0.599, tp=172, fp=82, fn=115, tn=0]
-		parameter.put(Word2VecClusterTemplate.class, new Object[] { new File("wordvector/small_kmeans++_200_ranking.vec"),
-				new File("wordvector/kmeans_200_distances.vec") });
-
-//		 parameter.put(Word2VecClusterTemplate.class,
-//				new Object[] { new File("wordvector/kmeans_1000_ranking.vec"),new File("wordvector/kmeans_1000_distances.vec") });
-		/**
-		 * Number of epochs, the system should train.
-		 * 
-		 */
-		int numberOfEpochs = 10;
-
-		AbstractSampler sampler = getSampler();
+		AbstractSampler sampler = newSampler();
 
 		MaxChainLengthCrit maxStepCrit = new MaxChainLengthCrit(10);
 		ConverganceCrit noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
@@ -283,8 +254,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * training we are interested in finding the correct document linked annotation
 		 * but for prediction we are only interested in the entity type.
 		 */
-		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
-				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+//		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+//				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -293,7 +264,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			/**
 			 * Train the CRF.
 			 */
-			crf.train(learner, trainingInstances, numberOfEpochs, sampleStoppingCrits);
+			crf.train(newLearner(), trainingInstances, getNumberOfEpochs(), sampleStoppingCrits);
 
 			/**
 			 * Save the model as binary. Do not override, in case a file already exists for
@@ -323,25 +294,18 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
-		evaluate(log, results, predictionOF);
+		evaluate(log, results, predictionObjectiveFunction);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
 
-		/**
-		 * Computes the coverage of the given instances. The coverage is defined by the
-		 * objective mean score that can be reached relying on greedy objective function
-		 * sampling strategy. The coverage can be seen as the upper bound of the system.
-		 * The upper bound depends only on the exploration strategy, e.g. the provided
-		 * NER-annotations during slot-filling.
-		 */
-		log.info("modelName: " + modelName);
 
 		Score s = new Score();
+		NerlaEvaluator eval = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
 
 		for (Entry<Instance, State> e : results.entrySet()) {
 
-			System.out.println(e.getKey().getName());
+			log.info(e.getKey().getName());
 
 			List<EntityTemplate> goldAnnotations = e.getValue().getGoldAnnotations().getAnnotations();
 			List<EntityTemplate> predictedAnnotations = e.getValue().getCurrentPredictions().getAnnotations();
@@ -349,37 +313,77 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
 					.getBestAssignment(goldAnnotations, predictedAnnotations);
 			Score score;
-			NerlaEvaluator eval = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
-			System.out.println(
-					score = simpleEvaluate(false, eval, bestAssignment, goldAnnotations, predictedAnnotations));
+			log.info(score = simpleEvaluate(false, eval, bestAssignment, goldAnnotations, predictedAnnotations));
 
 			s.add(score);
 
 		}
 
 		System.out.println("Overall score = " + s);
+		log.info("modelName: " + modelName);
 
 	}
 
 	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-//		Overall score = Score [getF1()=0.740, getPrecision()=0.766, getRecall()=0.715, tp=206, fp=63, fn=82, tn=0]
-		featureTemplates.add(new BOWCardinalityTemplate());
-//		featureTemplates.add(new TreatmentPriorTemplate());
 
-//		Overall score = Score [getF1()=0.707, getPrecision()=0.731, getRecall()=0.685, tp=198, fp=73, fn=91, tn=0]
+		featureTemplates.add(new BOWCardinalityTemplate());
+
+		// featureTemplates.add(new TreatmentPriorTemplate());
+//		Overall score = Score [getF1()=0.761, getPrecision()=0.803, getRecall()=0.722, tp=208, fp=51, fn=80, tn=0]
+
 		featureTemplates.add(new TreatmentCardinalityTemplate());
 
-//		Overall score = Score [getF1()=0.697, getPrecision()=0.682, getRecall()=0.712, tp=208, fp=97, fn=84, tn=0]
 		featureTemplates.add(new ExGrBOWTemplate());
 
-//		Overall score = Score [getF1()=0.713, getPrecision()=0.742, getRecall()=0.685, tp=196, fp=68, fn=90, tn=0]
 		featureTemplates.add(new ExGrAllUsedTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
 
-		featureTemplates.add(new Word2VecClusterTemplate());
+		featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
+//		Overall score = Score [getF1()=0.751, getPrecision()=0.797, getRecall()=0.711, tp=204, fp=52, fn=83, tn=0]
 
+//		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
+
+		featureTemplates.add(new Word2VecClusterTemplate());
 		return featureTemplates;
+	}
+
+	private Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> getParameter(
+			Map<Instance, Map<SlotType, Integer>> numberToPredictParameter) {
+		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
+		parameter.put(ExGrAllUsedTemplate.class, new Object[] { numberToPredictParameter });
+
+//		parameter.put(Word2VecClusterTemplate.class,
+//				new Object[] { new File("wordvector/small_kmeans++_1000_ranking_reduce10.vec"),
+//						new File("wordvector/kmeans_200_distances.vec") });
+		parameter.put(Word2VecClusterTemplate.class,
+				new Object[] { new File("wordvector/kmeans++_1000_ranking_reduce10.vec"),
+						new File("wordvector/kmeans_200_distances.vec") });
+//		parameter.put(Word2VecClusterTemplate.class,
+//				new Object[] { new File("wordvector/small_kmeans++_200_ranking.vec"),
+//						new File("wordvector/kmeans_200_distances.vec") });
+
+//		 parameter.put(Word2VecClusterTemplate.class,
+//				new Object[] { new File("wordvector/kmeans_1000_ranking.vec"),new File("wordvector/kmeans_1000_distances.vec") });
+
+		// small_kmeans++_1000_ranking_reduce10.vec
+		// kmeans++_1000_ranking_reduce10.vec
+		// small_kmeans++_200_ranking.vec
+		return parameter;
+	}
+
+	private int getNumberOfEpochs() {
+		return 1;
+	}
+
+	private AbstractSampler newSampler() {
+//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
+//		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
+//		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
+		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
+//		AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
+//		AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
+		return sampler;
 	}
 
 	private Map<Instance, List<DocumentLinkedAnnotation>> annotateGroupNamesWithNPCHunksAndPattern(
@@ -473,15 +477,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //			return a;
 //		});
 
-//		goldModificationRules.add(a -> {
-//			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
-//			return a;
-//		});
-//
-//		goldModificationRules.add(a -> {
-//			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
-//			return a;
-//		});
+		goldModificationRules.add(a -> {
+			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
+			return a;
+		});
+
+		goldModificationRules.add(a -> {
+			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
+			return a;
+		});
 //
 //		goldModificationRules.add(a -> {
 //			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
@@ -574,31 +578,20 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("DefinedExperimentalGroup")))));
 	}
 
-	private AbstractSampler getSampler() {
-//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
-//		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
-//		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
-		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
-//		AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
-//		AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
-		return sampler;
-	}
-
 	private File getModelBaseDir() {
 		return new File("models/slotfilling/experimental_group/");
 	}
 
-	private AdvancedLearner getLearner() {
+	private AdvancedLearner newLearner() {
 		return new AdvancedLearner(new SGD(0.0001, 0), new L2(0.0000000));
 	}
 
-	public void extractCandidatesFromGold(AnnotationCandidateRetrievalCollection candidateRetrieval,
-			Instance instance) {
+	public EntityTemplateCandidateProvider extractCandidatesFromGold(Instance instance) {
 		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldOrganismModels(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldInjuryModels(instance));
-		candidateRetrieval.registerCandidateProvider(entityTemplateCandidateProvider);
+		return entityTemplateCandidateProvider;
 	}
 
 	@Deprecated

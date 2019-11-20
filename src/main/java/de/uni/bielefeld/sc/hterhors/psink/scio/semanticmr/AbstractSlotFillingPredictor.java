@@ -63,16 +63,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final String modelName;
 	public final Map<String, Set<AbstractAnnotation>> annotations = new HashMap<>();
 
+//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED, 10));
+//
+//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
+
 	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED, 10));
+			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
-//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
-//	
-//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
 

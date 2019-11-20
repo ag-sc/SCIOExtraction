@@ -40,7 +40,7 @@ public class EntityExtractor {
 		
 		System.exit(1);
 
-		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("InvestigationMethod"));
+		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("Result"));
 
 		x.forEach(System.out::println);
 

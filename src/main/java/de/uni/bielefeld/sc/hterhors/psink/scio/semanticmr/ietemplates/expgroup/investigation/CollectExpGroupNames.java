@@ -185,7 +185,7 @@ public class CollectExpGroupNames {
 				if (expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).containsSlotFiller())
 					orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
 			}
-		
+
 			orgModelsPerDocument.put(instance.getName(), orgModels);
 
 		}
@@ -202,7 +202,7 @@ public class CollectExpGroupNames {
 				if (expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller())
 					injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
 			}
-			
+
 			injuriesPerDocument.put(instance.getName(), injuries);
 
 		}
@@ -544,8 +544,9 @@ public class CollectExpGroupNames {
 				.hasNext();) {
 
 			final Set<String> keyWords = it.next().getKey().stream().map(f -> f.term).collect(Collectors.toSet());
-			if (keyWords.contains("non") || ((keyWords.contains("laminectomy") || keyWords.contains("lesion") || keyWords.contains("injury"))
-					&& (keyWords.contains("only") || keyWords.contains("alone")))) {
+			if (keyWords.contains("non")
+					|| ((keyWords.contains("laminectomy") || keyWords.contains("lesion") || keyWords.contains("injury"))
+							&& (keyWords.contains("only") || keyWords.contains("alone")))) {
 				it.remove();
 			}
 
@@ -1177,7 +1178,7 @@ public class CollectExpGroupNames {
 			PatternIndexPair p, String group, int start) {
 		Finding finding = new Finding(group, p);
 		try {
-			int senIndex = instance.getDocument().getTokenByCharOffset(start).getSentenceIndex();
+			int senIndex = instance.getDocument().getTokenByCharStartOffset(start).getSentenceIndex();
 
 			/**
 			 * HEURISTIC reference

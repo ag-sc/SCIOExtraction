@@ -15,12 +15,17 @@ import de.hterhors.semanticmr.crf.variables.DocumentToken;
 public class BOWExtractor {
 
 	public static Set<TypedBOW> extractTypedBOW(EntityTemplate annotation) {
+		Set<TypedBOW> typedBOW;
+		fillTypedBOW(typedBOW = new HashSet<>(), annotation);
+		return typedBOW;
+	}
 
-		Set<TypedBOW> typedBOW = new HashSet<>();
+	private static void fillTypedBOW(Set<TypedBOW> typedBOW, EntityTemplate annotation) {
 
 		AbstractAnnotation rootAnnotation = annotation.getRootAnnotation();
 
 		final Set<String> bow = extractEntityTypeBOW(rootAnnotation.getEntityType());
+
 		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
 			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));
 		}
@@ -31,9 +36,14 @@ public class BOWExtractor {
 
 		for (Entry<SlotType, Set<AbstractAnnotation>> prop : propertyAnnotations.entrySet()) {
 
+//			if (!(prop.getKey() == SlotType.get("hasDeliveryMethod") || prop.getKey() == SlotType.get("hasCompound")
+//					|| prop.getKey() == SlotType.get("hasDosage")))
+//				continue;
+
 			Set<String> tmp = extractEntityTypeBOW(rootAnnotation.getEntityType());
 
 			for (AbstractAnnotation val : prop.getValue()) {
+//				tmp.addAll(extractEntityTypeBOW(val.getEntityType()));
 				tmp.addAll(extractDocLinkedBOW(val.asInstanceOfDocumentLinkedAnnotation()));
 			}
 
@@ -47,11 +57,10 @@ public class BOWExtractor {
 		for (Set<AbstractAnnotation> props : annotation.filter().entityTemplateAnnoation().multiSlots().singleSlots()
 				.merge().nonEmpty().build().getMergedAnnotations().values()) {
 			for (AbstractAnnotation prop : props) {
-				typedBOW.addAll(extractTypedBOW(prop.asInstanceOfEntityTemplate()));
+				fillTypedBOW(typedBOW, prop.asInstanceOfEntityTemplate());
 			}
 		}
 
-		return typedBOW;
 	}
 
 	public static Set<String> extractDocLinkedBOW(DocumentLinkedAnnotation docLinkedAnnotation) {
@@ -94,6 +103,8 @@ public class BOWExtractor {
 			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));
 
 		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot("hasGroupName").getSlotFiller()) {
+			
+			bow .addAll(extractEntityTypeBOW(groupName.getEntityType()));
 			if (groupName.isInstanceOfDocumentLinkedAnnotation())
 				bow.addAll(BOWExtractor.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation()));
 		}

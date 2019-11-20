@@ -278,24 +278,31 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 					if (clustersJ.isEmpty())
 						continue;
 
-					for (int i = 0; i < 3 && i < clustersI.size(); i++) {
+					for (int i = 0; i <1 && i < clustersI.size(); i++) {
 
 						Integer clusterI = clustersI.get(i);
 
-						for (int j = 0; j < 3 && j < clustersJ.size(); j++) {
+						for (int j = 0; j <1 && j < clustersJ.size(); j++) {
 
 							Integer clusterJ = clustersJ.get(j);
 
 //							factor.getFeatureVector().set("Context: " + factor.getFactorScope().slotTypeContext.slotName
 //									+ ", " + clusterI + "\t" + clusterJ , true);
+//							factor.getFeatureVector()
+//									.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + ", "
+//											+ (clusterI == -1 ? expBOWTerm : clusterI) + "\t"
+//											+ (clusterJ == -1 ? typedBOWTerm : clusterJ) + " : (" + i + "," + j + ")",
+//											true);
+//							factor.getFeatureVector()
+//									.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + ", " + "."
+//											+ getOrigin(factor, typedBOW) + ","
+//											+ (clusterI == -1 ? expBOWTerm : clusterI) + "\t"
+//											+ (clusterJ == -1 ? typedBOWTerm : clusterJ) + " : (" + i + "," + j + ")",
+//											true);
 							factor.getFeatureVector()
-									.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + ", "
-											+ (clusterI == -1 ? expBOWTerm : clusterI) + "\t"
-											+ (clusterJ == -1 ? typedBOWTerm : clusterJ) + " : (" + i + "," + j + ")",
-											true);
-//							factor.getFeatureVector().set("Context: " + factor.getFactorScope().slotTypeContext.slotName
-//									+ "." + getOrigin(factor, typedBOW) 
-//									+ ", " + clusterI + "\t" + clusterJ + " : (" + i + "," + j + ")", true);
+									.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + "."
+											+ getOrigin(factor, typedBOW) + ", " + clusterI + "\t" + clusterJ + " : ("
+											+ i + "," + j + ")", true);
 
 						}
 					}

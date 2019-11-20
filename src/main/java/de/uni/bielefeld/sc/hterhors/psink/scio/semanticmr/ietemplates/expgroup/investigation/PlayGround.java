@@ -387,7 +387,7 @@ public class PlayGround {
 				while (m.find()) {
 					Finding finding = new Finding(m.group(), p);
 					try {
-						int senIndex = instance.getDocument().getTokenByCharOffset(m.start()).getSentenceIndex();
+						int senIndex = instance.getDocument().getTokenByCharStartOffset(m.start()).getSentenceIndex();
 
 						boolean cont = false;
 						for (Integer keyPoint : keyPoints) {
@@ -761,7 +761,7 @@ public class PlayGround {
 			while (m.find()) {
 
 				c++;
-				int sentenceIndex = instance.getDocument().getTokenByCharOffset(m.start()).getSentenceIndex();
+				int sentenceIndex = instance.getDocument().getTokenByCharStartOffset(m.start()).getSentenceIndex();
 
 //				String sentence = listToString(instance.getDocument().getSentenceByIndex(sentenceIndex));
 //				System.out.println(sentenceIndex + "\t" + sentence);
