@@ -170,13 +170,10 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 	@Override
 	public void generateFeatureVector(Factor<ExpGroupTreatmentLocalityScope> factor) {
 
-//		for (EntityType ce : factor.getFactorScope().slotFiller.getDirectSuperEntityTypes()) {
-//
-//			factor.getFeatureVector().set(PREFIX + pe.entityName + "->" + ce.entityName + " sentence dist = "
-//					+ factor.getFactorScope().sentenceDistance, true);
-//			factor.getFeatureVector().set(PREFIX + pe.entityName + "->" + ce.entityName + " sentence dist >= 4",
-//					factor.getFactorScope().sentenceDistance >= 4);
-//		}
+//		factor.getFeatureVector().set(PREFIX + pe.entityName + "->" + ce.entityName + " sentence dist = "
+//				+ factor.getFactorScope().sentenceDistance, true);
+//		factor.getFeatureVector().set(PREFIX + pe.entityName + "->" + ce.entityName + " sentence dist >= 4",
+//				factor.getFactorScope().sentenceDistance >= 4);
 
 		factor.getFeatureVector().set(
 				PREFIX + factor.getFactorScope().slot.slotName + "->" + factor.getFactorScope().sentenceDistance, true);
