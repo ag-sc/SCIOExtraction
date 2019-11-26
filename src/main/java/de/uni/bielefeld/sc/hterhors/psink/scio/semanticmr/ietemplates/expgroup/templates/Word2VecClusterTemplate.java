@@ -230,7 +230,7 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 
 			final EntityTemplate property = slotFillerAnnotation.asInstanceOfEntityTemplate();
 
-			final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
+			final Set<String> expGroupBOW = BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
 
 			final Set<TypedBOW> propertyBOW = BOWExtractor.extractTypedBOW(property);
 
@@ -247,7 +247,7 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 
 		final EntityTemplate property = sfs.getSlotFiller().asInstanceOfEntityTemplate();
 
-		final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
+		final Set<String> expGroupBOW = BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
 
 		final Set<TypedBOW> propertyBOW = BOWExtractor.extractTypedBOW(property);
 

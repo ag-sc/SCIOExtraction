@@ -13,35 +13,23 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
 import de.hterhors.semanticmr.crf.structure.EntityType;
-import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 
 public class OrganismModelsSanto2Json {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	private static final File entities = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/entities.csv");
-	private static final File slots = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/slots.csv");
-	private static final File structures = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/structures.csv");
-	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/organism_model/specifications/hierarchies.csv");
-
-	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
-
-	final static private String exportDate = "14082019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(OrgModelSpecs.systemsScopeReader).build();
 
-		final String dir = "rawData/export_" + exportDate + "/";
+		final String dir = "rawData/export_" + ResultSanto2Json.exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
@@ -58,11 +46,12 @@ public class OrganismModelsSanto2Json {
 //			}
 			log.info(name + " convert...");
 			Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
-					new File("rawData/export_" + exportDate + "/" + name + "_export.csv"),
-					new File("rawData/export_" + exportDate + "/" + name + "_Jessica.annodb"),
-					new File("rawData/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
-					resourceNameSpace);
+					new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_export.csv"),
+					new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
+					new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"),
+					scioNameSpace, resourceNameSpace);
 
+			converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 			converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 			converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 

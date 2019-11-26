@@ -141,6 +141,7 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 
 							int sentence = state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
 									.getSentenceIndex();
+
 							treatmentIndicies.add(sentence);
 						} catch (DocumentLinkedAnnotationMismatchException e) {
 						}

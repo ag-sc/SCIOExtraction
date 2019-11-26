@@ -13,6 +13,7 @@ import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
@@ -124,16 +125,19 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
 				continue;
 
-			addSFSFactor(factors, experimentalGroup, SlotType.get("hasOrganismModel"));
-			addSFSFactor(factors, experimentalGroup, SlotType.get("hasInjuryModel"));
-			addMFSFactor(factors, experimentalGroup, SlotType.get("hasTreatmentType"));
+			final Set<String> expGroupBOW = BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
+
+			addSFSFactor(factors, expGroupBOW, experimentalGroup, SlotType.get("hasOrganismModel"));
+			addSFSFactor(factors, expGroupBOW, experimentalGroup, SlotType.get("hasInjuryModel"));
+			addMFSFactor(factors, expGroupBOW, experimentalGroup, SlotType.get("hasTreatmentType"));
 
 		}
 
 		return factors;
 	}
 
-	private void addMFSFactor(List<BOWScope> factors, EntityTemplate experimentalGroup, SlotType slotType) {
+	private void addMFSFactor(List<BOWScope> factors, Set<String> expGroupBOW, EntityTemplate experimentalGroup,
+			SlotType slotType) {
 
 		final MultiFillerSlot mfs = experimentalGroup.getMultiFillerSlot(slotType);
 
@@ -144,15 +148,15 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 			final EntityTemplate property = slotFillerAnnotation.asInstanceOfEntityTemplate();
 
-			final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
-
 			final Set<TypedBOW> propertyBOW = BOWExtractor.extractTypedBOW(property);
 
 			factors.add(new BOWScope(this, slotType, expGroupBOW, propertyBOW));
+
 		}
 	}
 
-	private void addSFSFactor(List<BOWScope> factors, EntityTemplate experimentalGroup, SlotType slotType) {
+	private void addSFSFactor(List<BOWScope> factors, Set<String> expGroupBOW, EntityTemplate experimentalGroup,
+			SlotType slotType) {
 
 		final SingleFillerSlot sfs = experimentalGroup.getSingleFillerSlot(slotType);
 
@@ -160,8 +164,6 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 			return;
 
 		final EntityTemplate property = sfs.getSlotFiller().asInstanceOfEntityTemplate();
-
-		final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
 
 		final Set<TypedBOW> propertyBOW = BOWExtractor.extractTypedBOW(property);
 

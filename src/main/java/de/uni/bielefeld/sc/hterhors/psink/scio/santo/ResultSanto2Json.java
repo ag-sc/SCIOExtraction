@@ -33,7 +33,7 @@ public class ResultSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static public String exportDate = "25092019";
+	final static public String exportDate = "22112019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -54,8 +54,6 @@ public class ResultSanto2Json {
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
 
-//		Set<String> organismModelDocs = new HashSet<>(
-//				Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath()));
 		Random random = new Random(10000L);
 
 		for (String name : fileNames) {
@@ -67,7 +65,8 @@ public class ResultSanto2Json {
 						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.annodb"),
 						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
 						resourceNameSpace);
-
+				
+				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 				double rand = random.nextDouble();

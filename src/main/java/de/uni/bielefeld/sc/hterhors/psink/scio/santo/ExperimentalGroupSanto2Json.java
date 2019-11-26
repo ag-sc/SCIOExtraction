@@ -56,7 +56,8 @@ public class ExperimentalGroupSanto2Json {
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"),
 						scioNameSpace, resourceNameSpace);
-
+			
+				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 

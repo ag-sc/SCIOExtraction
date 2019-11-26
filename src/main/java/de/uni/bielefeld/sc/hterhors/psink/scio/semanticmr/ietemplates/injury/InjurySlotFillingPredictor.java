@@ -89,8 +89,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaAnnotations() {
-//		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
-		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
+		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
+//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
 		return externalNerlaAnnotations;
 	}
@@ -135,23 +135,22 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected IStateInitializer getStateInitializer() {
 
-//		IStateInitializer stateInitializer =
-//		((instance) -> new State(instance, new Annotations(
-//		//
-//		new EntityTemplate(AnnotationBuilder.toAnnotation("Injury"))
-////
-//)));
+		return ((instance) -> new State(instance, new Annotations(
+				//
+				new EntityTemplate(AnnotationBuilder.toAnnotation("Injury"))
+//
+		)));
 
-		return (instance -> {
-
-			List<AbstractAnnotation> as = new ArrayList<>();
-
-			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
-			}
-			return new State(instance, new Annotations(as));
-			//
-		});
+//		return (instance -> {
+//
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//
+//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
+//			}
+//			return new State(instance, new Annotations(as));
+//			//
+//		});
 	}
 
 	@Override
@@ -178,8 +177,6 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 //Compute coverage...
 //No states were generated for instance: N156 Kalincik 2010 2
 
-
-
 //Mean Score: Score [getF1()=0.432, getPrecision()=0.537, getRecall()=0.361, tp=79, fp=68, fn=140, tn=0]
 //CRFStatistics [context=Train, getTotalDuration()=67438]
 //CRFStatistics [context=Test, getTotalDuration()=151]
@@ -193,7 +190,6 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 //No states were generated for instance: N158 Kang 2015
 //No states were generated for instance: N189 Novikova 2011
 //No states were generated for instance: N209 Tharion 2011
-
 
 //Mean Score: Score [getF1()=0.432, getPrecision()=0.537, getRecall()=0.361, tp=79, fp=68, fn=140, tn=0]
 //CRFStatistics [context=Train, getTotalDuration()=70968]

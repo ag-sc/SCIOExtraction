@@ -87,7 +87,7 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
 				continue;
 
-			final Set<String> expGroupBOW = BOWExtractor.getExpGroupBOW(experimentalGroup);
+			final Set<String> expGroupBOW = BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
 
 //			if (expGroupBOW.contains("non") || expGroupBOW.contains("sham")
 //					|| ((expGroupBOW.contains("laminectomy") || expGroupBOW.contains("lesion")

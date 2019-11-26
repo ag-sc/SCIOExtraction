@@ -29,7 +29,6 @@ public class ObservationsSanto2Json {
 
 	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
-	final static private String exportDate = "25092019";
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
@@ -39,7 +38,7 @@ public class ObservationsSanto2Json {
 
 		String data = "rawData";
 
-		final String dir = data + "/export_" + exportDate + "/";
+		final String dir = data + "/export_" + ResultSanto2Json.exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
@@ -53,11 +52,12 @@ public class ObservationsSanto2Json {
 
 				log.info(name + " start processing...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
-						new File(data + "/export_" + exportDate + "/" + name + "_export.csv"),
-						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.annodb"),
-						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
+						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_export.csv"),
+						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
+						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
 						resourceNameSpace);
-
+			
+				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
 				double rand = random.nextDouble();

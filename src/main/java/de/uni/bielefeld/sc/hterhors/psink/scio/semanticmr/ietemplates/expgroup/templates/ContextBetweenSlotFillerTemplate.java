@@ -54,24 +54,6 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 
 	private static final String PREFIX = "CBSFT\t";
 
-//	static class PositionPairContainer {
-//
-//		final EntityType fromEntityType;
-//		final int fromTokenIndex;
-//
-//		final EntityType toEntityType;
-//		final int toTokenIndex;
-//
-//		public PositionPairContainer(EntityType fromEntityType, int fromTokenIndex, EntityType toEntityType,
-//				int toTokenIndex) {
-//			this.fromEntityType = fromEntityType;
-//			this.fromTokenIndex = fromTokenIndex;
-//			this.toEntityType = toEntityType;
-//			this.toTokenIndex = toTokenIndex;
-//		}
-//
-//	}
-
 	static class ContextBetweenScope extends AbstractFactorScope {
 
 		public final Instance instance;
@@ -293,14 +275,14 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 
 			getTokenNgrams(featureVector, fromEntity.entityName, toEntity.entityName, tokens);
 
-//				for (EntityType fe : fromEntity.getTransitiveClosureSuperEntityTypes()) {
-//					for (EntityType te : toEntity.getTransitiveClosureSuperEntityTypes()) {
+//			for (EntityType fe : fromEntity.getTransitiveClosureSuperEntityTypes()) {
+//				for (EntityType te : toEntity.getTransitiveClosureSuperEntityTypes()) {
 //
-//						if (tokens.size() > 2)
-//							getTokenNgrams(featureVector, fe.entityName, te.entityName, tokens);
-//					}
-//
+//					if (tokens.size() > 2)
+//						getTokenNgrams(featureVector, fe.entityName, te.entityName, tokens);
 //				}
+//
+//			}
 		}
 	}
 
@@ -342,7 +324,7 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 
 				}
 
-				final String featureName = fBuffer.toString().trim();
+				final String featureName = simplify(fBuffer.toString().trim());
 
 				if (featureName.length() < MIN_TOKEN_LENGTH)
 					continue;
@@ -356,6 +338,12 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 			}
 		}
 
+	}
+
+	private String simplify(String trim) {
+//		trim = trim.replaceAll("\\d", "#");
+//		trim = trim.toLowerCase();
+		return trim;
 	}
 
 }

@@ -51,6 +51,7 @@ public class PairwiseComparedGroupsRollOutToRDF {
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
+		
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
@@ -59,7 +60,7 @@ public class PairwiseComparedGroupsRollOutToRDF {
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-//		InstanceProvider instanceProviderO = new InstanceProvider(observationInstanceDirectory, corpusDistributor);
+		InstanceProvider instanceProviderO = new InstanceProvider(observationInstanceDirectory, corpusDistributor);
 
 		InstanceProvider instanceProvider = new InstanceProvider(resultInstanceDirectory, corpusDistributor);
 
@@ -78,7 +79,7 @@ public class PairwiseComparedGroupsRollOutToRDF {
 			/*
 			 * Add Observations cause they are not direct connected to results.
 			 */
-//			annotations.addAll(collectObservations(instanceProviderO, instance));
+			annotations.addAll(collectObservations(instanceProviderO, instance));
 
 			SantoAnnotations collectRDF = collectDataAsRDF(annotations);
 

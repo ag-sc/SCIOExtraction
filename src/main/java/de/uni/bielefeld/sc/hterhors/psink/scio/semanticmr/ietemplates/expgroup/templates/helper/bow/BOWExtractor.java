@@ -93,7 +93,7 @@ public class BOWExtractor {
 		return entityName.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 	}
 
-	public static Set<String> getExpGroupBOW(EntityTemplate experimentalGroup) {
+	public static Set<String> getExpGroupPlusNameBOW(EntityTemplate experimentalGroup) {
 
 		final AbstractAnnotation rootAnnotation = experimentalGroup.getRootAnnotation();
 

@@ -90,7 +90,6 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 
 		featureTemplates.add(new IntraTokenTemplate());
-
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
