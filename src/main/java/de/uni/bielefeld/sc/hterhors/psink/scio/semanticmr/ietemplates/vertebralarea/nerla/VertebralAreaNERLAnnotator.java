@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod.nerla;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.nerla;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,17 +15,19 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod.specs.DeliveryMethodSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
 
-public class DeliveryMethodNERLAnnotator {
+public class VertebralAreaNERLAnnotator {
 
 	public static void main(String[] args) {
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(SystemScope.Builder
-				.getScopeHandler().addScopeSpecification(DeliveryMethodSpecs.systemsScopeReader).build(),
-				new DeliveryMethodPattern());
+				.getScopeHandler().addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build(),
+				new VertebralAreaPattern());
 
-		File instanceDirectory = new File("src/main/resources/slotfilling/delivery_method/corpus/instances/");
+		File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory);
 
@@ -43,7 +45,7 @@ public class DeliveryMethodNERLAnnotator {
 						.flatMap(v -> v.stream()).map(d -> new JsonEntityAnnotationWrapper(d))
 						.collect(Collectors.toList());
 
-				io.writeNerlas(new File("src/main/resources/slotfilling/delivery_method/corpus/nerla/"
+				io.writeNerlas(new File("src/main/resources/slotfilling/vertebral_area/corpus/nerla/"
 						+ instance.getName() + ".nerla.json"), wrappedAnnotation);
 
 			} catch (IOException e) {

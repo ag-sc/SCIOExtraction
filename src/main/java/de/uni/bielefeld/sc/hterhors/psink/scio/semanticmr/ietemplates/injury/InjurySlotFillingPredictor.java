@@ -31,7 +31,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.vertebralarea.VertebralAreaPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -41,25 +41,12 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.MultiValueSl
  * Slot filling for injuries.
  * 
  * 
- * Mean Score: Score [getF1()=0.416, getPrecision()=0.521, getRecall()=0.347,
- * tp=76, fp=70, fn=143, tn=0] CRFStatistics [context=Train,
- * getTotalDuration()=200631] CRFStatistics [context=Test,
- * getTotalDuration()=6597] Compute coverage... Coverage Training: Score
- * [getF1()=0.950, getPrecision()=0.985, getRecall()=0.917, tp=719, fp=11,
- * fn=65, tn=0] Compute coverage... No states were generated for instance: N156
- * Kalincik 2010 2 Coverage Development: Score [getF1()=0.814,
- * getPrecision()=0.905, getRecall()=0.740, tp=162, fp=17, fn=57, tn=0]
- * Injury-520642072
- * 
- * 
  * @author hterhors
  *
  */
 public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger(InjurySlotFillingPredictor.class);
-
-	private List<GeneralCandidateProvider> provider;
 
 	public InjurySlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
@@ -70,7 +57,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
-		provider = new ArrayList<>();
+		List<GeneralCandidateProvider> provider = new ArrayList<>();
 		String vertebralAreaModelName = "VertebralArea_" + modelName;
 		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
@@ -129,17 +116,37 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 10;
+		return 35;
 	}
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-
+//		Mean Score: Score [getF1()=0.484, getPrecision()=0.571, getRecall()=0.420, tp=89, fp=67, fn=123, tn=0]
+//				CRFStatistics [context=Train, getTotalDuration()=126392]
+//				CRFStatistics [context=Test, getTotalDuration()=3302]
+//				Compute coverage...
+//				Coverage Training: Score [getF1()=0.814, getPrecision()=1.000, getRecall()=0.687, tp=504, fp=0, fn=230, tn=0]
+//				Compute coverage...
+//				No states were generated for instance: N164 Li 2003
+//				No states were generated for instance: N199 Ruitenberg 2005
+//				Coverage Development: Score [getF1()=0.686, getPrecision()=0.870, getRecall()=0.566, tp=120, fp=18, fn=92, tn=0]
+//				modelName: Injury1444679482
 		return ((instance) -> new State(instance, new Annotations(
 				//
 				new EntityTemplate(AnnotationBuilder.toAnnotation("Injury"))
 //
 		)));
+
+//		Mean Score: Score [getF1()=0.453, getPrecision()=0.521, getRecall()=0.401, tp=85, fp=78, fn=127, tn=0]
+//				CRFStatistics [context=Train, getTotalDuration()=165788]
+//				CRFStatistics [context=Test, getTotalDuration()=5152]
+//				Compute coverage...
+//				Coverage Training: Score [getF1()=0.921, getPrecision()=1.000, getRecall()=0.854, tp=627, fp=0, fn=107, tn=0]
+//				Compute coverage...
+//				No states were generated for instance: N164 Li 2003
+//				No states were generated for instance: N199 Ruitenberg 2005
+//				Coverage Development: Score [getF1()=0.749, getPrecision()=0.864, getRecall()=0.660, tp=140, fp=22, fn=72, tn=0]
+//				modelName: Injury-1001814223
 
 //		return (instance -> {
 //
@@ -169,42 +176,3 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		return new File("models/slotfilling/injury/");
 	}
 }
-
-//Mean Score: Score [getF1()=0.427, getPrecision()=0.467, getRecall()=0.393, tp=86, fp=98, fn=133, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=154358]
-//CRFStatistics [context=Test, getTotalDuration()=4171]
-//Compute coverage...
-//Compute coverage...
-//No states were generated for instance: N156 Kalincik 2010 2
-
-//Mean Score: Score [getF1()=0.432, getPrecision()=0.537, getRecall()=0.361, tp=79, fp=68, fn=140, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=67438]
-//CRFStatistics [context=Test, getTotalDuration()=151]
-//Compute coverage...
-//Compute coverage...
-//No states were generated for instance: N092 Cote, Hanna et al. 2010
-//No states were generated for instance: N141 Deng 2008
-//No states were generated for instance: N144 Ferrero-Gutierrez 2013
-//No states were generated for instance: N145 Fouad 2005
-//No states were generated for instance: N156 Kalincik 2010 2
-//No states were generated for instance: N158 Kang 2015
-//No states were generated for instance: N189 Novikova 2011
-//No states were generated for instance: N209 Tharion 2011
-
-//Mean Score: Score [getF1()=0.432, getPrecision()=0.537, getRecall()=0.361, tp=79, fp=68, fn=140, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=70968]
-//CRFStatistics [context=Test, getTotalDuration()=177]
-//Compute coverage...
-//Compute coverage...
-//No states were generated for instance: N092 Cote, Hanna et al. 2010
-//No states were generated for instance: N141 Deng 2008
-//No states were generated for instance: N144 Ferrero-Gutierrez 2013
-//No states were generated for instance: N145 Fouad 2005
-//No states were generated for instance: N156 Kalincik 2010 2
-//No states were generated for instance: N158 Kang 2015
-//No states were generated for instance: N189 Novikova 2011
-//No states were generated for instance: N209 Tharion 2011
-
-//Mean Score: Score [getF1()=0.465, getPrecision()=0.536, getRecall()=0.411, tp=90, fp=78, fn=129, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=71492]
-//CRFStatistics [context=Test, getTotalDuration()=244]

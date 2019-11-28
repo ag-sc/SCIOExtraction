@@ -60,7 +60,7 @@ import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.specs.TreatmentSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -150,7 +150,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 10;
+		return 35;
 	}
 
 	@Override

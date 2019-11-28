@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.vertebralarea.nerla;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.nerla;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,12 +13,20 @@ import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
 
 public class VertebralAreaPattern extends BasicRegExPattern {
 
+	public static void main(String[] args) {
+	System.out.println(VERTBERAL_AREA_PATTERN1.pattern());	
+	System.out.println(VERTBERAL_AREA_PATTERN2.pattern());	
+	System.out.println(VERTBERAL_AREA_PATTERN3.pattern());	
+	System.out.println(VERTBERAL_AREA_PATTERN4.pattern());	
+	System.out.println(VERTBERAL_AREA_PATTERN5.pattern());	
+	}
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final Set<String> INJURY_STOP_WORDS = new HashSet<>(Arrays.asList("vertebral", "area"));
+	private static final Set<String> VERTEBRAL_STOP_WORDS = new HashSet<>(Arrays.asList("vertebral", "area"));
 
 	private Map<EntityType, Set<Pattern>> pattern = new HashMap<>();
 
@@ -26,7 +34,7 @@ public class VertebralAreaPattern extends BasicRegExPattern {
 			+ "(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelfth|thirteenth|forteenth|fifteenth)))";
 
 	private static final Pattern VERTBERAL_AREA_PATTERN1 = Pattern
-			.compile("(Th?|LU?|Ce?)-?" + numbers + "\\W?(Th?|LU?|Ce?)?-?" + numbers);
+			.compile("(Th?|LU?|Ce?)-?" + numbers + "\\W(Th?|LU?|Ce?)?-?" + numbers+"");
 	private static final Pattern VERTBERAL_AREA_PATTERN2 = Pattern
 			.compile("(thoracic|lumbar|cervical) levels " + numbers + " and " + numbers);
 	private static final Pattern VERTBERAL_AREA_PATTERN3 = Pattern
@@ -50,7 +58,7 @@ public class VertebralAreaPattern extends BasicRegExPattern {
 
 	@Override
 	public Set<String> getStopWords() {
-		return INJURY_STOP_WORDS;
+		return VERTEBRAL_STOP_WORDS;
 	}
 
 	@Override

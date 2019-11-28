@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +18,8 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.vertebralarea.VertebralAreaPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod.specs.DeliveryMethodSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.specs.DeliveryMethodSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 
 /**
  * Slot filling for organism models.
@@ -94,9 +94,9 @@ public class DeliveryMethodFilling {
 				instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()));
 
-		deliveryMethodPrediction.trainOrLoadModel();
-
-		deliveryMethodPrediction.evaluateOnDevelopment();
+//		deliveryMethodPrediction.trainOrLoadModel();
+//
+//		deliveryMethodPrediction.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.

@@ -244,6 +244,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 
 		model.setParameter(parameter);
+		
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */

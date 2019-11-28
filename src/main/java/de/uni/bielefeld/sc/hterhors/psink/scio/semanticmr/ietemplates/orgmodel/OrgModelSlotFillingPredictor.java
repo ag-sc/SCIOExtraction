@@ -15,7 +15,7 @@ import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
-import de.hterhors.semanticmr.crf.sampling.impl.SamplerCollection;
+import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -69,7 +69,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 //				"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
-		 final File externalNerlaAnnotations = new File(
+		final File externalNerlaAnnotations = new File(
 				"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
 		return externalNerlaAnnotations;
@@ -140,9 +140,9 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected AbstractSampler getSampler() {
 //		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
-		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
+//		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
 //		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
-//		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
+		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
 //		AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
 //		AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
 		return sampler;
@@ -239,4 +239,5 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		});
 		return hardConstraintsProvider;
 	}
+
 }

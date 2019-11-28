@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.vertebralarea.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +12,20 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.vertebralarea.templates.VertebralLocationConditionTemplate.VertebralLocationScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaConditionTemplate.VertebralLocationScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class VertebralLocationConditionTemplate extends AbstractFeatureTemplate<VertebralLocationScope> {
+public class VertebralAreaConditionTemplate extends AbstractFeatureTemplate<VertebralLocationScope> {
 
 	private static final String VERTEBRAL_AREA_VALID_ORDINAL = "VertebralAreaValidOrdnial";
 
 	private static final String VERTEBRAL_AREA_SAME_SEGMENT = "VertebralAreaSameSegment";
 
+	private static final String VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ0 = "VertebralAreaOrdinalDistance==0";
 	private static final String VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ1 = "VertebralAreaOrdinalDistance==1";
 	private static final String VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ2 = "VertebralAreaOrdinalDistance==2";
 	private static final String VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ3 = "VertebralAreaOrdinalDistance==3";
@@ -101,16 +102,18 @@ public class VertebralLocationConditionTemplate extends AbstractFeatureTemplate<
 			final int lowerVertebraeOrdinal = getOrdinal(lowerVertebrae);
 			final int upperVertebraeOrdinal = getOrdinal(upperVertebrae);
 
-			addFactor(factors, VERTEBRAL_AREA_VALID_ORDINAL, lowerVertebraeOrdinal < upperVertebraeOrdinal);
+			addFactor(factors, VERTEBRAL_AREA_VALID_ORDINAL, lowerVertebraeOrdinal > upperVertebraeOrdinal);
 
 			addFactor(factors, VERTEBRAL_AREA_SAME_SEGMENT, sameSegment(lowerVertebraeOrdinal, upperVertebraeOrdinal));
 
+			addFactor(factors, VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ0,
+					(upperVertebraeOrdinal - lowerVertebraeOrdinal) == 0);
 			addFactor(factors, VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ1,
 					(upperVertebraeOrdinal - lowerVertebraeOrdinal) == 1);
 			addFactor(factors, VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ2,
 					(upperVertebraeOrdinal - lowerVertebraeOrdinal) == 2);
 			addFactor(factors, VERTEBRAL_AREA_ORDINAL_DISTANCE_EQ3,
-					(upperVertebraeOrdinal - lowerVertebraeOrdinal) >= 3);
+					(upperVertebraeOrdinal - lowerVertebraeOrdinal) == 3);
 			addFactor(factors, VERTEBRAL_AREA_ORDINAL_DISTANCE_GR3,
 					(upperVertebraeOrdinal - lowerVertebraeOrdinal) > 3);
 
@@ -194,8 +197,8 @@ public class VertebralLocationConditionTemplate extends AbstractFeatureTemplate<
 		DoubleVector featureVector = factor.getFeatureVector();
 
 		featureVector.set(PREFIX + factor.getFactorScope().condition, factor.getFactorScope().matchesCondition);
-		featureVector.set(PREFIX + "NOT_" + factor.getFactorScope().condition,
-				!factor.getFactorScope().matchesCondition);
+//		featureVector.set(PREFIX + "NOT_" + factor.getFactorScope().condition,
+//				!factor.getFactorScope().matchesCondition);
 
 	}
 

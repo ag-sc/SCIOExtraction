@@ -18,8 +18,8 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.specs.DeliveryMethodSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod.specs.DeliveryMethodSpecs;
 
 public class DeliveryMethodSanto2Json {
 

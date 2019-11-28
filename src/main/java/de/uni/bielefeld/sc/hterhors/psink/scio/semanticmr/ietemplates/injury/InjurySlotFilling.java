@@ -76,7 +76,7 @@ public class InjurySlotFilling {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		String modelName = "Injury" + new Random().nextInt();
+		String modelName = "Injury" + new Random().nextInt(10000);
 
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope, trainingInstanceNames,
 				developInstanceNames, testInstanceNames);

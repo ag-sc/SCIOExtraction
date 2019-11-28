@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.deliverymethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 10;
+		return 35;
 	}
 
 }

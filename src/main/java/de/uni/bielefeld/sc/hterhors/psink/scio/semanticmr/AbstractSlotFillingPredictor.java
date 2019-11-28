@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,6 +42,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -81,9 +83,9 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	protected final List<String> developInstanceNames;
 	protected final List<String> testInstanceNames;
 
-	private final ISamplingStoppingCriterion maxStepCrit;
-	private final ISamplingStoppingCriterion noModelChangeCrit;
-	private final ISamplingStoppingCriterion[] sampleStoppingCrits;
+	public final ISamplingStoppingCriterion maxStepCrit;
+	public final ISamplingStoppingCriterion noModelChangeCrit;
+	public final ISamplingStoppingCriterion[] sampleStoppingCrits;
 
 	private final List<IExplorationStrategy> explorerList;
 
@@ -122,7 +124,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 * ShuffleCorpusDistributor, we initially set a limit to the number of files
 		 * that should be read.
 		 */
-		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor);
+		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor, getGoldModificationRules());
 
 		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
@@ -147,7 +149,6 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			}
 			candidateRetrieval.registerCandidateProvider(ap);
 		}
-
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
 		 * changes during the exploration. This explorer is especially designed for slot
@@ -290,12 +291,12 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		final Map<Instance, State> results;
 
 		if (n == 1) {
+			results = crf.predict(instanceProvider.getInstances().stream().filter(i -> i.getName().equals(name))
+					.collect(Collectors.toList()), maxStepCrit, noModelChangeCrit);
+		} else {
 			results = crf.predictHighRecall(instanceProvider.getInstances().stream()
 					.filter(i -> i.getName().equals(name)).collect(Collectors.toList()), n, maxStepCrit,
 					noModelChangeCrit);
-		} else {
-			results = crf.predict(instanceProvider.getInstances().stream().filter(i -> i.getName().equals(name))
-					.collect(Collectors.toList()), maxStepCrit, noModelChangeCrit);
 		}
 		for (Entry<Instance, State> result : results.entrySet()) {
 
@@ -313,6 +314,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	final public void evaluateOnDevelopment() {
 
 		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedDevelopmentInstances(), maxStepCrit,
+				noModelChangeCrit);
+
+		AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);
+
+		log.info(crf.getTrainingStatistics());
+		log.info(crf.getTestStatistics());
+	}
+
+	final public void evaluateOnTest() {
+
+		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedTestInstances(), maxStepCrit,
 				noModelChangeCrit);
 
 		AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);
@@ -339,5 +351,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				.concat(trainingInstances.stream(),
 						Streams.concat(developmentInstances.stream(), testInstances.stream()))
 				.map(i -> i.getName()).collect(Collectors.toSet()), n);
+	}
+
+	protected Collection<ModifyGoldRule> getGoldModificationRules() {
+		return Collections.emptyList();
+	}
+
+	public Map<Instance, List<State>> collectBestNStates(List<Instance> remainingInstances, int n) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
