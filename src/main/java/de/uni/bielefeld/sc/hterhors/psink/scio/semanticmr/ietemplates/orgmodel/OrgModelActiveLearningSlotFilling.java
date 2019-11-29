@@ -16,7 +16,7 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.DocumentAtomicChangeEntropyRanker;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.DocumentMarginBasedRanker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
@@ -103,43 +103,45 @@ public class OrgModelActiveLearningSlotFilling {
 
 		final List<String> trainingInstancesNames = new ArrayList<>();
 
-		trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, 5));
+		trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, 1));
 		testInstanceNames.addAll(allTrainingInstanceNames);
 		testInstanceNames.removeAll(trainingInstancesNames);
 
 		String rand = String.valueOf(new Random().nextInt());
-
+		List<String> newTrainingDataInstances = null;
+		int i = 0;
 //		final IActiveLearningDocumentRanker ranker = new FullDocumentLengthRanker();
-
-		for (int i = 0; i < 25; i++) {
-			System.out.println("----TRAIN----");
-			trainingInstancesNames.forEach(System.out::println);
+		while (i!=22&& (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
 			String modelName = "OrganismModel" + rand + "_AL_" + i;
-			System.out.println(modelName);
-			OrgModelSlotFillingPredictor predictor;
+			log.info(modelName);
 
-			predictor = new OrgModelSlotFillingPredictor(modelName, scope, trainingInstancesNames, developInstanceNames,
-					testInstanceNames);
+			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
+					trainingInstancesNames, developInstanceNames, testInstanceNames);
 
 			predictor.trainOrLoadModel();
 
 			List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
 					.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
+			predictor.evaluateOnDevelopment();
+
 //			final IActiveLearningDocumentRanker ranker = new DocumentRandomRanker();
 //			final IActiveLearningDocumentRanker ranker = new DocumentModelScoreRanker(predictor);
 //			final IActiveLearningDocumentRanker ranker = new DocumentEntropyRanker(predictor);
-			final IActiveLearningDocumentRanker ranker = new DocumentAtomicChangeEntropyRanker(predictor);
+//			final IActiveLearningDocumentRanker ranker = new DocumentAtomicChangeEntropyRanker(predictor);
+//			final IActiveLearningDocumentRanker ranker = new DocumentObjectiveScoreRanker(predictor);
+//			final IActiveLearningDocumentRanker ranker = new DocumentVarianceRanker(predictor);
+			final IActiveLearningDocumentRanker ranker = new DocumentMarginBasedRanker(predictor);
 
 			List<Instance> rankedInstances = ranker.rank(remainingInstances);
 
-			List<String> newTrainingDataInstances = rankedInstances.stream().map(a -> a.getName()).limit(5)
+			newTrainingDataInstances = rankedInstances.stream().map(a -> a.getName()).limit(1)
 					.collect(Collectors.toList());
 
+			i++;
 			trainingInstancesNames.addAll(newTrainingDataInstances);
 			testInstanceNames.removeAll(newTrainingDataInstances);
 
-			predictor.evaluateOnDevelopment();
 		}
 
 	}
