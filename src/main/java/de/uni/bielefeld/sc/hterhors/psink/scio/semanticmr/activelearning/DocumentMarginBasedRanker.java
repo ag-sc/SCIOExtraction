@@ -11,11 +11,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
-import de.hterhors.semanticmr.activelearning.RankedInstance;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 
+/**
+ * 
+ * @author hterhors
+ *
+ */
 public class DocumentMarginBasedRanker implements IActiveLearningDocumentRanker {
 
 	final Logger log = LogManager.getRootLogger();
@@ -29,7 +33,7 @@ public class DocumentMarginBasedRanker implements IActiveLearningDocumentRanker 
 	@Override
 	public List<Instance> rank(List<Instance> remainingInstances) {
 
-		List<RankedInstance> entropyInstances = new ArrayList<>();
+		List<SmallestFirst> marginInstances = new ArrayList<>();
 
 		log.info("Compute variations for margin...");
 		Map<Instance, List<State>> results = runner.crf.collectNBestStates(remainingInstances, 2, runner.maxStepCrit);
@@ -43,25 +47,23 @@ public class DocumentMarginBasedRanker implements IActiveLearningDocumentRanker 
 				// Highest Value =
 				margin = Double.MAX_VALUE;
 			} else {
-				// Always negative
+				// Always positive
 				margin = Math.abs(predictedInstance.getValue().get(0).getModelScore()
 						- predictedInstance.getValue().get(1).getModelScore());
 			}
 
 			/*
-			 * Sorted by highest first
+			 * Sorted by smallest first
 			 */
-			entropyInstances.add(new RankedInstance(margin, predictedInstance.getKey()));
+			marginInstances.add(new SmallestFirst(predictedInstance.getKey(), margin));
 
 		}
 
 		log.info("Sort...");
 
-		Collections.sort(entropyInstances);
-		// Reverse order since greater margin = better
-		Collections.reverse(entropyInstances);
+		Collections.sort(marginInstances);
 
-		return entropyInstances.stream().map(e -> e.instance).collect(Collectors.toList());
+		return marginInstances.stream().map(e -> e.instance).collect(Collectors.toList());
 
 	}
 

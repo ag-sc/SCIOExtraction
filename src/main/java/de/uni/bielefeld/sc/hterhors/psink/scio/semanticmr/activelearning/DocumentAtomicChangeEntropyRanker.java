@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
-import de.hterhors.semanticmr.activelearning.RankedInstance;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -30,7 +29,7 @@ public class DocumentAtomicChangeEntropyRanker implements IActiveLearningDocumen
 	@Override
 	public List<Instance> rank(List<Instance> remainingInstances) {
 
-		List<RankedInstance> entropyInstances = new ArrayList<>();
+		List<HighestFirst> entropyInstances = new ArrayList<>();
 //		List<RankedInstance> objectiveInstances = new ArrayList<>();
 
 		log.info("Predict final states based on current model...");
@@ -89,7 +88,7 @@ public class DocumentAtomicChangeEntropyRanker implements IActiveLearningDocumen
 //				log.info("__");
 //			}
 
-			entropyInstances.add(new RankedInstance(entropy, predictedInstance.getKey()));
+			entropyInstances.add(new HighestFirst(predictedInstance.getKey(), entropy));
 //			final double inverseObjectiveRank = 1 - predictedInstance.getState().getObjectiveScore();
 //			objectiveInstances.add(new RankedInstance(inverseObjectiveRank, predictedInstance.getInstance()));
 

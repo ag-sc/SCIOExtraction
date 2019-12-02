@@ -11,12 +11,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
-import de.hterhors.semanticmr.activelearning.RankedInstance;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 
+/**
+ * High Variance is bad! Chose data with highest variance first.
+ * 
+ * @author hterhors
+ *
+ */
 public class DocumentVarianceRanker implements IActiveLearningDocumentRanker {
 
 	final Logger log = LogManager.getRootLogger();
@@ -30,7 +35,7 @@ public class DocumentVarianceRanker implements IActiveLearningDocumentRanker {
 	@Override
 	public List<Instance> rank(List<Instance> remainingInstances) {
 
-		List<RankedInstance> entropyInstances = new ArrayList<>();
+		List<HighestFirst> varianceInstances = new ArrayList<>();
 //		List<RankedInstance> objectiveInstances = new ArrayList<>();
 
 		log.info("Predict final states based on current model...");
@@ -59,16 +64,17 @@ public class DocumentVarianceRanker implements IActiveLearningDocumentRanker {
 
 			final double mean = nextStates.stream().map(s -> s.getModelScore()).reduce(0D, Double::sum)
 					/ nextStates.size();
+
 			final double variance = Math
 					.sqrt(nextStates.stream().map(s -> Math.pow(mean - s.getModelScore(), 2)).reduce(0D, Double::sum)
 							/ nextStates.size());
 
-			entropyInstances.add(new RankedInstance(-variance, predictedInstance.getKey()));
+			varianceInstances.add(new HighestFirst(predictedInstance.getKey(), variance));
 
 		}
-		log.info("Sort based on entropy...");
+		log.info("Sort based on variance...");
 
-		Collections.sort(entropyInstances);
+		Collections.sort(varianceInstances);
 //		Collections.sort(objectiveInstances);
 
 //		SpearmansCorrelation s = new SpearmansCorrelation();
@@ -93,16 +99,7 @@ public class DocumentVarianceRanker implements IActiveLearningDocumentRanker {
 //		logStats(entropyInstances, "entropy");
 //		logStats(objectiveInstances, "inverse-objective");
 
-		return entropyInstances.stream().map(e -> e.instance).collect(Collectors.toList());
+		return varianceInstances.stream().map(e -> e.instance).collect(Collectors.toList());
 	}
-//
-//	final int n = 5;
-//
-//	private void logStats(List<RankedInstance> entropyInstances, String context) {
-//
-//		log.info("Next " + n + " " + context + ":");
-//		entropyInstances.stream().limit(n).forEach(i -> log.info(i.instance.getName() + ":" + i.value));
-//
-//	}
 
 }

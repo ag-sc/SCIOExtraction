@@ -11,11 +11,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
+import de.hterhors.semanticmr.activelearning.ranker.EActiveLearningStrategies;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.DocumentMarginBasedRanker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
@@ -55,34 +57,11 @@ public class OrgModelActiveLearningSlotFilling {
 		/**
 		 * Initialize the system.
 		 * 
-		 * The scope represents the specifications of the 4 defined specification files.
-		 * The scope mainly affects the exploration.
 		 */
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				/**
-				 * We add a scope reader that reads and interprets the 4 specification files.
-				 */
-				.addScopeSpecification(OrgModelSpecs.systemsScopeReader)
-				/**
-				 * We apply the scope, so that we can add normalization functions for various
-				 * literal entity types, if necessary.
-				 */
-				.apply()
-				/**
-				 * Now normalization functions can be added. A normalization function is
-				 * especially used for literal-based annotations. In case a normalization
-				 * function is provided for a specific entity type, the normalized value is
-				 * compared during evaluation instead of the actual surface form. A
-				 * normalization function normalizes different surface forms so that e.g. the
-				 * weights "500 g", "0.5kg", "500g" are all equal. Each normalization function
-				 * is bound to exactly one entity type.
-				 */
+				.addScopeSpecification(OrgModelSpecs.systemsScopeReader).apply()
 				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization())
-				/**
-				 * Finally, we build the systems scope.
-				 */
-				.build();
+				.registerNormalizationFunction(new AgeNormalization()).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
@@ -90,58 +69,70 @@ public class OrgModelActiveLearningSlotFilling {
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 //				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
-		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
+				EActiveLearningStrategies.DocumentHighVariatyRanker,
+//				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
+//				EActiveLearningStrategies.DocumentMarginBasedRanker 
+		};
 
-		List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
-				.map(t -> t.getName()).collect(Collectors.toList());
+		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
+			log.info(strategy);
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
-				.map(t -> t.getName()).collect(Collectors.toList());
+			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
-				.collect(Collectors.toList());
+			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+					.map(t -> t.getName()).collect(Collectors.toList());
 
-		final List<String> trainingInstancesNames = new ArrayList<>();
+			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+					.map(t -> t.getName()).collect(Collectors.toList());
 
-		trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, 1));
-		testInstanceNames.addAll(allTrainingInstanceNames);
-		testInstanceNames.removeAll(trainingInstancesNames);
+			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+					.map(t -> t.getName()).collect(Collectors.toList());
 
-		String rand = String.valueOf(new Random().nextInt());
-		List<String> newTrainingDataInstances = null;
-		int i = 0;
-//		final IActiveLearningDocumentRanker ranker = new FullDocumentLengthRanker();
-		while (i!=22&& (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
-			String modelName = "OrganismModel" + rand + "_AL_" + i;
-			log.info(modelName);
+			final List<String> trainingInstancesNames = new ArrayList<>();
 
-			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-					trainingInstancesNames, developInstanceNames, testInstanceNames);
+			int numberOfInstanceToBegin = 1;
+			long numberOfInstancePerStep = 1;
+			int numOfMaxSteps = 25;
 
-			predictor.trainOrLoadModel();
+			trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, numberOfInstanceToBegin));
+			testInstanceNames.addAll(allTrainingInstanceNames);
+			testInstanceNames.removeAll(trainingInstancesNames);
 
-			List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
-					.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
+			String rand = String.valueOf(new Random().nextInt());
 
-			predictor.evaluateOnDevelopment();
+			List<String> newTrainingDataInstances = null;
 
-//			final IActiveLearningDocumentRanker ranker = new DocumentRandomRanker();
-//			final IActiveLearningDocumentRanker ranker = new DocumentModelScoreRanker(predictor);
-//			final IActiveLearningDocumentRanker ranker = new DocumentEntropyRanker(predictor);
-//			final IActiveLearningDocumentRanker ranker = new DocumentAtomicChangeEntropyRanker(predictor);
-//			final IActiveLearningDocumentRanker ranker = new DocumentObjectiveScoreRanker(predictor);
-//			final IActiveLearningDocumentRanker ranker = new DocumentVarianceRanker(predictor);
-			final IActiveLearningDocumentRanker ranker = new DocumentMarginBasedRanker(predictor);
+			int i = 0;
 
-			List<Instance> rankedInstances = ranker.rank(remainingInstances);
+			while (i++ != numOfMaxSteps && (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
+				String modelName = "OrganismModel" + rand + "_AL_" + i;
+				log.info("model name: " + modelName);
+				log.info("#Training instances: " + trainingInstancesNames.size());
+				log.info("Strategy: " + strategy);
 
-			newTrainingDataInstances = rankedInstances.stream().map(a -> a.getName()).limit(1)
-					.collect(Collectors.toList());
+				OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
+						trainingInstancesNames, developInstanceNames, testInstanceNames);
 
-			i++;
-			trainingInstancesNames.addAll(newTrainingDataInstances);
-			testInstanceNames.removeAll(newTrainingDataInstances);
+				predictor.trainOrLoadModel();
 
+				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
+						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
+
+				predictor.evaluateOnDevelopment();
+
+				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
+						predictor);
+
+				List<Instance> rankedInstances = ranker.rank(remainingInstances);
+
+				newTrainingDataInstances = rankedInstances.stream().map(a -> a.getName()).limit(numberOfInstancePerStep)
+						.collect(Collectors.toList());
+
+				trainingInstancesNames.addAll(newTrainingDataInstances);
+				testInstanceNames.removeAll(newTrainingDataInstances);
+
+			}
 		}
 
 	}

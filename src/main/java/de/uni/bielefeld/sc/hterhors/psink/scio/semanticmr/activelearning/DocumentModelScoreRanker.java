@@ -19,33 +19,14 @@ public class DocumentModelScoreRanker implements IActiveLearningDocumentRanker {
 		this.predictor = predictor;
 	}
 
-	static class Pair implements Comparable<Pair> {
-		public final Instance instance;
-
-		public final double modelScore;
-
-		public Pair(Instance instance, double modelScore) {
-			this.instance = instance;
-			this.modelScore = modelScore;
-		}
-
-		@Override
-		public int compareTo(Pair o) {
-			/*
-			 * Smalles first.
-			 */
-			return Double.compare(modelScore, o.modelScore);
-		}
-	}
-
 	@Override
 	public List<Instance> rank(List<Instance> remainingInstances) {
 
 		Map<Instance, State> results = predictor.crf.predict(remainingInstances, predictor.maxStepCrit,
 				predictor.noModelChangeCrit);
 
-		List<Pair> predictions = new ArrayList<>(results.entrySet().stream()
-				.map(e -> new Pair(e.getKey(), e.getValue().getModelScore())).collect(Collectors.toList()));
+		List<SmallestFirst> predictions = new ArrayList<>(results.entrySet().stream()
+				.map(e -> new SmallestFirst(e.getKey(), e.getValue().getModelScore())).collect(Collectors.toList()));
 
 		Collections.sort(predictions);
 

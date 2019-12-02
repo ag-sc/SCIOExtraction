@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
-import de.hterhors.semanticmr.activelearning.RankedInstance;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
@@ -31,7 +30,7 @@ public class DocumentEntropyRanker implements IActiveLearningDocumentRanker {
 	@Override
 	public List<Instance> rank(List<Instance> remainingInstances) {
 
-		List<RankedInstance> entropyInstances = new ArrayList<>();
+		List<HighestFirst> entropyInstances = new ArrayList<>();
 //		List<RankedInstance> objectiveInstances = new ArrayList<>();
 
 		log.info("Compute variations for entropy...");
@@ -70,7 +69,7 @@ public class DocumentEntropyRanker implements IActiveLearningDocumentRanker {
 //					predictedInstance.getKey().getName() + "\t" + predictedInstance.getValue().size() + "\t" + entropy);
 //			log.info("___");
 
-			entropyInstances.add(new RankedInstance(entropy, predictedInstance.getKey()));
+			entropyInstances.add(new HighestFirst(predictedInstance.getKey(), entropy));
 //			final double inverseObjectiveRank = 1 - predictedInstance.getValue().get(0).getObjectiveScore();
 //			objectiveInstances.add(new RankedInstance(inverseObjectiveRank, predictedInstance.getKey()));
 
@@ -106,10 +105,10 @@ public class DocumentEntropyRanker implements IActiveLearningDocumentRanker {
 
 	final int n = 20;
 
-	private void logStats(List<RankedInstance> entropyInstances, String context) {
+	private void logStats(List<HighestFirst> entropyInstances, String context) {
 
 		log.info("Next " + n + " " + context + ":");
-		entropyInstances.stream().limit(n).forEach(i -> log.info(i.instance.getName() + ":" + i.value));
+		entropyInstances.stream().limit(n).forEach(i -> log.info(i.instance.getName() + ":" + i.score));
 
 	}
 }

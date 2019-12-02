@@ -44,7 +44,6 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -88,6 +87,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final ISamplingStoppingCriterion[] sampleStoppingCrits;
 
 	private final List<IExplorationStrategy> explorerList;
+
+	public List<Instance> getTrainingInstances() {
+		return Collections.unmodifiableList(trainingInstances);
+	}
 
 	public AbstractSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
