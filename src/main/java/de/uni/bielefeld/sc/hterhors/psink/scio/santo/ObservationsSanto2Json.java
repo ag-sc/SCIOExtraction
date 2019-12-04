@@ -13,28 +13,28 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
 import de.hterhors.semanticmr.crf.structure.EntityType;
-import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
 public class ObservationsSanto2Json {
 	private static Logger log = LogManager.getFormatterLogger(ResultSanto2Json.class);
 
-	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
-	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
-	private static final File structures = new File(
-			"src/main/resources/slotfilling/result/specifications/structures.csv");
-	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
-
-	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
+//	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
+//	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
+//	private static final File structures = new File(
+//			"src/main/resources/slotfilling/result/specifications/structures.csv");
+//	private static final File hierarchies = new File(
+//			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
+//
+//	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
 	final static private String scioNameSpace = "http://psink.de/scio";
 	final static private String resourceNameSpace = "http://scio/data";
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
 
 		String data = "rawData";
 
@@ -54,9 +54,9 @@ public class ObservationsSanto2Json {
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
 						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_export.csv"),
 						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
-						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
-						resourceNameSpace);
-			
+						new File(data + "/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"),
+						scioNameSpace, resourceNameSpace);
+
 				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");
@@ -67,8 +67,8 @@ public class ObservationsSanto2Json {
 
 				log.info("context = " + context);
 
-				converter.convert(context,
-						new File("src/main/resources/slotfilling/observation/corpus/instances/" + name + "_Observation.json"),
+				converter.convert(context, new File(
+						"src/main/resources/slotfilling/observation/corpus/instances/" + name + "_Observation.json"),
 						EntityType.get("Observation"), true, true, true);
 			} catch (Exception e) {
 				e.printStackTrace();

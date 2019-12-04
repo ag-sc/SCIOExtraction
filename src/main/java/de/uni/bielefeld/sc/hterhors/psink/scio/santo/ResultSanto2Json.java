@@ -20,18 +20,19 @@ import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
 public class ResultSanto2Json {
 	private static Logger log = LogManager.getFormatterLogger(ResultSanto2Json.class);
 
-	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
-	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
-	private static final File structures = new File(
-			"src/main/resources/slotfilling/result/specifications/structures.csv");
-	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
-
-	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
+//	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
+//	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
+//	private static final File structures = new File(
+//			"src/main/resources/slotfilling/result/specifications/structures.csv");
+//	private static final File hierarchies = new File(
+//			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
+//
+//	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 
 	final static public String exportDate = "22112019";
 	final static private String scioNameSpace = "http://psink.de/scio";
@@ -39,15 +40,15 @@ public class ResultSanto2Json {
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
 
 		/**
 		 * TODO: To generate the unrolled data , you need to convert the rawData first,
 		 * unroll and convert with unroll again..
 		 */
 
-		String data = "unroll";
-//		String data = "rawData";
+//		String data = "unroll";
+		String data = "rawData";
 
 		final String dir = data + "/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
