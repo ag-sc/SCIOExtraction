@@ -75,7 +75,7 @@ public class DocumentEntropyRanker implements IActiveLearningDocumentRanker {
 
 		}
 
-		log.info("Sort...");
+//		log.info("Sort...");
 
 		Collections.sort(entropyInstances);
 
@@ -96,7 +96,7 @@ public class DocumentEntropyRanker implements IActiveLearningDocumentRanker {
 //		log.info("Spearmans Correlation: " + correlation);
 //		log.info("Mean F1 score (Objective): " + meanObjectiveF1Score);
 
-		logStats(entropyInstances, "entropy");
+//		logStats(entropyInstances, "entropy");
 //		logStats(objectiveInstances, "inverse-objective");
 
 		return entropyInstances.stream().map(e -> e.instance).collect(Collectors.toList());

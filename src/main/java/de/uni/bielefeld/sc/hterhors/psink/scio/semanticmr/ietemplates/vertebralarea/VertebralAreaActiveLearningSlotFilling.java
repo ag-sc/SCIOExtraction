@@ -1,8 +1,9 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -15,12 +16,16 @@ import de.hterhors.semanticmr.activelearning.ranker.EActiveLearningStrategies;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.DocumentMarginBasedRanker;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 
 /**
@@ -32,7 +37,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNorma
  *         modelName: OrganismModel930148736
  *
  */
-public class OrgModelActiveLearningSlotFilling {
+public class VertebralAreaActiveLearningSlotFilling {
 
 	/**
 	 * Start the slot filling procedure.
@@ -41,7 +46,7 @@ public class OrgModelActiveLearningSlotFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new OrgModelActiveLearningSlotFilling();
+		new VertebralAreaActiveLearningSlotFilling();
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -50,18 +55,16 @@ public class OrgModelActiveLearningSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private final File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
 
-	public OrgModelActiveLearningSlotFilling() throws IOException {
+	public VertebralAreaActiveLearningSlotFilling() throws IOException {
 
 		/**
 		 * Initialize the system.
 		 * 
 		 */
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(OrgModelSpecs.systemsScopeReader).apply()
-				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization()).build();
+				.addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
@@ -70,15 +73,14 @@ public class OrgModelActiveLearningSlotFilling {
 //				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentHighVariatyRanker,
-//				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
-//				EActiveLearningStrategies.DocumentMarginBasedRanker 
-		};
+				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
+				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
+		InstanceProvider.removeEmptyInstances = true;
 
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
-
-			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
+					getGoldModificationRules());
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -106,13 +108,13 @@ public class OrgModelActiveLearningSlotFilling {
 			int i = 0;
 
 			while (i++ != numOfMaxSteps && (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
-				String modelName = "OrganismModel_" + rand + "_"+strategy.name()+"_" + i;
+				String modelName = "VertebralArea" + rand + "_" + strategy.name() + "_" + i;
 				log.info("model name: " + modelName);
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
 
-				OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-						trainingInstancesNames, developInstanceNames, testInstanceNames);
+				VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName, scope, trainingInstancesNames,
+						developInstanceNames, testInstanceNames);
 
 				predictor.trainOrLoadModel();
 
@@ -135,5 +137,26 @@ public class OrgModelActiveLearningSlotFilling {
 			}
 		}
 
+	}
+
+	protected Collection<ModifyGoldRule> getGoldModificationRules() {
+		Collection<ModifyGoldRule> goldModificationRules = new ArrayList<>();
+
+		goldModificationRules.add(a -> {
+			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType.get("VertebralArea"))
+				return a;
+			return null;
+		});
+
+		goldModificationRules.add(a -> {
+			if (a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasUpperVertebrae"))
+					.containsSlotFiller()
+					&& a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasLowerVertebrae"))
+							.containsSlotFiller())
+
+				return a;
+			return null; // remove from annotation if upper or lower vertebrae is missing.
+		});
+		return goldModificationRules;
 	}
 }

@@ -98,12 +98,19 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
-
+//
 	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
 			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+//
+//	
+//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED,3));
+//	
+//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
 	private final File instanceDirectory = new File(
 			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
@@ -111,15 +118,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private InstanceProvider instanceProvider;
 
 	/**
-	 * MODI
-	 */
-
-	/**
 	 * Add Clustering of groupNames! If this is true the group names are correctly
 	 * assigned to the predictions on state generation. Further group names are
 	 * excluded from sampling.
 	 */
-	final public static boolean groupNameClusterGiven = true;
+	final public static boolean groupNameClusterGiven = false;
 
 	public ExperimentalGroupSlotFilling() throws IOException {
 		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
@@ -174,10 +177,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			public Map<Instance, List<DocumentLinkedAnnotation>> getForInstances(List<Instance> instances) {
 
 //				return returnEmptyMap(instances);
-				return extractCandidatesFromGold(instances);
+//				return extractCandidatesFromGold(instances);
 //				return annotateGroupNamesWithPattern(instances);
 //				return annotateGroupNamesWithNPCHunks(instances);
-//				return annotateGroupNamesWithNPCHunksAndPattern(instances);
+				return annotateGroupNamesWithNPCHunksAndPattern(instances);
 
 			}
 
@@ -244,16 +247,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 
 		model.setParameter(parameter);
-		
+
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
 		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, getStateInitializer(),
 				trainingObjectiveFunction);
 
-//		log.info("Training instances coverage: "
-//				+ crf.computeCoverage(false, predictionObjectiveFunction, trainingInstances));
-//		log.info("Test instances coverage: " + crf.computeCoverage(false, predictionObjectiveFunction, testInstances));
+		log.info("Training instances coverage: "
+				+ crf.computeCoverage(false, predictionObjectiveFunction, trainingInstances));
+		log.info("Test instances coverage: " + crf.computeCoverage(false, predictionObjectiveFunction, testInstances));
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -380,7 +383,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public Collection<ModifyGoldRule> getGoldModificationRules() {
 		Collection<ModifyGoldRule> goldModificationRules = new ArrayList<>();
-		
+
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType
 					.get("DefinedExperimentalGroup"))
@@ -530,6 +533,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
 					.getBestAssignment(goldAnnotations, predictedAnnotations);
+
 			Score score;
 			log.info("Both: " + (score = simpleEvaluate(false, eval, bestAssignment, goldAnnotations,
 					predictedAnnotations, ESimpleEvaluationMode.BOTH)));

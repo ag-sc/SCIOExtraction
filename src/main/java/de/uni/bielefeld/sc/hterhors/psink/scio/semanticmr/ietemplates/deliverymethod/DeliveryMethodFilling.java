@@ -94,9 +94,9 @@ public class DeliveryMethodFilling {
 				instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()));
 
-//		deliveryMethodPrediction.trainOrLoadModel();
+		deliveryMethodPrediction.trainOrLoadModel();
 //
-//		deliveryMethodPrediction.evaluateOnDevelopment();
+		deliveryMethodPrediction.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.

@@ -6,7 +6,7 @@
 			<!-- PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} 
 				- %msg%n" / -->
 		</Console>
-		<File name="LogFile" fileName="log/system.log"
+		<File name="LogFile" fileName="log/system_investigation.log"
 			immediateFlush="true" append="false">
 			<!-- <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level 
 				- %msg%n" /> -->

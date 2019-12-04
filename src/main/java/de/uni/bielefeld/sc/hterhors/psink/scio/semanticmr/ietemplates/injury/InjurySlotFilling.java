@@ -59,7 +59,6 @@ public class InjurySlotFilling {
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new DosageNormalization())
 				.registerNormalizationFunction(new DurationNormalization())
-
 				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)

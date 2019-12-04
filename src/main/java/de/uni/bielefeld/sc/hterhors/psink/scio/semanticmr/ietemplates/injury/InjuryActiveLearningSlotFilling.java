@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +18,10 @@ import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.DocumentMarginBasedRanker;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 
 /**
@@ -32,7 +33,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNorma
  *         modelName: OrganismModel930148736
  *
  */
-public class OrgModelActiveLearningSlotFilling {
+public class InjuryActiveLearningSlotFilling {
 
 	/**
 	 * Start the slot filling procedure.
@@ -41,7 +42,7 @@ public class OrgModelActiveLearningSlotFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new OrgModelActiveLearningSlotFilling();
+		new InjuryActiveLearningSlotFilling();
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -50,18 +51,18 @@ public class OrgModelActiveLearningSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
-	public OrgModelActiveLearningSlotFilling() throws IOException {
+	public InjuryActiveLearningSlotFilling() throws IOException {
 
 		/**
 		 * Initialize the system.
 		 * 
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(OrgModelSpecs.systemsScopeReader).apply()
-				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization()).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScopeReader)
+				.apply().registerNormalizationFunction(new WeightNormalization())
+				.registerNormalizationFunction(new DosageNormalization())
+				.registerNormalizationFunction(new DurationNormalization()).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
@@ -70,10 +71,8 @@ public class OrgModelActiveLearningSlotFilling {
 //				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentHighVariatyRanker,
-//				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
-//				EActiveLearningStrategies.DocumentMarginBasedRanker 
-		};
+				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
+				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
@@ -106,12 +105,12 @@ public class OrgModelActiveLearningSlotFilling {
 			int i = 0;
 
 			while (i++ != numOfMaxSteps && (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
-				String modelName = "OrganismModel_" + rand + "_"+strategy.name()+"_" + i;
+				String modelName = "Injury" + rand + "_" + strategy.name() + "_" + i;
 				log.info("model name: " + modelName);
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
 
-				OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
+				InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
 						trainingInstancesNames, developInstanceNames, testInstanceNames);
 
 				predictor.trainOrLoadModel();

@@ -1,14 +1,19 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.nerla.corpus;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.opencsv.CSVReader;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
@@ -23,7 +28,6 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
@@ -49,16 +53,17 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 			List<Instance> newInstances = new ArrayList<>();
 
 			System.out.println(instance.getName());
-			Set<AbstractAnnotation> annotations = new HashSet<>();
+			Set<AbstractAnnotation> annotations = getAdditionalAnnotations(instance);
 
 			for (EntityTemplate annotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
 
 				add(annotations, annotation);
 
 			}
+
 			System.out.println("Found annotations: " + annotations.size());
 
-			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
+//			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
@@ -71,6 +76,38 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 					conv.convertToWrapperInstances());
 
 		}
+	}
+
+	/**
+	 * Returns a set of group name anntotions which are not serve as slot filler.
+	 * 
+	 * @param instance
+	 * @return
+	 * @throws IOException
+	 */
+	private Set<AbstractAnnotation> getAdditionalAnnotations(Instance instance) throws IOException {
+		Set<AbstractAnnotation> adds = new HashSet<>();
+
+		CSVReader reader = new CSVReader(
+				new FileReader(new File(new File("rawData/export_22112019/"), instance.getName() + "_Jessica.annodb")),
+				',', '"', 1);
+
+		List<String[]> data = reader.readAll();
+
+		for (String[] strings : data) {
+
+			if (!(strings[1].trim().equals("GroupName") || strings[1].trim().equals("DefinedExperimentalGroup")))
+				continue;
+
+			adds.add(AnnotationBuilder.toAnnotation(instance.getDocument(), "GroupName", strings[4].trim(),
+					Integer.parseInt(strings[2].trim())));
+
+		}
+		System.out.println("Found additional annotations: " + adds.size());
+
+		reader.close();
+
+		return adds;
 	}
 
 	/**

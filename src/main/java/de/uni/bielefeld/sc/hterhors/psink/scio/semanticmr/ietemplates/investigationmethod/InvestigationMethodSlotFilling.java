@@ -2,6 +2,8 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investiga
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -12,7 +14,10 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigationmethod.specs.InvestigationMethodSpecs;
 
@@ -65,9 +70,10 @@ public class InvestigationMethodSlotFilling {
 
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 //				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
-		InstanceProvider.maxNumberOfAnnotations = 50;
+//		InstanceProvider.maxNumberOfAnnotations = 8;
 
-		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
+				getGoldModificationRules());
 
 		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
@@ -109,5 +115,24 @@ public class InvestigationMethodSlotFilling {
 		 * TODO: Compare results with results when changing some parameter. Implement
 		 * more sophisticated feature-templates.
 		 */
+	}
+
+	private Collection<ModifyGoldRule> getGoldModificationRules() {
+
+		List<ModifyGoldRule> list = new ArrayList<>();
+//
+		list.add(new ModifyGoldRule() {
+
+			@Override
+			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
+				if (goldAnnotation.getEntityType() == EntityType.get("InvestigationMethod"))
+					if (goldAnnotation.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+						return null;
+
+				return goldAnnotation;
+			}
+		});
+
+		return list;
 	}
 }
