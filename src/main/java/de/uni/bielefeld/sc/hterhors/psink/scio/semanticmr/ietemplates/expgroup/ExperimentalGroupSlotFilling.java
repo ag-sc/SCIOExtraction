@@ -168,12 +168,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		PATTERN_NP_CHUNKS;
 	}
 
-	public final EExtractGroupNamesMode groupNameMode = EExtractGroupNamesMode.GOLD_CLUSTERED;
+	public EExtractGroupNamesMode groupNameMode;
 
 	public ExperimentalGroupSlotFilling() throws IOException {
 		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
+
+		groupNameMode = EExtractGroupNamesMode.GOLD_CLUSTERED;
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED)
 			SlotType.get("hasGroupName").excludeFromExploration = true;
@@ -202,8 +204,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 //		Collections.shuffle(docs, new Random(100L));
 
-		List<String> trainingInstanceNames = docs.subList(0, 50);
-		List<String> testInstanceNames = docs.subList(50, docs.size());
+		List<String> trainingInstanceNames = docs.subList(0, 75);
+		List<String> testInstanceNames = docs.subList(75, docs.size());
 
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();
@@ -221,7 +223,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
 		String rand = String.valueOf(new Random().nextInt(100000));
-		rand = "16500";
+//		rand = "16500";
 		final String modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 		/*
@@ -268,7 +270,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		extractTreatmentsFromNERLA(instanceProvider.getInstances())
 				.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
 
-		extractTreatmentsFromTRAIN().forEach(p -> candidateRetrieval.registerCandidateProvider(p));
+		extractTreatmentsFromTRAIN(instanceProvider.getInstances())
+				.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
 
 		for (Instance instance : trainingInstances) {
 			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
@@ -690,7 +693,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public EntityTemplateCandidateProvider extractCandidatesFromGold(Instance instance) {
 		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-//		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
+		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldOrganismModels(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldInjuryModels(instance));
 		return entityTemplateCandidateProvider;
@@ -732,13 +735,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		return provider;
 	}
 
-	private List<? extends ICandidateProvider> extractTreatmentsFromTRAIN() {
+	private List<? extends ICandidateProvider> extractTreatmentsFromTRAIN(List<Instance> instances) {
 
 		List<EntityTemplateCandidateProvider> provider = new ArrayList<>();
 
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
-		for (Instance instance : trainingInstances) {
+		for (Instance instance : instances) {
 			EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(
 					instance);
 			for (AbstractAnnotation nerla : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
