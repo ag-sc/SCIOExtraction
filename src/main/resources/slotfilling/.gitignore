@@ -5,6 +5,5 @@
 /delivery_method/
 /treatment/
 /experimental_group/
-/investigation/
-/investigationmethod/
 /observation/
+/investigation_method/
