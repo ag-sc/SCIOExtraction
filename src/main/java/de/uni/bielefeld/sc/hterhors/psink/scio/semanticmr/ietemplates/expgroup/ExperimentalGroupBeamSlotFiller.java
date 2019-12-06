@@ -63,7 +63,7 @@ import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
@@ -132,7 +132,7 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-		Collection<ModifyGoldRule> goldModificationRules = getGoldModificationRules();
+		Collection<GoldModificationRule> goldModificationRules = getGoldModificationRules();
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules);
 
@@ -401,8 +401,8 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 		return annotations;
 	}
 
-	public Collection<ModifyGoldRule> getGoldModificationRules() {
-		Collection<ModifyGoldRule> goldModificationRules = new ArrayList<>();
+	public Collection<GoldModificationRule> getGoldModificationRules() {
+		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType
 					.get("DefinedExperimentalGroup"))

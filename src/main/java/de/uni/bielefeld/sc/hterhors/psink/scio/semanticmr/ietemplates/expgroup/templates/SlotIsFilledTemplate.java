@@ -108,7 +108,7 @@ public class SlotIsFilledTemplate extends AbstractFeatureTemplate<SlotIsFilledSc
 
 		final boolean slotIsFilled = factor.getFactorScope().numberOfSlotFiller > 0;
 
-		final String slotName = factor.getFactorScope().slot.slotName;
+		final String slotName = factor.getFactorScope().slot.name;
 
 		factor.getFeatureVector().set(PREFIX + slotName + " contains elements", slotIsFilled);
 		factor.getFeatureVector().set(PREFIX + slotName + " is empty", !slotIsFilled);

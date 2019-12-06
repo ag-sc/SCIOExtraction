@@ -54,7 +54,7 @@ public class DocumentHighVariatyRanker implements IActiveLearningDocumentRanker 
 						if (ann.isInstanceOfDocumentLinkedAnnotation() && ann.getEntityType().isLiteral)
 							annData.add(ann.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm());
 						else
-							annData.add(ann.getEntityType().entityName);
+							annData.add(ann.getEntityType().name);
 
 					}
 				}
@@ -107,7 +107,7 @@ public class DocumentHighVariatyRanker implements IActiveLearningDocumentRanker 
 						if (ann.isInstanceOfDocumentLinkedAnnotation() && ann.getEntityType().isLiteral)
 							annData.add(ann.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm());
 						else
-							annData.add(ann.getEntityType().entityName);
+							annData.add(ann.getEntityType().name);
 
 					}
 				}

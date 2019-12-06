@@ -141,7 +141,7 @@ public class ExGrAllUsedTemplate extends AbstractFeatureTemplate<AllUsedScope> {
 	@Override
 	public void generateFeatureVector(Factor<AllUsedScope> factor) {
 
-		factor.getFeatureVector().set("Cntxt: " + factor.getFactorScope().slotTypeContext.slotName,
+		factor.getFeatureVector().set("Cntxt: " + factor.getFactorScope().slotTypeContext.name,
 				factor.getFactorScope().allUsed);
 	}
 

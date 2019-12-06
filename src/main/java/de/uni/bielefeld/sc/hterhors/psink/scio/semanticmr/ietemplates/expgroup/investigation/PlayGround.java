@@ -189,7 +189,7 @@ public class PlayGround {
 					expSurfaceForm = expRoot.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm();
 					System.out.println("ExpRoot: "
 							+ expRoot.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex()
-							+ "\t" + expRoot.getEntityType().entityName + "\t" + expSurfaceForm);
+							+ "\t" + expRoot.getEntityType().name + "\t" + expSurfaceForm);
 					System.out.println();
 					System.out.println(expRoot.getSentenceOfAnnotation());
 					System.out.println();
@@ -216,7 +216,7 @@ public class PlayGround {
 					if (treatRoot.isInstanceOfDocumentLinkedAnnotation()) {
 						System.out.println(
 								treatRoot.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex()
-										+ "\t" + treatRoot.getEntityType().entityName + "\t"
+										+ "\t" + treatRoot.getEntityType().name + "\t"
 										+ treatRoot.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm() + "\t"
 										+ contains(expSurfaceForm,
 												treatRoot.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()));

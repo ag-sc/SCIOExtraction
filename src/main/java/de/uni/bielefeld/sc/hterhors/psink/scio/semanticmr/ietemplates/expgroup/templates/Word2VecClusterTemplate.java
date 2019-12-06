@@ -300,7 +300,7 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 //											+ (clusterJ == -1 ? typedBOWTerm : clusterJ) + " : (" + i + "," + j + ")",
 //											true);
 							factor.getFeatureVector()
-									.set("Context: " + factor.getFactorScope().slotTypeContext.slotName + "."
+									.set("Context: " + factor.getFactorScope().slotTypeContext.name + "."
 											+ getOrigin(factor, typedBOW) + ", " + clusterI + "\t" + clusterJ + " : ("
 											+ i + "," + j + ")", true);
 
@@ -337,8 +337,8 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 	}
 
 	private String getOrigin(Factor<W2VScope> factor, TypedBOW typedBOW) {
-		return typedBOW.slotType != null ? typedBOW.slotType.slotName
-				: factor.getFactorScope().slotTypeContext.slotName;
+		return typedBOW.slotType != null ? typedBOW.slotType.name
+				: factor.getFactorScope().slotTypeContext.name;
 	}
 
 }

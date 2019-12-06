@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
@@ -238,6 +240,11 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 			}
 		});
 		return hardConstraintsProvider;
+	}
+
+	@Override
+	protected Collection<GoldModificationRule> getGoldModificationRules() {
+		return OrganismModelRestrictionProvider.getRule(OrgModelSlotFilling.rule);
 	}
 
 }

@@ -42,9 +42,9 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonNerlaProvider;
@@ -70,17 +70,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new GreedySearchEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
-	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED,3));
-	
-	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
-
 //	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
-//
+//			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED,3));
+//	
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+//			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
+
+	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+
+	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
 
@@ -118,7 +118,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
 		 */
-		InstanceProvider.maxNumberOfAnnotations = 50;
+		InstanceProvider.maxNumberOfAnnotations = 8;
 
 //		InstanceProvider.maxNumberOfAnnotations = CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE;
 
@@ -171,7 +171,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 		explorerList = Arrays.asList(explorer);
 
-		maxStepCrit = new MaxChainLengthCrit(10);
+		maxStepCrit = new MaxChainLengthCrit(25);
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
 	}
@@ -322,15 +322,16 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return annotations.getOrDefault(name, Collections.emptySet());
 	}
 
-	final public void evaluateOnDevelopment() {
+	final public Score evaluateOnDevelopment() {
 
 		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedDevelopmentInstances(), maxStepCrit,
 				noModelChangeCrit);
 
-		AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);
+		Score s = AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
+		return s;
 	}
 
 	final public void evaluateOnTest() {
@@ -364,12 +365,8 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				.map(i -> i.getName()).collect(Collectors.toSet()), n);
 	}
 
-	protected Collection<ModifyGoldRule> getGoldModificationRules() {
+	protected Collection<GoldModificationRule> getGoldModificationRules() {
 		return Collections.emptyList();
 	}
 
-	public Map<Instance, List<State>> collectBestNStates(List<Instance> remainingInstances, int n) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

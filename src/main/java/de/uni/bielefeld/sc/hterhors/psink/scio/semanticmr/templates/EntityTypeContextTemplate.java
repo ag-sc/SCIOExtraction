@@ -155,9 +155,9 @@ public class EntityTypeContextTemplate extends AbstractFeatureTemplate<EntityTyp
 				.flatMap(e -> e.getDirectSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
 
 		factor.getFeatureVector()
-				.set(PREFIX + superLeftContext.stream().map(e -> " " + e.entityName).reduce("", String::concat).trim()
-						+ "<->" + factor.getFactorScope().slotTypeContext.slotName + "<->"
-						+ superRightContext.stream().map(e -> " " + e.entityName).reduce("", String::concat).trim(),
+				.set(PREFIX + superLeftContext.stream().map(e -> " " + e.name).reduce("", String::concat).trim()
+						+ "<->" + factor.getFactorScope().slotTypeContext.name + "<->"
+						+ superRightContext.stream().map(e -> " " + e.name).reduce("", String::concat).trim(),
 						true);
 
 //		factor.getFeatureVector()

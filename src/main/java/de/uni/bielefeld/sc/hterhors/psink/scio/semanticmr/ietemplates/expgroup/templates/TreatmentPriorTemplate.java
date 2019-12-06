@@ -106,9 +106,9 @@ public class TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPri
 		Collections.sort(sorted);
 
 		for (int i = 0; i < sorted.size() - 1; i++) {
-			factor.getFeatureVector().set(PREFIX + sorted.get(i).entityName, true);
+			factor.getFeatureVector().set(PREFIX + sorted.get(i).name, true);
 			for (int j = i + 1; j < sorted.size(); j++) {
-				factor.getFeatureVector().set(PREFIX + sorted.get(i).entityName + "--" + sorted.get(j).entityName,
+				factor.getFeatureVector().set(PREFIX + sorted.get(i).name + "--" + sorted.get(j).name,
 						true);
 			}
 		}

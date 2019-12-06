@@ -134,18 +134,18 @@ public class ConvertInstancesToCSV {
 				values.put(path, "\""
 						+ ((DocumentLinkedAnnotation) annotation).getSurfaceForm().replaceAll("\"", "\\\\\"") + "\"");
 			} else {
-				values.put(path, annotation.getEntityType().entityName);
+				values.put(path, annotation.getEntityType().name);
 			}
 		}
 
 		else if (annotation instanceof EntityTemplate) {
 
-			values.put(path, annotation.getEntityType().entityName);
+			values.put(path, annotation.getEntityType().name);
 
 			for (Entry<SlotType, SingleFillerSlot> sfs : ((EntityTemplate) annotation).getSingleFillerSlots()
 					.entrySet()) {
 
-				String p = path + "_" + sfs.getKey().slotName;
+				String p = path + "_" + sfs.getKey().name;
 
 				SingleFillerSlot sf = sfs.getValue();
 
@@ -163,7 +163,7 @@ public class ConvertInstancesToCSV {
 
 				int count = 0;
 				for (AbstractAnnotation v : vs) {
-					String p = path + "_" + msf.getKey().slotName + "[" + count + "]";
+					String p = path + "_" + msf.getKey().name + "[" + count + "]";
 					collectFlattenedInstance(values, p, v);
 					count++;
 				}

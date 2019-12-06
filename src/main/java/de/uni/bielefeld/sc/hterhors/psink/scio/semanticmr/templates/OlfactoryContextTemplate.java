@@ -129,10 +129,10 @@ public class OlfactoryContextTemplate extends AbstractFeatureTemplate<EntityType
 		if (!olfactory)
 			return;
 
-		factor.getFeatureVector().set(PREFIX + "ContextOfOlfactory " + factor.getFactorScope().entityType.entityName,
+		factor.getFeatureVector().set(PREFIX + "ContextOfOlfactory " + factor.getFactorScope().entityType.name,
 				true);
 		for (EntityType superET : factor.getFactorScope().entityType.getDirectSuperEntityTypes()) {
-			factor.getFeatureVector().set(PREFIX + "ContextOfOlfactory " + superET.entityName, true);
+			factor.getFeatureVector().set(PREFIX + "ContextOfOlfactory " + superET.name, true);
 		}
 
 	}

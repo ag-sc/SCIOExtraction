@@ -138,7 +138,7 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 	@Override
 	public void generateFeatureVector(Factor<IntraTokenScope> factor) {
 
-		getTokenNgrams(factor.getFeatureVector(), factor.getFactorScope().entityType.entityName,
+		getTokenNgrams(factor.getFeatureVector(), factor.getFactorScope().entityType.name,
 				factor.getFactorScope().surfaceForm, factor.getFactorScope().cardinality);
 
 //		for (EntityType e : factor.getFactorScope().entityType.getDirectSuperEntityTypes()) {

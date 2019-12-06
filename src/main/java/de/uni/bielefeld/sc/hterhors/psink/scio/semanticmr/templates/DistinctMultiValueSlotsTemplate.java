@@ -103,7 +103,7 @@ public class DistinctMultiValueSlotsTemplate extends AbstractFeatureTemplate<Dis
 	public void generateFeatureVector(Factor<DistinctMultiValueSlotsScope> factor) {
 
 		factor.getFeatureVector().set(
-				factor.getFactorScope().slotTypeContext.slotName + "is distinct =" + factor.getFactorScope().isDistinct,
+				factor.getFactorScope().slotTypeContext.name + "is distinct =" + factor.getFactorScope().isDistinct,
 				true);
 
 	}

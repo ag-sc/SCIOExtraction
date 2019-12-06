@@ -72,7 +72,7 @@ public class PriorNumericInterpretationInjuryTemplate extends AbstractFeatureTem
 		for (Entry<EntityType, Map<EntityType, Map<IUnit, Double>>> parent : this.meanValues.entrySet()) {
 			for (Entry<EntityType, Map<IUnit, Double>> property : parent.getValue().entrySet()) {
 				for (Entry<IUnit, Double> unit : property.getValue().entrySet()) {
-					log.info(parent.getKey().entityName + " -> " + property.getKey().entityName + " = "
+					log.info(parent.getKey().name + " -> " + property.getKey().name + " = "
 							+ unit.getValue() + " +- "
 							+ this.stdDeviations.get(parent.getKey()).get(property.getKey()).get(unit.getKey()) + " "
 							+ unit.getKey());
@@ -479,8 +479,8 @@ public class PriorNumericInterpretationInjuryTemplate extends AbstractFeatureTem
 
 	private void addFeatures(EntityType parentClassType, EntityType propertyClassType, DoubleVector featureVector,
 			final INumericInterpreter semantics) {
-		final String parentClassName = parentClassType.entityName;
-		final String className = propertyClassType.entityName;
+		final String parentClassName = parentClassType.name;
+		final String className = propertyClassType.name;
 
 		if (!semantics.isInterpretable())
 			return;

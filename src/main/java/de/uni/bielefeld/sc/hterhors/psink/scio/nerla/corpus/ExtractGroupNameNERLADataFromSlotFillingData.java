@@ -130,7 +130,7 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 				try {
 
 					additionalAnnotations.add(AnnotationBuilder.toAnnotation(document,
-							abstractAnnotation.getEntityType().entityName, m.group(), m.start()));
+							abstractAnnotation.getEntityType().name, m.group(), m.start()));
 				} catch (RuntimeException e) {
 					System.out.println("Could not map annotation to tokens!");
 				}

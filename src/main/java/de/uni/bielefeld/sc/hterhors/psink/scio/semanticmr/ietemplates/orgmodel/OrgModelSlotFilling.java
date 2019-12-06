@@ -2,6 +2,8 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,6 +16,7 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
@@ -60,6 +63,12 @@ public class OrgModelSlotFilling {
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
 
+	public static EOrgModelModifications rule;
+
+	public final String header = "Mode\tF1\tPrecision\tRecall";
+
+	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
+
 	public OrgModelSlotFilling() throws IOException {
 
 		/**
@@ -94,54 +103,67 @@ public class OrgModelSlotFilling {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.build();
+		PrintStream resultsOut = new PrintStream(new File("results/organismModelResults.csv"));
+
+		resultsOut.println(header);
+
+		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
+			OrgModelSlotFilling.rule = rule;
+
+			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+					.setCorpusSizeFraction(1F).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 //				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
-		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
+					OrganismModelRestrictionProvider.getRule(rule));
 
-		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
-				.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+					.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
-				.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+					.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
-				.collect(Collectors.toList());
+			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+					.map(t -> t.getName()).collect(Collectors.toList());
 
-		String modelName = "OrganismModel" + new Random().nextInt();
+			String modelName = "OrganismModel" + new Random().nextInt();
 
-		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames);
+			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
+					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-		predictor.trainOrLoadModel();
+			predictor.trainOrLoadModel();
 
-		predictor.evaluateOnDevelopment();
+			Score score = predictor.evaluateOnDevelopment();
 
-		/**
-		 * Finally, we evaluate the produced states and print some statistics.
-		 */
+			resultsOut.println(toResults(rule, score));
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-		log.info("Coverage Training: " + trainCoverage);
+			/**
+			 * Finally, we evaluate the produced states and print some statistics.
+			 */
 
-		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-		log.info("Coverage Development: " + devCoverage);
+//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//			log.info("Coverage Training: " + trainCoverage);
+//
+//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+//			log.info("Coverage Development: " + devCoverage);
 
-		/**
-		 * Computes the coverage of the given instances. The coverage is defined by the
-		 * objective mean score that can be reached relying on greedy objective function
-		 * sampling strategy. The coverage can be seen as the upper bound of the system.
-		 * The upper bound depends only on the exploration strategy, e.g. the provided
-		 * NER-annotations during slot-filling.
-		 */
-		log.info("modelName: " + predictor.modelName);
-		/**
-		 * TODO: Compare results with results when changing some parameter. Implement
-		 * more sophisticated feature-templates.
-		 */
+			/**
+			 * Computes the coverage of the given instances. The coverage is defined by the
+			 * objective mean score that can be reached relying on greedy objective function
+			 * sampling strategy. The coverage can be seen as the upper bound of the system.
+			 * The upper bound depends only on the exploration strategy, e.g. the provided
+			 * NER-annotations during slot-filling.
+			 */
+			log.info("modelName: " + predictor.modelName);
+			/**
+			 * TODO: Compare results with results when changing some parameter. Implement
+			 * more sophisticated feature-templates.
+			 */
+		}
+		resultsOut.flush();
+		resultsOut.close();
 
 //		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictAllInstances();
 //		int docID = 0;
@@ -174,5 +196,10 @@ public class OrgModelSlotFilling {
 //			docID++;
 //		}
 
+	}
+
+	private String toResults(EOrgModelModifications rule, Score score) {
+		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
+				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}
 }

@@ -100,7 +100,7 @@ public class MultiValueSlotSizeTemplate extends AbstractFeatureTemplate<MultiVal
 	public void generateFeatureVector(Factor<MultiValueSlotSizeScope> factor) {
 
 		factor.getFeatureVector()
-				.set(factor.getFactorScope().slotTypeContext.slotName + " size = " + factor.getFactorScope().num, true);
+				.set(factor.getFactorScope().slotTypeContext.name + " size = " + factor.getFactorScope().num, true);
 
 	}
 

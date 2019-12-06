@@ -224,8 +224,8 @@ public class NumericInterpretationTemplate extends AbstractFeatureTemplate<Numer
 
 	private void addFeatures(EntityType parentClassType, EntityType propertyClassType, DoubleVector featureVector,
 			final INumericInterpreter interpretation) {
-		final String parentClassName = parentClassType.entityName;
-		final String className = propertyClassType.entityName;
+		final String parentClassName = parentClassType.name;
+		final String className = propertyClassType.name;
 
 		final IUnit unit = interpretation.getUnit();
 

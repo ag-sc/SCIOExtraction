@@ -140,49 +140,49 @@ public class VertebralAreaConditionTemplate extends AbstractFeatureTemplate<Vert
 
 	private int getOrdinal(EntityType entityType) {
 
-		if (entityType.entityName.equals("L1"))
+		if (entityType.name.equals("L1"))
 			return 0;
-		if (entityType.entityName.equals("L2"))
+		if (entityType.name.equals("L2"))
 			return 1;
-		if (entityType.entityName.equals("L3"))
+		if (entityType.name.equals("L3"))
 			return 2;
-		if (entityType.entityName.equals("L4"))
+		if (entityType.name.equals("L4"))
 			return 3;
-		if (entityType.entityName.equals("T1"))
+		if (entityType.name.equals("T1"))
 			return 4;
-		if (entityType.entityName.equals("T2"))
+		if (entityType.name.equals("T2"))
 			return 5;
-		if (entityType.entityName.equals("T3"))
+		if (entityType.name.equals("T3"))
 			return 6;
-		if (entityType.entityName.equals("T4"))
+		if (entityType.name.equals("T4"))
 			return 7;
-		if (entityType.entityName.equals("T5"))
+		if (entityType.name.equals("T5"))
 			return 8;
-		if (entityType.entityName.equals("T6"))
+		if (entityType.name.equals("T6"))
 			return 9;
-		if (entityType.entityName.equals("T7"))
+		if (entityType.name.equals("T7"))
 			return 10;
-		if (entityType.entityName.equals("T8"))
+		if (entityType.name.equals("T8"))
 			return 11;
-		if (entityType.entityName.equals("T9"))
+		if (entityType.name.equals("T9"))
 			return 12;
-		if (entityType.entityName.equals("T10"))
+		if (entityType.name.equals("T10"))
 			return 13;
-		if (entityType.entityName.equals("T11"))
+		if (entityType.name.equals("T11"))
 			return 14;
-		if (entityType.entityName.equals("C1"))
+		if (entityType.name.equals("C1"))
 			return 15;
-		if (entityType.entityName.equals("C2"))
+		if (entityType.name.equals("C2"))
 			return 16;
-		if (entityType.entityName.equals("C3"))
+		if (entityType.name.equals("C3"))
 			return 17;
-		if (entityType.entityName.equals("C4"))
+		if (entityType.name.equals("C4"))
 			return 18;
-		if (entityType.entityName.equals("C5"))
+		if (entityType.name.equals("C5"))
 			return 19;
-		if (entityType.entityName.equals("C6"))
+		if (entityType.name.equals("C6"))
 			return 20;
-		if (entityType.entityName.equals("C7"))
+		if (entityType.name.equals("C7"))
 			return 21;
 		return -1;
 	}

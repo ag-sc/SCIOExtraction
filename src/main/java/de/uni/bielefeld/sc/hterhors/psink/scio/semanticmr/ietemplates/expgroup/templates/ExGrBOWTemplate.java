@@ -193,7 +193,7 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 					if (ALL_STOPWORDS.contains(typedBOWTerm))
 						continue;
 
-					factor.getFeatureVector().set("Context: " + factor.getFactorScope().slotTypeContext.slotName
+					factor.getFeatureVector().set("Context: " + factor.getFactorScope().slotTypeContext.name
 							+ ", TermPair: " + expBOWTerm + "\t" + typedBOWTerm, true);
 
 				}
@@ -227,7 +227,7 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 	}
 
 	private String getOrigin(Factor<BOWScope> factor, TypedBOW typedBOW) {
-		return typedBOW.slotType != null ? typedBOW.slotType.slotName
-				: factor.getFactorScope().slotTypeContext.slotName;
+		return typedBOW.slotType != null ? typedBOW.slotType.name
+				: factor.getFactorScope().slotTypeContext.name;
 	}
 }

@@ -813,7 +813,7 @@ public class CollectExpGroupNames {
 				treatmentTerms.addAll(Arrays
 						.asList(compoundRoot.asInstanceOfLiteralAnnotation().textualContent.surfaceForm.split(" ")));
 			}
-			treatmentTerms.add(compoundRoot.getEntityType().entityName);
+			treatmentTerms.add(compoundRoot.getEntityType().name);
 
 		}
 		if (treatmentTerms.isEmpty()) {
@@ -824,7 +824,7 @@ public class CollectExpGroupNames {
 						.asList(treatmentRoot.asInstanceOfLiteralAnnotation().textualContent.surfaceForm.split(" ")));
 			}
 
-			treatmentTerms.add(treatment.getEntityType().entityName);
+			treatmentTerms.add(treatment.getEntityType().name);
 		}
 
 		return treatmentTerms;

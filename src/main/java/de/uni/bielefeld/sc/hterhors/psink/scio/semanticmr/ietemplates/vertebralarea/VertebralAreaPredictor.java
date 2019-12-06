@@ -25,7 +25,7 @@ import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
-import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
@@ -140,8 +140,8 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected Collection<ModifyGoldRule> getGoldModificationRules() {
-		Collection<ModifyGoldRule> goldModificationRules = new ArrayList<>();
+	protected Collection<GoldModificationRule> getGoldModificationRules() {
+		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
 
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType.get("VertebralArea"))

@@ -106,11 +106,11 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 			if (!(lower.containsSlotFiller() && upper.containsSlotFiller()))
 				continue;
 
-			String lowerVertebraeNum = lower.getSlotFiller().getEntityType().entityName.replaceAll("T|C|L", "");
-			String upperVertebraeNum = upper.getSlotFiller().getEntityType().entityName.replaceAll("T|C|L", "");
+			String lowerVertebraeNum = lower.getSlotFiller().getEntityType().name.replaceAll("T|C|L", "");
+			String upperVertebraeNum = upper.getSlotFiller().getEntityType().name.replaceAll("T|C|L", "");
 
-			String lowerVertebraeID = lower.getSlotFiller().getEntityType().entityName.replaceAll("\\d+", "");
-			String upperVertebraeID = upper.getSlotFiller().getEntityType().entityName.replaceAll("\\d+", "");
+			String lowerVertebraeID = lower.getSlotFiller().getEntityType().name.replaceAll("\\d+", "");
+			String upperVertebraeID = upper.getSlotFiller().getEntityType().name.replaceAll("\\d+", "");
 
 			String surfaceForm = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation().getSurfaceForm();
 

@@ -105,11 +105,11 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Treatm
 	@Override
 	public void generateFeatureVector(Factor<TreatmentCardinalityScope> factor) {
 
-		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.entityName + ", num > 1",
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.name + ", num > 1",
 				factor.getFactorScope().numOfTreatments > 1);
-		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.entityName + ", num != 1",
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.name + ", num != 1",
 				factor.getFactorScope().numOfTreatments != 1);
-		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.entityName + ", num == "
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().entityType.name + ", num == "
 				+ factor.getFactorScope().numOfTreatments, true);
 
 	}

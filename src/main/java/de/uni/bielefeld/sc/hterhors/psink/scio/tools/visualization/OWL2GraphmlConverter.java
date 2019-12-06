@@ -129,14 +129,14 @@ public class OWL2GraphmlConverter {
 			x: for (Entry<String, Set<String>> vg : visGroups.entrySet()) {
 				for (EntityType superE : entity.getTransitiveClosureSuperEntityTypes()) {
 
-					if (vg.getValue().contains(superE.entityName)) {
-						classGroups.put(entity.entityName, vg.getKey());
+					if (vg.getValue().contains(superE.name)) {
+						classGroups.put(entity.name, vg.getKey());
 						break x;
 					}
 				}
 
-				if (vg.getValue().contains(entity.entityName)) {
-					classGroups.put(entity.entityName, vg.getKey());
+				if (vg.getValue().contains(entity.name)) {
+					classGroups.put(entity.name, vg.getKey());
 					break x;
 				}
 			}
@@ -144,7 +144,7 @@ public class OWL2GraphmlConverter {
 			// ################################
 
 			if (entity.isLiteral) {
-				dataTypeClasses.add(entity.entityName);
+				dataTypeClasses.add(entity.name);
 			}
 
 			// ################################
@@ -154,7 +154,7 @@ public class OWL2GraphmlConverter {
 				for (EntityType et : s.getSlotFillerEntityTypes()) {
 
 					if (et.isLiteral) {
-						dataProps.add(s.slotName);
+						dataProps.add(s.name);
 						break;
 					}
 
@@ -162,14 +162,14 @@ public class OWL2GraphmlConverter {
 
 			}
 			if (dataProps.isEmpty())
-				classesWithoutDataTypeProperties.add(entity.entityName);
+				classesWithoutDataTypeProperties.add(entity.name);
 			else
-				classesWithDataTypeProperties.put(entity.entityName, dataProps);
+				classesWithDataTypeProperties.put(entity.name, dataProps);
 
 			// ################################
 
 			if (entity.getTransitiveClosureSubEntityTypes().isEmpty())
-				namedIndividuals.add(entity.entityName);
+				namedIndividuals.add(entity.name);
 
 		}
 

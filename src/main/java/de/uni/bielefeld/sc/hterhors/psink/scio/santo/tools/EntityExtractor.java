@@ -40,7 +40,7 @@ public class EntityExtractor {
 		
 		System.exit(1);
 
-		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("Result"));
+		Set<String> x = printrec(new HashSet<>(), new HashSet<>(), EntityType.get("DefinedExperimentalGroup"));
 
 		x.forEach(System.out::println);
 
@@ -52,14 +52,14 @@ public class EntityExtractor {
 			return x;
 
 		types.add(rootE);
-		x.add(rootE.entityName + "\t" + rootE.isLiteral);
+		x.add(rootE.name + "\t" + rootE.isLiteral);
 		for (EntityType et : rootE.getHierarchicalEntityTypes()) {
 
 			if (types.contains(et))
 				continue;
 
 			types.add(et);
-			x.add(et.entityName + "\t" + et.isLiteral);
+			x.add(et.name + "\t" + et.isLiteral);
 
 			for (SlotType st : et.getSlots()) {
 

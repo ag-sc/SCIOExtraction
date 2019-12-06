@@ -28,7 +28,7 @@ import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
@@ -133,11 +133,11 @@ public class InvestigationMethodSlotFillingPredictor extends AbstractSlotFilling
 	}
 
 	@Override
-	protected Collection<ModifyGoldRule> getGoldModificationRules() {
+	protected Collection<GoldModificationRule> getGoldModificationRules() {
 
-		List<ModifyGoldRule> list = new ArrayList<>();
+		List<GoldModificationRule> list = new ArrayList<>();
 
-		list.add(new ModifyGoldRule() {
+		list.add(new GoldModificationRule() {
 
 			@Override
 			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {

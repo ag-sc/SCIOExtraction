@@ -20,8 +20,11 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.candprov.helper.DictionaryFromInstanceHelper;
 import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
 import de.hterhors.semanticmr.candprov.sf.EntityTemplateCandidateProvider;
+import de.hterhors.semanticmr.candprov.sf.GeneralCandidateProvider;
+import de.hterhors.semanticmr.candprov.sf.ICandidateProvider;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -50,15 +53,17 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.INerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
@@ -77,6 +82,9 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.Word2VecClusterTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
@@ -122,7 +130,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	 * assigned to the predictions on state generation. Further group names are
 	 * excluded from sampling.
 	 */
-	final public static boolean groupNameClusterGiven = false;
+	final public static boolean groupNameClusterGiven = true;
+
+	List<Instance> trainingInstances;
+	List<Instance> devInstances;
+	List<Instance> testInstances;
 
 	public ExperimentalGroupSlotFilling() throws IOException {
 		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
@@ -132,12 +144,25 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		if (groupNameClusterGiven)
 			SlotType.get("hasGroupName").excludeFromExploration = true;
 
+		TreatmentSlotFilling.rule = ETreatmentModifications.ROOT;
+
 		/*
 		 *
 		 * 
 		 * 
 		 * 
 		 */
+//		SpecificationWriter w = new SpecificationWriter(scope);
+//		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/experimental_group/entities.csv"),
+//				EntityType.get("DefinedExperimentalGroup"));
+//		w.writeHierarchiesSpecificationFile(
+//				new File("src/main/resources/slotfilling/experimental_group/hierarchies.csv"),
+//				EntityType.get("DefinedExperimentalGroup"));
+//		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/experimental_group/slots.csv"),
+//				EntityType.get("DefinedExperimentalGroup"));
+////		w.writeStructuresSpecificationFile(null, EntityType.get("Treatment"));
+//
+//		System.exit(1);
 
 		List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
@@ -153,15 +178,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-		Collection<ModifyGoldRule> goldModificationRules = getGoldModificationRules();
+		Collection<GoldModificationRule> goldModificationRules = getGoldModificationRules();
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules);
 
-		List<Instance> trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
+		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
+		testInstances = instanceProvider.getRedistributedTestInstances();
 
 		String rand = String.valueOf(new Random().nextInt(100000));
+		final String modelName = "ExperimentalGroup" + rand;
 
 		/*
 		 * Initialize candidate provider for search space exploration.
@@ -171,16 +197,29 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * Create annotation with pattern.
 		 */
 		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
+
+		/*
+		 * add external treatment annotations
+		 */
+		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(getExternalTreatmentNerlaAnnotations()));
+
+		/*
+		 * TODO: get Gold treatment annotations.
+		 */
+//		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(getGoldTreatmentNerlaAnnotations()));
+		/*
+		 * Add groupNames
+		 */
 		nerlaProvider.addNerlaProvider(new INerlaProvider() {
 
 			@Override
 			public Map<Instance, List<DocumentLinkedAnnotation>> getForInstances(List<Instance> instances) {
 
 //				return returnEmptyMap(instances);
-//				return extractCandidatesFromGold(instances);
+				return extractCandidatesFromGold(instances);
 //				return annotateGroupNamesWithPattern(instances);
 //				return annotateGroupNamesWithNPCHunks(instances);
-				return annotateGroupNamesWithNPCHunksAndPattern(instances);
+//				return annotateGroupNamesWithNPCHunksAndPattern(instances);
 
 			}
 
@@ -191,14 +230,30 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 */
 		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : trainingInstances) {
 			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
 		}
-		for (Instance instance : instanceProvider.getRedistributedDevelopmentInstances()) {
+		for (Instance instance : devInstances) {
 			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
 		}
-		for (Instance instance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance instance : testInstances) {
 			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
+		}
+
+		for (ICandidateProvider ap : getAdditionalCandidateProvider(modelName)) {
+			candidateRetrieval.registerCandidateProvider(ap);
+		}
+
+		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
+
+		for (Instance instance : trainingInstances) {
+			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+
+			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
+					trainDictionary)) {
+				ap.addSlotFiller(annotation);
+			}
+			candidateRetrieval.registerCandidateProvider(ap);
 		}
 
 		List<IExplorationStrategy> explorerList = Arrays
@@ -230,7 +285,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * NOTE: Make sure that the base model directory exists!
 		 */
 		final File modelBaseDir = getModelBaseDir();
-		final String modelName = "ExperimentalGroup" + rand;
 
 		Model model;
 
@@ -255,8 +309,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				trainingObjectiveFunction);
 
 		log.info("Training instances coverage: "
-				+ crf.computeCoverage(false, predictionObjectiveFunction, trainingInstances));
+				+ crf.computeCoverage(true, predictionObjectiveFunction, trainingInstances));
+
 		log.info("Test instances coverage: " + crf.computeCoverage(false, predictionObjectiveFunction, testInstances));
+
+		System.exit(1);
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -302,6 +359,43 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		log.info(crf.getTestStatistics());
 		log.info("modelName: " + modelName);
 
+	}
+
+	private File getGoldTreatmentNerlaAnnotations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private File getExternalTreatmentNerlaAnnotations() {
+		return new File("src/main/resources/slotfilling/treatment/corpus/nerla/");
+	}
+
+	private List<? extends ICandidateProvider> getAdditionalCandidateProvider(String modelName) {
+
+		List<GeneralCandidateProvider> candList = new ArrayList<>();
+		DeliveryMethodPredictor deliveryMethodPrediction = null;
+		if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
+
+			String deliveryMethodModelName = "DeliveryMethod" + modelName;
+
+			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, scope,
+					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
+
+			deliveryMethodPrediction.trainOrLoadModel();
+			deliveryMethodPrediction.predictAllInstances(2);
+
+		}
+		for (Instance instance : instanceProvider.getInstances()) {
+			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+			if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
+				ap.addBatchSlotFiller(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+			}
+			ap.addSlotFiller(AnnotationBuilder.toAnnotation(EntityType.get("CompoundTreatment")));
+			candList.add(ap);
+		}
+		return candList;
 	}
 
 	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
@@ -381,8 +475,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		return sampler;
 	}
 
-	public Collection<ModifyGoldRule> getGoldModificationRules() {
-		Collection<ModifyGoldRule> goldModificationRules = new ArrayList<>();
+	public Collection<GoldModificationRule> getGoldModificationRules() {
+		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
 
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType
@@ -410,6 +504,34 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
 //			return a;
 //		});
+
+		goldModificationRules.add(a -> {
+
+			List<AbstractAnnotation> newTreatments = new ArrayList<>();
+			for (AbstractAnnotation treatment : a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType")
+					.getSlotFiller()) {
+
+				AbstractAnnotation treat = treatment;
+				for (GoldModificationRule goldModificationRule : TreatmentRestrictionProvider
+						.getByRule(TreatmentSlotFilling.rule)) {
+					treat = goldModificationRule.modify(treat);
+
+					if (treat == null) {
+						break;
+					}
+
+				}
+				if (treat != null)
+					newTreatments.add(treat);
+
+			}
+			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
+			for (AbstractAnnotation slotFiller : newTreatments) {
+				a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").add(slotFiller);
+			}
+
+			return a;
+		});
 
 		goldModificationRules.add(a -> {
 			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasNNumber").clear();
@@ -458,37 +580,40 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/**
 		 * 3)
 		 */
-		return (instance -> {
-			List<AbstractAnnotation> as = new ArrayList<>();
+		if (groupNameClusterGiven) {
 
-			for (EntityTemplate goldAnnotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+			return (instance -> {
+				List<AbstractAnnotation> as = new ArrayList<>();
 
-				EntityTemplate init = new EntityTemplate(goldAnnotation.getRootAnnotation());
+				for (EntityTemplate goldAnnotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
 
-				if (groupNameClusterGiven)
+					EntityTemplate init = new EntityTemplate(goldAnnotation.getRootAnnotation());
+
 					for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
 							.getMultiFillerSlot("hasGroupName").getSlotFiller()) {
 						init.addMultiSlotFiller(SlotType.get("hasGroupName"), groupName);
 					}
 
-				as.add(init);
-			}
+					as.add(init);
+				}
 
-			return new State(instance, new Annotations(as));
-		});
+				return new State(instance, new Annotations(as));
+			});
+		} else {
 
-		/**
-		 * 2)
-		 */
-//		return (instance -> {
-//			
-//			List<AbstractAnnotation> as = new ArrayList<>();
-//			
-//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("DefinedExperimentalGroup")));
-//			}
-//			return new State(instance, new Annotations(as));
-//		});
+			/**
+			 * 2)
+			 */
+			return (instance -> {
+
+				List<AbstractAnnotation> as = new ArrayList<>();
+
+				for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+					as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("DefinedExperimentalGroup")));
+				}
+				return new State(instance, new Annotations(as));
+			});
+		}
 
 		/**
 		 * 1)
@@ -508,7 +633,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public EntityTemplateCandidateProvider extractCandidatesFromGold(Instance instance) {
 		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
+//		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldOrganismModels(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldInjuryModels(instance));
 		return entityTemplateCandidateProvider;
@@ -899,7 +1024,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	@Deprecated
-	private void predictAll() {
+	private void preprocessingPrediction() {
 		/**
 		 * Predict GroupNames.
 		 */

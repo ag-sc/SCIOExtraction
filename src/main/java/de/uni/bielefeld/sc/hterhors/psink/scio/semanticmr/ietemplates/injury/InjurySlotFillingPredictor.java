@@ -2,6 +2,8 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,8 +31,10 @@ import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
@@ -57,6 +61,10 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
+
+		if (InjurySlotFilling.rule != EInjuryModifications.ROOT_LOCATION)
+			return Collections.emptyList();
+
 		List<GeneralCandidateProvider> provider = new ArrayList<>();
 		String vertebralAreaModelName = "VertebralArea_" + modelName;
 		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
@@ -78,7 +86,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	protected File getExternalNerlaAnnotations() {
 		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
-//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
+//		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
 		return externalNerlaAnnotations;
 	}
 
@@ -121,43 +129,16 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-//		Mean Score: Score [getF1()=0.484, getPrecision()=0.571, getRecall()=0.420, tp=89, fp=67, fn=123, tn=0]
-//				CRFStatistics [context=Train, getTotalDuration()=126392]
-//				CRFStatistics [context=Test, getTotalDuration()=3302]
-//				Compute coverage...
-//				Coverage Training: Score [getF1()=0.814, getPrecision()=1.000, getRecall()=0.687, tp=504, fp=0, fn=230, tn=0]
-//				Compute coverage...
-//				No states were generated for instance: N164 Li 2003
-//				No states were generated for instance: N199 Ruitenberg 2005
-//				Coverage Development: Score [getF1()=0.686, getPrecision()=0.870, getRecall()=0.566, tp=120, fp=18, fn=92, tn=0]
-//				modelName: Injury1444679482
-		return ((instance) -> new State(instance, new Annotations(
-				//
-				new EntityTemplate(AnnotationBuilder.toAnnotation("Injury"))
-//
-		)));
+//		return ((instance) -> new State(instance,
+//				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")))));
 
-//		Mean Score: Score [getF1()=0.453, getPrecision()=0.521, getRecall()=0.401, tp=85, fp=78, fn=127, tn=0]
-//				CRFStatistics [context=Train, getTotalDuration()=165788]
-//				CRFStatistics [context=Test, getTotalDuration()=5152]
-//				Compute coverage...
-//				Coverage Training: Score [getF1()=0.921, getPrecision()=1.000, getRecall()=0.854, tp=627, fp=0, fn=107, tn=0]
-//				Compute coverage...
-//				No states were generated for instance: N164 Li 2003
-//				No states were generated for instance: N199 Ruitenberg 2005
-//				Coverage Development: Score [getF1()=0.749, getPrecision()=0.864, getRecall()=0.660, tp=140, fp=22, fn=72, tn=0]
-//				modelName: Injury-1001814223
-
-//		return (instance -> {
-//
-//			List<AbstractAnnotation> as = new ArrayList<>();
-//
-//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
-//			}
-//			return new State(instance, new Annotations(as));
-//			//
-//		});
+		return (instance -> {
+			List<AbstractAnnotation> as = new ArrayList<>();
+			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
+			}
+			return new State(instance, new Annotations(as));
+		});
 	}
 
 	@Override
@@ -174,5 +155,10 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected File getModelBaseDir() {
 		return new File("models/slotfilling/injury/");
+	}
+
+	@Override
+	protected Collection<GoldModificationRule> getGoldModificationRules() {
+		return InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule);
 	}
 }

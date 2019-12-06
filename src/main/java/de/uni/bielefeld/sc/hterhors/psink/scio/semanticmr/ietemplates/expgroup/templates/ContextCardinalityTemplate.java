@@ -170,7 +170,7 @@ public class ContextCardinalityTemplate extends AbstractFeatureTemplate<ContextB
 
 		final String[] rightContext = extractRightContext(tokens, endTokenIndex);
 
-		getContextFeatures(featureVector, entity.entityName, leftContext, rightContext, cardinality);
+		getContextFeatures(featureVector, entity.name, leftContext, rightContext, cardinality);
 
 //		for (EntityType e : entity.getDirectSuperEntityTypes()) {
 //			getContextFeatures(featureVector, e.entityName, leftContext, rightContext,cardinality);

@@ -17,7 +17,7 @@ import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.variables.Instance.ModifyGoldRule;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigationmethod.specs.InvestigationMethodSpecs;
 
@@ -117,11 +117,11 @@ public class InvestigationMethodSlotFilling {
 		 */
 	}
 
-	private Collection<ModifyGoldRule> getGoldModificationRules() {
+	private Collection<GoldModificationRule> getGoldModificationRules() {
 
-		List<ModifyGoldRule> list = new ArrayList<>();
+		List<GoldModificationRule> list = new ArrayList<>();
 //
-		list.add(new ModifyGoldRule() {
+		list.add(new GoldModificationRule() {
 
 			@Override
 			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {

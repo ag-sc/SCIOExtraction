@@ -80,7 +80,7 @@ public class BOWExtractor {
 	public static Set<String> extractEntityTypeBOW(EntityType entityType) {
 		Set<String> bow = new HashSet<>();
 		if (!entityType.isLiteral) {
-			for (String part : camelCaseSplit(entityType.entityName)) {
+			for (String part : camelCaseSplit(entityType.name)) {
 				bow.add(part);
 			}
 		}
