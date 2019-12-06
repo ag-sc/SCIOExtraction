@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigationmethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,8 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigationmethod.specs.InvestigationMethodSpecs;
+import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
 /**
  * 
@@ -34,7 +35,7 @@ public class InvestigationMethodSlotFilling {
 	 * @param args
 	 * @throws IOException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new InvestigationMethodSlotFilling();
 	}
 
@@ -45,9 +46,9 @@ public class InvestigationMethodSlotFilling {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/investigationmethod/corpus/instances/");
+			"src/main/resources/slotfilling/investigation_method/corpus/instances/");
 
-	public InvestigationMethodSlotFilling() {
+	public InvestigationMethodSlotFilling() throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -59,11 +60,23 @@ public class InvestigationMethodSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(InvestigationMethodSpecs.systemsScopeReader)
+				.addScopeSpecification(ResultSpecifications.systemsScope)
 				/**
 				 * Finally, we build the systems scope.
 				 */
 				.build();
+
+//		SpecificationWriter w = new SpecificationWriter(scope);
+//		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/investigation_method/entities.csv"),
+//				EntityType.get("InvestigationMethod"));
+//		w.writeHierarchiesSpecificationFile(
+//				new File("src/main/resources/slotfilling/investigation_method/hierarchies.csv"),
+//				EntityType.get("InvestigationMethod"));
+//		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/investigation_method/slots.csv"),
+//				EntityType.get("InvestigationMethod"));
+////		w.writeStructuresSpecificationFile(null, EntityType.get("Treatment"));
+//
+//		System.exit(1);
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
@@ -89,18 +102,18 @@ public class InvestigationMethodSlotFilling {
 		InvestigationMethodSlotFillingPredictor predictor = new InvestigationMethodSlotFillingPredictor(modelName,
 				scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-		predictor.trainOrLoadModel();
-
-		predictor.evaluateOnDevelopment();
+//		predictor.trainOrLoadModel();
+//
+//		predictor.evaluateOnDevelopment();
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(true);
 		log.info("Coverage Training: " + trainCoverage);
 
-		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(true);
 		log.info("Coverage Development: " + devCoverage);
 
 		/**

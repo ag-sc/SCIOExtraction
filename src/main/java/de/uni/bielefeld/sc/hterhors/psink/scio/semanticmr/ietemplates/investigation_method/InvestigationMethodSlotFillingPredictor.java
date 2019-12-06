@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigationmethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,14 +50,14 @@ public class InvestigationMethodSlotFillingPredictor extends AbstractSlotFilling
 	@Override
 	protected File getExternalNerlaAnnotations() {
 		final File externalNerlaAnnotations = new File(
-				"src/main/resources/slotfilling/investigationmethod/corpus/nerla/");
+				"src/main/resources/slotfilling/investigation_method/corpus/nerla/");
 
 		return externalNerlaAnnotations;
 	}
 
 	@Override
 	protected File getInstanceDirectory() {
-		return new File("src/main/resources/slotfilling/investigationmethod/corpus/instances/");
+		return new File("src/main/resources/slotfilling/investigation_method/corpus/instances/");
 	}
 
 	@Override

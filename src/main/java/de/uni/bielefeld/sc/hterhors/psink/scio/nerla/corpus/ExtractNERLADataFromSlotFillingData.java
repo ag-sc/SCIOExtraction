@@ -2,32 +2,39 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.nerla.corpus;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Set;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.filter.EntityTemplateAnnotationFilter;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.Annotations;
+import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 
 public class ExtractNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractNERLADataFromSlotFillingData("organism_model", OrgModelSpecs.systemsScopeReader);
+		new ExtractNERLADataFromSlotFillingData("investigation_method", InvestigationMethodSpecs.systemsScopeReader);
 	}
 
 	public ExtractNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
@@ -38,10 +45,12 @@ public class ExtractNERLADataFromSlotFillingData {
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				new File("src/main/resources/slotfilling/" + type + "/corpus/instances/"), shuffleCorpusDistributor);
+		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			List<Instance> newInstances = new ArrayList<>();
-
+			if (!names.contains(instance.getName()))
+				continue;
 			System.out.println(instance.getName());
 			Set<AbstractAnnotation> annotations = new HashSet<>();
 
@@ -50,6 +59,7 @@ public class ExtractNERLADataFromSlotFillingData {
 				add(annotations, annotation);
 
 			}
+			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
@@ -57,36 +67,66 @@ public class ExtractNERLADataFromSlotFillingData {
 			InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(newInstances);
 
 			JsonInstanceIO io = new JsonInstanceIO(true);
-			io.writeInstances(new File(
-					"src/main/resources/nerl/" + "group_name" + "/corpus/instances/" + instance.getName() + ".json"),
+			io.writeInstances(
+					new File("src/main/resources/nerl/" + type + "/corpus/instances/" + instance.getName() + ".json"),
 					conv.convertToWrapperInstances());
 
 		}
 	}
 
 	public void add(Set<AbstractAnnotation> annotations, EntityTemplate annotation) {
-		EntityTemplateAnnotationFilter filter = annotation.filter().docLinkedAnnoation().nonEmpty().merge().multiSlots()
-				.singleSlots().build();
 
 		if (annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
 			DocumentLinkedAnnotation a = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation();
 			annotations.add(a);
 		}
 
-		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter.getMergedAnnotations().entrySet()) {
+//		EntityTemplateAnnotationFilter filter = annotation.filter().docLinkedAnnoation().nonEmpty().merge().multiSlots()
+//				.singleSlots().build();
+//		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter.getMergedAnnotations().entrySet()) {
+//
+//			annotations.addAll(a.getValue());
+//
+//		}
+//
+//		EntityTemplateAnnotationFilter filter2 = annotation.filter().merge().entityTemplateAnnoation().multiSlots()
+//				.nonEmpty().singleSlots().build();
+//
+//		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter2.getMergedAnnotations().entrySet()) {
+//			for (AbstractAnnotation abstractAnnotation : a.getValue()) {
+//				add(annotations, abstractAnnotation.asInstanceOfEntityTemplate());
+//			}
+//		}
 
-			annotations.addAll(a.getValue());
+	}
+	/**
+	 * Projects existing annotations into the whole document.
+	 * 
+	 * @param document
+	 * @param annotations
+	 */
+	private void projectAnnotationsIntoDocument(Document document, Set<AbstractAnnotation> annotations) {
 
-		}
+		Set<AbstractAnnotation> additionalAnnotations = new HashSet<>();
 
-		EntityTemplateAnnotationFilter filter2 = annotation.filter().merge().entityTemplateAnnoation().multiSlots()
-				.nonEmpty().singleSlots().build();
+		for (AbstractAnnotation abstractAnnotation : annotations) {
 
-		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter2.getMergedAnnotations().entrySet()) {
-			for (AbstractAnnotation abstractAnnotation : a.getValue()) {
-				add(annotations, abstractAnnotation.asInstanceOfEntityTemplate());
+			Matcher m = Pattern
+					.compile(Pattern.quote(abstractAnnotation.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
+					.matcher(document.documentContent);
+
+			while (m.find()) {
+				try {
+
+					additionalAnnotations.add(AnnotationBuilder.toAnnotation(document,
+							abstractAnnotation.getEntityType().name, m.group(), m.start()));
+				} catch (RuntimeException e) {
+					System.out.println("Could not map annotation to tokens!");
+				}
 			}
 		}
+		System.out.println("Found additional annotation projections: " + additionalAnnotations.size());
+		annotations.addAll(additionalAnnotations);
 
 	}
 

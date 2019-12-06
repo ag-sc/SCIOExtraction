@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigationmethod.nerla;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.nerla;
 
 import java.util.Arrays;
 import java.util.HashMap;

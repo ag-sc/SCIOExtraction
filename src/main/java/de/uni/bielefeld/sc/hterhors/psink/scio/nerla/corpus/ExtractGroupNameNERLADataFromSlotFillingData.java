@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.nerla.corpus;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,12 +33,13 @@ import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
 public class ExtractGroupNameNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractGroupNameNERLADataFromSlotFillingData("experimental_group", ResultSpecifications.systemsScope);
+		new ExtractGroupNameNERLADataFromSlotFillingData("experimental_group", ExperimentalGroupSpecifications.systemsScope);
 	}
 
 	public ExtractGroupNameNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
@@ -49,8 +51,12 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 		InstanceProvider instanceProvider = new InstanceProvider(
 				new File("src/main/resources/slotfilling/" + type + "/corpus/instances/"), shuffleCorpusDistributor);
 
+		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
+
 		for (Instance instance : instanceProvider.getInstances()) {
 			List<Instance> newInstances = new ArrayList<>();
+			if (!names.contains(instance.getName()))
+				continue;
 
 			System.out.println(instance.getName());
 			Set<AbstractAnnotation> annotations = getAdditionalAnnotations(instance);
@@ -63,7 +69,7 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 
 			System.out.println("Found annotations: " + annotations.size());
 
-//			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
+			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
@@ -136,7 +142,7 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 				}
 			}
 		}
-		System.out.println("Found additional annotations: " + additionalAnnotations.size());
+		System.out.println("Found additional annotation projections: " + additionalAnnotations.size());
 		annotations.addAll(additionalAnnotations);
 
 	}

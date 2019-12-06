@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.santo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
@@ -32,7 +34,7 @@ public class ExperimentalGroupSanto2Json {
 	public static void main(String[] args) throws IOException {
 
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(ResultSpecifications.systemsScope).build();
+				.addScopeSpecification(ExperimentalGroupSpecifications.systemsScope).build();
 
 		final String dir = "rawData/export_" + ResultSanto2Json.exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
@@ -42,11 +44,15 @@ public class ExperimentalGroupSanto2Json {
 		Random random = new Random(10000L);
 
 		Set<SlotType> slotTypes = new HashSet<>();
+		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		for (String name : fileNames) {
 			try {
 
-//				if (!name.startsWith("N001"))
+				if (!names.contains(name))
+					continue;
+
+				// if (!name.startsWith("N001"))
 //					continue;
 
 				log.info(name + " convert...");
@@ -56,7 +62,7 @@ public class ExperimentalGroupSanto2Json {
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"),
 						scioNameSpace, resourceNameSpace);
-			
+
 				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");

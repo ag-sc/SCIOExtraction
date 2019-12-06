@@ -101,7 +101,7 @@ public class TreatmentSlotFilling {
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(true);
+			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
 			log.info("Coverage Training: " + trainCoverage);
 
 			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
