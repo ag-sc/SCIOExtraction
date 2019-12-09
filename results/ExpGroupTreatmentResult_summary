@@ -1,0 +1,19 @@
+
+(All gold given, only treatments Assignment)
+EXP GROUP MACRO: F1 = 0.8522901044718073, P = 0.7896798968227537, R = 0.9466015466015466
+EXP GROUP MICRO: BOTH = Score [getF1()=0.823, getPrecision()=0.737, getRecall()=0.932, tp=123, fp=44, fn=9, tn=0]
+EXP GROUP MICRO: Vehicle = Score [getF1()=0.818, getPrecision()=0.692, getRecall()=1.000, tp=27, fp=12, fn=0, tn=0]
+EXP GROUP MICRO: Non Vehicle = Score [getF1()=0.824, getPrecision()=0.750, getRecall()=0.914, tp=96, fp=32, fn=9, tn=0]
+
+
+REAL DATA ( Cardinality of Exp groups given )
+
+EXP GROUP MACRO: F1 = 0.4618600013513769, P = 0.4924036281179139, R = 0.44733414733414734
+EXP GROUP MICRO: BOTH = Score [getF1()=0.465, getPrecision()=0.514, getRecall()=0.424, tp=56, fp=53, fn=76, tn=0]
+EXP GROUP MICRO: Vehicle = Score [getF1()=0.235, getPrecision()=0.571, getRecall()=0.148, tp=4, fp=3, fn=23, tn=0]
+EXP GROUP MICRO: Non Vehicle = Score [getF1()=0.502, getPrecision()=0.510, getRecall()=0.495, tp=52, fp=50, fn=53, tn=0]
+
+TREATMENTS MACRO: F1 = 0.6105839486791866, P = 0.7868996083281797, R = 0.5497354497354497
+TREATMENTS MICRO: BOTH = Score [getF1()=0.607, getPrecision()=0.724, getRecall()=0.522, tp=284, fp=108, fn=260, tn=0]
+TREATMENTS MICRO: Vehicle = Score [getF1()=0.324, getPrecision()=0.818, getRecall()=0.202, tp=36, fp=8, fn=142, tn=0]
+TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.639, getPrecision()=0.655, getRecall()=0.623, tp=228, fp=120, fn=138, tn=0]
