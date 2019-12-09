@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.santo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,7 +20,6 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.specs.DeliveryMethodSpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
 
 public class DeliveryMethodSanto2Json {
 
@@ -39,12 +39,15 @@ public class DeliveryMethodSanto2Json {
 		Collections.sort(fileNames);
 
 		Random random = new Random(10000L);
+		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		Set<SlotType> slotTypes = new HashSet<>();
 
 		for (String name : fileNames) {
 			try {
 
+				if (!names.contains(name))
+					continue;
 				log.info(name + " convert...");
 
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,

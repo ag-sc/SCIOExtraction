@@ -1,15 +1,11 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.tools;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import com.github.jsonldjava.shaded.com.google.common.collect.Streams;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;

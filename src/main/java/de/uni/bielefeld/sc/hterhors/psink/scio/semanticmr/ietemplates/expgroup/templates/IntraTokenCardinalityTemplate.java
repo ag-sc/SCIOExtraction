@@ -2,17 +2,17 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.IntraTokenCardinalityTemplate.IntraTokenScope;
 
 /**
@@ -111,10 +111,10 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			int cardinality = experimentalGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).size();
+			int cardinality = experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).size();
 
 			if (experimentalGroup.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfLiteralAnnotation())
 				factors.add(
@@ -123,7 +123,7 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 										.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm(),
 								cardinality));
 
-			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SlotType.get("hasGroupName"))
+			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
 					.getSlotFiller()) {
 
 				factors.add(new IntraTokenScope(this, experimentalGroup.getEntityType(),

@@ -13,10 +13,6 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
-import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
-import de.hterhors.semanticmr.crf.variables.Document;
-import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.groupname.specs.GroupNameSpecs;
 

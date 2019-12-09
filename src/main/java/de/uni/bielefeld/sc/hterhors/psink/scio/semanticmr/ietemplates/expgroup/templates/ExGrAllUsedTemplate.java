@@ -9,13 +9,14 @@ import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrAllUsedTemplate.AllUsedScope;
 
 /**
@@ -97,24 +98,24 @@ public class ExGrAllUsedTemplate extends AbstractFeatureTemplate<AllUsedScope> {
 		 */
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			EntityTemplate orgM = collectSFS(experimentalGroup, SlotType.get("hasOrganismModel"));
+			EntityTemplate orgM = collectSFS(experimentalGroup, SCIOSlotTypes.hasOrganismModel);
 			if (orgM != null)
 				predictedOrganismModels.add(orgM);
 
-			EntityTemplate injuryM = collectSFS(experimentalGroup, SlotType.get("hasInjuryModel"));
+			EntityTemplate injuryM = collectSFS(experimentalGroup, SCIOSlotTypes.hasInjuryModel);
 			if (injuryM != null)
 				predictedInjuryModels.add(injuryM);
 
-			predictedTreatmentTypes.addAll(collectMFS(experimentalGroup, SlotType.get("hasTreatmentType")));
+			predictedTreatmentTypes.addAll(collectMFS(experimentalGroup, SCIOSlotTypes.hasTreatmentType));
 
 		}
 
-		addFactor(factors, state, SlotType.get("hasOrganismModel"), predictedOrganismModels.size());
-		addFactor(factors, state, SlotType.get("hasInjuryModel"), predictedInjuryModels.size());
-		addFactor(factors, state, SlotType.get("hasTreatmentType"), predictedTreatmentTypes.size());
+		addFactor(factors, state, SCIOSlotTypes.hasOrganismModel, predictedOrganismModels.size());
+		addFactor(factors, state, SCIOSlotTypes.hasInjuryModel, predictedInjuryModels.size());
+		addFactor(factors, state, SCIOSlotTypes.hasTreatmentType, predictedTreatmentTypes.size());
 
 		return factors;
 	}

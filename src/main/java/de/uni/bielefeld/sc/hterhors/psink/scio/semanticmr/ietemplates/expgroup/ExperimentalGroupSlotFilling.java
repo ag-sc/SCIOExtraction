@@ -48,7 +48,6 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -66,6 +65,8 @@ import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.INerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
@@ -132,6 +133,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	List<Instance> devInstances;
 	List<Instance> testInstances;
 
+	enum ETreatmentMode {
+
+		NONE, GOLD, PREDICTED, JOINT;
+
+	}
+
 	enum EExtractGroupNamesMode {
 
 		/**
@@ -168,6 +175,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		PATTERN_NP_CHUNKS;
 	}
 
+	public ETreatmentMode treatmentMode;
 	public EExtractGroupNamesMode groupNameMode;
 
 	public ExperimentalGroupSlotFilling() throws IOException {
@@ -175,10 +183,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
+		treatmentMode = ETreatmentMode.JOINT;
 		groupNameMode = EExtractGroupNamesMode.GOLD_CLUSTERED;
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED)
-			SlotType.get("hasGroupName").excludeFromExploration = true;
+			SCIOSlotTypes.hasGroupName.excludeFromExploration = true;
 
 		TreatmentSlotFilling.rule = ETreatmentModifications.ROOT;
 
@@ -190,12 +199,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 */
 //		SpecificationWriter w = new SpecificationWriter(scope);
 //		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/experimental_group/entities.csv"),
-//				EntityType.get("DefinedExperimentalGroup"));
+//				SCIOEntityTypes.definedExperimentalGroup);
 //		w.writeHierarchiesSpecificationFile(
 //				new File("src/main/resources/slotfilling/experimental_group/hierarchies.csv"),
-//				EntityType.get("DefinedExperimentalGroup"));
+//				SCIOEntityTypes.definedExperimentalGroup);
 //		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/experimental_group/slots.csv"),
-//				EntityType.get("DefinedExperimentalGroup"));
+//				SCIOEntityTypes.definedExperimentalGroup);
 ////		w.writeStructuresSpecificationFile(null, EntityType.get("Treatment"));
 //
 //		System.exit(1);
@@ -266,12 +275,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //			}
 //			candidateRetrieval.registerCandidateProvider(ap);
 //		}
+		if (treatmentMode == ETreatmentMode.JOINT) {
 
-		extractTreatmentsFromNERLA(instanceProvider.getInstances())
-				.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
+			extractTreatmentsFromNERLA(instanceProvider.getInstances())
+					.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
 
-		extractTreatmentsFromTRAIN(instanceProvider.getInstances())
-				.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
+			extractTreatmentsFromTRAIN(instanceProvider.getInstances())
+					.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
+		}
 
 		for (Instance instance : trainingInstances) {
 			candidateRetrieval.registerCandidateProvider(extractCandidatesFromGold(instance));
@@ -295,11 +306,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		Map<Instance, Map<SlotType, Integer>> numberToPredictParameter = new HashMap<>();
 		for (Instance instance : instanceProvider.getInstances()) {
 			numberToPredictParameter.put(instance, new HashMap<>());
-			numberToPredictParameter.get(instance).put(SlotType.get("hasOrganismModel"),
+			numberToPredictParameter.get(instance).put(SCIOSlotTypes.hasOrganismModel,
 					extractGoldOrganismModels(instance).size());
-			numberToPredictParameter.get(instance).put(SlotType.get("hasInjuryModel"),
+			numberToPredictParameter.get(instance).put(SCIOSlotTypes.hasInjuryModel,
 					extractGoldInjuryModels(instance).size());
-			numberToPredictParameter.get(instance).put(SlotType.get("hasTreatmentType"),
+			numberToPredictParameter.get(instance).put(SCIOSlotTypes.hasTreatmentType,
 					extractGoldTreatments(instance).size());
 		}
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = getParameter(numberToPredictParameter);
@@ -447,7 +458,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //				if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
 				ap.addBatchSlotFiller(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
 //				}
-//			ap.addSlotFiller(AnnotationBuilder.toAnnotation(EntityType.get("CompoundTreatment")));
+//			ap.addSlotFiller(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
 				candList.add(ap);
 			}
 		}
@@ -557,7 +568,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		});
 
 //		goldModificationRules.add(a -> {
-//			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
+//			a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).clear();
 //			return a;
 //		});
 
@@ -565,7 +576,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			List<AbstractAnnotation> newTreatments = new ArrayList<>();
 
-			MultiFillerSlot treatments = a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType");
+			MultiFillerSlot treatments = a.asInstanceOfEntityTemplate()
+					.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType);
 
 			for (AbstractAnnotation treatment : treatments.getSlotFiller()) {
 
@@ -606,12 +618,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			if (a.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasGroupName")).containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInjuryModel"))
+			if (a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName).containsSlotFiller()
+					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
 							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+					|| a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 							.containsSlotFiller())
 				return a;
 			return null; // remove from annotation if it has no injury, treatment or organism.
@@ -650,8 +662,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 					EntityTemplate init = new EntityTemplate(goldAnnotation.getRootAnnotation());
 
 					for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
-							.getMultiFillerSlot("hasGroupName").getSlotFiller()) {
-						init.addMultiSlotFiller(SlotType.get("hasGroupName"), groupName);
+							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+						init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
 					}
 
 					as.add(init);
@@ -669,7 +681,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				List<AbstractAnnotation> as = new ArrayList<>();
 
 				for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-					as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("DefinedExperimentalGroup")));
+					as.add(new EntityTemplate(
+							AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup)));
 				}
 				return new State(instance, new Annotations(as));
 			});
@@ -693,7 +706,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public EntityTemplateCandidateProvider extractCandidatesFromGold(Instance instance) {
 		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
+		if (treatmentMode == ETreatmentMode.GOLD)
+			entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
+
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldOrganismModels(instance));
 		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldInjuryModels(instance));
 		return entityTemplateCandidateProvider;
@@ -719,10 +734,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 						|| nerla.getEntityType().isSubEntityOf(EntityType.get("Compound"))) {
 
 					EntityTemplate compoundTreatment = new EntityTemplate(
-							AnnotationBuilder.toAnnotation(EntityType.get("CompoundTreatment")))
-									.setSingleSlotFiller(SlotType.get("hasCompound"), new EntityTemplate(nerla));
+							AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment))
+									.setSingleSlotFiller(SCIOSlotTypes.hasCompound, new EntityTemplate(nerla));
 					entityTemplateCandidateProvider.addSlotFiller(compoundTreatment);
-				} else if (nerla.getEntityType() != EntityType.get("CompoundTreatment")
+				} else if (nerla.getEntityType() != SCIOEntityTypes.compoundTreatment
 						&& nerla.getEntityType().isSubEntityOf(EntityType.get("Treatment"))) {
 					entityTemplateCandidateProvider.addSlotFiller(new EntityTemplate(nerla));
 				}
@@ -747,14 +762,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			for (AbstractAnnotation nerla : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
 					trainDictionary)) {
 
-				if (nerla.getEntityType() == EntityType.get("Compound")
-						|| nerla.getEntityType().isSubEntityOf(EntityType.get("Compound"))) {
+				if (nerla.getEntityType() == SCIOEntityTypes.compound
+						|| nerla.getEntityType().isSubEntityOf( SCIOEntityTypes.compound)) {
 					EntityTemplate compoundTreatment = new EntityTemplate(
-							AnnotationBuilder.toAnnotation(EntityType.get("CompoundTreatment")))
-									.setSingleSlotFiller(SlotType.get("hasCompound"), nerla);
+							AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment))
+									.setSingleSlotFiller(SCIOSlotTypes.hasCompound, nerla);
 					entityTemplateCandidateProvider.addSlotFiller(compoundTreatment);
-				} else if (nerla.getEntityType() != EntityType.get("CompoundTreatment")
-						&& nerla.getEntityType().isSubEntityOf(EntityType.get("Treatment"))) {
+				} else if (nerla.getEntityType() != SCIOEntityTypes.compoundTreatment
+						&& nerla.getEntityType().isSubEntityOf( SCIOEntityTypes.treatment)) {
 					entityTemplateCandidateProvider.addSlotFiller(nerla);
 				}
 			}
@@ -834,13 +849,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			List<EntityTemplate> goldAnnotations = new ArrayList<>(
 					e.getValue().getGoldAnnotations().getAnnotations().stream()
-							.flatMap(ex -> ex.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType")
-									.getSlotFiller().stream())
+							.flatMap(ex -> ex.asInstanceOfEntityTemplate()
+									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
 							.map(t -> t.asInstanceOfEntityTemplate()).collect(Collectors.toSet()));
 			List<EntityTemplate> predictedAnnotations = new ArrayList<>(
 					e.getValue().getCurrentPredictions().getAnnotations().stream()
-							.flatMap(ex -> ex.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType")
-									.getSlotFiller().stream())
+							.flatMap(ex -> ex.asInstanceOfEntityTemplate()
+									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
 							.map(t -> t.asInstanceOfEntityTemplate()).collect(Collectors.toSet()));
 
 			i++;
@@ -905,10 +920,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * Treatments
 			 */
 			List<AbstractAnnotation> goldTreatments = new ArrayList<>(
-					goldAnnotations.get(goldIndex).getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+					goldAnnotations.get(goldIndex).getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
 
 			List<AbstractAnnotation> predictTreatments = new ArrayList<>(predictedAnnotationsBaseline.get(predictIndex)
-					.getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+					.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
 
 			/*
 			 * NOTE: Compare objects are used to tell whether a tp should be given for an
@@ -923,10 +938,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 *
 			 */
 			List<AbstractAnnotation> goldTreatmentsCompare = new ArrayList<>(
-					goldAnnotations.get(goldIndex).getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+					goldAnnotations.get(goldIndex).getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
 
 			List<AbstractAnnotation> predictTreatmentsCompare = new ArrayList<>(predictedAnnotationsBaseline
-					.get(predictIndex).getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+					.get(predictIndex).getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
 
 			switch (mode) {
 			case BOTH: {
@@ -938,42 +953,42 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				 * Filter for vehicles
 				 */
 				goldTreatments = goldTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
 				predictTreatments = predictTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
 				goldTreatmentsCompare.removeAll(goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
 				predictTreatmentsCompare.removeAll(predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
@@ -981,42 +996,42 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 			case NON_VEHICLE: {
 				goldTreatments.removeAll(goldTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
 				predictTreatments.removeAll(predictTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
 				goldTreatmentsCompare = goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
 				predictTreatmentsCompare = predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
@@ -1109,42 +1124,42 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				 * Filter for vehicles
 				 */
 				goldTreatments = goldTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
 				predictTreatments = predictTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
 				goldTreatmentsCompare.removeAll(goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
 				predictTreatmentsCompare.removeAll(predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
@@ -1152,42 +1167,42 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 			case NON_VEHICLE: {
 				goldTreatments.removeAll(goldTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
 				predictTreatments.removeAll(predictTreatments.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList()));
 				goldTreatmentsCompare = goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
 				predictTreatmentsCompare = predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasCompound"))
+								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
 										.contains(EntityType.get("Vehicle")))
 						.collect(Collectors.toList());
@@ -1230,7 +1245,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Set<AbstractAnnotation> treatments = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			treatments.addAll(expGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream()
+			treatments.addAll(expGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
 					.filter(a -> a != null).collect(Collectors.toList()));
 		}
 
@@ -1241,8 +1256,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Set<AbstractAnnotation> orgModels = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			if (expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).containsSlotFiller())
-				orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
+			if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+				orgModels.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller());
 		}
 
 		return orgModels;
@@ -1252,8 +1267,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Set<AbstractAnnotation> injuries = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			if (expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller())
-				injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
+			if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+				injuries.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller());
 		}
 
 		return injuries;
@@ -1274,7 +1289,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			gold.put(instance, new ArrayList<>());
 			gold.get(instance)
 					.addAll(instance.getGoldAnnotations().getAbstractAnnotations().stream()
-							.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot("hasGroupName"))
+							.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
 							.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
 							.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
 		}

@@ -26,12 +26,8 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingBeamCRF;
-import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
-import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
-import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
-import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -43,15 +39,11 @@ import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.SamplerCollection;
 import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.IBeamSamplingStoppingCriterion;
-import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
-import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
-import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
@@ -67,17 +59,16 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.INerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.templates.PriorNumericInterpretationOrgModelTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
@@ -164,11 +155,10 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 				for (Instance instance : instances) {
 					gold.put(instance, new ArrayList<>());
-					gold.get(instance)
-							.addAll(instance.getGoldAnnotations().getAbstractAnnotations().stream()
-									.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot("hasGroupName"))
-									.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
-									.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
+					gold.get(instance).addAll(instance.getGoldAnnotations().getAbstractAnnotations().stream()
+							.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
+							.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
+							.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
 				}
 
 				return gold;
@@ -422,7 +412,7 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getMultiFillerSlot("hasTreatmentType").clear();
+			a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).clear();
 			return a;
 		});
 		goldModificationRules.add(a -> {
@@ -438,12 +428,12 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			if (a.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasGroupName")).containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInjuryModel"))
+			if (a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName).containsSlotFiller()
+					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
 							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+					|| a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 							.containsSlotFiller())
 				return a;
 			return null; // remove from annotation if it has no injury, treatment or organism.
@@ -461,7 +451,7 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 			List<AbstractAnnotation> as = new ArrayList<>();
 
 			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("DefinedExperimentalGroup")));
+				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup)));
 			}
 			return new State(instance, new Annotations(as));
 		});
@@ -569,7 +559,7 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 		Set<AbstractAnnotation> treatments = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			treatments.addAll(expGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream()
+			treatments.addAll(expGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
 					.filter(a -> a != null).collect(Collectors.toList()));
 		}
 
@@ -580,8 +570,8 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 		Set<AbstractAnnotation> orgModels = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			if (expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).containsSlotFiller())
-				orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
+			if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+				orgModels.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller());
 		}
 
 		return orgModels;
@@ -591,8 +581,8 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 		Set<AbstractAnnotation> injuries = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			if (expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller())
-				injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
+			if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+				injuries.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller());
 		}
 
 		return injuries;

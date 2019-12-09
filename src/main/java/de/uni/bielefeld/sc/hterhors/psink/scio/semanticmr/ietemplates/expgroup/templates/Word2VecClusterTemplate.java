@@ -2,10 +2,8 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
@@ -29,6 +26,8 @@ import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.Word2VecClusterTemplate.W2VScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow.BOWExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow.TypedBOW;
@@ -207,12 +206,12 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			addSFSFactor(factors, experimentalGroup, SlotType.get("hasOrganismModel"));
-			addSFSFactor(factors, experimentalGroup, SlotType.get("hasInjuryModel"));
-			addMFSFactor(factors, experimentalGroup, SlotType.get("hasTreatmentType"));
+			addSFSFactor(factors, experimentalGroup, SCIOSlotTypes.hasOrganismModel);
+			addSFSFactor(factors, experimentalGroup, SCIOSlotTypes.hasInjuryModel);
+			addMFSFactor(factors, experimentalGroup, SCIOSlotTypes.hasTreatmentType);
 
 		}
 

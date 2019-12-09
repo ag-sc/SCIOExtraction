@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,6 +12,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class BOWExtractor {
 
@@ -36,7 +38,7 @@ public class BOWExtractor {
 
 		for (Entry<SlotType, Set<AbstractAnnotation>> prop : propertyAnnotations.entrySet()) {
 
-//			if (!(prop.getKey() == SlotType.get("hasDeliveryMethod") || prop.getKey() == SlotType.get("hasCompound")
+//			if (!(prop.getKey() == SlotType.get("hasDeliveryMethod") || prop.getKey() == SCIOSlotTypes.hasCompound
 //					|| prop.getKey() == SlotType.get("hasDosage")))
 //				continue;
 
@@ -89,8 +91,14 @@ public class BOWExtractor {
 
 	}
 
+	private static Map<String, String[]> camelCaseSplitCache = new HashMap<>();
+
 	private static String[] camelCaseSplit(String entityName) {
-		return entityName.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+		String[] split;
+		if ((split = camelCaseSplitCache.get(entityName)) == null) {
+			camelCaseSplitCache.put(entityName, split = entityName.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"));
+		}
+		return split;
 	}
 
 	public static Set<String> getExpGroupPlusNameBOW(EntityTemplate experimentalGroup) {
@@ -102,9 +110,9 @@ public class BOWExtractor {
 		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation())
 			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));
 
-		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot("hasGroupName").getSlotFiller()) {
-			
-			bow .addAll(extractEntityTypeBOW(groupName.getEntityType()));
+		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+
+			bow.addAll(extractEntityTypeBOW(groupName.getEntityType()));
 			if (groupName.isInstanceOfDocumentLinkedAnnotation())
 				bow.addAll(BOWExtractor.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation()));
 		}

@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -33,8 +31,9 @@ import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 
 public class ExtractGroupNameNERLADataFromSlotFillingData {
 
@@ -152,7 +151,7 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 				.singleSlots().build();
 
 		if (annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
-			if (annotation.getRootAnnotation().getEntityType() == EntityType.get("DefinedExperimentalGroup")
+			if (annotation.getRootAnnotation().getEntityType() == SCIOEntityTypes.definedExperimentalGroup
 					|| annotation.getRootAnnotation().getEntityType() == EntityType.get("AnalyzedExperimentalGroup")) {
 				DocumentLinkedAnnotation a = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation();
 				annotations.add(AnnotationBuilder.toAnnotation(a.document, "GroupName", a.getSurfaceForm(),
@@ -162,7 +161,7 @@ public class ExtractGroupNameNERLADataFromSlotFillingData {
 
 		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter.getMergedAnnotations().entrySet()) {
 
-			if (a.getKey().equals(SlotType.get("hasGroupName")))
+			if (a.getKey().equals(SCIOSlotTypes.hasGroupName))
 				annotations.addAll(a.getValue());
 
 		}

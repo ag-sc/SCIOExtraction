@@ -20,8 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.set.SynchronizedSet;
-
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -29,7 +27,6 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -38,6 +35,8 @@ import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
@@ -165,7 +164,7 @@ public class CollectExpGroupNames {
 
 			Set<AbstractAnnotation> treatments = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-				treatments.addAll(expGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream()
+				treatments.addAll(expGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
 						.filter(a -> a != null).collect(Collectors.toList()));
 			}
 
@@ -182,8 +181,8 @@ public class CollectExpGroupNames {
 
 			Set<AbstractAnnotation> orgModels = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-				if (expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).containsSlotFiller())
-					orgModels.add(expGroup.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller());
+				if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+					orgModels.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller());
 			}
 
 			orgModelsPerDocument.put(instance.getName(), orgModels);
@@ -199,8 +198,8 @@ public class CollectExpGroupNames {
 
 			Set<AbstractAnnotation> injuries = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-				if (expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller())
-					injuries.add(expGroup.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller());
+				if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+					injuries.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller());
 			}
 
 			injuriesPerDocument.put(instance.getName(), injuries);
@@ -282,28 +281,28 @@ public class CollectExpGroupNames {
 		instanceProvider.getRedistributedTrainingInstances().stream().forEach(i -> {
 			countExpGroups.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 					.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller()
+							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 									.containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 									.containsSlotFiller()))
 					.count()));
 
 			countInjuries.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 					.filter(zzz -> zzz != null).map(b -> b.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller())
+							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller())
 					.filter(zzz -> zzz != null).distinct().count()));
 
 			countOrganismModels.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream().filter(zzz -> zzz != null)
 							.map(b -> b.asInstanceOfEntityTemplate()
-									.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller())
+									.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller())
 							.filter(zzz -> zzz != null).distinct().count()));
 
 			countTreatments.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream().filter(zzz -> zzz != null)
 							.flatMap(b -> b.asInstanceOfEntityTemplate()
-									.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream())
+									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
 							.filter(zzz -> zzz != null).distinct().count()));
 
 		});
@@ -337,14 +336,14 @@ public class CollectExpGroupNames {
 			List<EntityTemplate> goldAnnotations = instance.getGoldAnnotations().<EntityTemplate>getAnnotations()
 					.stream()
 					.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller()
+							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 									.containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 									.containsSlotFiller()))
 					.collect(Collectors.toList());
 
-			goldAnnotations.forEach(a -> a.getMultiFillerSlot("hasGroupName").clear());
+			goldAnnotations.forEach(a -> a.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).clear());
 			goldAnnotations.forEach(a -> a.getSingleFillerSlot("hasNNumber").clear());
 
 			if (!includeInjuryModels)
@@ -355,10 +354,10 @@ public class CollectExpGroupNames {
 			List<EntityTemplate> predictedAnnotationsBaseline = goldAnnotations.stream().map(a -> {
 				EntityTemplate clone = a.deepCopy();
 				clone.getSingleFillerSlot("hasNNumber").clear();
-				clone.getMultiFillerSlot("hasGroupName").clear();
+				clone.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).clear();
 				clone.getSingleFillerSlot("hasInjuryModel").clear();
 				clone.getSingleFillerSlot("hasOrganismModel").clear();
-				clone.getMultiFillerSlot("hasTreatmentType").clear();
+				clone.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).clear();
 				return clone;
 			}).collect(Collectors.toList());
 
@@ -428,10 +427,10 @@ public class CollectExpGroupNames {
 			 * Treatments
 			 */
 			List<AbstractAnnotation> goldTreatments = new ArrayList<>(
-					goldAnnotations.get(goldIndex).getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+					goldAnnotations.get(goldIndex).getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
 
 			List<AbstractAnnotation> predictTreatments = new ArrayList<>(predictedAnnotationsBaseline.get(predictIndex)
-					.getMultiFillerSlot("hasTreatmentType").getSlotFiller());
+					.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
 			Score s;
 			if (goldTreatments.isEmpty() && predictTreatments.isEmpty())
 				s = new Score(1, 0, 0);
@@ -490,13 +489,13 @@ public class CollectExpGroupNames {
 			EntityTemplate t = predictedAnnotations.get(i);
 
 			if (includeInjuryModels)
-				t.setSingleSlotFiller(SlotType.get("hasInjuryModel"), in.get(0));
+				t.setSingleSlotFiller(SCIOSlotTypes.hasInjuryModel, in.get(0));
 			if (includeOrganismModels)
-				t.setSingleSlotFiller(SlotType.get("hasOrganismModel"), or.get(0));
+				t.setSingleSlotFiller(SCIOSlotTypes.hasOrganismModel, or.get(0));
 
 //			for (int j = 0; j < clusters.get(i).terms.size() && j < tr.size(); j++) {
 			Collections.shuffle(tr, new Random());
-			t.addMultiSlotFiller(SlotType.get("hasTreatmentType"), tr.get(0));
+			t.addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, tr.get(0));
 //			}
 
 		}
@@ -530,9 +529,9 @@ public class CollectExpGroupNames {
 
 		for (EntityTemplate expGroup : remainingPredictedAnnotations.values()) {
 			if (includeInjuryModels)
-				expGroup.setSingleSlotFiller(SlotType.get("hasInjuryModel"), pickRandom(in, new Random()));
+				expGroup.setSingleSlotFiller(SCIOSlotTypes.hasInjuryModel, pickRandom(in, new Random()));
 			if (includeOrganismModels)
-				expGroup.setSingleSlotFiller(SlotType.get("hasOrganismModel"), pickRandom(or, new Random()));
+				expGroup.setSingleSlotFiller(SCIOSlotTypes.hasOrganismModel, pickRandom(or, new Random()));
 
 		}
 
@@ -601,8 +600,8 @@ public class CollectExpGroupNames {
 		 */
 		{
 			Optional<AbstractAnnotation> cycloOpt = tr.stream().filter(a -> {
-				if (a.asInstanceOfEntityTemplate().getEntityType() == EntityType.get("CompoundTreatment")) {
-					return a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound").getSlotFiller()
+				if (a.asInstanceOfEntityTemplate().getEntityType() == SCIOEntityTypes.compoundTreatment) {
+					return a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound).getSlotFiller()
 							.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType
 									.get("CyclosporineA");
 				} else {
@@ -615,7 +614,7 @@ public class CollectExpGroupNames {
 				System.out.println("Found Cyclosporine Treatment...");
 				AbstractAnnotation cyclo = cycloOpt.get();
 				for (EntityTemplate abstractAnnotation : remainingPredictedAnnotations.values()) {
-					abstractAnnotation.addMultiSlotFiller(SlotType.get("hasTreatmentType"), cyclo);
+					abstractAnnotation.addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, cyclo);
 				}
 
 				tr.remove(cyclo);
@@ -628,8 +627,8 @@ public class CollectExpGroupNames {
 		 */
 //		{
 //			Optional<AbstractAnnotation> vehicleOpt = tr.stream().filter(a -> {
-//				if (a.asInstanceOfEntityTemplate().getEntityType() == EntityType.get("CompoundTreatment")) {
-//					return a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound").getSlotFiller()
+//				if (a.asInstanceOfEntityTemplate().getEntityType() == SCIOEntityTypes.compoundTreatment) {
+//					return a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound).getSlotFiller()
 //							.asInstanceOfEntityTemplate().getRootAnnotation().entityType
 //									.getTransitiveClosureSuperEntityTypes().contains(EntityType.get("Vehicle"));
 //				}
@@ -646,7 +645,7 @@ public class CollectExpGroupNames {
 //					final Set<String> keyWords = e.getKey().stream().map(f -> f.term).collect(Collectors.toSet());
 //					if (keyWords.size() == 1 && (keyWords.contains("media") || keyWords.contains("medium")
 //							|| keyWords.contains("vehicle") || keyWords.contains("veh"))) {
-//						e.getValue().addMultiSlotFiller(SlotType.get("hasTreatmentType"), vehicle);
+//						e.getValue().addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, vehicle);
 //
 //						/*
 //						 * remove vehicle from exp groups.
@@ -669,7 +668,7 @@ public class CollectExpGroupNames {
 
 			for (EntityTemplate expGroup : remainingPredictedAnnotations.values()) {
 				for (AbstractAnnotation treatment : tr) {
-					expGroup.addMultiSlotFiller(SlotType.get("hasTreatmentType"), treatment);
+					expGroup.addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, treatment);
 				}
 			}
 			return;
@@ -682,7 +681,7 @@ public class CollectExpGroupNames {
 			 */
 			int i = 0;
 			for (AbstractAnnotation expGroup : remainingPredictedAnnotations.values()) {
-				expGroup.asInstanceOfEntityTemplate().addMultiSlotFiller(SlotType.get("hasTreatmentType"), tr.get(i++));
+				expGroup.asInstanceOfEntityTemplate().addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, tr.get(i++));
 			}
 
 			return;
@@ -696,7 +695,7 @@ public class CollectExpGroupNames {
 				Set<AbstractAnnotation> picked = selectByHeuristic(pair.getKey(), tr);
 
 				for (AbstractAnnotation treatment : picked) {
-					pair.getValue().addMultiSlotFiller(SlotType.get("hasTreatmentType"), treatment);
+					pair.getValue().addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, treatment);
 				}
 
 			}
@@ -804,9 +803,9 @@ public class CollectExpGroupNames {
 	private Set<String> getTreatmentTerms(AbstractAnnotation treatment) {
 		Set<String> treatmentTerms = new HashSet<>();
 
-		if (treatment.asInstanceOfEntityTemplate().getEntityType() == EntityType.get("CompoundTreatment")) {
+		if (treatment.asInstanceOfEntityTemplate().getEntityType() == SCIOEntityTypes.compoundTreatment) {
 
-			AbstractAnnotation compoundRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound")
+			AbstractAnnotation compoundRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 					.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
 
 			if (compoundRoot.isInstanceOfLiteralAnnotation()) {

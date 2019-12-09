@@ -2,9 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebral
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -14,19 +11,8 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
-import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
-import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
-import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
-import de.hterhors.semanticmr.eval.CartesianEvaluator;
-import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.specs.DeliveryMethodSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
 
 /**

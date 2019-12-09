@@ -44,8 +44,8 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.eval.GreedySearchEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
@@ -64,11 +64,11 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final String modelName;
 	public final Map<String, Set<AbstractAnnotation>> annotations = new HashMap<>();
 
-	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new GreedySearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
-
-	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-			new GreedySearchEvaluator(EEvaluationDetail.ENTITY_TYPE));
+//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new GreedySearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+//
+//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+//			new GreedySearchEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 //	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED,3));
@@ -76,11 +76,11 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
-//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
-//
-//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+
+	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
 

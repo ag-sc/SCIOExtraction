@@ -90,7 +90,7 @@ public class OrganismModelPatternBAK {
 //		/*
 //		 * Treatment
 //		 */
-//		pattern.put(EntityType.get("CompoundTreatment"), COMPOUND_REG_EXP);
+//		pattern.put(SCIOEntityTypes.compoundTreatment, COMPOUND_REG_EXP);
 //		pattern.put(EntityType.get("Compound"), COMPOUND_REG_EXP);
 //
 //		/*

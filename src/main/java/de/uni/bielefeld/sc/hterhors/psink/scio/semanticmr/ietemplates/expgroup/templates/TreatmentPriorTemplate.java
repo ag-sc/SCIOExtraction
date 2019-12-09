@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
@@ -14,6 +13,8 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate.TreatmentPriorScope;
 
 /**
@@ -79,18 +80,18 @@ public class TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPri
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
 			Set<EntityType> types = new HashSet<>();
-			types.addAll(experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().stream()
-					.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-					.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound"))
+			types.addAll(experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
+					.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+					.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound))
 					.filter(s -> s.containsSlotFiller()).map(x -> x.getSlotFiller().getEntityType())
 					.collect(Collectors.toList()));
 
-			types.addAll(experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().stream()
-					.filter(a -> a.getEntityType() != EntityType.get("CompoundTreatment")).map(x -> x.getEntityType())
+			types.addAll(experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
+					.filter(a -> a.getEntityType() != SCIOEntityTypes.compoundTreatment).map(x -> x.getEntityType())
 					.collect(Collectors.toList()));
 			factors.add(new TreatmentPriorScope(this, types));
 		}

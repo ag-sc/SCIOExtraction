@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
@@ -110,11 +110,11 @@ public class OrgModelSlotFilling {
 		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
 			OrgModelSlotFilling.rule = rule;
 
-			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
-					.setCorpusSizeFraction(1F).build();
+//			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+//					.setCorpusSizeFraction(1F).build();
 
-//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-//				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(90)
+				.setSeed(1000L).setDevelopmentProportion(5).setTestProportion(5).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getRule(rule));

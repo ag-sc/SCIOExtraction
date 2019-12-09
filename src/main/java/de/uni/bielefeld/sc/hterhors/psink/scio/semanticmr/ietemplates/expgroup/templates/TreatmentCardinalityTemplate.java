@@ -9,6 +9,8 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate.TreatmentCardinalityScope;
 
 /**
@@ -80,21 +82,22 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Treatm
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().stream()
-					.filter(a -> a.getEntityType() == EntityType.get("CompoundTreatment"))
-					.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound"))
+			experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
+					.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
+					.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound))
 					.filter(s -> s.containsSlotFiller()).forEach(a -> {
-						factors.add(new TreatmentCardinalityScope(this, a.getSlotFiller().getEntityType(),
-								experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().size()));
+						factors.add(
+								new TreatmentCardinalityScope(this, a.getSlotFiller().getEntityType(), experimentalGroup
+										.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().size()));
 					});
 
-			experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().stream()
-					.filter(a -> a.getEntityType() != EntityType.get("CompoundTreatment")).forEach(a -> {
-						factors.add(new TreatmentCardinalityScope(this, a.getEntityType(),
-								experimentalGroup.getMultiFillerSlot("hasTreatmentType").getSlotFiller().size()));
+			experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
+					.filter(a -> a.getEntityType() != SCIOEntityTypes.compoundTreatment).forEach(a -> {
+						factors.add(new TreatmentCardinalityScope(this, a.getEntityType(), experimentalGroup
+								.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().size()));
 					});
 
 		}

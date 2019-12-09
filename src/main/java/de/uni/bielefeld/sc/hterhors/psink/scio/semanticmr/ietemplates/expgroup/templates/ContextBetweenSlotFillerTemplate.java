@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
@@ -24,7 +22,8 @@ import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ContextBetweenSlotFillerTemplate.ContextBetweenScope;
 
 /**
@@ -148,14 +147,14 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
 			EntityType rootEntityType = experimentalGroup.getEntityType();
 			final Set<Integer> rootSentenceIndicies = collectExpGroupTokenIndicies(experimentalGroup);
 
 			getMultiFllerSlotSentenceIndicies(factors, rootEntityType, rootSentenceIndicies, state, experimentalGroup,
-					SlotType.get("hasTreatmentType"));
+					SCIOSlotTypes.hasTreatmentType);
 		}
 		return factors;
 
@@ -176,10 +175,10 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 				final Set<Integer> treatmentIndicies = new HashSet<>();
 
 				AbstractAnnotation mainAnnotation;
-				if (treatment.getEntityType() == EntityType.get("CompoundTreatment")) {
+				if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
 					mainAnnotation = treatment.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasCompound")).getSlotFiller()
-							.asInstanceOfEntityTemplate().getRootAnnotation();
+							.getSingleFillerSlot(SCIOSlotTypes.hasCompound).getSlotFiller().asInstanceOfEntityTemplate()
+							.getRootAnnotation();
 				} else {
 					mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
 				}
@@ -188,17 +187,17 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 					treatmentIndicies.add(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0)
 							.getDocTokenIndex());
 //
-					Pattern project = Pattern.compile(Pattern
-							.quote(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
-					Matcher m = project.matcher(state.getInstance().getDocument().documentContent);
-
-					while (m.find()) {
-						try {
-							treatmentIndicies.add(state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
-									.getDocTokenIndex());
-						} catch (DocumentLinkedAnnotationMismatchException e) {
-						}
-					}
+//					Pattern project = Pattern.compile(Pattern
+//							.quote(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
+//					Matcher m = project.matcher(state.getInstance().getDocument().documentContent);
+//
+//					while (m.find()) {
+//						try {
+//							treatmentIndicies.add(state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
+//									.getDocTokenIndex());
+//						} catch (DocumentLinkedAnnotationMismatchException e) {
+//						}
+//					}
 
 				}
 				map.put(mainAnnotation.getEntityType(), treatmentIndicies);
@@ -249,7 +248,8 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 
 		}
 
-		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot("hasGroupName").getSlotFiller()) {
+		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+				.getSlotFiller()) {
 
 			if (groupName.isInstanceOfDocumentLinkedAnnotation())
 				sentenceIndicies

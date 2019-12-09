@@ -6,11 +6,11 @@ import java.util.Set;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.BOWCardinalityTemplate.BOWCardScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow.BOWExtractor;
 
@@ -84,7 +84,7 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (experimentalGroup.getEntityType() != EntityType.get("DefinedExperimentalGroup"))
+			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
 			final Set<String> expGroupBOW = BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
@@ -94,7 +94,7 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 //							|| expGroupBOW.contains("injury"))
 //							&& (expGroupBOW.contains("only") || expGroupBOW.contains("alone")))) {
 			factors.add(new BOWCardScope(this, expGroupBOW,
-					experimentalGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().size()));
+					experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().size()));
 //			}
 
 		}

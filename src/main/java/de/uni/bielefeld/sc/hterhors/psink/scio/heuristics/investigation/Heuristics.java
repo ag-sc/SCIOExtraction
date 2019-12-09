@@ -18,6 +18,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 
@@ -94,7 +95,7 @@ public class Heuristics {
 							gresult.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasReferenceGroup"))
 									.getSlotFiller()))
 					.filter(zzz -> zzz != null).flatMap(a -> a.stream()).filter(zzz -> zzz != null)
-					.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInjuryModel"))
+					.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
 							.getSlotFiller())
 					.collect(Collectors.toList()).toString();
 
@@ -106,7 +107,7 @@ public class Heuristics {
 									gresult.asInstanceOfEntityTemplate()
 											.getSingleFillerSlot(SlotType.get("hasReferenceGroup")).getSlotFiller()))
 							.filter(zzz -> zzz != null).flatMap(a -> a.stream()).filter(zzz -> zzz != null)
-							.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInjuryModel"))
+							.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
 									.getSlotFiller())
 							.filter(zzz -> zzz != null).distinct().count()));
 
@@ -117,7 +118,7 @@ public class Heuristics {
 							gresult.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasReferenceGroup"))
 									.getSlotFiller()))
 					.filter(zzz -> zzz != null).flatMap(a -> a.stream()).filter(zzz -> zzz != null)
-					.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+					.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 							.getSlotFiller())
 					.filter(zzz -> zzz != null).distinct().count()));
 
@@ -130,7 +131,7 @@ public class Heuristics {
 											.getSingleFillerSlot(SlotType.get("hasReferenceGroup")).getSlotFiller()))
 							.filter(zzz -> zzz != null).flatMap(a -> a.stream()).filter(zzz -> zzz != null)
 							.flatMap(b -> b.asInstanceOfEntityTemplate()
-									.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream())
+									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
 							.filter(zzz -> zzz != null).distinct().count()));
 
 		});

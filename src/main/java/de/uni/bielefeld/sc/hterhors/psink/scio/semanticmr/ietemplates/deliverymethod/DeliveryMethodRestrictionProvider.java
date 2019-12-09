@@ -16,7 +16,7 @@ public class DeliveryMethodRestrictionProvider {
 	}
 
 	private static final SlotType durationSlot = SlotType.get("hasDuration");
-	private static final SlotType locationSlot = SlotType.get("hasLocation");
+	private static final SlotType locationsSlot = SlotType.get("hasLocation");
 
 	public static List<GoldModificationRule> getByRule(EDeliveryMethodModifications modelModifications) {
 
@@ -63,8 +63,11 @@ public class DeliveryMethodRestrictionProvider {
 
 				EntityTemplate newGold = new EntityTemplate(
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
-				newGold.setSingleSlotFiller(locationSlot,
-						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(locationSlot).getSlotFiller());
+
+				for (AbstractAnnotation sf : goldAnnotation.asInstanceOfEntityTemplate()
+						.getMultiFillerSlot(locationsSlot).getSlotFiller()) {
+					newGold.addMultiSlotFiller(locationsSlot, sf.deepCopy());
+				}
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
@@ -91,8 +94,11 @@ public class DeliveryMethodRestrictionProvider {
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
 				newGold.setSingleSlotFiller(durationSlot,
 						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(durationSlot).getSlotFiller());
-				newGold.setSingleSlotFiller(locationSlot,
-						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(locationSlot).getSlotFiller());
+
+				for (AbstractAnnotation sf : goldAnnotation.asInstanceOfEntityTemplate()
+						.getMultiFillerSlot(locationsSlot).getSlotFiller()) {
+					newGold.addMultiSlotFiller(locationsSlot, sf.deepCopy());
+				}
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;

@@ -16,9 +16,9 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.EInstanceContext;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
-import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.specs.TreatmentSpecs;
 
 public class TreatmentsSanto2Json {
@@ -42,7 +42,7 @@ public class TreatmentsSanto2Json {
 
 		Set<SlotType> slotTypes = new HashSet<>();
 		slotTypes.add(SlotType.get("hasDeliveryMethod"));
-		slotTypes.add(SlotType.get("hasCompound"));
+		slotTypes.add(SCIOSlotTypes.hasCompound);
 		slotTypes.add(SlotType.get("hasDirection"));
 		slotTypes.add(SlotType.get("hasLocation"));
 		slotTypes.add(SlotType.get("hasDosage"));

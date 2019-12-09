@@ -18,21 +18,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.set.SynchronizedSet;
-
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.exce.DocumentLinkedAnnotationMismatchException;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 
@@ -100,28 +98,28 @@ public class PlayGround {
 		instanceProvider.getRedistributedTrainingInstances().stream().forEach(i -> {
 			countExpGroups.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 					.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasInjuryModel")).containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller()
+							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 									.containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 									.containsSlotFiller()))
 					.count()));
 
 			countInjuries.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 					.filter(zzz -> zzz != null).map(b -> b.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SlotType.get("hasInjuryModel")).getSlotFiller())
+							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller())
 					.filter(zzz -> zzz != null).distinct().count()));
 
 			countOrganismModels.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream().filter(zzz -> zzz != null)
 							.map(b -> b.asInstanceOfEntityTemplate()
-									.getSingleFillerSlot(SlotType.get("hasOrganismModel")).getSlotFiller())
+									.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller())
 							.filter(zzz -> zzz != null).distinct().count()));
 
 			countTreatments.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream().filter(zzz -> zzz != null)
 							.flatMap(b -> b.asInstanceOfEntityTemplate()
-									.getMultiFillerSlot(SlotType.get("hasTreatmentType")).getSlotFiller().stream())
+									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
 							.filter(zzz -> zzz != null).distinct().count()));
 
 		});
@@ -172,11 +170,11 @@ public class PlayGround {
 
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
 
-				if (!(expGroup.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInjuryModel"))
+				if (!(expGroup.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
 						.containsSlotFiller()
-						|| expGroup.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasOrganismModel"))
+						|| expGroup.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
 								.containsSlotFiller()
-						|| expGroup.asInstanceOfEntityTemplate().getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+						|| expGroup.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 								.containsSlotFiller()))
 					continue;
 
@@ -195,19 +193,19 @@ public class PlayGround {
 					System.out.println();
 					sentences.add(expRoot.getSentenceOfAnnotation());
 				}
-				Set<AbstractAnnotation> groupNames = expGroup.getMultiFillerSlot("hasGroupName").getSlotFiller();
+				Set<AbstractAnnotation> groupNames = expGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller();
 				System.out.println("GroupNames:");
 				groupNames.stream().map(g -> "GroupName: " + g.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm())
 						.forEach(System.out::println);
 
-				Set<AbstractAnnotation> treatments = expGroup.getMultiFillerSlot(SlotType.get("hasTreatmentType"))
+				Set<AbstractAnnotation> treatments = expGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
 						.getSlotFiller();
 
 				System.out.println("------------treatments-------------");
 				for (AbstractAnnotation treatment : treatments) {
 					AbstractAnnotation treatRoot;
-					if (treatment.getEntityType() == EntityType.get("CompoundTreatment")) {
-						treatRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot("hasCompound")
+					if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
+						treatRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 								.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
 					} else {
 						treatRoot = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
@@ -689,7 +687,7 @@ public class PlayGround {
 
 			List<DocumentLinkedAnnotation> annotations = instance
 					.getGoldAnnotations().getAnnotations().stream().flatMap(e -> e.asInstanceOfEntityTemplate()
-							.getMultiFillerSlot("hasGroupName").getSlotFiller().stream())
+							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller().stream())
 					.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList());
 			annotations.addAll(instance.getGoldAnnotations().getAnnotations().stream()
 					.map(e -> e.asInstanceOfEntityTemplate().getRootAnnotation())
