@@ -75,7 +75,7 @@ public class InjuryActiveLearningSlotFilling {
 				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
+				EActiveLearningStrategies.DocumentModelScoreRanker, EActiveLearningStrategies.DocumentRandomRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
 		InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
@@ -84,7 +84,8 @@ public class InjuryActiveLearningSlotFilling {
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
 
-			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
+					InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -122,15 +123,14 @@ public class InjuryActiveLearningSlotFilling {
 
 				predictor.trainOrLoadModel();
 
-				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
-						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
-
 				Score score = predictor.evaluateOnDevelopment();
 				resultOut.println(toResult(score, strategy, trainingInstancesNames, InjurySlotFilling.rule));
 
 				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
 						predictor);
 
+				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
+						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 				List<Instance> rankedInstances = ranker.rank(remainingInstances);
 
 				newTrainingDataInstances = rankedInstances.stream().map(a -> a.getName()).limit(numberOfInstancePerStep)
