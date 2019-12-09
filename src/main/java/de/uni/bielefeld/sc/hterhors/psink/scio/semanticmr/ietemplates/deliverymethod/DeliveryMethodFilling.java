@@ -132,12 +132,13 @@ public class DeliveryMethodFilling {
 				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(90).setDevelopmentProportion(5).setTestProportion(5).build();
+				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(10).setTestProportion(10).build();
+		
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
 		PrintStream resultsOut = new PrintStream(new File("results/deliveryResults.csv"));
-		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
+//		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		resultsOut.println(header);
 
@@ -158,11 +159,14 @@ public class DeliveryMethodFilling {
 
 			DeliveryMethodPredictor deliveryMethodPrediction = new DeliveryMethodPredictor(modelName, scope,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
-							.filter(n -> names.contains(n)).collect(Collectors.toList()),
+//							.filter(n -> names.contains(n))
+							.collect(Collectors.toList()),
 					instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
-							.filter(n -> names.contains(n)).collect(Collectors.toList()),
+//							.filter(n -> names.contains(n))
+							.collect(Collectors.toList()),
 					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
-							.filter(n -> names.contains(n)).collect(Collectors.toList()));
+//							.filter(n -> names.contains(n))
+							.collect(Collectors.toList()));
 
 			deliveryMethodPrediction.trainOrLoadModel();
 
@@ -174,11 +178,11 @@ public class DeliveryMethodFilling {
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-			final Score trainCoverage = deliveryMethodPrediction.computeCoverageOnTrainingInstances(false);
-			log.info("Coverage Training: " + trainCoverage);
-
-			final Score devCoverage = deliveryMethodPrediction.computeCoverageOnDevelopmentInstances(false);
-			log.info("Coverage Development: " + devCoverage);
+//			final Score trainCoverage = deliveryMethodPrediction.computeCoverageOnTrainingInstances(false);
+//			log.info("Coverage Training: " + trainCoverage);
+//
+//			final Score devCoverage = deliveryMethodPrediction.computeCoverageOnDevelopmentInstances(false);
+//			log.info("Coverage Development: " + devCoverage);
 
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
