@@ -62,7 +62,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
 
-		if (InjurySlotFilling.rule != EInjuryModifications.ROOT_LOCATION)
+		if (InjurySlotFilling.rule == EInjuryModifications.ROOT)
 			return Collections.emptyList();
 
 		List<GeneralCandidateProvider> provider = new ArrayList<>();
@@ -129,16 +129,16 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-//		return ((instance) -> new State(instance,
-//				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")))));
+		return ((instance) -> new State(instance,
+				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")))));
 
-		return (instance -> {
-			List<AbstractAnnotation> as = new ArrayList<>();
-			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
-			}
-			return new State(instance, new Annotations(as));
-		});
+//		return (instance -> {
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Injury")));
+//			}
+//			return new State(instance, new Annotations(as));
+//		});
 	}
 
 	@Override

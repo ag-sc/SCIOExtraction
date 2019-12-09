@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.santo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -45,6 +46,8 @@ public class InjuriesSanto2Json {
 		slotTypes.add(SlotType.get("hasInjuryAnaesthesia"));
 		slotTypes.add(SlotType.get("hasLowerVertebrae"));
 		slotTypes.add(SlotType.get("hasUpperVertebrae"));
+	
+		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		for (String name : fileNames) {
 			try {
@@ -55,7 +58,10 @@ public class InjuriesSanto2Json {
 
 //				if (!name.startsWith("N092 Cot"))
 //					continue;
-
+				
+				if (!names.contains(name))
+					continue;
+				
 				log.info(name + " convert...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
 						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_export.csv"),

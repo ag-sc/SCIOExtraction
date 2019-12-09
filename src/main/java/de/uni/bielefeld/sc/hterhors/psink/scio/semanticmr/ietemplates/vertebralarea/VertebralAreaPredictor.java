@@ -131,7 +131,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 //		return SamplerCollection.greedyObjectiveStrategy();
 		return new EpochSwitchSampler(epoch -> epoch % 2 == 0);
 //		return new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
-//		return new EpochSwitchSampler(e -> new Random(e).nextBoolean());
+//		return new EpochSwitchSampler(e -> new Random(e).nextBoolean());.
 	}
 
 	@Override
@@ -141,7 +141,8 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
+		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>(
+				VertebralAreaRestrictionProvider.getByRule(VertebralAreaFilling.rule));
 
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType.get("VertebralArea"))

@@ -1,7 +1,10 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -10,9 +13,10 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
 
 /**
@@ -28,9 +32,11 @@ public class VertebralAreaFilling {
 	 * @param args
 	 * @throws IOException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		new VertebralAreaFilling();
 	}
+
+	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
@@ -39,8 +45,9 @@ public class VertebralAreaFilling {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
+	public static EVertebralAreaModifications rule;
 
-	public VertebralAreaFilling() {
+	public VertebralAreaFilling() throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -63,8 +70,17 @@ public class VertebralAreaFilling {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//				.build();
+
+		rule = EVertebralAreaModifications.NO_MODIFICATION;
+
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
+				.setTrainingProportion(80).setDevelopmentProportion(20).setTestProportion(0).setCorpusSizeFraction(1F)
 				.build();
+
+		PrintStream resultsOut = new PrintStream(new File("results/vertebralAreaResults.csv"));
+
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
 		 * the distributor in the constructor. If not all instances should be read from
@@ -75,7 +91,8 @@ public class VertebralAreaFilling {
 		 */
 		InstanceProvider instanceProvider;
 
-		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
+				VertebralAreaRestrictionProvider.getByRule(rule));
 
 		String modelName = "VertebralArea" + new Random().nextInt(10000);
 
@@ -89,8 +106,9 @@ public class VertebralAreaFilling {
 
 		predictor.trainOrLoadModel();
 
-		predictor.evaluateOnDevelopment();
+		Score score = predictor.evaluateOnDevelopment();
 
+		resultsOut.println(toResults(rule, score));
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
@@ -114,6 +132,13 @@ public class VertebralAreaFilling {
 		 * more sophisticated feature-templates.
 		 */
 
+		resultsOut.flush();
+		resultsOut.close();
+	}
+
+	private String toResults(EVertebralAreaModifications rule, Score score) {
+		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
+				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}
 
 }

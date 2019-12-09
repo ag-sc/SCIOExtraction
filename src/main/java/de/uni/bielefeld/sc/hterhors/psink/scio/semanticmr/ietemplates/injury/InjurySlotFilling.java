@@ -13,13 +13,14 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
 
@@ -73,28 +74,36 @@ public class InjurySlotFilling {
 		PrintStream resultsOut = new PrintStream(new File("results/injuryResults.csv"));
 
 		resultsOut.println(header);
+//		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
+		VertebralAreaFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
 			InjurySlotFilling.rule = rule;
 
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
+					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
-
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
-					.setTrainingProportion(80).setSeed(1000L).setDevelopmentProportion(10).setTestProportion(10)
-					.setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
 
 			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+					.map(t -> t.getName())
+//					.filter(n -> names.contains(n))
+
+					.collect(Collectors.toList());
 
 			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+					.map(t -> t.getName())
+//					.filter(n -> names.contains(n))
+					.collect(Collectors.toList());
 
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+					.map(t -> t.getName())
+//					.filter(n -> names.contains(n))
+					.collect(Collectors.toList());
 
 			String modelName = "Injury" + new Random().nextInt(10000);
 

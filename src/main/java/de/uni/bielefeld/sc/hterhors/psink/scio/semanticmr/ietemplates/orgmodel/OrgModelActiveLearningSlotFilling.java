@@ -2,11 +2,14 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.apache.jena.sparql.pfunction.library.str;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,10 +17,12 @@ import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
 import de.hterhors.semanticmr.activelearning.ranker.EActiveLearningStrategies;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
@@ -50,6 +55,7 @@ public class OrgModelActiveLearningSlotFilling {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public OrgModelActiveLearningSlotFilling() throws IOException {
 
@@ -62,22 +68,23 @@ public class OrgModelActiveLearningSlotFilling {
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
 
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.build();
+//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//				.build();
 
-//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-//				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setSeed(1000L).setDevelopmentProportion(10).setTestProportion(10).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentHighVariatyRanker,
-//				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
-//				EActiveLearningStrategies.DocumentMarginBasedRanker 
-		};
+				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
+				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
+		OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES;
+		PrintStream resultOut = new PrintStream("results/activeLearning/OrganismModel.csv");
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
 
-			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
+					OrganismModelRestrictionProvider.getRule(OrgModelSlotFilling.rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -105,7 +112,7 @@ public class OrgModelActiveLearningSlotFilling {
 			int i = 0;
 
 			while (i++ != numOfMaxSteps && (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
-				String modelName = "OrganismModel_" + rand + "_"+strategy.name()+"_" + i;
+				String modelName = "OrganismModel_" + rand + "_" + strategy.name() + "_" + i;
 				log.info("model name: " + modelName);
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
@@ -118,7 +125,9 @@ public class OrgModelActiveLearningSlotFilling {
 				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
 						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
-				predictor.evaluateOnDevelopment();
+				Score score = predictor.evaluateOnDevelopment();
+
+				resultOut.println(toResult(score, strategy, trainingInstancesNames, OrgModelSlotFilling.rule));
 
 				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
 						predictor);
@@ -133,6 +142,13 @@ public class OrgModelActiveLearningSlotFilling {
 
 			}
 		}
+		resultOut.close();
+	}
 
+	private String toResult(Score score, EActiveLearningStrategies strategy, List<String> trainingInstancesNames,
+			EOrgModelModifications rule) {
+		return strategy.name() + "\t" + rule.name() + "\t" + trainingInstancesNames.size() + "\t"
+				+ resultFormatter.format(score.getF1()) + "\t" + resultFormatter.format(score.getPrecision()) + "\t"
+				+ resultFormatter.format(score.getRecall());
 	}
 }
