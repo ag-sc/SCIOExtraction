@@ -70,15 +70,19 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected IStateInitializer getStateInitializer() {
 		return (instance -> {
-
-			List<AbstractAnnotation> as = new ArrayList<>();
-
-			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("DeliveryMethod")));
-			}
-			return new State(instance, new Annotations(as));
-			//
+			return new State(instance,
+					new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("DeliveryMethod"))));
 		});
+//		return (instance -> {
+//
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//
+//			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("DeliveryMethod")));
+//			}
+//			return new State(instance, new Annotations(as));
+//			//
+//		});
 	}
 
 	@Override
