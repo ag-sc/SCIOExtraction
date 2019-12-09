@@ -72,7 +72,7 @@ public class OrgModelActiveLearningSlotFilling {
 //				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-				.setSeed(1000L).setDevelopmentProportion(10).setTestProportion(10).setCorpusSizeFraction(1F).build();
+				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,

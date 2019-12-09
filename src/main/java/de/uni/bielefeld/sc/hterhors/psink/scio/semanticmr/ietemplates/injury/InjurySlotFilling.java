@@ -17,7 +17,7 @@ import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
@@ -58,7 +58,7 @@ public class InjurySlotFilling {
 
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
-	public static EInjuryModifications rule;
+	public static EInjuryModificationRules rule;
 
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
@@ -77,7 +77,7 @@ public class InjurySlotFilling {
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 		VertebralAreaFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 
-		for (EInjuryModifications rule : EInjuryModifications.values()) {
+		for (EInjuryModificationRules rule : EInjuryModificationRules.values()) {
 			InjurySlotFilling.rule = rule;
 
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
@@ -144,7 +144,7 @@ public class InjurySlotFilling {
 		resultsOut.close();
 	}
 
-	private String toResults(EInjuryModifications rule, Score score) {
+	private String toResults(EInjuryModificationRules rule, Score score) {
 		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}

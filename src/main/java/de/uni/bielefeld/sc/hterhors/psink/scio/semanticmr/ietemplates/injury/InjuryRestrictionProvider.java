@@ -10,7 +10,7 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 
 public class InjuryRestrictionProvider {
 
-	enum EInjuryModifications {
+	public enum EInjuryModificationRules {
 		ROOT, ROOT_LOCATION, ROOT_LOCATION_DEVICE, ROOT_LOCATION_DEVICE_ANAESTHESIA;
 
 	}
@@ -19,7 +19,7 @@ public class InjuryRestrictionProvider {
 	private static final SlotType locationSlot = SlotType.get("hasInjuryLocation");
 	private static final SlotType anaesthesiaSlot = SlotType.get("hasInjuryAnaesthesia");
 
-	public static List<GoldModificationRule> getByRule(EInjuryModifications modelModifications) {
+	public static List<GoldModificationRule> getByRule(EInjuryModificationRules modelModifications) {
 
 		switch (modelModifications) {
 		case ROOT:
