@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -75,7 +76,7 @@ public class InjuryActiveLearningSlotFilling {
 				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentModelScoreRanker, EActiveLearningStrategies.DocumentRandomRanker,
+				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
 		InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
@@ -88,8 +89,9 @@ public class InjuryActiveLearningSlotFilling {
 					InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+					.map(t -> t.getName()).sorted().collect(Collectors.toList());
 
+			allTrainingInstanceNames.forEach(System.out::println);
 			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 

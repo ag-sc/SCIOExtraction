@@ -4,10 +4,17 @@ import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 
 public class SCIOSlotTypes {
 
-	public static final SlotType hasCompound = SlotType.get("hasCompound");;
-	public static final SlotType hasGroupName = SlotType.get("hasGroupName");
-	public static final SlotType hasTreatmentType = SlotType.get("hasTreatmentType");
-	public static final SlotType hasOrganismModel = SlotType.get("hasOrganismModel");
-	public static final SlotType hasInjuryModel = SlotType.get("hasInjuryModel");
+	public static final SlotType hasCompound = getLazy("hasCompound");
+	public static final SlotType hasGroupName = getLazy("hasGroupName");
+	public static final SlotType hasTreatmentType = getLazy("hasTreatmentType");
+	public static final SlotType hasOrganismModel = getLazy("hasOrganismModel");
+	public static final SlotType hasInjuryModel = getLazy("hasInjuryModel");
 
+	private static SlotType getLazy(String name) {
+		try {
+			return SlotType.get(name);
+		} catch (Exception e) {
+		}
+		return null;
+	}
 }

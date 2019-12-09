@@ -106,6 +106,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public static void main(String[] args) throws IOException {
+
 		new ExperimentalGroupSlotFilling();
 	}
 
@@ -183,7 +184,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
-		treatmentMode = ETreatmentMode.JOINT;
+		treatmentMode = ETreatmentMode.GOLD;
 		groupNameMode = EExtractGroupNamesMode.GOLD_CLUSTERED;
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED)
@@ -430,11 +431,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 
 		};
-	}
-
-	private File getGoldTreatmentNerlaAnnotations() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private List<? extends ICandidateProvider> getAdditionalCandidateProvider(String modelName) {
@@ -763,13 +759,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 					trainDictionary)) {
 
 				if (nerla.getEntityType() == SCIOEntityTypes.compound
-						|| nerla.getEntityType().isSubEntityOf( SCIOEntityTypes.compound)) {
+						|| nerla.getEntityType().isSubEntityOf(SCIOEntityTypes.compound)) {
 					EntityTemplate compoundTreatment = new EntityTemplate(
 							AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment))
 									.setSingleSlotFiller(SCIOSlotTypes.hasCompound, nerla);
 					entityTemplateCandidateProvider.addSlotFiller(compoundTreatment);
 				} else if (nerla.getEntityType() != SCIOEntityTypes.compoundTreatment
-						&& nerla.getEntityType().isSubEntityOf( SCIOEntityTypes.treatment)) {
+						&& nerla.getEntityType().isSubEntityOf(SCIOEntityTypes.treatment)) {
 					entityTemplateCandidateProvider.addSlotFiller(nerla);
 				}
 			}

@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
@@ -69,7 +69,11 @@ public class TreatmentSlotFilling {
 		for (ETreatmentModifications rule : ETreatmentModifications.values()) {
 			TreatmentSlotFilling.rule = rule;
 
-			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+//			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+//					.setCorpusSizeFraction(1F).build();
+			
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
+					.setTrainingProportion(80).setDevelopmentProportion(20)
 					.setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
@@ -99,11 +103,11 @@ public class TreatmentSlotFilling {
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-			log.info("Coverage Training: " + trainCoverage);
-
-			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-			log.info("Coverage Development: " + devCoverage);
+//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//			log.info("Coverage Training: " + trainCoverage);
+//
+//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+//			log.info("Coverage Development: " + devCoverage);
 
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
@@ -117,6 +121,7 @@ public class TreatmentSlotFilling {
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
 			 */
+			break;
 		}
 
 		resultsOut.flush();
