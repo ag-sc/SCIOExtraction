@@ -1,0 +1,2100 @@
+|===========TEST============
+[1/21] [98]_____________N221 Takami 2002_____________|
+Final State  Model[2.75661] Objective[0.86111] {
+GOLD [4]:
+DefinedExperimentalGroup	"medium"	10554
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM-F12 medium"	10425
+		]
+	 [7]hasGroupName	[
+		GroupName	"control medium-injected animals"	26997
+		GroupName	"controls"	1691
+		GroupName	"control animals"	37066
+		GroupName	"medium-injected animals"	27466
+		GroupName	"medium-injected rats"	935
+		GroupName	"control"	35988
+		GroupName	"control group"	38310
+		]
+DefinedExperimentalGroup	"OEG"	10585
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	10585
+		]
+	 [5]hasGroupName	[
+		GroupName	"OEG graft"	2113
+		GroupName	"OEG grafts"	1289
+		GroupName	"OEG-only grafted animals"	35503
+		GroupName	"OEG-only grafts"	1455
+		GroupName	"OEG-injected animals"	29717
+		]
+DefinedExperimentalGroup	"SCs"	10571
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	SchwannCell	"SCs"	10571
+		]
+	 [8]hasGroupName	[
+		GroupName	"SC-injected animals"	29543
+		GroupName	"SC grafts"	1231
+		GroupName	"SC-containing grafts"	33387
+		GroupName	"SC-only grafts"	1810
+		GroupName	"SC-only grafted animals"	38065
+		GroupName	"SC graft"	2027
+		GroupName	"SCtransplanted group"	38165
+		GroupName	"SC-containing"	35045
+		]
+DefinedExperimentalGroup	"SC/OEG"	10602
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	SchwannCell	"SCs"	10571
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	10585
+		]
+	 [3]hasGroupName	[
+		GroupName	"SC/OEG transplanted animals"	35463
+		GroupName	"SC/OEG grafts"	1634
+		GroupName	"combination of SCs and OEG"	27504
+		]
+}
+PREDICT [4]:
+DefinedExperimentalGroup	"medium"	10554
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	45295
+		]
+	 [7]hasGroupName	[
+		GroupName	"control medium-injected animals"	26997
+		GroupName	"controls"	1691
+		GroupName	"control animals"	37066
+		GroupName	"medium-injected animals"	27466
+		GroupName	"medium-injected rats"	935
+		GroupName	"control"	35988
+		GroupName	"control group"	38310
+		]
+DefinedExperimentalGroup	"OEG"	10585
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	45295
+		]
+	 [5]hasGroupName	[
+		GroupName	"OEG graft"	2113
+		GroupName	"OEG grafts"	1289
+		GroupName	"OEG-only grafted animals"	35503
+		GroupName	"OEG-only grafts"	1455
+		GroupName	"OEG-injected animals"	29717
+		]
+DefinedExperimentalGroup	"SCs"	10571
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	45295
+		]
+	 [8]hasGroupName	[
+		GroupName	"SC-injected animals"	29543
+		GroupName	"SC grafts"	1231
+		GroupName	"SC-containing grafts"	33387
+		GroupName	"SC-only grafts"	1810
+		GroupName	"SC-only grafted animals"	38065
+		GroupName	"SC graft"	2027
+		GroupName	"SCtransplanted group"	38165
+		GroupName	"SC-containing"	35045
+		]
+DefinedExperimentalGroup	"SC/OEG"	10602
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	45295
+		]
+	 [3]hasGroupName	[
+		GroupName	"SC/OEG transplanted animals"	35463
+		GroupName	"SC/OEG grafts"	1634
+		GroupName	"combination of SCs and OEG"	27504
+		]
+}
+Score [getF1()=0.861, getPrecision()=0.886, getRecall()=0.838, tp=31, fp=4, fn=6, tn=0]
+***********************************************************
+
+
+Time: 65132
+***********************************************************
+|===========TEST============
+[2/21] [98]_____________N223 Wu 2008_____________|
+Final State  Model[2.62426] Objective[0.81818] {
+GOLD [4]:
+DefinedExperimentalGroup	"pcDNA3.1(+)-transfected OEG"	10006
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	10030
+		]
+	 [3]hasGroupName	[
+		GroupName	"pcDNA3.1(+)+OEG"	20701
+		GroupName	"pcDNA3.1(+)-transfected"	19390
+		GroupName	"pcDNA3.1(+)-transfected OEG group"	20866
+		]
+DefinedExperimentalGroup	"untransfected OEG"	9976
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	9990
+		]
+	 [2]hasGroupName	[
+		GroupName	"untransfected OEG groups"	19418
+		GroupName	"untransfected OEG group"	20908
+		]
+DefinedExperimentalGroup	"untreated"	9892
+	 [2]hasGroupName	[
+		GroupName	"untreated group"	919
+		GroupName	"untreated groups"	20722
+		]
+DefinedExperimentalGroup	"pcDNA3.1(+)-NT3-transfected OEG"	10104
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEG"	10132
+		]
+	 [4]hasGroupName	[
+		GroupName	"NT-3-transfected OEGs"	1107
+		GroupName	"pcDNA3.1(+)-NT3+OEG"	20676
+		GroupName	"pcDNA3.1(+)-NT3 transfected OEGs"	1038
+		GroupName	"pcDNA3.1(+)-NT3-tansfected OEG group"	19345
+		]
+}
+PREDICT [4]:
+DefinedExperimentalGroup	"pcDNA3.1(+)-transfected OEG"	10006
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	5620
+		]
+	 [3]hasGroupName	[
+		GroupName	"pcDNA3.1(+)+OEG"	20701
+		GroupName	"pcDNA3.1(+)-transfected"	19390
+		GroupName	"pcDNA3.1(+)-transfected OEG group"	20866
+		]
+DefinedExperimentalGroup	"untransfected OEG"	9976
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	5620
+		]
+	 [2]hasGroupName	[
+		GroupName	"untransfected OEG groups"	19418
+		GroupName	"untransfected OEG group"	20908
+		]
+DefinedExperimentalGroup	"untreated"	9892
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	5620
+		]
+	 [2]hasGroupName	[
+		GroupName	"untreated group"	919
+		GroupName	"untreated groups"	20722
+		]
+DefinedExperimentalGroup	"pcDNA3.1(+)-NT3-transfected OEG"	10104
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	5620
+		]
+	 [4]hasGroupName	[
+		GroupName	"NT-3-transfected OEGs"	1107
+		GroupName	"pcDNA3.1(+)-NT3+OEG"	20676
+		GroupName	"pcDNA3.1(+)-NT3 transfected OEGs"	1038
+		GroupName	"pcDNA3.1(+)-NT3-tansfected OEG group"	19345
+		]
+}
+Score [getF1()=0.818, getPrecision()=0.783, getRecall()=0.857, tp=18, fp=5, fn=3, tn=0]
+***********************************************************
+
+
+Time: 83679
+***********************************************************
+|===========TEST============
+[3/21] [98]_____________N224 Wu 2015_____________|
+Final State  Model[2.85994] Objective[0.68000] {
+GOLD [5]:
+DefinedExperimentalGroup	"cotransplant treated group"	7625
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	MesenchymalStemCell	"BMSCs"	7589
+		RehabilitativeTraining	"Passive mobilization of the hind legs"	8849
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	14208
+		]
+	 [1]hasGroupName	[
+		GroupName	"cotransplant groups"	26515
+		]
+DefinedExperimentalGroup	"sham group"	7353
+	 [2]hasTreatmentType	[
+		RehabilitativeTraining	"Passive mobilization of the hind legs"	8849
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM culture medium"	7383
+		]
+	 [3]hasGroupName	[
+		GroupName	"sham group"	27770
+		GroupName	"shamgroups"	28421
+		GroupName	"sham injured control group"	31090
+		]
+DefinedExperimentalGroup	"control group"	7249
+	 [1]hasTreatmentType	[
+		RehabilitativeTraining	"Passive mobilization of the hind legs"	8849
+		]
+	 [1]hasGroupName	[
+		GroupName	"control group rats"	27555
+		]
+DefinedExperimentalGroup	"OECs treated group"	7449
+	 [2]hasTreatmentType	[
+		RehabilitativeTraining	"Passive mobilization of the hind legs"	8849
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	7501
+		]
+	 [1]hasGroupName	[
+		GroupName	"OECs treated"	27607
+		]
+DefinedExperimentalGroup	"BMSCs treated group"	7536
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	MesenchymalStemCell	"BMSCs"	7589
+		RehabilitativeTraining	"Passive mobilization of the hind legs"	8849
+		]
+	 [2]hasGroupName	[
+		GroupName	"BMSCs treated"	27621
+		GroupName	"BMSCs groups"	26472
+		]
+}
+PREDICT [5]:
+DefinedExperimentalGroup	"cotransplant treated group"	7625
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	11860
+		]
+	 [1]hasGroupName	[
+		GroupName	"cotransplant groups"	26515
+		]
+DefinedExperimentalGroup	"sham group"	7353
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	11860
+		]
+	 [3]hasGroupName	[
+		GroupName	"sham group"	27770
+		GroupName	"shamgroups"	28421
+		GroupName	"sham injured control group"	31090
+		]
+DefinedExperimentalGroup	"control group"	7249
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	11860
+		]
+	 [1]hasGroupName	[
+		GroupName	"control group rats"	27555
+		]
+DefinedExperimentalGroup	"OECs treated group"	7449
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	2103
+		]
+	 [1]hasGroupName	[
+		GroupName	"OECs treated"	27607
+		]
+DefinedExperimentalGroup	"BMSCs treated group"	7536
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	2103
+		]
+	 [2]hasGroupName	[
+		GroupName	"BMSCs treated"	27621
+		GroupName	"BMSCs groups"	26472
+		]
+}
+Score [getF1()=0.680, getPrecision()=0.773, getRecall()=0.607, tp=17, fp=5, fn=11, tn=0]
+***********************************************************
+
+
+Time: 115046
+***********************************************************
+|===========TEST============
+[4/21] [98]_____________N225 Xiao 2005_____________|
+Final State  Model[1.71121] Objective[0.68293] {
+GOLD [2]:
+DefinedExperimentalGroup	"MatrigelR matrix alone"	9736
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	11528
+		SurgeryTreatment	"cellular debris was removed by aspiration"	13528
+		CompoundTreatment
+			hasCompound	Matrix	"MatrigelR matrix"	9716
+		]
+	 [7]hasGroupName	[
+		GroupName	"lesion only"	41427
+		GroupName	"lesion only animals"	41751
+		GroupName	"MatrigelR matrix only"	11425
+		GroupName	"control group"	9136
+		GroupName	"lesion only group"	42232
+		GroupName	"lesion controls"	1243
+		GroupName	"Matrix alone"	1652
+		]
+DefinedExperimentalGroup	"NSFCs suspended in MatrigelR matrix"	9697
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	11528
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"NSFCs"	9697
+		SurgeryTreatment	"cellular debris was removed by aspiration"	13528
+		]
+	 [1]hasGroupName	[
+		GroupName	"NSFCs engrafted"	11398
+		]
+}
+PREDICT [2]:
+DefinedExperimentalGroup	"MatrigelR matrix alone"	9736
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	2932
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	53717
+		RehabilitativeTraining	"trained"	15564
+		]
+	 [7]hasGroupName	[
+		GroupName	"lesion only"	41427
+		GroupName	"lesion only animals"	41751
+		GroupName	"MatrigelR matrix only"	11425
+		GroupName	"control group"	9136
+		GroupName	"lesion only group"	42232
+		GroupName	"lesion controls"	1243
+		GroupName	"Matrix alone"	1652
+		]
+DefinedExperimentalGroup	"NSFCs suspended in MatrigelR matrix"	9697
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	2932
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	53717
+		CompoundTreatment
+			hasCompound	Cell	"cell"	33697
+		RehabilitativeTraining	"trained"	15564
+		]
+	 [1]hasGroupName	[
+		GroupName	"NSFCs engrafted"	11398
+		]
+}
+Score [getF1()=0.683, getPrecision()=0.667, getRecall()=0.700, tp=14, fp=7, fn=6, tn=0]
+***********************************************************
+
+
+Time: 144020
+***********************************************************
+|===========TEST============
+[5/21] [98]_____________N226 Xiao 2007_____________|
+Final State  Model[1.68860] Objective[0.78571] {
+GOLD [2]:
+DefinedExperimentalGroup	"NSFCs suspended in Matrigel® matrix"	6749
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"NSFCs"	6749
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	7936
+		]
+	 [2]hasGroupName	[
+		GroupName	"NSFCs-engrafted animal"	22120
+		GroupName	"NSFCs-engrafted subgroups"	1078
+		]
+DefinedExperimentalGroup	"Matrigel® matrix alone"	6795
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	7936
+		CompoundTreatment
+			hasCompound	Matrix	"Matrigel® matrix"	6795
+		]
+	 [2]hasGroupName	[
+		GroupName	"control rats"	654
+		GroupName	"lesion-matrix-only"	22079
+		]
+}
+PREDICT [2]:
+DefinedExperimentalGroup	"NSFCs suspended in Matrigel® matrix"	6749
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	2128
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	7936
+		]
+	 [2]hasGroupName	[
+		GroupName	"NSFCs-engrafted animal"	22120
+		GroupName	"NSFCs-engrafted subgroups"	1078
+		]
+DefinedExperimentalGroup	"Matrigel® matrix alone"	6795
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	2128
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	26371
+		]
+	 [2]hasGroupName	[
+		GroupName	"control rats"	654
+		GroupName	"lesion-matrix-only"	22079
+		]
+}
+Score [getF1()=0.786, getPrecision()=0.786, getRecall()=0.786, tp=11, fp=3, fn=3, tn=0]
+***********************************************************
+
+
+Time: 152099
+***********************************************************
+|===========TEST============
+[6/21] [98]_____________N227 Yamamoto 2009_____________|
+Final State  Model[1.51801] Objective[0.66667] {
+GOLD [2]:
+DefinedExperimentalGroup	"transplants"	6248
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"mucosal cells"	18458
+		]
+DefinedExperimentalGroup	"injection of culture medium"	6306
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"serum-free culture medium"	18869
+		]
+}
+PREDICT [2]:
+DefinedExperimentalGroup	"transplants"	6248
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	16346
+		]
+DefinedExperimentalGroup	"injection of culture medium"	6306
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	18580
+		]
+}
+Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=4, fp=2, fn=2, tn=0]
+***********************************************************
+
+
+Time: 153951
+***********************************************************
+|===========TEST============
+[7/21] [98]_____________N228 Yazdani 2012_____________|
+Final State  Model[2.06700] Objective[0.83333] {
+GOLD [3]:
+DefinedExperimentalGroup	"OECs"	11323
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	11323
+		]
+	 [3]hasGroupName	[
+		GroupName	"OEC group"	19963
+		GroupName	"OEC treated"	21834
+		GroupName	"OEC treated group"	19390
+		]
+DefinedExperimentalGroup	"NIMSCs"	11283
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	MesenchymalStemCell	"NIMSCs"	11283
+		]
+	 [4]hasGroupName	[
+		GroupName	"rats receiving NIMSC"	1788
+		GroupName	"NIMSC treated groups"	21801
+		GroupName	"NIMSC treated group"	21473
+		GroupName	"NIMSC group"	19875
+		]
+DefinedExperimentalGroup	"control"	11451
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"medium"	11469
+		]
+	 [2]hasGroupName	[
+		GroupName	"control ones"	19433
+		GroupName	"control group"	20025
+		]
+}
+PREDICT [3]:
+DefinedExperimentalGroup	"OECs"	11323
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	30011
+		]
+	 [3]hasGroupName	[
+		GroupName	"OEC group"	19963
+		GroupName	"OEC treated"	21834
+		GroupName	"OEC treated group"	19390
+		]
+DefinedExperimentalGroup	"NIMSCs"	11283
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	29316
+		]
+	 [4]hasGroupName	[
+		GroupName	"rats receiving NIMSC"	1788
+		GroupName	"NIMSC treated groups"	21801
+		GroupName	"NIMSC treated group"	21473
+		GroupName	"NIMSC group"	19875
+		]
+DefinedExperimentalGroup	"control"	11451
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	16467
+		]
+	 [2]hasGroupName	[
+		GroupName	"control ones"	19433
+		GroupName	"control group"	20025
+		]
+}
+Score [getF1()=0.833, getPrecision()=0.833, getRecall()=0.833, tp=15, fp=3, fn=3, tn=0]
+***********************************************************
+
+
+Time: 168289
+***********************************************************
+|===========TEST============
+[8/21] [98]_____________N229 Yui 2014_____________|
+Final State  Model[1.59249] Objective[0.71429] {
+GOLD [2]:
+DefinedExperimentalGroup	"media group"	12866
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"DM(+"	12821
+		]
+	 [1]hasGroupName	[
+		GroupName	"media"	18213
+		]
+DefinedExperimentalGroup	"OEC group"	12774
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	12752
+		]
+}
+PREDICT [2]:
+DefinedExperimentalGroup	"media group"	12866
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	13687
+		]
+	 [1]hasGroupName	[
+		GroupName	"media"	18213
+		]
+DefinedExperimentalGroup	"OEC group"	12774
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	1812
+		]
+}
+Score [getF1()=0.714, getPrecision()=0.714, getRecall()=0.714, tp=5, fp=2, fn=2, tn=0]
+***********************************************************
+
+
+Time: 170998
+***********************************************************
+|===========TEST============
+[9/21] [98]_____________N230 Zhang 2011 2_____________|
+Final State  Model[1.43922] Objective[0.62500] {
+GOLD [2]:
+DefinedExperimentalGroup	"transplanted ALP"	19304
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	9048
+		SurgeryTreatment	"the glial scar was removed photochemically from the injury site"	7808
+		]
+DefinedExperimentalGroup	"scar ablation and LP transplantation"	16624
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	9048
+		SurgeryTreatment	"the glial scar was removed photochemically from the injury site"	7808
+		]
+	 [1]hasGroupName	[
+		GroupName	"combination treatments"	1450
+		]
+}
+PREDICT [2]:
+DefinedExperimentalGroup	"transplanted ALP"	19304
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	4588
+		]
+DefinedExperimentalGroup	"scar ablation and LP transplantation"	16624
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	30888
+		]
+	 [1]hasGroupName	[
+		GroupName	"combination treatments"	1450
+		]
+}
+Score [getF1()=0.625, getPrecision()=0.714, getRecall()=0.556, tp=5, fp=2, fn=4, tn=0]
+***********************************************************
+
+
+Time: 178750
+***********************************************************
+|===========TEST============
+[10/21] [98]_____________N231 Zhang 2011_____________|
+Final State  Model[3.09597] Objective[0.66667] {
+GOLD [6]:
+DefinedExperimentalGroup	"SCI+LP"	32482
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	40492
+		]
+DefinedExperimentalGroup	"SCI Control"	32342
+	 [8]hasGroupName	[
+		GroupName	"SCI-22w"	17003
+		GroupName	"injury alone control rats"	19453
+		GroupName	"control animals"	1601
+		GroupName	"SCI control animals"	19935
+		GroupName	"injury only control group"	16976
+		GroupName	"injury only control"	27955
+		GroupName	"SCI 6w"	19647
+		GroupName	"SCI 22w"	19576
+		]
+DefinedExperimentalGroup	"SCI+SA+LP"	32674
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	40492
+		SurgeryTreatment	"photochemical scar ablation"	38649
+		]
+DefinedExperimentalGroup	"SCI+SA"	32627
+	 [1]hasTreatmentType	[
+		SurgeryTreatment	"photochemical scar ablation"	38649
+		]
+DefinedExperimentalGroup	"SCI+LP+OEC"	32512
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	40492
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	40589
+		]
+DefinedExperimentalGroup	"SCI+SA+LP+OEC"	32706
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	40492
+		SurgeryTreatment	"photochemical scar ablation"	38649
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	40589
+		]
+}
+PREDICT [6]:
+DefinedExperimentalGroup	"SCI+LP"	32482
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	6743
+		]
+DefinedExperimentalGroup	"SCI Control"	32342
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"olfactory ensheathing"	5020
+		]
+	 [8]hasGroupName	[
+		GroupName	"SCI-22w"	17003
+		GroupName	"injury alone control rats"	19453
+		GroupName	"control animals"	1601
+		GroupName	"SCI control animals"	19935
+		GroupName	"injury only control group"	16976
+		GroupName	"injury only control"	27955
+		GroupName	"SCI 6w"	19647
+		GroupName	"SCI 22w"	19576
+		]
+DefinedExperimentalGroup	"SCI+SA+LP"	32674
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	6743
+		]
+DefinedExperimentalGroup	"SCI+SA"	32627
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	6743
+		]
+DefinedExperimentalGroup	"SCI+LP+OEC"	32512
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	6743
+		]
+DefinedExperimentalGroup	"SCI+SA+LP+OEC"	32706
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	6743
+		]
+}
+Score [getF1()=0.667, getPrecision()=0.720, getRecall()=0.621, tp=18, fp=7, fn=11, tn=0]
+***********************************************************
+
+
+Time: 254225
+***********************************************************
+|===========TEST============
+[11/21] [98]_____________N232 Zhang 2012_____________|
+Final State  Model[2.26008] Objective[0.57143] {
+GOLD [4]:
+DefinedExperimentalGroup	"SCI Control"	31194
+	 [2]hasGroupName	[
+		GroupName	"SCI control rats"	16567
+		GroupName	"control group"	21355
+		]
+DefinedExperimentalGroup	"SCI+BT"	31430
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	36920
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	36569
+		SurgeryTreatment	"photochemical scar ablation"	36444
+		]
+DefinedExperimentalGroup	"SCI+TANES"	31323
+	 [1]hasTreatmentType	[
+		CurrentApplication	"TANES"	31348
+		]
+	 [1]hasGroupName	[
+		GroupName	"rats without basic treatments but with TANES"	16448
+		]
+DefinedExperimentalGroup	"SCI+BT+TANES"	31620
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Tissue	"LP"	36920
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	36569
+		CurrentApplication	"TANES"	31348
+		SurgeryTreatment	"photochemical scar ablation"	36444
+		]
+	 [1]hasGroupName	[
+		GroupName	"full treatments"	16654
+		]
+}
+PREDICT [4]:
+DefinedExperimentalGroup	"SCI Control"	31194
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	36569
+		]
+	 [2]hasGroupName	[
+		GroupName	"SCI control rats"	16567
+		GroupName	"control group"	21355
+		]
+DefinedExperimentalGroup	"SCI+BT"	31430
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	36569
+		]
+DefinedExperimentalGroup	"SCI+TANES"	31323
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	36569
+		]
+	 [1]hasGroupName	[
+		GroupName	"rats without basic treatments but with TANES"	16448
+		]
+DefinedExperimentalGroup	"SCI+BT+TANES"	31620
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	36569
+		]
+	 [1]hasGroupName	[
+		GroupName	"full treatments"	16654
+		]
+}
+Score [getF1()=0.571, getPrecision()=0.667, getRecall()=0.500, tp=10, fp=5, fn=10, tn=0]
+***********************************************************
+
+
+Time: 274848
+***********************************************************
+|===========TEST============
+[12/21] [98]_____________N233 Zhang 2015_____________|
+Final State  Model[2.93527] Objective[0.66667] {
+GOLD [5]:
+DefinedExperimentalGroup	"blank control without transplantation"	8041
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CyclosporinA"	8955
+		]
+DefinedExperimentalGroup	"OECs"	8191
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	6174
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CyclosporinA"	8955
+		]
+	 [1]hasGroupName	[
+		GroupName	"OECs-injected group"	1355
+		]
+DefinedExperimentalGroup	"EPI-NCSCs"	8180
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	StemCell	"EPI-NCSCs"	4832
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CyclosporinA"	8955
+		]
+	 [2]hasGroupName	[
+		GroupName	"EPI-NCSCs-"	1340
+		GroupName	"EPI-NCSCs-injected animals"	18590
+		]
+DefinedExperimentalGroup	"DMEM/F12"	8109
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM/F12"	8109
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CyclosporinA"	8955
+		]
+	 [4]hasGroupName	[
+		GroupName	"controls"	18684
+		GroupName	"control animals"	8794
+		GroupName	"control groups"	1433
+		GroupName	"control group"	18044
+		]
+DefinedExperimentalGroup	"mixed EPI-NCSCs-OECs"	8201
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	StemCell	"EPI-NCSCs"	4832
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	6174
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CyclosporinA"	8955
+		]
+	 [4]hasGroupName	[
+		GroupName	"co-transplanted group"	17931
+		GroupName	"co-injected animals"	1526
+		GroupName	"co-transplantation"	1246
+		GroupName	"coinjected group"	1393
+		]
+}
+PREDICT [5]:
+DefinedExperimentalGroup	"blank control without transplantation"	8041
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	8642
+		]
+DefinedExperimentalGroup	"OECs"	8191
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	17693
+		]
+	 [1]hasGroupName	[
+		GroupName	"OECs-injected group"	1355
+		]
+DefinedExperimentalGroup	"EPI-NCSCs"	8180
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	17693
+		]
+	 [2]hasGroupName	[
+		GroupName	"EPI-NCSCs-"	1340
+		GroupName	"EPI-NCSCs-injected animals"	18590
+		]
+DefinedExperimentalGroup	"DMEM/F12"	8109
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	8452
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM"	8848
+		CompoundTreatment
+			hasCompound	Cell	"cell"	18073
+		]
+	 [4]hasGroupName	[
+		GroupName	"controls"	18684
+		GroupName	"control animals"	8794
+		GroupName	"control groups"	1433
+		GroupName	"control group"	18044
+		]
+DefinedExperimentalGroup	"mixed EPI-NCSCs-OECs"	8201
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	17032
+		]
+	 [4]hasGroupName	[
+		GroupName	"co-transplanted group"	17931
+		GroupName	"co-injected animals"	1526
+		GroupName	"co-transplantation"	1246
+		GroupName	"coinjected group"	1393
+		]
+}
+Score [getF1()=0.667, getPrecision()=0.733, getRecall()=0.611, tp=22, fp=8, fn=14, tn=0]
+***********************************************************
+
+
+Time: 309069
+***********************************************************
+|===========TEST============
+[13/21] [98]_____________N234 Zhang 2016_____________|
+Final State  Model[2.73601] Objective[0.77273] {
+GOLD [4]:
+DefinedExperimentalGroup	"DMEM control group"	20536
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM"	8862
+		]
+	 [3]hasGroupName	[
+		GroupName	"DMEM"	1023
+		GroupName	"DMEM group"	23669
+		GroupName	"Control animals"	8806
+		]
+DefinedExperimentalGroup	"OEC group"	20676
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	8323
+		]
+	 [1]hasGroupName	[
+		GroupName	"OEC"	22263
+		]
+DefinedExperimentalGroup	"SC group"	20728
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	SchwannCell	"SCs"	8318
+		]
+	 [1]hasGroupName	[
+		GroupName	"SC"	1029
+		]
+DefinedExperimentalGroup	"SC+OEC group"	20627
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	SchwannCell	"SCs"	8318
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	8323
+		]
+	 [4]hasGroupName	[
+		GroupName	"co-transplanted group"	24511
+		GroupName	"co-transplantation of OECs and SCs"	21425
+		GroupName	"co-transplantation"	27848
+		GroupName	"co-transplantation group"	1051
+		]
+}
+PREDICT [4]:
+DefinedExperimentalGroup	"DMEM control group"	20536
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	5481
+		]
+	 [3]hasGroupName	[
+		GroupName	"DMEM"	1023
+		GroupName	"DMEM group"	23669
+		GroupName	"Control animals"	8806
+		]
+DefinedExperimentalGroup	"OEC group"	20676
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	388
+		]
+	 [1]hasGroupName	[
+		GroupName	"OEC"	22263
+		]
+DefinedExperimentalGroup	"SC group"	20728
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	8665
+		]
+	 [1]hasGroupName	[
+		GroupName	"SC"	1029
+		]
+DefinedExperimentalGroup	"SC+OEC group"	20627
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	388
+		]
+	 [4]hasGroupName	[
+		GroupName	"co-transplanted group"	24511
+		GroupName	"co-transplantation of OECs and SCs"	21425
+		GroupName	"co-transplantation"	27848
+		GroupName	"co-transplantation group"	1051
+		]
+}
+Score [getF1()=0.773, getPrecision()=0.810, getRecall()=0.739, tp=17, fp=4, fn=6, tn=0]
+***********************************************************
+
+
+Time: 334484
+***********************************************************
+|===========TEST============
+[14/21] [98]_____________N243 Bretzner et al., 2010_____________|
+Final State  Model[6.59163] Objective[0.54688] {
+GOLD [7]:
+DefinedExperimentalGroup	"cAMP-DMEM-treated rat"	27550
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Substance	"penicillin/streptomycin"	13911
+		CompoundTreatment
+			hasCompound	Substance	"cAMP"	13789
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM/ F-12"	12857
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+DefinedExperimentalGroup	"veh-DMEM control group"	34241
+	 [5]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Substance	"penicillin/streptomycin"	13911
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM/ F-12"	12857
+		CompoundTreatment
+			hasCompound	Vehicle	"vehicle solution"	13978
+		CompoundTreatment
+			hasCompound	Vehicle	"vehicle solution"	14719
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+	 [5]hasGroupName	[
+		GroupName	"veh-DMEM controls"	40466
+		GroupName	"veh-DMEM"	38393
+		GroupName	"veh- DMEM"	38220
+		GroupName	"vehicle-DMEM-treated rat"	27432
+		GroupName	"control group (vehicle-DMEM)"	41630
+		]
+DefinedExperimentalGroup	"rolip-OEC groups"	34384
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	12564
+		CompoundTreatment
+			hasCompound	Substance	"Rolipram"	14289
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+	 [2]hasGroupName	[
+		GroupName	"rolipram-OEC"	33454
+		GroupName	"OEC-rolipram group"	39978
+		]
+DefinedExperimentalGroup	"OEC"	34366
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	12564
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+	 [1]hasGroupName	[
+		GroupName	"OEC transplants"	40697
+		]
+DefinedExperimentalGroup	"veh-OEC"	34321
+	 [5]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Substance	"penicillin/streptomycin"	13911
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	12564
+		CompoundTreatment
+			hasCompound	Vehicle	"vehicle solution"	13978
+		CompoundTreatment
+			hasCompound	Vehicle	"vehicle solution"	14719
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+	 [1]hasGroupName	[
+		GroupName	"vehicle-OECs-treated rat"	27577
+		]
+DefinedExperimentalGroup	"rolipram-DMEM treatment group"	40041
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM/ F-12"	12857
+		CompoundTreatment
+			hasCompound	Substance	"Rolipram"	14289
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+DefinedExperimentalGroup	"cAMP-OEC"	34343
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Substance	"penicillin/streptomycin"	13911
+		CompoundTreatment
+			hasCompound	Substance	"cAMP"	13789
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	12564
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine A"	10533
+		]
+	 [2]hasGroupName	[
+		GroupName	"dbcAMP-OEC"	41790
+		GroupName	"cAMP-OECs-treated rat"	27611
+		]
+}
+PREDICT [7]:
+DefinedExperimentalGroup	"cAMP-DMEM-treated rat"	27550
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"LP-OEC slurries"	12436
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		RehabilitativeTraining	"trained"	15909
+		CompoundTreatment
+			hasCompound	DMSO	"DMSO"	14671
+		]
+DefinedExperimentalGroup	"veh-DMEM control group"	34241
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"LP-OEC slurries"	12436
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM/F-12"	8172
+		RehabilitativeTraining	"trained"	15909
+		]
+	 [5]hasGroupName	[
+		GroupName	"veh-DMEM controls"	40466
+		GroupName	"veh-DMEM"	38393
+		GroupName	"veh- DMEM"	38220
+		GroupName	"vehicle-DMEM-treated rat"	27432
+		GroupName	"control group (vehicle-DMEM)"	41630
+		]
+DefinedExperimentalGroup	"rolip-OEC groups"	34384
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	3694
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		]
+	 [2]hasGroupName	[
+		GroupName	"rolipram-OEC"	33454
+		GroupName	"OEC-rolipram group"	39978
+		]
+DefinedExperimentalGroup	"OEC"	34366
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"LP-OEC slurries"	12436
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		RehabilitativeTraining	"trained"	15909
+		CompoundTreatment
+			hasCompound	DMSO	"DMSO"	14671
+		]
+	 [1]hasGroupName	[
+		GroupName	"OEC transplants"	40697
+		]
+DefinedExperimentalGroup	"veh-OEC"	34321
+	 [4]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"LP-OEC slurries"	12436
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		RehabilitativeTraining	"trained"	15909
+		CompoundTreatment
+			hasCompound	DMSO	"DMSO"	14671
+		]
+	 [1]hasGroupName	[
+		GroupName	"vehicle-OECs-treated rat"	27577
+		]
+DefinedExperimentalGroup	"rolipram-DMEM treatment group"	40041
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	3694
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		]
+DefinedExperimentalGroup	"cAMP-OEC"	34343
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"LP-OEC slurries"	12436
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10896
+		]
+	 [2]hasGroupName	[
+		GroupName	"dbcAMP-OEC"	41790
+		GroupName	"cAMP-OECs-treated rat"	27611
+		]
+}
+Score [getF1()=0.547, getPrecision()=0.603, getRecall()=0.500, tp=35, fp=23, fn=35, tn=0]
+***********************************************************
+
+
+Time: 570983
+***********************************************************
+|===========TEST============
+[15/21] [98]_____________N244 Cloutier 2016_____________|
+Final State  Model[1.72720] Objective[0.88889] {
+GOLD [2]:
+DefinedExperimentalGroup	"injections of GFP-OECs"	9311
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"GFP-OECs"	9093
+		]
+	 [6]hasGroupName	[
+		GroupName	"OECtreated animals"	24826
+		GroupName	"GFP-OEC-transplanted group"	21847
+		GroupName	"OEC-transplanted animals"	25729
+		GroupName	"OEC-treated animals"	24538
+		GroupName	"OEC-transplanted group"	18353
+		GroupName	"OECstransplanted animals"	25831
+		]
+DefinedExperimentalGroup	"Control animals"	9597
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Cell	"fibroblasts"	9630
+		]
+	 [6]hasGroupName	[
+		GroupName	"fibroblast-transplanted groupwas"	18380
+		GroupName	"control groups"	27490
+		GroupName	"control group"	1484
+		GroupName	"fibroblasttransplanted animals"	25758
+		GroupName	"fibroblast-transplanted group"	21882
+		GroupName	"fibroblast-treated animals"	24574
+		]
+}
+PREDICT [2]:
+DefinedExperimentalGroup	"injections of GFP-OECs"	9311
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	2847
+		]
+	 [6]hasGroupName	[
+		GroupName	"OECtreated animals"	24826
+		GroupName	"GFP-OEC-transplanted group"	21847
+		GroupName	"OEC-transplanted animals"	25729
+		GroupName	"OEC-treated animals"	24538
+		GroupName	"OEC-transplanted group"	18353
+		GroupName	"OECstransplanted animals"	25831
+		]
+DefinedExperimentalGroup	"Control animals"	9597
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	5910
+		]
+	 [6]hasGroupName	[
+		GroupName	"fibroblast-transplanted groupwas"	18380
+		GroupName	"control groups"	27490
+		GroupName	"control group"	1484
+		GroupName	"fibroblasttransplanted animals"	25758
+		GroupName	"fibroblast-transplanted group"	21882
+		GroupName	"fibroblast-treated animals"	24574
+		]
+}
+Score [getF1()=0.889, getPrecision()=0.889, getRecall()=0.889, tp=16, fp=2, fn=2, tn=0]
+***********************************************************
+
+
+Time: 576516
+***********************************************************
+|===========TEST============
+[16/21] [98]_____________N246 Gu 2017_____________|
+Final State  Model[1.97329] Objective[0.81250] {
+GOLD [3]:
+DefinedExperimentalGroup	"low-dose OEC-M group"	33118
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC-M"	33049
+		]
+	 [2]hasGroupName	[
+		GroupName	"low dose group"	12234
+		GroupName	"low dose OEC-M"	515
+		]
+DefinedExperimentalGroup	"high-dose OEC-M group"	33143
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC-M"	33080
+		]
+	 [4]hasGroupName	[
+		GroupName	"high dose OEC-M"	541
+		GroupName	"higher dose of OEC-M"	1271
+		GroupName	"high dose OECM group"	17369
+		GroupName	"high dose"	12048
+		]
+DefinedExperimentalGroup	"Con-M group"	32971
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"Con-M"	33007
+		]
+	 [1]hasGroupName	[
+		GroupName	"Con-M"	17183
+		]
+}
+PREDICT [3]:
+DefinedExperimentalGroup	"low-dose OEC-M group"	33118
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	17814
+		]
+	 [2]hasGroupName	[
+		GroupName	"low dose group"	12234
+		GroupName	"low dose OEC-M"	515
+		]
+DefinedExperimentalGroup	"high-dose OEC-M group"	33143
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	17814
+		]
+	 [4]hasGroupName	[
+		GroupName	"high dose OEC-M"	541
+		GroupName	"higher dose of OEC-M"	1271
+		GroupName	"high dose OECM group"	17369
+		GroupName	"high dose"	12048
+		]
+DefinedExperimentalGroup	"Con-M group"	32971
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"Olfactory ensheathing cells (OECs)"	17814
+		]
+	 [1]hasGroupName	[
+		GroupName	"Con-M"	17183
+		]
+}
+Score [getF1()=0.812, getPrecision()=0.812, getRecall()=0.812, tp=13, fp=3, fn=3, tn=0]
+***********************************************************
+
+
+Time: 590619
+***********************************************************
+|===========TEST============
+[17/21] [98]_____________N248 Imaizumi_____________|
+Final State  Model[1.79625] Objective[0.78571] {
+GOLD [3]:
+DefinedExperimentalGroup	"Schwann cells transplanted groups"	10618
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	25910
+		]
+	 [2]hasGroupName	[
+		GroupName	"Schwann cells transplant groups"	11408
+		GroupName	"Schwann cells"	15856
+		]
+DefinedExperimentalGroup	"OEC"	10610
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	25910
+		]
+	 [1]hasGroupName	[
+		GroupName	"transplanted with pig OECs"	15826
+		]
+DefinedExperimentalGroup	"controls"	11574
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"control DMEM"	25933
+		]
+	 [2]hasGroupName	[
+		GroupName	"control lesions"	16046
+		GroupName	"Non-transplanted lesion-controlled rats"	424
+		]
+}
+PREDICT [3]:
+DefinedExperimentalGroup	"Schwann cells transplanted groups"	10618
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	8077
+		]
+	 [2]hasGroupName	[
+		GroupName	"Schwann cells transplant groups"	11408
+		GroupName	"Schwann cells"	15856
+		]
+DefinedExperimentalGroup	"OEC"	10610
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	19176
+		]
+	 [1]hasGroupName	[
+		GroupName	"transplanted with pig OECs"	15826
+		]
+DefinedExperimentalGroup	"controls"	11574
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	8077
+		]
+	 [2]hasGroupName	[
+		GroupName	"control lesions"	16046
+		GroupName	"Non-transplanted lesion-controlled rats"	424
+		]
+}
+Score [getF1()=0.786, getPrecision()=0.786, getRecall()=0.786, tp=11, fp=3, fn=3, tn=0]
+***********************************************************
+
+
+Time: 605259
+***********************************************************
+|===========TEST============
+[18/21] [98]_____________N249 Khankan_____________|
+Final State  Model[2.45813] Objective[0.85714] {
+GOLD [4]:
+DefinedExperimentalGroup	"OEC-treated rats"	51292
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CSA"	12423
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	12934
+		]
+	 [7]hasGroupName	[
+		GroupName	"OEC + CSA"	54537
+		GroupName	"OEC + CSA groups"	55919
+		GroupName	"OEC  CSA"	51612
+		GroupName	"OEC-"	57384
+		GroupName	"OEC groups"	52451
+		GroupName	"OEC ¬± CSA"	54932
+		GroupName	"OECCSA-treated rats"	52690
+		]
+DefinedExperimentalGroup	"FBs"	12917
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Cell	"FBs"	12917
+		]
+	 [6]hasGroupName	[
+		GroupName	"FBtreated cords"	40835
+		GroupName	"FBtreated rats"	39875
+		GroupName	"FBversus"	42677
+		GroupName	"FB-treated spinal cords"	37764
+		GroupName	"FB-treated rats"	39750
+		GroupName	"FB-transplanted rats"	37463
+		]
+DefinedExperimentalGroup	"FB"	51283
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Cell	"FBs"	12917
+		CompoundTreatment
+			hasCompound	CyclosporineA	"CSA"	12423
+		]
+	 [6]hasGroupName	[
+		GroupName	"FB  CSA"	51590
+		GroupName	"FB + CSAcompared"	56238
+		GroupName	"FB + CSA groups"	56397
+		GroupName	"FB-treated rats"	55027
+		GroupName	"FB + CSA-treated rats"	54875
+		GroupName	"FB + CSA"	54111
+		]
+DefinedExperimentalGroup	"OECs"	12934
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	12934
+		]
+	 [9]hasGroupName	[
+		GroupName	"inOEC-than"	39739
+		GroupName	"OECcompared"	37747
+		GroupName	"OEC-treated rats"	41095
+		GroupName	"OEC groups"	39586
+		GroupName	"OEC-treated spinal cords"	45549
+		GroupName	"andOECgroups"	47613
+		GroupName	"OEC"	39865
+		GroupName	"OEC-treatment alone"	54288
+		GroupName	"OEC-transplanted rats"	46861
+		]
+}
+PREDICT [4]:
+DefinedExperimentalGroup	"OEC-treated rats"	51292
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	27964
+		]
+	 [7]hasGroupName	[
+		GroupName	"OEC + CSA"	54537
+		GroupName	"OEC + CSA groups"	55919
+		GroupName	"OEC  CSA"	51612
+		GroupName	"OEC-"	57384
+		GroupName	"OEC groups"	52451
+		GroupName	"OEC ¬± CSA"	54932
+		GroupName	"OECCSA-treated rats"	52690
+		]
+DefinedExperimentalGroup	"FBs"	12917
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	4675
+		]
+	 [6]hasGroupName	[
+		GroupName	"FBtreated cords"	40835
+		GroupName	"FBtreated rats"	39875
+		GroupName	"FBversus"	42677
+		GroupName	"FB-treated spinal cords"	37764
+		GroupName	"FB-treated rats"	39750
+		GroupName	"FB-transplanted rats"	37463
+		]
+DefinedExperimentalGroup	"FB"	51283
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	62150
+		]
+	 [6]hasGroupName	[
+		GroupName	"FB  CSA"	51590
+		GroupName	"FB + CSAcompared"	56238
+		GroupName	"FB + CSA groups"	56397
+		GroupName	"FB-treated rats"	55027
+		GroupName	"FB + CSA-treated rats"	54875
+		GroupName	"FB + CSA"	54111
+		]
+DefinedExperimentalGroup	"OECs"	12934
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OECs"	27964
+		]
+	 [9]hasGroupName	[
+		GroupName	"inOEC-than"	39739
+		GroupName	"OECcompared"	37747
+		GroupName	"OEC-treated rats"	41095
+		GroupName	"OEC groups"	39586
+		GroupName	"OEC-treated spinal cords"	45549
+		GroupName	"andOECgroups"	47613
+		GroupName	"OEC"	39865
+		GroupName	"OEC-treatment alone"	54288
+		GroupName	"OEC-transplanted rats"	46861
+		]
+}
+Score [getF1()=0.857, getPrecision()=0.900, getRecall()=0.818, tp=36, fp=4, fn=8, tn=0]
+***********************************************************
+
+
+Time: 657057
+***********************************************************
+|===========TEST============
+[19/21] [98]_____________N251 Nategh_____________|
+Final State  Model[2.97993] Objective[0.70000] {
+GOLD [5]:
+DefinedExperimentalGroup	"OEC"	3902
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	7024
+		]
+DefinedExperimentalGroup	"Mixed"	3930
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	7024
+		CompoundTreatment
+			hasCompound	SchwannCell	"Schwann cells"	7031
+		]
+	 [1]hasGroupName	[
+		GroupName	"mixed groups"	12069
+		]
+DefinedExperimentalGroup	"Schwann"	3914
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	SchwannCell	"Schwann cells"	7031
+		]
+	 [1]hasGroupName	[
+		GroupName	"Schwann cell group"	11391
+		]
+DefinedExperimentalGroup	"fibroblast"	3960
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Cell	"Fibroblasts"	7165
+		]
+	 [1]hasGroupName	[
+		GroupName	"fibroblast group"	11253
+		]
+DefinedExperimentalGroup	"DMEM"	3890
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM"	3890
+		]
+	 [1]hasGroupName	[
+		GroupName	"DMEM groups"	12110
+		]
+}
+PREDICT [5]:
+DefinedExperimentalGroup	"OEC"	3902
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	15139
+		]
+DefinedExperimentalGroup	"Mixed"	3930
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	15139
+		]
+	 [1]hasGroupName	[
+		GroupName	"mixed groups"	12069
+		]
+DefinedExperimentalGroup	"Schwann"	3914
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	15139
+		]
+	 [1]hasGroupName	[
+		GroupName	"Schwann cell group"	11391
+		]
+DefinedExperimentalGroup	"fibroblast"	3960
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	15139
+		]
+	 [1]hasGroupName	[
+		GroupName	"fibroblast group"	11253
+		]
+DefinedExperimentalGroup	"DMEM"	3890
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"cell suspension"	15139
+		]
+	 [1]hasGroupName	[
+		GroupName	"DMEM groups"	12110
+		]
+}
+Score [getF1()=0.700, getPrecision()=0.737, getRecall()=0.667, tp=14, fp=5, fn=7, tn=0]
+***********************************************************
+
+
+Time: 676261
+***********************************************************
+|===========TEST============
+[20/21] [98]_____________N253 Salehi 2009_____________|
+Final State  Model[3.81027] Objective[0.76667] {
+GOLD [5]:
+DefinedExperimentalGroup	"OEC group"	4406
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	11169
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [1]hasGroupName	[
+		GroupName	"OEC"	19317
+		]
+DefinedExperimentalGroup	"control group"	4278
+	 [1]hasGroupName	[
+		GroupName	"Control"	744
+		]
+DefinedExperimentalGroup	"OEC + ESMN group"	4532
+	 [3]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	11169
+		CompoundTreatment
+			hasCompound	Cell	"ESMN"	11197
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [2]hasGroupName	[
+		GroupName	"co-transplanted group"	1355
+		GroupName	"OEC + ESMN"	19362
+		]
+DefinedExperimentalGroup	"medium-injected group"	4344
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		CompoundTreatment
+			hasCompound	Vehicle	"DMEM medium"	11116
+		]
+	 [1]hasGroupName	[
+		GroupName	"mediuminjected groups"	756
+		]
+DefinedExperimentalGroup	"ESMN group"	4462
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Cell	"ESMN"	11197
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [1]hasGroupName	[
+		GroupName	"ESMN"	19338
+		]
+}
+PREDICT [5]:
+DefinedExperimentalGroup	"OEC group"	4406
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	11328
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [1]hasGroupName	[
+		GroupName	"OEC"	19317
+		]
+DefinedExperimentalGroup	"control group"	4278
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	11328
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [1]hasGroupName	[
+		GroupName	"Control"	744
+		]
+DefinedExperimentalGroup	"OEC + ESMN group"	4532
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	11328
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [2]hasGroupName	[
+		GroupName	"co-transplanted group"	1355
+		GroupName	"OEC + ESMN"	19362
+		]
+DefinedExperimentalGroup	"medium-injected group"	4344
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	11328
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [1]hasGroupName	[
+		GroupName	"mediuminjected groups"	756
+		]
+DefinedExperimentalGroup	"ESMN group"	4462
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC suspension"	11328
+		CompoundTreatment
+			hasCompound	CyclosporineA	"cyclosporine"	10998
+		]
+	 [1]hasGroupName	[
+		GroupName	"ESMN"	19338
+		]
+}
+Score [getF1()=0.767, getPrecision()=0.742, getRecall()=0.793, tp=23, fp=8, fn=6, tn=0]
+***********************************************************
+
+
+Time: 731432
+***********************************************************
+|===========TEST============
+[21/21] [98]_____________N254 Tsa 2017_____________|
+Final State  Model[1.82030] Objective[0.78261] {
+GOLD [3]:
+DefinedExperimentalGroup	"AdPGIS-OEC-grafted groups"	28268
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	7232
+		SurgeryTreatment	"5 mm segment of spinal cord encompassing T8 being removed"	11412
+		]
+	 [4]hasGroupName	[
+		GroupName	"AdPGIS-OEC transplanted SCI rats"	1247
+		GroupName	"AdPGIS-OEC"	29156
+		GroupName	"AdPGIS-OEC-grafted"	28726
+		GroupName	"AdPGIS-OEC grafted SCI rats"	30431
+		]
+DefinedExperimentalGroup	"SCI rats with vehicle treatment"	29192
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	6189
+		SurgeryTreatment	"5 mm segment of spinal cord encompassing T8 being removed"	11412
+		]
+	 [6]hasGroupName	[
+		GroupName	"OEC transplanted SCI rats"	1425
+		GroupName	"AdGFP-OEC-grafted"	28246
+		GroupName	"SCI rats receiving OEC"	29129
+		GroupName	"OEC graft only"	29876
+		GroupName	"OEC grafted SCI rats"	30501
+		GroupName	"OEC"	29628
+		]
+DefinedExperimentalGroup	"SCI rats with vehicle treatment"	29192
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	Vehicle	"fibrin solution"	11633
+		SurgeryTreatment	"5 mm segment of spinal cord encompassing T8 being removed"	11412
+		]
+	 [2]hasGroupName	[
+		GroupName	"nontreated SCI rats"	1294
+		GroupName	"vehicle-treated SCI rats"	30356
+		]
+}
+PREDICT [3]:
+DefinedExperimentalGroup	"AdPGIS-OEC-grafted groups"	28268
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	24843
+		]
+	 [4]hasGroupName	[
+		GroupName	"AdPGIS-OEC transplanted SCI rats"	1247
+		GroupName	"AdPGIS-OEC"	29156
+		GroupName	"AdPGIS-OEC-grafted"	28726
+		GroupName	"AdPGIS-OEC grafted SCI rats"	30431
+		]
+DefinedExperimentalGroup	"SCI rats with vehicle treatment"	29192
+	 [1]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	24843
+		]
+	 [6]hasGroupName	[
+		GroupName	"OEC transplanted SCI rats"	1425
+		GroupName	"AdGFP-OEC-grafted"	28246
+		GroupName	"SCI rats receiving OEC"	29129
+		GroupName	"OEC graft only"	29876
+		GroupName	"OEC grafted SCI rats"	30501
+		GroupName	"OEC"	29628
+		]
+DefinedExperimentalGroup	"SCI rats with vehicle treatment"	29192
+	 [2]hasTreatmentType	[
+		CompoundTreatment
+			hasCompound	OlfactoryEnsheathingGliaCell	"OEC"	24843
+		RehabilitativeTraining	"trained"	41985
+		]
+	 [2]hasGroupName	[
+		GroupName	"nontreated SCI rats"	1294
+		GroupName	"vehicle-treated SCI rats"	30356
+		]
+}
+Score [getF1()=0.783, getPrecision()=0.818, getRecall()=0.750, tp=18, fp=4, fn=6, tn=0]
+***********************************************************
+
+
+Time: 750337
+mean score: Score [getF1()=0.832, getPrecision()=0.870, getRecall()=0.798, tp=402, fp=60, fn=102, tn=0]
+N223 Wu 2008
+Both: Score [getF1()=0.857, getPrecision()=0.750, getRecall()=1.000, tp=3, fp=1, fn=0, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.857, getPrecision()=0.750, getRecall()=1.000, tp=3, fp=1, fn=0, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.8571428571428571, P = 0.75, R = 1.0
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.857, getPrecision()=0.750, getRecall()=1.000, tp=3, fp=1, fn=0, tn=0]
+
+N254 Tsa 2017
+Both: Score [getF1()=0.400, getPrecision()=0.500, getRecall()=0.333, tp=2, fp=2, fn=4, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.444, getPrecision()=0.500, getRecall()=0.400, tp=2, fp=2, fn=3, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.6285714285714286, P = 0.625, R = 0.6666666666666666
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.588, getPrecision()=0.625, getRecall()=0.556, tp=5, fp=3, fn=4, tn=0]
+
+N221 Takami 2002
+Both: Score [getF1()=0.444, getPrecision()=0.500, getRecall()=0.400, tp=2, fp=2, fn=3, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=2, fp=2, fn=2, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.5671957671957671, P = 0.5833333333333334, R = 0.5777777777777778
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.538, getPrecision()=0.583, getRecall()=0.500, tp=7, fp=5, fn=7, tn=0]
+
+N228 Yazdani 2012
+Both: Score [getF1()=0.333, getPrecision()=0.333, getRecall()=0.333, tp=1, fp=2, fn=2, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.400, getPrecision()=0.333, getRecall()=0.500, tp=1, fp=2, fn=1, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.5087301587301587, P = 0.5208333333333334, R = 0.5166666666666667
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.500, getPrecision()=0.533, getRecall()=0.471, tp=8, fp=7, fn=9, tn=0]
+
+N232 Zhang 2012
+Both: Score [getF1()=0.333, getPrecision()=0.500, getRecall()=0.250, tp=2, fp=2, fn=6, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.333, getPrecision()=0.500, getRecall()=0.250, tp=2, fp=2, fn=6, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.47365079365079366, P = 0.5166666666666667, R = 0.4633333333333334
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.455, getPrecision()=0.526, getRecall()=0.400, tp=10, fp=9, fn=15, tn=0]
+
+N226 Xiao 2007
+Both: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=3, fp=1, fn=1, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=3, fp=1, fn=1, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.5197089947089947, P = 0.5555555555555556, R = 0.5111111111111112
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.500, getPrecision()=0.565, getRecall()=0.448, tp=13, fp=10, fn=16, tn=0]
+
+N224 Wu 2015
+Both: Score [getF1()=0.267, getPrecision()=0.400, getRecall()=0.200, tp=2, fp=3, fn=8, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.286, getPrecision()=0.400, getRecall()=0.222, tp=2, fp=3, fn=7, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.48356009070294786, P = 0.5333333333333333, R = 0.46666666666666673
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.448, getPrecision()=0.536, getRecall()=0.385, tp=15, fp=13, fn=24, tn=0]
+
+N248 Imaizumi
+Both: Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=2, fp=1, fn=1, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.800, getPrecision()=0.667, getRecall()=1.000, tp=2, fp=1, fn=0, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.5064484126984127, P = 0.55, R = 0.4916666666666667
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.466, getPrecision()=0.548, getRecall()=0.405, tp=17, fp=14, fn=25, tn=0]
+
+N244 Cloutier 2016
+Both: Score [getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=1, fp=1, fn=1, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=1, fp=1, fn=1, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.505731922398589, P = 0.5444444444444445, R = 0.49259259259259264
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.468, getPrecision()=0.545, getRecall()=0.409, tp=18, fp=15, fn=26, tn=0]
+
+N233 Zhang 2015
+Both: Score [getF1()=0.353, getPrecision()=0.429, getRecall()=0.300, tp=3, fp=4, fn=7, tn=0]
+Vehicles: Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=1, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.267, getPrecision()=0.333, getRecall()=0.222, tp=2, fp=4, fn=7, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4904528478057889, P = 0.5328571428571429, R = 0.47333333333333333
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.447, getPrecision()=0.525, getRecall()=0.389, tp=21, fp=19, fn=33, tn=0]
+
+N225 Xiao 2005
+Both: Score [getF1()=0.462, getPrecision()=0.429, getRecall()=0.500, tp=3, fp=4, fn=3, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.462, getPrecision()=0.429, getRecall()=0.500, tp=3, fp=4, fn=3, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4878242672360319, P = 0.5233766233766235, R = 0.47575757575757577
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.449, getPrecision()=0.511, getRecall()=0.400, tp=24, fp=23, fn=36, tn=0]
+
+N230 Zhang 2011 2
+Both: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=2, fn=4, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=2, fn=4, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4471722449663626, P = 0.47976190476190483, R = 0.4361111111111111
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.425, getPrecision()=0.490, getRecall()=0.375, tp=24, fp=25, fn=40, tn=0]
+
+N231 Zhang 2011
+Both: Score [getF1()=0.267, getPrecision()=0.333, getRecall()=0.222, tp=2, fp=4, fn=7, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.267, getPrecision()=0.333, getRecall()=0.222, tp=2, fp=4, fn=7, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4332872004817706, P = 0.46849816849816855, R = 0.41965811965811967
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.406, getPrecision()=0.473, getRecall()=0.356, tp=26, fp=29, fn=47, tn=0]
+
+N251 Nategh
+Both: Score [getF1()=0.364, getPrecision()=0.400, getRecall()=0.333, tp=2, fp=3, fn=4, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.400, getPrecision()=0.400, getRecall()=0.400, tp=2, fp=3, fn=3, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4283121407070986, P = 0.46360544217687083, R = 0.41349206349206347
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.403, getPrecision()=0.467, getRecall()=0.354, tp=28, fp=32, fn=51, tn=0]
+
+N253 Salehi 2009
+Both: Score [getF1()=0.632, getPrecision()=0.600, getRecall()=0.667, tp=6, fp=4, fn=3, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.600, getRecall()=0.750, tp=6, fp=4, fn=2, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4418632611511868, P = 0.47269841269841273, R = 0.4303703703703704
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.430, getPrecision()=0.486, getRecall()=0.386, tp=34, fp=36, fn=54, tn=0]
+
+N249 Khankan
+Both: Score [getF1()=0.400, getPrecision()=0.500, getRecall()=0.333, tp=2, fp=2, fn=4, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.400, getPrecision()=0.500, getRecall()=0.333, tp=2, fp=2, fn=4, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.43924680732923765, P = 0.47440476190476194, R = 0.42430555555555555
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.429, getPrecision()=0.486, getRecall()=0.383, tp=36, fp=38, fn=58, tn=0]
+
+N246 Gu 2017
+Both: Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=2, fp=1, fn=1, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.800, getPrecision()=0.667, getRecall()=1.000, tp=2, fp=1, fn=0, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4526244461137923, P = 0.48571428571428577, R = 0.43856209150326797
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.437, getPrecision()=0.494, getRecall()=0.392, tp=38, fp=39, fn=59, tn=0]
+
+N234 Zhang 2016
+Both: Score [getF1()=0.444, getPrecision()=0.500, getRecall()=0.400, tp=2, fp=2, fn=3, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=2, fp=2, fn=2, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.45217000157660636, P = 0.48650793650793656, R = 0.4364197530864198
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.437, getPrecision()=0.494, getRecall()=0.392, tp=40, fp=41, fn=62, tn=0]
+
+N229 Yui 2014
+Both: Score [getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=1, fp=1, fn=1, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.500, getRecall()=1.000, tp=1, fp=1, fn=0, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4546873699146797, P = 0.487218045112782, R = 0.4397660818713451
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.439, getPrecision()=0.494, getRecall()=0.394, tp=41, fp=42, fn=63, tn=0]
+
+N227 Yamamoto 2009
+Both: Score [getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=1, fp=1, fn=1, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=1, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.500, getRecall()=1.000, tp=1, fp=1, fn=0, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4569530014189457, P = 0.4878571428571429, R = 0.4427777777777778
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.440, getPrecision()=0.494, getRecall()=0.396, tp=42, fp=43, fn=64, tn=0]
+
+N243 Bretzner et al., 2010
+Both: Score [getF1()=0.560, getPrecision()=0.583, getRecall()=0.538, tp=14, fp=10, fn=12, tn=0]
+Vehicles: Score [getF1()=0.286, getPrecision()=0.500, getRecall()=0.200, tp=3, fp=3, fn=12, tn=0]
+Non Vehicles: Score [getF1()=0.759, getPrecision()=0.611, getRecall()=1.000, tp=11, fp=7, fn=0, tn=0]
+EXP GROUP INTERMEDIATE MACRO: F1 = 0.4618600013513769, P = 0.4924036281179139, R = 0.44733414733414734
+EXP GROUP INTERMEDIATE MICRO: Score [getF1()=0.465, getPrecision()=0.514, getRecall()=0.424, tp=56, fp=53, fn=76, tn=0]
+
+EXP GROUP MACRO: F1 = 0.4618600013513769, P = 0.4924036281179139, R = 0.44733414733414734
+EXP GROUP MICRO: BOTH = Score [getF1()=0.465, getPrecision()=0.514, getRecall()=0.424, tp=56, fp=53, fn=76, tn=0]
+EXP GROUP MICRO: Vehicle = Score [getF1()=0.235, getPrecision()=0.571, getRecall()=0.148, tp=4, fp=3, fn=23, tn=0]
+EXP GROUP MICRO: Non Vehicle = Score [getF1()=0.502, getPrecision()=0.510, getRecall()=0.495, tp=52, fp=50, fn=53, tn=0]
+N223 Wu 2008
+Both: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=6, fp=0, fn=12, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=6, fp=0, fn=12, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5, P = 1.0, R = 0.3333333333333333
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=6, fp=0, fn=12, tn=0]
+
+N254 Tsa 2017
+Both: Score [getF1()=0.400, getPrecision()=0.667, getRecall()=0.286, tp=8, fp=4, fn=20, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=8, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=0.667, getRecall()=0.400, tp=8, fp=4, fn=12, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.45, P = 0.8333333333333333, R = 0.30952380952380953
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.438, getPrecision()=0.778, getRecall()=0.304, tp=14, fp=4, fn=32, tn=0]
+
+N221 Takami 2002
+Both: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=6, fp=0, fn=12, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=6, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=1.000, getRecall()=0.500, tp=6, fp=0, fn=6, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.4666666666666666, P = 0.8888888888888888, R = 0.31746031746031744
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.455, getPrecision()=0.833, getRecall()=0.312, tp=20, fp=4, fn=44, tn=0]
+
+N228 Yazdani 2012
+Both: Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=12, fp=6, fn=6, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=6, tn=0]
+Non Vehicles: Score [getF1()=0.600, getPrecision()=0.500, getRecall()=0.750, tp=9, fp=9, fn=3, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5166666666666666, P = 0.8333333333333333, R = 0.40476190476190477
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.516, getPrecision()=0.762, getRecall()=0.390, tp=32, fp=10, fn=50, tn=0]
+
+N232 Zhang 2012
+Both: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=8, fp=0, fn=16, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=8, fp=0, fn=16, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5133333333333333, P = 0.8666666666666666, R = 0.3904761904761905
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.513, getPrecision()=0.800, getRecall()=0.377, tp=40, fp=10, fn=66, tn=0]
+
+N226 Xiao 2007
+Both: Score [getF1()=0.833, getPrecision()=0.833, getRecall()=0.833, tp=15, fp=3, fn=3, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.833, getPrecision()=0.833, getRecall()=0.833, tp=15, fp=3, fn=3, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5666666666666667, P = 0.861111111111111, R = 0.46428571428571425
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.573, getPrecision()=0.809, getRecall()=0.444, tp=55, fp=13, fn=69, tn=0]
+
+N224 Wu 2015
+Both: Score [getF1()=0.615, getPrecision()=1.000, getRecall()=0.444, tp=20, fp=0, fn=25, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=10, tn=0]
+Non Vehicles: Score [getF1()=0.727, getPrecision()=1.000, getRecall()=0.571, tp=20, fp=0, fn=15, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5736263736263736, P = 0.8809523809523808, R = 0.4614512471655329
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.584, getPrecision()=0.852, getRecall()=0.444, tp=75, fp=13, fn=94, tn=0]
+
+N248 Imaizumi
+Both: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=6, fp=2, fn=2, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=4, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.500, getRecall()=1.000, tp=4, fp=4, fn=0, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5956730769230769, P = 0.8645833333333333, R = 0.4975198412698413
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.593, getPrecision()=0.844, getRecall()=0.458, tp=81, fp=15, fn=96, tn=0]
+
+N244 Cloutier 2016
+Both: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=6, fp=2, fn=2, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=6, fp=2, fn=2, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6128205128205129, P = 0.8518518518518517, R = 0.5255731922398589
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.602, getPrecision()=0.837, getRecall()=0.470, tp=87, fp=17, fn=98, tn=0]
+
+N233 Zhang 2015
+Both: Score [getF1()=0.600, getPrecision()=0.500, getRecall()=0.750, tp=36, fp=36, fn=12, tn=0]
+Vehicles: Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=12, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=0.400, getRecall()=0.667, tp=24, fp=36, fn=12, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6115384615384615, P = 0.8166666666666667, R = 0.5480158730158731
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.601, getPrecision()=0.699, getRecall()=0.528, tp=123, fp=53, fn=110, tn=0]
+
+N225 Xiao 2005
+Both: Score [getF1()=0.714, getPrecision()=0.714, getRecall()=0.714, tp=20, fp=8, fn=8, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.714, getPrecision()=0.714, getRecall()=0.714, tp=20, fp=8, fn=8, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6208791208791209, P = 0.8073593073593073, R = 0.5631313131313131
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.615, getPrecision()=0.701, getRecall()=0.548, tp=143, fp=61, fn=118, tn=0]
+
+N230 Zhang 2011 2
+Both: Score [getF1()=0.333, getPrecision()=0.333, getRecall()=0.333, tp=2, fp=4, fn=4, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.333, getPrecision()=0.333, getRecall()=0.333, tp=2, fp=4, fn=4, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5969169719169719, P = 0.7678571428571428, R = 0.5439814814814815
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.608, getPrecision()=0.690, getRecall()=0.543, tp=145, fp=65, fn=122, tn=0]
+
+N231 Zhang 2011
+Both: Score [getF1()=0.667, getPrecision()=0.750, getRecall()=0.600, tp=9, fp=3, fn=6, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.750, getRecall()=0.600, tp=9, fp=3, fn=6, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6022823330515638, P = 0.7664835164835164, R = 0.5482905982905982
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.611, getPrecision()=0.694, getRecall()=0.546, tp=154, fp=68, fn=128, tn=0]
+
+N251 Nategh
+Both: Score [getF1()=0.400, getPrecision()=1.000, getRecall()=0.250, tp=8, fp=0, fn=24, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=8, tn=0]
+Non Vehicles: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=8, fp=0, fn=16, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.587833594976452, P = 0.7831632653061223, R = 0.526984126984127
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.596, getPrecision()=0.704, getRecall()=0.516, tp=162, fp=68, fn=152, tn=0]
+
+N253 Salehi 2009
+Both: Score [getF1()=0.667, getPrecision()=1.000, getRecall()=0.500, tp=16, fp=0, fn=16, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=8, tn=0]
+Non Vehicles: Score [getF1()=0.800, getPrecision()=1.000, getRecall()=0.667, tp=16, fp=0, fn=8, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.593089133089133, P = 0.7976190476190476, R = 0.5251851851851852
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.601, getPrecision()=0.724, getRecall()=0.514, tp=178, fp=68, fn=168, tn=0]
+
+N249 Khankan
+Both: Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=12, fp=6, fn=6, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=0, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=12, fp=6, fn=6, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5976877289377288, P = 0.7894345238095237, R = 0.5340277777777778
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.605, getPrecision()=0.720, getRecall()=0.522, tp=190, fp=74, fn=174, tn=0]
+
+N246 Gu 2017
+Both: Score [getF1()=0.500, getPrecision()=1.000, getRecall()=0.333, tp=6, fp=0, fn=12, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=6, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=1.000, getRecall()=0.500, tp=6, fp=0, fn=6, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.5919413919413918, P = 0.8018207282913165, R = 0.5222222222222223
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.601, getPrecision()=0.726, getRecall()=0.513, tp=196, fp=74, fn=186, tn=0]
+
+N234 Zhang 2016
+Both: Score [getF1()=0.667, getPrecision()=0.667, getRecall()=0.667, tp=12, fp=6, fn=6, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=6, tn=0]
+Non Vehicles: Score [getF1()=0.600, getPrecision()=0.500, getRecall()=0.750, tp=9, fp=9, fn=3, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.596092796092796, P = 0.7943121693121692, R = 0.5302469135802469
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.605, getPrecision()=0.722, getRecall()=0.520, tp=208, fp=80, fn=192, tn=0]
+
+N229 Yui 2014
+Both: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=6, fp=2, fn=2, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=4, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.500, getRecall()=1.000, tp=4, fp=4, fn=0, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6041931752458067, P = 0.7919799498746866, R = 0.541812865497076
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.608, getPrecision()=0.723, getRecall()=0.525, tp=214, fp=82, fn=194, tn=0]
+
+N227 Yamamoto 2009
+Both: Score [getF1()=0.750, getPrecision()=0.750, getRecall()=0.750, tp=6, fp=2, fn=2, tn=0]
+Vehicles: Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=4, tn=0]
+Non Vehicles: Score [getF1()=0.667, getPrecision()=0.500, getRecall()=1.000, tp=4, fp=4, fn=0, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6114835164835164, P = 0.7898809523809522, R = 0.5522222222222222
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.611, getPrecision()=0.724, getRecall()=0.529, tp=220, fp=84, fn=196, tn=0]
+
+N243 Bretzner et al., 2010
+Both: Score [getF1()=0.593, getPrecision()=0.727, getRecall()=0.500, tp=64, fp=24, fn=64, tn=0]
+Vehicles: Score [getF1()=0.375, getPrecision()=0.750, getRecall()=0.250, tp=24, fp=8, fn=72, tn=0]
+Non Vehicles: Score [getF1()=0.727, getPrecision()=0.571, getRecall()=1.000, tp=32, fp=24, fn=0, tn=0]
+TREATMENTS INTERMEDIATE MACRO: F1 = 0.6105839486791866, P = 0.7868996083281797, R = 0.5497354497354497
+TREATMENTS INTERMEDIATE MICRO: Score [getF1()=0.607, getPrecision()=0.724, getRecall()=0.522, tp=284, fp=108, fn=260, tn=0]
+
+TREATMENTS MACRO: F1 = 0.6105839486791866, P = 0.7868996083281797, R = 0.5497354497354497
+TREATMENTS MICRO: BOTH = Score [getF1()=0.607, getPrecision()=0.724, getRecall()=0.522, tp=284, fp=108, fn=260, tn=0]
+TREATMENTS MICRO: Vehicle = Score [getF1()=0.324, getPrecision()=0.818, getRecall()=0.202, tp=36, fp=8, fn=142, tn=0]
+TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.639, getPrecision()=0.655, getRecall()=0.623, tp=228, fp=120, fn=138, tn=0]
+CRFStatistics [context=Train, getTotalDuration()=3628994]
+CRFStatistics [context=Test, getTotalDuration()=750338]
+modelName: ExperimentalGroup42764

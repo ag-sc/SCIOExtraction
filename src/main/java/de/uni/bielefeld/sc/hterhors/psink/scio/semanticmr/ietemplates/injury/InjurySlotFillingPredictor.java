@@ -34,7 +34,7 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
@@ -62,7 +62,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
 
-		if (InjurySlotFilling.rule == EInjuryModifications.ROOT)
+		if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT)
 			return Collections.emptyList();
 
 		List<GeneralCandidateProvider> provider = new ArrayList<>();

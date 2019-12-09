@@ -2,6 +2,8 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,10 +16,12 @@ import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
 import de.hterhors.semanticmr.activelearning.ranker.EActiveLearningStrategies;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
@@ -51,6 +55,7 @@ public class InjuryActiveLearningSlotFilling {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
+	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public InjuryActiveLearningSlotFilling() throws IOException {
 
@@ -63,15 +68,18 @@ public class InjuryActiveLearningSlotFilling {
 				.registerNormalizationFunction(new DosageNormalization())
 				.registerNormalizationFunction(new DurationNormalization()).build();
 
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.build();
+//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+//				.build();
 
-//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-//				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
+
+		InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
+		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel.csv");
 
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
@@ -117,7 +125,8 @@ public class InjuryActiveLearningSlotFilling {
 				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
 						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
-				predictor.evaluateOnDevelopment();
+				Score score = predictor.evaluateOnDevelopment();
+				resultOut.println(toResult(score, strategy, trainingInstancesNames, InjurySlotFilling.rule));
 
 				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
 						predictor);
@@ -132,6 +141,13 @@ public class InjuryActiveLearningSlotFilling {
 
 			}
 		}
+		resultOut.close();
+	}
 
+	private String toResult(Score score, EActiveLearningStrategies strategy, List<String> trainingInstancesNames,
+			EInjuryModificationRules rule) {
+		return strategy.name() + "\t" + rule.name() + "\t" + trainingInstancesNames.size() + "\t"
+				+ resultFormatter.format(score.getF1()) + "\t" + resultFormatter.format(score.getPrecision()) + "\t"
+				+ resultFormatter.format(score.getRecall());
 	}
 }
