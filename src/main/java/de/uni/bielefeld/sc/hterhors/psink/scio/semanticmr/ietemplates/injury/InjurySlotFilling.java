@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
@@ -76,7 +77,11 @@ public class InjurySlotFilling {
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
 			InjurySlotFilling.rule = rule;
 
-			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+//			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
+//					.setCorpusSizeFraction(1F).build();
+
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder()
+					.setTrainingProportion(80).setSeed(1000L).setDevelopmentProportion(10).setTestProportion(10)
 					.setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,

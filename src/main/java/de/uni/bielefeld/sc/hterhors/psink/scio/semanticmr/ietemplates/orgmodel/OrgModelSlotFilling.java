@@ -113,8 +113,8 @@ public class OrgModelSlotFilling {
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(90)
-				.setSeed(1000L).setDevelopmentProportion(5).setTestProportion(5).setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setSeed(1000L).setDevelopmentProportion(10).setTestProportion(10).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getRule(rule));
