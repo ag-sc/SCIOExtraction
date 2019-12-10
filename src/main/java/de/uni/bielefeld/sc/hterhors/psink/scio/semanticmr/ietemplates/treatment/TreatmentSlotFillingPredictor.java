@@ -99,7 +99,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	}
 
 	@Override
-	protected File getExternalNerlaAnnotations() {
+	protected File getExternalNerlAnnotations() {
 		return new File("src/main/resources/slotfilling/treatment/corpus/nerla/");
 	}
 

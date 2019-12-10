@@ -66,7 +66,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected File getExternalNerlaAnnotations() {
+	protected File getExternalNerlAnnotations() {
 		return new File("src/main/resources/slotfilling/vertebral_area/corpus/nerla/");
 	}
 

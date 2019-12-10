@@ -1,6 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,8 @@ public class ExGrAllUsedTemplate extends AbstractFeatureTemplate<AllUsedScope> {
 	@Override
 	public void initalize(Object[] parameter) {
 		this.numToPredictMap = (Map<Instance, Map<SlotType, Integer>>) parameter[0];
+		if (this.numToPredictMap == null)
+			numToPredictMap = Collections.emptyMap();
 	}
 
 	static class AllUsedScope extends AbstractFactorScope {

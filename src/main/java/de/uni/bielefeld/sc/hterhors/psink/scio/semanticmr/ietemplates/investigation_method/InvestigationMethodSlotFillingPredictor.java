@@ -45,7 +45,7 @@ public class InvestigationMethodSlotFillingPredictor extends AbstractSlotFilling
 	}
 
 	@Override
-	protected File getExternalNerlaAnnotations() {
+	protected File getExternalNerlAnnotations() {
 		final File externalNerlaAnnotations = new File(
 				"src/main/resources/slotfilling/investigation_method/corpus/nerla/");
 

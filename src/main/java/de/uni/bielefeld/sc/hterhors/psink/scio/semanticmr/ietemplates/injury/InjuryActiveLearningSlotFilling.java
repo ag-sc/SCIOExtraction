@@ -24,6 +24,8 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
@@ -79,8 +81,10 @@ public class InjuryActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
-		InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
-		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel.csv");
+		VertebralAreaFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
+		InjurySlotFilling.rule = EInjuryModificationRules.ROOT_LOCATION_DEVICE_ANAESTHESIA;
+
+		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusfive.csv");
 
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
@@ -91,7 +95,6 @@ public class InjuryActiveLearningSlotFilling {
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).sorted().collect(Collectors.toList());
 
-			allTrainingInstanceNames.forEach(System.out::println);
 			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
@@ -100,9 +103,9 @@ public class InjuryActiveLearningSlotFilling {
 
 			final List<String> trainingInstancesNames = new ArrayList<>();
 
-			int numberOfInstanceToBegin = 1;
-			long numberOfInstancePerStep = 1;
-			int numOfMaxSteps = 25;
+			int numberOfInstanceToBegin = 5;
+			long numberOfInstancePerStep = 5;
+			int numOfMaxSteps = 10;
 
 			trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, numberOfInstanceToBegin));
 			testInstanceNames.addAll(allTrainingInstanceNames);

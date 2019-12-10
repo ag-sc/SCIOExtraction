@@ -142,7 +142,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
 		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
-		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(getExternalNerlaAnnotations()));
+		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(getExternalNerlAnnotations()));
 		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
 		for (ICandidateProvider ap : getAdditionalCandidateProvider()) {
@@ -184,7 +184,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return Collections.emptyList();
 	}
 
-	abstract protected File getExternalNerlaAnnotations();
+	abstract protected File getExternalNerlAnnotations();
 
 	abstract protected File getInstanceDirectory();
 

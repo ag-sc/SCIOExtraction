@@ -63,7 +63,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected File getExternalNerlaAnnotations() {
+	protected File getExternalNerlAnnotations() {
 		return new File("src/main/resources/slotfilling/delivery_method/corpus/nerla/");
 	}
 
