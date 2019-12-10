@@ -80,7 +80,7 @@ public class InjuryActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
 		InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
-		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel.csv");
+		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusone.csv");
 
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
@@ -102,7 +102,7 @@ public class InjuryActiveLearningSlotFilling {
 
 			int numberOfInstanceToBegin = 1;
 			long numberOfInstancePerStep = 1;
-			int numOfMaxSteps = 25;
+			int numOfMaxSteps = 300;
 
 			trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, numberOfInstanceToBegin));
 			testInstanceNames.addAll(allTrainingInstanceNames);
