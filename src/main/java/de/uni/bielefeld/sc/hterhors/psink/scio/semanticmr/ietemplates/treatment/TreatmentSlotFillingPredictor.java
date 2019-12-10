@@ -131,7 +131,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 35;
+		return 10;
 	}
 
 	@Override
