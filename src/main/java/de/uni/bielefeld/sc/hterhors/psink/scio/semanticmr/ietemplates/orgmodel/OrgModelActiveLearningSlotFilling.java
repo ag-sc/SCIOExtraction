@@ -78,8 +78,8 @@ public class OrgModelActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
-		OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES;
-		PrintStream resultOut = new PrintStream("results/activeLearning/OrganismModel.csv");
+		OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+		PrintStream resultOut = new PrintStream("results/activeLearning/OrganismModel_full_plusfive.csv");
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
 
@@ -97,9 +97,9 @@ public class OrgModelActiveLearningSlotFilling {
 
 			final List<String> trainingInstancesNames = new ArrayList<>();
 
-			int numberOfInstanceToBegin = 1;
-			long numberOfInstancePerStep = 1;
-			int numOfMaxSteps = 25;
+			int numberOfInstanceToBegin = 5;
+			long numberOfInstancePerStep = 5;
+			int numOfMaxSteps = 10;
 
 			trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, numberOfInstanceToBegin));
 			testInstanceNames.addAll(allTrainingInstanceNames);
