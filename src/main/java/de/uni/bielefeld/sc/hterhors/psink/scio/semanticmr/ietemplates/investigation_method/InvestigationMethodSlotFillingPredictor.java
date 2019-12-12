@@ -139,7 +139,7 @@ public class InvestigationMethodSlotFillingPredictor extends AbstractSlotFilling
 			@Override
 			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
 				if (goldAnnotation.getEntityType() == EntityType.get("InvestigationMethod"))
-					if (goldAnnotation.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+					if (goldAnnotation.asInstanceOfEntityTemplate().isEmpty())
 						return null;
 
 				return goldAnnotation;

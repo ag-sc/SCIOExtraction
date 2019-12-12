@@ -11,9 +11,9 @@ import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
-import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -132,6 +132,7 @@ public class IETemplateCardinalityTemplate extends AbstractFeatureTemplate<IETem
 
 				if (!singleFillerSlotAnnotation.getValue().containsSlotFiller())
 					continue;
+				
 				factors.add(new IETemplateCardinalityScope(this, state.getInstance(), rootCardinality,
 						annotation.getEntityType(),
 						singleFillerSlotAnnotation.getValue().getSlotFiller().getEntityType()));

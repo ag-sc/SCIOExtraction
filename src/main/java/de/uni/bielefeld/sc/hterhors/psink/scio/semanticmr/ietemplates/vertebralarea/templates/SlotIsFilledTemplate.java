@@ -7,7 +7,7 @@ import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.SlotIsFilledTemplate.SlotIsFilledScope;
@@ -80,8 +80,8 @@ public class SlotIsFilledTemplate extends AbstractFeatureTemplate<SlotIsFilledSc
 			if (vertebralArea.getEntityType() != EntityType.get("VertebralArea"))
 				continue;
 
-			SingleFillerSlot lower = vertebralArea.getSingleFillerSlot("hasLowerVertebrae");
-			SingleFillerSlot upper = vertebralArea.getSingleFillerSlot("hasUpperVertebrae");
+			SingleFillerSlot lower = vertebralArea.getSingleFillerSlotOfName("hasLowerVertebrae");
+			SingleFillerSlot upper = vertebralArea.getSingleFillerSlotOfName("hasUpperVertebrae");
 
 			factors.add(new SlotIsFilledScope(this, upper.containsSlotFiller(), lower.containsSlotFiller()));
 

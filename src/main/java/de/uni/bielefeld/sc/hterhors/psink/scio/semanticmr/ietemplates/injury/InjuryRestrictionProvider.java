@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 
 public class InjuryRestrictionProvider {
@@ -72,7 +72,7 @@ public class InjuryRestrictionProvider {
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 
 				return newGold;
@@ -100,7 +100,7 @@ public class InjuryRestrictionProvider {
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 
 				return newGold;
@@ -133,7 +133,7 @@ public class InjuryRestrictionProvider {
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 
 				return newGold;

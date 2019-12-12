@@ -12,7 +12,7 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
@@ -53,7 +53,7 @@ public class FindInvestigationDuplicates {
 
 			for (AbstractAnnotation a : i.getGoldAnnotations().getAnnotations()) {
 
-				String Id1 = a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasID").getSlotFiller()
+				String Id1 = a.asInstanceOfEntityTemplate().getSingleFillerSlotOfName("hasID").getSlotFiller()
 						.asInstanceOfLiteralAnnotation().getSurfaceForm();
 
 				Set<AbstractAnnotation> set2 = new HashSet<>();
@@ -64,11 +64,11 @@ public class FindInvestigationDuplicates {
 
 				for (AbstractAnnotation a2 : set2) {
 
-					String Id2 = a2.asInstanceOfEntityTemplate().getSingleFillerSlot("hasID").getSlotFiller()
+					String Id2 = a2.asInstanceOfEntityTemplate().getSingleFillerSlotOfName("hasID").getSlotFiller()
 							.asInstanceOfLiteralAnnotation().getSurfaceForm();
 
-					a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasID")).clear();
-					a2.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasID")).clear();
+					a.asInstanceOfEntityTemplate().clearSlot(SlotType.get("hasID"));
+					a2.asInstanceOfEntityTemplate().clearSlot(SlotType.get("hasID"));
 
 					if (a.equals(a2)) {
 						dups.putIfAbsent(Id1, new HashSet<>());

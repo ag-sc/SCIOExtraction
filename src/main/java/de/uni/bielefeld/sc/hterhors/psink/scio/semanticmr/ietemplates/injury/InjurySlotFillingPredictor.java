@@ -66,7 +66,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 			return Collections.emptyList();
 
 		List<GeneralCandidateProvider> provider = new ArrayList<>();
-		String vertebralAreaModelName = "VertebralArea_" + modelName;
+		String vertebralAreaModelName = "VertebralArea_STD";
+//		String vertebralAreaModelName = "VertebralArea_" + modelName;
 		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
@@ -100,6 +101,27 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		return new AdvancedLearner(new SGD(0.00001, 0), new L2(0.00));
 	}
 
+//	@Override
+//	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
+//		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
+////		featureTemplates.add(new LevenshteinTemplate());
+//		featureTemplates.add(new IntraTokenTemplate());
+////		featureTemplates.add(new DistinctMultiValueSlotsTemplate());
+////		featureTemplates.add(new MultiValueSlotSizeTemplate());
+//		featureTemplates.add(new NGramTokenContextTemplate());
+//		featureTemplates.add(new SingleTokenContextTemplate());
+//		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
+////		featureTemplates.add(new ClusterTemplate());
+////		featureTemplates.add(new EntityTypeContextTemplate());
+////		featureTemplates.add(new OlfactoryContextTemplate());
+//		featureTemplates.add(new DocumentPartTemplate());
+////		featureTemplates.add(new LocalityTemplate());
+////		featureTemplates.add(new SlotIsFilledTemplate());
+////		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));
+////		featureTemplates.add(new NumericInterpretationTemplate());
+//
+//		return featureTemplates;
+//	}
 	@Override
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
@@ -118,7 +140,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new SlotIsFilledTemplate());
 //		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
-
+		
 		return featureTemplates;
 	}
 

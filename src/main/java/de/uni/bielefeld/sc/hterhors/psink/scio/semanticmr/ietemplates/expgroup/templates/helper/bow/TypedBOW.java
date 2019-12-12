@@ -2,7 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.
 
 import java.util.Set;
 
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 
 /**
  * This class represents a typed BOW. This is a set of BOW terms and a slot type

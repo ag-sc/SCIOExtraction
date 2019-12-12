@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
-import de.hterhors.semanticmr.crf.structure.slots.SingleFillerSlot;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
@@ -159,7 +159,7 @@ public class ConvertInstancesToCSV {
 
 				MultiFillerSlot mf = msf.getValue();
 
-				LinkedHashSet<AbstractAnnotation> vs = mf.getSlotFiller();
+				Set<AbstractAnnotation> vs = mf.getSlotFiller();
 
 				int count = 0;
 				for (AbstractAnnotation v : vs) {
