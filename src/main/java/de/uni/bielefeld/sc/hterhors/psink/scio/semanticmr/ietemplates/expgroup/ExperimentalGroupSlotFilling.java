@@ -51,8 +51,8 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
@@ -717,12 +717,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //		});
 
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasInjuryModel");
 			return a;
 		});
 
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasOrganismModel");
 			return a;
 		});
 
@@ -734,7 +734,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		if (groupNameMode == EExtractGroupNamesMode.EMPTY) {
 			goldModificationRules.add(a -> {
-				a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName).clear();
+				a.asInstanceOfEntityTemplate().clearSlot(SCIOSlotTypes.hasGroupName);
 				return a;
 			});
 		}
@@ -766,25 +766,25 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			}
 
-			treatments.clear();
+			a.asInstanceOfEntityTemplate().clearSlot(SCIOSlotTypes.hasTreatmentType);
 
 			for (AbstractAnnotation slotFiller : newTreatments) {
-				treatments.add(slotFiller);
+				a.asInstanceOfEntityTemplate().addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, slotFiller);
 			}
 
 			return a;
 		});
 
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasNNumber").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasNNumber");
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasTotalPopulationSize").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasTotalPopulationSize");
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasGroupNumber").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasGroupNumber");
 			return a;
 		});
 		goldModificationRules.add(a -> {
@@ -1259,15 +1259,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			/*
 			 * OrganismModel
 			 */
-			List<AbstractAnnotation> goldOrganismModel = Arrays
-					.asList(goldAnnotations.get(goldIndex).getSingleFillerSlot("hasOrganismModel").getSlotFiller())
+			List<AbstractAnnotation> goldOrganismModel = Arrays.asList(
+					goldAnnotations.get(goldIndex).getSingleFillerSlotOfName("hasOrganismModel").getSlotFiller())
 					.stream().filter(a -> a != null).collect(Collectors.toList());
 			List<AbstractAnnotation> predictOrganismModel;
 
 			if (predictedAnnotations.size() > predictIndex)
-				predictOrganismModel = Arrays.asList(
-						predictedAnnotations.get(predictIndex).getSingleFillerSlot("hasOrganismModel").getSlotFiller())
-						.stream().filter(a -> a != null).collect(Collectors.toList());
+				predictOrganismModel = Arrays.asList(predictedAnnotations.get(predictIndex)
+						.getSingleFillerSlotOfName("hasOrganismModel").getSlotFiller()).stream().filter(a -> a != null)
+						.collect(Collectors.toList());
 			else
 				predictOrganismModel = Collections.emptyList();
 
@@ -1277,14 +1277,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * InjuryModel
 			 */
 			List<AbstractAnnotation> goldInjuryModel = Arrays
-					.asList(goldAnnotations.get(goldIndex).getSingleFillerSlot("hasInjuryModel").getSlotFiller())
+					.asList(goldAnnotations.get(goldIndex).getSingleFillerSlotOfName("hasInjuryModel").getSlotFiller())
 					.stream().filter(a -> a != null).collect(Collectors.toList());
 			List<AbstractAnnotation> predictInjuryModel;
 
 			if (predictedAnnotations.size() > predictIndex)
-				predictInjuryModel = Arrays.asList(
-						predictedAnnotations.get(predictIndex).getSingleFillerSlot("hasInjuryModel").getSlotFiller())
-						.stream().filter(a -> a != null).collect(Collectors.toList());
+				predictInjuryModel = Arrays.asList(predictedAnnotations.get(predictIndex)
+						.getSingleFillerSlotOfName("hasInjuryModel").getSlotFiller()).stream().filter(a -> a != null)
+						.collect(Collectors.toList());
 			else
 				predictInjuryModel = Collections.emptyList();
 

@@ -16,8 +16,8 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.slots.MultiFillerSlot;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -51,7 +51,7 @@ public class PairwiseComparedGroupsRollOutToRDF {
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
-		
+
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
@@ -158,13 +158,13 @@ public class PairwiseComparedGroupsRollOutToRDF {
 
 						AbstractAnnotation deepCopyOfResult = resultAnnotation.deepCopy();
 
-						MultiFillerSlot mfs = deepCopyOfResult.asInstanceOfEntityTemplate()
-								.getMultiFillerSlot(SlotType.get("hasPairwisedCompareGroups"));
-
-						for (AbstractAnnotation slotFiller : resultAnnotation.asInstanceOfEntityTemplate()
-								.getMultiFillerSlot(SlotType.get("hasPairwisedCompareGroups")).getSlotFiller()) {
-							mfs.removeSlotFiller(slotFiller);
-						}
+						deepCopyOfResult.asInstanceOfEntityTemplate().clearSlot(SlotType.get("hasPairwisedCompareGroups"));
+						
+//						for (AbstractAnnotation slotFiller : resultAnnotation.asInstanceOfEntityTemplate()
+//								.getMultiFillerSlot(SlotType.get("hasPairwisedCompareGroups")).getSlotFiller()) {
+//							deepCopyOfResult.asInstanceOfEntityTemplate()
+//									.removeMultiFillerSlotFiller(SlotType.get("hasPairwisedCompareGroups"), slotFiller);
+//						}
 
 						deepCopyOfResult.asInstanceOfEntityTemplate()
 								.setSingleSlotFiller(SlotType.get("hasTargetGroup"), expGroup1);

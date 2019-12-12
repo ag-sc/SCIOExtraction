@@ -1,6 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr;
 
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 
 public class SCIOSlotTypes {
 

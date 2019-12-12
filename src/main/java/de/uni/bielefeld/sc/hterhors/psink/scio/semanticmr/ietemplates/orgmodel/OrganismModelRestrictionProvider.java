@@ -6,7 +6,7 @@ import java.util.List;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.slots.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 
 public class OrganismModelRestrictionProvider {
@@ -53,7 +53,7 @@ public class OrganismModelRestrictionProvider {
 				newGold.setSingleSlotFiller(speciesSlot,
 						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(speciesSlot).getSlotFiller());
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 
 				return newGold;
@@ -78,7 +78,7 @@ public class OrganismModelRestrictionProvider {
 				newGold.setSingleSlotFiller(genderSlot,
 						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(genderSlot).getSlotFiller());
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 				return newGold;
 			}
@@ -104,7 +104,7 @@ public class OrganismModelRestrictionProvider {
 				newGold.setSingleSlotFiller(weightSlot,
 						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(weightSlot).getSlotFiller());
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 				return newGold;
 			}
@@ -132,7 +132,7 @@ public class OrganismModelRestrictionProvider {
 				newGold.setSingleSlotFiller(ageCategorySlot, goldAnnotation.asInstanceOfEntityTemplate()
 						.getSingleFillerSlot(ageCategorySlot).getSlotFiller());
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 				return newGold;
 			}
@@ -162,7 +162,7 @@ public class OrganismModelRestrictionProvider {
 				newGold.setSingleSlotFiller(ageSlot,
 						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(ageSlot).getSlotFiller());
 
-				if (newGold.asInstanceOfEntityTemplate().getAllSlotFillerValues().isEmpty())
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
 					return null;
 				return newGold;
 			}

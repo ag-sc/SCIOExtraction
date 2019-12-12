@@ -3,7 +3,9 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -13,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
@@ -108,14 +110,26 @@ public class OrgModelSlotFilling {
 		resultsOut.println(header);
 
 		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
-			OrgModelSlotFilling.rule = rule;
+			OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
 
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-					.setTrainingProportion(80).setDevelopmentProportion(20)
-					.setCorpusSizeFraction(1F).build();
+//			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
+//					.setTrainingProportion(80).setDevelopmentProportion(20)
+//					.setCorpusSizeFraction(1F).build();
+
+			List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
+
+			Collections.shuffle(docs, new Random(1000L));
+
+			int percent = (int)((((double)docs.size()) / 100D) * 80D);
+			System.out.println(percent);
+			List<String> tn = docs.subList(0, percent);
+			List<String> dn = docs.subList(percent, docs.size());
+
+			AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
+					.setTrainingInstanceNames(tn).setDevelopInstanceNames(dn).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getRule(rule));
@@ -162,6 +176,7 @@ public class OrgModelSlotFilling {
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
 			 */
+			break;
 		}
 		resultsOut.flush();
 		resultsOut.close();

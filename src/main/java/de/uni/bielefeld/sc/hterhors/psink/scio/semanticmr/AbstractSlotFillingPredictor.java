@@ -160,6 +160,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			}
 			candidateRetrieval.registerCandidateProvider(ap);
 		}
+	
+		for (Instance instance : developmentInstances) {
+			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+			
+			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
+					trainDictionary)) {
+				ap.addSlotFiller(annotation);
+			}
+			candidateRetrieval.registerCandidateProvider(ap);
+		}
+		
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
 		 * changes during the exploration. This explorer is especially designed for slot

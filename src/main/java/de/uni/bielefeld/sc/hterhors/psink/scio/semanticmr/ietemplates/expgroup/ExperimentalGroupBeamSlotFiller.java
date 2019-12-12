@@ -404,27 +404,27 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasInjuryModel").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasInjuryModel");
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasOrganismModel");
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).clear();
+			a.asInstanceOfEntityTemplate().clearSlot(SCIOSlotTypes.hasTreatmentType);
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasNNumber").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasNNumber");
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasTotalPopulationSize").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasTotalPopulationSize");
 			return a;
 		});
 		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasGroupNumber").clear();
+			a.asInstanceOfEntityTemplate().clearSlotOfName("hasGroupNumber");
 			return a;
 		});
 		goldModificationRules.add(a -> {

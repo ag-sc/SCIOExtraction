@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
@@ -37,8 +38,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormaliz
 public class PlayGround {
 
 	public static void main(String[] args) throws Exception {
-		PlayGround pg = new PlayGround(
-				new File("src/main/resources/slotfilling/corpus_docs.csv"));
+		PlayGround pg = new PlayGround(new File("src/main/resources/slotfilling/corpus_docs.csv"));
 //		pg.DIRECT_METNION();
 		pg.APPLY_PATTERN();
 //		pg.PRINT_PATTERN();
@@ -96,25 +96,25 @@ public class PlayGround {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		instanceProvider.getRedistributedTrainingInstances().stream().forEach(i -> {
-			countExpGroups.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
-					.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
-									.containsSlotFiller()
-							|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
-									.containsSlotFiller()))
-					.count()));
+			countExpGroups.put(i.getName(),
+					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
+							.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
+									.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller()
+									|| b.asInstanceOfEntityTemplate()
+											.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller()
+									|| b.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
+											.containsSlotFiller()))
+							.count()));
 
 			countInjuries.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 					.filter(zzz -> zzz != null).map(b -> b.asInstanceOfEntityTemplate()
 							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller())
 					.filter(zzz -> zzz != null).distinct().count()));
 
-			countOrganismModels.put(i.getName(),
-					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream().filter(zzz -> zzz != null)
-							.map(b -> b.asInstanceOfEntityTemplate()
-									.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller())
-							.filter(zzz -> zzz != null).distinct().count()));
+			countOrganismModels.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
+					.filter(zzz -> zzz != null).map(b -> b.asInstanceOfEntityTemplate()
+							.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller())
+					.filter(zzz -> zzz != null).distinct().count()));
 
 			countTreatments.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream().filter(zzz -> zzz != null)
@@ -193,7 +193,8 @@ public class PlayGround {
 					System.out.println();
 					sentences.add(expRoot.getSentenceOfAnnotation());
 				}
-				Set<AbstractAnnotation> groupNames = expGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller();
+				Set<AbstractAnnotation> groupNames = expGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+						.getSlotFiller();
 				System.out.println("GroupNames:");
 				groupNames.stream().map(g -> "GroupName: " + g.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm())
 						.forEach(System.out::println);
@@ -205,8 +206,9 @@ public class PlayGround {
 				for (AbstractAnnotation treatment : treatments) {
 					AbstractAnnotation treatRoot;
 					if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
-						treatRoot = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
+						treatRoot = treatment.asInstanceOfEntityTemplate()
+								.getSingleFillerSlot(SCIOSlotTypes.hasCompound).getSlotFiller()
+								.asInstanceOfEntityTemplate().getRootAnnotation();
 					} else {
 						treatRoot = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
 					}
@@ -615,9 +617,11 @@ public class PlayGround {
 //			exp.forEach(a -> System.out.println(a + "\tExp Root"));
 
 		Set<Integer> model = instance.getGoldAnnotations().getAnnotations().stream().filter(a -> a != null)
-				.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlot("hasOrganismModel"))
+				.map(a -> a.asInstanceOfEntityTemplate().getSingleFillerSlotOfName("hasOrganismModel"))
 				.filter(a -> a != null && a.containsSlotFiller())
-				.flatMap(a -> a.getSlotFiller().asInstanceOfEntityTemplate().getAllSlotFillerValues().stream())
+				.flatMap(a -> Stream.concat(
+						a.getSlotFiller().asInstanceOfEntityTemplate().streamSingleFillerSlotValues(),
+						a.getSlotFiller().asInstanceOfEntityTemplate().flatStreamMultiFillerSlotValues()))
 				.filter(a -> a.isInstanceOfDocumentLinkedAnnotation())
 				.map(a -> a.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex() + 1)
 				.collect(Collectors.toSet());
@@ -685,9 +689,9 @@ public class PlayGround {
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
-			List<DocumentLinkedAnnotation> annotations = instance
-					.getGoldAnnotations().getAnnotations().stream().flatMap(e -> e.asInstanceOfEntityTemplate()
-							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller().stream())
+			List<DocumentLinkedAnnotation> annotations = instance.getGoldAnnotations().getAnnotations().stream()
+					.flatMap(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+							.getSlotFiller().stream())
 					.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList());
 			annotations.addAll(instance.getGoldAnnotations().getAnnotations().stream()
 					.map(e -> e.asInstanceOfEntityTemplate().getRootAnnotation())
