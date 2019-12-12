@@ -19,6 +19,7 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.slots.SlotType;
 import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithOutDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.DataTypeClass;
@@ -60,20 +61,11 @@ public class OWL2GraphmlConverter {
 
 	}
 
-	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
-	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
-	private static final File structuresFile = new File(
-			"src/main/resources/slotfilling/result/specifications/structures.csv");
-	private static final File hierarchiesFile = new File(
-			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
-	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchiesFile, slots,
-			structuresFile);
-
 	public OWL2GraphmlConverter() throws IOException, Exception {
 
 		List<IGraphMLContent> listOfUnGroupedContent = new ArrayList<>();
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
+		SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
 
 		/*
 		 * vis_group,ClassNames
@@ -113,9 +105,10 @@ public class OWL2GraphmlConverter {
 
 		Set<Triple> objectTypeProperties = new HashSet<>();
 
-		List<String[]> structures = structuresFile == null ? Collections.emptyList()
-				: Files.readAllLines(structuresFile.toPath()).stream().filter(l -> !l.startsWith("#"))
-						.filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t")).collect(Collectors.toList());
+		List<String[]> structures = ResultSpecifications.structures == null ? Collections.emptyList()
+				: Files.readAllLines(ResultSpecifications.structures.toPath()).stream()
+						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
+						.collect(Collectors.toList());
 
 		for (String[] d : structures) {
 
@@ -173,8 +166,8 @@ public class OWL2GraphmlConverter {
 
 		}
 
-		List<String[]> hierarchies = hierarchiesFile == null ? Collections.emptyList()
-				: Files.readAllLines(hierarchiesFile.toPath()).stream().filter(l -> !l.startsWith("#"))
+		List<String[]> hierarchies = ResultSpecifications.hierarchies == null ? Collections.emptyList()
+				: Files.readAllLines(ResultSpecifications.hierarchies.toPath()).stream().filter(l -> !l.startsWith("#"))
 						.filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t")).collect(Collectors.toList());
 
 		for (String[] d : hierarchies) {

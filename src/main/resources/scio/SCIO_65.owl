@@ -149,7 +149,7 @@
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasThermalHyperalgesiaParameter">
         <rdfs:domain rdf:resource="http://psink.de/scio/ThermalHyperalgesiaTest"/>
-        <rdfs:range rdf:resource="http://psink.de/scio/TemporalParameter"/>
+        <rdfs:range rdf:resource="http://psink.de/scio/ThermalHyperalgesiaParameter"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has thermal hyperalgesia parameter</rdfs:label>
     </owl:ObjectProperty>
 
@@ -165,7 +165,7 @@
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasHindpawSensationParameter">
         <rdfs:domain rdf:resource="http://psink.de/scio/HindpawSensationTest"/>
-        <rdfs:range rdf:resource="http://psink.de/scio/TemporalParameter"/>
+        <rdfs:range rdf:resource="http://psink.de/scio/HindpawSensationParameter"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has hindpaw sensation parameter </rdfs:label>
     </owl:ObjectProperty>
 
@@ -470,7 +470,7 @@ Some treatment paradigms consist of multiple injections at different depths in t
                     <rdf:Description rdf:about="http://psink.de/scio/InclinedPlaneTest"/>
                     <rdf:Description rdf:about="http://psink.de/scio/LateralHemisection"/>
                     <rdf:Description rdf:about="http://psink.de/scio/Treatment"/>
-                    <rdf:Description rdf:about="http://psink.de/scio/NonfunctionalTest"/>
+                    <rdf:Description rdf:about="http://psink.de/scio/NonFunctionalTest"/>
                     <rdf:Description rdf:about="http://psink.de/scio/ElectrophysiologyTest"/>
                 </owl:unionOf>
             </owl:Class>
@@ -734,7 +734,7 @@ Some treatment paradigms consist of multiple injections at different locations i
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasInjuryModel">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://psink.de/scio/ExperimentalGroup"/>
+        <rdfs:domain rdf:resource="http://psink.de/scio/DefinedExperimentalGroup"/>
         <rdfs:range rdf:resource="http://psink.de/scio/Injury"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has injury model</rdfs:label>
     </owl:ObjectProperty>
@@ -743,7 +743,7 @@ Some treatment paradigms consist of multiple injections at different locations i
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasShamOperation">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://psink.de/scio/ExperimentalGroup"/>
+        <rdfs:domain rdf:resource="http://psink.de/scio/DefinedExperimentalGroup"/>
         <rdfs:range rdf:resource="http://psink.de/scio/ShamOperation"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has sham operation</rdfs:label>
     </owl:ObjectProperty>
@@ -824,17 +824,37 @@ function throughout the survival period.&quot;</example>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has chemical compound</rdfs:label>
     </owl:ObjectProperty>
 
+    <!-- http://psink.de/scio/hasLocations -->
+
+    <owl:ObjectProperty rdf:about="http://psink.de/scio/hasLocations">
+            <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://psink.de/scio/DeliveryMethod"/>
+                    <rdf:Description rdf:about="http://psink.de/scio/NonFunctionalTest"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://psink.de/scio/Location"/>
+        <example rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lesion areas from sections containing the central canal were outlined using Image Pro software and lesion size calculated for statistical analysis.</example>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Property of the investigation method type &quot;non-functional&quot; test. This points at the anatomical location of the tissue investigated in the test, e.g. if a histological method is applied.
+
+Multiple anatomical locations can be used for investigation and pooled in the outcome  measure of an experiment, e.g. if tissue from thoracic level 3, 4 and 5 are used for axon quantification.</rdfs:comment>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has location</rdfs:label>
+    </owl:ObjectProperty>
+    
     <!-- http://psink.de/scio/hasLocation -->
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasLocation">
-        <rdfs:domain>
+            <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+            <rdfs:domain>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
                     <rdf:Description rdf:about="http://psink.de/scio/Treatment"/>
-                    <rdf:Description rdf:about="http://psink.de/scio/DeliveryMethod"/>
-                    <rdf:Description rdf:about="http://psink.de/scio/NonFunctionalTest"/>
                     <rdf:Description rdf:about="http://psink.de/scio/ElectrophysiologyTest"/>
+                    <rdf:Description rdf:about="http://psink.de/scio/InfectionExamination"/>
                     <rdf:Description rdf:about="http://psink.de/scio/ImagingTest"/>
+                    <rdf:Description rdf:about="http://psink.de/scio/SelfMutilationObservation"/>
                     <rdf:Description rdf:about="http://psink.de/scio/SpasticityObservation"/>
                 </owl:unionOf>
             </owl:Class>
@@ -978,7 +998,7 @@ Multiple anatomical locations can be used for investigation and pooled in the ou
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasOrganismModel">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://psink.de/scio/ExperimentalGroup"/>
+        <rdfs:domain rdf:resource="http://psink.de/scio/DefinedExperimentalGroup"/>
         <rdfs:range rdf:resource="http://psink.de/scio/OrganismModel"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has organism model</rdfs:label>
     </owl:ObjectProperty>
@@ -1032,7 +1052,7 @@ Multiple anatomical locations can be used for investigation and pooled in the ou
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <rdfs:domain rdf:resource="http://psink.de/scio/Result"/>
-        <rdfs:range rdf:resource="http://psink.de/scio/ExperimentalGroup"/>
+        <rdfs:range rdf:resource="http://psink.de/scio/DefinedExperimentalGroup"/>
         <example rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The locomotor recovery for the 5-infusion group was significantly greater than for the SALINE GROUP ( p&lt;0.0001) and the 2-INFUSION GROUP ( p&lt;0.0056).</example>
         <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A result is obtained from the comparison of two groups, usually the treated and the control group. The reference setup represents the group, which is used for comparison to a target group of interest.</rdfs:description>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has reference group</rdfs:label>
@@ -1134,7 +1154,7 @@ Multiple anatomical locations can be used for investigation and pooled in the ou
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasTargetGroup">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://psink.de/scio/Result"/>
-        <rdfs:range rdf:resource="http://psink.de/scio/ExperimentalGroup"/>
+        <rdfs:range rdf:resource="http://psink.de/scio/DefinedExperimentalGroup"/>
         <example rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The locomotor recovery for the 5-INFUSION GROUP was significantly greater than for the saline group ( p&lt;0.0001) and the 2-infusion group ( p&lt;0.0056).</example>
         <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A result is obtained from the comparison of two groups, usually the treated and the control group. The target setup represents the focus group, which is compared to a reference group.</rdfs:description>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has target group</rdfs:label>
@@ -1183,7 +1203,7 @@ solution in room temperature (20 °C).&quot;</example>
 
     <owl:ObjectProperty rdf:about="http://psink.de/scio/hasTreatmentType">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
-        <rdfs:domain rdf:resource="http://psink.de/scio/ExperimentalGroup"/>
+        <rdfs:domain rdf:resource="http://psink.de/scio/DefinedExperimentalGroup"/>
         <rdfs:range rdf:resource="http://psink.de/scio/Treatment"/>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has treatment type</rdfs:label>
     </owl:ObjectProperty>
@@ -5931,14 +5951,6 @@ Jove DOI: 10.3791/51827</rdfs:videoReference>
     <owl:Class rdf:about="http://psink.de/scio/Treatment">
         <rdfs:subClassOf rdf:resource="http://psink.de/scio/Event"/>
  
-	<rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://psink.de/scio/hasLocation"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="http://psink.de/scio/Location"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-
         <visualizationContainer>Treatment_Group</visualizationContainer>
         <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Treatment is the therapeutic intervention for spinal cord injury which is applied to a subject in a study.</rdfs:description>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">treatment</rdfs:label>
@@ -7373,34 +7385,58 @@ using a modiﬁcation of a previously published protocol (Klapka et al.,
     </owl:NamedIndividual>
 
 
-  <!-- http://psink.de/scio/TemporalParameter -->
-
-    <owl:Class rdf:about="http://psink.de/scio/TemporalParameter">
-        <rdfs:subClassOf rdf:resource="http://psink.de/scio/ElectrophysiologyParameter"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">temporal parameter</rdfs:label>
-    </owl:Class>
-
-  <!-- http://psink.de/scio/TemporalParameter -->
+  <!-- http://psink.de/scio/ObservedParameter -->
 
     <owl:Class rdf:about="http://psink.de/scio/ObservedParameter">
         <visualizationContainer>Observation_Group</visualizationContainer>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">observed parameter</rdfs:label>
     </owl:Class>
 
+  <!-- http://psink.de/scio/HindpawSensationParameter -->
 
-  <!-- http://psink.de/scio/Latency -->
+    <owl:Class rdf:about="http://psink.de/scio/HindpawSensationParameter">
+        <rdfs:subClassOf rdf:resource="http://psink.de/scio/ObservedParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hindpaw sensation parameter</rdfs:label>
+    </owl:Class>
 
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/Latency">
-        <rdf:type rdf:resource="http://psink.de/scio/TemporalParameter"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">latency</rdfs:label>
+
+  <!-- http://psink.de/scio/HindpawSensationLatency -->
+
+    <owl:NamedIndividual rdf:about="http://psink.de/scio/HindpawSensationLatency">
+        <rdf:type rdf:resource="http://psink.de/scio/HindpawSensationParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hindpaw sensation lLatency</rdfs:label>
     </owl:NamedIndividual>
 
-  <!-- http://psink.de/scio/Threshold -->
+  <!-- http://psink.de/scio/HindpawSensationThreshold -->
 
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/Threshold">
-        <rdf:type rdf:resource="http://psink.de/scio/TemporalParameter"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">threshold</rdfs:label>
+    <owl:NamedIndividual rdf:about="http://psink.de/scio/HindpawSensationThreshold">
+        <rdf:type rdf:resource="http://psink.de/scio/HindpawSensationParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hindpaw sensation threshold</rdfs:label>
     </owl:NamedIndividual>
+
+<!-- http://psink.de/scio/ThermalHyperalgesiaParameter -->
+
+    <owl:Class rdf:about="http://psink.de/scio/ThermalHyperalgesiaParameter">
+        <rdfs:subClassOf rdf:resource="http://psink.de/scio/ObservedParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">adhesive removal parameter</rdfs:label>
+    </owl:Class>
+
+
+  <!-- http://psink.de/scio/ThermalWithdrawalLatency -->
+
+    <owl:NamedIndividual rdf:about="http://psink.de/scio/ThermalWithdrawalLatency">
+        <rdf:type rdf:resource="http://psink.de/scio/ThermalHyperalgesiaParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thermal withdrawal latency</rdfs:label>
+    </owl:NamedIndividual>
+
+  <!-- http://psink.de/scio/ThermalWithdrawalThreshold -->
+
+    <owl:NamedIndividual rdf:about="http://psink.de/scio/ThermalWithdrawalThreshold">
+        <rdf:type rdf:resource="http://psink.de/scio/ThermalHyperalgesiaParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thermal withdrawal tThreshold</rdfs:label>
+    </owl:NamedIndividual>
+
+
 
 
 
@@ -7427,6 +7463,22 @@ using a modiﬁcation of a previously published protocol (Klapka et al.,
     </owl:NamedIndividual>
 
 
+
+
+
+<!-- http://psink.de/scio/ElectrophysiologicalThreshold -->
+
+    <owl:NamedIndividual rdf:about="http://psink.de/scio/ElectrophysiologicalThreshold">
+        <rdf:type rdf:resource="http://psink.de/scio/ElectrophysiologyParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">electrophysiological threshold</rdfs:label>
+    </owl:NamedIndividual>
+
+  <!-- http://psink.de/scio/ElectrophysiologicalLatency -->
+
+    <owl:NamedIndividual rdf:about="http://psink.de/scio/ElectrophysiologicalLatency">
+        <rdf:type rdf:resource="http://psink.de/scio/ElectrophysiologyParameter"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">electrophysiological latency</rdfs:label>
+    </owl:NamedIndividual>
 
   <!-- http://psink.de/scio/ElectrophysiologicalAmplitude -->
 
@@ -8159,7 +8211,7 @@ Jove DOI:10.3791/53161</rdfs:videoReference>
         <rdf:type rdf:resource="http://psink.de/scio/InVitroExperimentalProcedure"/>
         <descriptionSource>http://purl.bioontology.org/ontology/CSP/1254-8955</descriptionSource>
          <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nuclear transfection is a technique of transferring DNA into somatic cells or germ lines of experimental animals so that the cells or progeny may express the integrated donor gene.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">nuclear transfection</rdfs:label>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">transfection</rdfs:label>
         <skos:closeMatch>http://purl.obolibrary.org/obo/OBI_0001152</skos:closeMatch>
     </owl:NamedIndividual>
     
