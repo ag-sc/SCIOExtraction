@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,10 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
 
@@ -106,7 +110,9 @@ public class VertebralAreaFilling {
 
 		predictor.trainOrLoadModel();
 
-		Score score = predictor.evaluateOnDevelopment();
+		Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
+
+		Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
 		resultsOut.println(toResults(rule, score));
 		/**

@@ -1335,14 +1335,7 @@ solution in room temperature (20 °C).&quot;</example>
     
 
 
-    <!-- http://psink.de/scio/testsFor -->
 
-    <owl:ObjectProperty rdf:about="http://psink.de/scio/testsFor">
-        <rdfs:domain rdf:resource="http://psink.de/scio/FunctionalTest"/>
-        <rdfs:range rdf:resource="http://psink.de/scio/Function"/>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tests for</rdfs:label>
-    </owl:ObjectProperty>
-    
 
 
     <!-- 
@@ -1550,6 +1543,7 @@ Continuous frequency distribution of infinite range. Its properties are as follo
     <!-- http://psink.de/scio/RehabMedication -->
 
     <owl:Class rdf:about="http://psink.de/scio/RehabMedication">
+            <visualizationContainer>Treatment_Group</visualizationContainer>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rehab mdeication</rdfs:label>
     </owl:Class>
 
@@ -3130,15 +3124,7 @@ Jove DOI: 10.3791/2610</rdfs:videoReference>
     
 
 
-    <!-- http://psink.de/scio/Function -->
-
-    <owl:Class rdf:about="http://psink.de/scio/Function">
-        <visualizationContainer>Investigation_Method_Group</visualizationContainer>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Function is the physiological or motor cabability which inheres in an organism and is investigated in an experimental study.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">function</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNMI/F-00000</skos:closeMatch>
-    </owl:Class>
-    
+  
 
 
     <!-- http://psink.de/scio/FunctionalTest -->
@@ -4055,16 +4041,6 @@ Jove DOI: 10.3791/1204</rdfs:videoReference>
     
 
 
-    <!-- http://psink.de/scio/LocomotorFunction -->
-
-    <owl:Class rdf:about="http://psink.de/scio/LocomotorFunction">
-        <rdfs:subClassOf rdf:resource="http://psink.de/scio/Function"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Locomotor Function is the bodies&apos; capability to execute task which demand rhythm or gait control or coupling of multiple muscle groups involved in movement.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">locomotor function</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://ontology.neuinfo.org/NIF/Function/NIF-Function.owl#birnlex_1817</skos:closeMatch>
-    </owl:Class>
-    
-
 
     <!-- http://psink.de/scio/LocomotorTest -->
 
@@ -4364,15 +4340,6 @@ A suborder of primates consisting of six families.</rdfs:description>
     
 
 
-    <!-- http://psink.de/scio/MotorFunction -->
-
-    <owl:Class rdf:about="http://psink.de/scio/MotorFunction">
-        <rdfs:subClassOf rdf:resource="http://psink.de/scio/Function"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Motor Function is the ability of to control and move muscles in order to achieve a desired motion.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">motor function</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNOMEDCT/52479005</skos:closeMatch>
-    </owl:Class>
-    
 
 
     <!-- http://psink.de/scio/MotorReflexTest -->
@@ -5385,15 +5352,7 @@ Jove DOI: 10.3791/51843</rdfs:videoReference>
     
 
 
-    <!-- http://psink.de/scio/SensoryFunction -->
-
-    <owl:Class rdf:about="http://psink.de/scio/SensoryFunction">
-        <rdfs:subClassOf rdf:resource="http://psink.de/scio/Function"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sensory Function or Sensory System Function is the extent to which an individual correctly senses skin stimulation, sounds, proprioception, taste and smell, and visual images.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sensory function</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNOMEDCT/106148006</skos:closeMatch>
-    </owl:Class>
-    
+  
 
 
     <!-- http://psink.de/scio/SensoryTest -->
@@ -6455,16 +6414,6 @@ DOI: 10.1055/s-0032-1315779</rdfs:introduced>
     
 
 
-    <!-- http://psink.de/scio/Allodynia -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/Allodynia">
-        <rdf:type rdf:resource="http://psink.de/scio/SensoryFunction"/>
-        <descriptionSource rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.obolibrary.org/obo/SYMP_0000840</descriptionSource>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Allodynia is a pain where there is a painful sensation with a normal, non painful stimulation.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">allodynia</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.bioontology.org/ontology/SNOMEDCT/247404004</skos:closeMatch>
-    </owl:NamedIndividual>
-    
 
 
     <!-- http://psink.de/scio/Allogeneic -->
@@ -6501,16 +6450,6 @@ DOI: 10.1055/s-0032-1315779</rdfs:introduced>
     
 
 
-    <!-- http://psink.de/scio/BalanceAbility -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/BalanceAbility">
-        <rdf:type rdf:resource="http://psink.de/scio/MotorFunction"/>
-        <descriptionSource rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.obolibrary.org/obo/PATO_0000185</descriptionSource>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Balance Ability is the behavioral quality inhering in a bearer by virtue of having physical steadiness.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">balance ability</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.obolibrary.org/obo/PATO_0000185</skos:closeMatch>
-    </owl:NamedIndividual>
-    
 
 
     <!-- http://psink.de/scio/BladderExpression -->
@@ -6913,17 +6852,6 @@ completely removed, forming about 2 mm transection gap.</example>
     
 
 
-    <!-- http://psink.de/scio/Dexterity -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/Dexterity">
-        <rdf:type rdf:resource="http://psink.de/scio/MotorFunction"/>
-        <descriptionSource rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://scdontology.h3abionet.org/ontology/SCDO_0000365</descriptionSource>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dexterity is skill in performing tasks, especially with the hands.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dexterity</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.obolibrary.org/obo/NBO_0000349</skos:closeMatch>
-    </owl:NamedIndividual>
-    
-
 
     <!-- http://psink.de/scio/DigiGait -->
 
@@ -7091,16 +7019,6 @@ using a modiﬁcation of a previously published protocol (Klapka et al.,
     
 
 
-    <!-- http://psink.de/scio/FineMotorControlAbility -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/FineMotorControlAbility">
-        <rdf:type rdf:resource="http://psink.de/scio/MotorFunction"/>
-        <descriptionSource rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.obolibrary.org/obo/TRAK_0000769</descriptionSource>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fine Motor Function is the ability to coordinate of small muscle movements which occur in body parts such as the fingers, usually in coordination with the eyes.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fine motor control ability</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNOMEDCT/284179005</skos:closeMatch>
-    </owl:NamedIndividual>
-    
 
 
     <!-- http://psink.de/scio/FischerRat -->
@@ -7647,26 +7565,6 @@ using a modiﬁcation of a previously published protocol (Klapka et al.,
     
 
 
-    <!-- http://psink.de/scio/ForelimbHindlimbCouplingAbility -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/ForelimbHindlimbCouplingAbility">
-        <rdf:type rdf:resource="http://psink.de/scio/LocomotorFunction"/>
-        <clinicalTerm rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</clinicalTerm>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Forelimb Hindlimb Coupling Ability is a feature of quadrupedal movement. It is also called diagonal limb coupling or coordination.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">forelimb hindlimb coupling ability</rdfs:label>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://psink.de/scio/GaitControlAbility -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/GaitControlAbility">
-        <rdf:type rdf:resource="http://psink.de/scio/LocomotorFunction"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gait Control Ability is the general function to execute walking behavioiur on purpose.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gait control ability</rdfs:label>
-        <rdfs:seeAlso rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.bioontology.org/ontology/SNOMEDCT/63448001</rdfs:seeAlso>
-    </owl:NamedIndividual>
-
 
         <!-- http://psink.de/scio/Fibroblast -->
 
@@ -7743,17 +7641,6 @@ PMID 15507795</rdfs:introduced>
     
 
 
-    <!-- http://psink.de/scio/HeatSensation -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/HeatSensation">
-        <rdf:type rdf:resource="http://psink.de/scio/SensoryFunction"/>
-        <descriptionSource rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://ontology.neuinfo.org/NIF/Function/NIF-Function.owl#birnlex_15014</descriptionSource>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Heat Sensation is the ability to detect high temperatures with recepors in the skin. It comprises the series of events in which a sensory heat stimulus is converted into a percieved senstation.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">heat sensation</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNOMEDCT/397628006</skos:closeMatch>
-    </owl:NamedIndividual>
-    
-
 
     <!-- http://psink.de/scio/Higher -->
 
@@ -7790,16 +7677,6 @@ PMID 15507795</rdfs:introduced>
     
 
 
-    <!-- http://psink.de/scio/Hyperalgesia -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/Hyperalgesia">
-        <rdf:type rdf:resource="http://psink.de/scio/SensoryFunction"/>
-        <descriptionSource rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://purl.bioontology.org/ontology/MESH/D006930</descriptionSource>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hyperalgesia is an increased sensation of pain or discomfort produced by mimimally noxious stimuli due to damage to soft tissue containing nociceptors or injury to a peripheral nerve.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hyperalgesia</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNOMEDCT/55406008</skos:closeMatch>
-    </owl:NamedIndividual>
-    
 
 
     <!-- http://psink.de/scio/HypothermiaBlanket -->
@@ -8284,15 +8161,6 @@ Jove DOI:10.3791/53161</rdfs:videoReference>
     </owl:NamedIndividual>
     
 
-
-    <!-- http://psink.de/scio/PhysiologicalFunction -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/PhysiologicalFunction">
-        <rdf:type rdf:resource="http://psink.de/scio/Function"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Physiologcal Function is an inherent ability or capability of the body which is extecuted or maintained without or only minimal conscious control.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">physiological function</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/MESH/D010829</skos:closeMatch>
-    </owl:NamedIndividual>
     
 
 
@@ -8373,14 +8241,6 @@ Jove DOI:10.3791/53161</rdfs:videoReference>
     
 
 
-    <!-- http://psink.de/scio/RegularWalkingPatternMaintaining -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/RegularWalkingPatternMaintaining">
-        <rdf:type rdf:resource="http://psink.de/scio/LocomotorFunction"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Regular Walking Pattern Maintaining is the ability to walk in a regular pattern without interruption. Especially for quadrupedal walking this is a measure for intact locomotion and interlimb coupling.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">regular walking pattern maintaining</rdfs:label>
-    </owl:NamedIndividual>
-    
 
 
     <!-- http://psink.de/scio/Retransection -->
@@ -8851,17 +8711,6 @@ with iridectomy scissors and a sharp, pointed blade (Fig 3C).</example>
         <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thoracic is the anatomical region comprising one or more of 12 (in some animals 13) vertebrae in the vertebral column. The thoracic vertebrae are situated between the seventh cervical vertebra down to the first lumbar vertebra.</rdfs:description>
         <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thoracic</rdfs:label>
         <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C12798</skos:closeMatch>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://psink.de/scio/TouchSensation -->
-
-    <owl:NamedIndividual rdf:about="http://psink.de/scio/TouchSensation">
-        <rdf:type rdf:resource="http://psink.de/scio/SensoryFunction"/>
-        <rdfs:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Touch Sensation is the ability to sense skin contact via receptors in the skin.</rdfs:description>
-        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">touch sensation</rdfs:label>
-        <skos:closeMatch rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">http://purl.bioontology.org/ontology/SNMI/F-A2010</skos:closeMatch>
     </owl:NamedIndividual>
     
 

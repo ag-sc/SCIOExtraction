@@ -22,7 +22,7 @@ public class InjuryNERLAnnotator {
 	public static void main(String[] args) {
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(
-				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScopeReader).build(),
+				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build(),
 				new InjuryPattern());
 
 		File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");

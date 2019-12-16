@@ -11,7 +11,7 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 public class InjuryRestrictionProvider {
 
 	public enum EInjuryModificationRules {
-		ROOT, ROOT_LOCATION, ROOT_LOCATION_DEVICE, ROOT_LOCATION_DEVICE_ANAESTHESIA;
+		ROOT, ROOT_DEVICE,ROOT_LOCATION, ROOT_LOCATION_DEVICE, ROOT_LOCATION_DEVICE_ANAESTHESIA;
 
 	}
 
@@ -26,8 +26,10 @@ public class InjuryRestrictionProvider {
 			return getRoot();
 		case ROOT_LOCATION:
 			return getPlusLocation();
-		case ROOT_LOCATION_DEVICE:
+		case ROOT_DEVICE:
 			return getPlusDevice();
+		case ROOT_LOCATION_DEVICE:
+			return getPlusLocationDevice();
 		case ROOT_LOCATION_DEVICE_ANAESTHESIA:
 			return getPlusAnaesthesia();
 		}
@@ -83,6 +85,32 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusDevice() {
+		List<GoldModificationRule> rules = new ArrayList<>();
+		
+		rules.add(new GoldModificationRule() {
+			
+			@Override
+			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
+				
+				EntityTemplate newGold = new EntityTemplate(
+						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
+				newGold.setSingleSlotFiller(deviceSlot,
+						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(deviceSlot).getSlotFiller());
+				
+				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					return null;
+				
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
+					return null;
+				
+				return newGold;
+			}
+		});
+		return rules;
+		
+	}
+	
+	public static List<GoldModificationRule> getPlusLocationDevice() {
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {

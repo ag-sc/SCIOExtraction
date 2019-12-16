@@ -103,11 +103,30 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new DocumentPartTemplate());
 		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate());
 
+//		featureTemplates.add(new DocumentSectionTemplate());
+
 //		featureTemplates.add(new LevenshteinTemplate());
 //		featureTemplates.add(new NumericInterpretationTemplate());
 		return featureTemplates;
 	}
 
+//	Time: 1807
+//	mean score: Score [getF1()=0.936, getPrecision()=0.957, getRecall()=0.917, tp=88, fp=4, fn=8, tn=0]
+//	CRFStatistics [context=Train, getTotalDuration()=56201]
+//	CRFStatistics [context=Test, getTotalDuration()=1807]
+//	modelName: OrganismModel438496488
+
+//	Time: 868
+//	mean score: Score [getF1()=0.952, getPrecision()=0.968, getRecall()=0.938, tp=90, fp=3, fn=6, tn=0]
+//	CRFStatistics [context=Train, getTotalDuration()=34440]
+//	CRFStatistics [context=Test, getTotalDuration()=868]
+//	modelName: OrganismModel1797611783
+
+//	Time: 944
+//	mean score: Score [getF1()=0.942, getPrecision()=0.957, getRecall()=0.927, tp=89, fp=4, fn=7, tn=0]
+//	CRFStatistics [context=Train, getTotalDuration()=32434]
+//	CRFStatistics [context=Test, getTotalDuration()=944]
+//	modelName: OrganismModel-198471195
 	@Override
 	protected Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> getFeatureTemplateParameters() {
 

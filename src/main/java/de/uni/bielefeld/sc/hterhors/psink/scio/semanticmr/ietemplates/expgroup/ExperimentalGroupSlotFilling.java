@@ -69,6 +69,7 @@ import de.hterhors.semanticmr.json.JsonNerlaProvider;
 import de.hterhors.semanticmr.nerla.INerlaProvider;
 import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
@@ -214,10 +215,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		assignmentMode = EAssignmentMode.TREATMENT_ONLY;
 
 		if (groupNameMode == EExtractGroupNamesMode.EMPTY || groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED)
-			SCIOSlotTypes.hasGroupName.excludeFromExploration = true;
+			SCIOSlotTypes.hasGroupName.exclude();
 
 		TreatmentSlotFilling.rule = ETreatmentModifications.ROOT;
 		RootTemplateCardinalityExplorer.MAX_NUMBER_OF_ANNOTATIONS = CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE;
+
 		/*
 		 *
 		 * 
@@ -232,7 +234,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //				SCIOEntityTypes.definedExperimentalGroup);
 //		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/experimental_group/slots.csv"),
 //				SCIOEntityTypes.definedExperimentalGroup);
-////		w.writeStructuresSpecificationFile(null, EntityType.get("Treatment"));
+//		w.writeStructuresSpecificationFile(null, SCIOEntityTypes.definedExperimentalGroup);
 //
 //		System.exit(1);
 
@@ -261,11 +263,38 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
+		for (Instance instance : instanceProvider.getInstances()) {
+			try {
+				System.out.println(instance.getName());
+				for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+					int om = 0;
+					if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+
+						System.out.println(om = expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
+								.getSlotFiller().asInstanceOfEntityTemplate()
+								.getSingleFillerSlotOfName("hasOrganismSpecies").getSlotFiller()
+								.asInstanceOfDocumentLinkedAnnotation().documentPosition.docCharOffset);
+
+					int im = 0;
+					if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+						System.out.println(im = expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
+								.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation()
+								.asInstanceOfDocumentLinkedAnnotation().documentPosition.docCharOffset);
+					System.out.println(om < im);
+					System.out.println("----");
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
+		}
+
 //		histogramExp();
 //		histogramTreat();
 //		histogramTreatPerExp();
 //
-//		System.exit(1);
+		System.exit(1);
 
 		String rand = String.valueOf(new Random().nextInt(100000));
 //		rand = "89804";
@@ -716,15 +745,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //			return a;
 //		});
 
-		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().clearSlotOfName("hasInjuryModel");
-			return a;
-		});
-
-		goldModificationRules.add(a -> {
-			a.asInstanceOfEntityTemplate().clearSlotOfName("hasOrganismModel");
-			return a;
-		});
+//		goldModificationRules.add(a -> {
+//			a.asInstanceOfEntityTemplate().clearSlot(SCIOSlotTypes.hasInjuryModel);
+//			return a;
+//		});
+//
+//		goldModificationRules.add(a -> {
+//			a.asInstanceOfEntityTemplate().clearSlot(SCIOSlotTypes.hasOrganismModel);
+//			return a;
+//		});
 
 //		
 //		goldModificationRules.add(a -> {

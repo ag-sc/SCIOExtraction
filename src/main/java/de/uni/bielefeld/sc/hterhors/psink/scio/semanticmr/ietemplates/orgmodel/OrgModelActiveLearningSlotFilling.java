@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,9 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
@@ -125,7 +128,9 @@ public class OrgModelActiveLearningSlotFilling {
 				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
 						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
-				Score score = predictor.evaluateOnDevelopment();
+				Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
+
+				Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
 				resultOut.println(toResult(score, strategy, trainingInstancesNames, OrgModelSlotFilling.rule));
 

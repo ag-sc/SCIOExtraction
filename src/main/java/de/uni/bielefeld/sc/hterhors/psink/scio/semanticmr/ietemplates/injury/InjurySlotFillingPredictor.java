@@ -16,7 +16,6 @@ import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -25,6 +24,7 @@ import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
 import de.hterhors.semanticmr.crf.templates.et.LocalityTemplate;
 import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.LevenshteinTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
@@ -35,9 +35,11 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.templates.InjuryDeviceTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.MultiValueSlotSizeTemplate;
 
@@ -62,7 +64,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
 
-		if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT)
+		if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT
+				|| InjurySlotFilling.rule == EInjuryModificationRules.ROOT_DEVICE)
 			return Collections.emptyList();
 
 		List<GeneralCandidateProvider> provider = new ArrayList<>();
@@ -125,7 +128,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-//		featureTemplates.add(new LevenshteinTemplate());
+		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
 		featureTemplates.add(new DistinctMultiValueSlotsTemplate());
 		featureTemplates.add(new MultiValueSlotSizeTemplate());
@@ -134,21 +137,34 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
-//		featureTemplates.add(new OlfactoryContextTemplate());
 		featureTemplates.add(new DocumentPartTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
+
+		featureTemplates.add(new InjuryDeviceTemplate());
+		featureTemplates.add(new DocumentSectionTemplate());
+
+//		featureTemplates.add(new OlfactoryContextTemplate());
 //		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));
 //		featureTemplates.add(new NumericInterpretationTemplate());
-		
+
 		return featureTemplates;
 	}
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 35;
+		return 10;
 	}
 
+//	mean score: Score [getF1()=0.333, getPrecision()=0.344, getRecall()=0.324, tp=11, fp=21, fn=23, tn=0]
+//			CRFStatistics [context=Train, getTotalDuration()=121168]
+//			CRFStatistics [context=Test, getTotalDuration()=192]
+//			modelName: Injury7669
+//
+//	mean score: Score [getF1()=0.303, getPrecision()=0.312, getRecall()=0.294, tp=10, fp=22, fn=24, tn=0]
+//			CRFStatistics [context=Train, getTotalDuration()=122682]
+//			CRFStatistics [context=Test, getTotalDuration()=220]
+//			modelName: Injury1444
 	@Override
 	protected IStateInitializer getStateInitializer() {
 		return ((instance) -> new State(instance,

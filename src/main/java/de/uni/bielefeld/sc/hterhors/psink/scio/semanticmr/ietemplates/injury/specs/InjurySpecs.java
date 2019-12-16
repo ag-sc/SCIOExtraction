@@ -26,6 +26,5 @@ public class InjurySpecs {
 	private static final File hierarchies = new File(
 			"src/main/resources/slotfilling/injury/specifications/hierarchies.csv");
 
-	public final static CSVScopeReader systemsScopeReader = new CSVScopeReader(entities, hierarchies, slots,
-			structures);
+	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
 }

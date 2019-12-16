@@ -72,7 +72,7 @@ public class OWL2GraphmlConverter {
 		 */
 		Map<String, Set<String>> visGroups = new HashMap<>();
 
-		visGroups.put("Treatment_Group", new HashSet<>(Arrays.asList("Treatment", "StemCellSourceType")));
+		visGroups.put("Treatment_Group", new HashSet<>(Arrays.asList("Treatment", "StemCellSourceType","RehabMedication")));
 		visGroups.put("Investigation_Method_Group", new HashSet<>(Arrays.asList("Function", "Investigation",
 				"InvestigationMethod", "Apparatus", "ApplicationInstrument")));
 		visGroups.put("Experimental_Design_Group",

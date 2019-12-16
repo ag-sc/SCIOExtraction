@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,10 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.specs.DeliveryMethodSpecs;
 
@@ -155,7 +159,7 @@ public class DeliveryMethodFilling {
 
 			String modelName = "DeliveryMethod" + new Random().nextInt();
 
-			DeliveryMethodPredictor deliveryMethodPrediction = new DeliveryMethodPredictor(modelName, scope,
+			DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName, scope,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
@@ -166,10 +170,12 @@ public class DeliveryMethodFilling {
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()));
 
-			deliveryMethodPrediction.trainOrLoadModel();
+			predictor.trainOrLoadModel();
 
-			Score score = deliveryMethodPrediction.evaluateOnDevelopment();
+			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
+			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+			
 			resultsOut.println(toResults(rule, score));
 
 			/**
@@ -189,7 +195,7 @@ public class DeliveryMethodFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
-			log.info("modelName: " + deliveryMethodPrediction.modelName);
+			log.info("modelName: " + predictor.modelName);
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.

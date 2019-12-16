@@ -30,7 +30,7 @@ public class InjuriesSanto2Json {
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScopeReader)
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope)
 				.build();
 
 		final String dir = "rawData/export_" + ResultSanto2Json.exportDate + "/";

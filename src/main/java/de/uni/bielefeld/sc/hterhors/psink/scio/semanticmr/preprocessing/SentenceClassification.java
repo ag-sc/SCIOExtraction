@@ -33,7 +33,7 @@ public class SentenceClassification {
 	public static void main(String[] args) throws IOException {
 
 		new SentenceClassification(
-				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScopeReader).build());
+				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build());
 
 	}
 

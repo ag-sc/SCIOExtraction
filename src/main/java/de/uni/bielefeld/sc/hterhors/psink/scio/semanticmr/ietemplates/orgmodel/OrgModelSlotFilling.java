@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,10 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
@@ -124,7 +128,7 @@ public class OrgModelSlotFilling {
 			Collections.shuffle(docs, new Random(1000L));
 
 			int percent = (int)((((double)docs.size()) / 100D) * 80D);
-			System.out.println(percent);
+
 			List<String> tn = docs.subList(0, percent);
 			List<String> dn = docs.subList(percent, docs.size());
 
@@ -150,8 +154,10 @@ public class OrgModelSlotFilling {
 
 			predictor.trainOrLoadModel();
 
-			Score score = predictor.evaluateOnDevelopment();
+			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
+			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+		
 			resultsOut.println(toResults(rule, score));
 
 			/**

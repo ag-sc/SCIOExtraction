@@ -39,6 +39,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -76,10 +77,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
-	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
 			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
-	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
@@ -160,17 +161,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			}
 			candidateRetrieval.registerCandidateProvider(ap);
 		}
-	
-		for (Instance instance : developmentInstances) {
-			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
-			
-			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
-					trainDictionary)) {
-				ap.addSlotFiller(annotation);
-			}
-			candidateRetrieval.registerCandidateProvider(ap);
-		}
-		
+
+		// for (Instance instance : developmentInstances) {
+//			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+//			
+//			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
+//					trainDictionary)) {
+//				ap.addSlotFiller(annotation);
+//			}
+//			candidateRetrieval.registerCandidateProvider(ap);
+//		}
+//		
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
 		 * changes during the exploration. This explorer is especially designed for slot
@@ -260,6 +261,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			 * Print the model in a readable format.
 			 */
 			model.printReadable();
+			log.info(crf.getTrainingStatistics());
 		}
 	}
 
@@ -333,16 +335,15 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return annotations.getOrDefault(name, Collections.emptySet());
 	}
 
-	final public Score evaluateOnDevelopment() {
+	final public Map<Instance, State> evaluateOnDevelopment() {
 
 		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedDevelopmentInstances(), maxStepCrit,
 				noModelChangeCrit);
 
-		Score s = AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);
-
-		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
-		return s;
+
+		return results;
+
 	}
 
 	final public void evaluateOnTest() {
