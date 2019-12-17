@@ -263,38 +263,42 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
-		for (Instance instance : instanceProvider.getInstances()) {
-			try {
-				System.out.println(instance.getName());
-				for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-					int om = 0;
-					if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
-
-						System.out.println(om = expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
-								.getSlotFiller().asInstanceOfEntityTemplate()
-								.getSingleFillerSlotOfName("hasOrganismSpecies").getSlotFiller()
-								.asInstanceOfDocumentLinkedAnnotation().documentPosition.docCharOffset);
-
-					int im = 0;
-					if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
-						System.out.println(im = expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
-								.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation()
-								.asInstanceOfDocumentLinkedAnnotation().documentPosition.docCharOffset);
-					System.out.println(om < im);
-					System.out.println("----");
-					break;
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-
-		}
+		
+		/*
+		 * Test for org model is mentioned earlier than injury models
+		 */
+//		for (Instance instance : instanceProvider.getInstances()) {
+//			try {
+//				System.out.println(instance.getName());
+//				for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+//					int om = 0;
+//					if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+//
+//						System.out.println(om = expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
+//								.getSlotFiller().asInstanceOfEntityTemplate()
+//								.getSingleFillerSlotOfName("hasOrganismSpecies").getSlotFiller()
+//								.asInstanceOfDocumentLinkedAnnotation().documentPosition.docCharOffset);
+//
+//					int im = 0;
+//					if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+//						System.out.println(im = expGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
+//								.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation()
+//								.asInstanceOfDocumentLinkedAnnotation().documentPosition.docCharOffset);
+//					System.out.println(om < im);
+//					System.out.println("----");
+//					break;
+//				}
+//			} catch (Exception e) {
+//				System.out.println(e.getMessage());
+//			}
+//
+//		}
 
 //		histogramExp();
 //		histogramTreat();
 //		histogramTreatPerExp();
 //
-		System.exit(1);
+//		System.exit(1);
 
 		String rand = String.valueOf(new Random().nextInt(100000));
 //		rand = "89804";

@@ -96,10 +96,8 @@ public class InjurySlotFilling {
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 		VertebralAreaFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 
-		SlotType.getAllSlotTypes().forEach(System.out::println);
-
 		for (EInjuryModificationRules rule : EInjuryModificationRules.values()) {
-			InjurySlotFilling.rule = EInjuryModificationRules.ROOT_DEVICE;
+			InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
 
 //			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 //					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();

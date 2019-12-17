@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candprov.sf.GeneralCandidateProvider;
 import de.hterhors.semanticmr.candprov.sf.ICandidateProvider;
+import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
+import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -37,6 +39,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.templates.InjuryDeviceTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate;
@@ -198,5 +202,29 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
 		return InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule);
+	}
+
+	@Override
+	public HardConstraintsProvider getHardConstraints() {
+
+		HardConstraintsProvider hcp = new HardConstraintsProvider();
+		hcp.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
+
+				if (entityTemplate.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
+					final ESection section = AutomatedSectionifcation.getInstance(state.getInstance())
+							.getSection(entityTemplate.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+									.getSentenceIndex());
+					if(!(section == ESection.BEGIN || section == ESection.ABSTRACT))
+						return true;
+				}
+
+				return false;
+			}
+
+		});
+		return hcp;
 	}
 }

@@ -181,7 +181,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
 
 			@Override
-			public boolean violatesConstraint(EntityTemplate entityTemplate) {
+			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
 				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasAge"));
 
 				if (sfs.containsSlotFiller()) {
@@ -206,7 +206,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
 
 			@Override
-			public boolean violatesConstraint(EntityTemplate entityTemplate) {
+			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
 				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasAge"));
 
 				if (sfs.containsSlotFiller()) {
@@ -230,7 +230,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
 
 			@Override
-			public boolean violatesConstraint(EntityTemplate entityTemplate) {
+			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
 				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasGender"));
 
 				if (sfs.containsSlotFiller()) {

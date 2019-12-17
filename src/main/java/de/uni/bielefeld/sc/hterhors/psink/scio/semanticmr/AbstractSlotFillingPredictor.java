@@ -1,6 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,7 +40,6 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -78,7 +78,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
 	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
@@ -94,6 +94,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final ISamplingStoppingCriterion[] sampleStoppingCrits;
 
 	private final List<IExplorationStrategy> explorerList;
+	protected final AnnotationCandidateRetrievalCollection candidateRetrieval;
 
 	public List<Instance> getTrainingInstances() {
 		return Collections.unmodifiableList(trainingInstances);
@@ -144,7 +145,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
 		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(getExternalNerlAnnotations()));
-		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
+		candidateRetrieval = nerlaProvider.collect();
 
 		for (ICandidateProvider ap : getAdditionalCandidateProvider()) {
 			candidateRetrieval.registerCandidateProvider(ap);
@@ -181,11 +182,16 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval,
 				getHardConstraints());
 
-		explorerList = Arrays.asList(explorer);
+		explorerList = new ArrayList<>(Arrays.asList(explorer));
+		explorerList.addAll(getAdditionalExplorer());
 
 		maxStepCrit = new MaxChainLengthCrit(100);
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
+	}
+
+	public List<IExplorationStrategy> getAdditionalExplorer() {
+		return Collections.emptyList();
 	}
 
 	public HardConstraintsProvider getHardConstraints() {
