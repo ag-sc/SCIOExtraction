@@ -217,7 +217,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 					final ESection section = AutomatedSectionifcation.getInstance(state.getInstance())
 							.getSection(entityTemplate.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
 									.getSentenceIndex());
-					if(!(section == ESection.BEGIN || section == ESection.ABSTRACT))
+					if (!(section == ESection.BEGIN || section == ESection.ABSTRACT) || entityTemplate
+							.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation().getSentenceIndex() > 15)
 						return true;
 				}
 
