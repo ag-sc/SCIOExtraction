@@ -2,17 +2,21 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverym
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -119,4 +123,11 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
 		return DeliveryMethodRestrictionProvider.getByRule(DeliveryMethodFilling.rule);
 	}
+
+	@Override
+	public List<IExplorationStrategy> getAdditionalExplorer() {
+		return Arrays.asList(new RootTemplateCardinalityExplorer(candidateRetrieval,
+				AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
+	}
+
 }

@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -175,18 +176,18 @@ public class DeliveryMethodFilling {
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-			
+
 			resultsOut.println(toResults(rule, score));
 
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-//			final Score trainCoverage = deliveryMethodPrediction.computeCoverageOnTrainingInstances(false);
-//			log.info("Coverage Training: " + trainCoverage);
-//
-//			final Score devCoverage = deliveryMethodPrediction.computeCoverageOnDevelopmentInstances(false);
-//			log.info("Coverage Development: " + devCoverage);
+			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+			log.info("Coverage Training: " + trainCoverage);
+
+			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+			log.info("Coverage Development: " + devCoverage);
 
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
@@ -200,6 +201,7 @@ public class DeliveryMethodFilling {
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
 			 */
+			break;
 		}
 		resultsOut.flush();
 		resultsOut.close();
