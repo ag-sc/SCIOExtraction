@@ -2,7 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.groupname
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,8 +9,6 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.nerla.DefinedExhaustiveCandidateRetrieval;
-import de.hterhors.semanticmr.candprov.nerla.INerlaCandidateProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -44,7 +41,7 @@ public class GroupNameNERLPredictor extends AbstractNERLPredictor {
 	 * not sufficient! Consider implementing your own candidate retrieval e.g. fuzzy
 	 * lookup, Lucene-based etc...
 	 */
-//	private final File dictionaryFile = new File("src/main/resources/examples/nerla/dicts/organismModel.dict");
+	private final File dictionaryFile = new File("src/main/resources/examples/nerla/dicts/organismModel.dict");
 
 	/**
 	 * The directory of the corpus instances. In this example each instance is
@@ -107,10 +104,15 @@ public class GroupNameNERLPredictor extends AbstractNERLPredictor {
 	}
 
 	@Override
-	protected List<? extends INerlaCandidateProvider> getAdditionalCandidateProvider() {
+	protected File getDictionaryFile() {
+		return dictionaryFile;
+	}
+
+	@Override
+	protected Set<EntityType> getAdditionalCandidates() {
 		Set<EntityType> set = new HashSet<>();
 		set.add(EntityType.get("GroupName"));
-		return Arrays.asList(new DefinedExhaustiveCandidateRetrieval(set));
+		return set;
 	}
 
 }

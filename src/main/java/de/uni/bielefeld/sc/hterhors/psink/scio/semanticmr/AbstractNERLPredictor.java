@@ -15,8 +15,6 @@ import org.apache.jena.ext.com.google.common.collect.Streams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.nerla.INerlaCandidateProvider;
-import de.hterhors.semanticmr.candprov.nerla.NerlaCandidateProviderCollection;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -31,6 +29,7 @@ import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -93,10 +92,10 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
-		NerlaCandidateProviderCollection candidateRetrieval = new NerlaCandidateProviderCollection();
-
-		for (INerlaCandidateProvider ap : getAdditionalCandidateProvider()) {
-			candidateRetrieval.registerCandidateProvider(ap);
+		for (Instance instance : instanceProvider.getInstances()) {
+			instance.addCandidates(getAdditionalCandidates());
+			if (getDictionaryFile() != null)
+				instance.addCandidates(getDictionaryFile());
 		}
 
 		/**
@@ -104,7 +103,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * added to perform changes during the exploration. This explorer is especially
 		 * designed for NERLA and is parameterized with a candidate retrieval.
 		 */
-		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer(candidateRetrieval);
+		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer();
 		explorer.MAX_WINDOW_SIZE = 4;
 
 		explorerList = Arrays.asList(explorer);
@@ -112,6 +111,10 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		maxStepCrit = new MaxChainLengthCrit(50);
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
+	}
+
+	protected File getDictionaryFile() {
+		return null;
 	}
 
 	ISamplingStoppingCriterion maxStepCrit;
@@ -183,8 +186,8 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		}
 	}
 
-	protected List<? extends INerlaCandidateProvider> getAdditionalCandidateProvider() {
-		return Collections.emptyList();
+	protected Set<EntityType> getAdditionalCandidates() {
+		return Collections.emptySet();
 	}
 
 	protected abstract List<AbstractFeatureTemplate<?>> getFeatureTemplates();
