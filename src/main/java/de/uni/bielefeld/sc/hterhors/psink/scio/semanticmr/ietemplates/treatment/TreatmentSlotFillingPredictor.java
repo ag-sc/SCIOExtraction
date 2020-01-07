@@ -3,13 +3,13 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.sf.GeneralCandidateProvider;
-import de.hterhors.semanticmr.candprov.sf.ICandidateProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -72,9 +72,10 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	}
 
 	@Override
-	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
 
-		List<GeneralCandidateProvider> candList = new ArrayList<>();
+		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
+
 		DeliveryMethodPredictor deliveryMethodPrediction = null;
 		if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
 
@@ -88,18 +89,19 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 		}
 		for (Instance instance : instanceProvider.getInstances()) {
-			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
+			annotations.put(instance, new ArrayList<>());
 			if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
-				ap.addBatchSlotFiller(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+				annotations.get(instance)
+						.addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
 			}
-			ap.addSlotFiller(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
-			candList.add(ap);
+			annotations.get(instance).add(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
+
 		}
-		return candList;
+		return annotations;
 	}
 
 	@Override
-	protected File getExternalNerlAnnotations() {
+	protected File getExternalNerlaFile() {
 		return new File("src/main/resources/slotfilling/treatment/corpus/nerla/");
 	}
 

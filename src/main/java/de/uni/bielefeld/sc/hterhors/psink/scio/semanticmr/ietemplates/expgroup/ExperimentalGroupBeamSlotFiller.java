@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
-import de.hterhors.semanticmr.candprov.sf.EntityTemplateCandidateProvider;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -60,8 +58,6 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.nerla.INerlaProvider;
-import de.hterhors.semanticmr.nerla.NerlaCollector;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -140,50 +136,32 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 		/*
 		 * Create annotation with pattern.
 		 */
-		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
-		nerlaProvider.addNerlaProvider(new INerlaProvider() {
 
-			@Override
-			public Map<Instance, List<DocumentLinkedAnnotation>> getForInstances(List<Instance> instances) {
-//				return annotateGroupNamesWithPattern(instances);
-				return extractCandidatesFromGold(instances);
-			}
+		Map<Instance, List<DocumentLinkedAnnotation>> gold = new HashMap<>();
 
-			private Map<Instance, List<DocumentLinkedAnnotation>> extractCandidatesFromGold(List<Instance> instances) {
-
-				Map<Instance, List<DocumentLinkedAnnotation>> gold = new HashMap<>();
-
-				for (Instance instance : instances) {
-					gold.put(instance, new ArrayList<>());
-					gold.get(instance).addAll(instance.getGoldAnnotations().getAbstractAnnotations().stream()
-							.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
-							.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
-							.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
-				}
-
-				return gold;
-			}
-
-		});
+		for (Instance instance : instanceProvider.getInstances()) {
+			instance.addCandidateAnnotations(instance.getGoldAnnotations().getAbstractAnnotations().stream()
+					.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
+					.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
+					.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
+		}
 
 		/*
 		 * Create annotations for treatments/organismModel/injury with gold data.
 		 */
-		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
-			extractCandidatesFromGold(candidateRetrieval, instance);
+			extractCandidatesFromGold(instance);
 		}
 		for (Instance instance : instanceProvider.getRedistributedDevelopmentInstances()) {
-			extractCandidatesFromGold(candidateRetrieval, instance);
+			extractCandidatesFromGold(instance);
 		}
 
 		for (Instance instance : instanceProvider.getRedistributedTestInstances()) {
-			extractCandidatesFromGold(candidateRetrieval, instance);
+			extractCandidatesFromGold(instance);
 		}
 
-		List<IExplorationStrategy> explorerList = Arrays
-				.asList(new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval));
+		List<IExplorationStrategy> explorerList = Arrays.asList(new SlotFillingExplorer(predictionObjectiveFunction));
 
 		AdvancedLearner learner = new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
 
@@ -499,13 +477,10 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 		return featureTemplates;
 	}
 
-	public void extractCandidatesFromGold(AnnotationCandidateRetrievalCollection candidateRetrieval,
-			Instance instance) {
-		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldOrganismModels(instance));
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldInjuryModels(instance));
-		candidateRetrieval.registerCandidateProvider(entityTemplateCandidateProvider);
+	public void extractCandidatesFromGold(Instance instance) {
+		instance.addCandidateAnnotations(extractGoldTreatments(instance));
+		instance.addCandidateAnnotations(extractGoldOrganismModels(instance));
+		instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
 	}
 
 	@Deprecated

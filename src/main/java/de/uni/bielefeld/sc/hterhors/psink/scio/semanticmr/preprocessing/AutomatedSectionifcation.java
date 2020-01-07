@@ -15,9 +15,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import org.apache.http.impl.cookie.BrowserCompatSpecFactory.SecurityLevel;
-import org.apache.jena.sparql.function.library.leviathan.factorial;
-import org.apache.jena.sparql.function.library.leviathan.sec;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,7 +26,6 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
-import edu.stanford.nlp.ling.CoreAnnotations.BeginIndexAnnotation;
 
 public class AutomatedSectionifcation {
 

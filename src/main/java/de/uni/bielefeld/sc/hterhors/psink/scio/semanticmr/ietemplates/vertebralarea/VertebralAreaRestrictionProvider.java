@@ -3,9 +3,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebral
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 
 public class VertebralAreaRestrictionProvider {

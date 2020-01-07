@@ -59,7 +59,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected File getExternalNerlAnnotations() {
+	protected File getExternalNerlaFile() {
 //		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/organism_model/corpus/nerla/");
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/Normal/");

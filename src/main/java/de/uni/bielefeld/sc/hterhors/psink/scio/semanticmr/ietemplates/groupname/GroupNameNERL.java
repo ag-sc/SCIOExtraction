@@ -62,10 +62,10 @@ public class GroupNameNERL {
 //
 
 		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
-				.setCorpusSizeFraction(0.25F).build();
+				.setCorpusSizeFraction(1F).build();
 
 		InstanceProvider.removeEmptyInstances = true;
-		InstanceProvider.maxNumberOfAnnotations = 20;
+		InstanceProvider.maxNumberOfAnnotations = 400;
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, originalCorpusDistributor);
 

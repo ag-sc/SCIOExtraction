@@ -17,7 +17,6 @@ import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.EntityType;
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -30,8 +29,8 @@ import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
-import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
+import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -67,7 +66,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected File getExternalNerlAnnotations() {
+	protected File getExternalNerlaFile() {
 		return new File("src/main/resources/slotfilling/delivery_method/corpus/nerla/");
 	}
 
@@ -126,8 +125,8 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	public List<IExplorationStrategy> getAdditionalExplorer() {
-		return Arrays.asList(new RootTemplateCardinalityExplorer(candidateRetrieval,
-				AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
+		return Arrays.asList(
+				new RootTemplateCardinalityExplorer(AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
 	}
 
 }

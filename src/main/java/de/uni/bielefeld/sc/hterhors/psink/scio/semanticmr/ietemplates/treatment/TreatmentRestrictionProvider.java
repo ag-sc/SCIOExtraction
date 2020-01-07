@@ -18,7 +18,7 @@ public class TreatmentRestrictionProvider {
 	}
 
 	private static final SlotType compoundSlot = SCIOSlotTypes.hasCompound;
-	private static final SlotType deliveryMethodSlot = SlotType.get("hasDeliveryMethod");
+	private static final SlotType deliveryMethodSlot = SCIOSlotTypes.hasDeliveryMethod;
 
 	public static List<GoldModificationRule> getByRule(ETreatmentModifications modelModifications) {
 

@@ -13,7 +13,6 @@ import java.util.function.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
@@ -49,8 +48,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.json.JsonNerlaProvider;
-import de.hterhors.semanticmr.nerla.NerlaCollector;
+import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
@@ -160,8 +158,8 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * instance assignment during development.
 		 * 
 		 */
-		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
-				.setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+				.build();
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.setTrainingProportion(80).setTestProportion(20).setDevelopmentProportion(20).setSeed(300L).build();
 
@@ -240,38 +238,12 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * defines the upper bound!
 		 * 
 		 */
-		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
-		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(externalNerlaAnnotations));
 
-		/**
-		 * We can add more candidate provider if necessary.
-		 * 
-		 * If no external candidate retrieval is available one can also guide the
-		 * exploration based on the hierarchical and structural specifications. When
-		 * setting
-		 * 
-		 * candidateProvider.setEntityTypeCandidateProvider();
-		 *
-		 * All possible (based on the specifications) entity types are retrieved for
-		 * each slot.
-		 *
-		 */
-//		AnnotationCandidateRetrievalCollection candidateRetrieval = new AnnotationCandidateRetrievalCollection(
-//				instanceProvider.getInstances());
-		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
+		JSONNerlaReader reader = new JSONNerlaReader(externalNerlaAnnotations);
 
-//		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
-//
-//		for (Instance instance : instanceProvider.getInstances()) {
-//			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
-//
-//			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
-//					trainDictionary)) {
-//				ap.addSlotFiller(annotation);
-//			}
-//			candidateRetrieval.registerCandidateProvider(ap);
-//		}
-
+		for (Instance instance : instanceProvider.getInstances()) {
+			instance.addCandidateAnnotations(reader.getForInstance(instance));
+		}
 		/**
 		 * To further increase the systems performance, we can specify a set of hard
 		 * constraints that are considered during exploration.
@@ -290,10 +262,9 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval,
-				constraintsProvider);
+		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, constraintsProvider);
 
-		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
 				AnnotationBuilder.toAnnotation("OrganismModel"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer

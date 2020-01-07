@@ -1,9 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.templates;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;

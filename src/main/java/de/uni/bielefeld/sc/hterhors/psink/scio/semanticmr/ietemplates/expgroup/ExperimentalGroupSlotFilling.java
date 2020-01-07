@@ -2,7 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,15 +20,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candprov.helper.DictionaryFromInstanceHelper;
-import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
-import de.hterhors.semanticmr.candprov.sf.EntityTemplateCandidateProvider;
-import de.hterhors.semanticmr.candprov.sf.GeneralCandidateProvider;
-import de.hterhors.semanticmr.candprov.sf.ICandidateProvider;
-import de.hterhors.semanticmr.candprov.sf.IEntityTypeAnnotationCandidateProvider;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
@@ -62,14 +55,10 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.eval.GreedySearchEvaluator;
 import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.json.JsonNerlaProvider;
-import de.hterhors.semanticmr.nerla.INerlaProvider;
-import de.hterhors.semanticmr.nerla.NerlaCollector;
+import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
@@ -263,7 +252,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
-		
 		/*
 		 * Test for org model is mentioned earlier than injury models
 		 */
@@ -312,7 +300,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/*
 		 * Create annotation with pattern.
 		 */
-		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
 
 		/*
 		 * add external treatment annotations
@@ -327,13 +314,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/*
 		 * Add groupNames
 		 */
-		nerlaProvider.addNerlaProvider(extractGroupNames(groupNameMode));
-		nerlaProvider.addNerlaProvider(extractGroupNamesForDefExpGroup(groupNameMode));
+		for (Instance instance : instanceProvider.getInstances()) {
+			extractGroupNames(groupNameMode, instance);
+			extractGroupNamesForDefExpGroup(groupNameMode, instance);
+		}
 
 		/*
 		 * Create annotations for treatments/organismModel/injury with gold data.
 		 */
-		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
 //		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 //		
@@ -348,50 +336,42 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //		}
 
 		for (Instance instance : trainingInstances) {
-			GeneralCandidateProvider entityTemplateCandidateProvider = new GeneralCandidateProvider(instance);
-
 			for (AbstractAnnotation root : instance.getGoldAnnotations().getAnnotations()) {
-				entityTemplateCandidateProvider.addSlotFiller(root.asInstanceOfEntityTemplate().getRootAnnotation());
+				instance.addCandidateAnnotation(root.asInstanceOfEntityTemplate().getRootAnnotation());
 			}
-
-			candidateRetrieval.registerCandidateProvider(entityTemplateCandidateProvider);
 		}
 
 		if (mainClassMode == EMainClassMode.JOINT) {
 
 			if (assignmentMode == EAssignmentMode.TREATMENT_ONLY || assignmentMode == EAssignmentMode.ALL)
-				extractTreatmentsFromNERLA(instanceProvider.getInstances())
-						.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
+				extractTreatmentsFromNERLA(instanceProvider.getInstances());
 
-			extractTreatmentsFromTRAIN(instanceProvider.getInstances())
-					.forEach(p -> candidateRetrieval.registerCandidateProvider(p));
+			extractTreatmentsFromTRAIN(instanceProvider.getInstances());
 		}
 
 		if (assignmentMode == EAssignmentMode.TREATMENT_ONLY || assignmentMode == EAssignmentMode.ALL) {
 			for (Instance instance : trainingInstances) {
-				candidateRetrieval.registerCandidateProvider(extractTreatmentCandidatesFromGold(instance));
+				extractTreatmentCandidatesFromGold(instance);
 			}
 			if (mainClassMode == EMainClassMode.GOLD) {
 				for (Instance instance : devInstances) {
-					candidateRetrieval.registerCandidateProvider(extractTreatmentCandidatesFromGold(instance));
+					extractTreatmentCandidatesFromGold(instance);
 				}
 				for (Instance instance : testInstances) {
-					candidateRetrieval.registerCandidateProvider(extractTreatmentCandidatesFromGold(instance));
+					extractTreatmentCandidatesFromGold(instance);
 				}
 			}
 		} else {
 			throw new IllegalArgumentException("not implemented");
 		}
 
-		for (ICandidateProvider ap : getAdditionalCandidateProvider(modelName)) {
-			candidateRetrieval.registerCandidateProvider(ap);
-		}
+		getAdditionalCandidateProvider(modelName);
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(
 //						
-				new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval)
+				new SlotFillingExplorer(predictionObjectiveFunction)
 //				
-				, new RootTemplateCardinalityExplorer(candidateRetrieval,
+				, new RootTemplateCardinalityExplorer(
 						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup)));
 
 		List<AbstractFeatureTemplate<?>> featureTemplates = getFeatureTemplates();
@@ -537,81 +517,62 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		System.out.println("--");
 	}
 
-	public INerlaProvider extractGroupNames(EExtractGroupNamesMode mode) {
-		return new INerlaProvider() {
+	public void extractGroupNames(EExtractGroupNamesMode mode, Instance instance) {
 
-			@Override
-			public Map<Instance, List<DocumentLinkedAnnotation>> getForInstances(List<Instance> instances) {
-
-				switch (mode) {
-				case EMPTY:
-				case GOLD_CLUSTERED:// if clustered we do not need group names annotations for sampling.
-					return returnEmptyMap(instances);
-				case GOLD_UNCLUSTERED:
-					return extractCandidatesFromGold(instances);
-				case NP_CHUNKS:
-					return annotateGroupNamesWithPattern(instances);
-				case PATTERN:
-					return annotateGroupNamesWithNPCHunks(instances);
-				case PATTERN_NP_CHUNKS:
-					return annotateGroupNamesWithNPCHunksAndPattern(instances);
-
-				}
-
-				return null;
-
-			}
-
-		};
+		switch (mode) {
+		case EMPTY:
+		case GOLD_CLUSTERED:// if clustered we do not need group names annotations for sampling.
+			break;
+		case GOLD_UNCLUSTERED:
+			instance.addCandidateAnnotations(extractCandidatesFromGold(instance));
+			break;
+		case NP_CHUNKS:
+			instance.addCandidateAnnotations(extractWithPattern(instance));
+			break;
+		case PATTERN:
+			instance.addCandidateAnnotations(extractWithNPCHunks(instance));
+			break;
+		case PATTERN_NP_CHUNKS:
+			instance.addCandidateAnnotations(extractWithNPCHunks(instance));
+			instance.addCandidateAnnotations(extractWithPattern(instance));
+			break;
+		}
 	}
 
-	public INerlaProvider extractGroupNamesForDefExpGroup(EExtractGroupNamesMode mode) {
-		return new INerlaProvider() {
+	public void extractGroupNamesForDefExpGroup(EExtractGroupNamesMode mode, Instance instance) {
 
-			@Override
-			public Map<Instance, List<DocumentLinkedAnnotation>> getForInstances(List<Instance> instances) {
+		switch (mode) {
+		case EMPTY:
+		case GOLD_CLUSTERED:// if clustered we do not need group names annotations for sampling.
+			break;
+		case GOLD_UNCLUSTERED:
+			convertToDefExpGroupAnnotation(instance, extractCandidatesFromGold(instance));
+			break;
+		case NP_CHUNKS:
+			convertToDefExpGroupAnnotation(instance, extractWithPattern(instance));
+			break;
+		case PATTERN:
+			convertToDefExpGroupAnnotation(instance, extractWithNPCHunks(instance));
+			break;
+		case PATTERN_NP_CHUNKS:
+			convertToDefExpGroupAnnotation(instance, extractWithNPCHunks(instance));
+			convertToDefExpGroupAnnotation(instance, extractWithPattern(instance));
+			break;
+		}
 
-				switch (mode) {
-				case EMPTY:
-				case GOLD_CLUSTERED:// if clustered we do not need group names annotations for sampling.
-					return returnEmptyMap(instances);
-				case GOLD_UNCLUSTERED:
-					return convertToDefExpGroupAnnotation(extractCandidatesFromGold(instances));
-				case NP_CHUNKS:
-					return convertToDefExpGroupAnnotation(annotateGroupNamesWithPattern(instances));
-				case PATTERN:
-					return convertToDefExpGroupAnnotation(annotateGroupNamesWithNPCHunks(instances));
-				case PATTERN_NP_CHUNKS:
-					return convertToDefExpGroupAnnotation(annotateGroupNamesWithNPCHunksAndPattern(instances));
-
-				}
-
-				return null;
-
-			}
-
-			private Map<Instance, List<DocumentLinkedAnnotation>> convertToDefExpGroupAnnotation(
-					Map<Instance, List<DocumentLinkedAnnotation>> extractCandidates) {
-
-				Map<Instance, List<DocumentLinkedAnnotation>> converted = new HashMap<>();
-				for (Entry<Instance, List<DocumentLinkedAnnotation>> ec : extractCandidates.entrySet()) {
-					converted.put(ec.getKey(),
-							ec.getValue().stream()
-									.map(dla -> AnnotationBuilder.toAnnotation(ec.getKey().getDocument(),
-											EntityType.get("DefinedExperimentalGroup"), dla.getSurfaceForm(),
-											dla.getStartDocCharOffset()))
-									.collect(Collectors.toList()));
-				}
-
-				return converted;
-			}
-
-		};
 	}
 
-	private List<? extends ICandidateProvider> getAdditionalCandidateProvider(String modelName) {
+	private void convertToDefExpGroupAnnotation(Instance instance, List<DocumentLinkedAnnotation> extractCandidates) {
 
-		List<GeneralCandidateProvider> candList = new ArrayList<>();
+		for (DocumentLinkedAnnotation ec : extractCandidates) {
+			instance.addCandidateAnnotation(AnnotationBuilder.toAnnotation(instance.getDocument(),
+					EntityType.get("DefinedExperimentalGroup"), ec.getSurfaceForm(), ec.getStartDocCharOffset()));
+		}
+
+	}
+
+	private void getAdditionalCandidateProvider(String modelName) {
+
 		DeliveryMethodPredictor deliveryMethodPrediction = null;
 		if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
 
@@ -626,15 +587,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			deliveryMethodPrediction.predictAllInstances(2);
 
 			for (Instance instance : instanceProvider.getInstances()) {
-				GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
 //				if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
-				ap.addBatchSlotFiller(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+				instance.addCandidateAnnotations(
+						deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
 //				}
 //			ap.addSlotFiller(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
-				candList.add(ap);
 			}
 		}
-		return candList;
 	}
 
 	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
@@ -909,39 +868,25 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		return new AdvancedLearner(new SGD(0.0001, 0), new L2(0.0000000));
 	}
 
-	private EntityTemplateCandidateProvider extractTreatmentCandidatesFromGold(Instance instance) {
-		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldTreatments(instance));
-		return entityTemplateCandidateProvider;
+	private void extractTreatmentCandidatesFromGold(Instance instance) {
+		instance.addCandidateAnnotations(extractGoldTreatments(instance));
 	}
 
-	private EntityTemplateCandidateProvider extractOrganismModelCandidatesFromGold(Instance instance) {
-		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldOrganismModels(instance));
-		return entityTemplateCandidateProvider;
+	private void extractOrganismModelCandidatesFromGold(Instance instance) {
+		instance.addCandidateAnnotations(extractGoldOrganismModels(instance));
 	}
 
-	private EntityTemplateCandidateProvider extractInjuryCandidatesFromGold(Instance instance) {
-		EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(instance);
-		entityTemplateCandidateProvider.addBatchSlotFiller(extractGoldInjuryModels(instance));
-		return entityTemplateCandidateProvider;
+	private void extractInjuryCandidatesFromGold(Instance instance) {
+		instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
 	}
 
-	private List<? extends ICandidateProvider> extractTreatmentsFromNERLA(List<Instance> instances) {
+	private void extractTreatmentsFromNERLA(List<Instance> instances) {
 
-		List<EntityTemplateCandidateProvider> provider = new ArrayList<>();
+		JSONNerlaReader prov = new JSONNerlaReader(new File("src/main/resources/slotfilling/treatment/corpus/nerla/"));
 
-		JsonNerlaProvider prov = new JsonNerlaProvider(
-				new File("src/main/resources/slotfilling/treatment/corpus/nerla/"));
+		for (Instance instance : instances) {
 
-		Map<Instance, List<DocumentLinkedAnnotation>> nerlas = prov.getForInstances(instances);
-		for (Entry<Instance, List<DocumentLinkedAnnotation>> instanceNerla : nerlas.entrySet()) {
-
-			Instance instance = instanceNerla.getKey();
-			EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(
-					instance);
-
-			for (DocumentLinkedAnnotation nerla : instanceNerla.getValue()) {
+			for (DocumentLinkedAnnotation nerla : prov.getForInstance(instance)) {
 
 				if (nerla.getEntityType() == SCIOEntityTypes.compound
 						|| nerla.getEntityType().isSubEntityOf(SCIOEntityTypes.compound)) {
@@ -949,46 +894,36 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 					EntityTemplate compoundTreatment = new EntityTemplate(
 							AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment))
 									.setSingleSlotFiller(SCIOSlotTypes.hasCompound, new EntityTemplate(nerla));
-					entityTemplateCandidateProvider.addSlotFiller(compoundTreatment);
+					instance.addCandidateAnnotation(compoundTreatment);
 				} else if (nerla.getEntityType() != SCIOEntityTypes.compoundTreatment
 						&& nerla.getEntityType().isSubEntityOf(SCIOEntityTypes.treatment)) {
-					entityTemplateCandidateProvider.addSlotFiller(new EntityTemplate(nerla));
+					instance.addCandidateAnnotation(new EntityTemplate(nerla));
 				}
 
 			}
-
-			provider.add(entityTemplateCandidateProvider);
 		}
 
-		return provider;
 	}
 
-	private List<? extends ICandidateProvider> extractTreatmentsFromTRAIN(List<Instance> instances) {
-
-		List<EntityTemplateCandidateProvider> provider = new ArrayList<>();
+	private void extractTreatmentsFromTRAIN(List<Instance> instances) {
 
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
 		for (Instance instance : instances) {
-			EntityTemplateCandidateProvider entityTemplateCandidateProvider = new EntityTemplateCandidateProvider(
-					instance);
 			for (AbstractAnnotation nerla : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
 					trainDictionary)) {
-
 				if (nerla.getEntityType() == SCIOEntityTypes.compound
 						|| nerla.getEntityType().isSubEntityOf(SCIOEntityTypes.compound)) {
 					EntityTemplate compoundTreatment = new EntityTemplate(
 							AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment))
 									.setSingleSlotFiller(SCIOSlotTypes.hasCompound, nerla);
-					entityTemplateCandidateProvider.addSlotFiller(compoundTreatment);
+					instance.addCandidateAnnotation(compoundTreatment);
 				} else if (nerla.getEntityType() != SCIOEntityTypes.compoundTreatment
 						&& nerla.getEntityType().isSubEntityOf(SCIOEntityTypes.treatment)) {
-					entityTemplateCandidateProvider.addSlotFiller(nerla);
+					instance.addCandidateAnnotation(nerla);
 				}
 			}
-			provider.add(entityTemplateCandidateProvider);
 		}
-		return provider;
 	}
 
 	private void evaluateExpGroupSimple(Map<Instance, State> results) {
@@ -1525,44 +1460,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		return injuries;
 	}
 
-	private Map<Instance, List<DocumentLinkedAnnotation>> returnEmptyMap(List<Instance> instances) {
-
-		Map<Instance, List<DocumentLinkedAnnotation>> map = new HashMap<>();
-		for (Instance instance : instances)
-			map.put(instance, Collections.emptyList());
-		return map;
+	private List<DocumentLinkedAnnotation> extractCandidatesFromGold(Instance instance) {
+		return instance.getGoldAnnotations().getAbstractAnnotations().stream()
+				.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
+				.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
+				.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList());
 	}
 
-	private Map<Instance, List<DocumentLinkedAnnotation>> extractCandidatesFromGold(List<Instance> instances) {
-
-		Map<Instance, List<DocumentLinkedAnnotation>> gold = new HashMap<>();
-		for (Instance instance : instances) {
-			gold.put(instance, new ArrayList<>());
-			gold.get(instance)
-					.addAll(instance.getGoldAnnotations().getAbstractAnnotations().stream()
-							.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
-							.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
-							.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
-		}
-		return gold;
-	}
-
-	private Map<Instance, List<DocumentLinkedAnnotation>> annotateGroupNamesWithNPCHunksAndPattern(
-			List<Instance> instances) {
-
-		Map<Instance, List<DocumentLinkedAnnotation>> annotations = new HashMap<>();
-
-		for (Instance instance : instances) {
-			final List<DocumentLinkedAnnotation> findings = new ArrayList<>();
-			extractWithNPCHunks(instance, findings);
-			extractWithPattern(instance, findings);
-			annotations.put(instance, findings);
-		}
-
-		return annotations;
-	}
-
-	private void extractWithNPCHunks(Instance instance, final List<DocumentLinkedAnnotation> findings) {
+	private List<DocumentLinkedAnnotation> extractWithNPCHunks(Instance instance) {
+		List<DocumentLinkedAnnotation> anns = new ArrayList<>();
 		try {
 			for (TermIndexPair groupName : new NPChunker(instance.getDocument()).getNPs()) {
 				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)")) {
@@ -1574,16 +1480,18 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 						annotation = null;
 					}
 					if (annotation != null)
-						findings.add(annotation);
+						anns.add(annotation);
 
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return anns;
 	}
 
-	private void extractWithPattern(Instance instance, final List<DocumentLinkedAnnotation> findings) {
+	private List<DocumentLinkedAnnotation> extractWithPattern(Instance instance) {
+		List<DocumentLinkedAnnotation> anns = new ArrayList<>();
 		for (PatternIndexPair p : CollectExpGroupNames.pattern) {
 			Matcher m = p.pattern.matcher(instance.getDocument().documentContent);
 			while (m.find()) {
@@ -1596,34 +1504,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 						annotation = null;
 					}
 					if (annotation != null)
-						findings.add(annotation);
+						anns.add(annotation);
 				}
 			}
 		}
-	}
-
-	private Map<Instance, List<DocumentLinkedAnnotation>> annotateGroupNamesWithNPCHunks(List<Instance> instances) {
-
-		Map<Instance, List<DocumentLinkedAnnotation>> annotations = new HashMap<>();
-
-		for (Instance instance : instances) {
-			final List<DocumentLinkedAnnotation> findings = new ArrayList<>();
-			extractWithNPCHunks(instance, findings);
-			annotations.put(instance, findings);
-		}
-
-		return annotations;
-	}
-
-	public Map<Instance, List<DocumentLinkedAnnotation>> annotateGroupNamesWithPattern(List<Instance> instances) {
-		Map<Instance, List<DocumentLinkedAnnotation>> annotations = new HashMap<>();
-
-		for (Instance instance : instances) {
-			final List<DocumentLinkedAnnotation> findings = new ArrayList<>();
-			annotations.put(instance, findings);
-			extractWithPattern(instance, findings);
-		}
-		return annotations;
+		return anns;
 	}
 
 	@Deprecated

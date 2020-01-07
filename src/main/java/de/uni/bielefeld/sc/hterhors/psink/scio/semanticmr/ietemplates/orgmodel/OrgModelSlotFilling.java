@@ -177,6 +177,7 @@ public class OrgModelSlotFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
+			log.info("Score: " + toResults(rule, score));
 			log.info("modelName: " + predictor.modelName);
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement
@@ -184,6 +185,7 @@ public class OrgModelSlotFilling {
 			 */
 			break;
 		}
+		
 		resultsOut.flush();
 		resultsOut.close();
 

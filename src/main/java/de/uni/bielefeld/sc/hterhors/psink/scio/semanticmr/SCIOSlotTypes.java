@@ -10,6 +10,7 @@ public class SCIOSlotTypes {
 	public static final SlotType hasOrganismModel = getLazy("hasOrganismModel");
 	public static final SlotType hasInjuryModel = getLazy("hasInjuryModel");
 	public static final SlotType hasInjuryDevice = getLazy("hasInjuryDevice");
+	public static final SlotType hasDeliveryMethod = SlotType.get("hasDeliveryMethod");
 
 	private static SlotType getLazy(String name) {
 		try {

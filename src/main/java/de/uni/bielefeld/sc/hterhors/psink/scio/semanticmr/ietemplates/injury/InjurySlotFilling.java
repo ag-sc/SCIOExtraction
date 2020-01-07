@@ -133,12 +133,12 @@ public class InjurySlotFilling {
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
 					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-			SlotType.get("hasInjuryDevice").exclude();
+			SlotType.get("hasInjuryDevice").include();
 			SlotType.get("hasInjuryArea").exclude();
 			SlotType.get("hasInjuryPostsurgicalCare").exclude();
 			SlotType.get("hasAnimalCareCondition").exclude();
 			SlotType.get("hasInjuryIntensity").exclude();
-			SlotType.get("hasInjuryLocation").exclude();
+			SlotType.get("hasInjuryLocation").include();
 			SlotType.get("hasDirection").exclude();
 			SlotType.get("hasMedication").exclude();
 			SlotType.get("hasInjuryAnaesthesia").exclude();
@@ -147,13 +147,13 @@ public class InjurySlotFilling {
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-			SlotType.get("hasInjuryDevice").exclude();
-			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-			System.out.println("score: " + score);
-
 			SlotType.get("hasInjuryDevice").include();
 			Score device = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-			System.out.println("device: " + device);
+			System.out.println("standard: " + device);
+
+			SlotType.excludeAll();
+			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+			System.out.println("only root: " + score);
 
 			log.info(predictor.crf.getTrainingStatistics());
 			log.info(predictor.crf.getTestStatistics());

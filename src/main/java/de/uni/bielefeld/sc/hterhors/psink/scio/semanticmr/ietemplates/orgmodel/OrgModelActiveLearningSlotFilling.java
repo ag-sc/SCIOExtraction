@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.apache.jena.sparql.pfunction.library.str;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

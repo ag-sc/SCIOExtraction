@@ -4,20 +4,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.sf.GeneralCandidateProvider;
-import de.hterhors.semanticmr.candprov.sf.ICandidateProvider;
-import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
-import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -39,8 +38,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.templates.InjuryDeviceTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate;
@@ -66,13 +63,14 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
 
 		if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT
 				|| InjurySlotFilling.rule == EInjuryModificationRules.ROOT_DEVICE)
-			return Collections.emptyList();
+			return Collections.emptyMap();
 
-		List<GeneralCandidateProvider> provider = new ArrayList<>();
+		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
+
 		String vertebralAreaModelName = "VertebralArea_STD";
 //		String vertebralAreaModelName = "VertebralArea_" + modelName;
 		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
@@ -83,15 +81,14 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		vertebralAreaPrediction.predictAllInstances(2);
 
 		for (Instance instance : instanceProvider.getInstances()) {
-			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
-			ap.addBatchSlotFiller(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-			provider.add(ap);
+			map.put(instance, new ArrayList<>());
+			map.get(instance).addAll(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
 		}
-		return provider;
+		return map;
 	}
 
 	@Override
-	protected File getExternalNerlAnnotations() {
+	protected File getExternalNerlaFile() {
 		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/nerla/");
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
 //		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
@@ -204,28 +201,28 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		return InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule);
 	}
 
-	@Override
-	public HardConstraintsProvider getHardConstraints() {
-
-		HardConstraintsProvider hcp = new HardConstraintsProvider();
-		hcp.addHardConstraints(new AbstractHardConstraint() {
-
-			@Override
-			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
-
-				if (entityTemplate.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
-					final ESection section = AutomatedSectionifcation.getInstance(state.getInstance())
-							.getSection(entityTemplate.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
-									.getSentenceIndex());
-					if (!(section == ESection.BEGIN || section == ESection.ABSTRACT) || entityTemplate
-							.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation().getSentenceIndex() > 15)
-						return true;
-				}
-
-				return false;
-			}
-
-		});
-		return hcp;
-	}
+//	@Override
+//	public HardConstraintsProvider getHardConstraints() {
+//
+//		HardConstraintsProvider hcp = new HardConstraintsProvider();
+//		hcp.addHardConstraints(new AbstractHardConstraint() {
+//
+//			@Override
+//			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
+//
+//				if (entityTemplate.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
+//					final ESection section = AutomatedSectionifcation.getInstance(state.getInstance())
+//							.getSection(entityTemplate.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+//									.getSentenceIndex());
+//					if (!(section == ESection.BEGIN || section == ESection.ABSTRACT) || entityTemplate
+//							.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation().getSentenceIndex() > 15)
+//						return true;
+//				}
+//
+//				return false;
+//			}
+//
+//		});
+//		return hcp;
+//	}
 }

@@ -19,9 +19,6 @@ import org.apache.logging.log4j.Logger;
 import com.github.jsonldjava.shaded.com.google.common.collect.Streams;
 
 import de.hterhors.semanticmr.candprov.helper.DictionaryFromInstanceHelper;
-import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
-import de.hterhors.semanticmr.candprov.sf.GeneralCandidateProvider;
-import de.hterhors.semanticmr.candprov.sf.ICandidateProvider;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -48,8 +45,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.json.JsonNerlaProvider;
-import de.hterhors.semanticmr.nerla.NerlaCollector;
+import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 
 public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProject {
@@ -78,7 +74,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
 	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
@@ -94,7 +90,6 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final ISamplingStoppingCriterion[] sampleStoppingCrits;
 
 	private final List<IExplorationStrategy> explorerList;
-	protected final AnnotationCandidateRetrievalCollection candidateRetrieval;
 
 	public List<Instance> getTrainingInstances() {
 		return Collections.unmodifiableList(trainingInstances);
@@ -143,44 +138,30 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
-		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
-		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(getExternalNerlAnnotations()));
-		candidateRetrieval = nerlaProvider.collect();
+		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(getExternalNerlaFile());
 
-		for (ICandidateProvider ap : getAdditionalCandidateProvider()) {
-			candidateRetrieval.registerCandidateProvider(ap);
+		for (Instance instance : instanceProvider.getInstances()) {
+			instance.addCandidateAnnotations(nerlaJSONReader.getForInstance(instance));
+		}
+
+		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider().entrySet()) {
+			ap.getKey().addCandidateAnnotations(ap.getValue());
 		}
 
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
-		for (Instance instance : trainingInstances) {
-			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
-
-			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
-					trainDictionary)) {
-				ap.addSlotFiller(annotation);
-			}
-			candidateRetrieval.registerCandidateProvider(ap);
+		for (Instance instance : instanceProvider.getInstances()) {
+			instance.addCandidateAnnotations(
+					DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
 		}
 
-		// for (Instance instance : developmentInstances) {
-//			GeneralCandidateProvider ap = new GeneralCandidateProvider(instance);
-//			
-//			for (AbstractAnnotation annotation : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
-//					trainDictionary)) {
-//				ap.addSlotFiller(annotation);
-//			}
-//			candidateRetrieval.registerCandidateProvider(ap);
-//		}
-//		
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
 		 * changes during the exploration. This explorer is especially designed for slot
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, candidateRetrieval,
-				getHardConstraints());
+		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, getHardConstraints());
 
 		explorerList = new ArrayList<>(Arrays.asList(explorer));
 		explorerList.addAll(getAdditionalExplorer());
@@ -198,11 +179,11 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return new HardConstraintsProvider();
 	}
 
-	protected List<? extends ICandidateProvider> getAdditionalCandidateProvider() {
-		return Collections.emptyList();
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
+		return Collections.emptyMap();
 	}
 
-	abstract protected File getExternalNerlAnnotations();
+	abstract protected File getExternalNerlaFile();
 
 	abstract protected File getInstanceDirectory();
 

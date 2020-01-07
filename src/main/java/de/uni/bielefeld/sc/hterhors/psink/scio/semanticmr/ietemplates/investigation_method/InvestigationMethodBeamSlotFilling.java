@@ -13,7 +13,6 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.candprov.sf.AnnotationCandidateRetrievalCollection;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
@@ -48,8 +47,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.json.JsonNerlaProvider;
-import de.hterhors.semanticmr.nerla.NerlaCollector;
+import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
@@ -191,9 +189,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * defines the upper bound!
 		 * 
 		 */
-		NerlaCollector nerlaProvider = new NerlaCollector(instanceProvider.getInstances());
-		nerlaProvider.addNerlaProvider(new JsonNerlaProvider(externalNerlaAnnotations));
-
+		JSONNerlaReader reader = new JSONNerlaReader(externalNerlaAnnotations);
 		/**
 		 * We can add more candidate provider if necessary.
 		 * 
@@ -207,9 +203,14 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * each slot.
 		 *
 		 */
+
+		for (Instance instance : instanceProvider.getInstances()) {
+			instance.addCandidateAnnotations(reader.getForInstance(instance));
+		}
+
 //		AnnotationCandidateRetrievalCollection candidateRetrieval = new AnnotationCandidateRetrievalCollection(
 //				instanceProvider.getInstances());
-		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
+//		AnnotationCandidateRetrievalCollection candidateRetrieval = nerlaProvider.collect();
 
 //		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 //
@@ -238,9 +239,9 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, candidateRetrieval);
+		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction);
 
-		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(candidateRetrieval,
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
 				AnnotationBuilder.toAnnotation(EntityType.get("InvestigtaionMethod")));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);
