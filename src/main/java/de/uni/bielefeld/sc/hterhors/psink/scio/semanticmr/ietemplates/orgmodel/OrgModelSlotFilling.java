@@ -127,7 +127,7 @@ public class OrgModelSlotFilling {
 
 			Collections.shuffle(docs, new Random(1000L));
 
-			int percent = (int)((((double)docs.size()) / 100D) * 80D);
+			int percent = (int) ((((double) docs.size()) / 100D) * 80D);
 
 			List<String> tn = docs.subList(0, percent);
 			List<String> dn = docs.subList(percent, docs.size());
@@ -157,7 +157,7 @@ public class OrgModelSlotFilling {
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-		
+
 			resultsOut.println(toResults(rule, score));
 
 			/**
@@ -185,7 +185,7 @@ public class OrgModelSlotFilling {
 			 */
 			break;
 		}
-		
+
 		resultsOut.flush();
 		resultsOut.close();
 

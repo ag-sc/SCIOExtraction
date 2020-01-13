@@ -84,7 +84,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected AdvancedLearner getLearner() {
-		return new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001));
+		return new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001F));
 	}
 
 	@Override
