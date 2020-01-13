@@ -26,7 +26,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
@@ -94,10 +94,10 @@ public class InjurySlotFilling {
 
 		resultsOut.println(header);
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-		VertebralAreaFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
-
+		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
+		SlotType.includeAll();
 		for (EInjuryModificationRules rule : EInjuryModificationRules.values()) {
-			InjurySlotFilling.rule = EInjuryModificationRules.ROOT;
+			InjurySlotFilling.rule = EInjuryModificationRules.ROOT_DEVICE;
 
 //			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 //					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
@@ -133,26 +133,27 @@ public class InjurySlotFilling {
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
 					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-			SlotType.get("hasInjuryDevice").include();
-			SlotType.get("hasInjuryArea").exclude();
-			SlotType.get("hasInjuryPostsurgicalCare").exclude();
-			SlotType.get("hasAnimalCareCondition").exclude();
-			SlotType.get("hasInjuryIntensity").exclude();
-			SlotType.get("hasInjuryLocation").include();
-			SlotType.get("hasDirection").exclude();
-			SlotType.get("hasMedication").exclude();
-			SlotType.get("hasInjuryAnaesthesia").exclude();
+//			SlotType.get("hasInjuryDevice").include();
+//			SlotType.get("hasInjuryLocation").exclude();
+//
+//			SlotType.get("hasInjuryArea").exclude();
+//			SlotType.get("hasInjuryPostsurgicalCare").exclude();
+//			SlotType.get("hasAnimalCareCondition").exclude();
+//			SlotType.get("hasInjuryIntensity").exclude();
+//			SlotType.get("hasDirection").exclude();
+//			SlotType.get("hasMedication").exclude();
+//			SlotType.get("hasInjuryAnaesthesia").exclude();
 
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-			SlotType.get("hasInjuryDevice").include();
 			Score device = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-			System.out.println("standard: " + device);
 
 			SlotType.excludeAll();
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+
+			System.out.println("standard: " + device);
 			System.out.println("only root: " + score);
 
 			log.info(predictor.crf.getTrainingStatistics());
@@ -173,11 +174,11 @@ public class InjurySlotFilling {
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-//			log.info("Coverage Training: " + trainCoverage);
-//
-//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(true);
-//			log.info("Coverage Development: " + devCoverage);
+			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+			log.info("Coverage Training: " + trainCoverage);
+
+			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+			log.info("Coverage Development: " + devCoverage);
 
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
@@ -187,11 +188,8 @@ public class InjurySlotFilling {
 			 * NER-annotations during slot-filling.
 			 */
 			log.info("modelName: " + predictor.modelName);
-			/**
-			 * TODO: Compare results with results when changing some parameter. Implement
-			 * more sophisticated feature-templates.
-			 */
-			break;
+
+//			break;
 		}
 
 		resultsOut.flush();

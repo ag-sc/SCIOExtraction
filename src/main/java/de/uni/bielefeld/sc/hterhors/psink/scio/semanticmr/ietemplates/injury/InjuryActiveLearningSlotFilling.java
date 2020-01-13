@@ -26,7 +26,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
@@ -83,8 +83,8 @@ public class InjuryActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
-		VertebralAreaFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
-		InjurySlotFilling.rule = EInjuryModificationRules.ROOT_LOCATION_DEVICE_ANAESTHESIA;
+		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
+		InjurySlotFilling.rule = EInjuryModificationRules.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusfive.csv");
 

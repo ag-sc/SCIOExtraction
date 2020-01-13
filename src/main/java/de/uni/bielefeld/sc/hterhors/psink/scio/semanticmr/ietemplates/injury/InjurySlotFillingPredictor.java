@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,7 @@ import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
@@ -35,9 +37,11 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.templates.InjuryDeviceTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.AnnotationExistsInAbstractTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DistinctMultiValueSlotsTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate;
@@ -62,27 +66,43 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	}
 
+	final public boolean useGoldLocations = false;
+
 	@Override
 	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
 
-		if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT
-				|| InjurySlotFilling.rule == EInjuryModificationRules.ROOT_DEVICE)
-			return Collections.emptyMap();
-
 		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
+		if (!useGoldLocations) {
 
-		String vertebralAreaModelName = "VertebralArea_STD";
-//		String vertebralAreaModelName = "VertebralArea_" + modelName;
-		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames);
+			if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT
+					|| InjurySlotFilling.rule == EInjuryModificationRules.ROOT_DEVICE)
+				return Collections.emptyMap();
 
-		vertebralAreaPrediction.trainOrLoadModel();
+//		String vertebralAreaModelName = "VertebralArea_STD";
+			String vertebralAreaModelName = "VertebralArea_" + modelName;
+			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
+					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-		vertebralAreaPrediction.predictAllInstances(2);
+			vertebralAreaPrediction.trainOrLoadModel();
 
-		for (Instance instance : instanceProvider.getInstances()) {
-			map.put(instance, new ArrayList<>());
-			map.get(instance).addAll(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+			vertebralAreaPrediction.predictAllInstances(2);
+
+			for (Instance instance : instanceProvider.getInstances()) {
+				map.put(instance, new ArrayList<>());
+				map.get(instance)
+						.addAll(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+			}
+		} else {
+			for (Instance instance : instanceProvider.getInstances()) {
+				map.put(instance, new ArrayList<>());
+
+				map.get(instance)
+						.addAll(instance
+								.getGoldAnnotations().getAnnotations().stream().map(a -> a.asInstanceOfEntityTemplate()
+										.getSingleFillerSlot(SCIOSlotTypes.hasLocation).getSlotFiller())
+								.filter(a -> a != null).collect(Collectors.toSet()));
+
+			}
 		}
 		return map;
 	}
@@ -129,21 +149,23 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-		featureTemplates.add(new LevenshteinTemplate());
+//		featureTemplates.add(new LevenshteinTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
-		featureTemplates.add(new DistinctMultiValueSlotsTemplate());
-		featureTemplates.add(new MultiValueSlotSizeTemplate());
+//		featureTemplates.add(new DistinctMultiValueSlotsTemplate());
+//		featureTemplates.add(new MultiValueSlotSizeTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
-		featureTemplates.add(new ClusterTemplate());
-		featureTemplates.add(new EntityTypeContextTemplate());
+//		featureTemplates.add(new ClusterTemplate());
+//		featureTemplates.add(new EntityTypeContextTemplate());
 		featureTemplates.add(new DocumentPartTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
 
 		featureTemplates.add(new InjuryDeviceTemplate());
 		featureTemplates.add(new DocumentSectionTemplate());
+
+		featureTemplates.add(new AnnotationExistsInAbstractTemplate());
 
 //		featureTemplates.add(new OlfactoryContextTemplate());
 //		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));

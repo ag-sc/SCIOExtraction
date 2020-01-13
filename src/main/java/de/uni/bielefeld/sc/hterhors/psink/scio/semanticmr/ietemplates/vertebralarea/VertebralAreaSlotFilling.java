@@ -28,7 +28,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebrala
  * @author hterhors
  *
  */
-public class VertebralAreaFilling {
+public class VertebralAreaSlotFilling {
 	/**
 	 * Start the slot filling procedure.
 	 * 
@@ -36,7 +36,7 @@ public class VertebralAreaFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new VertebralAreaFilling();
+		new VertebralAreaSlotFilling();
 	}
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
@@ -50,7 +50,7 @@ public class VertebralAreaFilling {
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
 	public static EVertebralAreaModifications rule;
 
-	public VertebralAreaFilling() throws IOException {
+	public VertebralAreaSlotFilling() throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -131,6 +131,7 @@ public class VertebralAreaFilling {
 		 * The upper bound depends only on the exploration strategy, e.g. the provided
 		 * NER-annotations during slot-filling.
 		 */
+		log.info("results: " + toResults(rule, score));
 		log.info("modelName: " + predictor.modelName);
 		/**
 		 * TODO: Compare results with results when changing some parameter. Implement

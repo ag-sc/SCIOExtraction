@@ -33,6 +33,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebrala
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaConditionTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaRootMatchTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaRootOverlapTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.AnnotationExistsInAbstractTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
 /**
@@ -95,6 +96,8 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
 
+		featureTemplates.add(new AnnotationExistsInAbstractTemplate());
+
 		featureTemplates.add(new VertebralAreaRootOverlapTemplate());
 		featureTemplates.add(new VertebralAreaConditionTemplate());
 		featureTemplates.add(new VertebralAreaRootMatchTemplate());
@@ -142,7 +145,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
 		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>(
-				VertebralAreaRestrictionProvider.getByRule(VertebralAreaFilling.rule));
+				VertebralAreaRestrictionProvider.getByRule(VertebralAreaSlotFilling.rule));
 
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType.get("VertebralArea"))
