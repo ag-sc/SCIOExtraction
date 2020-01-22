@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import com.github.jsonldjava.shaded.com.google.common.collect.Streams;
 
 import de.hterhors.semanticmr.candidateretrieval.helper.DictionaryFromInstanceHelper;
+import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -37,7 +38,9 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
+import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
@@ -47,6 +50,8 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.Classification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.weka.SentenceClassificationWEKA;
 
 public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProject {
 
@@ -110,7 +115,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Remove empty instances from corpus
 		 */
-		InstanceProvider.removeEmptyInstances = true;
+//		InstanceProvider.removeEmptyInstances = true;
 
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
@@ -155,6 +160,168 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 					DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
 		}
 
+//		IFilter goldFilter = new IFilter() {
+//
+//			Map<Document, Map<Integer, Classification>> cache = buildCache();
+//
+//			@Override
+//			public boolean remove(AbstractAnnotation candidate) {
+//
+//				if (!candidate.isInstanceOfDocumentLinkedAnnotation())
+//					return false;
+//
+//				Document doc = candidate.asInstanceOfDocumentLinkedAnnotation().document;
+//
+//				Map<Integer, Classification> classification = cache.get(doc);
+//
+//				if (classification == null) {
+//					return false;
+//				}
+//
+//				if (!classification.get(candidate.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant)
+//					return true;
+//
+//				return false;
+//			}
+//
+//			private Map<Document, Map<Integer, Classification>> buildCache() {
+//				Map<Document, Map<Integer, Classification>> cache = new HashMap<>();
+//				Map<Integer, Classification> classification;
+//				
+////				for (Instance instance : instanceProvider.getInstances()) {
+////				for (Instance instance : developmentInstances) {
+//				for (Instance instance : trainingInstances) {
+//					if ((classification = cache.get(instance.getDocument())) == null) {
+//						classification = new HashMap<>();
+//
+//						Set<Integer> ints = new HashSet<>();
+//
+//						for (EntityTemplate gold : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+//
+//							Collection<Set<AbstractAnnotation>> x = gold.filter().docLinkedAnnoation().merge()
+//									.rootAnnotation().singleSlots().multiSlots().nonEmpty().build()
+//									.getMergedAnnotations().values();
+//
+//							for (Set<AbstractAnnotation> string : x) {
+//								for (AbstractAnnotation a : string) {
+//									if (!a.isInstanceOfDocumentLinkedAnnotation())
+//										continue;
+//									ints.add(a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex());
+//								}
+//							}
+//
+//						}
+//						for (int i = 0; i < instance.getDocument().getNumberOfSentences(); i++) {
+//							if (ints.contains(i))
+//								classification.put(i, new Classification(i, true, 1));
+//							else
+//								classification.put(i, new Classification(i, false, 1));
+//						}
+//
+//						cache.put(instance.getDocument(), classification);
+//					}
+//				}
+//				return cache;
+//			}
+//
+//		};
+
+		IFilter predictFilter = new IFilter() {
+
+			SentenceClassificationWEKA senClassification = new SentenceClassificationWEKA(trainingInstances);
+
+			Map<Document, Map<Integer, Classification>> cache = new HashMap<>();
+
+			@Override
+			public boolean remove(AbstractAnnotation candidate) {
+
+				if (!candidate.isInstanceOfDocumentLinkedAnnotation())
+					return false;
+
+				Document doc = candidate.asInstanceOfDocumentLinkedAnnotation().document;
+
+				Map<Integer, Classification> classification;
+
+				if ((classification = cache.get(doc)) == null) {
+					classification = senClassification.classifyDocument(doc);
+					cache.put(doc, classification);
+				}
+
+				if (candidate.isInstanceOfEntityTemplate()) {
+
+					Collection<Set<AbstractAnnotation>> x = candidate.asInstanceOfEntityTemplate().filter()
+							.docLinkedAnnoation().merge().rootAnnotation().singleSlots().multiSlots().nonEmpty().build()
+							.getMergedAnnotations().values();
+
+					boolean allRelevant = true;
+
+					for (Set<AbstractAnnotation> string : x) {
+						for (AbstractAnnotation a : string) {
+							allRelevant &= classification
+									.get(a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant;
+							if (!allRelevant) {
+								return true;
+							}
+						}
+					}
+
+				} else if (candidate.isInstanceOfDocumentLinkedAnnotation()) {
+					if (!classification
+							.get(candidate.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant)
+						return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		for (Instance instance : instanceProvider.getInstances()) {
+//			instance.removeCandidateAnnotation(predictFilter);
+//			instance.removeCandidateAnnotation(goldFilter);
+		}
+
+		HardConstraintsProvider prov = getHardConstraints();
+
+//		prov.addHardConstraints(new AbstractHardConstraint() {
+//			
+//			Set<Instance> trainInstancesSet = new HashSet<>(trainingInstances);
+//			
+//			SentenceClassificationWEKA senClassification = new SentenceClassificationWEKA(trainingInstances);
+//			Map<Instance, Map<Integer, Classification>> cache = new HashMap<>();
+//			
+//			@Override
+//			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+//				Map<Integer, Classification> classification;
+//				if (isTrainingInstance(currentState.getInstance()))
+//					return false;
+//				if ((classification = cache.get(currentState.getInstance())) == null) {
+//					classification = senClassification.classify(currentState.getInstance(), new Score());
+//					cache.put(currentState.getInstance(), classification);
+//				}
+//				
+//				Collection<Set<AbstractAnnotation>> x = entityTemplate.filter().docLinkedAnnoation().merge()
+//						.rootAnnotation().singleSlots().multiSlots().nonEmpty().build().getMergedAnnotations().values();
+//				
+//				boolean allRelevant = true;
+//				
+//				for (Set<AbstractAnnotation> string : x) {
+//					for (AbstractAnnotation a : string) {
+//						allRelevant &= classification
+//								.get(a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant;
+//						if (!allRelevant) {
+//							return true;
+//						}
+//					}
+//				}
+//				
+//				return false;
+//			}
+//			
+//			private boolean isTrainingInstance(Instance instance) {
+//				return trainInstancesSet.contains(instance);
+//			}
+//		});
 
 		/**
 		 * For the slot filling problem, the SlotFillingExplorer is added to perform
@@ -162,7 +329,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 * filling and is parameterized with a candidate retrieval and the
 		 * constraintsProvider.
 		 */
-		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, getHardConstraints());
+		SlotFillingExplorer explorer = new SlotFillingExplorer(predictionObjectiveFunction, prov);
 
 		explorerList = new ArrayList<>(Arrays.asList(explorer));
 		explorerList.addAll(getAdditionalExplorer());
@@ -170,6 +337,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		maxStepCrit = new MaxChainLengthCrit(100);
 		noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
 		sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit, noModelChangeCrit };
+
 	}
 
 	public List<IExplorationStrategy> getAdditionalExplorer() {

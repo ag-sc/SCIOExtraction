@@ -110,6 +110,9 @@ public class BOWExtractor {
 		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation())
 			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));
 
+		if(SCIOSlotTypes.hasGroupName.isExcluded())
+			return bow;
+		
 		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
 
 			bow.addAll(extractEntityTypeBOW(groupName.getEntityType()));

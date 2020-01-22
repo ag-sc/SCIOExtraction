@@ -148,11 +148,14 @@ public class ContextCardinalityTemplate extends AbstractFeatureTemplate<ContextB
 			tokens.add(docLinkedRootAnnotation.relatedTokens);
 
 		}
+		if (SCIOSlotTypes.hasGroupName.isIncluded()) {
 
-		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+					.getSlotFiller()) {
 
-			if (groupName.isInstanceOfDocumentLinkedAnnotation())
-				tokens.add(groupName.asInstanceOfDocumentLinkedAnnotation().relatedTokens);
+				if (groupName.isInstanceOfDocumentLinkedAnnotation())
+					tokens.add(groupName.asInstanceOfDocumentLinkedAnnotation().relatedTokens);
+			}
 		}
 		return tokens;
 	}

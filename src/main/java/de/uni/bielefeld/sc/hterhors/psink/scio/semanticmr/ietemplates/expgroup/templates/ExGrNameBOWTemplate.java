@@ -189,13 +189,15 @@ public class ExGrNameBOWTemplate extends AbstractFeatureTemplate<ExGrNaBOWScope>
 				groupBow = Collections.emptySet();
 
 			bows.add(groupBow);
+			if (SCIOSlotTypes.hasGroupName.isIncluded()) {
+				for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+						.getSlotFiller()) {
 
-			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+					Set<String> groupNameBow = BOWExtractor
+							.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation());
 
-				Set<String> groupNameBow = BOWExtractor
-						.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation());
-
-				bows.add(groupNameBow);
+					bows.add(groupNameBow);
+				}
 			}
 
 			allBows.add(bows);

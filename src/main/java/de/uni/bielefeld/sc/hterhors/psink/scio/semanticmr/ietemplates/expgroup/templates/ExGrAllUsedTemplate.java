@@ -116,9 +116,12 @@ public class ExGrAllUsedTemplate extends AbstractFeatureTemplate<AllUsedScope> {
 
 		}
 
-		addFactor(factors, state, SCIOSlotTypes.hasOrganismModel, predictedOrganismModels.size());
-		addFactor(factors, state, SCIOSlotTypes.hasInjuryModel, predictedInjuryModels.size());
-		addFactor(factors, state, SCIOSlotTypes.hasTreatmentType, predictedTreatmentTypes.size());
+		if (SCIOSlotTypes.hasOrganismModel.isIncluded())
+			addFactor(factors, state, SCIOSlotTypes.hasOrganismModel, predictedOrganismModels.size());
+		if (SCIOSlotTypes.hasInjuryModel.isIncluded())
+			addFactor(factors, state, SCIOSlotTypes.hasInjuryModel, predictedInjuryModels.size());
+		if (SCIOSlotTypes.hasTreatmentType.isIncluded())
+			addFactor(factors, state, SCIOSlotTypes.hasTreatmentType, predictedTreatmentTypes.size());
 
 		return factors;
 	}
@@ -129,6 +132,9 @@ public class ExGrAllUsedTemplate extends AbstractFeatureTemplate<AllUsedScope> {
 	}
 
 	public EntityTemplate collectSFS(EntityTemplate experimentalGroup, SlotType slotType) {
+		if (slotType.isExcluded())
+			return null;
+
 		final SingleFillerSlot sfs = experimentalGroup.getSingleFillerSlot(slotType);
 
 		if (sfs.containsSlotFiller())
@@ -138,6 +144,10 @@ public class ExGrAllUsedTemplate extends AbstractFeatureTemplate<AllUsedScope> {
 	}
 
 	public Set<EntityTemplate> collectMFS(EntityTemplate experimentalGroup, SlotType slotType) {
+
+		if (slotType.isExcluded())
+			Collections.emptySet();
+
 		return experimentalGroup.getMultiFillerSlot(slotType).getSlotFiller().stream()
 				.map(e -> e.asInstanceOfEntityTemplate()).collect(Collectors.toSet());
 	}

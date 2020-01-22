@@ -12,6 +12,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -118,13 +119,16 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 			for (AbstractAnnotation treatment : mfs.getSlotFiller()) {
 				final Set<Integer> treatmentIndicies = new HashSet<>();
 
-				AbstractAnnotation main;
+				AbstractAnnotation main = null;
 				if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
-					main = treatment.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-							.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
-				} else {
-					main = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
+					SingleFillerSlot sfs = treatment.asInstanceOfEntityTemplate()
+							.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
+					if (sfs.containsSlotFiller())
+						main = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
 				}
+
+				if (main == null)
+					main = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
 
 				if (main.isInstanceOfDocumentLinkedAnnotation()) {
 					treatmentIndicies
@@ -177,12 +181,15 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 			sentenceIndicies.add(docLinkedRootAnnotation.relatedTokens.get(0).getSentenceIndex());
 
 		}
+		if (SCIOSlotTypes.hasGroupName.isIncluded()) {
 
-		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+					.getSlotFiller()) {
 
-			if (groupName.isInstanceOfDocumentLinkedAnnotation())
-				sentenceIndicies
-						.add(groupName.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex());
+				if (groupName.isInstanceOfDocumentLinkedAnnotation())
+					sentenceIndicies.add(
+							groupName.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex());
+			}
 		}
 		return sentenceIndicies;
 	}
@@ -206,42 +213,33 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 //		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.slotName + "-> dist >= 4",
 //				factor.getFactorScope().sentenceDistance >= 4);
 
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist == 0",
-						factor.getFactorScope().sentenceDistance == 0);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist != 0",
-						factor.getFactorScope().sentenceDistance != 0);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist == 1",
-						factor.getFactorScope().sentenceDistance == 1);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist != 1",
-						factor.getFactorScope().sentenceDistance != 1);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist == 2",
-						factor.getFactorScope().sentenceDistance == 2);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist != 2",
-						factor.getFactorScope().sentenceDistance != 2);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist == 3",
-						factor.getFactorScope().sentenceDistance == 3);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist != 3",
-						factor.getFactorScope().sentenceDistance != 03);
-		factor.getFeatureVector()
-				.set(PREFIX + factor.getFactorScope().slot.name + "->"
-						+ factor.getFactorScope().entityType.name + " dist >= 4",
-						factor.getFactorScope().sentenceDistance >= 4);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist == 0",
+				factor.getFactorScope().sentenceDistance == 0);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist != 0",
+				factor.getFactorScope().sentenceDistance != 0);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist == 1",
+				factor.getFactorScope().sentenceDistance == 1);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist != 1",
+				factor.getFactorScope().sentenceDistance != 1);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist == 2",
+				factor.getFactorScope().sentenceDistance == 2);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist != 2",
+				factor.getFactorScope().sentenceDistance != 2);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist == 3",
+				factor.getFactorScope().sentenceDistance == 3);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist != 3",
+				factor.getFactorScope().sentenceDistance != 03);
+		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
+				+ factor.getFactorScope().entityType.name + " dist >= 4",
+				factor.getFactorScope().sentenceDistance >= 4);
 	}
 
 }

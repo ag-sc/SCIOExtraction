@@ -51,6 +51,7 @@ public class VertebralAreaSlotFilling {
 	public static EVertebralAreaModifications rule;
 
 	public VertebralAreaSlotFilling() throws IOException {
+		InstanceProvider.removeEmptyInstances = false;
 
 		/**
 		 * Initialize the system.
@@ -84,6 +85,8 @@ public class VertebralAreaSlotFilling {
 
 		PrintStream resultsOut = new PrintStream(new File("results/vertebralAreaResults.csv"));
 
+//		InstanceProvider.removeEmptyInstances = false;
+		
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
 		 * the distributor in the constructor. If not all instances should be read from

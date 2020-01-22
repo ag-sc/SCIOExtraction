@@ -220,6 +220,9 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 
 	private void addMFSFactor(List<W2VScope> factors, EntityTemplate experimentalGroup, SlotType slotType) {
 
+		if (slotType.isExcluded())
+			return;
+
 		final MultiFillerSlot mfs = experimentalGroup.getMultiFillerSlot(slotType);
 
 		if (!mfs.containsSlotFiller())
@@ -238,6 +241,9 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 	}
 
 	private void addSFSFactor(List<W2VScope> factors, EntityTemplate experimentalGroup, SlotType slotType) {
+
+		if (slotType.isExcluded())
+			return;
 
 		final SingleFillerSlot sfs = experimentalGroup.getSingleFillerSlot(slotType);
 
@@ -277,11 +283,11 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 					if (clustersJ.isEmpty())
 						continue;
 
-					for (int i = 0; i <1 && i < clustersI.size(); i++) {
+					for (int i = 0; i < 1 && i < clustersI.size(); i++) {
 
 						Integer clusterI = clustersI.get(i);
 
-						for (int j = 0; j <1 && j < clustersJ.size(); j++) {
+						for (int j = 0; j < 1 && j < clustersJ.size(); j++) {
 
 							Integer clusterJ = clustersJ.get(j);
 
@@ -336,8 +342,7 @@ public class Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope> {
 	}
 
 	private String getOrigin(Factor<W2VScope> factor, TypedBOW typedBOW) {
-		return typedBOW.slotType != null ? typedBOW.slotType.name
-				: factor.getFactorScope().slotTypeContext.name;
+		return typedBOW.slotType != null ? typedBOW.slotType.name : factor.getFactorScope().slotTypeContext.name;
 	}
 
 }

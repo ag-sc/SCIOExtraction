@@ -15,6 +15,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Document;
@@ -174,14 +175,16 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 			for (AbstractAnnotation treatment : mfs.getSlotFiller()) {
 				final Set<Integer> treatmentIndicies = new HashSet<>();
 
-				AbstractAnnotation mainAnnotation;
+				AbstractAnnotation mainAnnotation = null;
 				if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
-					mainAnnotation = treatment.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SCIOSlotTypes.hasCompound).getSlotFiller().asInstanceOfEntityTemplate()
-							.getRootAnnotation();
-				} else {
-					mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
+					SingleFillerSlot sfs = treatment.asInstanceOfEntityTemplate()
+							.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
+					if (sfs.containsSlotFiller())
+						mainAnnotation = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
 				}
+
+				if (mainAnnotation == null)
+					mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
 
 				if (mainAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
 					treatmentIndicies.add(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0)
@@ -247,13 +250,15 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 			sentenceIndicies.add(docLinkedRootAnnotation.relatedTokens.get(0).getDocTokenIndex());
 
 		}
+		if (SCIOSlotTypes.hasGroupName.isIncluded()) {
 
-		for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
-				.getSlotFiller()) {
+			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+					.getSlotFiller()) {
 
-			if (groupName.isInstanceOfDocumentLinkedAnnotation())
-				sentenceIndicies
-						.add(groupName.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getDocTokenIndex());
+				if (groupName.isInstanceOfDocumentLinkedAnnotation())
+					sentenceIndicies.add(
+							groupName.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getDocTokenIndex());
+			}
 		}
 		return sentenceIndicies;
 	}

@@ -138,6 +138,8 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 	private void addMFSFactor(List<BOWScope> factors, Set<String> expGroupBOW, EntityTemplate experimentalGroup,
 			SlotType slotType) {
+		if (slotType.isExcluded())
+			return;
 
 		final MultiFillerSlot mfs = experimentalGroup.getMultiFillerSlot(slotType);
 
@@ -157,6 +159,8 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 	private void addSFSFactor(List<BOWScope> factors, Set<String> expGroupBOW, EntityTemplate experimentalGroup,
 			SlotType slotType) {
+		if (slotType.isExcluded())
+			return;
 
 		final SingleFillerSlot sfs = experimentalGroup.getSingleFillerSlot(slotType);
 
@@ -227,7 +231,6 @@ public class ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 	}
 
 	private String getOrigin(Factor<BOWScope> factor, TypedBOW typedBOW) {
-		return typedBOW.slotType != null ? typedBOW.slotType.name
-				: factor.getFactorScope().slotTypeContext.name;
+		return typedBOW.slotType != null ? typedBOW.slotType.name : factor.getFactorScope().slotTypeContext.name;
 	}
 }

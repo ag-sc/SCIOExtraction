@@ -24,7 +24,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
@@ -84,7 +84,7 @@ public class InjuryActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
 		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
-		InjurySlotFilling.rule = EInjuryModificationRules.ROOT_DEVICE_LOCATION_ANAESTHESIA;
+		InjurySlotFilling.rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusfive.csv");
 
@@ -155,7 +155,7 @@ public class InjuryActiveLearningSlotFilling {
 	}
 
 	private String toResult(Score score, EActiveLearningStrategies strategy, List<String> trainingInstancesNames,
-			EInjuryModificationRules rule) {
+			EInjuryModifications rule) {
 		return strategy.name() + "\t" + rule.name() + "\t" + trainingInstancesNames.size() + "\t"
 				+ resultFormatter.format(score.getF1()) + "\t" + resultFormatter.format(score.getPrecision()) + "\t"
 				+ resultFormatter.format(score.getRecall());

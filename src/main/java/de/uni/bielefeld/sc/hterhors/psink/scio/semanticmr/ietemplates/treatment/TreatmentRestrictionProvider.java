@@ -17,9 +17,6 @@ public class TreatmentRestrictionProvider {
 
 	}
 
-	private static final SlotType compoundSlot = SCIOSlotTypes.hasCompound;
-	private static final SlotType deliveryMethodSlot = SCIOSlotTypes.hasDeliveryMethod;
-
 	public static List<GoldModificationRule> getByRule(ETreatmentModifications modelModifications) {
 
 		switch (modelModifications) {
@@ -42,11 +39,12 @@ public class TreatmentRestrictionProvider {
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
 
 				if (newGold.getEntityType() == SCIOEntityTypes.compoundTreatment) {
-					if (goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(compoundSlot)
+					if (goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
 							.containsSlotFiller())
-						newGold.setSingleSlotFiller(compoundSlot,
-								goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(compoundSlot)
-										.getSlotFiller().asInstanceOfEntityTemplate().clearAllSlots());
+						newGold.setSingleSlotFiller(SCIOSlotTypes.hasCompound,
+								goldAnnotation.asInstanceOfEntityTemplate()
+										.getSingleFillerSlot(SCIOSlotTypes.hasCompound).getSlotFiller()
+										.asInstanceOfEntityTemplate().clearAllSlots());
 
 					if (newGold.asInstanceOfEntityTemplate().isEmpty())
 						return null;
@@ -64,7 +62,7 @@ public class TreatmentRestrictionProvider {
 
 	}
 
-	public static List<GoldModificationRule> getPlusLocation() {
+	public static List<GoldModificationRule> getPlusDeliveryMethod() {
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -74,8 +72,8 @@ public class TreatmentRestrictionProvider {
 
 				EntityTemplate newGold = new EntityTemplate(
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
-				newGold.setSingleSlotFiller(deliveryMethodSlot, goldAnnotation.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(deliveryMethodSlot).getSlotFiller());
+				newGold.setSingleSlotFiller(SCIOSlotTypes.hasDeliveryMethod, goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SCIOSlotTypes.hasDeliveryMethod).getSlotFiller());
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;

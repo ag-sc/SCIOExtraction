@@ -7,6 +7,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class DeliveryMethodRestrictionProvider {
 
@@ -15,8 +16,8 @@ public class DeliveryMethodRestrictionProvider {
 
 	}
 
-	private static final SlotType durationSlot = SlotType.get("hasDuration");
-	private static final SlotType locationsSlot = SlotType.get("hasLocation");
+	private static final SlotType durationSlot = SCIOSlotTypes.hasDuration;
+	private static final SlotType locationsSlot = SCIOSlotTypes.hasLocation;
 
 	public static List<GoldModificationRule> getByRule(EDeliveryMethodModifications modelModifications) {
 

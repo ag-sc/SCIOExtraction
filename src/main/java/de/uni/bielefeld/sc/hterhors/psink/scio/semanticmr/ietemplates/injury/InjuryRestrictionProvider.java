@@ -5,17 +5,18 @@ import java.util.List;
 
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class InjuryRestrictionProvider {
 
-	public enum EInjuryModificationRules {
+	public enum EInjuryModifications {
 		ROOT, ROOT_DEVICE, ROOT_LOCATION, ROOT_LOCATION_DEVICE, ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 	}
 
-	public static List<GoldModificationRule> getByRule(EInjuryModificationRules modelModifications) {
+	public static List<GoldModificationRule> getByRule(EInjuryModifications modelModifications) {
 
 		switch (modelModifications) {
 		case ROOT:
@@ -34,6 +35,9 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getRoot() {
+
+		SlotType.excludeAll();
+
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -55,6 +59,10 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusLocation() {
+		SlotType.excludeAll();
+		SCIOSlotTypes.hasLocation.include();
+		SCIOSlotTypes.hasUpperVertebrae.include();
+		SCIOSlotTypes.hasLowerVertebrae.include();
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -81,6 +89,8 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusDevice() {
+		SlotType.excludeAll();
+		SCIOSlotTypes.hasInjuryDevice.include();
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -107,6 +117,11 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusLocationDevice() {
+		SlotType.excludeAll();
+		SCIOSlotTypes.hasInjuryDevice.include();
+		SCIOSlotTypes.hasLocation.include();
+		SCIOSlotTypes.hasUpperVertebrae.include();
+		SCIOSlotTypes.hasLowerVertebrae.include();
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -136,6 +151,13 @@ public class InjuryRestrictionProvider {
 
 	public static List<GoldModificationRule> getPlusAnaesthesia() {
 		List<GoldModificationRule> rules = new ArrayList<>();
+
+		SlotType.excludeAll();
+		SCIOSlotTypes.hasInjuryDevice.include();
+		SCIOSlotTypes.hasLocation.include();
+		SCIOSlotTypes.hasUpperVertebrae.include();
+		SCIOSlotTypes.hasLowerVertebrae.include();
+		SCIOSlotTypes.hasAnaesthesia.include();
 
 		rules.add(new GoldModificationRule() {
 

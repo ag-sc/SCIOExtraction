@@ -79,13 +79,14 @@ public class ExGrNameOverlapTemplate extends AbstractFeatureTemplate<OverlapScop
 				continue;
 
 			int count = 0;
-			for (AbstractAnnotation groupNameAnnotation : experimentalGroup
-					.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
-				if (!contains.add(groupNameAnnotation.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm())) {
-					count++;
+			if (SCIOSlotTypes.hasGroupName.isIncluded()) {
+				for (AbstractAnnotation groupNameAnnotation : experimentalGroup
+						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+					if (!contains.add(groupNameAnnotation.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm())) {
+						count++;
+					}
 				}
 			}
-
 			factors.add(new OverlapScope(this, count));
 
 		}

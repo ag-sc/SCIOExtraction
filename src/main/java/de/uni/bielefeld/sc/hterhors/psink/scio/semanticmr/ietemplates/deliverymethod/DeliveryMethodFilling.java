@@ -143,7 +143,8 @@ public class DeliveryMethodFilling {
 		resultsOut.println(header);
 
 		for (EDeliveryMethodModifications rule : EDeliveryMethodModifications.values()) {
-			DeliveryMethodFilling.rule = rule;
+//			DeliveryMethodFilling.rule =rule;
+			DeliveryMethodFilling.rule =EDeliveryMethodModifications. ROOT_LOCATION_DURATION;
 			/**
 			 * The instance provider reads all json files in the given directory. We can set
 			 * the distributor in the constructor. If not all instances should be read from
@@ -193,6 +194,7 @@ public class DeliveryMethodFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
+			log.info("results: " + toResults(rule, score));
 			log.info("modelName: " + predictor.modelName);
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement

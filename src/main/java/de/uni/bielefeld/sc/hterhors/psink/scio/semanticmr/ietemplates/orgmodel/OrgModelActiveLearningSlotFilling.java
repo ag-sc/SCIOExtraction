@@ -86,7 +86,7 @@ public class OrgModelActiveLearningSlotFilling {
 			log.info(strategy);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
-					OrganismModelRestrictionProvider.getRule(OrgModelSlotFilling.rule));
+					OrganismModelRestrictionProvider.getByRule(OrgModelSlotFilling.rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());

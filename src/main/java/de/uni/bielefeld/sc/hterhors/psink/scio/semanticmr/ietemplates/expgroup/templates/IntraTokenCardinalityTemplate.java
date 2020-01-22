@@ -122,15 +122,16 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 								this, experimentalGroup.getEntityType(), experimentalGroup.asInstanceOfEntityTemplate()
 										.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm(),
 								cardinality));
+			if (SCIOSlotTypes.hasGroupName.isIncluded()) {
 
-			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
-					.getSlotFiller()) {
+				for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+						.getSlotFiller()) {
 
-				factors.add(new IntraTokenScope(this, experimentalGroup.getEntityType(),
-						groupName.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(), cardinality));
+					factors.add(new IntraTokenScope(this, experimentalGroup.getEntityType(),
+							groupName.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(), cardinality));
 
+				}
 			}
-
 		}
 		return factors;
 	}

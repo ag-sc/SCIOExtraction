@@ -38,7 +38,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.templates.InjuryDeviceTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.AnnotationExistsInAbstractTemplate;
@@ -74,8 +74,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
 		if (!useGoldLocations) {
 
-			if (InjurySlotFilling.rule == EInjuryModificationRules.ROOT
-					|| InjurySlotFilling.rule == EInjuryModificationRules.ROOT_DEVICE)
+			if (InjurySlotFilling.rule == EInjuryModifications.ROOT
+					|| InjurySlotFilling.rule == EInjuryModifications.ROOT_DEVICE)
 				return Collections.emptyMap();
 
 //		String vertebralAreaModelName = "VertebralArea_STD";
@@ -158,14 +158,15 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 //		featureTemplates.add(new ClusterTemplate());
 //		featureTemplates.add(new EntityTypeContextTemplate());
-		featureTemplates.add(new DocumentPartTemplate());
-		featureTemplates.add(new LocalityTemplate());
-		featureTemplates.add(new SlotIsFilledTemplate());
-
-		featureTemplates.add(new InjuryDeviceTemplate());
-		featureTemplates.add(new DocumentSectionTemplate());
-
-		featureTemplates.add(new AnnotationExistsInAbstractTemplate());
+	
+//		featureTemplates.add(new DocumentPartTemplate());
+//		featureTemplates.add(new LocalityTemplate());
+//		featureTemplates.add(new SlotIsFilledTemplate());
+//
+//		featureTemplates.add(new InjuryDeviceTemplate());
+//		featureTemplates.add(new DocumentSectionTemplate());
+//
+//		featureTemplates.add(new AnnotationExistsInAbstractTemplate());
 
 //		featureTemplates.add(new OlfactoryContextTemplate());
 //		featureTemplates.add(new PriorNumericInterpretationInjuryTemplate(trainingInstances));

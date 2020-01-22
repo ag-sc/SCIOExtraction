@@ -155,12 +155,15 @@ public class ExGrOuterNameBOWTemplate extends AbstractFeatureTemplate<ExGrOuterN
 
 			bows.add(groupBow);
 
-			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+			if (SCIOSlotTypes.hasGroupName.isIncluded()) {
+				for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+						.getSlotFiller()) {
 
-				Set<String> groupNameBow = BOWExtractor
-						.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation());
+					Set<String> groupNameBow = BOWExtractor
+							.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation());
 
-				bows.add(groupNameBow);
+					bows.add(groupNameBow);
+				}
 			}
 
 			allBows.add(bows);

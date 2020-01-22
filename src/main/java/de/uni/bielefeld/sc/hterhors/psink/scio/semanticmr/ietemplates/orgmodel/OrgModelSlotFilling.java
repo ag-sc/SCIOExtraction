@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -136,7 +137,7 @@ public class OrgModelSlotFilling {
 					.setTrainingInstanceNames(tn).setDevelopInstanceNames(dn).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
-					OrganismModelRestrictionProvider.getRule(rule));
+					OrganismModelRestrictionProvider.getByRule(rule));
 
 			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -160,6 +161,7 @@ public class OrgModelSlotFilling {
 
 			resultsOut.println(toResults(rule, score));
 
+			System.out.println(SlotFillingExplorer.averageNumberOfNewProposalStates);
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
@@ -177,7 +179,7 @@ public class OrgModelSlotFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
-			log.info("Score: " + toResults(rule, score));
+			log.info("Score: " + toResults(OrgModelSlotFilling.rule, score));
 			log.info("modelName: " + predictor.modelName);
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement

@@ -24,7 +24,7 @@ import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModificationRules;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 
 public class AutomatedSectionifcation {
@@ -55,7 +55,7 @@ public class AutomatedSectionifcation {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public static EInjuryModificationRules rule;
+	public static EInjuryModifications rule;
 
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 

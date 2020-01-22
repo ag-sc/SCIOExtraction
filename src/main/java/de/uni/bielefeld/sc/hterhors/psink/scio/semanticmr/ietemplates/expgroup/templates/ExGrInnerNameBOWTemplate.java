@@ -90,13 +90,15 @@ public class ExGrInnerNameBOWTemplate extends AbstractFeatureTemplate<ExGrInnerN
 
 			bows.add(groupBow);
 
-			for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
-					.getSlotFiller()) {
+			if (SCIOSlotTypes.hasGroupName.isIncluded()) {
+				for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+						.getSlotFiller()) {
 
-				Set<String> groupNameBow = BOWExtractor
-						.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation());
+					Set<String> groupNameBow = BOWExtractor
+							.extractDocLinkedBOW(groupName.asInstanceOfDocumentLinkedAnnotation());
 
-				bows.add(groupNameBow);
+					bows.add(groupNameBow);
+				}
 			}
 
 			factors.add(new ExGrInnerNaBOWScope(this, bows));

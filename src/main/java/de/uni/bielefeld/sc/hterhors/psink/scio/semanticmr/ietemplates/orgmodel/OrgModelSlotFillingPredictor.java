@@ -60,7 +60,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-//		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/organism_model/corpus/nerla/");
+		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/organism_model/corpus/nerla/");
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/Normal/");
 //		 final File externalNerlaAnnotations = new File(
@@ -71,8 +71,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 //				"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
-		final File externalNerlaAnnotations = new File(
-				"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
+//		final File externalNerlaAnnotations = new File(
+//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
 		return externalNerlaAnnotations;
 	}
@@ -97,11 +97,12 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
 		featureTemplates.add(new EntityTypeContextTemplate());
-		featureTemplates.add(new OlfactoryContextTemplate());
-		featureTemplates.add(new LocalityTemplate());
-		featureTemplates.add(new SlotIsFilledTemplate());
-		featureTemplates.add(new DocumentPartTemplate());
-		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate());
+//		featureTemplates.add(new OlfactoryContextTemplate());
+//		featureTemplates.add(new LocalityTemplate());
+//		featureTemplates.add(new SlotIsFilledTemplate());
+//		featureTemplates.add(new DocumentPartTemplate());
+
+//		featureTemplates.add(new PriorNumericInterpretationOrgModelTemplate());
 
 //		featureTemplates.add(new DocumentSectionTemplate());
 
@@ -110,28 +111,11 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		return featureTemplates;
 	}
 
-//	Time: 1807
-//	mean score: Score [getF1()=0.936, getPrecision()=0.957, getRecall()=0.917, tp=88, fp=4, fn=8, tn=0]
-//	CRFStatistics [context=Train, getTotalDuration()=56201]
-//	CRFStatistics [context=Test, getTotalDuration()=1807]
-//	modelName: OrganismModel438496488
-
-//	Time: 868
-//	mean score: Score [getF1()=0.952, getPrecision()=0.968, getRecall()=0.938, tp=90, fp=3, fn=6, tn=0]
-//	CRFStatistics [context=Train, getTotalDuration()=34440]
-//	CRFStatistics [context=Test, getTotalDuration()=868]
-//	modelName: OrganismModel1797611783
-
-//	Time: 944
-//	mean score: Score [getF1()=0.942, getPrecision()=0.957, getRecall()=0.927, tp=89, fp=4, fn=7, tn=0]
-//	CRFStatistics [context=Train, getTotalDuration()=32434]
-//	CRFStatistics [context=Test, getTotalDuration()=944]
-//	modelName: OrganismModel-198471195
 	@Override
 	protected Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> getFeatureTemplateParameters() {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
-		parameter.put(PriorNumericInterpretationOrgModelTemplate.class, new Object[] { trainingInstances });
+//		parameter.put(PriorNumericInterpretationOrgModelTemplate.class, new Object[] { trainingInstances });
 
 		return parameter;
 	}
@@ -175,95 +159,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	public HardConstraintsProvider getHardConstraints() {
-		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
-
-		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
-
-			@Override
-			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
-				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasAge"));
-
-				if (sfs.containsSlotFiller()) {
-
-					DocumentLinkedAnnotation a = sfs.getSlotFiller().asInstanceOfDocumentLinkedAnnotation();
-					List<DocumentToken> sentence = a.document
-							.getSentenceByIndex(a.relatedTokens.get(0).getSentenceIndex());
-
-					for (DocumentToken token : sentence) {
-						if (token.getText().equals("OECs")) {
-
-							return true;
-						}
-
-					}
-				}
-
-				return false;
-			}
-		});
-
-		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
-
-			@Override
-			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
-				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasAge"));
-
-				if (sfs.containsSlotFiller()) {
-
-					DocumentLinkedAnnotation a = sfs.getSlotFiller().asInstanceOfDocumentLinkedAnnotation();
-
-					List<DocumentToken> l = a.document.tokenList.subList(a.relatedTokens.get(0).getDocTokenIndex() - 4,
-							a.relatedTokens.get(a.relatedTokens.size() - 1).getDocTokenIndex() + 4);
-
-					for (DocumentToken token : l) {
-						if (token.getText().equals("treated")) {
-							return true;
-						}
-					}
-
-				}
-
-				return false;
-			}
-		});
-		hardConstraintsProvider.addHardConstraints(new AbstractHardConstraint() {
-
-			@Override
-			public boolean violatesConstraint(State state, EntityTemplate entityTemplate) {
-				SingleFillerSlot sfs = entityTemplate.getSingleFillerSlot(SlotType.get("hasGender"));
-
-				if (sfs.containsSlotFiller()) {
-
-					DocumentLinkedAnnotation a = sfs.getSlotFiller().asInstanceOfDocumentLinkedAnnotation();
-
-					if (a.getEntityType() == EntityType.get("Male") || a.getEntityType() == EntityType.get("Female")) {
-
-						List<DocumentToken> l = a.document.tokenList.subList(
-								a.relatedTokens.get(0).getDocTokenIndex() - 2,
-								a.relatedTokens.get(a.relatedTokens.size() - 1).getDocTokenIndex() + 2);
-
-						for (DocumentToken token : l) {
-							if (token.getText().equals("and")) {
-								return true;
-							}
-						}
-
-					} else {
-						return false;
-					}
-
-				}
-
-				return false;
-			}
-		});
-		return hardConstraintsProvider;
-	}
-
-	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return OrganismModelRestrictionProvider.getRule(OrgModelSlotFilling.rule);
+		return OrganismModelRestrictionProvider.getByRule(OrgModelSlotFilling.rule);
 	}
 
 }

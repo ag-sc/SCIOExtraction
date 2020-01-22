@@ -87,16 +87,23 @@ public class SlotIsFilledTemplate extends AbstractFeatureTemplate<SlotIsFilledSc
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			AbstractAnnotation orgModel = experimentalGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
-					.getSlotFiller();
-			AbstractAnnotation injuryModel = experimentalGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
-					.getSlotFiller();
-			Set<AbstractAnnotation> treatementTypes = experimentalGroup
-					.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller();
+			if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
+				AbstractAnnotation orgModel = experimentalGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
+						.getSlotFiller();
+				factors.add(new SlotIsFilledScope(this, SCIOSlotTypes.hasOrganismSpecies, orgModel != null ? 1 : 0));
+			}
 
-			factors.add(new SlotIsFilledScope(this, SCIOSlotTypes.hasOrganismModel, orgModel != null ? 1 : 0));
-			factors.add(new SlotIsFilledScope(this, SCIOSlotTypes.hasInjuryModel, injuryModel != null ? 1 : 0));
-			factors.add(new SlotIsFilledScope(this, SCIOSlotTypes.hasTreatmentType, treatementTypes.size()));
+			if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
+				AbstractAnnotation injuryModel = experimentalGroup.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
+						.getSlotFiller();
+				factors.add(new SlotIsFilledScope(this, SCIOSlotTypes.hasInjuryModel, injuryModel != null ? 1 : 0));
+			}
+
+			if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
+				Set<AbstractAnnotation> treatementTypes = experimentalGroup
+						.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller();
+				factors.add(new SlotIsFilledScope(this, SCIOSlotTypes.hasTreatmentType, treatementTypes.size()));
+			}
 
 		}
 
