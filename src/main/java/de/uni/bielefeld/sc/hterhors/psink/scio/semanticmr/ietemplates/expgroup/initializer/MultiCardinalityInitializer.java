@@ -26,25 +26,57 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	 */
 	private int current;
 
-	public MultiCardinalityInitializer(int max) {
+	private final EExtractGroupNamesMode groupNameMode;
+
+	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameMode, int max) {
 		this.max = max;
 		this.current = 1;
+		this.groupNameMode = groupNameMode;
 	}
 
 	@Override
 	public State getInitState(Instance instance) {
 		List<AbstractAnnotation> as = new ArrayList<>();
 
-		for (int i = 0; i < current; i++) {
+		int count = 0;
+
+		for (EntityTemplate goldAnnotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+
+			if (current == count)
+				break;
+
+			count++;
 
 			EntityTemplate init = new EntityTemplate(
 					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 
+			if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED) {
+
+				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+							AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getSurfaceForm(),
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getStartDocCharOffset()));
+
+				for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
+						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+				}
+			}
+
 			as.add(init);
 		}
 
-		return new State(instance, new Annotations(as));
+		if (count < current)
+			for (int i = count; i < current; i++) {
+				EntityTemplate init = new EntityTemplate(
+						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+				as.add(init);
+			}
 
+		return new State(instance, new Annotations(as));
 	}
 
 	/**
@@ -55,8 +87,12 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	public boolean increase() {
 		current++;
 		if (current <= max)
-			return false;
-		return true;
+			return true;
+		return false;
+	}
+
+	public int getCurrent() {
+		return current;
 	}
 
 }

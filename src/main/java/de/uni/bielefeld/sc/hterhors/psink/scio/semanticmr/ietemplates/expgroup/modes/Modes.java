@@ -1,6 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes;
 
 public class Modes {
+
 	public enum ESimpleEvaluationMode {
 		/**
 		 * Only vehicle
@@ -15,6 +16,7 @@ public class Modes {
 		 */
 		BOTH;
 	}
+
 	public enum EMainClassMode {
 
 		GOLD, PREDICT, GOLD_PREDICTED;
@@ -54,7 +56,11 @@ public class Modes {
 		/**
 		 * Combine Pattern and NP-Chunks
 		 */
-		PATTERN_NP_CHUNKS;
+		PATTERN_NP_CHUNKS,
+		/**
+		 * Combine Pattern and NP-Chunks with Gold
+		 */
+		PATTERN_NP_CHUNKS_GOLD;
 	}
 
 	public enum ECardinalityMode {
@@ -65,7 +71,8 @@ public class Modes {
 
 	public enum EAssignmentMode {
 
-		TREATMENT, ALL, ORGANISM_MODEL, INJURY, INJURY_ORGANISM_MODEL, TREATMENT_ORGANISM_MODEL, INJURY_TREATMENT;
+		GROUP_NAME, TREATMENT, ALL, ORGANISM_MODEL, INJURY, INJURY_ORGANISM_MODEL, TREATMENT_ORGANISM_MODEL,
+		INJURY_TREATMENT;
 
 	}
 

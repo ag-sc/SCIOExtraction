@@ -30,7 +30,16 @@ public class GoldCardinalityInitializer implements IStateInitializer {
 
 			EntityTemplate init = new EntityTemplate(
 					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+
 			if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED) {
+
+				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+							AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getSurfaceForm(),
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getStartDocCharOffset()));
 
 				for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
 						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {

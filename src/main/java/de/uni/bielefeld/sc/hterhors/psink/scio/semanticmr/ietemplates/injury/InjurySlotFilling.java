@@ -152,7 +152,7 @@ public class InjurySlotFilling {
 
 			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			SlotType.excludeAll();
+//			SlotType.excludeAll();
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
 

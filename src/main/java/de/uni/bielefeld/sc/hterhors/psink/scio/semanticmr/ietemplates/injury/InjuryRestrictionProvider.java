@@ -36,7 +36,7 @@ public class InjuryRestrictionProvider {
 
 	public static List<GoldModificationRule> getRoot() {
 
-		SlotType.excludeAll();
+//		SlotType.excludeAll();
 
 		List<GoldModificationRule> rules = new ArrayList<>();
 
@@ -59,10 +59,10 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusLocation() {
-		SlotType.excludeAll();
-		SCIOSlotTypes.hasLocation.include();
-		SCIOSlotTypes.hasUpperVertebrae.include();
-		SCIOSlotTypes.hasLowerVertebrae.include();
+//		SlotType.excludeAll();
+//		SCIOSlotTypes.hasLocation.include();
+//		SCIOSlotTypes.hasUpperVertebrae.include();
+//		SCIOSlotTypes.hasLowerVertebrae.include();
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -89,8 +89,8 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusDevice() {
-		SlotType.excludeAll();
-		SCIOSlotTypes.hasInjuryDevice.include();
+//		SlotType.excludeAll();
+//		SCIOSlotTypes.hasInjuryDevice.include();
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -117,11 +117,11 @@ public class InjuryRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getPlusLocationDevice() {
-		SlotType.excludeAll();
-		SCIOSlotTypes.hasInjuryDevice.include();
-		SCIOSlotTypes.hasLocation.include();
-		SCIOSlotTypes.hasUpperVertebrae.include();
-		SCIOSlotTypes.hasLowerVertebrae.include();
+//		SlotType.excludeAll();
+//		SCIOSlotTypes.hasInjuryDevice.include();
+//		SCIOSlotTypes.hasLocation.include();
+//		SCIOSlotTypes.hasUpperVertebrae.include();
+//		SCIOSlotTypes.hasLowerVertebrae.include();
 		List<GoldModificationRule> rules = new ArrayList<>();
 
 		rules.add(new GoldModificationRule() {
@@ -152,12 +152,12 @@ public class InjuryRestrictionProvider {
 	public static List<GoldModificationRule> getPlusAnaesthesia() {
 		List<GoldModificationRule> rules = new ArrayList<>();
 
-		SlotType.excludeAll();
-		SCIOSlotTypes.hasInjuryDevice.include();
-		SCIOSlotTypes.hasLocation.include();
-		SCIOSlotTypes.hasUpperVertebrae.include();
-		SCIOSlotTypes.hasLowerVertebrae.include();
-		SCIOSlotTypes.hasAnaesthesia.include();
+//		SlotType.excludeAll();
+//		SCIOSlotTypes.hasInjuryDevice.include();
+//		SCIOSlotTypes.hasLocation.include();
+//		SCIOSlotTypes.hasUpperVertebrae.include();
+//		SCIOSlotTypes.hasLowerVertebrae.include();
+//		SCIOSlotTypes.hasAnaesthesia.include();
 
 		rules.add(new GoldModificationRule() {
 

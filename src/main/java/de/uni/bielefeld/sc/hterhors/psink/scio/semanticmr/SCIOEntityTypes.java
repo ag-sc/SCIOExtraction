@@ -11,6 +11,8 @@ public class SCIOEntityTypes {
 	public static final EntityType species = getLazy("OrganismSpecies");
 	public static final EntityType organismModel = getLazy("OrganismModel");
 	public static final EntityType injury = getLazy("Injury");
+	public static final EntityType vehicle = getLazy("Vehicle");
+	public static final EntityType groupName = getLazy("GroupName");;
 
 	private static EntityType getLazy(String name) {
 		try {

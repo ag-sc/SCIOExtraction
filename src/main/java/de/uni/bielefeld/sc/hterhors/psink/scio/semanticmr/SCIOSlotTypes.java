@@ -29,6 +29,8 @@ public class SCIOSlotTypes {
 	public static final SlotType hasNNumber = getLazy("hasNNumber");
 	public static final SlotType hasTotalPopulationSize = getLazy("hasTotalPopulationSize");
 	public static final SlotType hasGroupNumber = getLazy("hasGroupNumber");
+	public static final SlotType hasEventBefore = getLazy("hasEventBefore");
+	public static final SlotType hasEventAfter = getLazy("hasEventAfter");
 
 	private static SlotType getLazy(String name) {
 		try {

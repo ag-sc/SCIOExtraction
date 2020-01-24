@@ -13,12 +13,16 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 
 public class PredictCardinalityInitializer implements IStateInitializer {
+	private final EExtractGroupNamesMode groupNameMode;
 
 	private final Map<Instance, Integer> cache = new HashMap<>();
 
-	public PredictCardinalityInitializer(List<Instance> instances) {
+	public PredictCardinalityInitializer(EExtractGroupNamesMode groupNameMode, List<Instance> instances) {
+		this.groupNameMode = groupNameMode;
 
 		for (Instance instance : instances) {
 			cache.put(instance, predictNumber());
@@ -26,20 +30,51 @@ public class PredictCardinalityInitializer implements IStateInitializer {
 	}
 
 	private Integer predictNumber() {
-		return null;
+		return 2;
 	}
 
 	@Override
 	public State getInitState(Instance instance) {
 		List<AbstractAnnotation> as = new ArrayList<>();
 
-		for (int i = 0; i < cache.getOrDefault(instance, 0); i++) {
+		final int num = cache.getOrDefault(instance, 0);
+		int count = 0;
+
+		for (EntityTemplate goldAnnotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+
+			if (num == count)
+				break;
+
+			count++;
 
 			EntityTemplate init = new EntityTemplate(
 					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 
+			if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED) {
+
+				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+							AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getSurfaceForm(),
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getStartDocCharOffset()));
+
+				for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
+						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+				}
+			}
+
 			as.add(init);
 		}
+
+		if (count < num)
+			for (int i = count; i < num; i++) {
+				EntityTemplate init = new EntityTemplate(
+						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+				as.add(init);
+			}
 
 		return new State(instance, new Annotations(as));
 	}

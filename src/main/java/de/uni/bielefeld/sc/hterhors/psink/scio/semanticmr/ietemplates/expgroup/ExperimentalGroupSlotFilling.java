@@ -3,14 +3,11 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -27,6 +24,7 @@ import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
@@ -40,7 +38,6 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
-import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -49,11 +46,11 @@ import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
+import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.eval.NerlaEvaluator;
@@ -63,6 +60,10 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.ExperimentalGroupEvaluation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.InjuryEvaluation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.OrganismModelEvaluation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.TreatmentEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.hardconstraints.DistinctExperimentalGroupConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.GoldCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.MultiCardinalityInitializer;
@@ -75,7 +76,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.m
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EComplexityMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EMainClassMode;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.ESimpleEvaluationMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.BOWCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ContextBetweenSlotFillerTemplate;
@@ -92,6 +92,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.Word2VecClusterTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.RemainingTypesTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider;
@@ -113,11 +114,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+	private final IObjectiveFunction trainingObjectiveFunction;
 
-	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+	private final IObjectiveFunction predictionObjectiveFunction;
 //
 //	
 //	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
@@ -151,29 +150,46 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private EOrgModelModifications orgModelModificationsRule;
 	private EInjuryModifications injuryModificationRule;
 
-	private final String modelName;
+	private ESamplingMode samplingMode;
+
+	private String modelName;
 
 	public ExperimentalGroupSlotFilling() throws IOException {
 		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
+		Annotations.removeDuplicates = true;
+
+		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
+
+		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 5;
+		
 		String rand = String.valueOf(new Random().nextInt(100000));
-		modelName = "ExperimentalGroup" + rand;
+		modelName = "ExperimentalGroup" + 50700;// rand;
 		log.info("Model name = " + modelName);
 
 		mainClassMode = EMainClassMode.PREDICT;
-		groupNameMode = EExtractGroupNamesMode.GOLD_CLUSTERED;
-		cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
-		assignmentMode = EAssignmentMode.TREATMENT;
+		groupNameMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
+		cardinalityMode = ECardinalityMode.MULTI_CARDINALITIES;
+		assignmentMode = EAssignmentMode.ALL;
 		complexityMode = EComplexityMode.ROOT;
+		samplingMode = ESamplingMode.TYPE_BASED;
 
+		trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+				new CartesianEvaluator(samplingMode == ESamplingMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
+						: EEvaluationDetail.DOCUMENT_LINKED));
+
+		predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 		/**
 		 * Exclude some slots that are not needed for now
 		 */
 		SCIOSlotTypes.hasNNumber.exclude();
 		SCIOSlotTypes.hasTotalPopulationSize.exclude();
 		SCIOSlotTypes.hasGroupNumber.exclude();
+		SCIOSlotTypes.hasEventBefore.exclude();
+		SCIOSlotTypes.hasEventAfter.exclude();
 
 		/**
 		 * Apply different modes that were previously set.
@@ -182,9 +198,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<IExplorationStrategy> explorerList = buildExplorer();
 
-		IStateInitializer initializer = getStateInitializer();
-
 		getData();
+
+		IStateInitializer initializer = getStateInitializer();
 
 		addGroupNameCandidates();
 
@@ -208,6 +224,112 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		ISamplingStoppingCriterion[] sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit,
 				noModelChangeCrit };
+
+		if (initializer instanceof MultiCardinalityInitializer) {
+			multiPrediction(explorerList, sampler, (MultiCardinalityInitializer) initializer, sampleStoppingCrits,
+					maxStepCrit, featureTemplates, parameter);
+		} else {
+			normalPrediction(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates,
+					parameter);
+
+		}
+
+	}
+
+	private void multiPrediction(List<IExplorationStrategy> explorerList, AbstractSampler sampler,
+			MultiCardinalityInitializer initializer, ISamplingStoppingCriterion[] sampleStoppingCrits,
+			MaxChainLengthCrit maxStepCrit, List<AbstractFeatureTemplate<?>> featureTemplates,
+			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
+
+		Map<Instance, State> mergedResults = new HashMap<>();
+
+		do {
+			modelName += "MCI_" + initializer.getCurrent();
+
+			normalPrediction(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates,
+					parameter);
+
+		} while (initializer.increase());
+
+		/**
+		 * Evaluate with objective function
+		 */
+		evaluate(log, mergedResults, predictionObjectiveFunction);
+
+		/**
+		 * Evaluate assuming TT,OM,IM are one unit. Evaluate assuming TT,OM,IM are one
+		 * unit, distinguish vehicle-treatments and main-treatments.
+		 */
+
+		evaluateDetailed(mergedResults);
+
+		log.info("States generated: " + SlotFillingExplorer.statesgenerated);
+
+	}
+
+	public void evaluateDetailed(Map<Instance, State> mergedResults) {
+
+		TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(
+				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+
+		treatmentEvaluation.evaluate(mergedResults);
+
+		OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(
+				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+
+		organismModelEvaluation.evaluate(mergedResults);
+
+		InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(
+				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+
+		injuryModelEvaluation.evaluate(mergedResults);
+
+		ExperimentalGroupEvaluation expGroupEval = new ExperimentalGroupEvaluation(predictionObjectiveFunction,
+				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+
+		expGroupEval.evaluate(mergedResults);
+	}
+
+	/**
+	 * Selects the state with the higher model score.
+	 * 
+	 * @param result
+	 * @param state
+	 * @return
+	 */
+	private State selectBestState(State state1, State state2) {
+
+		if (state2 == null)
+			return state1;
+
+		if (state1 == null)
+			return state2;
+
+		final String c1;
+		final String c2;
+
+		log.info(state1.getInstance().getName());
+		log.info("Gold number: " + state1.getGoldAnnotations().getAnnotations().size());
+		log.info("Prev number: " + state1.getCurrentPredictions().getAnnotations().size());
+		log.info("New number: " + state2.getCurrentPredictions().getAnnotations().size());
+		log.info("Compare MODEL: " + state1.getModelScore() + " with " + state2.getModelScore());
+		log.info("Select MODEL: " + (c1 = (state1.getModelScore() > state2.getModelScore() ? "prev" : "new")));
+		log.info("Compare OBJECTIVE: " + state1.getObjectiveScore() + " with " + state2.getObjectiveScore());
+		log.info("Select OBJECTIVE: "
+				+ (c2 = (state1.getObjectiveScore() > state2.getObjectiveScore() ? "prev" : "new")));
+		log.info("Correct : " + c1.equals(c2));
+		log.info("\n");
+		if (state1.getModelScore() > state2.getModelScore())
+			return state1;
+
+		return state2;
+
+	}
+
+	private void normalPrediction(List<IExplorationStrategy> explorerList, AbstractSampler sampler,
+			IStateInitializer initializer, ISamplingStoppingCriterion[] sampleStoppingCrits,
+			ISamplingStoppingCriterion maxStepCrit, List<AbstractFeatureTemplate<?>> featureTemplates,
+			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
 		/**
 		 * Finally, we chose a model base directory and a name for the model.
 		 * 
@@ -234,8 +356,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, initializer,
-				trainingObjectiveFunction);
+		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, trainingObjectiveFunction);
+
+		crf.setInitializer(initializer);
 
 //		log.info("Training instances coverage: "
 //				+ crf.computeCoverage(true, predictionObjectiveFunction, trainingInstances));
@@ -273,6 +396,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 */
 		Map<Instance, State> results = crf.predict(testInstances, maxStepCrit);
 
+		log.info(crf.getTrainingStatistics());
+		log.info(crf.getTestStatistics());
+		log.info("modelName: " + modelName);
 		/**
 		 * Evaluate with objective function
 		 */
@@ -282,12 +408,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * Evaluate assuming TT,OM,IM are one unit. Evaluate assuming TT,OM,IM are one
 		 * unit, distinguish vehicle-treatments and main-treatments.
 		 */
-		evaluateExpGroupSimple(results);
-		evaluateTreatments(results, new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+
+		evaluateDetailed(results);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
 		log.info("modelName: " + modelName);
+		log.info("States generated: " + SlotFillingExplorer.statesgenerated);
 
 	}
 
@@ -464,21 +591,22 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	public List<IExplorationStrategy> buildExplorer() {
+
 		List<IExplorationStrategy> explorerList = new ArrayList<>();
 
 		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
 
-//		hardConstraintsProvider.addHardConstraints(
-//				new DistinctExperimentalGroupConstraint(predictionObjectiveFunction.getEvaluator()));
+		hardConstraintsProvider.addHardConstraints(
+				new DistinctExperimentalGroupConstraint(predictionObjectiveFunction.getEvaluator()));
 
-		SlotFillingExplorer slotFillingExplorer = new SlotFillingExplorer(predictionObjectiveFunction,
+		SlotFillingExplorer slotFillingExplorer = new SlotFillingExplorer(samplingMode, predictionObjectiveFunction,
 				hardConstraintsProvider);
 		explorerList.add(slotFillingExplorer);
 
 		if (cardinalityMode == ECardinalityMode.SAMPLE_CARDINALITY) {
 			RootTemplateCardinalityExplorer.MAX_NUMBER_OF_ANNOTATIONS = CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE;
 			RootTemplateCardinalityExplorer rootTemplateCardinalityExplorer = new RootTemplateCardinalityExplorer(
-					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+					samplingMode, AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 			explorerList.add(rootTemplateCardinalityExplorer);
 
 		}
@@ -534,11 +662,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			List<DocumentLinkedAnnotation> candidates = new ArrayList<>();
 			switch (groupNameMode) {
 			case EMPTY:
-				break;
-			case GOLD_CLUSTERED:// if clustered we do not need group names annotations for sampling.
-				candidates.addAll(extractGroupNamesFromGold(instance));
+			case GOLD_CLUSTERED:
+				// if clustered we do not need group names annotations for sampling.
 				break;
 			case GOLD_UNCLUSTERED:
+				candidates.addAll(extractGroupNamesFromGold(instance));
 				break;
 			case NP_CHUNKS:
 				candidates.addAll(extractGroupNamesWithPattern(instance));
@@ -547,6 +675,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				candidates.addAll(extractGroupNamesWithNPCHunks(instance));
 				break;
 			case PATTERN_NP_CHUNKS:
+				candidates.addAll(extractGroupNamesWithNPCHunks(instance));
+				candidates.addAll(extractGroupNamesWithPattern(instance));
+				break;
+			case PATTERN_NP_CHUNKS_GOLD:
+				candidates.addAll(extractGroupNamesFromGold(instance));
 				candidates.addAll(extractGroupNamesWithNPCHunks(instance));
 				candidates.addAll(extractGroupNamesWithPattern(instance));
 				break;
@@ -563,51 +696,100 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 
-		featureTemplates.add(new BOWCardinalityTemplate());
+		if (samplingMode == ESamplingMode.ANNOTATION_BASED) {
+			featureTemplates.add(new BOWCardinalityTemplate());
 
-		featureTemplates.add(new TreatmentPriorTemplate());
+			featureTemplates.add(new TreatmentPriorTemplate());
 
-		featureTemplates.add(new TreatmentCardinalityTemplate());
+			featureTemplates.add(new TreatmentCardinalityTemplate());
 
-		featureTemplates.add(new ExGrBOWTemplate());
-		//
+			featureTemplates.add(new ExGrBOWTemplate());
+			//
 
-		/**
-		 * TODO: activate if cardinality can be predicted without gold data.
-		 */
-		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
-			featureTemplates.add(new ExGrAllUsedTemplate());
+			/**
+			 * TODO: activate if cardinality can be predicted without gold data.
+			 */
+//		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
+//			featureTemplates.add(new ExGrAllUsedTemplate());
 //
-		featureTemplates.add(new ExGrInnerNameBOWTemplate());
+			featureTemplates.add(new ExGrInnerNameBOWTemplate());
 //		
-		featureTemplates.add(new ExGrOuterNameBOWTemplate());
+			featureTemplates.add(new ExGrOuterNameBOWTemplate());
 //
-		featureTemplates.add(new ExGrNameBOWTemplate());
+			featureTemplates.add(new ExGrNameBOWTemplate());
 //
-		featureTemplates.add(new ExGrNameOverlapTemplate());
+			featureTemplates.add(new ExGrNameOverlapTemplate());
 //
-		featureTemplates.add(new SlotIsFilledTemplate());
+			featureTemplates.add(new SlotIsFilledTemplate());
 
-		featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
+			featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
 
-		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
+			featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 
-		featureTemplates.add(new ContextCardinalityTemplate());
+			featureTemplates.add(new ContextCardinalityTemplate());
 
-		featureTemplates.add(new IntraTokenCardinalityTemplate());
+			featureTemplates.add(new IntraTokenCardinalityTemplate());
 
-		featureTemplates.add(new Word2VecClusterTemplate());
+			featureTemplates.add(new Word2VecClusterTemplate());
+
+		}
+		if (samplingMode == ESamplingMode.TYPE_BASED) {
+			featureTemplates.add(new BOWCardinalityTemplate());
+
+			featureTemplates.add(new TreatmentPriorTemplate());
+
+			featureTemplates.add(new TreatmentCardinalityTemplate());
+
+			featureTemplates.add(new ExGrBOWTemplate());
+			//
+
+			/**
+			 * TODO: activate if cardinality can be predicted without gold data.
+			 */
+//		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
+//			featureTemplates.add(new ExGrAllUsedTemplate());
+//
+			featureTemplates.add(new ExGrInnerNameBOWTemplate());
+//		
+			featureTemplates.add(new ExGrOuterNameBOWTemplate());
+//
+			featureTemplates.add(new ExGrNameBOWTemplate());
+//
+			featureTemplates.add(new ExGrNameOverlapTemplate());
+//
+			featureTemplates.add(new SlotIsFilledTemplate());
+
+			featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
+
+			featureTemplates.add(new ContextBetweenSlotFillerTemplate());
+
+			featureTemplates.add(new ContextCardinalityTemplate());
+
+			featureTemplates.add(new IntraTokenCardinalityTemplate());
+
+			featureTemplates.add(new Word2VecClusterTemplate());
+
+			/**
+			 * NEW
+			 */
+			featureTemplates.add(new RemainingTypesTemplate());
+
+		}
+
 		return featureTemplates;
 	}
 
 	private Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> getParameter() {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
+		if (true)
+			return parameter;
+
 		if (cardinalityMode == ECardinalityMode.GOLD_CARDINALITY) {
 			Map<Instance, Map<SlotType, Integer>> numberToPredictParameter = new HashMap<>();
-			
+
 			for (Instance instance : instanceProvider.getInstances()) {
-			
+
 				numberToPredictParameter.put(instance, new HashMap<>());
 
 				if (SCIOSlotTypes.hasOrganismModel.isIncluded())
@@ -678,6 +860,26 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			return null;
 		});
 
+		goldModificationRules.add(a -> {
+			if (SCIOSlotTypes.hasGroupName.isExcluded())
+				return a;
+
+			if (a.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+				a.asInstanceOfEntityTemplate()
+						.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+								AnnotationBuilder.toAnnotation(
+										a.asInstanceOfEntityTemplate().getRootAnnotation()
+												.asInstanceOfDocumentLinkedAnnotation().document,
+										SCIOEntityTypes.groupName,
+										a.asInstanceOfEntityTemplate().getRootAnnotation()
+												.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(),
+										a.asInstanceOfEntityTemplate().getRootAnnotation()
+												.asInstanceOfDocumentLinkedAnnotation().getStartDocCharOffset()));
+
+			a.asInstanceOfEntityTemplate().reduceRootToEntityType();
+			return a;
+		});
+
 		if (SCIOSlotTypes.hasTreatmentType.isIncluded())
 			goldModificationRules.add(a -> {
 
@@ -708,7 +910,25 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 				a.asInstanceOfEntityTemplate().clearSlot(SCIOSlotTypes.hasTreatmentType);
 
-				for (AbstractAnnotation slotFiller : newTreatments) {
+				List<AbstractAnnotation> distinctAnnotations = new ArrayList<>();
+
+				l_1: for (AbstractAnnotation abstractAnnotation : newTreatments) {
+
+					if (Annotations.removeDuplicates)
+						for (AbstractAnnotation abstractAnnotation2 : distinctAnnotations) {
+
+							if (abstractAnnotation2
+									.evaluate(predictionObjectiveFunction.getEvaluator(), abstractAnnotation)
+									.getF1() == 1.0D) {
+								continue l_1;
+							}
+
+						}
+
+					distinctAnnotations.add(abstractAnnotation);
+				}
+
+				for (AbstractAnnotation slotFiller : distinctAnnotations) {
 					a.asInstanceOfEntityTemplate().addMultiSlotFiller(SCIOSlotTypes.hasTreatmentType, slotFiller);
 				}
 
@@ -793,14 +1013,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 */
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()
-					|| a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
-							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel)
-							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
-							.containsSlotFiller()
-					|| a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
-							.containsSlotFiller())
+					|| (SCIOSlotTypes.hasGroupName.isIncluded() && a.asInstanceOfEntityTemplate()
+							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).containsSlotFiller())
+					|| (SCIOSlotTypes.hasInjuryModel.isIncluded() && a.asInstanceOfEntityTemplate()
+							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+					|| (SCIOSlotTypes.hasOrganismModel.isIncluded() && a.asInstanceOfEntityTemplate()
+							.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+					|| (SCIOSlotTypes.hasTreatmentType.isIncluded() && a.asInstanceOfEntityTemplate()
+							.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).containsSlotFiller()))
 				return a;
 			return null;
 		});
@@ -818,15 +1038,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		case GOLD_CARDINALITY:
 			return new GoldCardinalityInitializer(groupNameMode);
 		case PREDICTED_CARDINALITY:
-			return new PredictCardinalityInitializer(instanceProvider.getInstances());
+			return new PredictCardinalityInitializer(groupNameMode, instanceProvider.getInstances());
 		case SAMPLE_CARDINALITY:
-			return new SampleCardinalityInitializer(0);
+			return new SampleCardinalityInitializer(1);
 		case MULTI_CARDINALITIES:
 			/**
 			 * TODO: compute. avg + 1 std deviation
 			 */
-			int max = 5;
-			return new MultiCardinalityInitializer(max);
+			int max = 4;
+			return new MultiCardinalityInitializer(groupNameMode, max);
 		default:
 			return null;
 		}
@@ -916,8 +1136,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)")) {
 					DocumentLinkedAnnotation annotation;
 					try {
-						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), "GroupName", groupName.term,
-								groupName.index);
+						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+								groupName.term, groupName.index);
 					} catch (Exception e) {
 						annotation = null;
 					}
@@ -940,8 +1160,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				for (Integer group : p.groups) {
 					DocumentLinkedAnnotation annotation;
 					try {
-						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), "GroupName", m.group(group),
-								m.start(group));
+						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+								m.group(group), m.start(group));
 					} catch (Exception e) {
 						annotation = null;
 					}
@@ -1030,498 +1250,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			}
 		}
-	}
-
-	private void evaluateExpGroupSimple(Map<Instance, State> results) {
-
-		Score vehicleScore = new Score();
-		Score nonVehicleScore = new Score();
-		Score bothS = new Score();
-		double macroF1 = 0;
-		double macroPrecision = 0;
-		double macroRecall = 0;
-		NerlaEvaluator eval = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
-		int i = 0;
-		for (Entry<Instance, State> e : results.entrySet()) {
-			/*
-			 * 
-			 * Evaluate clustering of Treatments
-			 */
-
-			i++;
-			log.info(e.getKey().getName());
-
-			List<EntityTemplate> goldAnnotations = e.getValue().getGoldAnnotations().getAnnotations();
-			List<EntityTemplate> predictedAnnotations = e.getValue().getCurrentPredictions().getAnnotations();
-
-			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
-					.getBestAssignment(goldAnnotations, predictedAnnotations);
-
-			Score score;
-			log.info("Both: " + (score = simpleExpGroupEvaluate(false, eval, bestAssignment, goldAnnotations,
-					predictedAnnotations, ESimpleEvaluationMode.BOTH)));
-			Score vs = simpleExpGroupEvaluate(false, eval, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.VEHICLE);
-			log.info("Vehicles: " + vs);
-			Score nvs = simpleExpGroupEvaluate(false, eval, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.NON_VEHICLE);
-			log.info("Non Vehicles: " + nvs);
-
-			vehicleScore.add(vs);
-			nonVehicleScore.add(nvs);
-			bothS.add(score);
-			macroF1 += score.getF1();
-			macroPrecision += score.getPrecision();
-			macroRecall += score.getRecall();
-			log.info("EXP GROUP INTERMEDIATE MACRO: F1 = " + macroF1 / i + ", P = " + macroPrecision / i + ", R = "
-					+ macroRecall / i);
-			log.info("EXP GROUP INTERMEDIATE MICRO: " + bothS);
-			log.info("");
-		}
-		macroF1 /= results.entrySet().size();
-		macroPrecision /= results.entrySet().size();
-		macroRecall /= results.entrySet().size();
-		log.info("EXP GROUP MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
-		log.info("EXP GROUP MICRO: BOTH = " + bothS);
-		log.info("EXP GROUP MICRO: Vehicle = " + vehicleScore);
-		log.info("EXP GROUP MICRO: Non Vehicle = " + nonVehicleScore);
-	}
-
-	private void evaluateTreatments(Map<Instance, State> results, AbstractEvaluator eval) {
-
-		Score vehicleScore = new Score();
-		Score nonVehicleScore = new Score();
-		Score bothS = new Score();
-		double macroF1 = 0;
-		double macroPrecision = 0;
-		double macroRecall = 0;
-		int i = 0;
-		for (Entry<Instance, State> e : results.entrySet()) {
-			/*
-			 * Evaluate treatments
-			 */
-
-			List<EntityTemplate> goldAnnotations = new ArrayList<>(
-					e.getValue().getGoldAnnotations().getAnnotations().stream()
-							.flatMap(ex -> ex.asInstanceOfEntityTemplate()
-									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
-							.map(t -> t.asInstanceOfEntityTemplate()).collect(Collectors.toSet()));
-			List<EntityTemplate> predictedAnnotations = new ArrayList<>(
-					e.getValue().getCurrentPredictions().getAnnotations().stream()
-							.flatMap(ex -> ex.asInstanceOfEntityTemplate()
-									.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream())
-							.map(t -> t.asInstanceOfEntityTemplate()).collect(Collectors.toSet()));
-
-			i++;
-			log.info(e.getKey().getName());
-
-			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
-					.getBestAssignment(goldAnnotations, predictedAnnotations);
-
-			if (e.getKey().getName().startsWith("N147"))
-				System.out.println("here");
-
-			Score score;
-			log.info("Both: " + (score = simpleTreatmentEvaluate(false, eval, bestAssignment, goldAnnotations,
-					predictedAnnotations, ESimpleEvaluationMode.BOTH)));
-			Score vs = simpleTreatmentEvaluate(false, eval, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.VEHICLE);
-			log.info("Vehicles: " + vs);
-			Score nvs = simpleTreatmentEvaluate(false, eval, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.NON_VEHICLE);
-			log.info("Non Vehicles: " + nvs);
-
-			vehicleScore.add(vs);
-			nonVehicleScore.add(nvs);
-			bothS.add(score);
-			macroF1 += score.getF1();
-			macroPrecision += score.getPrecision();
-			macroRecall += score.getRecall();
-			log.info("TREATMENTS INTERMEDIATE MACRO: F1 = " + macroF1 / i + ", P = " + macroPrecision / i + ", R = "
-					+ macroRecall / i);
-			log.info("TREATMENTS INTERMEDIATE MICRO: " + bothS);
-			log.info("");
-		}
-		macroF1 /= results.entrySet().size();
-		macroPrecision /= results.entrySet().size();
-		macroRecall /= results.entrySet().size();
-		log.info("TREATMENTS MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
-		log.info("TREATMENTS MICRO: BOTH = " + bothS);
-		log.info("TREATMENTS MICRO: Vehicle = " + vehicleScore);
-		log.info("TREATMENTS MICRO: Non Vehicle = " + nonVehicleScore);
-	}
-
-	private Score simpleExpGroupEvaluate(boolean print, AbstractEvaluator evaluator, List<Integer> bestAssignment,
-			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations,
-			ESimpleEvaluationMode mode) {
-		Score simpleScore = new Score();
-
-		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
-			final int predictIndex = bestAssignment.get(goldIndex);
-			/*
-			 * Treatments
-			 */
-			List<AbstractAnnotation> goldTreatments = new ArrayList<>();
-			if (goldAnnotations.size() > goldIndex)
-				goldTreatments.addAll(goldAnnotations.get(goldIndex).getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
-						.getSlotFiller());
-
-			List<AbstractAnnotation> predictTreatments = new ArrayList<>();
-			if (predictedAnnotations.size() > predictIndex)
-				predictTreatments.addAll(predictedAnnotations.get(predictIndex)
-						.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
-
-			/*
-			 * NOTE: Compare objects are used to tell whether a tp should be given for an
-			 * empty prediction or not. If gold and predicted is empty AND the compare
-			 * objects are also empty then a +1 tp is given
-			 *
-			 * E.g. g:Vehicle p:Vehicle would result in non vehicle mode to add 1 tp cause g
-			 * and p are empty, however if we check the compare list (vehicle list) then
-			 * they are not empty thus we do not add +1 We add only +1 for non vehicle,
-			 * otherwise +1 would be added twice.
-			 * 
-			 *
-			 */
-
-			List<AbstractAnnotation> goldTreatmentsCompare = new ArrayList<>();
-			if (goldAnnotations.size() > goldIndex)
-				goldTreatmentsCompare.addAll(goldAnnotations.get(goldIndex)
-						.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
-
-			List<AbstractAnnotation> predictTreatmentsCompare = new ArrayList<>();
-			if (predictedAnnotations.size() > predictIndex)
-				predictTreatmentsCompare.addAll(predictedAnnotations.get(predictIndex)
-						.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller());
-
-			switch (mode) {
-			case BOTH: {
-				// Do nothing
-				break;
-			}
-			case VEHICLE: {
-				/*
-				 * Filter for vehicles
-				 */
-				goldTreatments = goldTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				predictTreatments = predictTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				goldTreatmentsCompare.removeAll(goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				predictTreatmentsCompare.removeAll(predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				break;
-			}
-			case NON_VEHICLE: {
-				goldTreatments.removeAll(goldTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				predictTreatments.removeAll(predictTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				goldTreatmentsCompare = goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				predictTreatmentsCompare = predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				break;
-			}
-			}
-
-			Score s;
-			if (goldTreatments.isEmpty() && predictTreatments.isEmpty()) {
-				if (mode == ESimpleEvaluationMode.BOTH) {
-					s = new Score(1, 0, 0);
-				} else {
-					if (goldTreatmentsCompare.isEmpty() && predictTreatmentsCompare.isEmpty()
-							&& mode == ESimpleEvaluationMode.NON_VEHICLE) {
-						s = new Score(1, 0, 0);
-					} else {
-						s = new Score(0, 0, 0);
-					}
-				}
-			} else
-				s = evaluator.scoreMultiValues(goldTreatments, predictTreatments);
-
-			if (print) {
-				log.info("Compare: g" + goldIndex);
-				goldTreatments.forEach(g -> log.info(g.toPrettyString()));
-				log.info("With: p" + predictIndex);
-				predictTreatments.forEach(p -> log.info(p.toPrettyString()));
-				log.info("Score: " + s);
-				log.info("-----");
-			}
-
-			simpleScore.add(s);
-			/*
-			 * OrganismModel
-			 */
-			if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
-				List<AbstractAnnotation> goldOrganismModel = Arrays.asList(goldAnnotations.get(goldIndex)
-						.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller()).stream()
-						.filter(a -> a != null).collect(Collectors.toList());
-				List<AbstractAnnotation> predictOrganismModel;
-
-				if (predictedAnnotations.size() > predictIndex)
-					predictOrganismModel = Arrays
-							.asList(predictedAnnotations.get(predictIndex)
-									.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller())
-							.stream().filter(a -> a != null).collect(Collectors.toList());
-				else
-					predictOrganismModel = Collections.emptyList();
-
-				simpleScore.add(evaluator.scoreMultiValues(goldOrganismModel, predictOrganismModel));
-			}
-
-			/*
-			 * InjuryModel
-			 */
-			if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
-				List<AbstractAnnotation> goldInjuryModel = Arrays.asList(goldAnnotations.get(goldIndex)
-						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller()).stream()
-						.filter(a -> a != null).collect(Collectors.toList());
-				List<AbstractAnnotation> predictInjuryModel;
-
-				if (predictedAnnotations.size() > predictIndex)
-					predictInjuryModel = Arrays
-							.asList(predictedAnnotations.get(predictIndex)
-									.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller())
-							.stream().filter(a -> a != null).collect(Collectors.toList());
-				else
-					predictInjuryModel = Collections.emptyList();
-
-				simpleScore.add(evaluator.scoreMultiValues(goldInjuryModel, predictInjuryModel));
-			}
-
-		}
-
-		return simpleScore;
-	}
-
-	private Score simpleTreatmentEvaluate(boolean print, AbstractEvaluator evaluator, List<Integer> bestAssignment,
-			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations,
-			ESimpleEvaluationMode mode) {
-		Score simpleScore = new Score();
-
-		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
-			final int predictIndex = bestAssignment.get(goldIndex);
-
-			List<AbstractAnnotation> goldTreatments = new ArrayList<>();
-			List<AbstractAnnotation> predictTreatments = new ArrayList<>();
-
-			if (goldAnnotations.size() > goldIndex)
-				goldTreatments.add(goldAnnotations.get(goldIndex));
-
-			if (predictedAnnotations.size() > predictIndex)
-				predictTreatments.add(predictedAnnotations.get(predictIndex));
-			/*
-			 * NOTE: Compare objects are used to tell whether a tp should be given for an
-			 * empty prediction or not. If gold and predicted is empty AND the compare
-			 * objects are also empty then a +1 tp is given
-			 *
-			 * E.g. g:Vehicle p:Vehicle would result in non vehicle mode to add 1 tp cause g
-			 * and p are empty, however if we check the compare list (vehicle list) then
-			 * they are not empty thus we do not add +1 We add only +1 for non vehicle,
-			 * otherwise +1 would be added twice.
-			 * 
-			 *
-			 */
-			List<AbstractAnnotation> goldTreatmentsCompare = new ArrayList<>();
-			List<AbstractAnnotation> predictTreatmentsCompare = new ArrayList<>();
-
-			if (goldAnnotations.size() > goldIndex)
-				goldTreatmentsCompare.add(goldAnnotations.get(goldIndex));
-
-			if (predictedAnnotations.size() > predictIndex)
-				predictTreatmentsCompare.add(predictedAnnotations.get(predictIndex));
-
-			switch (mode) {
-			case BOTH: {
-				// Do nothing
-				break;
-			}
-			case VEHICLE: {
-				/*
-				 * Filter for vehicles
-				 */
-				goldTreatments = goldTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				predictTreatments = predictTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				goldTreatmentsCompare.removeAll(goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				predictTreatmentsCompare.removeAll(predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				break;
-			}
-			case NON_VEHICLE: {
-				goldTreatments.removeAll(goldTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				predictTreatments.removeAll(predictTreatments.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList()));
-				goldTreatmentsCompare = goldTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				predictTreatmentsCompare = predictTreatmentsCompare.stream()
-						.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.containsSlotFiller())
-						.filter(t -> t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-								.getSlotFiller().getEntityType() == EntityType.get("Vehicle")
-								|| t.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
-										.getSlotFiller().getEntityType().getHierarchicalEntityTypes()
-										.contains(EntityType.get("Vehicle")))
-						.collect(Collectors.toList());
-				break;
-			}
-			}
-
-			Score s;
-			if (goldTreatments.isEmpty() && predictTreatments.isEmpty()) {
-				if (mode == ESimpleEvaluationMode.BOTH) {
-					s = new Score(1, 0, 0);
-				} else {
-					if (goldTreatmentsCompare.isEmpty() && predictTreatmentsCompare.isEmpty()
-							&& mode == ESimpleEvaluationMode.NON_VEHICLE) {
-						s = new Score(1, 0, 0);
-					} else {
-						s = new Score(0, 0, 0);
-					}
-				}
-			} else
-				s = evaluator.scoreMultiValues(goldTreatments, predictTreatments);
-
-			if (print) {
-				log.info("Compare: g" + goldIndex);
-				goldTreatments.forEach(g -> log.info(g.toPrettyString()));
-				log.info("With: p" + predictIndex);
-				predictTreatments.forEach(p -> log.info(p.toPrettyString()));
-				log.info("Score: " + s);
-				log.info("-----");
-			}
-
-			simpleScore.add(s);
-
-		}
-
-		return simpleScore;
 	}
 
 }

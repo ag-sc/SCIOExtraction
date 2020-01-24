@@ -19,11 +19,11 @@ public class DistinctExperimentalGroupConstraint extends AbstractHardConstraint 
 
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
 
-			if (currentPrediction.evaluate(evaluator, entityTemplate).getF1() != 1.0D)
-				return false;
+			if (currentPrediction.evaluate(evaluator, entityTemplate).getF1() == 1.0D) {
+				return true;
+			}
 		}
-
-		return true;
+		return false;
 	}
 
 }
