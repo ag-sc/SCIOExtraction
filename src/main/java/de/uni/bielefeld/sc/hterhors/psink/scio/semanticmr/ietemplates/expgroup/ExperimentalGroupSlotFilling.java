@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ import de.hterhors.semanticmr.candidateretrieval.helper.DictionaryFromInstanceHe
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.SemanticParsingCRF;
+import de.hterhors.semanticmr.crf.SemanticParsingCRFMultiState;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
@@ -32,8 +33,10 @@ import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
+import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
+import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
@@ -171,7 +174,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		log.info("Model name = " + modelName);
 
 		mainClassMode = EMainClassMode.PREDICT;
-		groupNameMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
+		groupNameMode = EExtractGroupNamesMode.GOLD_CLUSTERED;
 		cardinalityMode = ECardinalityMode.MULTI_CARDINALITIES;
 		assignmentMode = EAssignmentMode.ALL;
 		complexityMode = EComplexityMode.ROOT;
@@ -217,7 +220,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = getParameter();
 
-		AbstractSampler sampler = newSampler();
+		AbstractBeamSampler sampler = new EpochSwitchBeamSampler(epoch -> epoch % 2 == 0);
+
+//		AbstractSampler sampler = newSampler();
 
 		MaxChainLengthCrit maxStepCrit = new MaxChainLengthCrit(100);
 
@@ -226,47 +231,47 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		ISamplingStoppingCriterion[] sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit,
 				noModelChangeCrit };
 
-		if (initializer instanceof MultiCardinalityInitializer) {
-			multiPrediction(explorerList, sampler, (MultiCardinalityInitializer) initializer, sampleStoppingCrits,
-					maxStepCrit, featureTemplates, parameter);
-		} else {
-			normalPrediction(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates,
-					parameter);
-
-		}
-
-	}
-
-	private void multiPrediction(List<IExplorationStrategy> explorerList, AbstractSampler sampler,
-			MultiCardinalityInitializer initializer, ISamplingStoppingCriterion[] sampleStoppingCrits,
-			MaxChainLengthCrit maxStepCrit, List<AbstractFeatureTemplate<?>> featureTemplates,
-			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
-
-		Map<Instance, State> mergedResults = new HashMap<>();
-
-		do {
-			modelName += "MCI_" + initializer.getCurrent();
-
-			normalPrediction(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates,
-					parameter);
-
-		} while (initializer.increase());
-
-		/**
-		 * Evaluate with objective function
-		 */
-		evaluate(log, mergedResults, predictionObjectiveFunction);
-
-		/**
-		 * Evaluate assuming TT,OM,IM are one unit. Evaluate assuming TT,OM,IM are one
-		 * unit, distinguish vehicle-treatments and main-treatments.
-		 */
-
-		evaluateDetailed(mergedResults);
-
-		log.info("States generated: " + SlotFillingExplorer.statesgenerated);
+//		if (initializer instanceof MultiCardinalityInitializer) {
+//			multiPrediction(explorerList, sampler, (MultiCardinalityInitializer) initializer, sampleStoppingCrits,
+//					maxStepCrit, featureTemplates, parameter);
+//		} else {
+		normalPrediction(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates,
+				parameter);
+//
+//		}
 
 	}
+
+//	private void multiPrediction(List<IExplorationStrategy> explorerList, AbstractSampler sampler,
+//			MultiCardinalityInitializer initializer, ISamplingStoppingCriterion[] sampleStoppingCrits,
+//			MaxChainLengthCrit maxStepCrit, List<AbstractFeatureTemplate<?>> featureTemplates,
+//			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
+//
+//		Map<Instance, State> mergedResults = new HashMap<>();
+//
+//		do {
+//			modelName += "MCI_" + initializer.getCurrent();
+//
+//			normalPrediction(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates,
+//					parameter);
+//
+//		} while (initializer.increase());
+//
+//		/**
+//		 * Evaluate with objective function
+//		 */
+//		evaluate(log, mergedResults, predictionObjectiveFunction);
+//
+//		/**
+//		 * Evaluate assuming TT,OM,IM are one unit. Evaluate assuming TT,OM,IM are one
+//		 * unit, distinguish vehicle-treatments and main-treatments.
+//		 */
+//
+//		evaluateDetailed(mergedResults);
+//
+//		log.info("States generated: " + SlotFillingExplorer.statesgenerated);
+//
+//	}
 
 	public void evaluateDetailed(Map<Instance, State> mergedResults) {
 
@@ -327,7 +332,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	}
 
-	private void normalPrediction(List<IExplorationStrategy> explorerList, AbstractSampler sampler,
+	private void normalPrediction(List<IExplorationStrategy> explorerList, AbstractBeamSampler sampler,
 			IStateInitializer initializer, ISamplingStoppingCriterion[] sampleStoppingCrits,
 			ISamplingStoppingCriterion maxStepCrit, List<AbstractFeatureTemplate<?>> featureTemplates,
 			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
@@ -357,7 +362,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, trainingObjectiveFunction);
+		SemanticParsingCRFMultiState crf = new SemanticParsingCRFMultiState(model, explorerList, sampler,
+				trainingObjectiveFunction);
+//		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, trainingObjectiveFunction);
 
 		crf.setInitializer(initializer);
 
@@ -783,7 +790,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			/**
 			 * NEW
 			 */
-			featureTemplates.add(new RemainingTypesTemplate());
+//			featureTemplates.add(new RemainingTypesTemplate());
 
 		}
 
@@ -865,8 +872,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * get only DefinedExperimentalGroups
 		 */
 		goldModificationRules.add(a -> {
-			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType
-					.get("DefinedExperimentalGroup"))
+			if (a.asInstanceOfEntityTemplate()
+					.getRootAnnotation().entityType == SCIOEntityTypes.definedExperimentalGroup)
 				return a;
 			return null;
 		});
@@ -1017,6 +1024,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 				return a;
 			});
+
+		if (samplingMode == ESamplingMode.TYPE_BASED)
+			goldModificationRules.add(a -> a.reduceToEntityType());
 
 		/*
 		 * remove from annotation if it has no injury, treatment, groupName, and

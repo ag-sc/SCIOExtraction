@@ -36,47 +36,59 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 	@Override
 	public State getInitState(Instance instance) {
-		List<AbstractAnnotation> as = new ArrayList<>();
+		return null;
+	}
 
-		int count = 0;
+	@Override
+	public List<State> getInitMultiStates(Instance instance) {
+		current = 1;
 
-		for (EntityTemplate goldAnnotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+		List<State> list = new ArrayList<>();
 
-			if (current == count)
-				break;
+		do {
+			List<AbstractAnnotation> as = new ArrayList<>();
 
-			count++;
+			int count = 0;
+			for (EntityTemplate goldAnnotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
 
-			EntityTemplate init = new EntityTemplate(
-					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+				if (current == count)
+					break;
 
-			if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED) {
+				count++;
 
-				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
-					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
-							AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
-											.getSurfaceForm(),
-									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
-											.getStartDocCharOffset()));
-
-				for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
-						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
-					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
-				}
-			}
-
-			as.add(init);
-		}
-
-		if (count < current)
-			for (int i = count; i < current; i++) {
 				EntityTemplate init = new EntityTemplate(
 						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+
+				if (groupNameMode == EExtractGroupNamesMode.GOLD_CLUSTERED) {
+
+					if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+						init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+								AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+										goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+												.getSurfaceForm(),
+										goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+												.getStartDocCharOffset()));
+
+					for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
+							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+						init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+					}
+				}
+
 				as.add(init);
 			}
 
-		return new State(instance, new Annotations(as));
+			if (count < current)
+				for (int i = count; i < current; i++) {
+					EntityTemplate init = new EntityTemplate(
+							AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+					as.add(init);
+				}
+
+			list.add(new State(instance, new Annotations(as)));
+		} while (increase());
+
+		return list;
 	}
 
 	/**
@@ -84,15 +96,11 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	 * 
 	 * @return true if current number is smaller or equal to max.
 	 */
-	public boolean increase() {
+	private boolean increase() {
 		current++;
 		if (current <= max)
 			return true;
 		return false;
-	}
-
-	public int getCurrent() {
-		return current;
 	}
 
 }
