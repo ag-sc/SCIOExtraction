@@ -116,7 +116,7 @@ public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTyp
 
 				if (documentLinkedAnnotation.isInstanceOfDocumentLinkedAnnotation())
 					remainingTypeAnnotations.add(documentLinkedAnnotation.asInstanceOfDocumentLinkedAnnotation());
-
+				
 			}
 		}
 		return remainingTypeAnnotations;

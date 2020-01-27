@@ -60,6 +60,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.KMeansWords;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.ExperimentalGroupEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.InjuryEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.OrganismModelEvaluation;
@@ -164,7 +165,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 5;
-		
+
 		String rand = String.valueOf(new Random().nextInt(100000));
 		modelName = "ExperimentalGroup" + 50700;// rand;
 		log.info("Model name = " + modelName);
@@ -483,10 +484,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			for (Instance instance : instanceProvider.getInstances()) {
 				instance.addCandidateAnnotations(
 						deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-			}
-			/**
-			 * TODO: add training delivery method
-			 */
+			} /**
+				 * TODO: add training delivery method
+				 */
 		}
 	}
 
@@ -527,10 +527,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			for (Instance instance : instanceProvider.getInstances()) {
 				instance.addCandidateAnnotations(
 						vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-			}
-			/**
-			 * TODO: add training location
-			 */
+			} /**
+				 * TODO: add training location
+				 */
 		}
 	}
 
@@ -686,11 +685,23 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 			instance.addCandidateAnnotations(candidates);
 
+			List<String> datapoints = new ArrayList<>();
 			for (DocumentLinkedAnnotation ec : candidates) {
 				instance.addCandidateAnnotation(AnnotationBuilder.toAnnotation(instance.getDocument(),
 						SCIOEntityTypes.definedExperimentalGroup, ec.getSurfaceForm(), ec.getStartDocCharOffset()));
+				datapoints.add(ec.getSurfaceForm());
 			}
+
+			int k = instance.getGoldAnnotations().getAnnotations().size();
+			List<List<String>> cluster = KMeansWords.cluster(datapoints, k);
+
+			for (List<String> list : cluster) {
+				System.out.println(list);
+			}
+			System.out.println("###################");
+
 		}
+		System.exit(1);
 	}
 
 	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
@@ -1160,8 +1171,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				for (Integer group : p.groups) {
 					DocumentLinkedAnnotation annotation;
 					try {
+						String term = m.group(group);
+						if (term.length() > NPChunker.maxLength)
+							continue;
 						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-								m.group(group), m.start(group));
+								term, m.start(group));
 					} catch (Exception e) {
 						annotation = null;
 					}
