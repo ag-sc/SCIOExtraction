@@ -753,7 +753,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		return featureTemplates;
 	}
-
+	
+/*
+ * Some comment
+ */
 	private Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> getParameter() {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
