@@ -38,6 +38,9 @@ public class ExperimentalGroupEvaluation {
 
 	public Score evaluate(Map<Instance, State> results) {
 
+		double cardinalityRMSE = 0;
+
+		Score experimentalCardinality = new Score();
 		Score experimentalGroupScore = new Score();
 		Score organismModelScore = new Score();
 		Score injuryModelScore = new Score();
@@ -48,7 +51,12 @@ public class ExperimentalGroupEvaluation {
 //		double macroPrecision = 0;
 //		double macroRecall = 0;
 //		int i = 0;
+
 		for (Entry<Instance, State> e : results.entrySet()) {
+
+			cardinalityRMSE += Math.pow(e.getValue().getCurrentPredictions().getAbstractAnnotations().size()
+					- e.getValue().getGoldAnnotations().getAbstractAnnotations().size(), 2);
+
 			/*
 			 * 
 			 * Evaluate clustering of Treatments
@@ -59,6 +67,16 @@ public class ExperimentalGroupEvaluation {
 
 			List<EntityTemplate> goldAnnotations = e.getValue().getGoldAnnotations().getAnnotations();
 			List<EntityTemplate> predictedAnnotations = e.getValue().getCurrentPredictions().getAnnotations();
+
+			int tp = Math.min(goldAnnotations.size(), predictedAnnotations.size());
+			int fp = predictedAnnotations.size() > goldAnnotations.size()
+					? predictedAnnotations.size() - goldAnnotations.size()
+					: 0;
+			int fn = predictedAnnotations.size() < goldAnnotations.size()
+					? goldAnnotations.size() - predictedAnnotations.size()
+					: 0;
+
+			experimentalCardinality.add(new Score(tp, fp, fn));
 
 			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
 					.getBestAssignment(goldAnnotations, predictedAnnotations);
@@ -100,6 +118,8 @@ public class ExperimentalGroupEvaluation {
 //		macroPrecision /= results.entrySet().size();
 //		macroRecall /= results.entrySet().size();
 //		log.info("EXP GROUP MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
+		log.info("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
+		log.info("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));
 		log.info("EXP GROUP MICRO  SCORE = " + experimentalGroupScore);
 		log.info("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
 		log.info("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);

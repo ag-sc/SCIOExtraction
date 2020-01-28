@@ -1,6 +1,5 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,6 +12,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 
 public class KMeansWords {
@@ -21,21 +21,32 @@ public class KMeansWords {
 
 	final static private int maxIterations = 1000;
 
-	public static List<List<String>> cluster(List<String> datapoints, int k) {
+	public static List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> datapoints, int k) {
 
 		List<Record> vecs = toDataPoints(datapoints);
 
 		Map<Centroid, List<Record>> clusterRecords = kMeans(vecs, k, maxIterations);
-		List<List<String>> clusters = new ArrayList<>();
+		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
 
+//		for (Entry<Centroid, List<Record>> list : clusterRecords.entrySet()) {
+//List<DocumentLinkedAnnotation> anns = new ArrayList<>();
+//anns.add(list.getKey().)
+//			clusters.add(l);
+//		}
+//		
 		for (List<Record> records : clusterRecords.values()) {
-			clusters.add(records.stream().map(r -> r.word).collect(Collectors.toList()));
+			clusters.add(records.stream().map(r -> r.annotation).collect(Collectors.toList()));
 		}
+
+		for (int i = clusters.size(); i < k; i++) {
+			clusters.add(Collections.emptyList());
+		}
+
 		return clusters;
 
 	}
 
-	static private List<Record> toDataPoints(List<String> datapoints) {
+	static private List<Record> toDataPoints(List<DocumentLinkedAnnotation> datapoints) {
 
 		List<Record> list = datapoints.stream().map(s -> new Record(s)).collect(Collectors.toList());
 
@@ -83,15 +94,18 @@ public class KMeansWords {
 
 	static class Record {
 		public final String word;
+		public final DocumentLinkedAnnotation annotation;
 
-		public Record(String word) {
-			this.word = word;
+		public Record(DocumentLinkedAnnotation annotation) {
+			this.annotation = annotation;
+			this.word = annotation.getSurfaceForm();
 		}
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
+			result = prime * result + ((annotation == null) ? 0 : annotation.hashCode());
 			result = prime * result + ((word == null) ? 0 : word.hashCode());
 			return result;
 		}
@@ -105,6 +119,11 @@ public class KMeansWords {
 			if (getClass() != obj.getClass())
 				return false;
 			Record other = (Record) obj;
+			if (annotation == null) {
+				if (other.annotation != null)
+					return false;
+			} else if (!annotation.equals(other.annotation))
+				return false;
 			if (word == null) {
 				if (other.word != null)
 					return false;
@@ -163,17 +182,19 @@ public class KMeansWords {
 
 	static class DistToPoint {
 
+		public final int recordIndex;
 		public final String word;
 		public final double distance;
 
-		public DistToPoint(String word, double distance) {
+		public DistToPoint(String word, int recordIndex, double distance) {
 			this.word = word;
+			this.recordIndex = recordIndex;
 			this.distance = distance;
 		}
 
 		@Override
 		public String toString() {
-			return "DistToPoint [word=" + word + ", distance=" + distance + "]";
+			return "DistToPoint [recordIndex=" + recordIndex + ", word=" + word + ", distance=" + distance + "]";
 		}
 
 	}
@@ -181,31 +202,50 @@ public class KMeansWords {
 	private static List<Centroid> plusplusCentroids(List<Record> records, int k) {
 		List<Centroid> centroids = new ArrayList<>();
 
-		Map<String, Record> recMap = new HashMap<>();
+		Map<Integer, Record> recMap = new HashMap<>();
 
+		Integer index = 0;
 		for (Record rec : records) {
-			recMap.put(rec.word, rec);
+			recMap.put(index, rec);
+			index++;
 		}
 
-		Set<String> chosen = new HashSet<>();
+		Set<Integer> chosen = new HashSet<>();
 		Integer rand = random.nextInt(records.size());
-		chosen.add(records.get(rand).word);
+		chosen.add(rand);
 		centroids.add(new Centroid(records.get(rand).word, 0));
 
 		for (int c = 1; c < k; c++) {
-			List<DistToPoint> distances = Collections.synchronizedList(new ArrayList<>());
-			records.parallelStream().filter(r -> !chosen.contains(r.word)).forEach(r -> {
+			List<DistToPoint> distances = new ArrayList<>();
+			for (int i = 0; i < records.size(); i++) {
+
+				if (chosen.contains(i))
+					continue;
 
 				double minDist = Double.MAX_VALUE;
 
 				for (Centroid centroid : centroids) {
-					double dist = levenshteinDistance(centroid.word, r.word);
+					double dist = levenshteinDistance(centroid.word, records.get(i).word);
 					if (dist < minDist) {
 						minDist = dist;
 					}
 				}
-				distances.add(new DistToPoint(r.word, Math.pow(minDist, 2)));
-			});
+				distances.add(new DistToPoint(records.get(i).word, i, Math.pow(minDist, 2)));
+
+			}
+
+//			records.stream().filter(r -> !chosen.contains(r.word)).forEach(r -> {
+//
+//				double minDist = Double.MAX_VALUE;
+//
+//				for (Centroid centroid : centroids) {
+//					double dist = levenshteinDistance(centroid.word, r.word);
+//					if (dist < minDist) {
+//						minDist = dist;
+//					}
+//				}
+//				distances.add(new DistToPoint(r.word, Math.pow(minDist, 2)));
+//			});
 //			List<DistToPoint> distances = new ArrayList<>();
 //			for (int i = 0; i < records.size(); i++) {
 //
@@ -234,11 +274,12 @@ public class KMeansWords {
 			if (!distances.isEmpty()) {
 				d = drawFromDistribution(distances);
 			} else {
-				d = new DistToPoint(records.get(new Random().nextInt(records.size())).word, 0);
+				int r = new Random().nextInt(records.size());
+				d = new DistToPoint(records.get(r).word, r, 0);
 			}
 
-			chosen.add(d.word);
-			centroids.add(new Centroid(recMap.get(d.word).word, c));
+			chosen.add(d.recordIndex);
+			centroids.add(new Centroid(recMap.get(d.recordIndex).word, c));
 		}
 
 		return centroids;

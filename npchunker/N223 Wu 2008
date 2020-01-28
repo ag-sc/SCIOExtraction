@@ -2,7 +2,6 @@ Ex vivo non-viral vector-mediated neurotrophin-3	1
 Ex vivo	1
 non-viral vector-mediated neurotrophin-3	9
 gene	50
-transfer to olfactory ensheathing glia : effects on axonal regeneration and functional recovery after implantation in rats with spinal cord injury Jun	55
 transfer to olfactory ensheathing glia : effects on axonal regeneration	55
 transfer to olfactory ensheathing glia	55
 transfer	55
@@ -22,7 +21,6 @@ WU	206
 Tian-Sheng SUN	210
 Ji-Xin REN	226
 Xian-Zhang WANG Abstract	238
-Objective Combine olfactory ensheathing glia -LRB- OEG -RRB- implantation with ex vivo non-viral vector-based neurotrophin - 3 -LRB- NT-3 -RRB- gene therapy in attempting to enhance regeneration after thoracic spinal cord injury -LRB- SCI -RRB-	265
 Objective	265
 olfactory ensheathing glia -LRB- OEG -RRB- implantation	283
 OEG	311
@@ -40,11 +38,9 @@ SCI	474
 Methods Primary OEG	480
 cationic liposome-mediated recombinant plasmid pcDNA3 .1	522
 +	578
-- NT3 and subsequently implanted into adult Wistar rats directly after the thoracic spinal cord -LRB- T9 -RRB- contusion by the New York University impactor	580
 - NT3 and subsequently implanted into adult Wistar rats	580
 NT3	581
 adult Wistar rats	617
-the thoracic spinal cord -LRB- T9 -RRB- contusion by the New York University impactor	650
 the thoracic spinal cord -LRB- T9 -RRB- contusion	650
 the New York University impactor	693
 The animals in 3 different groups	727
@@ -56,10 +52,7 @@ The animals	727
 105 OEG	772
 pcDNA3 .1	797
 +	806
-- NT3 or pcDNA3 .1 -LRB- + -RRB- plasmids , or the OEGs without any plasmid transfection , respectively ; the fourth group was untreated group , in which no OEG was implanted	808
-- NT3 or pcDNA3 .1 -LRB- + -RRB- plasmids , or the OEGs without any plasmid transfection , respectively ; the fourth group was untreated group , in	808
 NT3	809
-pcDNA3 .1 -LRB- + -RRB- plasmids , or the OEGs without any plasmid transfection , respectively ; the fourth group was untreated group , in	816
 pcDNA3 .1	816
 +	825
 plasmids , or the OEGs	828
@@ -104,7 +97,6 @@ NT	1461
 axonal outgrowth	1481
 SCI recovery	1520
 rats	1536
-1 Introduction Impairment in motor and sensory function following spinal cord injury -LRB- SCI -RRB-	1543
 1 Introduction Impairment	1543
 motor and sensory function following spinal cord injury -LRB- SCI -RRB-	1572
 motor and sensory function	1572
@@ -143,7 +135,6 @@ a promising strategy	2095
 Both normal and transected olfactory axons	2122
 normal	2127
 transected olfactory axons	2138
-the unusual property of being able to grow into adult CNS , find their appropriate targets , and form synaptic contacts with them -LSB- 4 -RSB-	2170
 the unusual property	2170
 adult CNS , find their appropriate targets ,	2218
 adult CNS	2218
@@ -151,20 +142,17 @@ their appropriate targets	2234
 synaptic contacts	2270
 them	2293
 4 -RSB-	2298
-A critical element in the ability of olfactory axons to regenerate and form specific connections	2302
 A critical element	2302
 the ability of olfactory axons to regenerate and form specific connections	2324
 the ability	2324
 olfactory axons	2339
 specific connections	2378
-the presence of a unique supporting cell , the olfactory ensheathing glia -LRB- OEG -RRB-	2402
 the presence	2402
 a unique supporting cell , the olfactory ensheathing glia -LRB- OEG -RRB-	2418
 a unique supporting cell	2418
 the olfactory ensheathing glia -LRB- OEG -RRB-	2444
 the olfactory ensheathing glia	2444
 OEG	2476
-These cells uniquely present both Schwann cell-like and astrocyte-like characteristics	2482
 These cells uniquely present	2482
 These cells	2482
 Schwann cell-like and astrocyte-like characteristics	2516
@@ -224,15 +212,12 @@ NT-3	3441
 insertion of NT-3 gene	3457
 insertion	3457
 NT-3 gene	3470
-OEG , which would then produce NT-3 continuously and exert the physiological action	3485
 OEG	3485
 NT-3	3515
 the physiological action	3543
 The present experiment	3569
-a new approach to repair SCI by applying ex vivo plasmid-transfected OEG implants in attempting to create more conducive conditions for axonal regeneration	3603
 SCI	3628
 ex vivo	3644
-plasmid-transfected OEG implants in attempting to create more conducive conditions for axonal regeneration	3652
 plasmid-transfected OEG implants	3652
 more conducive conditions for axonal regeneration	3709
 more conducive conditions	3709
@@ -258,10 +243,7 @@ methods 2.1 Recombinant plasmid pcDNA3	4035
 methods	4035
 2.1 Recombinant plasmid pcDNA3	4043
 +	4076
-- NT3 production Coding sequence of NT-3 was amplified by PCR from gene got from rat liver cells and cloned into pcDNA3 .1 -LRB- + -RRB- eukaryotic expression vector	4078
-- NT3 production Coding sequence of NT-3 was amplified by PCR from gene got from rat liver cells and cloned into pcDNA3 .1 -LRB- + -RRB-	4078
 NT3 production Coding sequence	4079
-NT-3 was amplified by PCR from gene got from rat liver cells and cloned into pcDNA3 .1 -LRB- + -RRB-	4113
 NT-3	4113
 PCR	4135
 gene got from rat liver cells	4144
@@ -317,11 +299,9 @@ HBSS	4970
 37 °C	5013
 15 min	5023
 continual shaking	5035
-DMEM -LRB- Sigma -RRB- and Ham 's F-12 -LRB- DMEM / F-12 ; 1:1 mixture ; Sigma -RRB- supplemented with 10 % fetal bovine serum -LRB- DF-10S ; Invitrogen -RRB-	5054
 DMEM -LRB- Sigma -RRB-	5054
 DMEM	5054
 Sigma	5060
-Ham 's F-12 -LRB- DMEM / F-12 ; 1:1 mixture ; Sigma -RRB- supplemented with 10 % fetal bovine serum -LRB- DF-10S ; Invitrogen -RRB-	5071
 Ham 's F-12 -LRB- DMEM / F-12 ; 1:1 mixture ; Sigma -RRB-	5071
 Ham 's F-12	5071
 Ham 's	5071
@@ -386,9 +366,7 @@ the serum-free medium	5911
 SFM	5934
 DF-10S	5950
 The SFM	5958
-DMEM , biotin -LRB- 10 ng/mL -RRB- , insulin -LRB- 5 g/mL -RRB- , transferrin -LRB- 50 g/mL -RRB- , sodium selenate -LRB- 5.2 ng/mL -RRB- , hydrocortisone -LRB- 10 ng/mL -RRB- and glutamine -LRB- 292 mg/L -RRB-	5979
 DMEM	5979
-biotin -LRB- 10 ng/mL -RRB- , insulin -LRB- 5 g/mL -RRB- , transferrin -LRB- 50 g/mL -RRB- , sodium selenate -LRB- 5.2 ng/mL -RRB- , hydrocortisone -LRB- 10 ng/mL -RRB- and glutamine -LRB- 292 mg/L -RRB-	5985
 biotin -LRB- 10 ng/mL -RRB-	5985
 biotin	5985
 10 ng/mL	5993
@@ -414,7 +392,6 @@ cells	6144
 culture medium	6191
 every 3 d. 2.3 Transfection	6214
 OEG cultures	6245
-cationic liposome We used Lipofectamine2000 -LRB- Invitrogen -RRB- as the media to transfer the plasmids into OEG	6263
 cationic liposome	6263
 We	6281
 Lipofectamine2000 -LRB- Invitrogen -RRB-	6289
@@ -485,9 +462,7 @@ they	7238
 assay for transgene expression	7257
 assay	7257
 transgene expression	7267
-2.4 NT-3 production from transfected OEG The NT-3 levels of secreted plasmid in conditioned medium from transfected OEG cultures	7289
 2.4 NT-3 production	7289
-transfected OEG The NT-3 levels of secreted plasmid in conditioned medium from transfected OEG cultures	7314
 transfected OEG	7314
 The NT-3 levels	7330
 secreted plasmid in conditioned medium from transfected OEG cultures	7349
@@ -539,11 +514,9 @@ The attached cells	8067
 Invitrogen	8121
 10 min	8137
 the reaction	8154
-DMEM -LRB- Sigma -RRB- and Ham 's F-12 -LRB- 1:1 ; Sigma -RRB- supplemented with 10 % fetal bovine serum -LRB- DF-10S ; Invitrogen -RRB-	8189
 DMEM -LRB- Sigma -RRB-	8189
 DMEM	8189
 Sigma	8195
-Ham 's F-12 -LRB- 1:1 ; Sigma -RRB- supplemented with 10 % fetal bovine serum -LRB- DF-10S ; Invitrogen -RRB-	8206
 Ham 's F-12 -LRB- 1:1 ; Sigma -RRB-	8206
 Ham 's F-12	8206
 Ham 's	8206
@@ -562,7 +535,6 @@ a density of 1 ×	8374
 a density	8374
 1 ×	8387
 104	8389
-500 μL medium from the cultures of OEGs transfected with pcDNA3 .1 -LRB- + -RRB- - NT3 or pcDNA3 .1 -LRB- + -RRB- , or OEGs without plasmid transfection , was added to 3 different plates	8399
 500 μL medium from the cultures of OEGs	8399
 500 μL medium	8399
 the cultures of OEGs	8418
@@ -570,10 +542,7 @@ the cultures	8418
 OEGs	8434
 pcDNA3	8456
 +	8465
-- NT3 or pcDNA3 .1 -LRB- + -RRB- , or OEGs without plasmid transfection , was added to 3 different plates	8467
-- NT3 or pcDNA3 .1 -LRB- + -RRB- , or OEGs without plasmid transfection , was added to 3 different	8467
 NT3	8468
-pcDNA3 .1 -LRB- + -RRB- , or OEGs without plasmid transfection , was added to 3 different	8475
 pcDNA3 .1	8475
 +	8484
 OEGs without plasmid transfection	8491
@@ -630,7 +599,6 @@ the OEG suspension	9272
 50 000 / μL	9294
 50 000	9294
 μL	9302
-The viability of OEG suspensions , which was assessed by counting the percentage of dead cells using Trypan blue staining ,	9306
 The viability	9306
 OEG suspensions	9323
 the percentage of dead cells using Trypan blue staining	9371
@@ -661,19 +629,14 @@ group 1 -LRB- n = 10 -RRB-	9872
 group 1	9872
 n	9881
 10	9884
-implantation ; groups 2 and 3 received implantation of untransfected OEG -LRB- n = 10 -RRB- or pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- n = 12 -RRB- , respectively ; and group 4 -LRB- n = 12 -RRB- received implantation of pcDNA3 .1 -LRB- + -RRB- - NT3-transfected OEG	9922
 implantation	9922
-groups 2 and 3 received implantation of untransfected OEG -LRB- n = 10 -RRB- or pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- n = 12 -RRB- , respectively ; and group 4 -LRB- n = 12 -RRB- received implantation of pcDNA3 .1 -LRB- + -RRB- - NT3-transfected OEG	9936
 groups 2 and 3	9936
-implantation of untransfected OEG -LRB- n = 10 -RRB- or pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- n = 12 -RRB- , respectively ; and group 4 -LRB- n = 12 -RRB- received implantation of pcDNA3 .1 -LRB- + -RRB- - NT3-transfected OEG	9960
 implantation of untransfected OEG -LRB- n = 10 -RRB-	9960
 implantation	9960
 untransfected OEG -LRB- n = 10 -RRB-	9976
 untransfected OEG	9976
 n	9995
 10	9999
-pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- n = 12 -RRB- , respectively ; and group 4 -LRB- n = 12 -RRB- received implantation of pcDNA3 .1 -LRB- + -RRB- - NT3-transfected OEG	10006
-pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- n = 12 -RRB- , respectively ; and group 4 -LRB- n = 12 -RRB- received implantation of pcDNA3 .1 -LRB- + -RRB-	10006
 pcDNA3 .1	10006
 +	10015
 OEG -LRB- n = 12 -RRB- , respectively ; and group 4 -LRB- n = 12 -RRB-	10030
@@ -712,7 +675,6 @@ fluorochrome	10419
 FG ; Vector Laboratories	10433
 FG	10433
 Vector Laboratories	10437
-2.8 Surgical procedures Implantation of OEG into complete thoracic transection injury model	10459
 2.8 Surgical procedures	10459
 OEG into complete thoracic transection injury model	10499
 OEG	10499
@@ -743,16 +705,12 @@ the edges	10932
 the lesion area	10945
 dorsal	10978
 cells	10986
-the following four sites of each cord stump : -LRB- 1 -RRB- ventral funiculus , -LRB- 2 -RRB- gray commissure , -LRB- 3 -RRB- dorsal corticospinal tract , and -LRB- 4 -RRB- gracile fasciculus	11011
 the following four sites of each cord stump	11011
 the following four sites	11011
 each cord stump	11039
--LRB- 1 -RRB- ventral funiculus , -LRB- 2 -RRB- gray commissure , -LRB- 3 -RRB- dorsal corticospinal tract , and -LRB- 4 -RRB- gracile fasciculus	11056
 ventral	11060
 funiculus ,	11068
 funiculus	11068
--LRB- 2 -RRB- gray commissure , -LRB- 3 -RRB- dorsal corticospinal tract , and -LRB- 4 -RRB- gracile fasciculus	11079
--LRB- 2 -RRB- gray commissure , -LRB- 3 -RRB- dorsal corticospinal tract , and -LRB- 4 -RRB-	11079
 gray	11083
 commissure ,	11088
 commissure	11088
@@ -827,10 +785,8 @@ the manufacturer 's	12099
 The resulting cDNA	12132
 PCR	12168
 PCR reaction	12173
-25 μL volume containing : 2 μL of cDNA , 2 U of Taq polymerase , 2 μL primers -LRB- forward and reverse -RRB- , and 3 μL beta-actin -LRB- inner reference -RRB-	12203
 25 μL volume containing	12203
 25 μL volume	12203
-2 μL of cDNA , 2 U of Taq polymerase , 2 μL primers -LRB- forward and reverse -RRB-	12228
 2 μL	12228
 cDNA , 2 U of Taq polymerase , 2 μL primers -LRB- forward and reverse -RRB-	12236
 cDNA	12236
@@ -850,7 +806,6 @@ Reaction conditions	12340
 94 °C for 1 min	12394
 94 °C	12394
 1 min	12404
-55 °C for 1 min , and at 72 °C for 1 min , for 35 cycles ; followed by a final extension at 72 °C for 10 min	12414
 55 °C	12414
 1 min	12424
 72 °C for 1 min	12438
@@ -913,7 +868,6 @@ the spinal cord caudad	13232
 the lesion region	13258
 The injector	13277
 place	13302
-5 min , followed by careful withdrawal of the glass capillary and suturing of the skin	13312
 5 min	13312
 careful withdrawal of the glass capillary and suturing of the skin	13331
 careful withdrawal of the glass capillary	13331
@@ -955,10 +909,8 @@ methanol	13888
 the endogenous peroxidase	13911
 nonspecific staining	13942
 3 % normal serum	13980
-Primary antibodies raised against NF -LRB- mouse anti-Neurofilament SMI31 , 1:1 000 ; Sternberger Monoclonals Inc. , Baltimore , MD , USA -RRB-	13997
 Primary antibodies	13997
 NF	14031
-mouse anti-Neurofilament SMI31 , 1:1 000 ; Sternberger Monoclonals Inc. , Baltimore , MD , USA	14035
 mouse anti-Neurofilament SMI31	14035
 1:1 000 ; Sternberger Monoclonals Inc. , Baltimore	14067
 1:1 000	14067
@@ -976,9 +928,7 @@ sections	14180
 4 °C	14218
 overnight	14223
 Sections	14234
-an appropriate biotinylated secondary antibody -LRB- 1:200 ; Vector Laboratories , Burlingame , CA , USA -RRB- followed by ABC complex for 45 min at room temperature	14263
 an appropriate	14263
-secondary antibody -LRB- 1:200 ; Vector Laboratories , Burlingame , CA , USA -RRB- followed by ABC complex for 45 min at room temperature	14291
 secondary antibody	14291
 1:200	14311
 Vector Laboratories , Burlingame , CA , USA	14318
@@ -990,7 +940,6 @@ ABC complex	14372
 45 min at room temperature	14388
 45 min	14388
 room temperature	14398
-Diaminobenzidine -LRB- DAB-brown color ; Sigma Chemical Co. , St. Louis , MO , USA -RRB-	14416
 Diaminobenzidine	14416
 DAB-brown color	14434
 Sigma Chemical Co. , St. Louis , MO , USA	14451
@@ -1033,12 +982,10 @@ properties	15027
 a defined target area	15045
 FG-labeled neurons	15068
 fluorescent microscope	15146
-2.13 Statistical analysis Data obtained from histological analysis and the BBB scores	15170
 2.13 Statistical analysis Data	15170
 histological analysis and the BBB scores	15215
 histological analysis	15215
 the BBB scores	15241
-statistical differences between animal groups using one-way ANOVA and Student-Newman-Keuls tests	15274
 statistical differences	15274
 animal groups using one-way ANOVA and Student-Newman-Keuls tests	15306
 animal groups	15306
@@ -1051,7 +998,6 @@ the analysis	15448
 the animals survived the entire study	15480
 the animals	15480
 the entire study	15501
-3 Results Fig. 1 Human neuroblastoma cells cultured with medium from olfactory ensheathing glia -LRB- OEG -RRB- cultures .	15520
 3 Results Fig. 1 Human neuroblastoma cells	15520
 3 Results	15520
 1 Human neuroblastoma cells	15535
@@ -1062,7 +1008,6 @@ Moderate extensions of neurites	15632
 Moderate extensions	15632
 neurites	15655
 human neuroblastoma cells	15683
-medium from untransfected or pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- A , B -RRB-	15730
 medium from untransfected or pcDNA3 .1 -LRB- + -RRB-	15730
 medium	15730
 untransfected or pcDNA3 .1 -LRB- + -RRB-	15742
@@ -1073,7 +1018,6 @@ transfected OEG	15771
 A , B	15788
 A	15788
 B	15791
-Robust outgrowth of neurites from neuroblastoma cells -LRB- C -RRB- and suspected synapse connection -LRB- D -RRB-	15795
 Robust outgrowth of neurites from neuroblastoma cells -LRB- C -RRB-	15795
 Robust outgrowth	15795
 neurites from neuroblastoma cells -LRB- C -RRB-	15815
@@ -1135,7 +1079,6 @@ Fig. 3 -LRB- - -RRB- Fig. 4	16227
 Fig. 3 -LRB- - -RRB-	16227
 Fig. 3	16227
 -	16235
-Fig. 5 Basso Beattie Bresnahan -LRB- BBB -RRB- locomotor score -LRB- mean ± SD -RRB- of rats in different groups	16251
 Fig. 5 Basso Beattie Bresnahan	16251
 -LRB- BBB -RRB- locomotor score -LRB- mean ± SD -RRB-	16282
 -LRB- BBB -RRB- locomotor score	16282
@@ -1146,7 +1089,6 @@ mean	16305
 rats in different groups	16317
 rats	16317
 different groups	16325
-Rats that received pcDNA3 .1 -LRB- + -RRB- - NT3 transfected OEG revealed active coordinated hindlimb movement six weeks later after injury .	16343
 Rats that received pcDNA3 .1 -LRB- + -RRB- - NT3 transfected OEG revealed active	16343
 Rats	16343
 pcDNA3 .1	16362
@@ -1177,9 +1119,7 @@ P	16688
 < 0.05	16690
 <	16690
 0.05	16692
-3.1 In vitro analysis of transgenic neurotrophin expression Transfection of purified OEG cultures with plasmid-liposome complex	16700
 3.1 In vitro analysis	16700
-transgenic neurotrophin expression Transfection of purified OEG cultures with plasmid-liposome complex	16725
 transgenic neurotrophin expression Transfection	16725
 purified OEG cultures with plasmid-liposome complex	16776
 purified OEG cultures	16776
@@ -1188,7 +1128,6 @@ comparatively high levels of transgene expression	16840
 comparatively high levels	16840
 transgene expression	16869
 many cells	16893
-determined by in situ hybridization at 3 d after infection -LRB- data not shown -RRB-	16907
 determined by in situ hybridization	16907
 3 d after infection -LRB- data not shown -RRB-	16946
 3 d	16946
@@ -1210,7 +1149,6 @@ No staining	17165
 any of the transgenes	17181
 any	17181
 the transgenes	17188
-untransfected OEGs that served as control cultures or after hybridization with sense probe	17219
 untransfected OEGs	17219
 control cultures	17253
 hybridization	17279
@@ -1225,7 +1163,6 @@ an ELISA assay	17403
 4 d	17418
 transfection	17434
 NT-3	17448
-the medium samples -LRB- n = 4 -RRB- taken from control or pcDNA3 .1 -LRB- + -RRB- - transfected OEG cultures	17475
 the medium samples	17475
 n	17495
 4	17499
@@ -1233,9 +1170,7 @@ control or pcDNA3 .1 -LRB- + -RRB-	17513
 control or pcDNA3 .1	17513
 +	17533
 OEG cultures	17548
-transfection with pcDNA3 .1 -LRB- + -RRB- - NT3 , ELISA analysis of medium samples revealed that at least -LRB- 21.7 ± 4.8 -RRB- ng of recombinant NT-3 was secreted from 1 × 105 cells per day	17568
 transfection	17568
-pcDNA3 .1 -LRB- + -RRB- - NT3 , ELISA analysis of medium samples revealed that at least -LRB- 21.7 ± 4.8 -RRB- ng of recombinant NT-3 was secreted from 1 × 105 cells per day	17586
 pcDNA3 .1	17586
 +	17595
 - NT3 , ELISA analysis	17597
@@ -1284,7 +1219,6 @@ Moderate extensions of neurites	18237
 Moderate extensions	18237
 neurites	18260
 human neuroblastoma cells	18288
-medium from untransfected or pcDNA3 .1 -LRB- + -RRB- - transfected OEG -LRB- Fig. 1A , B -RRB-	18335
 medium from untransfected or pcDNA3 .1 -LRB- + -RRB-	18335
 medium	18335
 untransfected or pcDNA3 .1 -LRB- + -RRB-	18347
@@ -1351,12 +1285,8 @@ axonal survival and regeneration	19196
 NF immunoreactivity	19230
 12 weeks	19266
 The significantly more NF-positive axons	19288
-the pcDNA3 .1 -LRB- + -RRB- - NT3-tansfected OEG group than in pcDNA3 .1 -LRB- + -RRB- - transfected and untransfected OEG groups , or untreated group -LRB- Fig. 3 ; P < 0.05 -RRB-	19341
-the pcDNA3 .1 -LRB- + -RRB- - NT3-tansfected OEG group than in pcDNA3 .1 -LRB- + -RRB- - transfected and untransfected OEG groups	19341
 the pcDNA3	19341
 +	19354
-- NT3-tansfected OEG group than in pcDNA3 .1 -LRB- + -RRB- - transfected and untransfected OEG groups	19356
-- NT3-tansfected OEG group than in pcDNA3 .1 -LRB- + -RRB- - transfected and untransfected	19356
 NT3-tansfected OEG group	19357
 pcDNA3 .1 -LRB- + -RRB- - transfected and untransfected	19390
 pcDNA3 .1	19390
@@ -1405,9 +1335,6 @@ SCI	19934
 10	19943
 the pcDNA3	19949
 +	19963
-- NT3-transfected OEG group , 9 in the untransfected OEG group , 9 in the pcDNA3 .1 -LRB- + -RRB- - transfected OEG group and 7 in untreated group	19965
-- NT3-transfected OEG group , 9 in the untransfected OEG group , 9 in the pcDNA3 .1 -LRB- + -RRB- - transfected OEG group and 7	19965
-- NT3-transfected OEG group , 9 in the untransfected OEG group , 9 in the pcDNA3 .1 -LRB- + -RRB-	19965
 NT3-transfected OEG group , 9 in the untransfected OEG group	19966
 NT3-transfected OEG group	19966
 9 in the untransfected OEG group	19993
@@ -1433,7 +1360,6 @@ durative uncoordinated hindlimb spasms	20248
 Three weeks	20288
 SCI	20306
 initial paralysis	20311
-the animals implanted with pcDNA3 .1 -LRB- + -RRB- - NT3-transfected OEG -LRB- Fig. 5 -RRB-	20347
 the animals	20347
 pcDNA3 .1 -LRB- + -RRB-	20374
 pcDNA3 .1	20374
@@ -1457,12 +1383,10 @@ P	20582
 The mean BBB scores at 12-week	20593
 The mean BBB scores	20593
 12-week	20616
-12.50 , 10.39 , 10.22 and 3.78 , respectively , in pcDNA3 .1 -LRB- + -RRB- - NT3 + OEG , OEG , pcDNA3 .1 -LRB- + -RRB- + OEG , and untreated groups	20629
 12.50	20629
 10.39	20636
 10.22 and 3.78 , respectively	20643
 10.22 and 3.78	20643
-pcDNA3 .1 -LRB- + -RRB- - NT3 + OEG , OEG , pcDNA3 .1 -LRB- + -RRB- + OEG , and untreated groups	20676
 pcDNA3 .1 -LRB- + -RRB- - NT3 + OEG , OEG , pcDNA3 .1 -LRB- + -RRB- + OEG	20676
 pcDNA3	20676
 +	20685
@@ -1475,11 +1399,9 @@ OEG , pcDNA3 .1	20696
 OEG	20696
 pcDNA3 .1	20701
 + OEG	20712
-Rats in the pcDNA3 .1 -LRB- + -RRB- - NT3-transfected OEG group had better performances compared with those in other groups	20740
 Rats	20740
 the pcDNA3	20748
 +	20761
-- NT3-transfected OEG group had better performances compared with those in other groups	20763
 - NT3-transfected OEG group had better performances compared with those in	20763
 NT3-transfected OEG	20764
 group had better performances compared	20784
@@ -1492,7 +1414,6 @@ P	20851
 < 0.05	20853
 <	20853
 0.05	20855
-The pcDNA3 .1 -LRB- + -RRB- - transfected OEG group and the untransfected OEG group had no significantly difference .	20862
 The pcDNA3 .1 -LRB- + -RRB-	20862
 The pcDNA3 .1	20862
 +	20875
@@ -1545,7 +1466,6 @@ a vector for therapeutic purposes	21881
 a vector	21881
 therapeutic purposes	21894
 This	21916
-a promising therapeutic method though currently enormous failure of clinical trials	21924
 a promising therapeutic method	21924
 currently enormous failure of clinical trials	21962
 currently enormous failure	21962
@@ -1560,7 +1480,6 @@ their desired site	22146
 action	22168
 the chosen cells	22178
 There	22196
-two kinds of vectors , viral and non-viral vector system , used for gene delivery	22206
 two kinds	22206
 vectors , viral and non-viral vector system	22219
 vectors	22219
@@ -1571,15 +1490,12 @@ Synthetic non-viral vector systems	22287
 many advantages compared with viral systems	22327
 many advantages	22327
 viral systems	22357
-significantly lower toxicity/immunogenicity and potential for oncogenicity , size independent delivery of nucleic acids -LRB- from oligonucleotides to artificial chromosomes -RRB- , simpler quality control , and substantially easier pharmaceutical and regulatory requirements -LSB- 19 -RSB-	22382
 significantly lower toxicity/immunogenicity and potential for oncogenicity	22382
 significantly lower toxicity/immunogenicity	22382
 potential for oncogenicity	22430
 potential	22430
 oncogenicity	22444
-size independent delivery of nucleic acids -LRB- from oligonucleotides to artificial chromosomes -RRB- , simpler quality control , and substantially easier pharmaceutical	22458
 size independent delivery	22458
-nucleic acids -LRB- from oligonucleotides to artificial chromosomes -RRB- , simpler quality control , and substantially easier pharmaceutical	22487
 nucleic acids -LRB- from oligonucleotides to artificial chromosomes -RRB-	22487
 nucleic acids	22487
 oligonucleotides to artificial chromosomes	22507
@@ -1598,7 +1514,6 @@ these significant advantages	22746
 Basic clinical confidence in non-viral vectors	22776
 Basic clinical confidence	22776
 non-viral vectors	22805
-the various advantages listed above inherent in synthetic non-viral vector systems	22838
 the various advantages	22838
 inherent in synthetic non-viral vector systems	22874
 synthetic non-viral vector	22886
@@ -1616,7 +1531,6 @@ delivery of recombinant NT-3 cDNA	23160
 delivery	23160
 recombinant NT-3 cDNA	23172
 OEG	23197
-production of therapeutic levels of functional NT-3 protein in injured spinal cord	23223
 production	23223
 therapeutic levels of functional NT-3 protein in injured spinal cord	23237
 therapeutic levels	23237
@@ -1635,7 +1549,6 @@ some specific neurites	23444
 SCI of mammalian	23474
 SCI	23474
 mammalian	23481
-the recovery of corticospinal tract -LRB- CST -RRB- and main sensory pathway , where NT-3 receptors exist widely ,	23492
 the recovery	23492
 corticospinal tract -LRB- CST -RRB- and main sensory pathway	23508
 corticospinal tract -LRB- CST -RRB-	23508
@@ -1660,7 +1573,6 @@ the ability of promoting axonal regeneration	23842
 the ability	23842
 axonal regeneration	23867
 NT-3	23888
-nerve growth factor -LRB- NGF -RRB- or brain-derived neurotrophic factor -LRB- BDNF -RRB- -LSB- 21 -RSB-	23900
 nerve growth factor	23900
 NGF	23921
 brain-derived neurotrophic factor -LRB- BDNF -RRB- -LSB- 21 -RSB-	23929
@@ -1675,9 +1587,7 @@ axon populations	23996
 OEG implants in different injury models	24049
 OEG implants	24049
 different injury models	24065
-sensory axons of the dorsal root axons -LSB- 21,22 -RSB- as well as serotonergic axons -LSB- 8,9,24,25 -RSB- and CST axons -LSB- 7,8 -RSB-	24100
 sensory axons	24100
-the dorsal root axons -LSB- 21,22 -RSB- as well as serotonergic axons -LSB- 8,9,24,25 -RSB- and CST axons -LSB- 7,8 -RSB-	24117
 the dorsal root axons -LSB- 21,22	24117
 the dorsal root axons	24117
 21,22	24139
@@ -1733,7 +1643,6 @@ injured spinal cord	24845
 the balance between promoter and inhibitor	24876
 the balance	24876
 promoter and inhibitor	24896
-the single use of promoter such as OEG or neurotrophin without dealing with inhibitor such as Nogo	24923
 the single use	24923
 promoter such as OEG or neurotrophin without dealing with inhibitor such as Nogo	24941
 promoter	24941
@@ -1748,9 +1657,7 @@ more insight	25127
 overall requirements of injured spinal cord	25143
 overall requirements	25143
 injured spinal cord	25167
-Extended knowledge of both promotion factors and inhibition ones involved in regeneration of nerve tracts	25188
 Extended knowledge	25188
-both promotion factors and inhibition ones involved in regeneration of nerve tracts	25210
 both promotion factors and inhibition ones	25210
 regeneration of nerve tracts	25265
 regeneration	25265
@@ -1774,7 +1681,6 @@ OEG	25584
 NT-3-encoding plasmid vectors	25593
 axonal regeneration	25654
 2	25676
-the growth-promoting properties of these cells , and -LRB- 3 -RRB- improve functional recovery after implantation	25687
 the growth-promoting properties of these cells	25687
 the growth-promoting properties	25687
 these cells	25722
@@ -1794,7 +1700,6 @@ injured spinal cord	25956
 Combination of promoter and inhibitor antagonist	25977
 Combination	25977
 promoter and inhibitor antagonist	25992
-the results obtained , giving hope for the use of these modified cells in both acute and chronic SCI models	26054
 the results	26054
 hope	26083
 the use of these modified cells in both acute and chronic SCI models	26092

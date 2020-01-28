@@ -1292,6 +1292,9 @@ public class CollectExpGroupNames {
 	final private static String referencesKeypointTerm = "references";
 	final private static String resultsKeyPointTerm = "results";
 
+	final public static Set<String> STOP_TERM_LIST = new HashSet<>(
+			Arrays.asList("spinal", "injured", "lesion", "experimental", "group", "animals", "rats", "cats","SCI"));
+
 	private Integer getReferencePoint(Instance instance) {
 		/*
 		 * Search for mentioned references point
