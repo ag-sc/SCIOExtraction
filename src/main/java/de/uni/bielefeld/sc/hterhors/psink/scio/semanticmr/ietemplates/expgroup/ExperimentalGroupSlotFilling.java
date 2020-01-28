@@ -840,7 +840,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private int getNumberOfEpochs() {
-		return 10;
+		return 2;
 //		return 1;
 	}
 
