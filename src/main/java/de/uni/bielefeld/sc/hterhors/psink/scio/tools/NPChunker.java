@@ -20,6 +20,8 @@ import edu.stanford.nlp.trees.tregex.TregexPattern;
 
 public class NPChunker {
 
+	public static int maxLength = 80;
+
 	private final File npChunkerDir = new File("npchunker/");
 
 	private StanfordCoreNLP pipeline;
@@ -54,6 +56,8 @@ public class NPChunker {
 
 	public NPChunker(final Document document) throws IOException {
 
+		System.out.println("Process: "+document.documentID);
+
 		chunks = new File(npChunkerDir, document.documentID);
 
 		if (chunks.exists())
@@ -85,12 +89,13 @@ public class NPChunker {
 			Tree constituencyParse = sentence.constituencyParse();
 			TregexMatcher matcher = NPpattern.matcher(constituencyParse);
 			while (matcher.findNextMatchingNode()) {
-				nps.add(new TermIndexPair(SentenceUtils.listToString(matcher.getMatch().yield()),
-						matcher.getMatch().yieldWords().get(0).beginPosition()));
+				String term = SentenceUtils.listToString(matcher.getMatch().yield());
+				if (term.length() > maxLength)
+					continue;
+				nps.add(new TermIndexPair(term, matcher.getMatch().yieldWords().get(0).beginPosition()));
 			}
 		}
 		PrintStream ps = new PrintStream(chunks);
-
 		nps.forEach(np -> ps.println(np.term + SPLITTER + np.index));
 		ps.close();
 		return nps;

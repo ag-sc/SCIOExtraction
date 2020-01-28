@@ -23,6 +23,28 @@ public class Modes {
 
 	}
 
+	public enum EGroupNamesPreProcessingMode {
+		SAMPLE,
+
+		KMEANS_CLUSTERING,
+
+		GOLD_CLUSTERING;
+
+	}
+
+	public enum EDistinctGroupNamesMode {
+		/**
+		 * Literals of GroupNames are distinct. Picks first occurrence of any groupName
+		 * from the set of same literals.
+		 */
+		DISTINCT,
+
+		/**
+		 * Literals of GroupNames are not distinct. Takes all occurrences.
+		 */
+		NOT_DISTINCT;
+	}
+
 	public enum EExtractGroupNamesMode {
 
 		/**
@@ -33,13 +55,7 @@ public class Modes {
 		 * Add GroupName annotations from gold data. GroupNames however are not
 		 * co-referenced and assigned to the correct DefindExperimentalGroup.
 		 */
-		GOLD_UNCLUSTERED,
-		/**
-		 * Add GroupName annotations from gold data and assign the groupNames to the
-		 * correct DefinedExperimentalGroup. If this is chosen, no annotations are
-		 * created for GroupNames and the slot "hasgroupNme" is excluded from sampling.
-		 */
-		GOLD_CLUSTERED,
+		GOLD,
 		/**
 		 * Add GroupName annotations from a set of predefined regular expression
 		 * pattern. Annotations are not clustered yet, as they are can be wrong.
@@ -60,7 +76,8 @@ public class Modes {
 		/**
 		 * Combine Pattern and NP-Chunks with Gold
 		 */
-		PATTERN_NP_CHUNKS_GOLD;
+		PATTERN_NP_CHUNKS_GOLD,
+
 	}
 
 	public enum ECardinalityMode {
