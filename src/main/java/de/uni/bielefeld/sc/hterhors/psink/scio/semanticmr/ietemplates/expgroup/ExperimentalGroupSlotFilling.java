@@ -242,62 +242,23 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	public void evaluateDetailed(Map<Instance, State> mergedResults) {
-
-		TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(
-				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+		NerlaEvaluator nerlaEvaluator = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
+		TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(nerlaEvaluator);
 
 		treatmentEvaluation.evaluate(mergedResults);
 
-		OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(
-				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+		OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(nerlaEvaluator);
 
 		organismModelEvaluation.evaluate(mergedResults);
 
-		InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(
-				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+		InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(nerlaEvaluator);
 
 		injuryModelEvaluation.evaluate(mergedResults);
 
 		ExperimentalGroupEvaluation expGroupEval = new ExperimentalGroupEvaluation(predictionObjectiveFunction,
-				new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE));
+				nerlaEvaluator);
 
 		expGroupEval.evaluate(mergedResults);
-	}
-
-	/**
-	 * Selects the state with the higher model score.
-	 * 
-	 * @param result
-	 * @param state
-	 * @return
-	 */
-	private State selectBestState(State state1, State state2) {
-
-		if (state2 == null)
-			return state1;
-
-		if (state1 == null)
-			return state2;
-
-		final String c1;
-		final String c2;
-
-		log.info(state1.getInstance().getName());
-		log.info("Gold number: " + state1.getGoldAnnotations().getAnnotations().size());
-		log.info("Prev number: " + state1.getCurrentPredictions().getAnnotations().size());
-		log.info("New number: " + state2.getCurrentPredictions().getAnnotations().size());
-		log.info("Compare MODEL: " + state1.getModelScore() + " with " + state2.getModelScore());
-		log.info("Select MODEL: " + (c1 = (state1.getModelScore() > state2.getModelScore() ? "prev" : "new")));
-		log.info("Compare OBJECTIVE: " + state1.getObjectiveScore() + " with " + state2.getObjectiveScore());
-		log.info("Select OBJECTIVE: "
-				+ (c2 = (state1.getObjectiveScore() > state2.getObjectiveScore() ? "prev" : "new")));
-		log.info("Correct : " + c1.equals(c2));
-		log.info("\n");
-		if (state1.getModelScore() > state2.getModelScore())
-			return state1;
-
-		return state2;
-
 	}
 
 	private void evaluation(List<IExplorationStrategy> explorerList, AbstractBeamSampler sampler,
@@ -753,10 +714,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		return featureTemplates;
 	}
-	
-/*
- * Some comment
- */
+
+	/*
+	 * Some comment
+	 */
 	private Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> getParameter() {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = new HashMap<>();
@@ -811,7 +772,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private int getNumberOfEpochs() {
-		return 2;
+		return 10;
 //		return 1;
 	}
 
@@ -1036,6 +997,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 	}
 
+	/**
+	 * Computes the mean + 1 std dev of numbers of experimental groups. 
+	 * @return
+	 */
 	private int computeMaxCardinality() {
 		double stdDev = 0;
 
