@@ -15,6 +15,12 @@ public class GroupNamePair implements Comparable<GroupNamePair> {
 		this.sameCluster = sameCluster;
 	}
 
+	public GroupNamePair(GroupNamePair groupNamePair, boolean sameCluster) {
+		this.groupName1 = groupNamePair.groupName1;
+		this.groupName2 = groupNamePair.groupName2;
+		this.sameCluster = sameCluster;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -59,4 +65,5 @@ public class GroupNamePair implements Comparable<GroupNamePair> {
 	public int compareTo(GroupNamePair o) {
 		return Boolean.compare(this.sameCluster, o.sameCluster);
 	}
+
 }

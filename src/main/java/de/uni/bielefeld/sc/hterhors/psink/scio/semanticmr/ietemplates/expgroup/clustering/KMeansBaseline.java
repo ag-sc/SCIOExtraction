@@ -15,16 +15,16 @@ import com.github.jsonldjava.shaded.com.google.common.collect.Streams;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.KMeansWords;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.WordBasedKMeans;
 
-public class Baseline {
+public class KMeansBaseline {
 
-	public Baseline(List<Instance> allInstances) {
+	public KMeansBaseline(List<Instance> allInstances, int k) {
 		Score overall = new Score();
 		for (Instance instance : allInstances) {
 
 			Map<Boolean, Set<GroupNamePair>> goldPairs = GroupNameHelperExtractionn
-					.extractTrainingData(Arrays.asList(instance));
+					.extractData(Arrays.asList(instance));
 
 			List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 			datapoints.addAll(goldPairs.get(true).stream().map(g -> g.groupName1).collect(Collectors.toList()));
@@ -35,7 +35,7 @@ public class Baseline {
 			if (datapoints.size() == 0)
 				continue;
 
-			List<List<DocumentLinkedAnnotation>> clusters = KMeansWords.cluster(datapoints, 4);
+			List<List<DocumentLinkedAnnotation>> clusters = new WordBasedKMeans().cluster(datapoints, k);
 
 			Map<Boolean, Set<GroupNamePair>> kMeansPairs = new HashMap<>();
 
@@ -45,9 +45,9 @@ public class Baseline {
 			for (int i = 0; i < clusters.size(); i++) {
 				for (int j = i; j < clusters.size(); j++) {
 					for (int l = 0; l < clusters.get(i).size(); l++) {
-						for (int k = l + 1; k < clusters.get(j).size(); k++) {
+						for (int m = l + 1; m < clusters.get(j).size(); m++) {
 							kMeansPairs.get(i == j)
-									.add(new GroupNamePair(clusters.get(i).get(l), clusters.get(j).get(k), i == j));
+									.add(new GroupNamePair(clusters.get(i).get(l), clusters.get(j).get(m), i == j));
 						}
 					}
 				}
@@ -62,7 +62,7 @@ public class Baseline {
 			overall.add(s);
 		}
 
-		System.out.println("Baseline score = " + overall);
+		System.out.println(k + " Means Baseline score = " + overall);
 
 	}
 
@@ -74,11 +74,15 @@ public class Baseline {
 		int tp = 0;
 		int fp = 0;
 		int fn = 0;
+		int tn = 0;
 
 		outer: for (GroupNamePair a : annotations) {
 			for (GroupNamePair oa : otherAnnotations) {
 				if (oa.equals(a)) {
-					tp++;
+					if (oa.sameCluster)
+						tp++;
+					else
+						tn++;
 					continue outer;
 				}
 			}
@@ -96,7 +100,7 @@ public class Baseline {
 		}
 //		System.out.println(new Score(tp, fp, fn));
 //		System.out.println();
-		return new Score(tp, fp, fn);
+		return new Score(tp, fp, fn, tn);
 
 	}
 }

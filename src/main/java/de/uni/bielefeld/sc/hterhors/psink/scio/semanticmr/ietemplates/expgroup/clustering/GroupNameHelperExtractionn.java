@@ -15,7 +15,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class GroupNameHelperExtractionn {
 
-	public static Map<Boolean, Set<GroupNamePair>> extractTrainingData(List<Instance> allInstances) {
+	public static Map<Boolean, Set<GroupNamePair>> extractData(List<Instance> allInstances) {
 
 		Map<Boolean, Set<GroupNamePair>> pairs = new HashMap<>();
 		pairs.put(true, new HashSet<>());
