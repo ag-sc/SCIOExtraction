@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,21 +7,24 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class InstanceCollection {
 	final private List<FeatureDataPoint> dataPoints;
 	public Map<String, Integer> sparseIndexMapping;
+	public Map<Integer, String> sparseFeatureMapping;
 
 	public InstanceCollection() {
 		this.dataPoints = Collections.synchronizedList(new ArrayList<>());
 		this.sparseIndexMapping = new ConcurrentHashMap<>();
+		this.sparseFeatureMapping = new ConcurrentHashMap<>();
 	}
 
 	public void addFeatureDataPoint(final FeatureDataPoint fdp) {
@@ -119,19 +122,73 @@ public class InstanceCollection {
 	 * 
 	 * @param feature  the feature
 	 * @param training if the data point belongs to training
-	 * @param offset   TODO
 	 * @param offset   the index offset, libLinear starts counting at 1...
 	 * @return the index of the feature, or null if mode is prediction and the
 	 *         feature is not present.
 	 */
 	private synchronized Integer getFeatureIndex(final String feature, final boolean training) {
 		if (training)
-			if (!sparseIndexMapping.containsKey(feature))
-				sparseIndexMapping.put(feature, sparseIndexMapping.size());
+			if (!sparseIndexMapping.containsKey(feature)) {
+				final int v = sparseIndexMapping.size();
+				sparseIndexMapping.put(feature, v);
+				sparseFeatureMapping.put(v, feature);
+
+			}
 		return sparseIndexMapping.get(feature);
 	}
 
+	/**
+	 * THIS ALL IS NEW !!!
+	 * 
+	 * @param minAppearence
+	 * @return
+	 */
+	public InstanceCollection removeRareFeatures(int minAppearence) {
+
+		Map<Integer, Integer> countFeatures = new HashMap<>();
+		for (FeatureDataPoint featureDataPoint : dataPoints) {
+			for (Integer featureIndex : featureDataPoint.features.keySet()) {
+				countFeatures.put(featureIndex, countFeatures.getOrDefault(featureIndex, 0) + 1);
+			}
+		}
+
+		Set<Integer> removeFeatures = new HashSet<>();
+		for (Entry<Integer, Integer> featureDataPoint : countFeatures.entrySet()) {
+
+			if (featureDataPoint.getValue() <= minAppearence) {
+				removeFeatures.add(featureDataPoint.getKey());
+			}
+
+		}
+
+		System.out.println(
+				"Remove: " + removeFeatures.size() + " number of features that appears less than " + minAppearence);
+
+		InstanceCollection newI = new InstanceCollection();
+
+		for (FeatureDataPoint fdp : this.dataPoints) {
+
+			Map<String, Double> newFeatures = new HashMap<>();
+
+			for (Entry<Integer, Double> f : fdp.features.entrySet()) {
+
+				if (removeFeatures.contains(f.getKey()))
+					continue;
+
+				String feature = sparseFeatureMapping.get(f.getKey());
+
+				newFeatures.put(feature, f.getValue());
+			}
+
+			newI.addFeatureDataPoint(new FeatureDataPoint(fdp.docID, fdp.sentenceIndex, fdp.sentence, newI, newFeatures,
+					fdp.score, true));
+		}
+
+		return newI;
+	}
+
 	public List<FeatureDataPoint> getDataPoints() {
+
 		return dataPoints;
 	}
 
