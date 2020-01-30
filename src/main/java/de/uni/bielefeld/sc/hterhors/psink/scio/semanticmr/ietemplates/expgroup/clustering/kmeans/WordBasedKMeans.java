@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 
-public class KMeansWords {
+public class WordBasedKMeans {
 
 	private static final Random random = new Random(1000L);
 
