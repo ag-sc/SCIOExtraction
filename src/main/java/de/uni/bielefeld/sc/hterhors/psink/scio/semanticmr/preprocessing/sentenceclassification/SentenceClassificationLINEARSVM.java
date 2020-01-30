@@ -1,48 +1,5 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import de.bwaldvogel.liblinear.Feature;
-import de.bwaldvogel.liblinear.FeatureNode;
-import de.bwaldvogel.liblinear.Linear;
-import de.bwaldvogel.liblinear.Model;
-import de.bwaldvogel.liblinear.Parameter;
-import de.bwaldvogel.liblinear.Problem;
-import de.bwaldvogel.liblinear.SolverType;
-import de.hterhors.semanticmr.corpus.InstanceProvider;
-import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
-import de.hterhors.semanticmr.crf.variables.Document;
-import de.hterhors.semanticmr.crf.variables.DocumentToken;
-import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.InstanceCollection.FeatureDataPoint;
-import weka.classifiers.Evaluation;
-import weka.classifiers.evaluation.NominalPrediction;
-import weka.classifiers.evaluation.Prediction;
-import weka.classifiers.trees.RandomForest;
-import weka.core.Attribute;
-import weka.core.Instances;
-import weka.core.SparseInstance;
-import weka.core.converters.ArffSaver;
-
 /**
  * Playground to Classify sentences into important or not important. Maybe multi
  * class classification.
