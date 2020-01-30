@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -67,12 +66,11 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.e
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.OrganismModelEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.TreatmentEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.hardconstraints.DistinctExperimentalGroupConstraint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.helper.GroupNameExtraction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.GoldCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.MultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.PredictCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.SampleCardinalityInitializer;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EAssignmentMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.ECardinalityMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EComplexityMode;
@@ -106,8 +104,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
@@ -611,22 +607,22 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			case EMPTY:
 				break;
 			case GOLD:
-				candidates.addAll(extractGroupNamesFromGold(instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
 				break;
 			case NP_CHUNKS:
-				candidates.addAll(extractGroupNamesWithNPCHunks(instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
 				break;
 			case PATTERN:
-				candidates.addAll(extractGroupNamesWithPattern(instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 				break;
 			case PATTERN_NP_CHUNKS:
-				candidates.addAll(extractGroupNamesWithNPCHunks(instance));
-				candidates.addAll(extractGroupNamesWithPattern(instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 				break;
 			case PATTERN_NP_CHUNKS_GOLD:
-				candidates.addAll(extractGroupNamesFromGold(instance));
-				candidates.addAll(extractGroupNamesWithNPCHunks(instance));
-				candidates.addAll(extractGroupNamesWithPattern(instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+				candidates.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 				break;
 			}
 
@@ -1097,81 +1093,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 		}
 
-	}
-
-	private List<DocumentLinkedAnnotation> extractGroupNamesFromGold(Instance instance) {
-		return instance.getGoldAnnotations().getAbstractAnnotations().stream()
-				.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
-				.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
-				.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList());
-	}
-
-	private List<DocumentLinkedAnnotation> extractGroupNamesWithNPCHunks(Instance instance) {
-		Set<String> distinct = new HashSet<>();
-
-		List<DocumentLinkedAnnotation> anns = new ArrayList<>();
-		try {
-			for (TermIndexPair groupName : new NPChunker(instance.getDocument()).getNPs()) {
-				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)")) {
-					DocumentLinkedAnnotation annotation;
-					if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
-
-						if (distinct.contains(groupName.term))
-							continue;
-
-						distinct.add(groupName.term);
-					}
-					try {
-						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-								groupName.term, groupName.index);
-					} catch (Exception e) {
-						annotation = null;
-					}
-					if (annotation != null)
-						anns.add(annotation);
-
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return anns;
-	}
-
-	private List<DocumentLinkedAnnotation> extractGroupNamesWithPattern(Instance instance) {
-		List<DocumentLinkedAnnotation> anns = new ArrayList<>();
-		Set<String> distinct = new HashSet<>();
-		for (PatternIndexPair p : CollectExpGroupNames.pattern) {
-			Matcher m = p.pattern.matcher(instance.getDocument().documentContent);
-			while (m.find()) {
-				for (Integer group : p.groups) {
-					DocumentLinkedAnnotation annotation;
-					try {
-						String term = m.group(group);
-						if (term.length() > NPChunker.maxLength)
-							continue;
-
-						if (CollectExpGroupNames.STOP_TERM_LIST.contains(term))
-							continue;
-
-						if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
-
-							if (distinct.contains(term))
-								continue;
-
-							distinct.add(term);
-						}
-						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-								term, m.start(group));
-					} catch (Exception e) {
-						annotation = null;
-					}
-					if (annotation != null)
-						anns.add(annotation);
-				}
-			}
-		}
-		return anns;
 	}
 
 	@Deprecated
