@@ -21,7 +21,7 @@ public class WordBasedKMeans {
 
 	final static private int maxIterations = 1000;
 
-	public static List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> datapoints, int k) {
+	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> datapoints, int k) {
 
 		List<Record> vecs = toDataPoints(datapoints);
 
