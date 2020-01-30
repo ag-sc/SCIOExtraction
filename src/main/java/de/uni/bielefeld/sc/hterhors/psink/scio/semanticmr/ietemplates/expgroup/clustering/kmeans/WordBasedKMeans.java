@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 
-public class KMeansWords {
+public class WordBasedKMeans {
 
 	private static final Random random = new Random(1000L);
 
 	final static private int maxIterations = 1000;
 
-	public static List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> datapoints, int k) {
+	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> datapoints, int k) {
 
 		List<Record> vecs = toDataPoints(datapoints);
 

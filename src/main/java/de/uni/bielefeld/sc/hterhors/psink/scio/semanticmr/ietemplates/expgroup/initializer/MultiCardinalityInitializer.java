@@ -1,13 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
 
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
@@ -20,10 +16,9 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.KMeansWords;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.WordBasedKMeans;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
-import edu.stanford.nlp.ling.tokensregex.SequencePattern.GroupPatternExpr;
 
 public class MultiCardinalityInitializer implements IStateInitializer {
 
@@ -59,7 +54,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 						datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
 				}
 
-				List<List<DocumentLinkedAnnotation>> clusters = KMeansWords.cluster(datapoints, max);
+				List<List<DocumentLinkedAnnotation>> clusters = new WordBasedKMeans().cluster(datapoints, max);
 
 				allClusters.put(instance, clusters);
 			}
