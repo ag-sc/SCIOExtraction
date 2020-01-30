@@ -28,8 +28,8 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNameHelperExtractionn;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.InstanceCollection;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.InstanceCollection.FeatureDataPoint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection.FeatureDataPoint;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
