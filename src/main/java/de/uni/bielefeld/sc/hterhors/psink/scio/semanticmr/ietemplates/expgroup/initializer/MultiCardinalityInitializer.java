@@ -23,6 +23,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.KMeansWords;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
+import edu.stanford.nlp.ling.tokensregex.SequencePattern.GroupPatternExpr;
 
 public class MultiCardinalityInitializer implements IStateInitializer {
 
@@ -48,19 +49,20 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		this.groupNameMode = groupNameMode;
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;
 
-		for (Instance instance : instances) {
-			List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
+		if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING)
+			for (Instance instance : instances) {
+				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
-			for (AbstractAnnotation ec : instance.getSlotTypeCandidates(ESamplingMode.ANNOTATION_BASED,
-					SCIOSlotTypes.hasGroupName)) {
-				if (ec.isInstanceOfDocumentLinkedAnnotation())
-					datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+				for (AbstractAnnotation ec : instance.getSlotTypeCandidates(ESamplingMode.ANNOTATION_BASED,
+						SCIOSlotTypes.hasGroupName)) {
+					if (ec.isInstanceOfDocumentLinkedAnnotation())
+						datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+				}
+
+				List<List<DocumentLinkedAnnotation>> clusters = KMeansWords.cluster(datapoints, max);
+
+				allClusters.put(instance, clusters);
 			}
-
-			List<List<DocumentLinkedAnnotation>> clusters = KMeansWords.cluster(datapoints, max);
-
-			allClusters.put(instance, clusters);
-		}
 	}
 
 	@Override
@@ -116,7 +118,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 				list.add(new State(instance, new Annotations(as)));
 			} while (increase());
 
-		} else {
+		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
 			List<List<DocumentLinkedAnnotation>> clusters = allClusters.get(instance);
 
 			for (int numOfClusters = 1; numOfClusters <= clusters.size(); numOfClusters++) {
@@ -140,6 +142,25 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 				list.add(new State(instance, new Annotations(experimentalGroups)));
 			}
+
+		} else if (groupNameMode == EExtractGroupNamesMode.EMPTY
+				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING) {
+			current = 1;
+
+			do {
+				List<AbstractAnnotation> as = new ArrayList<>();
+
+				int count = 0;
+
+				if (count < current)
+					for (int i = count; i < current; i++) {
+						EntityTemplate init = new EntityTemplate(
+								AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+						as.add(init);
+					}
+
+				list.add(new State(instance, new Annotations(as)));
+			} while (increase());
 
 		}
 
