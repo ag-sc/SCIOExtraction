@@ -16,12 +16,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DataPointCollector {
+public class InstanceCollection {
 	final private List<FeatureDataPoint> dataPoints;
 	public Map<String, Integer> sparseIndexMapping;
 	public Map<Integer, String> sparseFeatureMapping;
 
-	public DataPointCollector() {
+	public InstanceCollection() {
 		this.dataPoints = Collections.synchronizedList(new ArrayList<>());
 		this.sparseIndexMapping = new ConcurrentHashMap<>();
 		this.sparseFeatureMapping = new ConcurrentHashMap<>();
@@ -41,7 +41,7 @@ public class DataPointCollector {
 		public double score;
 		public int sentenceIndex;
 
-		public FeatureDataPoint(String docID, int sentenceIndex, String sentence, DataPointCollector data,
+		public FeatureDataPoint(String docID, int sentenceIndex, String sentence, InstanceCollection data,
 				Map<String, Double> features, double score, boolean training) {
 			this.docID = docID;
 			this.sentence = sentence;
@@ -143,7 +143,7 @@ public class DataPointCollector {
 	 * @param minAppearence
 	 * @return
 	 */
-	public DataPointCollector removeRareFeatures(int minAppearence) {
+	public InstanceCollection removeRareFeatures(int minAppearence) {
 
 		Map<Integer, Integer> countFeatures = new HashMap<>();
 		for (FeatureDataPoint featureDataPoint : dataPoints) {
@@ -164,7 +164,7 @@ public class DataPointCollector {
 		System.out.println(
 				"Remove: " + removeFeatures.size() + " number of features that appears less than " + minAppearence);
 
-		DataPointCollector newI = new DataPointCollector();
+		InstanceCollection newI = new InstanceCollection();
 
 		for (FeatureDataPoint fdp : this.dataPoints) {
 

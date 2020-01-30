@@ -28,8 +28,8 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNameHelperExtractionn;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.FeatureDataPoint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection.FeatureDataPoint;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
@@ -56,8 +56,8 @@ public class GroupNameClusteringWEKA {
 	private final Attribute classAttribute = new Attribute("classLabel",
 			Arrays.asList(CLASSIFICATION_LABEL_NO, CLASSIFICATION_LABEL_YES));
 
-	private DataPointCollector trainingData = new DataPointCollector();
-	private DataPointCollector testData = new DataPointCollector();
+	private InstanceCollection trainingData = new InstanceCollection();
+	private InstanceCollection testData = new InstanceCollection();
 
 	private Classifier rf = null;
 
@@ -316,7 +316,7 @@ public class GroupNameClusteringWEKA {
 		newCluster.add(groupName);
 	}
 
-	private List<GroupNamePair> extract(DataPointCollector instanceCollection, List<Instance> train, boolean training) {
+	private List<GroupNamePair> extract(InstanceCollection instanceCollection, List<Instance> train, boolean training) {
 		Map<Boolean, Set<GroupNamePair>> trainPairs = GroupNameHelperExtractionn.extractData(train);
 		List<FeatureDataPoint> trainingDataPoints = new ArrayList<>();
 
