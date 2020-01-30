@@ -31,6 +31,7 @@ public class InstanceCollection {
 		this.dataPoints.add(fdp);
 	}
 
+	
 	static public class FeatureDataPoint {
 
 		final public String docID;
