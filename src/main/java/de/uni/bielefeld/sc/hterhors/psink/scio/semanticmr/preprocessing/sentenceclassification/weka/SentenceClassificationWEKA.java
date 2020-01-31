@@ -25,8 +25,8 @@ import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection.FeatureDataPoint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.Classification;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
@@ -107,7 +107,7 @@ public class SentenceClassificationWEKA {
 	private final Attribute classAttribute = new Attribute("classLabel",
 			Arrays.asList(CLASSIFICATION_LABEL_NOT_RELEVANT, CLASSIFICATION_LABEL_RELEVANT));
 
-	private final InstanceCollection trainingData = new InstanceCollection();
+	private final DataPointCollector trainingData = new DataPointCollector();
 
 	private final double threshold;
 
@@ -119,7 +119,7 @@ public class SentenceClassificationWEKA {
 		rf = new RandomForest();
 		log.info("Train sentence classifier...");
 
-		List<FeatureDataPoint> trainingDataPoints = convertInstancesToDataPoints(trainingInstances, true);
+		List<DataPoint> trainingDataPoints = convertInstancesToDataPoints(trainingInstances, true);
 
 		trainingDataPoints.forEach(fdp -> trainingData.addFeatureDataPoint(fdp));
 
@@ -139,13 +139,14 @@ public class SentenceClassificationWEKA {
 	public Map<Integer, Classification> test(Instance testInstance, Score score) {
 		Map<Integer, Classification> classifications = new HashMap<>();
 
-		List<FeatureDataPoint> fdps = convertInstanceToDataPoints(testInstance, false);
+		List<DataPoint> fdps = convertInstanceToDataPoints(testInstance, false);
 
-		for (FeatureDataPoint fdp : fdps) {
+		for (DataPoint fdp : fdps) {
 
 			weka.core.Instance instance = convertToWekaInstances("TEST", fdp);
 
-			classifications.put(fdp.sentenceIndex, testForInstance(fdp, rf, score, instance));
+			classifications.put((Integer) fdp.parameter.get("sentenceIndex"),
+					testForInstance(fdp, rf, score, instance));
 		}
 
 		return classifications;
@@ -155,7 +156,7 @@ public class SentenceClassificationWEKA {
 		log.info("Classify document: " + document.documentID);
 		Map<Integer, Classification> classifications = new HashMap<>();
 
-		final List<FeatureDataPoint> fdps = new ArrayList<>();
+		final List<DataPoint> fdps = new ArrayList<>();
 
 		for (int i = 0; i < document.getNumberOfSentences(); i++) {
 
@@ -163,20 +164,20 @@ public class SentenceClassificationWEKA {
 
 			Map<String, Double> features = getFeaturesForSentence(document, i);
 
-			fdps.add(new FeatureDataPoint(document.documentID, i, sentence, trainingData, features, 0, true));
+			fdps.add(new DataPoint(document.documentID, i, sentence, trainingData, features, 0, true));
 		}
 
-		for (FeatureDataPoint fdp : fdps) {
+		for (DataPoint fdp : fdps) {
 
 			weka.core.Instance instance = convertToWekaInstances("TEST", fdp);
 
-			classifications.put(fdp.sentenceIndex, classifyForInstance(fdp, rf, instance));
+			classifications.put((Integer) fdp.parameter.get("sentenceIndex"), classifyForInstance(fdp, rf, instance));
 		}
 
 		return classifications;
 	}
 
-	private Classification testForInstance(FeatureDataPoint featureDataPoint, RandomForest rf, Score score,
+	private Classification testForInstance(DataPoint featureDataPoint, RandomForest rf, Score score,
 			weka.core.Instance instance) {
 
 		try {
@@ -191,7 +192,8 @@ public class SentenceClassificationWEKA {
 
 			boolean relevant = prediction.equals(CLASSIFICATION_LABEL_RELEVANT);
 
-			Classification classification = new Classification(featureDataPoint.sentenceIndex, relevant, probs[1]);
+			Classification classification = new Classification(
+					(Integer) featureDataPoint.parameter.get("sentenceIndex"), relevant, probs[1]);
 
 			int tp = groundTruth.equals(CLASSIFICATION_LABEL_RELEVANT) && groundTruth.equals(prediction) ? 1 : 0;
 			int tn = groundTruth.equals(CLASSIFICATION_LABEL_NOT_RELEVANT) && groundTruth.equals(prediction) ? 1 : 0;
@@ -225,7 +227,7 @@ public class SentenceClassificationWEKA {
 		return null;
 	}
 
-	private Classification classifyForInstance(FeatureDataPoint featureDataPoint, RandomForest rf,
+	private Classification classifyForInstance(DataPoint featureDataPoint, RandomForest rf,
 			weka.core.Instance instance) {
 
 		try {
@@ -234,7 +236,8 @@ public class SentenceClassificationWEKA {
 
 			double pred = probs[1] > threshold ? 1 : 0;
 
-			Classification classification = new Classification(featureDataPoint.sentenceIndex,
+			Classification classification = new Classification(
+					(Integer) featureDataPoint.parameter.get("sentenceIndex"),
 					classAttribute.value((int) pred).equals(CLASSIFICATION_LABEL_RELEVANT), probs[1]);
 
 			return classification;
@@ -264,13 +267,13 @@ public class SentenceClassificationWEKA {
 		return features;
 	}
 
-	private List<FeatureDataPoint> convertInstanceToDataPoints(Instance instance, boolean training) {
+	private List<DataPoint> convertInstanceToDataPoints(Instance instance, boolean training) {
 		return convertInstancesToDataPoints(Arrays.asList(instance), training);
 	}
 
-	private List<FeatureDataPoint> convertInstancesToDataPoints(List<Instance> instances, boolean training) {
+	private List<DataPoint> convertInstancesToDataPoints(List<Instance> instances, boolean training) {
 
-		final List<FeatureDataPoint> dataPoints = new ArrayList<>();
+		final List<DataPoint> dataPoints = new ArrayList<>();
 
 		for (Instance instance : instances) {
 			Set<Integer> sentencesWithInfo = new HashSet<>();
@@ -288,14 +291,14 @@ public class SentenceClassificationWEKA {
 
 				if (sentencesWithInfo.contains(i)) {
 					count++;
-					dataPoints.add(new FeatureDataPoint(instance.getDocument().documentID, i, sentence, trainingData,
-							features, 1, training));
+					dataPoints.add(new DataPoint(instance.getDocument().documentID, i, sentence, trainingData, features,
+							1, training));
 				} else {
 					if (training)
 						negExamples.add(new P(instance.getDocument().documentID, i, features, sentence));
 					else
-						dataPoints.add(new FeatureDataPoint(instance.getDocument().documentID, i, sentence,
-								trainingData, features, 0, training));
+						dataPoints.add(new DataPoint(instance.getDocument().documentID, i, sentence, trainingData,
+								features, 0, training));
 				}
 
 			}
@@ -303,7 +306,7 @@ public class SentenceClassificationWEKA {
 
 				Collections.shuffle(negExamples);
 				for (int i = 0; i < count; i++) {
-					dataPoints.add(new FeatureDataPoint(negExamples.get(i).docID, negExamples.get(i).sentenceIndex,
+					dataPoints.add(new DataPoint(negExamples.get(i).docID, negExamples.get(i).sentenceIndex,
 							negExamples.get(i).sentence, trainingData, negExamples.get(i).features, 0, training));
 				}
 			}
@@ -344,11 +347,11 @@ public class SentenceClassificationWEKA {
 		return sentencesWithInfo;
 	}
 
-	private weka.core.Instance convertToWekaInstances(final String dataSetName, final FeatureDataPoint dataPoint) {
+	private weka.core.Instance convertToWekaInstances(final String dataSetName, final DataPoint dataPoint) {
 		return convertToWekaInstances(dataSetName, Arrays.asList(dataPoint)).get(0);
 	}
 
-	private Instances convertToWekaInstances(final String dataSetName, final List<FeatureDataPoint> dataPoints) {
+	private Instances convertToWekaInstances(final String dataSetName, final List<DataPoint> dataPoints) {
 
 		Attribute[] attributes = new Attribute[trainingData.sparseIndexMapping.size()];
 
@@ -363,7 +366,7 @@ public class SentenceClassificationWEKA {
 		Instances instances = new Instances(dataSetName, attributeList, trainingData.getDataPoints().size());
 		instances.setClassIndex(attributeList.size() - 1);
 
-		for (FeatureDataPoint fdp : dataPoints) {
+		for (DataPoint fdp : dataPoints) {
 			double[] attValues = new double[attributeList.size()];
 
 			for (Entry<Integer, Double> d : fdp.features.entrySet()) {

@@ -601,30 +601,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private void addGroupNameCandidates() {
 
 		for (Instance instance : instanceProvider.getInstances()) {
-			List<DocumentLinkedAnnotation> candidates = new ArrayList<>();
-
-			switch (groupNameProviderMode) {
-			case EMPTY:
-				break;
-			case GOLD:
-				candidates.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
-				break;
-			case NP_CHUNKS:
-				candidates.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
-				break;
-			case PATTERN:
-				candidates.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
-				break;
-			case PATTERN_NP_CHUNKS:
-				candidates.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
-				candidates.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
-				break;
-			case PATTERN_NP_CHUNKS_GOLD:
-				candidates.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
-				candidates.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
-				candidates.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
-				break;
-			}
+			List<DocumentLinkedAnnotation> candidates = GroupNameExtraction.extractGroupNames(instance,
+					distinctGroupNamesMode, groupNameProviderMode);
 
 			for (DocumentLinkedAnnotation ec : candidates) {
 				instance.addCandidateAnnotation(AnnotationBuilder.toAnnotation(instance.getDocument(),
@@ -1233,11 +1211,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //modelName: ExperimentalGroup49767
 //States generated: 3562396
 
-
-
-
 //----------------------------------------------------------------
-
 
 //ALL GOLD
 
@@ -1334,5 +1308,3 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //CRFStatistics [context=Test, getTotalDuration()=12861]
 //modelName: ExperimentalGroup93583
 //States generated: 692301
-
-

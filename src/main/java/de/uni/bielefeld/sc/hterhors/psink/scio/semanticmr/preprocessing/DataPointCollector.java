@@ -16,38 +16,62 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InstanceCollection {
-	final private List<FeatureDataPoint> dataPoints;
+public class DataPointCollector {
+	final private List<DataPoint> dataPoints;
 	public Map<String, Integer> sparseIndexMapping;
 	public Map<Integer, String> sparseFeatureMapping;
 
-	public InstanceCollection() {
+	public DataPointCollector() {
 		this.dataPoints = Collections.synchronizedList(new ArrayList<>());
 		this.sparseIndexMapping = new ConcurrentHashMap<>();
 		this.sparseFeatureMapping = new ConcurrentHashMap<>();
 	}
 
-	public void addFeatureDataPoint(final FeatureDataPoint fdp) {
+	public void addFeatureDataPoint(final DataPoint fdp) {
 		this.dataPoints.add(fdp);
 	}
 
-	
-	static public class FeatureDataPoint {
+	static public class DataPoint {
 
-		final public String docID;
-		final public String sentence;
-
+//		final public String docID;
+//		final public String sentence;
+		final public Map<String, Object> parameter;
 		final public Map<Integer, Double> features;
 		final public List<Integer> featuresIndices = new ArrayList<>();
 		public double score;
-		public int sentenceIndex;
+//		public int sentenceIndex;
 
-		public FeatureDataPoint(String docID, int sentenceIndex, String sentence, InstanceCollection data,
-				Map<String, Double> features, double score, boolean training) {
-			this.docID = docID;
-			this.sentence = sentence;
-			this.sentenceIndex = sentenceIndex;
+		public DataPoint(Map<String, Object> parameter, DataPointCollector data, Map<String, Double> features,
+				double score, boolean training) {
+//			this.docID = null;
+//			this.sentence = null;
+//			this.sentenceIndex = 0;
 			this.features = new HashMap<>();
+			this.parameter = parameter;
+			for (Entry<String, Double> feature : features.entrySet()) {
+				final Integer featureIndex = data.getFeatureIndex(feature.getKey(), training);
+
+				/*
+				 * Do not include features that are not present in the training feature set.
+				 */
+				if (featureIndex == null)
+					continue;
+
+				this.features.put(featureIndex, feature.getValue());
+
+				this.featuresIndices.add(featureIndex);
+			}
+			Collections.sort(featuresIndices);
+			this.score = score;
+		}
+
+		public DataPoint(String docID, int sentenceIndex, String sentence, DataPointCollector data,
+				Map<String, Double> features, double score, boolean training) {
+//			this.docID = docID;
+//			this.sentence = sentence;
+//			this.sentenceIndex = sentenceIndex;
+			this.features = new HashMap<>();
+			this.parameter = new HashMap<>();
 
 			for (Entry<String, Double> feature : features.entrySet()) {
 				final Integer featureIndex = data.getFeatureIndex(feature.getKey(), training);
@@ -74,7 +98,7 @@ public class InstanceCollection {
 		 * @param newObjectiveScore
 		 * @return this.
 		 */
-		public FeatureDataPoint setScore(double newObjectiveScore) {
+		public DataPoint setScore(double newObjectiveScore) {
 			this.score = newObjectiveScore;
 			return this;
 		}
@@ -84,6 +108,7 @@ public class InstanceCollection {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + ((features == null) ? 0 : features.hashCode());
+			result = prime * result + ((parameter == null) ? 0 : parameter.hashCode());
 			long temp;
 			temp = Double.doubleToLongBits(score);
 			result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -98,11 +123,16 @@ public class InstanceCollection {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			FeatureDataPoint other = (FeatureDataPoint) obj;
+			DataPoint other = (DataPoint) obj;
 			if (features == null) {
 				if (other.features != null)
 					return false;
 			} else if (!features.equals(other.features))
+				return false;
+			if (parameter == null) {
+				if (other.parameter != null)
+					return false;
+			} else if (!parameter.equals(other.parameter))
 				return false;
 			if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score))
 				return false;
@@ -138,16 +168,10 @@ public class InstanceCollection {
 		return sparseIndexMapping.get(feature);
 	}
 
-	/**
-	 * THIS ALL IS NEW !!!
-	 * 
-	 * @param minAppearence
-	 * @return
-	 */
-	public InstanceCollection removeRareFeatures(int minAppearence) {
+	public DataPointCollector removeRareFeatures(int minAppearence) {
 
 		Map<Integer, Integer> countFeatures = new HashMap<>();
-		for (FeatureDataPoint featureDataPoint : dataPoints) {
+		for (DataPoint featureDataPoint : dataPoints) {
 			for (Integer featureIndex : featureDataPoint.features.keySet()) {
 				countFeatures.put(featureIndex, countFeatures.getOrDefault(featureIndex, 0) + 1);
 			}
@@ -165,9 +189,9 @@ public class InstanceCollection {
 		System.out.println(
 				"Remove: " + removeFeatures.size() + " number of features that appears less than " + minAppearence);
 
-		InstanceCollection newI = new InstanceCollection();
+		DataPointCollector newI = new DataPointCollector();
 
-		for (FeatureDataPoint fdp : this.dataPoints) {
+		for (DataPoint fdp : this.dataPoints) {
 
 			Map<String, Double> newFeatures = new HashMap<>();
 
@@ -181,14 +205,13 @@ public class InstanceCollection {
 				newFeatures.put(feature, f.getValue());
 			}
 
-			newI.addFeatureDataPoint(new FeatureDataPoint(fdp.docID, fdp.sentenceIndex, fdp.sentence, newI, newFeatures,
-					fdp.score, true));
+			newI.addFeatureDataPoint(new DataPoint(fdp.parameter, newI, newFeatures, fdp.score, true));
 		}
 
 		return newI;
 	}
 
-	public List<FeatureDataPoint> getDataPoints() {
+	public List<DataPoint> getDataPoints() {
 
 		return dataPoints;
 	}

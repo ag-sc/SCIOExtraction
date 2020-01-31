@@ -4,32 +4,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNameHelperExtractionn;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection.FeatureDataPoint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNamePair;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNameDataSetHelper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.BinaryClusterBasedKMeans;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
@@ -53,11 +48,13 @@ public class GroupNameClusteringWEKA {
 
 	private static final String CLASSIFICATION_LABEL_NO = "N";
 
-	private final Attribute classAttribute = new Attribute("classLabel",
-			Arrays.asList(CLASSIFICATION_LABEL_NO, CLASSIFICATION_LABEL_YES));
+	private static final String CLASSIFICATION_LABEL_UNKOWN = "?";
 
-	private InstanceCollection trainingData = new InstanceCollection();
-	private InstanceCollection testData = new InstanceCollection();
+	private final Attribute classAttribute = new Attribute("classLabel",
+			Arrays.asList(CLASSIFICATION_LABEL_NO, CLASSIFICATION_LABEL_YES, CLASSIFICATION_LABEL_UNKOWN));
+
+	private DataPointCollector trainingDataCollector = new DataPointCollector();
+	private DataPointCollector testDataCollector = new DataPointCollector();
 
 	private Classifier rf = null;
 
@@ -65,10 +62,10 @@ public class GroupNameClusteringWEKA {
 
 	}
 
-	public void train(List<Instance> train) {
+	public void train(List<Instance> train) throws IOException {
 
-		extract(trainingData, train, true);
-		trainingData = trainingData.removeRareFeatures(25);
+		collectInstances(train, trainingDataCollector, true);
+		trainingDataCollector = trainingDataCollector.removeRareFeatures(25);
 
 		try {
 			log.info("Load classifier...");
@@ -80,8 +77,8 @@ public class GroupNameClusteringWEKA {
 		if (rf != null)
 			return;
 
-		Instances wekaTRAINInstance = convertToWekaInstances("TRAIN", trainingData.getDataPoints());
-//		saveArff(new File("groupNameClustering_train.arff"), wekaTRAINInstance);
+		Instances wekaTRAINInstance = convertToWekaInstances("TRAIN", trainingDataCollector.getDataPoints());
+		saveArff(new File("groupNameClustering_train.arff"), wekaTRAINInstance);
 //		System.exit(1);
 
 		rf = new RandomForest();
@@ -104,26 +101,40 @@ public class GroupNameClusteringWEKA {
 	}
 
 	public void test(List<Instance> test) throws Exception {
-		List<GroupNamePair> pairs = extract(testData, test, false);
-		Instances wekaTESTInstance = convertToWekaInstances("TEST", testData.getDataPoints());
-//		saveArff(new File("groupNameClustering_test.arff"), wekaTESTInstance);
-//		System.exit(1);
+		collectInstances(test, testDataCollector, false);
 
+		Instances wekaTESTInstance = convertToWekaInstances("TEST", testDataCollector.getDataPoints());
+
+		saveArff(new File("groupNameClustering_test.arff"), wekaTESTInstance);
+//		System.exit(1);
 		Score score = new Score();
 		int i = 0;
+//		testDataCollector.getDataPoints().forEach(x -> System.out.println(x.parameter.get("groupNamePair")));
+//		System.out.println("-----------");
+
 		for (weka.core.Instance instance : wekaTESTInstance) {
 			try {
+//
+//				GroupNamePair gnp = (GroupNamePair) testDataCollector.getDataPoints().get(i).parameter
+//						.get("groupNamePair");
+
+				i++;
+//				if (!(gnp.groupName1.getSurfaceForm().equals("PBS")
+//						&& gnp.groupName2.getSurfaceForm().equals("PBS rats")))
+//					continue;
+
+//				System.out.println(testDataCollector.getDataPoints().get(i - 1).features);
+
 				double[] pred = rf.distributionForInstance(instance);
 
 				int index = pred[0] > pred[1] ? 0 : 1;
-//				System.out.println(pairs.get(i));
 //				System.out.println(Arrays.toString(pred));
 
 				String groundTruth = classAttribute.value((int) instance.classValue());
 
 				String prediction = classAttribute.value((int) index);
+//				System.out.println(gnp);
 //				System.out.println(groundTruth + ":" + prediction);
-				i++;
 				int tp = groundTruth.equals(CLASSIFICATION_LABEL_YES) && groundTruth.equals(prediction) ? 1 : 0;
 				int tn = groundTruth.equals(CLASSIFICATION_LABEL_NO) && groundTruth.equals(prediction) ? 1 : 0;
 				int fp = groundTruth.equals(CLASSIFICATION_LABEL_NO) && prediction.equals(CLASSIFICATION_LABEL_YES) ? 1
@@ -133,215 +144,88 @@ public class GroupNameClusteringWEKA {
 
 				score.add(new Score(tp, fp, fn, tn));
 
-//			if (groundTruth.equals(CLASSIFICATION_LABEL_RELEVANT) && prediction.equals(CLASSIFICATION_LABEL_NOT_RELEVANT)) {
-//				System.out.println("########### FASLE NEG #############");
-//			}
-				//
-//			System.out.println(Arrays.toString(probs));
-//			System.out.println(featureDataPoint.docID);
-//			System.out.println("Sentence: " + featureDataPoint.sentenceIndex);
-//			System.out.println(featureDataPoint.sentence);
-//			System.out.println("actual: " + groundTruth + ", predicted: " + prediction);
-//			System.out.println();
-
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
 		System.out.println(score);
-		System.out.println(score.getAccuracy());
 		log.info("done!");
 	}
 
-	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> anns) throws Exception {
+	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> anns, int k) throws Exception {
+
+		DataPointCollector predictions = new DataPointCollector();
 		List<GroupNamePair> pairs = new ArrayList<>();
 
 		for (int i = 0; i < anns.size(); i++) {
 			for (int j = i + 1; j < anns.size(); j++) {
-				pairs.add(new GroupNamePair(anns.get(i), anns.get(j), false));
+				pairs.add(new GroupNamePair(anns.get(i), anns.get(j), false, 3));
 			}
 		}
 
-		List<FeatureDataPoint> datapoints = convertToDataPoints(pairs, false);
+		List<DataPoint> datapoints = convertToDataPoints(pairs, false);
 
-		log.info("Number of datapoints: " + pairs.size());
-		Instances predictionInstances = convertToWekaInstances("CLUSTER", datapoints);
+		for (DataPoint dataPoint : datapoints) {
+			predictions.addFeatureDataPoint(dataPoint);
+		}
 
-		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
+		Instances predictionInstances = convertToWekaInstances("CLUSTER", predictions.getDataPoints());
 
 		int i = 0;
 
-		List<GroupNamePair> sameCluster = new ArrayList<>();
-		List<GroupNamePair> diffCluster = new ArrayList<>();
+		List<GroupNamePair> gnps = new ArrayList<>();
 
 		for (weka.core.Instance instance : predictionInstances) {
 
+			GroupNamePair gnp = (GroupNamePair) predictions.getDataPoints().get(i).parameter.get("groupNamePair");
+//
+//			if (!(gnp.groupName1.getSurfaceForm().equals("PBS") && gnp.groupName2.getSurfaceForm().equals("PBS rats")))
+//				continue;
+
 			double[] pred = rf.distributionForInstance(instance);
-//			System.out.println(pairs.get(i));
+//			System.out.println(predictions.getDataPoints().get(i - 1).features);
+//
 //			System.out.println(Arrays.toString(pred));
+
 			int index = pred[0] > pred[1] ? 0 : 1;
 
 			String prediction = classAttribute.value(index);
+//			System.out.println(gnp);
+//			System.out.println(prediction);
 
 			if (prediction.equals(CLASSIFICATION_LABEL_YES)) {
-				sameCluster.add(new GroupNamePair(pairs.get(i), true));
+				gnps.add(new GroupNamePair(gnp, true, pred[1]));
 			} else {
-				diffCluster.add(new GroupNamePair(pairs.get(i), false));
+				gnps.add(new GroupNamePair(gnp, false, pred[1]));
 			}
 
 			i++;
 		}
 
-		
-		log.info("Number of same clusters = " + sameCluster.size());
-		log.info("Number of diff clusters = " + diffCluster.size());
+		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
 
-		for (GroupNamePair groupNamePair : sameCluster) {
-			System.out.println(groupNamePair);
-		}
-		System.out.println("*******");
-		for (GroupNamePair groupNamePair : diffCluster) {
-			System.out.println(groupNamePair);
-		}
+		return kmeans.cluster(anns, k);
 
-		List<Set<DocumentLinkedAnnotation>> clustersAsSet = new ArrayList<>();
-
-		for (GroupNamePair groupNamePair : sameCluster) {
-			System.out.println("####### ADD #########");
-			System.out.println(groupNamePair.groupName1.toPrettyString());
-			System.out.println(groupNamePair.groupName2.toPrettyString());
-			System.out.println("######################");
-			addToCluster(clustersAsSet, groupNamePair.groupName1, groupNamePair.groupName2, true);
-
-			for (Set<DocumentLinkedAnnotation> a : clustersAsSet) {
-				for (DocumentLinkedAnnotation set2 : a) {
-					System.out.println(set2.toPrettyString());
-				}
-				System.out.println("---------------");
-			}
-			System.out.println();
-		}
-
-		List<Set<DocumentLinkedAnnotation>> _clustersAsSet = null;
-		while (true) {
-			_clustersAsSet = merge(clustersAsSet);
-			if (_clustersAsSet.isEmpty())
-				break;
-			clustersAsSet = _clustersAsSet;
-		}
-		System.out.println("+++++++++++++++++++++");
-		for (Set<DocumentLinkedAnnotation> a : clustersAsSet) {
-			for (DocumentLinkedAnnotation set2 : a) {
-				System.out.println(set2.toPrettyString());
-			}
-			System.out.println("---------------");
-		}
-		System.out.println();
-		for (GroupNamePair groupNamePair : diffCluster) {
-			addToCluster(clustersAsSet, groupNamePair.groupName1, groupNamePair.groupName2, false);
-		}
-
-		for (Set<DocumentLinkedAnnotation> set : clustersAsSet) {
-			clusters.add(new ArrayList<>(set));
-		}
-		for (List<DocumentLinkedAnnotation> cluster : clusters) {
-			Collections.sort(cluster, DocumentLinkedAnnotation.COMPARE_BY_SURFACEFORM);
-		}
-
-		return clusters;
 	}
 
-	private List<Set<DocumentLinkedAnnotation>> merge(List<Set<DocumentLinkedAnnotation>> clustersAsSet) {
-		List<Set<DocumentLinkedAnnotation>> clustersAsSet2 = new ArrayList<>();
+	private void collectInstances(List<Instance> instances, DataPointCollector collector, boolean training) {
 
-		for (int j = 0; j < clustersAsSet.size(); j++) {
-			for (int k = j + 1; k < clustersAsSet.size(); k++) {
+		Map<Boolean, Set<GroupNamePair>> dataSet = GroupNameDataSetHelper.getGroupNameClusterDataSet(instances);
 
-				outer: {
-					for (DocumentLinkedAnnotation gn1 : clustersAsSet.get(j)) {
-						for (DocumentLinkedAnnotation gn2 : clustersAsSet.get(k)) {
-							if (gn1 == gn2) {
-								Set<DocumentLinkedAnnotation> merge = new HashSet<>();
-								merge.addAll(clustersAsSet.get(j));
-								merge.addAll(clustersAsSet.get(k));
-								clustersAsSet2.add(merge);
-								break outer;
-							}
-						}
-					}
-					clustersAsSet2.add(clustersAsSet.get(j));
-					clustersAsSet2.add(clustersAsSet.get(k));
-				}
-			}
+		for (DataPoint fdp : convertToDataPoints(dataSet.get(false), training)) {
+			collector.addFeatureDataPoint(fdp);
 		}
-		return clustersAsSet2;
-	}
-
-	private void addToCluster(List<Set<DocumentLinkedAnnotation>> clustersAsSet, DocumentLinkedAnnotation groupName1,
-			DocumentLinkedAnnotation groupName2, boolean sameCluster) {
-
-		if (sameCluster) {
-			addToCluster(groupName1, groupName2, clustersAsSet);
-		} else {
-			addToCluster(groupName1, clustersAsSet);
-			addToCluster(groupName2, clustersAsSet);
-		}
-	}
-
-	private void addToCluster(DocumentLinkedAnnotation groupName1, DocumentLinkedAnnotation groupName2,
-			List<Set<DocumentLinkedAnnotation>> clustersAsSet) {
-
-		for (Set<DocumentLinkedAnnotation> set : clustersAsSet) {
-			if (set.contains(groupName1) || set.contains(groupName2)) {
-				set.add(groupName1);
-				set.add(groupName2);
-				return;
-			}
-		}
-		Set<DocumentLinkedAnnotation> newCluster = new HashSet<>();
-		clustersAsSet.add(newCluster);
-		newCluster.add(groupName1);
-		newCluster.add(groupName2);
-	}
-
-	private void addToCluster(DocumentLinkedAnnotation groupName, List<Set<DocumentLinkedAnnotation>> clustersAsSet) {
-		for (Set<DocumentLinkedAnnotation> set : clustersAsSet) {
-			if (set.contains(groupName)) {
-				set.add(groupName);
-				return;
-			}
-		}
-		Set<DocumentLinkedAnnotation> newCluster = new HashSet<>();
-		clustersAsSet.add(newCluster);
-		newCluster.add(groupName);
-	}
-
-	private List<GroupNamePair> extract(InstanceCollection instanceCollection, List<Instance> train, boolean training) {
-		Map<Boolean, Set<GroupNamePair>> trainPairs = GroupNameHelperExtractionn.extractData(train);
-		List<FeatureDataPoint> trainingDataPoints = new ArrayList<>();
-
-		List<GroupNamePair> data = new ArrayList<>();
-
-		List<GroupNamePair> sort1 = new ArrayList<>(trainPairs.get(false));
-		List<GroupNamePair> sort2 = new ArrayList<>(trainPairs.get(true));
-
-		data.addAll(sort1);
-		data.addAll(sort2);
-
-		trainingDataPoints.addAll(convertToDataPoints(sort1, training));
-		trainingDataPoints.addAll(convertToDataPoints(sort2, training));
-
-		for (FeatureDataPoint fdp : trainingDataPoints) {
-			instanceCollection.addFeatureDataPoint(fdp);
+		for (DataPoint fdp : convertToDataPoints(dataSet.get(true), training)) {
+			collector.addFeatureDataPoint(fdp);
 		}
 
-		return data;
 	}
 
 	public double classifyDocument(GroupNamePair groupNamePair) {
 
-		FeatureDataPoint fdp = new FeatureDataPoint(groupNamePair.groupName1.document.documentID, 0, null, trainingData,
-				getFeatures(groupNamePair), 0, false);
+		DataPoint fdp = new DataPoint(
+				groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID, 0, null,
+				trainingDataCollector, getFeatures(groupNamePair), 0, false);
 
 		return classifyForInstance(rf, convertToWekaInstances("TEST", fdp));
 	}
@@ -366,49 +250,53 @@ public class GroupNameClusteringWEKA {
 		FeaturesFactory.set(features, groupNamePair);
 		FeaturesFactory.levenshtein();
 		FeaturesFactory.overlap();
-//		FeaturesFactory.charBasedNGrams();
+		FeaturesFactory.charBasedNGrams();
 
 		return features;
 	}
 
-	private List<FeatureDataPoint> convertToDataPoints(Collection<GroupNamePair> pairs, boolean training) {
+	private List<DataPoint> convertToDataPoints(Collection<GroupNamePair> pairs, boolean training) {
 
-		List<FeatureDataPoint> dataPoints = new ArrayList<>();
+		List<DataPoint> dataPoints = new ArrayList<>();
 
 		for (GroupNamePair groupNamePair : pairs) {
-			dataPoints.add(new FeatureDataPoint(groupNamePair.groupName1.document.documentID, 0, null, trainingData,
-					getFeatures(groupNamePair), groupNamePair.sameCluster ? 1D : 0D, training));
+
+			DataPoint fdp = new DataPoint(
+					groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID, 0, null,
+					trainingDataCollector, getFeatures(groupNamePair), groupNamePair.sameCluster ? 1D : 0D, training);
+			fdp.parameter.put("groupNamePair", groupNamePair);
+			dataPoints.add(fdp);
 		}
 		return dataPoints;
 
 	}
 
-	private weka.core.Instance convertToWekaInstances(final String dataSetName, final FeatureDataPoint dataPoint) {
+	private weka.core.Instance convertToWekaInstances(final String dataSetName, final DataPoint dataPoint) {
 		return convertToWekaInstances(dataSetName, Arrays.asList(dataPoint)).get(0);
 	}
 
-	private Instances convertToWekaInstances(final String dataSetName, final List<FeatureDataPoint> dataPoints) {
+	private Instances convertToWekaInstances(final String dataSetName, final List<DataPoint> dataPoints) {
 
-		Attribute[] attributes = new Attribute[trainingData.sparseIndexMapping.size()];
+		Attribute[] attributes = new Attribute[trainingDataCollector.sparseIndexMapping.size()];
 
-		for (Entry<String, Integer> attribute : trainingData.sparseIndexMapping.entrySet()) {
+		for (Entry<String, Integer> attribute : trainingDataCollector.sparseIndexMapping.entrySet()) {
 			attributes[attribute.getValue()] = new Attribute(attribute.getKey());
 		}
 
 		ArrayList<Attribute> attributeList = new ArrayList<>();
 		attributeList.addAll(Arrays.asList(attributes));
+		Instances instances = new Instances(dataSetName, attributeList, dataPoints.size());
+
 		attributeList.add(classAttribute);
 
-		Instances instances = new Instances(dataSetName, attributeList, trainingData.getDataPoints().size());
 		instances.setClassIndex(attributeList.size() - 1);
 
-		for (FeatureDataPoint fdp : dataPoints) {
+		for (DataPoint fdp : dataPoints) {
 			double[] attValues = new double[attributeList.size()];
 
 			for (Entry<Integer, Double> d : fdp.features.entrySet()) {
 				attValues[d.getKey()] = d.getValue();
 			}
-
 			attValues[attributeList.size() - 1] = fdp.score;
 			instances.add(new SparseInstance(1, attValues));
 		}

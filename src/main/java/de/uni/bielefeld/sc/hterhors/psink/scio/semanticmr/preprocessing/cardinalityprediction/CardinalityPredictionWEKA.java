@@ -20,8 +20,8 @@ import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.InstanceCollection.FeatureDataPoint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
@@ -78,7 +78,7 @@ public class CardinalityPredictionWEKA {
 
 	private final Attribute classAttribute = new Attribute("classLabel");
 
-	private final InstanceCollection trainingData = new InstanceCollection();
+	private final DataPointCollector trainingData = new DataPointCollector();
 
 	private final Classifier rf;
 
@@ -87,7 +87,7 @@ public class CardinalityPredictionWEKA {
 		rf = new RandomForest();
 		log.info("Train sentence classifier...");
 
-		List<FeatureDataPoint> trainingDataPoints = new ArrayList<>();
+		List<DataPoint> trainingDataPoints = new ArrayList<>();
 		for (Instance instance : trainingInstances) {
 			trainingDataPoints.add(convertInstanceToDataPoint(instance, true));
 		}
@@ -108,10 +108,10 @@ public class CardinalityPredictionWEKA {
 	public CardinalityPredictionWEKA(List<Instance> redistributedTrainingInstances,
 			List<Instance> redistributedTestInstances) throws IOException {
 		rf = null;
-		final InstanceCollection trainingData = new InstanceCollection();
-		final InstanceCollection testData = new InstanceCollection();
+		final DataPointCollector trainingData = new DataPointCollector();
+		final DataPointCollector testData = new DataPointCollector();
 
-		List<FeatureDataPoint> trainingDataPoints = new ArrayList<>();
+		List<DataPoint> trainingDataPoints = new ArrayList<>();
 		for (Instance instance : redistributedTrainingInstances) {
 			trainingDataPoints.add(convertInstanceToDataPoint(instance, true));
 		}
@@ -121,7 +121,7 @@ public class CardinalityPredictionWEKA {
 
 		saveArff(new File("treatment_train.arff"), wekaTRAINInstance);
 
-		List<FeatureDataPoint> testDataPoints = new ArrayList<>();
+		List<DataPoint> testDataPoints = new ArrayList<>();
 		for (Instance instance : redistributedTestInstances) {
 			testDataPoints.add(convertInstanceToDataPoint(instance, false));
 		}
@@ -141,7 +141,7 @@ public class CardinalityPredictionWEKA {
 	public double classifyDocument(Document document) {
 		log.info("Classify document: " + document.documentID);
 
-		FeatureDataPoint fdp = new FeatureDataPoint(document.documentID, 0, null, trainingData, getFeatures(document),
+		DataPoint fdp = new DataPoint(document.documentID, 0, null, trainingData, getFeatures(document),
 				0, false);
 
 		return classifyForInstance(rf, convertToWekaInstances("TEST", fdp));
@@ -171,19 +171,19 @@ public class CardinalityPredictionWEKA {
 		return features;
 	}
 
-	private FeatureDataPoint convertInstanceToDataPoint(Instance instance, boolean training) {
+	private DataPoint convertInstanceToDataPoint(Instance instance, boolean training) {
 
 		Map<String, Double> features = getFeatures(instance.getDocument());
-		return new FeatureDataPoint(instance.getDocument().documentID, 0, null, trainingData, features,
+		return new DataPoint(instance.getDocument().documentID, 0, null, trainingData, features,
 				instance.getGoldAnnotations().getAnnotations().size(), training);
 
 	}
 
-	private weka.core.Instance convertToWekaInstances(final String dataSetName, final FeatureDataPoint dataPoint) {
+	private weka.core.Instance convertToWekaInstances(final String dataSetName, final DataPoint dataPoint) {
 		return convertToWekaInstances(dataSetName, Arrays.asList(dataPoint)).get(0);
 	}
 
-	private Instances convertToWekaInstances(final String dataSetName, final List<FeatureDataPoint> dataPoints) {
+	private Instances convertToWekaInstances(final String dataSetName, final List<DataPoint> dataPoints) {
 
 		Attribute[] attributes = new Attribute[trainingData.sparseIndexMapping.size()];
 
@@ -198,7 +198,7 @@ public class CardinalityPredictionWEKA {
 		Instances instances = new Instances(dataSetName, attributeList, trainingData.getDataPoints().size());
 		instances.setClassIndex(attributeList.size() - 1);
 
-		for (FeatureDataPoint fdp : dataPoints) {
+		for (DataPoint fdp : dataPoints) {
 			double[] attValues = new double[attributeList.size()];
 
 			for (Entry<Integer, Double> d : fdp.features.entrySet()) {

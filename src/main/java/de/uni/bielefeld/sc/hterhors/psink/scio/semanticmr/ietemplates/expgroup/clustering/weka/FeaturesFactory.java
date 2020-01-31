@@ -6,7 +6,7 @@ import java.util.Map;
 
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 import de.hterhors.semanticmr.crf.variables.Document;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.GroupNamePair;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNamePair;
 
 public class FeaturesFactory {
 	private static GroupNamePair groupNamePair;
@@ -57,8 +57,8 @@ public class FeaturesFactory {
 
 	public static void charBasedNGrams() {
 
-		List<String> g1 = getTokenNgrams(groupNamePair.groupName1.getSurfaceForm());
-		List<String> g2 = getTokenNgrams(groupNamePair.groupName2.getSurfaceForm());
+		List<String> g1 = getCharNgrams(groupNamePair.groupName1.getSurfaceForm());
+		List<String> g2 = getCharNgrams(groupNamePair.groupName2.getSurfaceForm());
 		for (int i = 0; i < g1.size(); i++) {
 			for (int j = 0; j < g2.size(); j++) {
 				if (g1.get(i).isEmpty() || g2.get(j).isEmpty())
@@ -69,7 +69,7 @@ public class FeaturesFactory {
 		}
 	}
 
-	private static List<String> getTokenNgrams(String surfaceForm) {
+	private static List<String> getCharNgrams(String surfaceForm) {
 
 		List<String> nGrams = new ArrayList<>();
 

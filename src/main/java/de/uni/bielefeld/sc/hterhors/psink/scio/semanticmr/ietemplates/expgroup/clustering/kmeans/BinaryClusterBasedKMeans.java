@@ -15,30 +15,39 @@ import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent;
-import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNamePair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 
-public class WordBasedKMeans<E extends LiteralAnnotation> {
+public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
+
+	private static final Random random = new Random(1000L);
+
+	final static private int maxIterations = 1000;
+
+	final private Map<String, Map<String, Double>> distances = new HashMap<>();
+
 	public static void main(String[] args) {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.build();
-
+		System.out.println(getProb(0D));
+		System.out.println(getProb(0D));
+		System.out.println(getProb(1D));
+		System.out.println(getProb(1D));
 		/*
 		 * First cluster
 		 */
 		String A = "co-graft rats";
-		String B = "cograft";
+		String B = "co-graft group";
 		String C = "co-graft";
 		String D = "cograft animals";
 		String E = "co-grafted animals";
 		/*
 		 * Second cluster
 		 */
-		String F = "BMSC";
+		String F = "BMSC group";
 
 		/*
 		 * Third cluster
@@ -50,90 +59,91 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		/*
 		 * Fourth cluster
 		 */
-		String I = "OEC";
+		String I = "OEC group";
 
 		List<GroupNamePair> gnd = new ArrayList<>();
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)), true, 0.8D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(A)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(B)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(C)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(D)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(E)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(0D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(F)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, 1D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)), true, getProb(1D)));
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(G)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)),
-				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
+				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, getProb(0D)));
 //		
-		WordBasedKMeans<LiteralAnnotation> c = new WordBasedKMeans<>();
+
+		BinaryClusterBasedKMeans<LiteralAnnotation> c = new BinaryClusterBasedKMeans<>(gnd);
 
 		List<LiteralAnnotation> datapoints = new ArrayList<>(gnd.stream()
 				.flatMap(a -> Arrays.asList(a.groupName1, a.groupName2).stream()).collect(Collectors.toSet()));
@@ -152,9 +162,27 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		}
 	}
 
-	private final Random random = new Random(1000L);
+	private static double getProb(double d) {
+		if (d == 0D)
+			return ((double) new Random().nextInt(50)) / 100D;
 
-	final private int maxIterations = 1000;
+		return (60D + new Random().nextInt(40)) / 100D;
+	}
+
+	public BinaryClusterBasedKMeans(List<GroupNamePair> gnd) {
+
+		for (GroupNamePair groupNamePair : gnd) {
+
+			distances.putIfAbsent(groupNamePair.groupName1.getSurfaceForm(), new HashMap<>());
+			distances.putIfAbsent(groupNamePair.groupName2.getSurfaceForm(), new HashMap<>());
+
+			distances.get(groupNamePair.groupName1.getSurfaceForm()).put(groupNamePair.groupName2.getSurfaceForm(),
+					groupNamePair.probability);
+			distances.get(groupNamePair.groupName2.getSurfaceForm()).put(groupNamePair.groupName1.getSurfaceForm(),
+					groupNamePair.probability);
+		}
+
+	}
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
 
@@ -182,9 +210,9 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return list;
 	}
 
-	class Centroid {
+	static class Centroid {
 
-		public final String word;
+		public final List<String> words;
 		public final int index;
 
 		@Override
@@ -209,19 +237,25 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			return true;
 		}
 
+		public Centroid(List<String> words, int index) {
+			this.index = index;
+			this.words = words;
+		}
+
 		public Centroid(String word, int index) {
 			this.index = index;
-			this.word = word;
+			this.words = new ArrayList<>();
+			this.words.add(word);
 		}
 
 		@Override
 		public String toString() {
-			return "Centroid [word=" + word + ", index=" + index + "]";
+			return "Centroid [words=" + words + ", index=" + index + "]";
 		}
 
 	}
 
-	class Record<E extends LiteralAnnotation> {
+	static class Record<E extends LiteralAnnotation> {
 		public final String word;
 		public final E annotation;
 
@@ -263,13 +297,12 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 		@Override
 		public String toString() {
-			return "Record<E> [word=" + word + "]";
+			return "Record [word=" + word + "]";
 		}
 
 	}
 
 	private Map<Centroid, List<Record<E>>> kMeans(List<Record<E>> records, int k, int maxIterations) {
-//		List<Centroid> centroids = randomCentroids(records, k);
 		List<Centroid> centroids = plusplusCentroids(records, k);
 
 		Map<Centroid, List<Record<E>>> lastState = new HashMap<>();
@@ -280,14 +313,6 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			final Map<Centroid, List<Record<E>>> clusters = new HashMap<>();
 
 			boolean isLastIteration = i == maxIterations - 1;
-
-			// in each iteration we should find the nearest centroid for each record
-
-//			final List<Centroid> cent = new ArrayList<>(centroids);
-//			records.parallelStream().forEach(record -> {
-//				Centroid centroid = nearestCentroid(record, cent);
-//				assignToCluster(clusters, record, centroid);
-//			});
 
 			for (Record<E> record : records) {
 				Centroid centroid = nearestCentroid(record, centroids);
@@ -309,7 +334,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return lastState;
 	}
 
-	class DistToPoint {
+	static class DistToPoint {
 
 		public final int recordIndex;
 		public final String word;
@@ -354,7 +379,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 				double minDist = Double.MAX_VALUE;
 
 				for (Centroid centroid : centroids) {
-					double dist = levenshteinDistance(centroid.word, records.get(i).word);
+					double dist = distance(records.get(i), centroid);
 					if (dist < minDist) {
 						minDist = dist;
 					}
@@ -414,7 +439,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return centroids;
 	}
 
-	private DistToPoint drawFromDistribution(List<DistToPoint> nextStates) {
+	private static DistToPoint drawFromDistribution(List<DistToPoint> nextStates) {
 
 		// compute total sum of scores
 		double totalSum = 0;
@@ -431,87 +456,21 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 	}
 
-//	private  List<Centroid> randomCentroids(List<Record<E>> records, int k) {
-//		List<Centroid> centroids = new ArrayList<>();
-//		double max = Double.MIN_VALUE;
-//		double min = Double.MAX_VALUE;
-//
-//		System.out.println("Calculate min and max... ");
-//		for (Record<E> record : records) {
-//			for (double v : record.features) {
-////				max += Math.abs(v);
-////				min -= Math.abs(v);
-//				max = Math.max(v, max);
-//				min = Math.min(v, min);
-//			}
-//		}
-////		System.out.println(records.size() * NUM_OF_DIM);
-////		System.out.println("max = " + max);
-////		System.out.println("min = " + min);
-////		max /= records.size() * NUM_OF_DIM;
-////		min /= records.size() * NUM_OF_DIM;
-//
-////		max = 1;
-////		min = -1;
-//		System.out.println("max = " + max);
-//		System.out.println("min = " + min);
-//
-//		for (int i = 0; i < k; i++) {
-//			double[] coordinates = new double[NUM_OF_DIM];
-//			for (int j = 0; j < coordinates.length; j++) {
-//				coordinates[j] = random.nextDouble() * (max - min) + min;
-//			}
-//			centroids.add(new Centroid(word, i));
-//		}
-//
-//		return centroids;
-//	}
-
 	private List<Centroid> relocateCentroids(Map<Centroid, List<Record<E>>> clusters) {
 		List<Centroid> centroids = new ArrayList<>();
 		for (Entry<Centroid, List<Record<E>>> cs : clusters.entrySet()) {
-			centroids.add(average(cs.getKey(), cs.getValue()));
+			centroids.add(update(cs.getKey(), cs.getValue()));
 		}
 
 		return centroids;
 	}
 
-	private Centroid average(Centroid centroid, List<Record<E>> records) {
+	private Centroid update(Centroid centroid, List<Record<E>> records) {
 		if (records == null || records.isEmpty()) {
 			return centroid;
 		}
 
-		int avgWordLength = (int) ((double) records.stream().map(r -> r.word.length()).reduce(0, Integer::sum)
-				/ records.size());
-
-		StringBuffer average = new StringBuffer();
-
-		for (int i = 0; i < avgWordLength; i++) {
-
-			Map<Character, Integer> count = new HashMap<>();
-
-			for (Record<E> record : records) {
-
-				if (record.word.length() > i)
-					count.put(record.word.charAt(i), count.getOrDefault(record.word.charAt(i), 0) + 1);
-				else
-					count.put('#', count.getOrDefault('#', 0) + 1);
-
-			}
-
-			int max = 0;
-			char maxChar = '#';
-			for (Entry<Character, Integer> record : count.entrySet()) {
-
-				if (max < record.getValue()) {
-					max = record.getValue();
-					maxChar = record.getKey();
-				}
-			}
-			average.append(maxChar);
-		}
-
-		return new Centroid(average.toString(), centroid.index);
+		return new Centroid(records.stream().map(r -> r.word).collect(Collectors.toList()), centroid.index);
 
 	}
 
@@ -531,7 +490,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		Centroid nearest = null;
 
 		for (Centroid centroid : centroids) {
-			double currentDistance = levenshteinDistance(record.word, centroid.word);
+			double currentDistance = distance(record, centroid);
 
 			if (currentDistance < minimumDistance) {
 				minimumDistance = currentDistance;
@@ -542,9 +501,19 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return nearest;
 	}
 
-	private double levenshteinDistance(String word1, String word2) {
-		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
+	private double distance(Record<E> record, Centroid centroid) {
+		double d = 0;
+		for (String word : centroid.words) {
+			d += distance(record.word, word);
+		}
+		d /= centroid.words.size();
+		return d;
+	}
 
+	private double distance(String word1, String word2) {
+		if (word1.equals(word2))
+			return 0;
+		return 1 - distances.get(word1).get(word2);
 	}
 
 }

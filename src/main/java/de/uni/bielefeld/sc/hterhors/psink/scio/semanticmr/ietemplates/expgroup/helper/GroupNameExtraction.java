@@ -16,10 +16,39 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EDistinctGroupNamesMode;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
 public class GroupNameExtraction {
+
+	public static List<DocumentLinkedAnnotation> extractGroupNames(Instance instance,
+			EDistinctGroupNamesMode distinctGroupNamesMode, EExtractGroupNamesMode groupNameProviderMode) {
+		List<DocumentLinkedAnnotation> groupNames = new ArrayList<>();
+		switch (groupNameProviderMode) {
+		case EMPTY:
+			break;
+		case GOLD:
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
+			break;
+		case NP_CHUNKS:
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+			break;
+		case PATTERN:
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
+			break;
+		case PATTERN_NP_CHUNKS:
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
+			break;
+		case PATTERN_NP_CHUNKS_GOLD:
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
+			break;
+		}
+		return groupNames;
+	}
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesWithPattern(
 			EDistinctGroupNamesMode distinctGroupNamesMode, Instance instance) {
