@@ -65,30 +65,30 @@ public class DataPointCollector {
 			this.score = score;
 		}
 
-		public DataPoint(String docID, int sentenceIndex, String sentence, DataPointCollector data,
-				Map<String, Double> features, double score, boolean training) {
-//			this.docID = docID;
-//			this.sentence = sentence;
-//			this.sentenceIndex = sentenceIndex;
-			this.features = new HashMap<>();
-			this.parameter = new HashMap<>();
-
-			for (Entry<String, Double> feature : features.entrySet()) {
-				final Integer featureIndex = data.getFeatureIndex(feature.getKey(), training);
-
-				/*
-				 * Do not include features that are not present in the training feature set.
-				 */
-				if (featureIndex == null)
-					continue;
-
-				this.features.put(featureIndex, feature.getValue());
-
-				this.featuresIndices.add(featureIndex);
-			}
-			Collections.sort(featuresIndices);
-			this.score = score;
-		}
+//		public DataPoint(String docID, int sentenceIndex, String sentence, DataPointCollector data,
+//				Map<String, Double> features, double score, boolean training) {
+////			this.docID = docID;
+////			this.sentence = sentence;
+////			this.sentenceIndex = sentenceIndex;
+//			this.features = new HashMap<>();
+//			this.parameter = new HashMap<>();
+//
+//			for (Entry<String, Double> feature : features.entrySet()) {
+//				final Integer featureIndex = data.getFeatureIndex(feature.getKey(), training);
+//
+//				/*
+//				 * Do not include features that are not present in the training feature set.
+//				 */
+//				if (featureIndex == null)
+//					continue;
+//
+//				this.features.put(featureIndex, feature.getValue());
+//
+//				this.featuresIndices.add(featureIndex);
+//			}
+//			Collections.sort(featuresIndices);
+//			this.score = score;
+//		}
 
 		/**
 		 * This method was used t change the score after the instance was created. Use

@@ -65,8 +65,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.e
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.InjuryEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.OrganismModelEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.TreatmentEvaluation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.helper.GroupNameExtraction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.hardconstraints.DistinctExperimentalGroupConstraint;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.helper.GroupNameExtraction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.GoldCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.MultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.PredictCardinalityInitializer;
@@ -175,7 +175,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		mainClassProviderMode = EMainClassMode.PREDICT;
 		groupNameProviderMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
-		groupNameProcessingMode = EGroupNamesPreProcessingMode.KMEANS_CLUSTERING;
+		groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
 		cardinalityMode = ECardinalityMode.MULTI_CARDINALITIES;
 		assignmentMode = EAssignmentMode.ALL;
 		complexityMode = EComplexityMode.ROOT;
@@ -601,15 +601,21 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private void addGroupNameCandidates() {
 
 		for (Instance instance : instanceProvider.getInstances()) {
+			/**
+			 * Get and add group names
+			 */
 			List<DocumentLinkedAnnotation> candidates = GroupNameExtraction.extractGroupNames(instance,
 					distinctGroupNamesMode, groupNameProviderMode);
 
+			instance.addCandidateAnnotations(candidates);
+
+			/**
+			 * Add groupNames as DefinedExperimentalGroup
+			 */
 			for (DocumentLinkedAnnotation ec : candidates) {
 				instance.addCandidateAnnotation(AnnotationBuilder.toAnnotation(instance.getDocument(),
 						SCIOEntityTypes.definedExperimentalGroup, ec.getSurfaceForm(), ec.getStartDocCharOffset()));
 			}
-
-			instance.addCandidateAnnotations(candidates);
 
 		}
 	}
@@ -975,7 +981,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			int maxCardinality = computeMaxCardinality();
 
 			return new MultiCardinalityInitializer(groupNameProviderMode, groupNameProcessingMode,
-					instanceProvider.getInstances(), maxCardinality);
+					instanceProvider.getInstances(), maxCardinality, trainingInstances);
 		default:
 			return null;
 		}

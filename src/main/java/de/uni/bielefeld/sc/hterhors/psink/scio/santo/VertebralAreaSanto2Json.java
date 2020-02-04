@@ -33,31 +33,27 @@ public class VertebralAreaSanto2Json {
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build();
 
-		final String dir = "rawData/export_" + ResultSanto2Json.exportDate + "/";
+		final String dir = "src/main/resources/current_raw_data/";
+
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
 
 		Random random = new Random(10000L);
-		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-
-		Set<SlotType> slotTypes = new HashSet<>();
 
 		for (String name : fileNames) {
 			try {
 
-				if (!names.contains(name))
-					continue;
 //				if (!name.startsWith("N221"))
 //					continue;
 				log.info(name + " convert...");
 
-				Santo2JsonConverter converter = new Santo2JsonConverter(scope, slotTypes, name,
-						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_export.csv"),
-						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.annodb"),
-						new File("rawData/export_" + ResultSanto2Json.exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
+				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
+						new File("src/main/resources/current_raw_data/" + name + "_export.csv"),
+						new File("src/main/resources/current_raw_data/" + name + "_Jessica.annodb"),
+						new File("src/main/resources/current_raw_data/" + name + "_Jessica.n-triples"), scioNameSpace,
 						resourceNameSpace);
-				
+
 				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");

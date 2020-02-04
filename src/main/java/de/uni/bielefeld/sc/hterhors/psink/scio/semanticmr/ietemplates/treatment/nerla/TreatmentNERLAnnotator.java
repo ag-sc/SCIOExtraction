@@ -22,7 +22,7 @@ public class TreatmentNERLAnnotator {
 	public static void main(String[] args) {
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(SystemScope.Builder
-				.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScopeReader).build(),
+				.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScope).build(),
 				new TreatmentPattern());
 
 		File instanceDirectory = new File("src/main/resources/slotfilling/treatment/corpus/instances/");

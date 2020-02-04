@@ -28,6 +28,8 @@ public class Modes {
 
 		KMEANS_CLUSTERING,
 
+		WEKA_CLUSTERING,
+
 		GOLD_CLUSTERING;
 
 	}

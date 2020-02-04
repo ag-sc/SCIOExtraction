@@ -1,8 +1,9 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.helper;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.helper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -17,6 +18,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.i
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
@@ -24,6 +27,7 @@ public class GroupNameExtraction {
 
 	public static List<DocumentLinkedAnnotation> extractGroupNames(Instance instance,
 			EDistinctGroupNamesMode distinctGroupNamesMode, EExtractGroupNamesMode groupNameProviderMode) {
+
 		List<DocumentLinkedAnnotation> groupNames = new ArrayList<>();
 		switch (groupNameProviderMode) {
 		case EMPTY:
@@ -47,7 +51,27 @@ public class GroupNameExtraction {
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 			break;
 		}
+
+		return filter(instance, groupNames);
+	}
+
+	public static List<DocumentLinkedAnnotation> filter(Instance instance, List<DocumentLinkedAnnotation> groupNames) {
+		AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+
+		for (Iterator<DocumentLinkedAnnotation> iterator = groupNames.iterator(); iterator.hasNext();) {
+			DocumentLinkedAnnotation groupName = iterator.next();
+			if (sectionification.getSection(groupName) != ESection.RESULTS
+					|| sectionification.getSection(groupName) != ESection.ABSTRACT
+					|| sectionification.getSection(groupName) != ESection.METHODS)
+				iterator.remove();
+
+		}
+
 		return groupNames;
+	}
+
+	public static List<DocumentLinkedAnnotation> extractGroupNamesWithPattern(Instance instance) {
+		return filter(instance, extractGroupNamesWithPattern(EDistinctGroupNamesMode.NOT_DISTINCT, instance));
 	}
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesWithPattern(
@@ -60,22 +84,22 @@ public class GroupNameExtraction {
 				for (Integer group : p.groups) {
 					DocumentLinkedAnnotation annotation;
 					try {
-						String term = m.group(group);
-						if (term.length() > NPChunker.maxLength)
+						String groupName = m.group(group);
+						if (groupName.length() > CollectExpGroupNames.maxLength)
 							continue;
 
-						if (CollectExpGroupNames.STOP_TERM_LIST.contains(term))
+						if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName))
 							continue;
 
 						if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
 
-							if (distinct.contains(term))
+							if (distinct.contains(groupName))
 								continue;
 
-							distinct.add(term);
+							distinct.add(groupName);
 						}
 						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-								term, m.start(group));
+								groupName, m.start(group));
 					} catch (Exception e) {
 						annotation = null;
 					}
@@ -84,14 +108,15 @@ public class GroupNameExtraction {
 				}
 			}
 		}
-		return anns;
+		return filter(instance, anns);
 	}
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesFromGold(Instance instance) {
-		return instance.getGoldAnnotations().getAbstractAnnotations().stream()
-				.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
-				.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
-				.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList());
+		return filter(instance,
+				instance.getGoldAnnotations().getAbstractAnnotations().stream()
+						.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
+						.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
+						.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
 	}
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesWithNPCHunks(
@@ -124,7 +149,7 @@ public class GroupNameExtraction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return anns;
+		return filter(instance, anns);
 	}
 
 }

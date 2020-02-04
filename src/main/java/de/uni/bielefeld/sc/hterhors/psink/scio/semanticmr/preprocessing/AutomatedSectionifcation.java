@@ -15,12 +15,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import org.apache.commons.beanutils.converters.AbstractArrayConverter;
+import org.apache.jena.sparql.function.library.leviathan.sec;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -41,14 +44,13 @@ public class AutomatedSectionifcation {
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		for (Instance instance : instanceProvider.getInstances()) {
-
+			System.out.println(instance.getName());
 			AutomatedSectionifcation sectionify = new AutomatedSectionifcation(instance);
 
-			for (int i = 0; i < 200; i++) {
-				System.out.println(i + " = " + sectionify.getSection(i));
+			for (int i = 0; i < instance.getDocument().getNumberOfSentences(); i++) {
+				log.info(i + " = " + sectionify.getSection(i));
 			}
 
-			break;
 		}
 
 	}
@@ -64,22 +66,23 @@ public class AutomatedSectionifcation {
 	public static enum ESection {
 		ABSTRACT(new HashSet<>(Arrays.asList("Abstract", "ABSTRACT")), 0),
 
-		INTRO(new HashSet<>(Arrays.asList("Background", "Introduction", "Intro", "INTRODUCTION")), 5),
+		INTRO(new HashSet<>(Arrays.asList("KEY", "Key", "Keywords", "KEYWORDS", "Background", "Introduction", "Intro",
+				"INTRODUCTION")), 5),
 
 		METHODS(new HashSet<>(Arrays.asList("Experimental", "Methods", "Material", "Materials", "Experiments",
 				"MATERIALS", "MATERIAL", "METHODS")), 15),
 
-		RESULTS(new HashSet<>(Arrays.asList("RESULTS", "Result", "Results")), 30),
+		RESULTS(new HashSet<>(Arrays.asList("RESULTS", "Result", "Results")), 25),
 
 		DISCUSSION(new HashSet<>(Arrays.asList("Conclusions", "Summary", "Discussion", "DISCUSSION")), 50),
 
 		REFERENCES(new HashSet<>(
 				Arrays.asList("Acknowledgements", "Acknowledgement", "REFERENCES", "ACKNOWLEDGMENTS", "References")),
 				100),
-		UNDEFINED(Collections.emptySet(), -1), BEGIN(Collections.emptySet(), -1);
+		UNKNOWN(Collections.emptySet(), -1);
 
-		public final Set<String> synonyms;
-		public final int ealiestAppearance;
+		private final Set<String> synonyms;
+		private final int ealiestAppearance;
 
 		private ESection(Set<String> synonyms, int ealiestAppearance) {
 			this.synonyms = synonyms;
@@ -116,14 +119,35 @@ public class AutomatedSectionifcation {
 
 			@Override
 			public int compare(Section o1, Section o2) {
-				return Integer.compare(o1.sentenceIndex, o2.sentenceIndex);
+				return Integer.compare(o1.startIndex, o2.startIndex);
 			}
 		});
-		if (sections.isEmpty() || sections.get(0).sentenceIndex != 0) {
-			sections.add(0, new Section(0, ESection.BEGIN));
+		if (sections.isEmpty() || sections.get(0).startIndex != 0) {
+			sections.add(0, new Section(0, ESection.ABSTRACT));
+		}
+
+		/*
+		 * if sections does not contains intro but abstract and method split abstract
+		 * into abstract and intro
+		 */
+		boolean containsIntro = false;
+		int abstractIndex = -1;
+		int methodIndex = -1;
+		for (Section section : sections) {
+			if (section.section == ESection.INTRO)
+				containsIntro |= true;
+			if (section.section == ESection.ABSTRACT)
+				abstractIndex = section.startIndex;
+			if (section.section == ESection.METHODS)
+				methodIndex = section.startIndex;
+		}
+
+		if (!containsIntro && methodIndex != -1 && abstractIndex != -1) {
+			sections.add(1, new Section(((int) ((double) (methodIndex - abstractIndex) / 2D)), ESection.INTRO));
 		}
 
 	}
+//	188, 184 193 N243
 
 	private final static Map<Instance, AutomatedSectionifcation> factory = new ConcurrentHashMap<>();
 
@@ -141,16 +165,31 @@ public class AutomatedSectionifcation {
 
 	private ESection computeSection(int sentenceindex) {
 
-		for (int i = 0; i < sections.size(); i++) {
-			if (sentenceindex <= sections.get(i).sentenceIndex)
-				return sections.get(i == 0 ? i : i - 1).section;
+		ESection section = ESection.UNKNOWN;
+
+		if (sentenceindex == 0)
+			section = sections.get(0).section;
+
+		if (section == ESection.UNKNOWN && sentenceindex > sections.get(sections.size() - 1).startIndex)
+			section = sections.get(sections.size() - 1).section;
+
+		for (int i = 0; i < sections.size() - 1; i++) {
+			if (section == ESection.UNKNOWN && sections.get(i).startIndex <= sentenceindex
+					&& sections.get(i + 1).startIndex >= sentenceindex) {
+				section = sections.get(i).section;
+			}
 		}
 
-		return ESection.UNDEFINED;
+		if (section == ESection.ABSTRACT && sentenceindex > 25)
+			section = ESection.UNKNOWN;
+		if (section == ESection.INTRO && sentenceindex > 45)
+			section = ESection.UNKNOWN;
+
+		return section;
+
 	}
 
 	public ESection getSection(int sentenceindex) {
-
 		ESection sec;
 		if ((sec = sectionMap.get(sentenceindex)) == null) {
 			sectionMap.put(sentenceindex, sec = computeSection(sentenceindex));
@@ -161,12 +200,11 @@ public class AutomatedSectionifcation {
 
 	static class Section {
 
-		final public int sentenceIndex;
+		final public int startIndex;
 		final public ESection section;
 
 		public Section(int sentenceIndex, ESection section) {
-			super();
-			this.sentenceIndex = sentenceIndex;
+			this.startIndex = sentenceIndex;
 			this.section = section;
 		}
 
@@ -175,7 +213,7 @@ public class AutomatedSectionifcation {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + ((section == null) ? 0 : section.hashCode());
-			result = prime * result + sentenceIndex;
+			result = prime * result + startIndex;
 			return result;
 		}
 
@@ -190,20 +228,24 @@ public class AutomatedSectionifcation {
 			Section other = (Section) obj;
 			if (section != other.section)
 				return false;
-			if (sentenceIndex != other.sentenceIndex)
+			if (startIndex != other.startIndex)
 				return false;
 			return true;
 		}
 
+		@Override
+		public String toString() {
+			return "Section [startIndex=" + startIndex + ", section=" + section + "]";
+		}
+
 	}
 
-	public static List<Section> sectionify(Instance instance) {
+	private static List<Section> sectionify(Instance instance) {
 		List<DocumentToken> sectionTokens = new ArrayList<>();
-
 		for (List<DocumentToken> sentence : instance.getDocument().getSentences()) {
 
 			final String firstToken = sentence.get(0).getText();
-			final String secondToken = sentence.get(1).getText();
+			final String secondToken = sentence.size() > 1 ? sentence.get(1).getText() : "***";
 
 			if (sectionBlackList.contains(firstToken))
 				continue;
@@ -213,13 +255,13 @@ public class AutomatedSectionifcation {
 
 			if (!sectionWhiteList.contains(firstToken)) {
 
-				if (sentence.get(1).isPunctuation())
+				if (sentence.size() > 1 && sentence.get(1).isPunctuation())
 					continue;
 
 				if (sentence.get(0).isStopWord())
 					continue;
 
-				if (!secondToken.equals("and") && sentence.get(1).isStopWord())
+				if (!secondToken.equals("and") && sentence.size() > 1 && sentence.get(1).isStopWord())
 					continue;
 			}
 
@@ -266,6 +308,10 @@ public class AutomatedSectionifcation {
 		return sectionTokens.stream()
 				.map(d -> new Section(d.getSentenceIndex(), ESection.getSectionForTerm(d.getText())))
 				.collect(Collectors.toList());
+	}
+
+	public ESection getSection(DocumentLinkedAnnotation groupName) {
+		return getSection(groupName.getSentenceIndex());
 	}
 
 }

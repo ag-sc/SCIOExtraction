@@ -1,6 +1,8 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,8 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.WordBasedKMeans;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.kmeans.WordBasedKMeans;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.weka.GroupNameClusteringWEKA;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
 
@@ -38,13 +41,14 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	private Map<Instance, List<List<DocumentLinkedAnnotation>>> allClusters = new HashMap<>();
 
 	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
-			EGroupNamesPreProcessingMode groupNamesPreProcessingMode, List<Instance> instances, int max) {
+			EGroupNamesPreProcessingMode groupNamesPreProcessingMode, List<Instance> instances, int max,
+			List<Instance> trainInstances) {
 		this.max = max;
 		this.current = 1;
 		this.groupNameMode = groupNameMode;
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;
 
-		if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING)
+		if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
 			for (Instance instance : instances) {
 				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
@@ -54,10 +58,35 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 						datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
 				}
 
-				List<List<DocumentLinkedAnnotation>> clusters = new WordBasedKMeans().cluster(datapoints, max);
+				List<List<DocumentLinkedAnnotation>> clusters = new WordBasedKMeans<DocumentLinkedAnnotation>()
+						.cluster(datapoints, max);
 
 				allClusters.put(instance, clusters);
 			}
+		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING) {
+			try {
+
+				GroupNameClusteringWEKA gnc = new GroupNameClusteringWEKA();
+
+				gnc.train(trainInstances);
+
+				for (Instance instance : instances) {
+					List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
+
+					for (AbstractAnnotation ec : instance.getSlotTypeCandidates(ESamplingMode.ANNOTATION_BASED,
+							SCIOSlotTypes.hasGroupName)) {
+						if (ec.isInstanceOfDocumentLinkedAnnotation())
+							datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+					}
+
+					List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, max);
+
+					allClusters.put(instance, clusters);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -114,6 +143,30 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 			} while (increase());
 
 		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
+			List<List<DocumentLinkedAnnotation>> clusters = allClusters.get(instance);
+
+			for (int numOfClusters = 1; numOfClusters <= clusters.size(); numOfClusters++) {
+
+				List<AbstractAnnotation> experimentalGroups = new ArrayList<>(clusters.size());
+
+				for (int clusterIndex = 0; clusterIndex < numOfClusters; clusterIndex++) {
+
+					EntityTemplate experimentalGroup = new EntityTemplate(
+							AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+
+					List<DocumentLinkedAnnotation> cluster = clusters.get(clusterIndex);
+
+					for (DocumentLinkedAnnotation groupName : cluster) {
+						experimentalGroup.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+					}
+
+					experimentalGroups.add(experimentalGroup);
+
+				}
+
+				list.add(new State(instance, new Annotations(experimentalGroups)));
+			}
+		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING) {
 			List<List<DocumentLinkedAnnotation>> clusters = allClusters.get(instance);
 
 			for (int numOfClusters = 1; numOfClusters <= clusters.size(); numOfClusters++) {

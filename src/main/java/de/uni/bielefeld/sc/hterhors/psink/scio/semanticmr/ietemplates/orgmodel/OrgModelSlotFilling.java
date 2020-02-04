@@ -3,9 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -16,13 +14,15 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
@@ -115,26 +115,12 @@ public class OrgModelSlotFilling {
 		resultsOut.println(header);
 
 		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
+			
 			OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
-
-//			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
-//					.setCorpusSizeFraction(1F).build();
-
-//			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-//					.setTrainingProportion(80).setDevelopmentProportion(20)
-//					.setCorpusSizeFraction(1F).build();
-
-			List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-
-			Collections.shuffle(docs, new Random(1000L));
-
-			int percent = (int) ((((double) docs.size()) / 100D) * 80D);
-
-			List<String> tn = docs.subList(0, percent);
-			List<String> dn = docs.subList(percent, docs.size());
-
-			AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
-					.setTrainingInstanceNames(tn).setDevelopInstanceNames(dn).build();
+			applyToData(OrgModelSlotFilling.rule);
+			
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
+					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getByRule(rule));
@@ -227,5 +213,37 @@ public class OrgModelSlotFilling {
 	private String toResults(EOrgModelModifications rule, Score score) {
 		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
+	}
+
+	private static void applyToData(EOrgModelModifications modelModifications) {
+
+		SlotType.excludeAll();
+		switch (modelModifications) {
+		case SPECIES:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			return;
+		case SPECIES_GENDER:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			return;
+		case SPECIES_GENDER_WEIGHT:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			return;
+		case SPECIES_GENDER_WEIGHT_AGE_CATEGORY:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasAgeCategory.include();
+			return;
+		case SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasAgeCategory.include();
+			SCIOSlotTypes.hasAge.include();
+			return;
+		}
 	}
 }

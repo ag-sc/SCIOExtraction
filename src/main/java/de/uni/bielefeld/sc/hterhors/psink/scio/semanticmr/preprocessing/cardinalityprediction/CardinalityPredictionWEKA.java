@@ -140,9 +140,11 @@ public class CardinalityPredictionWEKA {
 
 	public double classifyDocument(Document document) {
 		log.info("Classify document: " + document.documentID);
+		Map<String, Object> parameter = new HashMap<>();
 
-		DataPoint fdp = new DataPoint(document.documentID, 0, null, trainingData, getFeatures(document),
-				0, false);
+		parameter.put("docID", document.documentID);
+
+		DataPoint fdp = new DataPoint(parameter, trainingData, getFeatures(document), 0, false);
 
 		return classifyForInstance(rf, convertToWekaInstances("TEST", fdp));
 	}
@@ -174,8 +176,12 @@ public class CardinalityPredictionWEKA {
 	private DataPoint convertInstanceToDataPoint(Instance instance, boolean training) {
 
 		Map<String, Double> features = getFeatures(instance.getDocument());
-		return new DataPoint(instance.getDocument().documentID, 0, null, trainingData, features,
-				instance.getGoldAnnotations().getAnnotations().size(), training);
+		Map<String, Object> parameter = new HashMap<>();
+
+		parameter.put("docID", instance.getDocument().documentID);
+
+		return new DataPoint(parameter, trainingData, features, instance.getGoldAnnotations().getAnnotations().size(),
+				training);
 
 	}
 

@@ -1,6 +1,7 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.weka;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,18 +22,20 @@ import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.Classification;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.SparseInstance;
+import weka.core.converters.ArffSaver;
 
 /**
  * Playground to Classify sentences into important or not important. Maybe multi
@@ -40,33 +44,29 @@ import weka.core.SparseInstance;
  * @author hterhors
  *
  */
-public class SentenceClassificationWEKA {
+public class ResultSentenceClassificationWEKA {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-//	private static final File instanceDirectory = new File(
-//			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
-	private static final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private static final File instanceDirectory = new File("src/main/resources/slotfilling/result/corpus/instances/");
 
 	private static final String CLASSIFICATION_LABEL_RELEVANT = "Y";
 
 	private static final String CLASSIFICATION_LABEL_NOT_RELEVANT = "N";
-//	private static  final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
+
+	private static final String CLASSIFICATION_LABEL_UNKOWN = "?";
 
 	public static void main(String[] args) throws Exception {
-//		
-//				SystemScope.Builder.getScopeHandler().addScopeSpecification(OrgModelSpecs.systemsScopeReader).build();
-//				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build();
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
-				.build();
+		SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
+		InstanceProvider.maxNumberOfAnnotations = 1000;
+
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		SentenceClassificationWEKA sentenceClassification = new SentenceClassificationWEKA(
+		ResultSentenceClassificationWEKA sentenceClassification = new ResultSentenceClassificationWEKA(
 				instanceProvider.getRedistributedTrainingInstances());
 
 		Score score = new Score();
@@ -84,7 +84,6 @@ public class SentenceClassificationWEKA {
 		}
 
 		System.out.println(score);
-		System.out.println(score.getAccuracy());
 	}
 
 	static class P {
@@ -104,8 +103,8 @@ public class SentenceClassificationWEKA {
 
 	private final List<String> binaryValues = Arrays.asList("0", "1");
 
-	private final Attribute classAttribute = new Attribute("classLabel",
-			Arrays.asList(CLASSIFICATION_LABEL_NOT_RELEVANT, CLASSIFICATION_LABEL_RELEVANT));
+	private final Attribute classAttribute = new Attribute("classLabel", Arrays
+			.asList(CLASSIFICATION_LABEL_NOT_RELEVANT, CLASSIFICATION_LABEL_RELEVANT, CLASSIFICATION_LABEL_UNKOWN));
 
 	private final DataPointCollector trainingData = new DataPointCollector();
 
@@ -113,9 +112,9 @@ public class SentenceClassificationWEKA {
 
 	private final RandomForest rf;
 
-	public SentenceClassificationWEKA(List<Instance> trainingInstances) {
+	public ResultSentenceClassificationWEKA(List<Instance> trainingInstances) throws IOException {
 
-		threshold = 0.5;
+		threshold = 0.3;
 		rf = new RandomForest();
 		log.info("Train sentence classifier...");
 
@@ -124,6 +123,7 @@ public class SentenceClassificationWEKA {
 		trainingDataPoints.forEach(fdp -> trainingData.addFeatureDataPoint(fdp));
 
 		Instances wekaTRAINInstance = convertToWekaInstances("TRAIN", trainingData.getDataPoints());
+		saveArff(new File("result_train.arff"), wekaTRAINInstance);
 
 		rf.setNumIterations(200);
 
@@ -280,8 +280,25 @@ public class SentenceClassificationWEKA {
 
 		for (Instance instance : instances) {
 			Set<Integer> sentencesWithInfo = new HashSet<>();
+
 			for (AbstractAnnotation goldAnnotation : instance.getGoldAnnotations().getAnnotations()) {
-				sentencesWithInfo.addAll(extractRelevantSentences(goldAnnotation));
+
+				SingleFillerSlot judgement = goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SlotType.get("hasJudgement"));
+				if (judgement.containsSlotFiller())
+					sentencesWithInfo.addAll(extractRelevantSentences(judgement.getSlotFiller()));
+				SingleFillerSlot test = goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SlotType.get("hasStatisticalTest"));
+				if (test.containsSlotFiller())
+					sentencesWithInfo.addAll(extractRelevantSentences(test.getSlotFiller()));
+				SingleFillerSlot invest = goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SlotType.get("hasInvestigationMethod"));
+				if (invest.containsSlotFiller())
+					sentencesWithInfo.addAll(extractRelevantSentences(invest.getSlotFiller()));
+				SingleFillerSlot trend = goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SlotType.get("hasTrend"));
+				if (trend.containsSlotFiller())
+					sentencesWithInfo.addAll(extractRelevantSentences(trend.getSlotFiller()));
 			}
 
 			int count = 0;
@@ -307,27 +324,37 @@ public class SentenceClassificationWEKA {
 						else
 							dataPoints.add(new DataPoint(parameter, trainingData, features, 0, training));
 					}
-
 				}
 			}
-			if (training) {
 
-				Collections.shuffle(negExamples);
-				for (int i = 0; i < count; i++) {
+			if (training) {
+				for (int i = 0; i < count*3; i++) {
 					Map<String, Object> parameter = new HashMap<>();
 					parameter.put("docID", negExamples.get(i).docID);
 					parameter.put("sentenceIndex", negExamples.get(i).sentenceIndex);
 					parameter.put("sentence", negExamples.get(i).sentence);
+					Collections.shuffle(negExamples);
 					dataPoints.add(new DataPoint(parameter, trainingData, negExamples.get(i).features, 0, training));
 				}
 			}
 
 		}
+
 		return dataPoints;
 	}
 
 	private Set<Integer> extractRelevantSentences(AbstractAnnotation goldAnnotation) {
 		Set<Integer> sentencesWithInfo = new HashSet<>();
+
+		if (goldAnnotation.isInstanceOfLiteralAnnotation()) {
+			int sentenceIndex = goldAnnotation.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex();
+			sentencesWithInfo.add(sentenceIndex);
+			return sentencesWithInfo;
+		}
+
+		if (goldAnnotation.isInstanceOfEntityTypeAnnotation()) {
+			return sentencesWithInfo;
+		}
 
 		AbstractAnnotation rootAnnotation = goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation();
 
@@ -391,4 +418,10 @@ public class SentenceClassificationWEKA {
 		return instances;
 	}
 
+	private void saveArff(final File arffOutputFile, Instances dataSet) throws IOException {
+		ArffSaver saver = new ArffSaver();
+		saver.setInstances(dataSet);
+		saver.setFile(arffOutputFile);
+		saver.writeBatch();
+	}
 }

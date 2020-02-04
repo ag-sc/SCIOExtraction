@@ -135,8 +135,7 @@ public class AnnotationExistsInAbstractTemplate extends AbstractFeatureTemplate<
 	}
 
 	public boolean isAbstract(AutomatedSectionifcation sectionification, DocumentLinkedAnnotation eta) {
-		final ESection section = sectionification.getSection(eta.getSentenceIndex());
-		return section == ESection.ABSTRACT || (section == ESection.BEGIN && eta.getSentenceIndex() < 15);
+		return sectionification.getSection(eta.getSentenceIndex()) == ESection.ABSTRACT;
 	}
 
 	@Override

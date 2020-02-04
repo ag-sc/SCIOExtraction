@@ -2,10 +2,13 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.santo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -34,16 +37,18 @@ public class ResultSanto2Json {
 	final static private String resourceNameSpace = "http://scio/data";
 
 	public static void main(String[] args) throws IOException {
-
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
+		Set<String> docs = new HashSet<>(
+				Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath()));
+		SystemScope scope = SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(ResultSpecifications.systemsScope).build();
 
 		/**
 		 * TODO: To generate the unrolled data , you need to convert the rawData first,
 		 * unroll and convert with unroll again..
 		 */
 
-//		String data = "unroll";
-		String data = "rawData";
+		String data = "unroll";
+//		String data = "rawData";
 
 		final String dir = data + "/export_" + exportDate + "/";
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
@@ -53,6 +58,8 @@ public class ResultSanto2Json {
 		Random random = new Random(10000L);
 
 		for (String name : fileNames) {
+			if (!docs.contains(name))
+				continue;
 			try {
 
 				log.info(name + " start processing...");
@@ -61,7 +68,7 @@ public class ResultSanto2Json {
 						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.annodb"),
 						new File(data + "/export_" + exportDate + "/" + name + "_Jessica.n-triples"), scioNameSpace,
 						resourceNameSpace);
-				
+
 				converter.addIgnoreProperty("<http://psink.de/scio/hasInvestigationDeprecated>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#comment>");
 				converter.addIgnoreProperty("<http://www.w3.org/2000/01/rdf-schema#label>");

@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.weka;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.weka;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,9 +20,9 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNameDataSetHelper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.BinaryClusterBasedKMeans;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.helper.GroupNameDataSetHelper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.helper.GroupNamePair;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.kmeans.BinaryClusterBasedKMeans;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import weka.classifiers.Classifier;
@@ -100,41 +100,24 @@ public class GroupNameClusteringWEKA {
 		}
 	}
 
-	public void test(List<Instance> test) throws Exception {
+	public Score test(List<Instance> test) throws Exception {
 		collectInstances(test, testDataCollector, false);
 
 		Instances wekaTESTInstance = convertToWekaInstances("TEST", testDataCollector.getDataPoints());
 
 		saveArff(new File("groupNameClustering_test.arff"), wekaTESTInstance);
-//		System.exit(1);
 		Score score = new Score();
-		int i = 0;
-//		testDataCollector.getDataPoints().forEach(x -> System.out.println(x.parameter.get("groupNamePair")));
-//		System.out.println("-----------");
 
 		for (weka.core.Instance instance : wekaTESTInstance) {
 			try {
-//
-//				GroupNamePair gnp = (GroupNamePair) testDataCollector.getDataPoints().get(i).parameter
-//						.get("groupNamePair");
-
-				i++;
-//				if (!(gnp.groupName1.getSurfaceForm().equals("PBS")
-//						&& gnp.groupName2.getSurfaceForm().equals("PBS rats")))
-//					continue;
-
-//				System.out.println(testDataCollector.getDataPoints().get(i - 1).features);
 
 				double[] pred = rf.distributionForInstance(instance);
 
 				int index = pred[0] > pred[1] ? 0 : 1;
-//				System.out.println(Arrays.toString(pred));
 
 				String groundTruth = classAttribute.value((int) instance.classValue());
 
 				String prediction = classAttribute.value((int) index);
-//				System.out.println(gnp);
-//				System.out.println(groundTruth + ":" + prediction);
 				int tp = groundTruth.equals(CLASSIFICATION_LABEL_YES) && groundTruth.equals(prediction) ? 1 : 0;
 				int tn = groundTruth.equals(CLASSIFICATION_LABEL_NO) && groundTruth.equals(prediction) ? 1 : 0;
 				int fp = groundTruth.equals(CLASSIFICATION_LABEL_NO) && prediction.equals(CLASSIFICATION_LABEL_YES) ? 1
@@ -148,8 +131,7 @@ public class GroupNameClusteringWEKA {
 				e2.printStackTrace();
 			}
 		}
-		System.out.println(score);
-		log.info("done!");
+		return score;
 	}
 
 	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> anns, int k) throws Exception {
@@ -179,19 +161,12 @@ public class GroupNameClusteringWEKA {
 
 			GroupNamePair gnp = (GroupNamePair) predictions.getDataPoints().get(i).parameter.get("groupNamePair");
 //
-//			if (!(gnp.groupName1.getSurfaceForm().equals("PBS") && gnp.groupName2.getSurfaceForm().equals("PBS rats")))
-//				continue;
 
 			double[] pred = rf.distributionForInstance(instance);
-//			System.out.println(predictions.getDataPoints().get(i - 1).features);
-//
-//			System.out.println(Arrays.toString(pred));
 
 			int index = pred[0] > pred[1] ? 0 : 1;
 
 			String prediction = classAttribute.value(index);
-//			System.out.println(gnp);
-//			System.out.println(prediction);
 
 			if (prediction.equals(CLASSIFICATION_LABEL_YES)) {
 				gnps.add(new GroupNamePair(gnp, true, pred[1]));
@@ -222,10 +197,11 @@ public class GroupNameClusteringWEKA {
 	}
 
 	public double classifyDocument(GroupNamePair groupNamePair) {
+		Map<String, Object> parameter = new HashMap<>();
 
-		DataPoint fdp = new DataPoint(
-				groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID, 0, null,
-				trainingDataCollector, getFeatures(groupNamePair), 0, false);
+		parameter.put("docID", groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID);
+
+		DataPoint fdp = new DataPoint(parameter, trainingDataCollector, getFeatures(groupNamePair), 0, false);
 
 		return classifyForInstance(rf, convertToWekaInstances("TEST", fdp));
 	}
@@ -260,10 +236,12 @@ public class GroupNameClusteringWEKA {
 		List<DataPoint> dataPoints = new ArrayList<>();
 
 		for (GroupNamePair groupNamePair : pairs) {
+			Map<String, Object> parameter = new HashMap<>();
 
-			DataPoint fdp = new DataPoint(
-					groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID, 0, null,
-					trainingDataCollector, getFeatures(groupNamePair), groupNamePair.sameCluster ? 1D : 0D, training);
+			parameter.put("docID", groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID);
+
+			DataPoint fdp = new DataPoint(parameter, trainingDataCollector, getFeatures(groupNamePair),
+					groupNamePair.sameCluster ? 1D : 0D, training);
 			fdp.parameter.put("groupNamePair", groupNamePair);
 			dataPoints.add(fdp);
 		}

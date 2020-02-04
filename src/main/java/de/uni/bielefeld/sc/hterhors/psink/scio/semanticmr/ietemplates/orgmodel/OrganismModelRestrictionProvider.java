@@ -35,10 +35,11 @@ public class OrganismModelRestrictionProvider {
 
 	}
 
+
+
 	public static List<GoldModificationRule> getSpecies() {
 		List<GoldModificationRule> rules = new ArrayList<>();
-//		SlotType.excludeAll();
-//		SCIOSlotTypes.hasOrganismSpecies.include();
+
 		rules.add(new GoldModificationRule() {
 
 			@Override
@@ -62,9 +63,7 @@ public class OrganismModelRestrictionProvider {
 
 	public static List<GoldModificationRule> getPlusGender() {
 		List<GoldModificationRule> rules = new ArrayList<>();
-//		SlotType.excludeAll();
-//		SCIOSlotTypes.hasOrganismSpecies.include();
-//		SCIOSlotTypes.hasGender.include();
+
 		rules.add(new GoldModificationRule() {
 
 			@Override
@@ -89,10 +88,7 @@ public class OrganismModelRestrictionProvider {
 
 	public static List<GoldModificationRule> getPlusWeight() {
 		List<GoldModificationRule> rules = new ArrayList<>();
-//		SlotType.excludeAll();
-//		SCIOSlotTypes.hasOrganismSpecies.include();
-//		SCIOSlotTypes.hasGender.include();
-//		SCIOSlotTypes.hasWeight.include();
+
 		rules.add(new GoldModificationRule() {
 
 			@Override
@@ -119,11 +115,7 @@ public class OrganismModelRestrictionProvider {
 
 	public static List<GoldModificationRule> getPlusAgeCategory() {
 		List<GoldModificationRule> rules = new ArrayList<>();
-//		SlotType.excludeAll();
-//		SCIOSlotTypes.hasOrganismSpecies.include();
-//		SCIOSlotTypes.hasGender.include();
-//		SCIOSlotTypes.hasWeight.include();
-//		SCIOSlotTypes.hasAgeCategory.include();
+
 		rules.add(new GoldModificationRule() {
 
 			@Override
@@ -152,12 +144,6 @@ public class OrganismModelRestrictionProvider {
 
 	public static List<GoldModificationRule> getPlusAge() {
 		List<GoldModificationRule> rules = new ArrayList<>();
-//		SlotType.excludeAll();
-//		SCIOSlotTypes.hasOrganismSpecies.include();
-//		SCIOSlotTypes.hasGender.include();
-//		SCIOSlotTypes.hasWeight.include();
-//		SCIOSlotTypes.hasAgeCategory.include();
-//		SCIOSlotTypes.hasAge.include();
 		rules.add(new GoldModificationRule() {
 
 			@Override

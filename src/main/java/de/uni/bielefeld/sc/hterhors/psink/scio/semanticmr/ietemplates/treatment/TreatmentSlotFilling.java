@@ -15,28 +15,25 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.specs.TreatmentSpecs;
 
 /**
  * 
- * @author hterhors
- *	//	Time: 152876
-//	############
-//	# Epoch: 2 #
-//	############
+ * @author hterhors // Time: 152876 // ############ // # Epoch: 2 # //
+ *         ############
  * 
  * 
  * 
-Time: 221844
-############
-# Epoch: 2 #
-############
+ *         Time: 221844 ############ # Epoch: 2 # ############
  */
 public class TreatmentSlotFilling {
 
@@ -65,15 +62,19 @@ public class TreatmentSlotFilling {
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public TreatmentSlotFilling() throws IOException {
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(TreatmentSpecs.systemsScopeReader).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScope)
+				.build();
 
 //		SpecificationWriter w = new SpecificationWriter(scope);
-//		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/treatment/entities.csv"), EntityType.get("Treatment"));
-//		w.writeHierarchiesSpecificationFile(new File("src/main/resources/slotfilling/treatment/hierarchies.csv"), EntityType.get("Treatment"));
-//		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/treatment/slots.csv"), EntityType.get("Treatment"));
-////		w.writeStructuresSpecificationFile(null, EntityType.get("Treatment"));
-//	
+//		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/treatment/entities.csv"),
+//				EntityType.get("Treatment"));
+//		w.writeHierarchiesSpecificationFile(new File("src/main/resources/slotfilling/treatment/hierarchies.csv"),
+//				EntityType.get("Treatment"));
+//		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/treatment/slots.csv"),
+//				EntityType.get("Treatment"));
+//		w.writeStructuresSpecificationFile(new File("src/main/resources/slotfilling/result/specifications/structures.csv"),
+//				new File("src/main/resources/slotfilling/treatment/structures.csv"), EntityType.get("Treatment"));
+////	
 //		System.exit(1);
 
 		PrintStream resultsOut = new PrintStream(new File("results/treatmentResults.csv"));
@@ -85,10 +86,9 @@ public class TreatmentSlotFilling {
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
-			
+
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-					.setTrainingProportion(80).setDevelopmentProportion(20)
-					.setCorpusSizeFraction(1F).build();
+					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
@@ -113,7 +113,7 @@ public class TreatmentSlotFilling {
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-		
+
 			resultsOut.println(toResults(rule, score));
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.

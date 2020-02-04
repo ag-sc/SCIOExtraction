@@ -3,9 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -16,8 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -25,10 +22,11 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
 
@@ -97,26 +95,16 @@ public class InjurySlotFilling {
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
-			SlotType.includeAll();
 			InjurySlotFilling.rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 //			InjurySlotFilling.rule = rule;
 
-//			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-//					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
+					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
 
-			List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-
-			Collections.shuffle(docs, new Random(100L));
-
-			int percent = (int) ((((double) docs.size()) / 100D) * 80D);
-			List<String> tn = docs.subList(0, percent);
-			List<String> dn = docs.subList(percent, docs.size());
-
-			AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
-					.setTrainingInstanceNames(tn).setDevelopInstanceNames(dn).build();
+			modifyInjury(InjurySlotFilling.rule);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
@@ -135,26 +123,16 @@ public class InjurySlotFilling {
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
 					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-//			SlotType.get("hasInjuryDevice").include();
-//			SlotType.get("hasInjuryLocation").exclude();
-//
-//			SlotType.get("hasInjuryArea").exclude();
-//			SlotType.get("hasInjuryPostsurgicalCare").exclude();
-//			SlotType.get("hasAnimalCareCondition").exclude();
-//			SlotType.get("hasInjuryIntensity").exclude();
-//			SlotType.get("hasDirection").exclude();
-//			SlotType.get("hasMedication").exclude();
-//			SlotType.get("hasInjuryAnaesthesia").exclude();
-
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-//			SlotType.excludeAll();
+			SlotType.storeExcludance();
+			SlotType.excludeAll();
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-
+			SlotType.restoreExcludance();
 
 			log.info("standard: " + standard);
 			log.info("only root: " + score);
@@ -196,4 +174,37 @@ public class InjurySlotFilling {
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall()) + "\t"
 				+ context;
 	}
+
+	private static void modifyInjury(EInjuryModifications modelModifications) {
+
+		SlotType.excludeAll();
+
+		switch (modelModifications) {
+		case ROOT:
+			return;
+		case ROOT_LOCATION:
+			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasUpperVertebrae.include();
+			SCIOSlotTypes.hasLowerVertebrae.include();
+			return;
+		case ROOT_DEVICE:
+			SCIOSlotTypes.hasInjuryDevice.include();
+			return;
+		case ROOT_LOCATION_DEVICE:
+			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasUpperVertebrae.include();
+			SCIOSlotTypes.hasLowerVertebrae.include();
+			return;
+		case ROOT_DEVICE_LOCATION_ANAESTHESIA:
+			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasUpperVertebrae.include();
+			SCIOSlotTypes.hasLowerVertebrae.include();
+			SCIOSlotTypes.hasAnaesthesia.include();
+			return;
+		}
+
+	}
+
 }

@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.eval;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.eval;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNameDataSetHelper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.helper.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.kmeans.WordBasedKMeans;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.clustering.weka.GroupNameClusteringWEKA;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.helper.GroupNameDataSetHelper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.helper.GroupNamePair;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.kmeans.WordBasedKMeans;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.weka.GroupNameClusteringWEKA;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 
 public class EvaluateClusteringApproaches {
@@ -75,9 +75,11 @@ public class EvaluateClusteringApproaches {
 
 		gnc.train(trainInstances);
 
-		gnc.test(testInstances);
+		Score binaryClassificationScore = gnc.test(testInstances);
 
-		Score overallBinaryClassificationScore = new Score();
+		System.out.println("GroupNameClusteringWEKA binaryClassificationScore  = " + binaryClassificationScore);
+
+		Score overallPostClusteringBinaryClassificationScore = new Score();
 		Score overallClusteringScore = new Score();
 
 		for (Instance instance : testInstances) {
@@ -95,13 +97,13 @@ public class EvaluateClusteringApproaches {
 
 			overallClusteringScore.add(clusteringScore);
 
-			Score binaryClassificationScore = computeBinaryClassificationScore(goldPairs, clusters);
+			Score postClusteringBinaryClassificationScore = computeBinaryClassificationScore(goldPairs, clusters);
 
-			overallBinaryClassificationScore.add(binaryClassificationScore);
+			overallPostClusteringBinaryClassificationScore.add(postClusteringBinaryClassificationScore);
 		}
 
-		System.out.println(
-				k + " GroupNameClusteringWEKA overallBinaryClassificationScore  = " + overallBinaryClassificationScore);
+		System.out.println(k + " GroupNameClusteringWEKA overallBinaryClassificationScore  = "
+				+ overallPostClusteringBinaryClassificationScore);
 		System.out.println(k + " GroupNameClusteringWEKA overallClusteringScore  = " + overallClusteringScore);
 
 	}

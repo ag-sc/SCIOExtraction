@@ -38,7 +38,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
@@ -50,8 +50,8 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.Classification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.weka.SentenceClassificationWEKA;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 
 public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProject {
 
@@ -226,11 +226,65 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //
 //		};
 
-		IFilter predictFilter = new IFilter() {
+//		IFilter predictFilter = new IFilter() {
+//
+//			SentenceClassificationWEKA senClassification = new SentenceClassificationWEKA(trainingInstances);
+//
+//			Map<Document, Map<Integer, Classification>> cache = new HashMap<>();
+//
+//			@Override
+//			public boolean remove(AbstractAnnotation candidate) {
+//
+//				if (!candidate.isInstanceOfDocumentLinkedAnnotation())
+//					return false;
+//
+//				Document doc = candidate.asInstanceOfDocumentLinkedAnnotation().document;
+//
+//				Map<Integer, Classification> classification;
+//
+//				if ((classification = cache.get(doc)) == null) {
+//					classification = senClassification.classifyDocument(doc);
+//					cache.put(doc, classification);
+//				}
+//
+//				if (candidate.isInstanceOfEntityTemplate()) {
+//
+//					Collection<Set<AbstractAnnotation>> x = candidate.asInstanceOfEntityTemplate().filter()
+//							.docLinkedAnnoation().merge().rootAnnotation().singleSlots().multiSlots().nonEmpty().build()
+//							.getMergedAnnotations().values();
+//
+//					boolean allRelevant = true;
+//
+//					for (Set<AbstractAnnotation> string : x) {
+//						for (AbstractAnnotation a : string) {
+//							allRelevant &= classification
+//									.get(a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant;
+//							if (!allRelevant) {
+//								return true;
+//							}
+//						}
+//					}
+//
+//				} else if (candidate.isInstanceOfDocumentLinkedAnnotation()) {
+//					if (!classification
+//							.get(candidate.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant)
+//						return true;
+//				}
+//
+//				return false;
+//			}
+//
+//		};
+		IFilter sectionFilter = new IFilter() {
 
-			SentenceClassificationWEKA senClassification = new SentenceClassificationWEKA(trainingInstances);
+			Map<Document, AutomatedSectionifcation> cache = new HashMap<>();
+			{
 
-			Map<Document, Map<Integer, Classification>> cache = new HashMap<>();
+				for (Instance instance : instanceProvider.getInstances()) {
+					cache.put(instance.getDocument(), AutomatedSectionifcation.getInstance(instance));
+				}
+
+			}
 
 			@Override
 			public boolean remove(AbstractAnnotation candidate) {
@@ -240,12 +294,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 				Document doc = candidate.asInstanceOfDocumentLinkedAnnotation().document;
 
-				Map<Integer, Classification> classification;
-
-				if ((classification = cache.get(doc)) == null) {
-					classification = senClassification.classifyDocument(doc);
-					cache.put(doc, classification);
-				}
+				AutomatedSectionifcation sectionification = cache.get(doc);
 
 				if (candidate.isInstanceOfEntityTemplate()) {
 
@@ -257,21 +306,26 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 					for (Set<AbstractAnnotation> string : x) {
 						for (AbstractAnnotation a : string) {
-							allRelevant &= classification
-									.get(a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant;
-							if (!allRelevant) {
-								return true;
+							if (a.isInstanceOfDocumentLinkedAnnotation()) {
+								allRelevant &= isRelevant(sectionification, a.asInstanceOfDocumentLinkedAnnotation());
+								if (!allRelevant) {
+									return true;
+								}
 							}
 						}
 					}
 
 				} else if (candidate.isInstanceOfDocumentLinkedAnnotation()) {
-					if (!classification
-							.get(candidate.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).isRelevant)
+					if (!isRelevant(sectionification, candidate.asInstanceOfDocumentLinkedAnnotation()))
 						return true;
 				}
 
 				return false;
+			}
+
+			private boolean isRelevant(AutomatedSectionifcation sectionification, DocumentLinkedAnnotation a) {
+				ESection sec = sectionification.getSection(a.asInstanceOfDocumentLinkedAnnotation());
+				return sec != ESection.REFERENCES;
 			}
 
 		};
@@ -279,6 +333,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		for (Instance instance : instanceProvider.getInstances()) {
 //			instance.removeCandidateAnnotation(predictFilter);
 //			instance.removeCandidateAnnotation(goldFilter);
+			instance.removeCandidateAnnotation(sectionFilter);
 		}
 
 		HardConstraintsProvider prov = getHardConstraints();
