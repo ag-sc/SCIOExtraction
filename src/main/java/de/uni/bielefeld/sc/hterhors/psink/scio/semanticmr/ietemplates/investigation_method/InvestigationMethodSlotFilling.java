@@ -19,7 +19,7 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
 
 /**
  * 
@@ -59,7 +59,7 @@ public class InvestigationMethodSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(ResultSpecifications.systemsScope)
+				.addScopeSpecification(InvestigationMethodSpecs.systemsScope)
 				/**
 				 * Finally, we build the systems scope.
 				 */
@@ -73,7 +73,10 @@ public class InvestigationMethodSlotFilling {
 //				EntityType.get("InvestigationMethod"));
 //		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/investigation_method/slots.csv"),
 //				EntityType.get("InvestigationMethod"));
-////		w.writeStructuresSpecificationFile(null, EntityType.get("Treatment"));
+//		w.writeStructuresSpecificationFile(
+//				new File("src/main/resources/slotfilling/result/specifications/structures.csv"),
+//				new File("src/main/resources/slotfilling/investigation_method/structures.csv"),
+//				EntityType.get("InvestigationMethod"));
 //
 //		System.exit(1);
 

@@ -24,7 +24,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.RemainingTypesTemplate.RemainingTypesScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.TB_RemainingTypesTemplate.RemainingTypesScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 
@@ -33,7 +33,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.Automate
  *
  * @date Nov 15, 2017
  */
-public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTypesScope> {
+public class TB_RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTypesScope> {
+
+	final public TemplateParamter includeDirectSuperTypes = TemplateParamter.build(this, "includeDirectSuperTypes",
+			true);
 
 	static class RemainingTypesScope extends AbstractFactorScope {
 
@@ -97,7 +100,6 @@ public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTyp
 		List<RemainingTypesScope> factors = new ArrayList<>();
 
 		Set<EntityType> assignedTypes = getAssignedTypes(state);
-
 		factors.add(new RemainingTypesScope(this, state.getInstance(), assignedTypes));
 
 		return factors;
@@ -116,10 +118,26 @@ public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTyp
 
 				if (documentLinkedAnnotation.isInstanceOfDocumentLinkedAnnotation())
 					remainingTypeAnnotations.add(documentLinkedAnnotation.asInstanceOfDocumentLinkedAnnotation());
-				
+
 			}
 		}
 		return remainingTypeAnnotations;
+	}
+
+	private Set<DocumentLinkedAnnotation> getUsedAnnotations(Instance instance, Set<EntityType> assignedTypes) {
+		Set<DocumentLinkedAnnotation> usedTypeAnnotations = new HashSet<>();
+
+		for (EntityType entityType : assignedTypes) {
+
+			for (EntityTypeAnnotation documentLinkedAnnotation : instance
+					.getEntityTypeCandidates(ESamplingMode.ANNOTATION_BASED, entityType)) {
+
+				if (documentLinkedAnnotation.isInstanceOfDocumentLinkedAnnotation())
+					usedTypeAnnotations.add(documentLinkedAnnotation.asInstanceOfDocumentLinkedAnnotation());
+
+			}
+		}
+		return usedTypeAnnotations;
 	}
 
 	private Set<EntityType> getAssignedTypes(State state) {
@@ -131,19 +149,28 @@ public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTyp
 				continue;
 
 			EntityTemplate orgM = collectSFS(experimentalGroup, SCIOSlotTypes.hasOrganismModel);
-			if (orgM != null)
-				assignedTypes.add(orgM.getEntityType());
+			if (orgM != null) {
+				orgM.asInstanceOfEntityTemplate().streamSingleFillerSlotValues()
+						.forEach(g -> assignedTypes.add(g.getEntityType()));
+			}
 
 			EntityTemplate injuryM = collectSFS(experimentalGroup, SCIOSlotTypes.hasInjuryModel);
-			if (injuryM != null)
-				assignedTypes.add(injuryM.getEntityType());
+			if (injuryM != null) {
+				injuryM.asInstanceOfEntityTemplate().streamSingleFillerSlotValues()
+						.forEach(g -> assignedTypes.add(g.getEntityType()));
+				injuryM.asInstanceOfEntityTemplate().flatStreamMultiFillerSlotValues()
+						.forEach(g -> assignedTypes.add(g.getEntityType()));
+			}
 
-			for (EntityTemplate documentLinkedAnnotation : collectMFS(experimentalGroup,
-					SCIOSlotTypes.hasTreatmentType)) {
-				assignedTypes.add(documentLinkedAnnotation.getEntityType());
+			for (EntityTemplate treatment : collectMFS(experimentalGroup, SCIOSlotTypes.hasTreatmentType)) {
+				treatment.asInstanceOfEntityTemplate().streamSingleFillerSlotValues()
+						.forEach(g -> assignedTypes.add(g.getEntityType()));
+				treatment.asInstanceOfEntityTemplate().flatStreamMultiFillerSlotValues()
+						.forEach(g -> assignedTypes.add(g.getEntityType()));
 			}
 
 		}
+
 		return assignedTypes;
 	}
 
@@ -175,6 +202,7 @@ public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTyp
 		Set<EntityType> assignedTypes = factor.getFactorScope().assignedTypes;
 
 		Set<DocumentLinkedAnnotation> remainingTypeAnnotations = getRemainingAnnotations(instance, assignedTypes);
+		Set<DocumentLinkedAnnotation> usedTypeAnnotations = getUsedAnnotations(instance, assignedTypes);
 
 		AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
@@ -187,10 +215,37 @@ public class RemainingTypesTemplate extends AbstractFeatureTemplate<RemainingTyp
 
 		for (Entry<EntityType, Set<ESection>> feature : sectionsPerType.entrySet()) {
 			for (ESection section : feature.getValue()) {
-
-				factor.getFeatureVector()
-						.set("RTT: " + feature.getKey().name + " is missing in section " + section.name(), true);
+				factor.getFeatureVector().set("RTT: REMAINS " + feature.getKey().name + " in section " + section.name(),
+						true);
 			}
+			if (includeDirectSuperTypes.value)
+				for (EntityType superType : feature.getKey().getDirectSuperEntityTypes()) {
+					for (ESection section : feature.getValue()) {
+						factor.getFeatureVector()
+								.set("RTT: REMAINS " + superType.name + " in section " + section.name(), true);
+					}
+				}
+		}
+
+		Map<EntityType, Set<ESection>> sectionsPerTypeUsed = new HashMap<>();
+		for (DocumentLinkedAnnotation documentLinkedAnnotation : usedTypeAnnotations) {
+			sectionsPerTypeUsed.putIfAbsent(documentLinkedAnnotation.entityType, new HashSet<>());
+			sectionsPerTypeUsed.get(documentLinkedAnnotation.entityType)
+					.add(sectionification.getSection(documentLinkedAnnotation.getSentenceIndex()));
+		}
+
+		for (Entry<EntityType, Set<ESection>> feature : sectionsPerTypeUsed.entrySet()) {
+			for (ESection section : feature.getValue()) {
+				factor.getFeatureVector().set("RTT: USED " + feature.getKey().name + " in section " + section.name(),
+						true);
+			}
+			if (includeDirectSuperTypes.value)
+				for (EntityType superType : feature.getKey().getDirectSuperEntityTypes()) {
+					for (ESection section : feature.getValue()) {
+						factor.getFeatureVector().set("RTT: USED " + superType.name + " in section " + section.name(),
+								true);
+					}
+				}
 		}
 
 	}

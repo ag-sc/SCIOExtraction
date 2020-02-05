@@ -23,7 +23,7 @@ public class InvestigationMethodNERLAnnotator {
 	public static void main(String[] args) throws IOException {
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(SystemScope.Builder
-				.getScopeHandler().addScopeSpecification(InvestigationMethodSpecs.systemsScopeReader).build(),
+				.getScopeHandler().addScopeSpecification(InvestigationMethodSpecs.systemsScope).build(),
 				new InvestigationMethodPattern());
 
 		File instanceDirectory = new File("src/main/resources/slotfilling/investigation_method/corpus/instances/");

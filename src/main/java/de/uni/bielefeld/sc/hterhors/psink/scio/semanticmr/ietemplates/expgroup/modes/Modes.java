@@ -19,7 +19,7 @@ public class Modes {
 
 	public enum EMainClassMode {
 
-		GOLD, PREDICT, GOLD_PREDICTED;
+		GOLD, SAMPLE, PRE_PREDICTED;
 
 	}
 

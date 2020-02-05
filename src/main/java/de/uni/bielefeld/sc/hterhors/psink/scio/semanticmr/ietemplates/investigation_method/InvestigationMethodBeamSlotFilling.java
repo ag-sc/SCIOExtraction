@@ -91,7 +91,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(InvestigationMethodSpecs.systemsScopeReader)
+		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(InvestigationMethodSpecs.systemsScope)
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.

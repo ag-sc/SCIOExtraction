@@ -29,7 +29,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigat
 public class ExtractNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractNERLADataFromSlotFillingData("investigation_method", InvestigationMethodSpecs.systemsScopeReader);
+		new ExtractNERLADataFromSlotFillingData("investigation_method", InvestigationMethodSpecs.systemsScope);
 	}
 
 	public ExtractNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {

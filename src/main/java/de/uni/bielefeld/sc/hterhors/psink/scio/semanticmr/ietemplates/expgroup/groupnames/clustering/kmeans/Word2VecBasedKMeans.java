@@ -1,5 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.kmeans;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,6 +17,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.github.andrewoma.dexx.collection.Vector;
+
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent;
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
@@ -21,7 +27,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.helper.GroupNamePair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 
-public class WordBasedKMeans<E extends LiteralAnnotation> {
+public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
@@ -30,7 +36,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		/*
 		 * First cluster
 		 */
-		String A = "co-graft rats";
+		String A = "co-grafted rats";
 		String B = "cograft";
 		String C = "co-graft";
 		String D = "cograft animals";
@@ -133,7 +139,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)),
 				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
 //		
-		WordBasedKMeans<LiteralAnnotation> c = new WordBasedKMeans<>();
+		Word2VecBasedKMeans<LiteralAnnotation> c = new Word2VecBasedKMeans<>();
 
 		List<LiteralAnnotation> datapoints = new ArrayList<>(gnd.stream()
 				.flatMap(a -> Arrays.asList(a.groupName1, a.groupName2).stream()).collect(Collectors.toSet()));
@@ -152,11 +158,25 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		}
 	}
 
+	private Map<String, Double[]> wordEmbeddings = new HashMap<>();
+
 	private final Random random = new Random(1000L);
 
 	final private int maxIterations = 1000;
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
+
+		Set<String> words = datapoints.stream()
+				.flatMap(a -> Arrays.stream(a.asInstanceOfLiteralAnnotation().getSurfaceForm().split(" ")))
+				.collect(Collectors.toSet());
+//		Set<String> words =
+//				datapoints.stream().flatMap(
+//						a -> a.asInstanceOfDocumentLinkedAnnotation().relatedTokens.stream().map(t -> t.getText()))
+//				.collect(Collectors.toSet());
+
+		readVectors(words);
+
+		wordEmbeddings.entrySet().forEach(System.out::println);
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
 
@@ -175,6 +195,41 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 	}
 
+	private void readVectors(Set<String> words) {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File("wordvector/w2v.csv")));
+
+			String line = null;
+			int lineC = 0;
+			System.out.println("Read embeddings...");
+			while ((line = br.readLine()) != null) {
+				lineC++;
+				if (lineC % 100000 == 0)
+					System.out.println(lineC);
+
+				final String data[] = line.split(" ");
+
+				String word = data[0];
+
+				if (!words.contains(word))
+					continue;
+
+				Double[] vec = new Double[200];
+
+				for (int i = 1; i < data.length; i++) {
+					vec[i - 1] = Double.parseDouble(data[i].trim());
+				}
+
+				wordEmbeddings.put(word, vec);
+			}
+
+			br.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private List<Record<E>> toDataPoints(List<E> datapoints) {
 
 		List<Record<E>> list = datapoints.stream().map(s -> new Record<E>(s)).collect(Collectors.toList());
@@ -182,9 +237,9 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return list;
 	}
 
-	class Centroid {
+	static class Centroid {
 
-		public final String word;
+		public final Double[] word;
 		public final int index;
 
 		@Override
@@ -192,6 +247,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + index;
+			result = prime * result + Arrays.hashCode(word);
 			return result;
 		}
 
@@ -206,10 +262,12 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			Centroid other = (Centroid) obj;
 			if (index != other.index)
 				return false;
+			if (!Arrays.equals(word, other.word))
+				return false;
 			return true;
 		}
 
-		public Centroid(String word, int index) {
+		public Centroid(Double[] word, int index) {
 			this.index = index;
 			this.word = word;
 		}
@@ -222,12 +280,30 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 	}
 
 	class Record<E extends LiteralAnnotation> {
-		public final String word;
+		public final Double[] word;
 		public final E annotation;
 
 		public Record(E annotation) {
 			this.annotation = annotation;
-			this.word = annotation.getSurfaceForm();
+			this.word = new Double[200];
+
+			for (int i = 0; i < this.word.length; i++) {
+
+				this.word[i] = 0D;
+			}
+			String[] words = annotation.getSurfaceForm().split(" ");
+			for (String d : words) {
+				Double[] embedding = getBestEmbedding(d);
+				for (int i = 0; i < embedding.length; i++) {
+
+					this.word[i] += embedding[i];
+				}
+
+			}
+			for (int i = 0; i < words.length; i++) {
+				this.word[i] /= words.length;
+			}
+
 		}
 
 		@Override
@@ -266,6 +342,27 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			return "Record<E> [word=" + word + "]";
 		}
 
+	}
+
+	private Double[] getBestEmbedding(String d) {
+
+		if (wordEmbeddings.containsKey(d))
+			return wordEmbeddings.get(d);
+
+		double mostSim = 0;
+		String bestMatch = null;
+		for (String embedding : wordEmbeddings.keySet()) {
+
+			double sim = levenshteinSimilarty(embedding, d);
+
+			if (sim < mostSim) {
+				sim = mostSim;
+				bestMatch = embedding;
+			}
+
+		}
+
+		return wordEmbeddings.get(bestMatch);
 	}
 
 	private Map<Centroid, List<Record<E>>> kMeans(List<Record<E>> records, int k, int maxIterations) {
@@ -312,10 +409,10 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 	class DistToPoint {
 
 		public final int recordIndex;
-		public final String word;
+		public final Double[] word;
 		public final double distance;
 
-		public DistToPoint(String word, int recordIndex, double distance) {
+		public DistToPoint(Double[] word, int recordIndex, double distance) {
 			this.word = word;
 			this.recordIndex = recordIndex;
 			this.distance = distance;
@@ -354,7 +451,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 				double minDist = Double.MAX_VALUE;
 
 				for (Centroid centroid : centroids) {
-					double dist = levenshteinDistance(centroid.word, records.get(i).word);
+					double dist = calcEuklidDistance(centroid.word, records.get(i).word);
 					if (dist < minDist) {
 						minDist = dist;
 					}
@@ -392,13 +489,13 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 //				}
 //				distances.add(new DistToPoint(records.get(i).word, Math.pow(minDist, 2)));
 //			}
-			Collections.sort(distances, new Comparator<DistToPoint>() {
-
-				@Override
-				public int compare(DistToPoint o1, DistToPoint o2) {
-					return o1.word.compareTo(o2.word);
-				}
-			});
+//			Collections.sort(distances, new Comparator<DistToPoint>() {
+//
+//				@Override
+//				public int compare(DistToPoint o1, DistToPoint o2) {
+//					return o1.word.compareTo(o2.word);
+//				}
+//			});
 			DistToPoint d;
 			if (!distances.isEmpty()) {
 				d = drawFromDistribution(distances);
@@ -481,37 +578,21 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			return centroid;
 		}
 
-		int avgWordLength = (int) ((double) records.stream().map(r -> r.word.length()).reduce(0, Integer::sum)
-				/ records.size());
-
-		StringBuffer average = new StringBuffer();
-
-		for (int i = 0; i < avgWordLength; i++) {
-
-			Map<Character, Integer> count = new HashMap<>();
-
-			for (Record<E> record : records) {
-
-				if (record.word.length() > i)
-					count.put(record.word.charAt(i), count.getOrDefault(record.word.charAt(i), 0) + 1);
-				else
-					count.put('#', count.getOrDefault('#', 0) + 1);
-
-			}
-
-			int max = 0;
-			char maxChar = '#';
-			for (Entry<Character, Integer> record : count.entrySet()) {
-
-				if (max < record.getValue()) {
-					max = record.getValue();
-					maxChar = record.getKey();
-				}
-			}
-			average.append(maxChar);
+		Double[] vector = new Double[200];
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] = 0D;
 		}
 
-		return new Centroid(average.toString(), centroid.index);
+		for (Word2VecBasedKMeans<E>.Record<E> rec : records) {
+			for (int i = 0; i < rec.word.length; i++) {
+				vector[i] += rec.word[i];
+			}
+		}
+		for (int i = 0; i < vector.length; i++) {
+			vector[i] /= records.size();
+		}
+
+		return new Centroid(vector, centroid.index);
 
 	}
 
@@ -531,7 +612,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		Centroid nearest = null;
 
 		for (Centroid centroid : centroids) {
-			double currentDistance = levenshteinDistance(record.word, centroid.word);
+			double currentDistance = calcEuklidDistance(record.word, centroid.word);
 
 			if (currentDistance < minimumDistance) {
 				minimumDistance = currentDistance;
@@ -542,8 +623,19 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return nearest;
 	}
 
-	private double levenshteinDistance(String word1, String word2) {
-		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
+	private static double calcEuklidDistance(Double[] vec1, Double[] vec2) {
+
+		double dist = 0;
+		for (int i = 0; i < vec1.length; i++) {
+
+			dist += Math.pow(vec1[i] - vec2[i], 2);
+
+		}
+		return Math.sqrt(dist);
+
 	}
 
+	private double levenshteinSimilarty(String word1, String word2) {
+		return LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
+	}
 }

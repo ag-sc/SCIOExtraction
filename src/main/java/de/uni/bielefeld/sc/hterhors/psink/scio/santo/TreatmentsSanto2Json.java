@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.santo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,11 +31,12 @@ public class TreatmentsSanto2Json {
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(TreatmentSpecs.systemsScope).build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScope)
+				.build();
 
 		final String dir = "src/main/resources/current_raw_data/";
-
+		Set<String> docs = new HashSet<>(
+				Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath()));
 		List<String> fileNames = Arrays.stream(new File(dir).listFiles()).filter(f -> f.getName().endsWith(".csv"))
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 		Collections.sort(fileNames);
@@ -50,13 +52,9 @@ public class TreatmentsSanto2Json {
 
 		for (String name : fileNames) {
 			try {
-//			if (!organismModelDocs.contains(name)) {
-//				log.info(name + "... not part of the corpus!");
-//				continue;
-//			}
+				if (!docs.contains(name))
+					continue;
 
-//				if (!name.startsWith("N092 Cot"))
-//					continue;
 				log.info(name + " convert...");
 				Santo2JsonConverter converter = new Santo2JsonConverter(scope, name,
 						new File("src/main/resources/current_raw_data/" + name + "_export.csv"),

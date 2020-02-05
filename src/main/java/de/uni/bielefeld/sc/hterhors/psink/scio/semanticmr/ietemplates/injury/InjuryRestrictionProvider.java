@@ -8,6 +8,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 
 public class InjuryRestrictionProvider {
 
@@ -31,6 +32,38 @@ public class InjuryRestrictionProvider {
 			return getPlusAnaesthesia();
 		}
 		return null;
+
+	}
+	
+	public static void applySlotTypeRestrictions(EInjuryModifications modelModifications) {
+
+		SlotType.excludeAll();
+
+		switch (modelModifications) {
+		case ROOT:
+			return;
+		case ROOT_LOCATION:
+			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasUpperVertebrae.include();
+			SCIOSlotTypes.hasLowerVertebrae.include();
+			return;
+		case ROOT_DEVICE:
+			SCIOSlotTypes.hasInjuryDevice.include();
+			return;
+		case ROOT_LOCATION_DEVICE:
+			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasUpperVertebrae.include();
+			SCIOSlotTypes.hasLowerVertebrae.include();
+			return;
+		case ROOT_DEVICE_LOCATION_ANAESTHESIA:
+			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasUpperVertebrae.include();
+			SCIOSlotTypes.hasLowerVertebrae.include();
+			SCIOSlotTypes.hasAnaesthesia.include();
+			return;
+		}
 
 	}
 

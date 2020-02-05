@@ -29,6 +29,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	 * The maximum number of annotations
 	 */
 	private final int max;
+	private final int min;
 
 	/**
 	 * The current number of annotations;
@@ -41,14 +42,16 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	private Map<Instance, List<List<DocumentLinkedAnnotation>>> allClusters = new HashMap<>();
 
 	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
-			EGroupNamesPreProcessingMode groupNamesPreProcessingMode, List<Instance> instances, int max,
+			EGroupNamesPreProcessingMode groupNamesPreProcessingMode, List<Instance> instances, int min, int max,
 			List<Instance> trainInstances) {
 		this.max = max;
-		this.current = 1;
+		this.min = min;
+		this.current = min;
 		this.groupNameMode = groupNameMode;
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;
 
-		if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
+		if (groupNameMode != EExtractGroupNamesMode.EMPTY
+				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
 			for (Instance instance : instances) {
 				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
@@ -63,7 +66,8 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 				allClusters.put(instance, clusters);
 			}
-		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING) {
+		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
+				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING) {
 			try {
 
 				GroupNameClusteringWEKA gnc = new GroupNameClusteringWEKA();
@@ -100,7 +104,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD
 				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING) {
-			current = 1;
+			current = min;
 
 			do {
 				List<AbstractAnnotation> as = new ArrayList<>();
@@ -140,12 +144,14 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 					}
 
 				list.add(new State(instance, new Annotations(as)));
-			} while (increase());
+			} while (++current <= max);
 
-		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
+		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
+				&& (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING
+						|| groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING)) {
 			List<List<DocumentLinkedAnnotation>> clusters = allClusters.get(instance);
 
-			for (int numOfClusters = 1; numOfClusters <= clusters.size(); numOfClusters++) {
+			for (int numOfClusters = min; numOfClusters <= clusters.size(); numOfClusters++) {
 
 				List<AbstractAnnotation> experimentalGroups = new ArrayList<>(clusters.size());
 
@@ -166,34 +172,10 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 				list.add(new State(instance, new Annotations(experimentalGroups)));
 			}
-		} else if (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING) {
-			List<List<DocumentLinkedAnnotation>> clusters = allClusters.get(instance);
+		}
 
-			for (int numOfClusters = 1; numOfClusters <= clusters.size(); numOfClusters++) {
-
-				List<AbstractAnnotation> experimentalGroups = new ArrayList<>(clusters.size());
-
-				for (int clusterIndex = 0; clusterIndex < numOfClusters; clusterIndex++) {
-
-					EntityTemplate experimentalGroup = new EntityTemplate(
-							AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
-
-					List<DocumentLinkedAnnotation> cluster = clusters.get(clusterIndex);
-
-					for (DocumentLinkedAnnotation groupName : cluster) {
-						experimentalGroup.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
-					}
-
-					experimentalGroups.add(experimentalGroup);
-
-				}
-
-				list.add(new State(instance, new Annotations(experimentalGroups)));
-			}
-
-		} else if (groupNameMode == EExtractGroupNamesMode.EMPTY
-				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING) {
-			current = 1;
+		if (groupNameMode == EExtractGroupNamesMode.EMPTY) {
+			current = min;
 
 			do {
 				List<AbstractAnnotation> as = new ArrayList<>();
@@ -208,23 +190,10 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 					}
 
 				list.add(new State(instance, new Annotations(as)));
-			} while (increase());
+			} while (++current <= max);
 
 		}
-
 		return list;
-	}
-
-	/**
-	 * Increases the current number of annotations.
-	 * 
-	 * @return true if current number is smaller or equal to max.
-	 */
-	private boolean increase() {
-		current++;
-		if (current <= max)
-			return true;
-		return false;
 	}
 
 }

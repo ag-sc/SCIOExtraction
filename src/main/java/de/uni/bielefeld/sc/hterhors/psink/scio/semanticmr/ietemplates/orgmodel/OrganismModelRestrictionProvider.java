@@ -9,6 +9,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 
 public class OrganismModelRestrictionProvider {
 
@@ -16,7 +17,37 @@ public class OrganismModelRestrictionProvider {
 		SPECIES, SPECIES_GENDER, SPECIES_GENDER_WEIGHT, SPECIES_GENDER_WEIGHT_AGE_CATEGORY,
 		SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 	}
+	public static void applySlotTypeRestrictions(EOrgModelModifications modelModifications) {
 
+		SlotType.excludeAll();
+		switch (modelModifications) {
+		case SPECIES:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			return;
+		case SPECIES_GENDER:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			return;
+		case SPECIES_GENDER_WEIGHT:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			return;
+		case SPECIES_GENDER_WEIGHT_AGE_CATEGORY:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasAgeCategory.include();
+			return;
+		case SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE:
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasAgeCategory.include();
+			SCIOSlotTypes.hasAge.include();
+			return;
+		}
+	}
 	public static List<GoldModificationRule> getByRule(EOrgModelModifications modelModifications) {
 
 		switch (modelModifications) {

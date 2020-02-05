@@ -13,6 +13,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.management.InstanceNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -578,6 +580,32 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				.concat(trainingInstances.stream(),
 						Streams.concat(developmentInstances.stream(), testInstances.stream()))
 				.map(i -> i.getName()).collect(Collectors.toSet()), 1);
+	}
+
+	final public Map<Instance, Set<AbstractAnnotation>> predictInstances(List<Instance> instanceToPredict, int k) {
+		Map<String, Instance> instanceNameMapToPredict = new HashMap<>();
+
+		for (Instance instance : instanceToPredict) {
+			instanceNameMapToPredict.put(instance.getName(), instance);
+		}
+
+		Map<String, Set<AbstractAnnotation>> annotations = predictBatchHighRecallInstanceByNames(
+				new HashSet<>(instanceNameMapToPredict.keySet()), k);
+
+		Map<Instance, Set<AbstractAnnotation>> predictions = new HashMap<>();
+
+		for (Entry<String, Set<AbstractAnnotation>> pred : annotations.entrySet()) {
+			Set<AbstractAnnotation> filteredSet = new HashSet<>();
+			for (AbstractAnnotation aa : pred.getValue()) {
+
+				if (getStateInitializer().getInitState(instanceNameMapToPredict.get(pred.getKey())).getCurrentPredictions().getAnnotations().contains(aa))
+					continue;
+
+				filteredSet.add(aa);
+			}
+			predictions.put(instanceNameMapToPredict.get(pred.getKey()), filteredSet);
+		}
+		return predictions;
 	}
 
 	final public Map<String, Set<AbstractAnnotation>> predictAllInstances(int n) {

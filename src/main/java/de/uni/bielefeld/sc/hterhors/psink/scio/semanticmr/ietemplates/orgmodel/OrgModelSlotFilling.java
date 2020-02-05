@@ -4,9 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,11 +23,14 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools.AnnotationsToSantoAnnotations;
+import de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools.SantoAnnotations;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
@@ -115,10 +124,11 @@ public class OrgModelSlotFilling {
 		resultsOut.println(header);
 
 		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
-			
+
 			OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
-			applyToData(OrgModelSlotFilling.rule);
-			
+
+			OrganismModelRestrictionProvider.applySlotTypeRestrictions(OrgModelSlotFilling.rule);
+
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
@@ -177,7 +187,8 @@ public class OrgModelSlotFilling {
 		resultsOut.flush();
 		resultsOut.close();
 
-//		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictAllInstances();
+//		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor
+//				.predictInstances(new HashSet<>(testInstanceNames), 1);
 //		int docID = 0;
 //		for (Entry<String, Set<AbstractAnnotation>> annotations : organismModelAnnotations.entrySet()) {
 //
@@ -215,35 +226,4 @@ public class OrgModelSlotFilling {
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}
 
-	private static void applyToData(EOrgModelModifications modelModifications) {
-
-		SlotType.excludeAll();
-		switch (modelModifications) {
-		case SPECIES:
-			SCIOSlotTypes.hasOrganismSpecies.include();
-			return;
-		case SPECIES_GENDER:
-			SCIOSlotTypes.hasOrganismSpecies.include();
-			SCIOSlotTypes.hasGender.include();
-			return;
-		case SPECIES_GENDER_WEIGHT:
-			SCIOSlotTypes.hasOrganismSpecies.include();
-			SCIOSlotTypes.hasGender.include();
-			SCIOSlotTypes.hasWeight.include();
-			return;
-		case SPECIES_GENDER_WEIGHT_AGE_CATEGORY:
-			SCIOSlotTypes.hasOrganismSpecies.include();
-			SCIOSlotTypes.hasGender.include();
-			SCIOSlotTypes.hasWeight.include();
-			SCIOSlotTypes.hasAgeCategory.include();
-			return;
-		case SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE:
-			SCIOSlotTypes.hasOrganismSpecies.include();
-			SCIOSlotTypes.hasGender.include();
-			SCIOSlotTypes.hasWeight.include();
-			SCIOSlotTypes.hasAgeCategory.include();
-			SCIOSlotTypes.hasAge.include();
-			return;
-		}
-	}
 }

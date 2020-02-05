@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,6 +20,8 @@ import de.hterhors.semanticmr.candidateretrieval.helper.DictionaryFromInstanceHe
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.ISemanticParsingCRF;
+import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRFMultiState;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
@@ -33,6 +36,7 @@ import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
 import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
+import de.hterhors.semanticmr.crf.sampling.ISampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
@@ -71,6 +75,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.i
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.MultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.PredictCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.initializer.SampleCardinalityInitializer;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.investigation.CollectExpGroupNames;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EAssignmentMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.ECardinalityMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EComplexityMode;
@@ -94,9 +99,14 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.Word2VecClusterTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.RemainingTypesTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.TB_RemainingTypesTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.TB_SameOrganismModelTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjurySlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjurySlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider;
@@ -166,20 +176,23 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
 
-		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 5;
+		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 
 		String rand = String.valueOf(new Random().nextInt(100000));
 //		modelName = "ExperimentalGroup" + 50700;
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
-		mainClassProviderMode = EMainClassMode.PREDICT;
-		groupNameProviderMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
+		OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+		InjurySlotFilling.rule = EInjuryModifications.ROOT_DEVICE;
+
+		mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+		groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
 		groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
 		cardinalityMode = ECardinalityMode.MULTI_CARDINALITIES;
 		assignmentMode = EAssignmentMode.ALL;
 		complexityMode = EComplexityMode.ROOT;
-		samplingMode = ESamplingMode.TYPE_BASED;
+		samplingMode = ESamplingMode.ANNOTATION_BASED;
 
 		distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
 
@@ -195,13 +208,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		SCIOSlotTypes.hasNNumber.exclude();
 		SCIOSlotTypes.hasTotalPopulationSize.exclude();
 		SCIOSlotTypes.hasGroupNumber.exclude();
-		SCIOSlotTypes.hasEventBefore.exclude();
-		SCIOSlotTypes.hasEventAfter.exclude();
 
 		/**
 		 * Apply different modes that were previously set.
 		 */
-		applyModes();
+		applyModesAndRestrictions();
 
 		List<IExplorationStrategy> explorerList = buildExplorer();
 
@@ -209,13 +220,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		addGroupNameCandidates();
 
-		addCandidatesByTrainingDictionary();
+		addTrainingDictionaryCandidates();
 
-		addCandidatesForTreatment();
+		addTreatmentCandidates();
 
-		addCandidatesForOrganismModel();
+		addOrganismModelCandidates();
 
-		addCandidatesForInjury();
+		addInjuryCandidates();
 
 		IStateInitializer initializer = buildStateInitializer();
 
@@ -223,19 +234,29 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = getParameter();
 
-		AbstractBeamSampler sampler = new EpochSwitchBeamSampler(epoch -> epoch % 2 == 0);
-
-//		AbstractSampler sampler = newSampler();
+		ISampler sampler = getSampler();
 
 		MaxChainLengthCrit maxStepCrit = new MaxChainLengthCrit(100);
 
-		ConverganceCrit noModelChangeCrit = new ConverganceCrit(3 * explorerList.size(), s -> s.getModelScore());
+		ConverganceCrit noModelChangeCrit = new ConverganceCrit(10 * explorerList.size(), s -> s.getModelScore());
 
 		ISamplingStoppingCriterion[] sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit,
 				noModelChangeCrit };
 
-		evaluation(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates, parameter);
+		run(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates, parameter);
 
+	}
+
+	private ISampler getSampler() {
+		if (cardinalityMode == ECardinalityMode.MULTI_CARDINALITIES)
+			return new EpochSwitchBeamSampler(epoch -> epoch % 2 == 0);
+		else
+//			AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
+//			AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
+//			AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
+			return new EpochSwitchSampler(epoch -> epoch % 2 == 0);
+//			AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
+//			AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
 	}
 
 	public void evaluateDetailed(Map<Instance, State> mergedResults) {
@@ -267,9 +288,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		expGroupEval.evaluate(mergedResults);
 	}
 
-	private void evaluation(List<IExplorationStrategy> explorerList, AbstractBeamSampler sampler,
-			IStateInitializer initializer, ISamplingStoppingCriterion[] sampleStoppingCrits,
-			ISamplingStoppingCriterion maxStepCrit, List<AbstractFeatureTemplate<?>> featureTemplates,
+	private void run(List<IExplorationStrategy> explorerList, ISampler sampler, IStateInitializer initializer,
+			ISamplingStoppingCriterion[] sampleStoppingCrits, ISamplingStoppingCriterion maxStepCrit,
+			List<AbstractFeatureTemplate<?>> featureTemplates,
 			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
 		/**
 		 * Finally, we chose a model base directory and a name for the model.
@@ -297,9 +318,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		SemanticParsingCRFMultiState crf = new SemanticParsingCRFMultiState(model, explorerList, sampler,
-				trainingObjectiveFunction);
-//		SemanticParsingCRF crf = new SemanticParsingCRF(model, explorerList, sampler, trainingObjectiveFunction);
+		ISemanticParsingCRF crf;
+		if (cardinalityMode == ECardinalityMode.MULTI_CARDINALITIES)
+			crf = new SemanticParsingCRFMultiState(model, explorerList, (AbstractBeamSampler) sampler,
+					trainingObjectiveFunction);
+		else
+			crf = new SemanticParsingCRF(model, explorerList, (AbstractSampler) sampler, trainingObjectiveFunction);
 
 		crf.setInitializer(initializer);
 
@@ -362,21 +386,40 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	}
 
-	private void addCandidatesForOrganismModel() {
+	private void addOrganismModelCandidates() {
 		if (assignmentMode == EAssignmentMode.ORGANISM_MODEL || assignmentMode == EAssignmentMode.INJURY_ORGANISM_MODEL
 				|| assignmentMode == EAssignmentMode.TREATMENT_ORGANISM_MODEL
 				|| assignmentMode == EAssignmentMode.ALL) {
-			if (mainClassProviderMode != EMainClassMode.GOLD) { // predict_gold and predict
+
+			if (mainClassProviderMode == EMainClassMode.SAMPLE) {
 				addOrganismModelCandidatesFromNERLA();
 			}
 
-			if (mainClassProviderMode != EMainClassMode.PREDICT) {
+			if (mainClassProviderMode == EMainClassMode.PRE_PREDICTED) {
+				int k = 1;
+
+//				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictOrganismModel(trainingInstances,k)
+//						.entrySet()) {
+//					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//				}
+				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictOrganismModel(devInstances, k)
+						.entrySet()) {
+					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+				}
+				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictOrganismModel(testInstances, k)
+						.entrySet()) {
+					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+				}
+
 				for (Instance instance : trainingInstances) {
 					instance.addCandidateAnnotations(extractGoldOrganismModels(instance));
 				}
 			}
 
 			if (mainClassProviderMode == EMainClassMode.GOLD) {
+				for (Instance instance : trainingInstances) {
+					instance.addCandidateAnnotations(extractGoldOrganismModels(instance));
+				}
 				for (Instance instance : devInstances) {
 					instance.addCandidateAnnotations(extractGoldOrganismModels(instance));
 				}
@@ -386,23 +429,111 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 		}
 	}
-
-	private void addCandidatesForTreatment() {
-
-		if (assignmentMode == EAssignmentMode.TREATMENT || assignmentMode == EAssignmentMode.TREATMENT_ORGANISM_MODEL
+	private void addInjuryCandidates() {
+		if (assignmentMode == EAssignmentMode.INJURY || assignmentMode == EAssignmentMode.INJURY_ORGANISM_MODEL
 				|| assignmentMode == EAssignmentMode.INJURY_TREATMENT || assignmentMode == EAssignmentMode.ALL) {
 
-			if (mainClassProviderMode != EMainClassMode.GOLD) { // predict_gold and predict
-				addTreatmentCandidatesFromNERLA();
+			if (mainClassProviderMode == EMainClassMode.SAMPLE) {
+				addInjuryCandidatesFromNERLA();
 			}
 
-			if (mainClassProviderMode != EMainClassMode.PREDICT) {
+			if (mainClassProviderMode == EMainClassMode.PRE_PREDICTED) {
+				int k = 1;
+
+//				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictInjuryModel(trainingInstances,k)
+//						.entrySet()) {
+//					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//				}
+				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictInjuryModel(devInstances, k)
+						.entrySet()) {
+					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+				}
+				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictInjuryModel(testInstances, k)
+						.entrySet()) {
+					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+				}
+
 				for (Instance instance : trainingInstances) {
-					instance.addCandidateAnnotations(extractGoldTreatments(instance));
+					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
 				}
 			}
 
 			if (mainClassProviderMode == EMainClassMode.GOLD) {
+				for (Instance instance : trainingInstances) {
+					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
+				}
+				for (Instance instance : devInstances) {
+					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
+				}
+				for (Instance instance : testInstances) {
+					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
+				}
+			}
+		}
+
+		if (injuryModificationRule != EInjuryModifications.ROOT
+				&& injuryModificationRule != EInjuryModifications.ROOT_DEVICE) {
+
+			final int kVertebrea = 2;
+
+			String vertebralAreaModelName = "VertebralArea_" + modelName;
+			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
+					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
+
+			vertebralAreaPrediction.trainOrLoadModel();
+			vertebralAreaPrediction.predictAllInstances(2);
+
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(
+						vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), kVertebrea));
+			} /**
+				 * TODO: add training location
+				 */
+		}
+	}
+	private void addTreatmentCandidates() {
+
+		if (assignmentMode == EAssignmentMode.TREATMENT || assignmentMode == EAssignmentMode.TREATMENT_ORGANISM_MODEL
+				|| assignmentMode == EAssignmentMode.INJURY_TREATMENT || assignmentMode == EAssignmentMode.ALL) {
+
+			if (mainClassProviderMode == EMainClassMode.SAMPLE || mainClassProviderMode == EMainClassMode.PRE_PREDICTED) {
+				addTreatmentCandidatesFromNERLA();
+			}
+			
+			/**
+			 * TODO: implement treatment prediction. 
+			 */
+
+//			if (mainClassProviderMode == EMainClassMode.PREDICT) {
+//				int k = 1;
+//
+////				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictTreatmentModel(trainingInstances,k)
+////						.entrySet()) {
+////					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+////				}
+//				
+//				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictTreatmentModel(devInstances, k)
+//						.entrySet()) {
+//					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//				}
+//				
+//				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictTreatmentModel(testInstances, k)
+//						.entrySet()) {
+//					prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//				}
+//
+//				for (Instance instance : trainingInstances) {
+//					instance.addCandidateAnnotations(extractGoldTreatments(instance));
+//				}
+//				
+//			}
+
+			if (mainClassProviderMode == EMainClassMode.GOLD) {
+				for (Instance instance : trainingInstances) {
+					instance.addCandidateAnnotations(extractGoldTreatments(instance));
+				}
 				for (Instance instance : devInstances) {
 					instance.addCandidateAnnotations(extractGoldTreatments(instance));
 				}
@@ -413,6 +544,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 
 		if (treatmentModificationsRule != ETreatmentModifications.ROOT) {
+			final int kDelivery = 2;
 
 			String deliveryMethodModelName = "DeliveryMethod" + modelName;
 
@@ -426,55 +558,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			for (Instance instance : instanceProvider.getInstances()) {
 				instance.addCandidateAnnotations(
-						deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+						deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), kDelivery));
 			} /**
 				 * TODO: add training delivery method
 				 */
 		}
 	}
 
-	private void addCandidatesForInjury() {
-		if (assignmentMode == EAssignmentMode.INJURY || assignmentMode == EAssignmentMode.INJURY_ORGANISM_MODEL
-				|| assignmentMode == EAssignmentMode.INJURY_TREATMENT || assignmentMode == EAssignmentMode.ALL) {
-			if (mainClassProviderMode != EMainClassMode.GOLD) {
-				addInjuryCandidatesFromNERLA();
-			}
 
-			if (mainClassProviderMode != EMainClassMode.PREDICT) {
-				for (Instance instance : trainingInstances) {
-					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
-				}
-			}
-
-			if (mainClassProviderMode == EMainClassMode.GOLD) {
-				for (Instance instance : devInstances) {
-					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
-				}
-				for (Instance instance : testInstances) {
-					instance.addCandidateAnnotations(extractGoldInjuryModels(instance));
-				}
-			}
-		}
-		if (injuryModificationRule != EInjuryModifications.ROOT
-				&& injuryModificationRule != EInjuryModifications.ROOT_DEVICE) {
-
-			String vertebralAreaModelName = "VertebralArea_" + modelName;
-			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
-					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
-
-			vertebralAreaPrediction.trainOrLoadModel();
-			vertebralAreaPrediction.predictAllInstances(2);
-
-			for (Instance instance : instanceProvider.getInstances()) {
-				instance.addCandidateAnnotations(
-						vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-			} /**
-				 * TODO: add training location
-				 */
-		}
-	}
 
 	private Set<AbstractAnnotation> extractGoldTreatments(Instance instance) {
 		Set<AbstractAnnotation> treatments = new HashSet<>();
@@ -550,12 +641,19 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			RootTemplateCardinalityExplorer rootTemplateCardinalityExplorer = new RootTemplateCardinalityExplorer(
 					samplingMode, AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 			explorerList.add(rootTemplateCardinalityExplorer);
-
 		}
 		return explorerList;
 	}
 
-	public void applyModes() {
+	public void applyModesAndRestrictions() {
+
+		SCIOSlotTypes.hasGender.exclude();
+		SCIOSlotTypes.hasWeight.exclude();
+		SCIOSlotTypes.hasAgeCategory.exclude();
+		SCIOSlotTypes.hasAge.exclude();
+
+		SCIOSlotTypes.hasLocation.exclude();
+
 		if (groupNameProviderMode == EExtractGroupNamesMode.EMPTY) {
 			/*
 			 * If groupNameMode is EMPTY exclude this slot in general
@@ -574,7 +672,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			treatmentModificationsRule = ETreatmentModifications.ROOT;
 			orgModelModificationsRule = EOrgModelModifications.SPECIES;
 			injuryModificationRule = EInjuryModifications.ROOT;
-		} else if (complexityMode == EComplexityMode.ROOT) {
+		} else if (complexityMode == EComplexityMode.FULL) {
 			treatmentModificationsRule = ETreatmentModifications.ROOT;
 			orgModelModificationsRule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 			injuryModificationRule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
@@ -618,91 +716,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 
 		}
-	}
-
-	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
-		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-
-		if (samplingMode == ESamplingMode.ANNOTATION_BASED) {
-			featureTemplates.add(new BOWCardinalityTemplate());
-
-			featureTemplates.add(new TreatmentPriorTemplate());
-
-			featureTemplates.add(new TreatmentCardinalityTemplate());
-
-			featureTemplates.add(new ExGrBOWTemplate());
-			//
-
-			/**
-			 * TODO: activate if cardinality can be predicted without gold data.
-			 */
-//		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
-//			featureTemplates.add(new ExGrAllUsedTemplate());
-//
-			featureTemplates.add(new ExGrInnerNameBOWTemplate());
-//		
-			featureTemplates.add(new ExGrOuterNameBOWTemplate());
-//
-			featureTemplates.add(new ExGrNameBOWTemplate());
-//
-			featureTemplates.add(new ExGrNameOverlapTemplate());
-//
-			featureTemplates.add(new SlotIsFilledTemplate());
-
-			featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
-
-			featureTemplates.add(new ContextBetweenSlotFillerTemplate());
-
-			featureTemplates.add(new ContextCardinalityTemplate());
-
-			featureTemplates.add(new IntraTokenCardinalityTemplate());
-
-			featureTemplates.add(new Word2VecClusterTemplate());
-
-		}
-		if (samplingMode == ESamplingMode.TYPE_BASED) {
-			featureTemplates.add(new BOWCardinalityTemplate());
-
-			featureTemplates.add(new TreatmentPriorTemplate());
-
-			featureTemplates.add(new TreatmentCardinalityTemplate());
-
-			featureTemplates.add(new ExGrBOWTemplate());
-			//
-
-			/**
-			 * TODO: activate if cardinality can be predicted without gold data.
-			 */
-//		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
-//			featureTemplates.add(new ExGrAllUsedTemplate());
-//
-			featureTemplates.add(new ExGrInnerNameBOWTemplate());
-//		
-			featureTemplates.add(new ExGrOuterNameBOWTemplate());
-//
-			featureTemplates.add(new ExGrNameBOWTemplate());
-//
-			featureTemplates.add(new ExGrNameOverlapTemplate());
-//
-			featureTemplates.add(new SlotIsFilledTemplate());
-
-			featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
-
-			featureTemplates.add(new ContextBetweenSlotFillerTemplate());
-
-			featureTemplates.add(new ContextCardinalityTemplate());
-
-			featureTemplates.add(new IntraTokenCardinalityTemplate());
-
-			featureTemplates.add(new Word2VecClusterTemplate());
-
-			/**
-			 * NEW
-			 */
-			featureTemplates.add(new RemainingTypesTemplate());
-		}
-
-		return featureTemplates;
 	}
 
 	/*
@@ -766,16 +779,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //		return 1;
 	}
 
-	private AbstractSampler newSampler() {
-//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
-//		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
-//		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
-		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);
-//		AbstractSampler sampler = new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
-//		AbstractSampler sampler = new EpochSwitchSampler(e -> new Random(e).nextBoolean());
-		return sampler;
-	}
-
 	private Collection<GoldModificationRule> getGoldModificationRules() {
 		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
 
@@ -790,20 +793,19 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		});
 
 		goldModificationRules.add(a -> {
-			if (SCIOSlotTypes.hasGroupName.isExcluded())
-				return a;
 
-			if (a.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
-				a.asInstanceOfEntityTemplate()
-						.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
-								AnnotationBuilder.toAnnotation(
-										a.asInstanceOfEntityTemplate().getRootAnnotation()
-												.asInstanceOfDocumentLinkedAnnotation().document,
-										SCIOEntityTypes.groupName,
-										a.asInstanceOfEntityTemplate().getRootAnnotation()
-												.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(),
-										a.asInstanceOfEntityTemplate().getRootAnnotation()
-												.asInstanceOfDocumentLinkedAnnotation().getStartDocCharOffset()));
+			if (SCIOSlotTypes.hasGroupName.isIncluded())
+				if (a.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					a.asInstanceOfEntityTemplate()
+							.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+									AnnotationBuilder.toAnnotation(
+											a.asInstanceOfEntityTemplate().getRootAnnotation()
+													.asInstanceOfDocumentLinkedAnnotation().document,
+											SCIOEntityTypes.groupName,
+											a.asInstanceOfEntityTemplate().getRootAnnotation()
+													.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(),
+											a.asInstanceOfEntityTemplate().getRootAnnotation()
+													.asInstanceOfDocumentLinkedAnnotation().getStartDocCharOffset()));
 
 			a.asInstanceOfEntityTemplate().reduceRootToEntityType();
 			return a;
@@ -979,9 +981,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		case MULTI_CARDINALITIES:
 
 			int maxCardinality = computeMaxCardinality();
-
+			/**
+			 * TODO: min cardinality could be e - 1*stdDev
+			 */
+			int minCardinality = 1;
 			return new MultiCardinalityInitializer(groupNameProviderMode, groupNameProcessingMode,
-					instanceProvider.getInstances(), maxCardinality, trainingInstances);
+					instanceProvider.getInstances(), minCardinality, maxCardinality, trainingInstances);
 		default:
 			return null;
 		}
@@ -1079,7 +1084,58 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	}
 
-	@Deprecated
+	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances, int k) {
+
+		/**
+		 * Predict OrganismModels
+		 */
+
+		SlotType.storeExcludance();
+		OrganismModelRestrictionProvider.applySlotTypeRestrictions(OrgModelSlotFilling.rule);
+
+		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+//		+ modelName
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_12345", scope,
+				trainingInstanceNames, developInstanceNames, testInstanceNames);
+		predictor.trainOrLoadModel();
+
+		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
+
+		SlotType.restoreExcludance();
+		return organismModelAnnotations;
+	}
+
+	private Map<Instance, Set<AbstractAnnotation>> predictInjuryModel(List<Instance> instances, int k) {
+
+		/**
+		 * Predict OrganismModels
+		 */
+
+		SlotType.storeExcludance();
+		InjuryRestrictionProvider.applySlotTypeRestrictions(InjurySlotFilling.rule);
+
+		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+//		+ modelName
+		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_12345", scope,
+				trainingInstanceNames, developInstanceNames, testInstanceNames);
+		predictor.trainOrLoadModel();
+
+		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
+
+		SlotType.restoreExcludance();
+		return organismModelAnnotations;
+	}
+
 	private void preprocessingPrediction() {
 		/**
 		 * Predict GroupNames.
@@ -1092,17 +1148,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //
 //		Map<String, Set<AbstractAnnotation>> groupNameAnnotations = groupNamePredictor.predictBatchInstances();
 
-		/**
-		 * Predict OrganismModels
-		 */
-
-//		OrgModelSlotFillingPredictor organismModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel" + rand,
-//				scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
-//
-//		organismModelPredictor.trainOrLoadModel();
-//
-//		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = organismModelPredictor.predictAllInstances();
-//
 //		/**
 //		 * Predict Injuries
 //		 */
@@ -1126,9 +1171,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //		Map<String, Set<AbstractAnnotation>> treatmentAnnotations = treatmentPredictor.predictAllInstances();
 	}
 
-	private void addCandidatesByTrainingDictionary() {
+	private void addTrainingDictionaryCandidates() {
 
 		if (mainClassProviderMode == EMainClassMode.GOLD)
+			return;
+
+		if (mainClassProviderMode == EMainClassMode.PRE_PREDICTED)
 			return;
 
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
@@ -1140,9 +1188,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			for (AbstractAnnotation nerla : DictionaryFromInstanceHelper.getAnnotationsForInstance(instance,
 					trainDictionary)) {
 
-				if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
+				if (nerla.getEntityType() == SCIOEntityTypes.groupName) {
 
-					if (nerla.getEntityType() == SCIOEntityTypes.groupName) {
+					if (CollectExpGroupNames.STOP_TERM_LIST
+							.contains(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
+						continue;
+
+					if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
+
 						if (distinctGroupNames.contains(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
 							continue;
 						distinctGroupNames.add(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm());
@@ -1170,6 +1223,91 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 	}
 
+	private List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
+		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
+
+		if (samplingMode == ESamplingMode.ANNOTATION_BASED) {
+			featureTemplates.add(new BOWCardinalityTemplate());
+
+			featureTemplates.add(new TreatmentPriorTemplate());
+
+			featureTemplates.add(new TreatmentCardinalityTemplate());
+
+			featureTemplates.add(new ExGrBOWTemplate());
+			//
+
+			/**
+			 * TODO: activate if cardinality can be predicted without gold data.
+			 */
+//		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
+//			featureTemplates.add(new ExGrAllUsedTemplate());
+//
+			featureTemplates.add(new ExGrInnerNameBOWTemplate());
+//		
+			featureTemplates.add(new ExGrOuterNameBOWTemplate());
+//
+			featureTemplates.add(new ExGrNameBOWTemplate());
+//
+			featureTemplates.add(new ExGrNameOverlapTemplate());
+//
+			featureTemplates.add(new SlotIsFilledTemplate());
+
+			featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
+
+			featureTemplates.add(new ContextBetweenSlotFillerTemplate());
+
+			featureTemplates.add(new ContextCardinalityTemplate());
+
+			featureTemplates.add(new IntraTokenCardinalityTemplate());
+
+			featureTemplates.add(new Word2VecClusterTemplate());
+
+		}
+		if (samplingMode == ESamplingMode.TYPE_BASED) {
+//			featureTemplates.add(new BOWCardinalityTemplate());
+//
+//
+//			featureTemplates.add(new TreatmentCardinalityTemplate());
+//
+//			featureTemplates.add(new ExGrBOWTemplate());
+//			//
+//
+//			/**
+//			 * TODO: activate if cardinality can be predicted without gold data.
+//			 */
+////		if (cardinalityMode != ECardinalityMode.SAMPLE_CARDINALITY)
+////			featureTemplates.add(new ExGrAllUsedTemplate());
+////
+//			featureTemplates.add(new ExGrInnerNameBOWTemplate());
+////		
+//			featureTemplates.add(new ExGrOuterNameBOWTemplate());
+////
+//			featureTemplates.add(new ExGrNameBOWTemplate());
+////
+//			featureTemplates.add(new ExGrNameOverlapTemplate());
+////
+			featureTemplates.add(new ExpGroupTreatmentLocalityTemplate());
+//
+//			featureTemplates.add(new ContextBetweenSlotFillerTemplate());
+//
+//			featureTemplates.add(new ContextCardinalityTemplate());
+//
+//			featureTemplates.add(new IntraTokenCardinalityTemplate());
+//
+//			featureTemplates.add(new Word2VecClusterTemplate());
+
+			/**
+			 * NEW
+			 */
+			featureTemplates.add(new TB_RemainingTypesTemplate());
+			featureTemplates.add(new TB_SameOrganismModelTemplate());
+			featureTemplates.add(new SlotIsFilledTemplate());
+			featureTemplates.add(new TreatmentPriorTemplate());
+
+		}
+
+		return featureTemplates;
+	}
 }
 
 //intervall accuracy +

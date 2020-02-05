@@ -104,7 +104,7 @@ public class InjurySlotFilling {
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
 
-			modifyInjury(InjurySlotFilling.rule);
+			InjuryRestrictionProvider.applySlotTypeRestrictions(InjurySlotFilling.rule);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
@@ -173,38 +173,6 @@ public class InjurySlotFilling {
 		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall()) + "\t"
 				+ context;
-	}
-
-	private static void modifyInjury(EInjuryModifications modelModifications) {
-
-		SlotType.excludeAll();
-
-		switch (modelModifications) {
-		case ROOT:
-			return;
-		case ROOT_LOCATION:
-			SCIOSlotTypes.hasLocation.include();
-			SCIOSlotTypes.hasUpperVertebrae.include();
-			SCIOSlotTypes.hasLowerVertebrae.include();
-			return;
-		case ROOT_DEVICE:
-			SCIOSlotTypes.hasInjuryDevice.include();
-			return;
-		case ROOT_LOCATION_DEVICE:
-			SCIOSlotTypes.hasInjuryDevice.include();
-			SCIOSlotTypes.hasLocation.include();
-			SCIOSlotTypes.hasUpperVertebrae.include();
-			SCIOSlotTypes.hasLowerVertebrae.include();
-			return;
-		case ROOT_DEVICE_LOCATION_ANAESTHESIA:
-			SCIOSlotTypes.hasInjuryDevice.include();
-			SCIOSlotTypes.hasLocation.include();
-			SCIOSlotTypes.hasUpperVertebrae.include();
-			SCIOSlotTypes.hasLowerVertebrae.include();
-			SCIOSlotTypes.hasAnaesthesia.include();
-			return;
-		}
-
 	}
 
 }

@@ -128,6 +128,8 @@ public class GroupNameExtraction {
 			for (TermIndexPair groupName : new NPChunker(instance.getDocument()).getNPs()) {
 				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)")) {
 					DocumentLinkedAnnotation annotation;
+					if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName.term))
+						continue;
 					if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
 
 						if (distinct.contains(groupName.term))
