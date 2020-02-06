@@ -64,7 +64,7 @@ public class InjurySlotFilling {
 
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
-	public static EInjuryModifications rule;
+	private EInjuryModifications rule;
 
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
@@ -95,8 +95,8 @@ public class InjurySlotFilling {
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
-			InjurySlotFilling.rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
-//			InjurySlotFilling.rule = rule;
+			rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
+//			rule = rule;
 
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
@@ -104,7 +104,7 @@ public class InjurySlotFilling {
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
 
-			InjuryRestrictionProvider.applySlotTypeRestrictions(InjurySlotFilling.rule);
+			InjuryRestrictionProvider.applySlotTypeRestrictions(rule);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
@@ -121,7 +121,7 @@ public class InjurySlotFilling {
 			String modelName = "Injury" + new Random().nextInt(10000);
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames);
+					trainingInstanceNames, developInstanceNames, testInstanceNames,rule);
 
 			predictor.trainOrLoadModel();
 

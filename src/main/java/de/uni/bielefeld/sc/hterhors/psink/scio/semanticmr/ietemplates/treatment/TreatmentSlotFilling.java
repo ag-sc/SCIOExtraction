@@ -55,7 +55,7 @@ public class TreatmentSlotFilling {
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/treatment/corpus/instances/");
 
-	public static ETreatmentModifications rule;
+	private ETreatmentModifications rule;
 
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
@@ -82,7 +82,7 @@ public class TreatmentSlotFilling {
 		resultsOut.println(header);
 
 		for (ETreatmentModifications rule : ETreatmentModifications.values()) {
-			TreatmentSlotFilling.rule = rule;
+			this.rule = rule;
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
@@ -106,7 +106,7 @@ public class TreatmentSlotFilling {
 			String modelName = "Treatment" + new Random().nextInt();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames);
+					trainingInstanceNames, developInstanceNames, testInstanceNames,rule);
 
 			predictor.trainOrLoadModel();
 

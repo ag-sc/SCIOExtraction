@@ -79,7 +79,7 @@ public class OrgModelSlotFilling {
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
 
-	public static EOrgModelModifications rule;
+//	private final EOrgModelModifications rule;
 
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
@@ -125,9 +125,9 @@ public class OrgModelSlotFilling {
 
 		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
 
-			OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+			rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 
-			OrganismModelRestrictionProvider.applySlotTypeRestrictions(OrgModelSlotFilling.rule);
+			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
@@ -147,7 +147,7 @@ public class OrgModelSlotFilling {
 			String modelName = "OrganismModel" + new Random().nextInt();
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames);
+					trainingInstanceNames, developInstanceNames, testInstanceNames,rule);
 
 			predictor.trainOrLoadModel();
 
@@ -175,7 +175,7 @@ public class OrgModelSlotFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
-			log.info("Score: " + toResults(OrgModelSlotFilling.rule, score));
+			log.info("Score: " + toResults(rule, score));
 			log.info("modelName: " + predictor.modelName);
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement

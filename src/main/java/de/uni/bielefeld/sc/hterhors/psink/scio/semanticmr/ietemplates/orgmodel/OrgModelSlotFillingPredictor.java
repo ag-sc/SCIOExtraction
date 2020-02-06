@@ -38,6 +38,8 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.templates.PriorNumericInterpretationOrgModelTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -52,10 +54,12 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryCon
 public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFillingPredictor.class);
+	private EOrgModelModifications rule;
 
 	public OrgModelSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstances,
-			List<String> developmentInstances, List<String> testInstances) {
+			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule) {
 		super(modelName, scope, trainingInstances, developmentInstances, testInstances);
+		this.rule = rule;
 	}
 
 	@Override
@@ -139,7 +143,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 //					});
 
 		return ((instance) -> new State(instance,
-				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("OrganismModel")))));
+				new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation(SCIOEntityTypes.organismModel)))));
 	}
 
 	@Override
@@ -160,7 +164,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return OrganismModelRestrictionProvider.getByRule(OrgModelSlotFilling.rule);
+		return OrganismModelRestrictionProvider.getByRule(rule);
 	}
 
 }

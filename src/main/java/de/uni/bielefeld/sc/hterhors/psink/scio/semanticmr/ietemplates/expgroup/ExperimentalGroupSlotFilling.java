@@ -188,9 +188,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
-		OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
-		InjurySlotFilling.rule = EInjuryModifications.ROOT_DEVICE;
-
 		groupNameProviderMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
 		groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
 		distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -1202,11 +1199,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances, int k) {
 
 		/**
+		 * TODO: FULL MODEL EXTRACTION CAUSE THIS IS BEST TO PREDICT SPECIES
+		 */
+		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+
+		/**
 		 * Predict OrganismModels
 		 */
-
 		SlotType.storeExcludance();
-		OrganismModelRestrictionProvider.applySlotTypeRestrictions(OrgModelSlotFilling.rule);
+		OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
 		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
 				.collect(Collectors.toList());
@@ -1216,7 +1217,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_12345", scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
@@ -1228,11 +1229,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private Map<Instance, Set<AbstractAnnotation>> predictInjuryModel(List<Instance> instances, int k) {
 
 		/**
-		 * Predict OrganismModels
+		 * Predict Injury Model
 		 */
-
+		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE;
 		SlotType.storeExcludance();
-		InjuryRestrictionProvider.applySlotTypeRestrictions(InjurySlotFilling.rule);
+		InjuryRestrictionProvider.applySlotTypeRestrictions(rule);
 
 		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
 				.collect(Collectors.toList());
@@ -1242,7 +1243,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_12345", scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);

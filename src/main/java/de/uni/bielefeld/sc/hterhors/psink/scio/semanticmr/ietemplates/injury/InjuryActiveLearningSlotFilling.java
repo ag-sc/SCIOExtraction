@@ -84,7 +84,7 @@ public class InjuryActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
 		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
-		InjurySlotFilling.rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
+		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusfive.csv");
 
@@ -92,7 +92,7 @@ public class InjuryActiveLearningSlotFilling {
 			log.info(strategy);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
-					InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule));
+					InjuryRestrictionProvider.getByRule(rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).sorted().collect(Collectors.toList());
@@ -126,15 +126,14 @@ public class InjuryActiveLearningSlotFilling {
 				log.info("Strategy: " + strategy);
 
 				InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
-						trainingInstancesNames, developInstanceNames, testInstanceNames);
+						trainingInstancesNames, developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();
-
 
 				Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 				Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-				resultOut.println(toResult(score, strategy, trainingInstancesNames, InjurySlotFilling.rule));
+				resultOut.println(toResult(score, strategy, trainingInstancesNames, rule));
 
 				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
 						predictor);

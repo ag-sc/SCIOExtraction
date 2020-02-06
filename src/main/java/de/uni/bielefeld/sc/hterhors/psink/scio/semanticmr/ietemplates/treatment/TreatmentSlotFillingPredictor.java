@@ -63,12 +63,13 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeCo
 public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
+	private ETreatmentModifications rule;
 
 	public TreatmentSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developmentInstanceNames, List<String> testInstanceNames) {
+			List<String> developmentInstanceNames, List<String> testInstanceNames, ETreatmentModifications rule) {
 
 		super(modelName, scope, trainingInstanceNames, developmentInstanceNames, testInstanceNames);
-
+		this.rule = rule;
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
 
 		DeliveryMethodPredictor deliveryMethodPrediction = null;
-		if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
+		if (rule != ETreatmentModifications.ROOT) {
 
 			String deliveryMethodModelName = "DeliveryMethod" + modelName;
 
@@ -90,7 +91,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		}
 		for (Instance instance : instanceProvider.getInstances()) {
 			annotations.put(instance, new ArrayList<>());
-			if (TreatmentSlotFilling.rule != ETreatmentModifications.ROOT) {
+			if (rule != ETreatmentModifications.ROOT) {
 				annotations.get(instance)
 						.addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
 			}
@@ -167,7 +168,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return TreatmentRestrictionProvider.getByRule(TreatmentSlotFilling.rule);
+		return TreatmentRestrictionProvider.getByRule(rule);
 	}
 
 }

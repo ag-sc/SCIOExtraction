@@ -46,12 +46,13 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebrala
 public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger(InjurySlotFillingPredictor.class);
+	private EInjuryModifications rule;
 
 	public InjurySlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames) {
+			List<String> developInstanceNames, List<String> testInstanceNames, EInjuryModifications rule) {
 
 		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
-
+		this.rule = rule;
 	}
 
 	final public boolean useGoldLocations = false;
@@ -62,8 +63,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
 		if (!useGoldLocations) {
 
-			if (InjurySlotFilling.rule == EInjuryModifications.ROOT
-					|| InjurySlotFilling.rule == EInjuryModifications.ROOT_DEVICE)
+			if (rule == EInjuryModifications.ROOT || rule == EInjuryModifications.ROOT_DEVICE)
 				return Collections.emptyMap();
 
 //		String vertebralAreaModelName = "VertebralArea_STD";
@@ -209,7 +209,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return InjuryRestrictionProvider.getByRule(InjurySlotFilling.rule);
+		return InjuryRestrictionProvider.getByRule(rule);
 	}
 
 //	@Override

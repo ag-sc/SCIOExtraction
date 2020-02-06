@@ -80,13 +80,13 @@ public class OrgModelActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
-		OrgModelSlotFilling.rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 		PrintStream resultOut = new PrintStream("results/activeLearning/OrganismModel_full_plusfive.csv");
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
-					OrganismModelRestrictionProvider.getByRule(OrgModelSlotFilling.rule));
+					OrganismModelRestrictionProvider.getByRule(rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -120,7 +120,7 @@ public class OrgModelActiveLearningSlotFilling {
 				log.info("Strategy: " + strategy);
 
 				OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-						trainingInstancesNames, developInstanceNames, testInstanceNames);
+						trainingInstancesNames, developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();
 
@@ -131,7 +131,7 @@ public class OrgModelActiveLearningSlotFilling {
 
 				Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-				resultOut.println(toResult(score, strategy, trainingInstancesNames, OrgModelSlotFilling.rule));
+				resultOut.println(toResult(score, strategy, trainingInstancesNames, rule));
 
 				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
 						predictor);
