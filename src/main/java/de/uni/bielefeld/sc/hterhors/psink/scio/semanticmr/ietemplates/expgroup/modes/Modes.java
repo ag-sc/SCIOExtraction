@@ -39,7 +39,7 @@ public class Modes {
 		 * Literals of GroupNames are distinct. Picks first occurrence of any groupName
 		 * from the set of same literals.
 		 */
-		DISTINCT,
+		STRING_DISTINCT,
 
 		/**
 		 * Literals of GroupNames are not distinct. Takes all occurrences.
@@ -84,13 +84,13 @@ public class Modes {
 
 	public enum ECardinalityMode {
 
-		SAMPLE_CARDINALITY, GOLD_CARDINALITY, PREDICTED_CARDINALITY, MULTI_CARDINALITIES;
+		SAMPLE_CARDINALITY, GOLD_CARDINALITY, PREDICTED_CARDINALITY, PARALLEL_CARDINALITIES;
 
 	}
 
 	public enum EAssignmentMode {
 
-		GROUP_NAME, TREATMENT, ALL, ORGANISM_MODEL, INJURY, INJURY_ORGANISM_MODEL, TREATMENT_ORGANISM_MODEL,
+		GROUP_NAME, TREATMENT, TREATMENT_ORGANISM_MODEL_INJURY, ORGANISM_MODEL, INJURY, INJURY_ORGANISM_MODEL, TREATMENT_ORGANISM_MODEL,
 		INJURY_TREATMENT;
 
 	}

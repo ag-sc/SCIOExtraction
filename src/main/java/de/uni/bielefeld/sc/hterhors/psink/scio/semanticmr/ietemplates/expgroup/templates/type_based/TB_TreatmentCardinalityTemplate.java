@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +11,14 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentCardinalityTemplate.TreatmentCardinalityScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_TreatmentCardinalityTemplate.TreatmentCardinalityScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<TreatmentCardinalityScope> {
+public class TB_TreatmentCardinalityTemplate extends AbstractFeatureTemplate<TreatmentCardinalityScope> {
 
 	static class TreatmentCardinalityScope extends AbstractFactorScope {
 
@@ -83,6 +83,9 @@ public class TreatmentCardinalityTemplate extends AbstractFeatureTemplate<Treatm
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
+				continue;
+
+			if (SCIOSlotTypes.hasTreatmentType.isExcluded())
 				continue;
 
 			experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()

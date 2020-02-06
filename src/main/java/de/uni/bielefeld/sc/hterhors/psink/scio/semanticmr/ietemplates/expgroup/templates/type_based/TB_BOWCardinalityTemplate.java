@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.BOWCardinalityTemplate.BOWCardScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow.BOWExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.helper.bow.TB_BOWExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_BOWCardinalityTemplate.BOWCardScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope> {
+public class TB_BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope> {
 
 	static class BOWCardScope extends AbstractFactorScope {
 
@@ -87,10 +87,10 @@ public class BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			if(SCIOSlotTypes.hasTreatmentType.isExcluded())
+			if (SCIOSlotTypes.hasTreatmentType.isExcluded())
 				continue;
-			
-			final Set<String> expGroupBOW = BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
+
+			final Set<String> expGroupBOW = TB_BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
 
 //			if (expGroupBOW.contains("non") || expGroupBOW.contains("sham")
 //					|| ((expGroupBOW.contains("laminectomy") || expGroupBOW.contains("lesion")

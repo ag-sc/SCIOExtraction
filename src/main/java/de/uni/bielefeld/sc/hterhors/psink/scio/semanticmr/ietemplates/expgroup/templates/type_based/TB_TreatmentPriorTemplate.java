@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,14 +15,14 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.TreatmentPriorTemplate.TreatmentPriorScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_TreatmentPriorTemplate.TreatmentPriorScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPriorScope> {
+public class TB_TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPriorScope> {
 
 	static class TreatmentPriorScope extends AbstractFactorScope {
 
@@ -83,6 +83,9 @@ public class TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPri
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
+			if (SCIOSlotTypes.hasTreatmentType.isExcluded())
+				continue;
+
 			Set<EntityType> types = new HashSet<>();
 			types.addAll(experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
 					.filter(a -> a.getEntityType() == SCIOEntityTypes.compoundTreatment)
@@ -109,8 +112,7 @@ public class TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPri
 		for (int i = 0; i < sorted.size() - 1; i++) {
 			factor.getFeatureVector().set(PREFIX + sorted.get(i).name, true);
 			for (int j = i + 1; j < sorted.size(); j++) {
-				factor.getFeatureVector().set(PREFIX + sorted.get(i).name + "--" + sorted.get(j).name,
-						true);
+				factor.getFeatureVector().set(PREFIX + sorted.get(i).name + "--" + sorted.get(j).name, true);
 			}
 		}
 	}

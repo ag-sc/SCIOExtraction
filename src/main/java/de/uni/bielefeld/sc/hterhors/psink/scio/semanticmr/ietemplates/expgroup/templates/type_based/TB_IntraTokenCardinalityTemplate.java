@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +13,14 @@ import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.IntraTokenCardinalityTemplate.IntraTokenScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_IntraTokenCardinalityTemplate.IntraTokenScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<IntraTokenScope> {
+public class TB_IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<IntraTokenScope> {
 
 	/**
 	 * 
@@ -113,10 +113,10 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
-		
-			if(SCIOSlotTypes.hasTreatmentType.isExcluded())
+
+			if (SCIOSlotTypes.hasTreatmentType.isExcluded())
 				continue;
-			
+
 			int cardinality = experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).size();
 
 			if (experimentalGroup.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfLiteralAnnotation())

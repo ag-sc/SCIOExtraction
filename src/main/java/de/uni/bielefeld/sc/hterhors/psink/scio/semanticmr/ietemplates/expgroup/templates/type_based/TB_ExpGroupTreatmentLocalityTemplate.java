@@ -1,16 +1,20 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.logging.log4j.core.util.ExtensionLanguageMapping;
+
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -18,14 +22,14 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExpGroupTreatmentLocalityTemplate.ExpGroupTreatmentLocalityScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_ExpGroupTreatmentLocalityTemplate.ExpGroupTreatmentLocalityScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<ExpGroupTreatmentLocalityScope> {
+public class TB_ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<ExpGroupTreatmentLocalityScope> {
 
 	static class ExpGroupTreatmentLocalityScope extends AbstractFactorScope {
 
@@ -112,36 +116,41 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 				for (AbstractAnnotation treatment : mfs.getSlotFiller()) {
 					final Set<Integer> treatmentIndicies = new HashSet<>();
 
-					AbstractAnnotation main = null;
+					EntityType main = null;
 					if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
 						SingleFillerSlot sfs = treatment.asInstanceOfEntityTemplate()
 								.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
 						if (sfs.containsSlotFiller())
-							main = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
+							main = sfs.getSlotFiller().asInstanceOfEntityTemplate().getEntityType();
 					}
 
 					if (main == null)
-						main = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
+						main = treatment.asInstanceOfEntityTemplate().getRootAnnotation().getEntityType();
 
-					if (main.isInstanceOfDocumentLinkedAnnotation()) {
-						treatmentIndicies.add(
-								main.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0).getSentenceIndex());
-						//
+					for (EntityTypeAnnotation tretamentAnnotation : state.getInstance()
+							.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, main)) {
+
+						if (tretamentAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
+							treatmentIndicies
+									.add(tretamentAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0)
+											.getSentenceIndex());
+							//
 //						Pattern project = Pattern.compile(
 //								Pattern.quote(main.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
 //						Matcher m = project.matcher(state.getInstance().getDocument().documentContent);
-						//
+							//
 //						while (m.find()) {
 //							try {
-						//
+							//
 //								int sentence = state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
 //										.getSentenceIndex();
-						//
+							//
 //								treatmentIndicies.add(sentence);
 //							} catch (DocumentLinkedAnnotationMismatchException e) {
 //							}
 //						}
 
+						}
 					}
 
 					int minDist = Integer.MAX_VALUE;
@@ -157,8 +166,8 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 						continue;
 
 //					System.out.println(main.getEntityType().entityName + " -> " + minDist);
-					factors.add(new ExpGroupTreatmentLocalityScope(this, SCIOSlotTypes.hasTreatmentType,
-							main.getEntityType(), minDist));
+					factors.add(
+							new ExpGroupTreatmentLocalityScope(this, SCIOSlotTypes.hasTreatmentType, main, minDist));
 //					factors.add(new ExpGroupTreatmentLocalityScope(this, SCIOSlotTypes.hasTreatmentType, maxDist));
 
 				}
@@ -232,7 +241,7 @@ public class ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplate<E
 				factor.getFactorScope().sentenceDistance == 3);
 		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
 				+ factor.getFactorScope().entityType.name + " dist != 3",
-				factor.getFactorScope().sentenceDistance != 03);
+				factor.getFactorScope().sentenceDistance != 3);
 		factor.getFeatureVector().set(PREFIX + factor.getFactorScope().slot.name + "->"
 				+ factor.getFactorScope().entityType.name + " dist >= 4",
 				factor.getFactorScope().sentenceDistance >= 4);

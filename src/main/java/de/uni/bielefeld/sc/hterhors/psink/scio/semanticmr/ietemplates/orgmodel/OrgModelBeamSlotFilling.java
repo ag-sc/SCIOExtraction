@@ -20,7 +20,7 @@ import de.hterhors.semanticmr.crf.SemanticParsingBeamCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.exploration.constraints.EHardConstraintType;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
@@ -266,7 +266,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, constraintsProvider);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
-				ESamplingMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation("OrganismModel"));
+				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation("OrganismModel"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
 //				, cardExplorer

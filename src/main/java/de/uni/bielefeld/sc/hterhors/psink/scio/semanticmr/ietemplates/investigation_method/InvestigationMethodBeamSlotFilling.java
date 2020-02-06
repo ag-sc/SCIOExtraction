@@ -20,7 +20,7 @@ import de.hterhors.semanticmr.crf.SemanticParsingBeamCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -242,7 +242,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 */
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction);
 
-		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(ESamplingMode.ANNOTATION_BASED,
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(EExplorationMode.ANNOTATION_BASED,
 				AnnotationBuilder.toAnnotation(EntityType.get("InvestigtaionMethod")));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);

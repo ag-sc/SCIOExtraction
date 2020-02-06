@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +13,14 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.SlotIsFilledTemplate.SlotIsFilledScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_SlotIsFilledTemplate.SlotIsFilledScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class SlotIsFilledTemplate extends AbstractFeatureTemplate<SlotIsFilledScope> {
+public class TB_SlotIsFilledTemplate extends AbstractFeatureTemplate<SlotIsFilledScope> {
 
 	static class SlotIsFilledScope extends AbstractFactorScope {
 

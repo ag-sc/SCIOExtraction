@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -25,7 +27,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ContextBetweenSlotFillerTemplate.ContextBetweenScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_ContextBetweenSlotFillerTemplate.ContextBetweenScope;
 
 /**
  * This template creates feature in form of an in between context. Each feature
@@ -36,7 +38,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
  *
  * @date Jan 15, 2018
  */
-public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<ContextBetweenScope> {
+public class TB_ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<ContextBetweenScope> {
 
 	private static final String LEFT = "<";
 
@@ -178,20 +180,24 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 			for (AbstractAnnotation treatment : mfs.getSlotFiller()) {
 				final Set<Integer> treatmentIndicies = new HashSet<>();
 
-				AbstractAnnotation mainAnnotation = null;
+				EntityType mainAnnotation = null;
 				if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
 					SingleFillerSlot sfs = treatment.asInstanceOfEntityTemplate()
 							.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
 					if (sfs.containsSlotFiller())
-						mainAnnotation = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation();
+						mainAnnotation = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation()
+								.getEntityType();
 				}
 
 				if (mainAnnotation == null)
-					mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation();
+					mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation().getEntityType();
 
-				if (mainAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
-					treatmentIndicies.add(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0)
-							.getDocTokenIndex());
+				for (EntityTypeAnnotation tretamentAnnotation : state.getInstance()
+						.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, mainAnnotation)) {
+
+					if (tretamentAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
+						treatmentIndicies.add(tretamentAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens
+								.get(0).getDocTokenIndex());
 //
 //					Pattern project = Pattern.compile(Pattern
 //							.quote(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
@@ -205,9 +211,9 @@ public class ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate<Co
 //						}
 //					}
 
+					}
+					map.put(mainAnnotation, treatmentIndicies);
 				}
-				map.put(mainAnnotation.getEntityType(), treatmentIndicies);
-
 			}
 
 			List<EntityType> types = new ArrayList<>(map.keySet());

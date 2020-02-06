@@ -40,7 +40,7 @@ public class InjuryEvaluation {
 		for (Entry<Instance, State> e : results.entrySet()) {
 
 			/*
-			 * Evaluate organismModel
+			 * Evaluate injuryModel
 			 */
 
 			List<EntityTemplate> goldAnnotations = new ArrayList<>(

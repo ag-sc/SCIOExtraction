@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,7 +18,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ContextCardinalityTemplate.ContextBetweenScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_ContextCardinalityTemplate.ContextBetweenScope;
 
 /**
  * This template creates feature in form of an in between context. Each feature
@@ -29,7 +29,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
  *
  * @date Jan 15, 2018
  */
-public class ContextCardinalityTemplate extends AbstractFeatureTemplate<ContextBetweenScope> {
+public class TB_ContextCardinalityTemplate extends AbstractFeatureTemplate<ContextBetweenScope> {
 
 	private static final int DEFAULT_MAX_TOKEN_CONTEXT_LEFT = 4;
 	private static final int DEFAULT_MAX_TOKEN_CONTEXT_RIGHT = 4;
@@ -121,6 +121,9 @@ public class ContextCardinalityTemplate extends AbstractFeatureTemplate<ContextB
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
+				continue;
+
+			if (SCIOSlotTypes.hasTreatmentType.isExcluded())
 				continue;
 
 			int cardinality = experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).size();

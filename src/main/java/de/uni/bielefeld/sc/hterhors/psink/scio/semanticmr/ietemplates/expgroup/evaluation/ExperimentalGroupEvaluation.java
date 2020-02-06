@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,8 +20,6 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
-import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.ESimpleEvaluationMode;
@@ -40,6 +39,8 @@ public class ExperimentalGroupEvaluation {
 
 		double cardinalityRMSE = 0;
 
+		Map<Integer, Score> intervallCardinality = new HashMap<>();
+
 		Score experimentalCardinality = new Score();
 		Score experimentalGroupScore = new Score();
 		Score organismModelScore = new Score();
@@ -53,10 +54,8 @@ public class ExperimentalGroupEvaluation {
 //		int i = 0;
 
 		for (Entry<Instance, State> e : results.entrySet()) {
-
 			cardinalityRMSE += Math.pow(e.getValue().getCurrentPredictions().getAbstractAnnotations().size()
 					- e.getValue().getGoldAnnotations().getAbstractAnnotations().size(), 2);
-
 			/*
 			 * 
 			 * Evaluate clustering of Treatments
@@ -67,6 +66,15 @@ public class ExperimentalGroupEvaluation {
 
 			List<EntityTemplate> goldAnnotations = e.getValue().getGoldAnnotations().getAnnotations();
 			List<EntityTemplate> predictedAnnotations = e.getValue().getCurrentPredictions().getAnnotations();
+
+			for (int spread = 0; spread < 4; spread++) {
+				intervallCardinality.putIfAbsent(spread, new Score());
+
+				int tp = goldAnnotations.size() - predictedAnnotations.size() <= spread ? 1 : 0;
+				int fn = tp == 1 ? 0 : 1;
+				intervallCardinality.get(spread).add(new Score(tp, 0, fn));
+
+			}
 
 			int tp = Math.min(goldAnnotations.size(), predictedAnnotations.size());
 			int fp = predictedAnnotations.size() > goldAnnotations.size()
@@ -119,13 +127,20 @@ public class ExperimentalGroupEvaluation {
 //		macroRecall /= results.entrySet().size();
 //		log.info("EXP GROUP MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
 		log.info("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
+		final StringBuffer cardString = new StringBuffer();
+		intervallCardinality.entrySet().forEach(e -> cardString.append(e.getKey() + ":" + e.getValue().getF1() + "\t"));
+		log.info("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
 		log.info("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));
 		log.info("EXP GROUP MICRO  SCORE = " + experimentalGroupScore);
-		log.info("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
-		log.info("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);
-		log.info("EXP GROUP MICRO: TREATMENT Non Vehicle = " + nonVehicleScore);
-		log.info("EXP GROUP MICRO: ORG MODEL = " + organismModelScore);
-		log.info("EXP GROUP MICRO: INJURY MODEL = " + injuryModelScore);
+		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
+			log.info("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
+			log.info("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);
+			log.info("EXP GROUP MICRO: TREATMENT Non Vehicle = " + nonVehicleScore);
+		}
+		if (SCIOSlotTypes.hasOrganismModel.isIncluded())
+			log.info("EXP GROUP MICRO: ORG MODEL = " + organismModelScore);
+		if (SCIOSlotTypes.hasInjuryModel.isIncluded())
+			log.info("EXP GROUP MICRO: INJURY MODEL = " + injuryModelScore);
 		return experimentalGroupScore;
 	}
 
@@ -134,6 +149,8 @@ public class ExperimentalGroupEvaluation {
 			ESimpleEvaluationMode mode) {
 
 		Score simpleScore = new Score();
+		if (SCIOSlotTypes.hasTreatmentType.isExcluded())
+			return simpleScore;
 
 		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
 			final int predictIndex = bestAssignment.get(goldIndex);
@@ -345,34 +362,32 @@ public class ExperimentalGroupEvaluation {
 			List<EntityTemplate> predictedAnnotations) {
 
 		Score simpleScore = new Score();
-
+		if (SCIOSlotTypes.hasInjuryModel.isExcluded())
+			return simpleScore;
 		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
 			final int predictIndex = bestAssignment.get(goldIndex);
 
 			/*
 			 * InjuryModel
 			 */
-			if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
-				List<AbstractAnnotation> goldInjuryModel;
-				if (goldAnnotations.size() > goldIndex)
-					goldInjuryModel = Arrays.asList(goldAnnotations.get(goldIndex)
-							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller()).stream()
-							.filter(a -> a != null).collect(Collectors.toList());
-				else
-					goldInjuryModel = Collections.emptyList();
+			List<AbstractAnnotation> goldInjuryModel;
+			if (goldAnnotations.size() > goldIndex)
+				goldInjuryModel = Arrays.asList(goldAnnotations.get(goldIndex)
+						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller()).stream()
+						.filter(a -> a != null).collect(Collectors.toList());
+			else
+				goldInjuryModel = Collections.emptyList();
 
-				List<AbstractAnnotation> predictInjuryModel;
+			List<AbstractAnnotation> predictInjuryModel;
 
-				if (predictedAnnotations.size() > predictIndex)
-					predictInjuryModel = Arrays
-							.asList(predictedAnnotations.get(predictIndex)
-									.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller())
-							.stream().filter(a -> a != null).collect(Collectors.toList());
-				else
-					predictInjuryModel = Collections.emptyList();
+			if (predictedAnnotations.size() > predictIndex)
+				predictInjuryModel = Arrays.asList(predictedAnnotations.get(predictIndex)
+						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).getSlotFiller()).stream()
+						.filter(a -> a != null).collect(Collectors.toList());
+			else
+				predictInjuryModel = Collections.emptyList();
 
-				simpleScore.add(evaluator.scoreMultiValues(goldInjuryModel, predictInjuryModel));
-			}
+			simpleScore.add(evaluator.scoreMultiValues(goldInjuryModel, predictInjuryModel));
 
 		}
 

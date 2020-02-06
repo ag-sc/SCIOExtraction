@@ -51,8 +51,7 @@ public class GroupNameExtraction {
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 			break;
 		}
-
-		return filter(instance, groupNames);
+		return groupNames;
 	}
 
 	public static List<DocumentLinkedAnnotation> filter(Instance instance, List<DocumentLinkedAnnotation> groupNames) {
@@ -91,7 +90,7 @@ public class GroupNameExtraction {
 						if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName))
 							continue;
 
-						if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
+						if (distinctGroupNamesMode == EDistinctGroupNamesMode.STRING_DISTINCT) {
 
 							if (distinct.contains(groupName))
 								continue;
@@ -112,11 +111,10 @@ public class GroupNameExtraction {
 	}
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesFromGold(Instance instance) {
-		return filter(instance,
-				instance.getGoldAnnotations().getAbstractAnnotations().stream()
-						.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
-						.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
-						.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList()));
+		return instance.getGoldAnnotations().getAbstractAnnotations().stream()
+				.map(e -> e.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName))
+				.filter(s -> s.containsSlotFiller()).flatMap(s -> s.getSlotFiller().stream())
+				.map(e -> e.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toList());
 	}
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesWithNPCHunks(
@@ -130,7 +128,7 @@ public class GroupNameExtraction {
 					DocumentLinkedAnnotation annotation;
 					if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName.term))
 						continue;
-					if (distinctGroupNamesMode == EDistinctGroupNamesMode.DISTINCT) {
+					if (distinctGroupNamesMode == EDistinctGroupNamesMode.STRING_DISTINCT) {
 
 						if (distinct.contains(groupName.term))
 							continue;

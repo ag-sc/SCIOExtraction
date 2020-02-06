@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
@@ -95,7 +95,7 @@ public class AnnotationExistsInAbstractTemplate extends AbstractFeatureTemplate<
 				EntityType rootType = annotation.getRootAnnotation().entityType;
 
 				for (EntityTypeAnnotation eta : state.getInstance()
-						.getEntityTypeCandidates(ESamplingMode.ANNOTATION_BASED, rootType)) {
+						.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, rootType)) {
 
 					if (!eta.isInstanceOfDocumentLinkedAnnotation())
 						continue;
@@ -115,7 +115,7 @@ public class AnnotationExistsInAbstractTemplate extends AbstractFeatureTemplate<
 				for (AbstractAnnotation slotFillerAnnotation : slotFillerAnnotations.getValue()) {
 
 					for (EntityTypeAnnotation eta : state.getInstance().getEntityTypeCandidates(
-							ESamplingMode.ANNOTATION_BASED, slotFillerAnnotation.getEntityType())) {
+							EExplorationMode.ANNOTATION_BASED, slotFillerAnnotation.getEntityType())) {
 
 						if (!eta.isInstanceOfDocumentLinkedAnnotation())
 							continue;

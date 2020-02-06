@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
@@ -24,7 +24,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates_typebased.TB_RemainingTypesTemplate.RemainingTypesScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_RemainingTypesTemplate.RemainingTypesScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 
@@ -114,7 +114,7 @@ public class TB_RemainingTypesTemplate extends AbstractFeatureTemplate<Remaining
 				continue;
 
 			for (EntityTypeAnnotation documentLinkedAnnotation : instance
-					.getEntityTypeCandidates(ESamplingMode.ANNOTATION_BASED, entityType)) {
+					.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, entityType)) {
 
 				if (documentLinkedAnnotation.isInstanceOfDocumentLinkedAnnotation())
 					remainingTypeAnnotations.add(documentLinkedAnnotation.asInstanceOfDocumentLinkedAnnotation());
@@ -130,7 +130,7 @@ public class TB_RemainingTypesTemplate extends AbstractFeatureTemplate<Remaining
 		for (EntityType entityType : assignedTypes) {
 
 			for (EntityTypeAnnotation documentLinkedAnnotation : instance
-					.getEntityTypeCandidates(ESamplingMode.ANNOTATION_BASED, entityType)) {
+					.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, entityType)) {
 
 				if (documentLinkedAnnotation.isInstanceOfDocumentLinkedAnnotation())
 					usedTypeAnnotations.add(documentLinkedAnnotation.asInstanceOfDocumentLinkedAnnotation());

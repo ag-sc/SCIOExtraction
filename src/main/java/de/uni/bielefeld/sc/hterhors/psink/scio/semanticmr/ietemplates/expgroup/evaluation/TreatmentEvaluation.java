@@ -30,7 +30,7 @@ public class TreatmentEvaluation {
 	}
 
 	public Score evaluate(Map<Instance, State> results) {
-
+		
 		Score vehicleScore = new Score();
 		Score nonVehicleScore = new Score();
 		Score bothS = new Score();

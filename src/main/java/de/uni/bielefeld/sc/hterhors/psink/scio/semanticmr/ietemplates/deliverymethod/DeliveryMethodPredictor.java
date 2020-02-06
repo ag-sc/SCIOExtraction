@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.ESamplingMode;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -126,8 +126,8 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	public List<IExplorationStrategy> getAdditionalExplorer() {
-		return Arrays.asList(
-				new RootTemplateCardinalityExplorer(ESamplingMode.ANNOTATION_BASED,AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
+		return Arrays.asList(new RootTemplateCardinalityExplorer(EExplorationMode.ANNOTATION_BASED,
+				AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
 	}
 
 }
