@@ -17,7 +17,9 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DurationNormalization;
@@ -73,6 +75,8 @@ public class DeliveryMethodActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
+		EDeliveryMethodModifications rule = EDeliveryMethodModifications.ROOT_LOCATION_DURATION;
+
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
 
@@ -110,7 +114,7 @@ public class DeliveryMethodActiveLearningSlotFilling {
 				log.info("Strategy: " + strategy);
 
 				DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName, scope,
-						trainingInstancesNames, developInstanceNames, testInstanceNames);
+						trainingInstancesNames, developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();
 

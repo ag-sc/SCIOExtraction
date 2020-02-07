@@ -102,8 +102,6 @@ public class DeliveryMethodFilling {
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/delivery_method/corpus/instances/");
 
-	public static EDeliveryMethodModifications rule;
-
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
@@ -144,7 +142,7 @@ public class DeliveryMethodFilling {
 
 		for (EDeliveryMethodModifications rule : EDeliveryMethodModifications.values()) {
 //			DeliveryMethodFilling.rule =rule;
-			DeliveryMethodFilling.rule =EDeliveryMethodModifications. ROOT_LOCATION_DURATION;
+			rule = EDeliveryMethodModifications.ROOT_LOCATION_DURATION;
 			/**
 			 * The instance provider reads all json files in the given directory. We can set
 			 * the distributor in the constructor. If not all instances should be read from
@@ -167,7 +165,8 @@ public class DeliveryMethodFilling {
 							.collect(Collectors.toList()),
 					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
-							.collect(Collectors.toList()));
+							.collect(Collectors.toList()),
+					rule);
 
 			predictor.trainOrLoadModel();
 

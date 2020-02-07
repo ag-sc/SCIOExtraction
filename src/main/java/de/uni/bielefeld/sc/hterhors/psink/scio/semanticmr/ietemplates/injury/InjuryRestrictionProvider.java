@@ -8,11 +8,12 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 
 public class InjuryRestrictionProvider {
 
-	public enum EInjuryModifications {
+	public enum EInjuryModifications implements IModificationRule {
 		ROOT, ROOT_DEVICE, ROOT_LOCATION, ROOT_LOCATION_DEVICE, ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 	}

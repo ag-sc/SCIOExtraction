@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
@@ -22,6 +25,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.m
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
 
 public class MultiCardinalityInitializer implements IStateInitializer {
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	/**
 	 * The maximum number of annotations
@@ -67,7 +71,14 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		}
 	}
 
-	public void wekaBasedKmeans(List<Instance> instances, List<Instance> trainingInstances) {
+	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameProviderMode,
+			EGroupNamesPreProcessingMode groupNameProcessingMode, List<Instance> instances,
+			List<Instance> trainingInstances) {
+		this(groupNameProviderMode, groupNameProcessingMode, instances, -1, -1, trainingInstances);
+
+	}
+
+	private void wekaBasedKmeans(List<Instance> instances, List<Instance> trainingInstances) {
 		try {
 
 			GroupNameClusteringWEKA gnc = new GroupNameClusteringWEKA();
@@ -75,6 +86,8 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 			gnc.train(trainingInstances);
 
 			for (Instance instance : instances) {
+				
+				log.info("Cluster instance " + instance.getName());
 				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
 				for (AbstractAnnotation ec : instance.getSlotTypeCandidates(EExplorationMode.ANNOTATION_BASED,
@@ -82,16 +95,19 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 					if (ec.isInstanceOfDocumentLinkedAnnotation())
 						datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
 				}
+				log.info("Number of elements to cluster: " + datapoints.size());
+
 				List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, max);
 
 				preComputedClusters.put(instance, clusters);
+			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void wordBasedKMeans(List<Instance> instances) {
+	private void wordBasedKMeans(List<Instance> instances) {
 		for (Instance instance : instances) {
 			List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
@@ -108,14 +124,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		}
 	}
 
-	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameProviderMode,
-			EGroupNamesPreProcessingMode groupNameProcessingMode, List<Instance> instances,
-			List<Instance> trainingInstances) {
-		this(groupNameProviderMode, groupNameProcessingMode, instances, -1, -1, trainingInstances);
-
-	}
-
-	public double computeStdDeviation(List<Instance> trainingInstances, double e) {
+	private double computeStdDeviation(List<Instance> trainingInstances, double e) {
 		double stdDev = 0;
 		for (Instance instance : trainingInstances) {
 			stdDev += Math.pow(e - instance.getGoldAnnotations().getAbstractAnnotations().size(), 2)
@@ -125,7 +134,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		return stdDev;
 	}
 
-	public double computeMean(List<Instance> trainingInstances) {
+	private double computeMean(List<Instance> trainingInstances) {
 		double e = 0;
 		for (Instance instance : trainingInstances) {
 			e += instance.getGoldAnnotations().getAbstractAnnotations().size();

@@ -65,6 +65,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.ExperimentalGroupEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.InjuryEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.OrganismModelEvaluation;
@@ -108,15 +109,14 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.t
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.type_based.TB_Word2VecClusterTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjurySlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjurySlotFillingPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFilling;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 
@@ -188,7 +188,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
-		groupNameProviderMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
+		groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
 		groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
 		distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
 
@@ -558,7 +558,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
+					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					EVertebralAreaModifications.NO_MODIFICATION);
 
 			vertebralAreaPrediction.trainOrLoadModel();
 			vertebralAreaPrediction.predictAllInstances(2);
@@ -657,7 +658,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			DeliveryMethodPredictor deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName,
 					scope, trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
+					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					EDeliveryMethodModifications.ROOT);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);

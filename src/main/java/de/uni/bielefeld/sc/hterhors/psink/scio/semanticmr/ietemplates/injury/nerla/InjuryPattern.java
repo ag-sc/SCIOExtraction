@@ -51,7 +51,8 @@ public class InjuryPattern extends BasicRegExPattern {
 	private static final Set<Pattern> UTS_IMPACTOR_REG_EXP = new HashSet<>(
 			Arrays.asList(UTSIMPACTOR_PATTERN_1, UTSIMPACTOR_PATTERN_2));
 
-	public InjuryPattern() {
+	public InjuryPattern(EntityType rootEntityType) {
+		super(rootEntityType);
 
 		pattern.put(EntityType.get("BladderExpression"), BLADDER_EXPRESSION_REG_EXP);
 		pattern.put(EntityType.get("NYUImpactor"), NYU_IMPACTOR_REG_EXP);

@@ -21,7 +21,8 @@ public class InvestigationMethodPattern extends BasicRegExPattern {
 
 	private Map<EntityType, Set<Pattern>> pattern = new HashMap<>();
 
-	public InvestigationMethodPattern() {
+	public InvestigationMethodPattern(EntityType rootEntityType) {
+		super(rootEntityType);
 
 	}
 

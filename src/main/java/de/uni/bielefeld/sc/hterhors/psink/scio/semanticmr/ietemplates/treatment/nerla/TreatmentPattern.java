@@ -21,7 +21,9 @@ public class TreatmentPattern extends BasicRegExPattern {
 
 	private Map<EntityType, Set<Pattern>> pattern = new HashMap<>();
 
-	public TreatmentPattern() {
+	public TreatmentPattern(EntityType rootEntityType) {
+		super(rootEntityType);
+
 	}
 
 	public Map<EntityType, Set<Pattern>> getHandMadePattern() {

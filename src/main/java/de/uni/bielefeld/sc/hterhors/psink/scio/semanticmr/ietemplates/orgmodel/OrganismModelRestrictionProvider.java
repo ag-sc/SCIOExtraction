@@ -8,15 +8,16 @@ import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 
 public class OrganismModelRestrictionProvider {
 
-	public enum EOrgModelModifications {
+	public enum EOrgModelModifications implements IModificationRule {
 		SPECIES, SPECIES_GENDER, SPECIES_GENDER_WEIGHT, SPECIES_GENDER_WEIGHT_AGE_CATEGORY,
 		SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 	}
+
 	public static void applySlotTypeRestrictions(EOrgModelModifications modelModifications) {
 
 		SlotType.excludeAll();
@@ -48,6 +49,7 @@ public class OrganismModelRestrictionProvider {
 			return;
 		}
 	}
+
 	public static List<GoldModificationRule> getByRule(EOrgModelModifications modelModifications) {
 
 		switch (modelModifications) {
@@ -65,8 +67,6 @@ public class OrganismModelRestrictionProvider {
 		return null;
 
 	}
-
-
 
 	public static List<GoldModificationRule> getSpecies() {
 		List<GoldModificationRule> rules = new ArrayList<>();

@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.SlotIsFilledTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaConditionTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaRootMatchTemplate;
@@ -54,7 +55,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 	private static Logger log = LogManager.getFormatterLogger("VertebralAreaPrediction");
 
 	public VertebralAreaPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames) {
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
 
 		/**
 		 * Initialize the system.
@@ -62,7 +63,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
+		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
 	}
 
@@ -144,9 +145,9 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
 		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>(
-				VertebralAreaRestrictionProvider.getByRule(VertebralAreaSlotFilling.rule));
+				VertebralAreaRestrictionProvider.getByRule((EVertebralAreaModifications) rule));
 
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().entityType == EntityType.get("VertebralArea"))

@@ -144,15 +144,8 @@ public class OrganismModelPattern extends BasicRegExPattern {
 
 	private Map<EntityType, Set<Pattern>> pattern = new HashMap<>();
 
-	public OrganismModelPattern() {
-		
-		/**
-		 * All models are of type OrganismModel so we do not need to add this here
-		 */
-//		pattern.put(EntityType.get("MouseModel"), OrganismModelPattern.MOUSE_MODEL_REG_EXP);
-//		pattern.put(EntityType.get("GuineaPigModel"), OrganismModelPattern.GUINEA_PIG_MODEL_REG_EXP);
-//		pattern.put(EntityType.get("RatModel"), OrganismModelPattern.RAT_MODEL_REG_EXP);
-
+	public OrganismModelPattern(EntityType rootEntityType) {
+		super(rootEntityType);
 		pattern.put(EntityType.get("CD1_Mouse"), OrganismModelPattern.CD1_MOUSE_MODEL_REG_EXP);
 		pattern.put(EntityType.get("CD2_Mouse"), OrganismModelPattern.CD2_MOUSE_MODEL_REG_EXP);
 		pattern.put(EntityType.get("BALB_C_Mouse"), OrganismModelPattern.BALB_C_MOUSE_MODEL_REG_EXP);

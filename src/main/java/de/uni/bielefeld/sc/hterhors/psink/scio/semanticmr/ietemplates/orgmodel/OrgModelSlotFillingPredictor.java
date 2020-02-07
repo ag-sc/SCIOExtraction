@@ -10,29 +10,20 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
-import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
-import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
-import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
-import de.hterhors.semanticmr.crf.templates.et.LocalityTemplate;
-import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
-import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -40,10 +31,7 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.templates.PriorNumericInterpretationOrgModelTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
 
 /**
  * Slot filling for organism models.
@@ -58,8 +46,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	public OrgModelSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstances,
 			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule) {
-		super(modelName, scope, trainingInstances, developmentInstances, testInstances);
-		this.rule = rule;
+		super(modelName, scope, trainingInstances, developmentInstances, testInstances, rule);
 	}
 
 	@Override
@@ -163,8 +150,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return OrganismModelRestrictionProvider.getByRule(rule);
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
+		return OrganismModelRestrictionProvider.getByRule((EOrgModelModifications) rule);
 	}
 
 }

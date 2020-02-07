@@ -21,7 +21,9 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
 
 /**
@@ -75,8 +77,9 @@ public class VertebralAreaActiveLearningSlotFilling {
 
 		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
 			log.info(strategy);
+			EVertebralAreaModifications rule = EVertebralAreaModifications.NO_MODIFICATION;
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
-					getGoldModificationRules());
+					getGoldModificationRules(rule));
 
 			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -110,7 +113,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 				log.info("Strategy: " + strategy);
 
 				VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName, scope, trainingInstancesNames,
-						developInstanceNames, testInstanceNames);
+						developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();
 
@@ -135,7 +138,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 
 	}
 
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
 		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
 
 		goldModificationRules.add(a -> {

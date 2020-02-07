@@ -93,7 +93,6 @@ public class InjurySlotFilling {
 
 		resultsOut.println(header);
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
 			rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 //			rule = rule;
@@ -121,7 +120,7 @@ public class InjurySlotFilling {
 			String modelName = "Injury" + new Random().nextInt(10000);
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames,rule);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
 			predictor.trainOrLoadModel();
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -70,6 +69,8 @@ public class GroupNameClusteringWEKA {
 		try {
 			log.info("Load classifier...");
 			rf = (RandomForest) SerializationHelper.read(new FileInputStream("wekamodels/rfsmall.model"));
+			log.info("Done...");
+
 		} catch (Exception e1) {
 			log.info("Could not load classifiery: " + e1.getMessage());
 			rf = null;
@@ -152,15 +153,14 @@ public class GroupNameClusteringWEKA {
 		}
 
 		Instances predictionInstances = convertToWekaInstances("CLUSTER", predictions.getDataPoints());
-
 		int i = 0;
-
 		List<GroupNamePair> gnps = new ArrayList<>();
+		log.info("Num of pairwise instances to classify = " + predictionInstances.size());
 
 		for (weka.core.Instance instance : predictionInstances) {
-
+			if (i % (predictionInstances.size() / 10) == 0)
+				log.info("Num of instances classified = " + i);
 			GroupNamePair gnp = (GroupNamePair) predictions.getDataPoints().get(i).parameter.get("groupNamePair");
-//
 
 			double[] pred = rf.distributionForInstance(instance);
 
@@ -176,6 +176,7 @@ public class GroupNameClusteringWEKA {
 
 			i++;
 		}
+		log.info("Binary classification done...");
 
 		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
 

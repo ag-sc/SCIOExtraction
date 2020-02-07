@@ -34,6 +34,7 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
 /**
@@ -47,8 +48,8 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	public DeliveryMethodPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames) {
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
+		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 	}
 
 	@Override
@@ -120,8 +121,8 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return DeliveryMethodRestrictionProvider.getByRule(DeliveryMethodFilling.rule);
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
+		return DeliveryMethodRestrictionProvider.getByRule((EDeliveryMethodModifications) rule);
 	}
 
 	@Override

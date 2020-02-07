@@ -52,10 +52,15 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.AutomatedSectionifcation.ESection;
 
 public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProject {
+	public interface IModificationRule {
+
+	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
@@ -103,7 +108,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	}
 
 	public AbstractSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames) {
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule modificationRule) {
 		super(scope);
 		this.modelName = modelName;
 		this.trainingInstanceNames = trainingInstanceNames;
@@ -139,7 +144,8 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 * ShuffleCorpusDistributor, we initially set a limit to the number of files
 		 * that should be read.
 		 */
-		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor, getGoldModificationRules());
+		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor,
+				getGoldModificationRules(modificationRule));
 
 		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
@@ -151,7 +157,8 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			instance.addCandidateAnnotations(nerlaJSONReader.getForInstance(instance));
 		}
 
-		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider().entrySet()) {
+		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
+				.entrySet()) {
 			ap.getKey().addCandidateAnnotations(ap.getValue());
 		}
 
@@ -405,7 +412,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return new HardConstraintsProvider();
 	}
 
-	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule rule) {
 		return Collections.emptyMap();
 	}
 
@@ -598,7 +605,8 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			Set<AbstractAnnotation> filteredSet = new HashSet<>();
 			for (AbstractAnnotation aa : pred.getValue()) {
 
-				if (getStateInitializer().getInitState(instanceNameMapToPredict.get(pred.getKey())).getCurrentPredictions().getAnnotations().contains(aa))
+				if (getStateInitializer().getInitState(instanceNameMapToPredict.get(pred.getKey()))
+						.getCurrentPredictions().getAnnotations().contains(aa))
 					continue;
 
 				filteredSet.add(aa);
@@ -616,7 +624,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				.map(i -> i.getName()).collect(Collectors.toSet()), n);
 	}
 
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
 		return Collections.emptyList();
 	}
 

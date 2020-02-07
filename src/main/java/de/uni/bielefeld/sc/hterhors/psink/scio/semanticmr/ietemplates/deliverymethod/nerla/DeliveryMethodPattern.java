@@ -38,8 +38,10 @@ public class DeliveryMethodPattern extends BasicRegExPattern {
 //	private static final Set<Pattern> VERTEBRAL_AREA_REG_EXP = new HashSet<>(Arrays.asList(VERTBERAL_AREA_PATTERN1,
 //			VERTBERAL_AREA_PATTERN2, VERTBERAL_AREA_PATTERN3, VERTBERAL_AREA_PATTERN4, VERTBERAL_AREA_PATTERN5));
 
-	public DeliveryMethodPattern() {
+	public DeliveryMethodPattern(EntityType rootEntityType) {
 //		pattern.put(EntityType.get("VertebralArea"), VERTEBRAL_AREA_REG_EXP);
+		super(rootEntityType);
+
 	}
 
 	public Map<EntityType, Set<Pattern>> getHandMadePattern() {

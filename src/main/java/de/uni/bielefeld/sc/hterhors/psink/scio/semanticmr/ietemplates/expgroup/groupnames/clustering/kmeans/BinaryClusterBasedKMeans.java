@@ -13,6 +13,9 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -21,6 +24,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.g
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 
 public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	private static final Random random = new Random(1000L);
 
@@ -32,10 +36,10 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
 				.build();
-		System.out.println(getProb(0D));
-		System.out.println(getProb(0D));
-		System.out.println(getProb(1D));
-		System.out.println(getProb(1D));
+		log.info(getProb(0D));
+		log.info(getProb(0D));
+		log.info(getProb(1D));
+		log.info(getProb(1D));
 		/*
 		 * First cluster
 		 */
@@ -149,16 +153,16 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 				.flatMap(a -> Arrays.asList(a.groupName1, a.groupName2).stream()).collect(Collectors.toSet()));
 
 		List<List<LiteralAnnotation>> clusters = c.cluster(datapoints, 4);
-		System.out.println("Number of clusters = " + clusters.size());
+		log.info("Number of clusters = " + clusters.size());
 		for (List<LiteralAnnotation> cluster : clusters) {
-			System.out.println("Cluster size = " + cluster.size());
+			log.info("Cluster size = " + cluster.size());
 		}
 
 		for (List<LiteralAnnotation> cluster : clusters) {
 			for (LiteralAnnotation groupName : cluster) {
-				System.out.println(groupName.getSurfaceForm());
+				log.info(groupName.getSurfaceForm());
 			}
-			System.out.println("-------------------");
+			log.info("-------------------");
 		}
 	}
 
@@ -185,11 +189,13 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 	}
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
+		log.info("Start k (" + k + ") - means clustering...");
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
 
 		Map<Centroid, List<Record<E>>> clusterRecords = kMeans(vecs, k, maxIterations);
 		List<List<E>> clusters = new ArrayList<>();
+		log.info("Clustering done!");
 
 		for (List<Record<E>> records : clusterRecords.values()) {
 			clusters.add(records.stream().map(r -> r.annotation).collect(Collectors.toList()));
@@ -306,9 +312,12 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 		List<Centroid> centroids = plusplusCentroids(records, k);
 
 		Map<Centroid, List<Record<E>>> lastState = new HashMap<>();
-
+		log.info("Max iterations = " + maxIterations);
 		// iterate for a pre-defined number of times
 		for (int i = 0; i < maxIterations; i++) {
+
+			if (i % (maxIterations / 10) == 0)
+				log.info("iterations = " + i);
 
 			final Map<Centroid, List<Record<E>>> clusters = new HashMap<>();
 

@@ -4,15 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,15 +17,10 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools.AnnotationsToSantoAnnotations;
-import de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools.SantoAnnotations;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
@@ -147,7 +136,7 @@ public class OrgModelSlotFilling {
 			String modelName = "OrganismModel" + new Random().nextInt();
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames,rule);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
 			predictor.trainOrLoadModel();
 

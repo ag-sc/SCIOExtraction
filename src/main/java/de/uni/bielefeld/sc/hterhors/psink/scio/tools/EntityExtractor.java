@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools;
+package de.uni.bielefeld.sc.hterhors.psink.scio.tools;
 
 import java.io.File;
 import java.io.IOException;

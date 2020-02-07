@@ -48,7 +48,6 @@ public class VertebralAreaSlotFilling {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
-	public static EVertebralAreaModifications rule;
 
 	public VertebralAreaSlotFilling() throws IOException {
 		InstanceProvider.removeEmptyInstances = false;
@@ -77,7 +76,7 @@ public class VertebralAreaSlotFilling {
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
-		rule = EVertebralAreaModifications.NO_MODIFICATION;
+		EVertebralAreaModifications rule = EVertebralAreaModifications.NO_MODIFICATION;
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 				.setTrainingProportion(80).setDevelopmentProportion(20).setTestProportion(0).setCorpusSizeFraction(1F)
@@ -86,7 +85,7 @@ public class VertebralAreaSlotFilling {
 		PrintStream resultsOut = new PrintStream(new File("results/vertebralAreaResults.csv"));
 
 //		InstanceProvider.removeEmptyInstances = false;
-		
+
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
 		 * the distributor in the constructor. If not all instances should be read from
@@ -108,7 +107,8 @@ public class VertebralAreaSlotFilling {
 				instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
 				instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
-						.collect(Collectors.toList()));
+						.collect(Collectors.toList()),
+				rule);
 
 		predictor.trainOrLoadModel();
 

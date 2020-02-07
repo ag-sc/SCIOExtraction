@@ -65,18 +65,6 @@ public class TreatmentSlotFilling {
 		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScope)
 				.build();
 
-//		SpecificationWriter w = new SpecificationWriter(scope);
-//		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/treatment/entities.csv"),
-//				EntityType.get("Treatment"));
-//		w.writeHierarchiesSpecificationFile(new File("src/main/resources/slotfilling/treatment/hierarchies.csv"),
-//				EntityType.get("Treatment"));
-//		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/treatment/slots.csv"),
-//				EntityType.get("Treatment"));
-//		w.writeStructuresSpecificationFile(new File("src/main/resources/slotfilling/result/specifications/structures.csv"),
-//				new File("src/main/resources/slotfilling/treatment/structures.csv"), EntityType.get("Treatment"));
-////	
-//		System.exit(1);
-
 		PrintStream resultsOut = new PrintStream(new File("results/treatmentResults.csv"));
 
 		resultsOut.println(header);
@@ -106,7 +94,7 @@ public class TreatmentSlotFilling {
 			String modelName = "Treatment" + new Random().nextInt();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames,rule);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
 			predictor.trainOrLoadModel();
 

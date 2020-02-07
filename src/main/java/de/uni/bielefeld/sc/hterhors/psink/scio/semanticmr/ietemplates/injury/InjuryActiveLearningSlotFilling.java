@@ -83,7 +83,6 @@ public class InjuryActiveLearningSlotFilling {
 				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
 				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
 
-		VertebralAreaSlotFilling.rule = EVertebralAreaModifications.NO_MODIFICATION;
 		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusfive.csv");

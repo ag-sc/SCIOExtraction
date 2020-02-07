@@ -35,6 +35,7 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -63,17 +64,14 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeCo
 public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
-	private ETreatmentModifications rule;
 
 	public TreatmentSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developmentInstanceNames, List<String> testInstanceNames, ETreatmentModifications rule) {
-
-		super(modelName, scope, trainingInstanceNames, developmentInstanceNames, testInstanceNames);
-		this.rule = rule;
+		super(modelName, scope, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule);
 	}
 
 	@Override
-	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule rule) {
 
 		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
 
@@ -83,7 +81,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 			String deliveryMethodModelName = "DeliveryMethod" + modelName;
 
 			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);
@@ -167,8 +165,8 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	}
 
 	@Override
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return TreatmentRestrictionProvider.getByRule(rule);
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
+		return TreatmentRestrictionProvider.getByRule((ETreatmentModifications) rule);
 	}
 
 }

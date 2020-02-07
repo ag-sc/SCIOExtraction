@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools;
+package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,7 @@ import java.util.Set;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.ResolvePairwiseComparedGroups.SantoAnnotations;
 
 public class AnnotationsToSantoAnnotations {
 
@@ -21,8 +22,8 @@ public class AnnotationsToSantoAnnotations {
 		String rdf;
 		if (child.isInstanceOfEntityTemplate()) {
 
-			String rdfType = new StringBuilder("<").append(dataNamespace).append(child.getEntityType().name)
-					.append("_").append(getID(child.asInstanceOfEntityTemplate())).append("> <")
+			String rdfType = new StringBuilder("<").append(dataNamespace).append(child.getEntityType().name).append("_")
+					.append(getID(child.asInstanceOfEntityTemplate())).append("> <")
 					.append("http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <").append(classNamespace)
 					.append(child.getEntityType().name).append("> .").toString();
 
@@ -35,8 +36,8 @@ public class AnnotationsToSantoAnnotations {
 
 			if (origin != null) {
 				rdf = new StringBuilder("<").append(dataNamespace).append(parent.getEntityType().name).append("_")
-						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name)
-						.append("> <").append(dataNamespace).append(child.getEntityType().name).append("_")
+						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name).append("> <")
+						.append(dataNamespace).append(child.getEntityType().name).append("_")
 						.append(getID(child.asInstanceOfEntityTemplate())).append("> .").toString();
 				if (child.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
 					DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfEntityTemplate().getRootAnnotation()
@@ -48,9 +49,8 @@ public class AnnotationsToSantoAnnotations {
 		} else {
 			if (child.getEntityType().isLiteral) {
 				rdf = new StringBuilder("<").append(dataNamespace).append(parent.getEntityType().name).append("_")
-						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name)
-						.append("> \"").append(child.asInstanceOfLiteralAnnotation().getSurfaceForm()).append("\" .")
-						.toString();
+						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name).append("> \"")
+						.append(child.asInstanceOfLiteralAnnotation().getSurfaceForm()).append("\" .").toString();
 				if (child.isInstanceOfDocumentLinkedAnnotation()) {
 					DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfDocumentLinkedAnnotation();
 					collectData.addInstanceToAnnotation(toAnnotation(docLinkedAnn), rdf);
@@ -59,9 +59,8 @@ public class AnnotationsToSantoAnnotations {
 
 			} else {
 				rdf = new StringBuilder("<").append(dataNamespace).append(parent.getEntityType().name).append("_")
-						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name)
-						.append("> <").append(classNamespace).append(child.getEntityType().name).append("> .")
-						.toString();
+						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name).append("> <")
+						.append(classNamespace).append(child.getEntityType().name).append("> .").toString();
 				if (child.isInstanceOfDocumentLinkedAnnotation()) {
 					DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfDocumentLinkedAnnotation();
 					collectData.addInstanceToAnnotation(toAnnotation(docLinkedAnn), rdf);

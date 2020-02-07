@@ -7,11 +7,12 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class DeliveryMethodRestrictionProvider {
 
-	enum EDeliveryMethodModifications {
+	public enum EDeliveryMethodModifications implements IModificationRule {
 		ROOT, ROOT_LOCATION, ROOT_LOCATION_DURATION;
 
 	}

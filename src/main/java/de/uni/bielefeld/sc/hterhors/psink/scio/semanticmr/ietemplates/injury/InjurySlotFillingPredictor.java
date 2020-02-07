@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.jena.rdf.model.InfModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,6 +36,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 
 /**
  * Slot filling for injuries.
@@ -46,20 +48,19 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebrala
 public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger(InjurySlotFillingPredictor.class);
-	private EInjuryModifications rule;
 
 	public InjurySlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames, EInjuryModifications rule) {
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
 
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
-		this.rule = rule;
+		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 	}
 
 	final public boolean useGoldLocations = false;
 
 	@Override
-	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider() {
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule _rule) {
 
+		EInjuryModifications rule = (EInjuryModifications) _rule;
 		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
 		if (!useGoldLocations) {
 
@@ -69,7 +70,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 //		String vertebralAreaModelName = "VertebralArea_STD";
 			String vertebralAreaModelName = "VertebralArea_" + modelName;
 			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames);
+					trainingInstanceNames, developInstanceNames, testInstanceNames,
+					EVertebralAreaModifications.NO_MODIFICATION);
 
 			vertebralAreaPrediction.trainOrLoadModel();
 
@@ -208,8 +210,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	@Override
-	protected Collection<GoldModificationRule> getGoldModificationRules() {
-		return InjuryRestrictionProvider.getByRule(rule);
+	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
+		return InjuryRestrictionProvider.getByRule((EInjuryModifications) rule);
 	}
 
 //	@Override

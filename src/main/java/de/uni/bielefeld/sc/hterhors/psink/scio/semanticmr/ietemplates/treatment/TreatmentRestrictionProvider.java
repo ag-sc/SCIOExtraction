@@ -9,10 +9,11 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 
 public class TreatmentRestrictionProvider {
 
-	public enum ETreatmentModifications {
+	public enum ETreatmentModifications implements IModificationRule {
 		ROOT;
 
 	}

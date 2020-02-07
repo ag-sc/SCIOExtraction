@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.santo.tools;
+package de.uni.bielefeld.sc.hterhors.psink.scio.corpus;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
@@ -19,11 +21,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.examples.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.santo.ResultSanto2Json;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsToSantoAnnotations;
 
 /**
  * Rolls out the pairwise compared groups.
@@ -34,49 +32,74 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormaliz
  * @author hterhors
  *
  */
-public class PairwiseComparedGroupsRollOutToRDF {
+public class ResolvePairwiseComparedGroups {
 
-	public static void main(String[] args) throws IOException {
+	public static class SantoAnnotations {
 
-		new PairwiseComparedGroupsRollOutToRDF();
+		private static int annodbid = 0;
 
+		final private Set<String> rdf;
+		final private Map<String, Set<String>> annodb;
+
+		public SantoAnnotations(Set<String> rdf, Map<String, Set<String>> annodb) {
+			this.rdf = rdf;
+			this.annodb = annodb;
+		}
+
+		public Set<String> getRdf() {
+			return rdf;
+		}
+
+		public Set<String> getAnnodb() {
+			return annodb.entrySet().stream()
+					.map(e -> new String(annodbid++ + ", " + e.getKey() + "\"" + toWSSepList(e.getValue()) + "\""))
+					.collect(Collectors.toSet());
+		}
+
+		public void addInstanceToAnnotation(final String annotation, String instance) {
+			if (!annodb.containsKey(annotation))
+				annodb.put(annotation, new HashSet<>());
+			annodb.get(annotation).add(instance);
+		}
+
+		private String toWSSepList(Set<String> value) {
+			String x = "";
+			for (String string : value) {
+				x += string + " ";
+			}
+
+			return x.trim().replaceAll("\"", "\\\\\"");
+		}
 	}
 
-	private final File resultInstanceDirectory = new File("src/main/resources/slotfilling/result/corpus/instances/");
-	private final File observationInstanceDirectory = new File(
-			"src/main/resources/slotfilling/observation/corpus/instances/");
-
-	public PairwiseComparedGroupsRollOutToRDF() throws IOException {
+	public ResolvePairwiseComparedGroups(File resultInstanceDir, File observationInstanceDir, File tmpUnrolledDir)
+			throws IOException {
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
-				.apply().registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization()).build();
-
-		InstanceProvider.maxNumberOfAnnotations = 100;
+		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
-		InstanceProvider instanceProviderO = new InstanceProvider(observationInstanceDirectory, corpusDistributor);
+		InstanceProvider instanceProviderO = new InstanceProvider(observationInstanceDir, corpusDistributor);
 
-		InstanceProvider instanceProvider = new InstanceProvider(resultInstanceDirectory, corpusDistributor);
+		InstanceProvider instanceProvider = new InstanceProvider(resultInstanceDir, corpusDistributor);
 
 		int docID = 0;
 		for (Instance instance : instanceProvider.getInstances()) {
-			System.out.println(instance.getName());
+
 			PrintStream psRDF = new PrintStream(
-					"unroll/export_" + ResultSanto2Json.exportDate + "/" + instance.getName() + "_Jessica.n-triples");
+					new File(tmpUnrolledDir, "/" + instance.getName() + "_Jessica.n-triples"));
 			PrintStream psAnnotation = new PrintStream(
-					"unroll/export_" + ResultSanto2Json.exportDate + "/" + instance.getName() + "_Jessica.annodb");
+					new File(tmpUnrolledDir, "/" + instance.getName() + "_Jessica.annodb"));
 			PrintStream psDocument = new PrintStream(
-					"unroll/export_" + ResultSanto2Json.exportDate + "/" + instance.getName() + "_export.csv");
+					new File(tmpUnrolledDir, "/" + instance.getName() + "_export.csv"));
 
 			List<AbstractAnnotation> annotations = unrollAnnotations(instance);
 
 			/*
-			 * Add Observations cause they are not direct connected to results.
+			 * Add Observations cause they are not directly connected to results.
 			 */
 			annotations.addAll(collectObservations(instanceProviderO, instance));
 
@@ -157,13 +180,8 @@ public class PairwiseComparedGroupsRollOutToRDF {
 
 						AbstractAnnotation deepCopyOfResult = resultAnnotation.deepCopy();
 
-						deepCopyOfResult.asInstanceOfEntityTemplate().clearSlot(SlotType.get("hasPairwisedCompareGroups"));
-						
-//						for (AbstractAnnotation slotFiller : resultAnnotation.asInstanceOfEntityTemplate()
-//								.getMultiFillerSlot(SlotType.get("hasPairwisedCompareGroups")).getSlotFiller()) {
-//							deepCopyOfResult.asInstanceOfEntityTemplate()
-//									.removeMultiFillerSlotFiller(SlotType.get("hasPairwisedCompareGroups"), slotFiller);
-//						}
+						deepCopyOfResult.asInstanceOfEntityTemplate()
+								.clearSlot(SlotType.get("hasPairwisedCompareGroups"));
 
 						deepCopyOfResult.asInstanceOfEntityTemplate()
 								.setSingleSlotFiller(SlotType.get("hasTargetGroup"), expGroup1);
