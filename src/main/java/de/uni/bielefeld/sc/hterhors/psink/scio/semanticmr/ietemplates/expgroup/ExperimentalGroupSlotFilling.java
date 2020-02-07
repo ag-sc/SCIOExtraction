@@ -128,7 +128,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	public static void main(String[] args) throws Exception {
 
 		if (args.length == 0)
-			new ExperimentalGroupSlotFilling(0);
+			new ExperimentalGroupSlotFilling(3);
 		else
 			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]));
 	}
@@ -230,7 +230,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
-			cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
+			cardinalityMode = ECardinalityMode.PARALLEL_CARDINALITIES;
 
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
@@ -1267,7 +1267,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private void addTreatmentCandidatesFromNERLA() {
 
-		JSONNerlaReader prov = new JSONNerlaReader(new File("src/main/resources/slotfilling/treatment/corpus/nerla/"));
+		JSONNerlaReader prov = new JSONNerlaReader(CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.treatment));
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
@@ -1292,7 +1292,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private void addOrganismModelCandidatesFromNERLA() {
 
 		JSONNerlaReader prov = new JSONNerlaReader(
-				new File("src/main/resources/slotfilling/organism_model/corpus/nerla/"));
+				CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.organismModel));
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
@@ -1315,7 +1315,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private void addInjuryCandidatesFromNERLA() {
 
-		JSONNerlaReader prov = new JSONNerlaReader(new File("src/main/resources/slotfilling/injury/corpus/nerla/"));
+		JSONNerlaReader prov = new JSONNerlaReader(CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury));
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
