@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class ExperimentalGroupEvaluation {
 		this.evaluator = evaluator;
 	}
 
-	public Score evaluate(Map<Instance, State> results) {
+	public Score evaluate(PrintStream ps, Map<Instance, State> results) {
 
 		double cardinalityRMSE = 0;
 
@@ -127,20 +128,31 @@ public class ExperimentalGroupEvaluation {
 //		macroRecall /= results.entrySet().size();
 //		log.info("EXP GROUP MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
 		log.info("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
+		ps.println("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
 		final StringBuffer cardString = new StringBuffer();
 		intervallCardinality.entrySet().forEach(e -> cardString.append(e.getKey() + ":" + e.getValue().getF1() + "\t"));
 		log.info("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
+		ps.println("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
 		log.info("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));
+		ps.println("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));
 		log.info("EXP GROUP MICRO  SCORE = " + experimentalGroupScore);
+		ps.println("EXP GROUP MICRO  SCORE = " + experimentalGroupScore);
 		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
 			log.info("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
+			ps.println("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
 			log.info("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);
+			ps.println("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);
 			log.info("EXP GROUP MICRO: TREATMENT Non Vehicle = " + nonVehicleScore);
+			ps.println("EXP GROUP MICRO: TREATMENT Non Vehicle = " + nonVehicleScore);
 		}
-		if (SCIOSlotTypes.hasOrganismModel.isIncluded())
+		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
 			log.info("EXP GROUP MICRO: ORG MODEL = " + organismModelScore);
-		if (SCIOSlotTypes.hasInjuryModel.isIncluded())
+			ps.println("EXP GROUP MICRO: ORG MODEL = " + organismModelScore);
+		}
+		if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
 			log.info("EXP GROUP MICRO: INJURY MODEL = " + injuryModelScore);
+			ps.println("EXP GROUP MICRO: INJURY MODEL = " + injuryModelScore);
+		}
 		return experimentalGroupScore;
 	}
 

@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class OrganismModelEvaluation {
 		this.evaluator = evaluator;
 	}
 
-	public Score evaluate(Map<Instance, State> results) {
+	public Score evaluate(PrintStream ps, Map<Instance, State> results) {
 
 		Score score = new Score();
 //		double macroF1 = 0;
@@ -71,6 +72,7 @@ public class OrganismModelEvaluation {
 //		macroRecall /= results.entrySet().size();
 //		log.info("ORGANISM MODEL MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
 		log.info("ORGANISM MODEL MICRO: SCORE = " + score);
+		ps.println("ORGANISM MODEL MICRO: SCORE = " + score);
 		return score;
 	}
 

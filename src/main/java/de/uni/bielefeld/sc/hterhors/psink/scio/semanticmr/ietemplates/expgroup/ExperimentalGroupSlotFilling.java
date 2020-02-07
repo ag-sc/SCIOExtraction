@@ -1,7 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -123,9 +125,12 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNorma
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 
-		new ExperimentalGroupSlotFilling();
+		if (args.length == 0)
+			new ExperimentalGroupSlotFilling(0);
+		else
+			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]));
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -171,14 +176,130 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private EExplorationMode explorationMode;
 
 	private String modelName;
+	private File outputFile;
 
-	public ExperimentalGroupSlotFilling() throws IOException {
+	public void setParameterByID(int id) {
+
+		if (id == 0) {
+			/**
+			 * Test in eclipse
+			 */
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 1) {
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 2) {
+			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 3) {
+			groupNameProviderMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 4) {
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 5) {
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			cardinalityMode = ECardinalityMode.PARALLEL_CARDINALITIES;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 6) {
+			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			cardinalityMode = ECardinalityMode.PARALLEL_CARDINALITIES;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		} else if (id == 7) {
+			groupNameProviderMode = EExtractGroupNamesMode.PATTERN_NP_CHUNKS;
+			groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			cardinalityMode = ECardinalityMode.PARALLEL_CARDINALITIES;
+
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+		}
+
+	}
+
+	public ExperimentalGroupSlotFilling(int parameterID) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
-		this.instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
+		this.instanceDirectory = CorpusBuilderBib
+				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
 
 		Annotations.removeDuplicates = true;
 
@@ -191,17 +312,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
-		groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-		groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
-		distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+		setParameterByID(parameterID);
 
-		mainClassProviderMode = EMainClassMode.GOLD;
-
-		cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
-
-		assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-		complexityMode = EComplexityMode.ROOT;
-		explorationMode = EExplorationMode.TYPE_BASED;
+		outputFile = new File("ExperimentalGroupExtractionResults_" + rand);
 
 		trainingObjectiveFunction = new SlotFillingObjectiveFunction(
 				new CartesianEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
@@ -255,7 +368,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private void run(List<IExplorationStrategy> explorerList, ISampler sampler, IStateInitializer initializer,
 			ISamplingStoppingCriterion[] sampleStoppingCrits, ISamplingStoppingCriterion maxStepCrit,
 			List<AbstractFeatureTemplate<?>> featureTemplates,
-			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) {
+			Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter) throws Exception {
 		/**
 		 * Finally, we chose a model base directory and a name for the model.
 		 * 
@@ -350,7 +463,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	}
 
-	private void evaluateDetailed(Map<Instance, State> mergedResults) {
+	private void evaluateDetailed(Map<Instance, State> mergedResults) throws Exception {
 
 		log.info("samplingMode: " + explorationMode);
 		log.info("assignmentMode: " + assignmentMode);
@@ -359,6 +472,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		log.info("groupNameProviderMode: " + groupNameProviderMode);
 		log.info("mainClassProviderMode: " + mainClassProviderMode);
 		log.info("distinctGroupNamesMode: " + distinctGroupNamesMode);
+
+		PrintStream ps = new PrintStream(outputFile);
+
+		ps.println("samplingMode: " + explorationMode);
+		ps.println("assignmentMode: " + assignmentMode);
+		ps.println("cardinalityMode: " + cardinalityMode);
+		ps.println("groupNameProcessingMode: " + groupNameProcessingMode);
+		ps.println("groupNameProviderMode: " + groupNameProviderMode);
+		ps.println("mainClassProviderMode: " + mainClassProviderMode);
+		ps.println("distinctGroupNamesMode: " + distinctGroupNamesMode);
 
 		NerlaEvaluator nerlaEvaluator = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
 
@@ -373,7 +496,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			SCIOSlotTypes.hasCompound.include();
 			SCIOSlotTypes.hasTreatmentType.include();
 			TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(nerlaEvaluator);
-			treatmentEvaluation.evaluate(mergedResults);
+			treatmentEvaluation.evaluate(ps, mergedResults);
 			SlotType.restoreExcludance();
 		}
 		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
@@ -382,7 +505,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			SCIOSlotTypes.hasOrganismModel.include();
 			SCIOSlotTypes.hasOrganismSpecies.include();
 			OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(nerlaEvaluator);
-			organismModelEvaluation.evaluate(mergedResults);
+			organismModelEvaluation.evaluate(ps, mergedResults);
 			SlotType.restoreExcludance();
 		}
 
@@ -391,7 +514,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			SlotType.excludeAll();
 			SCIOSlotTypes.hasInjuryModel.include();
 			InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(nerlaEvaluator);
-			injuryModelEvaluation.evaluate(mergedResults);
+			injuryModelEvaluation.evaluate(ps, mergedResults);
 			SlotType.restoreExcludance();
 		}
 
@@ -410,8 +533,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		ExperimentalGroupEvaluation expGroupEval = new ExperimentalGroupEvaluation(predictionObjectiveFunction,
 				nerlaEvaluator);
 
-		expGroupEval.evaluate(mergedResults);
+		expGroupEval.evaluate(ps, mergedResults);
 		SlotType.restoreExcludance();
+
+		ps.flush();
+		ps.close();
 	}
 
 	private ISampler getSampler() {

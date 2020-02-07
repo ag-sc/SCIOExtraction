@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class TreatmentEvaluation {
 		this.evaluator = evaluator;
 	}
 
-	public Score evaluate(Map<Instance, State> results) {
+	public Score evaluate(PrintStream ps, Map<Instance, State> results) {
 		
 		Score vehicleScore = new Score();
 		Score nonVehicleScore = new Score();
@@ -87,6 +88,9 @@ public class TreatmentEvaluation {
 		log.info("TREATMENTS MICRO: BOTH = " + bothS);
 		log.info("TREATMENTS MICRO: Vehicle = " + vehicleScore);
 		log.info("TREATMENTS MICRO: Non Vehicle = " + nonVehicleScore);
+		ps.println("TREATMENTS MICRO: BOTH = " + bothS);
+		ps.println("TREATMENTS MICRO: Vehicle = " + vehicleScore);
+		ps.println("TREATMENTS MICRO: Non Vehicle = " + nonVehicleScore);
 		return bothS;
 	}
 
