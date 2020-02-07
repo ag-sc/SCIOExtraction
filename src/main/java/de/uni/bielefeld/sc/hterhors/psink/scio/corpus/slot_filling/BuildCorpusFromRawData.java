@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.corpus;
+package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,6 @@ import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
 import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderHelper;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.nerla.DeliveryMethodPattern;
@@ -105,8 +104,7 @@ public class BuildCorpusFromRawData {
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.result, true, true,
 				true);
 
-		File tmpUnrolledRawDataDir = new File(SRC_MAIN_RESOURCES,
-				CorpusBuilderHelper.toDirName(SCIOEntityTypes.result) + "_tmp/");
+		File tmpUnrolledRawDataDir = new File(SRC_MAIN_RESOURCES, toDirName(SCIOEntityTypes.result) + "_tmp/");
 		tmpUnrolledRawDataDir.mkdirs();
 
 		new ResolvePairwiseComparedGroups(finalInstanceDirectoryForEntity(SCIOEntityTypes.result),
@@ -208,7 +206,7 @@ public class BuildCorpusFromRawData {
 
 	private static void buildSubDataStructureFiles(EntityType rootEntityType) throws Exception {
 
-		final String dataStructureDirName = CorpusBuilderHelper.toDirName(rootEntityType) + DATA_STRUCTURE_DIR_NAME;
+		final String dataStructureDirName = toDirName(rootEntityType) + DATA_STRUCTURE_DIR_NAME;
 
 		File finalDataStructureDir = new File(SLOT_FILLING_DIR, dataStructureDirName);
 		finalDataStructureDir.mkdirs();
@@ -237,8 +235,7 @@ public class BuildCorpusFromRawData {
 		File finalInstancesDir = finalInstanceDirectoryForEntity(patternCollection.getRootEntityType());
 		finalInstancesDir.mkdirs();
 
-		final String nerlaDirName = CorpusBuilderHelper.toDirName(patternCollection.getRootEntityType())
-				+ REGEX_NERLA_DIR_NAME;
+		final String nerlaDirName = toDirName(patternCollection.getRootEntityType()) + REGEX_NERLA_DIR_NAME;
 		final File nerlaDiractory = new File(SLOT_FILLING_DIR, nerlaDirName);
 		nerlaDiractory.mkdirs();
 
@@ -308,10 +305,21 @@ public class BuildCorpusFromRawData {
 	}
 
 	private static File finalInstanceDirectoryForEntity(EntityType entityType) {
-		final String instancesDirName = CorpusBuilderHelper.toDirName(entityType) + INSTANCES_DIR_NAME;
+		final String instancesDirName = toDirName(entityType) + INSTANCES_DIR_NAME;
 		File finalInstancesDir = new File(SLOT_FILLING_DIR, instancesDirName);
 		finalInstancesDir.mkdirs();
 		return finalInstancesDir;
 	}
 
+	private static String toDirName(EntityType entityType) {
+		StringBuffer buffer = new StringBuffer();
+
+		String[] parts = entityType.name.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+		for (int i = 0; i < parts.length - 1; i++) {
+			buffer.append(parts[i].toLowerCase());
+			buffer.append("_");
+		}
+		buffer.append(parts[parts.length - 1].toLowerCase());
+		return buffer.toString();
+	}
 }

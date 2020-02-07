@@ -1,22 +1,29 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.nerla.corpus;
+package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.nerl;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.opencsv.CSVReader;
+
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.filter.EntityTemplateAnnotationFilter;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -24,15 +31,17 @@ import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 
-public class ExtractNERLADataFromSlotFillingData {
+public class ExtractGroupNameNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractNERLADataFromSlotFillingData("investigation_method", InvestigationMethodSpecs.systemsScope);
+		new ExtractGroupNameNERLADataFromSlotFillingData("experimental_group", ExperimentalGroupSpecifications.systemsScope);
 	}
 
-	public ExtractNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
+	public ExtractGroupNameNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(specs).build();
 
 		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
@@ -40,20 +49,25 @@ public class ExtractNERLADataFromSlotFillingData {
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				new File("src/main/resources/slotfilling/" + type + "/corpus/instances/"), shuffleCorpusDistributor);
+
 		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			List<Instance> newInstances = new ArrayList<>();
 			if (!names.contains(instance.getName()))
 				continue;
+
 			System.out.println(instance.getName());
-			Set<AbstractAnnotation> annotations = new HashSet<>();
+			Set<AbstractAnnotation> annotations = getAdditionalAnnotations(instance);
 
 			for (EntityTemplate annotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
 
 				add(annotations, annotation);
 
 			}
+
+			System.out.println("Found annotations: " + annotations.size());
+
 			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
@@ -62,38 +76,45 @@ public class ExtractNERLADataFromSlotFillingData {
 			InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(newInstances);
 
 			JsonInstanceIO io = new JsonInstanceIO(true);
-			io.writeInstances(
-					new File("src/main/resources/nerl/" + type + "/corpus/instances/" + instance.getName() + ".json"),
+			io.writeInstances(new File(
+					"src/main/resources/nerl/" + "group_name" + "/corpus/instances/" + instance.getName() + ".json"),
 					conv.convertToWrapperInstances());
 
 		}
 	}
 
-	public void add(Set<AbstractAnnotation> annotations, EntityTemplate annotation) {
+	/**
+	 * Returns a set of group name anntotions which are not serve as slot filler.
+	 * 
+	 * @param instance
+	 * @return
+	 * @throws IOException
+	 */
+	private Set<AbstractAnnotation> getAdditionalAnnotations(Instance instance) throws IOException {
+		Set<AbstractAnnotation> adds = new HashSet<>();
 
-		if (annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
-			DocumentLinkedAnnotation a = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation();
-			annotations.add(a);
+		CSVReader reader = new CSVReader(
+				new FileReader(new File(new File("rawData/export_22112019/"), instance.getName() + "_Jessica.annodb")),
+				',', '"', 1);
+
+		List<String[]> data = reader.readAll();
+
+		for (String[] strings : data) {
+
+			if (!(strings[1].trim().equals("GroupName") || strings[1].trim().equals("DefinedExperimentalGroup")))
+				continue;
+
+			adds.add(AnnotationBuilder.toAnnotation(instance.getDocument(), "GroupName", strings[4].trim(),
+					Integer.parseInt(strings[2].trim())));
+
 		}
+		System.out.println("Found additional annotations: " + adds.size());
 
-//		EntityTemplateAnnotationFilter filter = annotation.filter().docLinkedAnnoation().nonEmpty().merge().multiSlots()
-//				.singleSlots().build();
-//		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter.getMergedAnnotations().entrySet()) {
-//
-//			annotations.addAll(a.getValue());
-//
-//		}
-//
-//		EntityTemplateAnnotationFilter filter2 = annotation.filter().merge().entityTemplateAnnoation().multiSlots()
-//				.nonEmpty().singleSlots().build();
-//
-//		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter2.getMergedAnnotations().entrySet()) {
-//			for (AbstractAnnotation abstractAnnotation : a.getValue()) {
-//				add(annotations, abstractAnnotation.asInstanceOfEntityTemplate());
-//			}
-//		}
+		reader.close();
 
+		return adds;
 	}
+
 	/**
 	 * Projects existing annotations into the whole document.
 	 * 
@@ -122,6 +143,37 @@ public class ExtractNERLADataFromSlotFillingData {
 		}
 		System.out.println("Found additional annotation projections: " + additionalAnnotations.size());
 		annotations.addAll(additionalAnnotations);
+
+	}
+
+	public void add(Set<AbstractAnnotation> annotations, EntityTemplate annotation) {
+		EntityTemplateAnnotationFilter filter = annotation.filter().docLinkedAnnoation().nonEmpty().merge().multiSlots()
+				.singleSlots().build();
+
+		if (annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
+			if (annotation.getRootAnnotation().getEntityType() == SCIOEntityTypes.definedExperimentalGroup
+					|| annotation.getRootAnnotation().getEntityType() == EntityType.get("AnalyzedExperimentalGroup")) {
+				DocumentLinkedAnnotation a = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation();
+				annotations.add(AnnotationBuilder.toAnnotation(a.document, "GroupName", a.getSurfaceForm(),
+						a.getStartDocCharOffset()));
+			}
+		}
+
+		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter.getMergedAnnotations().entrySet()) {
+
+			if (a.getKey().equals(SCIOSlotTypes.hasGroupName))
+				annotations.addAll(a.getValue());
+
+		}
+
+		EntityTemplateAnnotationFilter filter2 = annotation.filter().merge().entityTemplateAnnoation().multiSlots()
+				.nonEmpty().singleSlots().build();
+
+		for (Entry<SlotType, Set<AbstractAnnotation>> a : filter2.getMergedAnnotations().entrySet()) {
+			for (AbstractAnnotation abstractAnnotation : a.getValue()) {
+				add(annotations, abstractAnnotation.asInstanceOfEntityTemplate());
+			}
+		}
 
 	}
 

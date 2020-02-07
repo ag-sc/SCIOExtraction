@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.corpus;
+package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,10 +19,10 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsToSantoAnnotations;
 
 /**
  * Rolls out the pairwise compared groups.
@@ -154,8 +155,7 @@ public class ResolvePairwiseComparedGroups {
 		SantoAnnotations collectRDF = new SantoAnnotations(new HashSet<>(), new HashMap<>());
 		for (AbstractAnnotation annotation : annotations) {
 
-			AnnotationsToSantoAnnotations.collectRDF(annotation, collectRDF, "http://scio/data/",
-					"http://psink.de/scio/");
+			collectRDF(annotation, collectRDF, "http://scio/data/", "http://psink.de/scio/");
 
 		}
 		return collectRDF;
@@ -196,5 +196,98 @@ public class ResolvePairwiseComparedGroups {
 		}
 
 		return annotations;
+	}
+
+	static private void collectRDF(AbstractAnnotation annotation, SantoAnnotations collectData, String dataNamespace,
+			String classNamespace) {
+		toRDFrec(collectData, annotation, annotation, null, dataNamespace, classNamespace);
+	}
+
+	static private SantoAnnotations toRDFrec(SantoAnnotations collectData, AbstractAnnotation parent,
+			AbstractAnnotation child, SlotType origin, String dataNamespace, String classNamespace) {
+		String rdf;
+		if (child.isInstanceOfEntityTemplate()) {
+
+			String rdfType = new StringBuilder("<").append(dataNamespace).append(child.getEntityType().name).append("_")
+					.append(getID(child.asInstanceOfEntityTemplate())).append("> <")
+					.append("http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <").append(classNamespace)
+					.append(child.getEntityType().name).append("> .").toString();
+
+			if (child.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
+				DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfEntityTemplate().getRootAnnotation()
+						.asInstanceOfDocumentLinkedAnnotation();
+				collectData.addInstanceToAnnotation(toAnnotation(docLinkedAnn), rdfType);
+			}
+			collectData.getRdf().add(rdfType);
+
+			if (origin != null) {
+				rdf = new StringBuilder("<").append(dataNamespace).append(parent.getEntityType().name).append("_")
+						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name).append("> <")
+						.append(dataNamespace).append(child.getEntityType().name).append("_")
+						.append(getID(child.asInstanceOfEntityTemplate())).append("> .").toString();
+				if (child.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
+					DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfEntityTemplate().getRootAnnotation()
+							.asInstanceOfDocumentLinkedAnnotation();
+					collectData.addInstanceToAnnotation(toAnnotation(docLinkedAnn), rdf);
+				}
+				collectData.getRdf().add(rdf);
+			}
+		} else {
+			if (child.getEntityType().isLiteral) {
+				rdf = new StringBuilder("<").append(dataNamespace).append(parent.getEntityType().name).append("_")
+						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name).append("> \"")
+						.append(child.asInstanceOfLiteralAnnotation().getSurfaceForm()).append("\" .").toString();
+				if (child.isInstanceOfDocumentLinkedAnnotation()) {
+					DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfDocumentLinkedAnnotation();
+					collectData.addInstanceToAnnotation(toAnnotation(docLinkedAnn), rdf);
+				}
+				collectData.getRdf().add(rdf);
+
+			} else {
+				rdf = new StringBuilder("<").append(dataNamespace).append(parent.getEntityType().name).append("_")
+						.append(getID(parent)).append("> <").append(classNamespace).append(origin.name).append("> <")
+						.append(classNamespace).append(child.getEntityType().name).append("> .").toString();
+				if (child.isInstanceOfDocumentLinkedAnnotation()) {
+					DocumentLinkedAnnotation docLinkedAnn = child.asInstanceOfDocumentLinkedAnnotation();
+					collectData.addInstanceToAnnotation(toAnnotation(docLinkedAnn), rdf);
+				}
+				collectData.getRdf().add(rdf);
+
+			}
+
+		}
+
+		if (child.isInstanceOfEntityTemplate()) {
+
+			final Map<SlotType, Set<AbstractAnnotation>> slots = child.asInstanceOfEntityTemplate().filter()
+					.docLinkedAnnoation().entityTemplateAnnoation().entityTypeAnnoation().literalAnnoation().nonEmpty()
+					.multiSlots().singleSlots().merge().build().getMergedAnnotations();
+
+			for (Entry<SlotType, Set<AbstractAnnotation>> slotFillerSlot : slots.entrySet()) {
+				for (AbstractAnnotation childAnnotation : slotFillerSlot.getValue()) {
+					toRDFrec(collectData, child, childAnnotation, slotFillerSlot.getKey(), dataNamespace,
+							classNamespace);
+				}
+			}
+		}
+		return collectData;
+	}
+
+	static private String toAnnotation(DocumentLinkedAnnotation docLinkedAnn) {
+		String annotation = new StringBuilder(docLinkedAnn.getEntityType().name).append(", ")
+				.append(docLinkedAnn.getStartDocCharOffset()).append(", ").append(docLinkedAnn.getEndDocCharOffset())
+				.append(", \"").append(docLinkedAnn.getSurfaceForm()).append("\", \"\", ").toString();
+		return annotation;
+	}
+
+	private static Map<AbstractAnnotation, Integer> rdfIDMap = new HashMap<AbstractAnnotation, Integer>();
+
+	private static int getID(AbstractAnnotation from) {
+		Integer id;
+		if ((id = rdfIDMap.get(from)) == null) {
+			id = new Integer(rdfIDMap.size());
+			rdfIDMap.put(from, id);
+		}
+		return id.intValue();
 	}
 }
