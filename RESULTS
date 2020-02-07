@@ -25,3 +25,63 @@ CRFStatistics [context=Test, getTotalDuration()=142077]
 modelName: ExperimentalGroup71412
 States generated: 5586769
 
+
+
+
+
+samplingMode: TYPE_BASED
+assignmentMode: TREATMENT_ORGANISM_MODEL_INJURY
+cardinalityMode: PARALLEL_CARDINALITIES
+groupNameProcessingMode: WEKA_CLUSTERING
+groupNameProviderMode: EMPTY
+mainClassProviderMode: PRE_PREDICTED
+distinctGroupNamesMode: NOT_DISTINCT
+TREATMENTS MICRO: BOTH = Score [ getF1()=0.687, getPrecision()=0.756, getRecall()=0.630, tp=34, fp=11, fn=20, tn=0]
+TREATMENTS MICRO: Vehicle = Score [ getF1()=0.688, getPrecision()=0.688, getRecall()=0.688, tp=11, fp=5, fn=5, tn=0]
+TREATMENTS MICRO: Non Vehicle = Score [ getF1()=0.687, getPrecision()=0.793, getRecall()=0.605, tp=23, fp=6, fn=15, tn=0]
+ORGANISM MODEL MICRO: SCORE = Score [ getF1()=0.821, getPrecision()=0.842, getRecall()=0.800, tp=16, fp=3, fn=4, tn=0]
+INJURY MODEL MICRO: SCORE = Score [ getF1()=0.444, getPrecision()=0.500, getRecall()=0.400, tp=8, fp=8, fn=12, tn=0]
+EXP GROUP MICRO  CARDINALITY = Score [ getF1()=0.821, getPrecision()=0.836, getRecall()=0.807, tp=46, fp=9, fn=11, tn=0]
+EXP GROUP MICRO  INTERVALL CARDINALITY = 0:0.7741935483870968	1:0.9444444444444444	2:0.972972972972973	3:0.972972972972973
+EXP GROUP MICRO  CARDINALITY RMSE = 1.4142135623730951
+EXP GROUP MICRO  SCORE = Score [ getF1()=0.536, getPrecision()=0.598, getRecall()=0.486, tp=101, fp=68, fn=107, tn=0]
+EXP GROUP MICRO: TREATMENT BOTH = Score [ getF1()=0.570, getPrecision()=0.671, getRecall()=0.495, tp=47, fp=23, fn=48, tn=0]
+EXP GROUP MICRO: TREATMENT Vehicle = Score [ getF1()=0.588, getPrecision()=0.667, getRecall()=0.526, tp=10, fp=5, fn=9, tn=0]
+EXP GROUP MICRO: TREATMENT Non Vehicle = Score [ getF1()=0.565, getPrecision()=0.673, getRecall()=0.487, tp=37, fp=18, fn=39, tn=0]
+EXP GROUP MICRO: ORG MODEL = Score [ getF1()=0.673, getPrecision()=0.720, getRecall()=0.632, tp=36, fp=14, fn=21, tn=0]
+EXP GROUP MICRO: INJURY MODEL = Score [ getF1()=0.343, getPrecision()=0.367, getRecall()=0.321, tp=18, fp=31, fn=38, tn=0]
+CRFStatistics [context=Train, getTotalDuration()=5295795]
+CRFStatistics [context=Test, getTotalDuration()=72725]
+modelName: ExperimentalGroup20048
+States generated: 8264293
+
+
+
+
+samplingMode: TYPE_BASED
+assignmentMode: TREATMENT_ORGANISM_MODEL_INJURY
+cardinalityMode: GOLD_CARDINALITY
+groupNameProcessingMode: GOLD_CLUSTERING
+groupNameProviderMode: GOLD
+mainClassProviderMode: GOLD
+distinctGroupNamesMode: NOT_DISTINCT
+TREATMENTS MICRO: BOTH = Score [ getF1()=0.887, getPrecision()=1.000, getRecall()=0.796, tp=43, fp=0, fn=11, tn=0]
+TREATMENTS MICRO: Vehicle = Score [ getF1()=0.476, getPrecision()=1.000, getRecall()=0.312, tp=5, fp=0, fn=11, tn=0]
+TREATMENTS MICRO: Non Vehicle = Score [ getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=38, fp=0, fn=0, tn=0]
+ORGANISM MODEL MICRO: SCORE = Score [ getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
+INJURY MODEL MICRO: SCORE = Score [ getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=20, fp=0, fn=0, tn=0]
+EXP GROUP MICRO  CARDINALITY = Score [ getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=57, fp=0, fn=0, tn=0]
+EXP GROUP MICRO  INTERVALL CARDINALITY = 0:1.0	1:1.0	2:1.0	3:1.0
+EXP GROUP MICRO  CARDINALITY RMSE = 0.0
+EXP GROUP MICRO  SCORE = Score [ getF1()=0.817, getPrecision()=0.821, getRecall()=0.813, tp=161, fp=35, fn=37, tn=0]
+EXP GROUP MICRO: TREATMENT BOTH = Score [ getF1()=0.731, getPrecision()=0.673, getRecall()=0.800, tp=68, fp=33, fn=17, tn=0]
+EXP GROUP MICRO: TREATMENT Vehicle = Score [ getF1()=0.417, getPrecision()=1.000, getRecall()=0.263, tp=5, fp=0, fn=14, tn=0]
+EXP GROUP MICRO: TREATMENT Non Vehicle = Score [ getF1()=0.778, getPrecision()=0.656, getRecall()=0.955, tp=63, fp=33, fn=3, tn=0]
+EXP GROUP MICRO: ORG MODEL = Score [ getF1()=0.927, getPrecision()=0.962, getRecall()=0.895, tp=51, fp=2, fn=6, tn=0]
+EXP GROUP MICRO: INJURY MODEL = Score [ getF1()=0.857, getPrecision()=1.000, getRecall()=0.750, tp=42, fp=0, fn=14, tn=0]
+CRFStatistics [context=Train, getTotalDuration()=309636]
+CRFStatistics [context=Test, getTotalDuration()=4822]
+modelName: ExperimentalGroup87303
+States generated: 360288
+
+
