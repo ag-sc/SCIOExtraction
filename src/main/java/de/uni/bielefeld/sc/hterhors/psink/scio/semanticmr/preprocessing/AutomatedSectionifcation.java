@@ -15,8 +15,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import org.apache.commons.beanutils.converters.AbstractArrayConverter;
-import org.apache.jena.sparql.function.library.leviathan.sec;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,8 +25,8 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.specs.InjurySpecs;
 
 public class AutomatedSectionifcation {
 
@@ -36,7 +34,7 @@ public class AutomatedSectionifcation {
 
 	public static void main(String[] args) throws IOException {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build();
+		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadDataStructureReader("Injury")).build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();

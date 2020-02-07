@@ -19,8 +19,8 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.specs.DeliveryMethodSpecs;
 
 /**
  * GREEDY EVAL! Slot filling for delivery method.
@@ -118,7 +118,7 @@ public class DeliveryMethodFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DeliveryMethodSpecs.systemsScopeReader)
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("DeliveryMethod"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.

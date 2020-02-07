@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,7 +27,7 @@ import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.Classification;
 import weka.classifiers.trees.RandomForest;
@@ -58,7 +57,8 @@ public class ResultSentenceClassificationWEKA {
 
 	public static void main(String[] args) throws Exception {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
@@ -328,7 +328,7 @@ public class ResultSentenceClassificationWEKA {
 			}
 
 			if (training) {
-				for (int i = 0; i < count*3; i++) {
+				for (int i = 0; i < count * 3; i++) {
 					Map<String, Object> parameter = new HashMap<>();
 					parameter.put("docID", negExamples.get(i).docID);
 					parameter.put("sentenceIndex", negExamples.get(i).sentenceIndex);

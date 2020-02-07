@@ -24,12 +24,13 @@ import de.hterhors.semanticmr.init.reader.ISpecificationsReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 
 public class ExtractNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractNERLADataFromSlotFillingData("investigation_method", InvestigationMethodSpecs.systemsScope);
+		new ExtractNERLADataFromSlotFillingData("investigation_method",
+				DataStructureLoader.loadDataStructureReader("InvestigationMethod"));
 	}
 
 	public ExtractNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {
@@ -94,6 +95,7 @@ public class ExtractNERLADataFromSlotFillingData {
 //		}
 
 	}
+
 	/**
 	 * Projects existing annotations into the whole document.
 	 * 

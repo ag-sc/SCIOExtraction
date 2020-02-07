@@ -62,8 +62,10 @@ import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.evaluation.ExperimentalGroupEvaluation;
@@ -84,7 +86,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.m
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EMainClassMode;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.BOWCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ContextBetweenSlotFillerTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.templates.ExGrAllUsedTemplate;
@@ -146,8 +147,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new GreedySearchEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
-	private final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
+	private final File instanceDirectory;
 
 	private InstanceProvider instanceProvider;
 
@@ -173,9 +173,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private String modelName;
 
 	public ExperimentalGroupSlotFilling() throws IOException {
-		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
-				.apply().registerNormalizationFunction(new WeightNormalization())
+		super(SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).apply()
+				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
+
+		this.instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
 
 		Annotations.removeDuplicates = true;
 

@@ -33,12 +33,13 @@ import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 
 public class ExtractGroupNameNERLADataFromSlotFillingData {
 
 	public static void main(String[] args) throws IOException {
-		new ExtractGroupNameNERLADataFromSlotFillingData("experimental_group", ExperimentalGroupSpecifications.systemsScope);
+		new ExtractGroupNameNERLADataFromSlotFillingData("experimental_group",
+				DataStructureLoader.loadDataStructureReader("ExperimentalGroup"));
 	}
 
 	public ExtractGroupNameNERLADataFromSlotFillingData(String type, ISpecificationsReader specs) throws IOException {

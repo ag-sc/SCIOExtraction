@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithOutDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.DataTypeClass;
@@ -64,14 +65,16 @@ public class OWL2GraphmlConverter {
 
 		List<IGraphMLContent> listOfUnGroupedContent = new ArrayList<>();
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
 
 		/*
 		 * vis_group,ClassNames
 		 */
 		Map<String, Set<String>> visGroups = new HashMap<>();
 
-		visGroups.put("Treatment_Group", new HashSet<>(Arrays.asList("Treatment", "StemCellSourceType","RehabMedication")));
+		visGroups.put("Treatment_Group",
+				new HashSet<>(Arrays.asList("Treatment", "StemCellSourceType", "RehabMedication")));
 		visGroups.put("Investigation_Method_Group", new HashSet<>(Arrays.asList("Function", "Investigation",
 				"InvestigationMethod", "Apparatus", "ApplicationInstrument")));
 		visGroups.put("Experimental_Design_Group",
@@ -104,8 +107,8 @@ public class OWL2GraphmlConverter {
 
 		Set<Triple> objectTypeProperties = new HashSet<>();
 
-		List<String[]> structures = ResultSpecifications.structures == null ? Collections.emptyList()
-				: Files.readAllLines(ResultSpecifications.structures.toPath()).stream()
+		List<String[]> structures = CorpusBuilderBib.buildStructuresFile("Result") == null ? Collections.emptyList()
+				: Files.readAllLines(CorpusBuilderBib.buildStructuresFile("Result").toPath()).stream()
 						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
 						.collect(Collectors.toList());
 
@@ -165,9 +168,10 @@ public class OWL2GraphmlConverter {
 
 		}
 
-		List<String[]> hierarchies = ResultSpecifications.hierarchies == null ? Collections.emptyList()
-				: Files.readAllLines(ResultSpecifications.hierarchies.toPath()).stream().filter(l -> !l.startsWith("#"))
-						.filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t")).collect(Collectors.toList());
+		List<String[]> hierarchies = CorpusBuilderBib.buildHierarchiesFile("Result") == null ? Collections.emptyList()
+				: Files.readAllLines(CorpusBuilderBib.buildHierarchiesFile("Result").toPath()).stream()
+						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
+						.collect(Collectors.toList());
 
 		for (String[] d : hierarchies) {
 			subClassRelations.add(new Tuple(d[0], d[1]));

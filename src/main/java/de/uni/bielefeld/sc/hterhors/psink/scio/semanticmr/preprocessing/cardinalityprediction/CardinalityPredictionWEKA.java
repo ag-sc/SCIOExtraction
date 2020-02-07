@@ -19,7 +19,9 @@ import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import weka.classifiers.Classifier;
@@ -44,14 +46,16 @@ public class CardinalityPredictionWEKA {
 //			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
 //	private static final File instanceDirectory = new File(
 //			"src/main/resources/slotfilling/organism_model/corpus/instances/");
-	private static final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/treatment/corpus/instances/");
+	private static File instanceDirectory;
 //	private static  final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
 	public static void main(String[] args) throws Exception {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
-				.build();
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).build();
+
+		instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
+
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
 

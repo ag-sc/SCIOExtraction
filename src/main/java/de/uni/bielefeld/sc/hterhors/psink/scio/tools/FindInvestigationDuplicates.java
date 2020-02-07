@@ -16,7 +16,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 
 public class FindInvestigationDuplicates {
@@ -35,7 +35,7 @@ public class FindInvestigationDuplicates {
 				.build();
 
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(ExperimentalGroupSpecifications.systemsScope).apply()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
 
@@ -90,9 +90,9 @@ public class FindInvestigationDuplicates {
 			}
 
 			for (Set<String> set : ids) {
-				if(set.size()==1)
+				if (set.size() == 1)
 					continue;
-				
+
 				StringBuffer sb = new StringBuffer(i.getName() + "\t");
 				for (String duplicates : set) {
 					sb.append(duplicates);

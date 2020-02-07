@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.logging.log4j.core.util.ExtensionLanguageMapping;
-
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;

@@ -19,8 +19,8 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.InvestigationMethodRestrictionProvider.EInvestigationMethodModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
 
 /**
  * 
@@ -60,7 +60,7 @@ public class InvestigationMethodSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(InvestigationMethodSpecs.systemsScope)
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("InvestigationMethod"))
 				/**
 				 * Finally, we build the systems scope.
 				 */

@@ -23,8 +23,8 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.specs.VertebralAreaSpecs;
 
 /**
  * Slot filling for organism models.
@@ -62,7 +62,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 		 * 
 		 */
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(VertebralAreaSpecs.systemsScopeReader).build();
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("VertebralArea")).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();

@@ -13,8 +13,8 @@ import java.util.List;
 import com.opencsv.CSVReader;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
-import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 
 /**
  * This class reads all annotations from the extracted .annodb files and checks
@@ -25,17 +25,10 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
  */
 public class AnnotationCheck {
 
-	private static final File entities = new File("src/main/resources/slotfilling/result/specifications/entities.csv");
-	private static final File slots = new File("src/main/resources/slotfilling/result/specifications/slots.csv");
-	private static final File structures = new File(
-			"src/main/resources/slotfilling/result/specifications/structures.csv");
-	private static final File hierarchies = new File(
-			"src/main/resources/slotfilling/result/specifications/hierarchies.csv");
-	public final static CSVScopeReader systemsScope = new CSVScopeReader(entities, hierarchies, slots, structures);
-
 	public static void main(String[] args) throws IOException {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(systemsScope).build();
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
 
 		File rootDir = new File("rawData/export_29052019/");
 		List<File> files = new ArrayList<>(Arrays.asList(rootDir.listFiles()));

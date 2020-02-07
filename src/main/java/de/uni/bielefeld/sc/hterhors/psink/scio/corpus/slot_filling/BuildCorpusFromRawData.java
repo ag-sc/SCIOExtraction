@@ -21,7 +21,7 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.init.reader.csv.CSVScopeReader;
+import de.hterhors.semanticmr.init.reader.csv.CSVDataStructureReader;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
 import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.nerla.DeliveryMethodPattern;
@@ -47,31 +48,23 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebrala
 public class BuildCorpusFromRawData {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	private static final String SLOT_FILLING_DIR_NAME = "/slot_filling/";
-	private static final String RAW_DATA_DIR_NAME = "/current_raw_data/";
-	private static final String DATA_STRUCTURE_DIR_NAME = "/data_structure/";
-	private static final String INSTANCES_DIR_NAME = "/instances/";
-	private static final String REGEX_NERLA_DIR_NAME = "/regex_nerla/";
+	private static final File SANTO_RAW_DATA_DIR = new File(CorpusBuilderBib.SRC_MAIN_RESOURCES,
+			CorpusBuilderBib.RAW_DATA_DIR_NAME);
+	private static final File ROOT_DATA_STRUCTURE_DIR = new File(CorpusBuilderBib.SRC_MAIN_RESOURCES,
+			CorpusBuilderBib.DATA_STRUCTURE_DIR_NAME);
 
-	private static final String ENTITIES_FILE_NAME = "entities.csv";
-	private static final String SLOTS_FILE_NAME = "slots.csv";
-	private static final String STRUCTURES_FILE_NAME = "structures.csv";
-	private static final String HIERARCHIES_FILE_NAME = "hierarchies.csv";
-
-	private static final File SRC_MAIN_RESOURCES = new File("src/main/resources/");
-
-	private final static File SLOT_FILLING_DIR = new File(SRC_MAIN_RESOURCES, SLOT_FILLING_DIR_NAME);
-	private static final File SANTO_RAW_DATA_DIR = new File(SRC_MAIN_RESOURCES, RAW_DATA_DIR_NAME);
-	private static final File ROOT_DATA_STRUCTURE_DIR = new File(SRC_MAIN_RESOURCES, DATA_STRUCTURE_DIR_NAME);
-
-	private static final File ROOT_DATA_STRUCTURE_ENTITIES = new File(ROOT_DATA_STRUCTURE_DIR, ENTITIES_FILE_NAME);
-	private static final File ROOT_DATA_STRUCTURE_SLOTS = new File(ROOT_DATA_STRUCTURE_DIR, SLOTS_FILE_NAME);
-	private static final File ROOT_DATA_STRUCTURE_STRUCTURES = new File(ROOT_DATA_STRUCTURE_DIR, STRUCTURES_FILE_NAME);
+	private static final File ROOT_DATA_STRUCTURE_ENTITIES = new File(ROOT_DATA_STRUCTURE_DIR,
+			CorpusBuilderBib.ENTITIES_FILE_NAME);
+	private static final File ROOT_DATA_STRUCTURE_SLOTS = new File(ROOT_DATA_STRUCTURE_DIR,
+			CorpusBuilderBib.SLOTS_FILE_NAME);
+	private static final File ROOT_DATA_STRUCTURE_STRUCTURES = new File(ROOT_DATA_STRUCTURE_DIR,
+			CorpusBuilderBib.STRUCTURES_FILE_NAME);
 	private static final File ROOT_DATA_STRUCTURE_HIERARCHIES = new File(ROOT_DATA_STRUCTURE_DIR,
-			HIERARCHIES_FILE_NAME);
+			CorpusBuilderBib.HIERARCHIES_FILE_NAME);
 
-	private static final CSVScopeReader dataStructureReader = new CSVScopeReader(ROOT_DATA_STRUCTURE_ENTITIES,
-			ROOT_DATA_STRUCTURE_HIERARCHIES, ROOT_DATA_STRUCTURE_SLOTS, ROOT_DATA_STRUCTURE_STRUCTURES);
+	private static final CSVDataStructureReader dataStructureReader = new CSVDataStructureReader(
+			ROOT_DATA_STRUCTURE_ENTITIES, ROOT_DATA_STRUCTURE_HIERARCHIES, ROOT_DATA_STRUCTURE_SLOTS,
+			ROOT_DATA_STRUCTURE_STRUCTURES);
 
 	private static final long RANDOM_SEED = 1000L;
 
@@ -84,7 +77,7 @@ public class BuildCorpusFromRawData {
 
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
-		SLOT_FILLING_DIR.mkdir();
+		CorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 
 		buildCorpusForOrganismModel();
 		buildCorpusForInjuryModel();
@@ -100,15 +93,16 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForResult() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.result);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.result, true, true,
 				true);
 
-		File tmpUnrolledRawDataDir = new File(SRC_MAIN_RESOURCES, toDirName(SCIOEntityTypes.result) + "_tmp/");
+		File tmpUnrolledRawDataDir = new File(CorpusBuilderBib.SRC_MAIN_RESOURCES,
+				CorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
 		tmpUnrolledRawDataDir.mkdirs();
 
-		new ResolvePairwiseComparedGroups(finalInstanceDirectoryForEntity(SCIOEntityTypes.result),
-				finalInstanceDirectoryForEntity(SCIOEntityTypes.observation), tmpUnrolledRawDataDir);
+		new ResolvePairwiseComparedGroups(CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.observation), tmpUnrolledRawDataDir);
 
 		convertFromSanto2JsonCorpus(tmpUnrolledRawDataDir, annotatedDocuments, Collections.emptySet(),
 				SCIOEntityTypes.result, true, true, true);
@@ -119,7 +113,7 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForObservation() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.observation);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.observation, true, true,
 				true);
 
@@ -128,7 +122,7 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForExperimentalGroup() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.experimentalGroup);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.experimentalGroup, true,
 				true, true);
 
@@ -145,7 +139,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.deliveryMethod, true,
 				true, false);
 		annotateWithRegularExpressions(new DeliveryMethodPattern(SCIOEntityTypes.deliveryMethod));
@@ -155,7 +149,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.investigationMethod);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 
 		Set<SlotType> investigationMethodSlotTypes = new HashSet<>();
 		investigationMethodSlotTypes.add(SCIOSlotTypes.hasLocation);
@@ -169,7 +163,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.treatment);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		Set<SlotType> treatmentSlotTypes = new HashSet<>();
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasCompound);
@@ -206,19 +200,20 @@ public class BuildCorpusFromRawData {
 
 	private static void buildSubDataStructureFiles(EntityType rootEntityType) throws Exception {
 
-		final String dataStructureDirName = toDirName(rootEntityType) + DATA_STRUCTURE_DIR_NAME;
+		final String dataStructureDirName = CorpusBuilderBib.toDirName(rootEntityType)
+				+ CorpusBuilderBib.DATA_STRUCTURE_DIR_NAME;
 
-		File finalDataStructureDir = new File(SLOT_FILLING_DIR, dataStructureDirName);
+		File finalDataStructureDir = new File(CorpusBuilderBib.SLOT_FILLING_DIR, dataStructureDirName);
 		finalDataStructureDir.mkdirs();
 
-		SpecificationWriter.writeEntityDataStructureFile(new File(finalDataStructureDir, ENTITIES_FILE_NAME),
+		SpecificationWriter.writeEntityDataStructureFile(CorpusBuilderBib.buildEntitiesFile(rootEntityType),
 				rootEntityType);
-		SpecificationWriter.writeHierarchiesDataStructureFile(new File(finalDataStructureDir, HIERARCHIES_FILE_NAME),
+		SpecificationWriter.writeHierarchiesDataStructureFile(CorpusBuilderBib.buildHierarchiesFile(rootEntityType),
 				rootEntityType);
-		SpecificationWriter.writeSlotsDataStructureFile(new File(finalDataStructureDir, SLOTS_FILE_NAME),
+		SpecificationWriter.writeSlotsDataStructureFile(CorpusBuilderBib.buildSlotsFile(rootEntityType),
 				rootEntityType);
 		SpecificationWriter.writeStructuresDataStructureFile(ROOT_DATA_STRUCTURE_STRUCTURES,
-				new File(finalDataStructureDir, STRUCTURES_FILE_NAME), rootEntityType);
+				CorpusBuilderBib.buildStructuresFile(rootEntityType), rootEntityType);
 
 	}
 
@@ -232,11 +227,13 @@ public class BuildCorpusFromRawData {
 
 	private static void annotateWithRegularExpressions(BasicRegExPattern patternCollection) {
 
-		File finalInstancesDir = finalInstanceDirectoryForEntity(patternCollection.getRootEntityType());
+		File finalInstancesDir = CorpusBuilderBib
+				.finalInstanceDirectoryForEntity(patternCollection.getRootEntityType());
 		finalInstancesDir.mkdirs();
 
-		final String nerlaDirName = toDirName(patternCollection.getRootEntityType()) + REGEX_NERLA_DIR_NAME;
-		final File nerlaDiractory = new File(SLOT_FILLING_DIR, nerlaDirName);
+		final String nerlaDirName = CorpusBuilderBib.toDirName(patternCollection.getRootEntityType())
+				+ CorpusBuilderBib.REGEX_NERLA_DIR_NAME;
+		final File nerlaDiractory = new File(CorpusBuilderBib.SLOT_FILLING_DIR, nerlaDirName);
 		nerlaDiractory.mkdirs();
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(patternCollection);
@@ -265,7 +262,8 @@ public class BuildCorpusFromRawData {
 	private static void convertFromSanto2JsonCorpus(File rawDataFile, Set<String> filterNames,
 			Set<SlotType> filterSlotTypes, EntityType entityType, boolean includeSubEntities, boolean jsonPrettyString,
 			boolean deepRec) throws Exception {
-		File finalInstancesDir = finalInstanceDirectoryForEntity(entityType);
+		File finalInstancesDir = CorpusBuilderBib.finalInstanceDirectoryForEntity(entityType);
+		finalInstancesDir.mkdirs();
 
 		final Random random = new Random(RANDOM_SEED);
 
@@ -304,22 +302,4 @@ public class BuildCorpusFromRawData {
 		}
 	}
 
-	private static File finalInstanceDirectoryForEntity(EntityType entityType) {
-		final String instancesDirName = toDirName(entityType) + INSTANCES_DIR_NAME;
-		File finalInstancesDir = new File(SLOT_FILLING_DIR, instancesDirName);
-		finalInstancesDir.mkdirs();
-		return finalInstancesDir;
-	}
-
-	private static String toDirName(EntityType entityType) {
-		StringBuffer buffer = new StringBuffer();
-
-		String[] parts = entityType.name.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-		for (int i = 0; i < parts.length - 1; i++) {
-			buffer.append(parts[i].toLowerCase());
-			buffer.append("_");
-		}
-		buffer.append(parts[parts.length - 1].toLowerCase());
-		return buffer.toString();
-	}
 }

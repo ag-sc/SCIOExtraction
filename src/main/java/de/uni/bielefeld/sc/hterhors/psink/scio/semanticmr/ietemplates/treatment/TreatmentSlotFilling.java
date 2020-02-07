@@ -15,16 +15,13 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.treatment.specs.TreatmentSpecs;
 
 /**
  * 
@@ -62,7 +59,7 @@ public class TreatmentSlotFilling {
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public TreatmentSlotFilling() throws IOException {
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(TreatmentSpecs.systemsScope)
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadDataStructureReader("Treatment"))
 				.build();
 
 		PrintStream resultsOut = new PrintStream(new File("results/treatmentResults.csv"));

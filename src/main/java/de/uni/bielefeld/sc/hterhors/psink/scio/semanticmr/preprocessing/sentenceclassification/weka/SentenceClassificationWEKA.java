@@ -24,7 +24,9 @@ import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.sentenceclassification.Classification;
@@ -46,8 +48,7 @@ public class SentenceClassificationWEKA {
 
 //	private static final File instanceDirectory = new File(
 //			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
-	private static final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private static File instanceDirectory;
 
 	private static final String CLASSIFICATION_LABEL_RELEVANT = "Y";
 
@@ -55,12 +56,13 @@ public class SentenceClassificationWEKA {
 //	private static  final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
 	public static void main(String[] args) throws Exception {
-//		
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).build();
 //				SystemScope.Builder.getScopeHandler().addScopeSpecification(OrgModelSpecs.systemsScopeReader).build();
 //				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build();
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
-				.build();
+		instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
 

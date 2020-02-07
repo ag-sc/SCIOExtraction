@@ -50,7 +50,7 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.investigation_method.specs.InvestigationMethodSpecs;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 
 /**
@@ -91,7 +91,8 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(SystemScope.Builder.getScopeHandler().addScopeSpecification(InvestigationMethodSpecs.systemsScope)
+		super(SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("InvestigationMethod"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
@@ -242,7 +243,8 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 */
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction);
 
-		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(EExplorationMode.ANNOTATION_BASED,
+		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
+				EExplorationMode.ANNOTATION_BASED,
 				AnnotationBuilder.toAnnotation(EntityType.get("InvestigtaionMethod")));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);

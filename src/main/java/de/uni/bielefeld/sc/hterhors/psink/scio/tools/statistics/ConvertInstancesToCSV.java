@@ -20,7 +20,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.result.specifications.ResultSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 
 /**
  * This class converts the instances of Results into one big csv table for the
@@ -41,7 +41,8 @@ public class ConvertInstancesToCSV {
 
 	public ConvertInstancesToCSV(File instancesfiledir) throws IOException {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ResultSpecifications.systemsScope).build();
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
 
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;

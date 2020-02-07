@@ -21,8 +21,10 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.specs.OrgModelSpecs;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
 
@@ -66,7 +68,7 @@ public class OrgModelSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private final File instanceDirectory;
 
 //	private final EOrgModelModifications rule;
 
@@ -86,7 +88,7 @@ public class OrgModelSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(OrgModelSpecs.systemsScopeReader)
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("OrganismModel"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
@@ -107,6 +109,8 @@ public class OrgModelSlotFilling {
 				 * Finally, we build the systems scope.
 				 */
 				.build();
+
+		instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
 
 		PrintStream resultsOut = new PrintStream(new File("results/organismModelResults.csv"));
 

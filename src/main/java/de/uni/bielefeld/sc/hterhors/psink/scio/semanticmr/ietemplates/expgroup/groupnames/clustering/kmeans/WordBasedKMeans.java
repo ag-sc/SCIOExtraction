@@ -18,13 +18,13 @@ import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.helper.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
 
 public class WordBasedKMeans<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(ExperimentalGroupSpecifications.systemsScope)
+		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup"))
 				.build();
 
 		/*

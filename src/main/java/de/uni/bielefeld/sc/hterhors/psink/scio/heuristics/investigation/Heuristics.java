@@ -19,7 +19,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.specifications.ExperimentalGroupSpecifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
 
 public class Heuristics {
@@ -38,7 +38,7 @@ public class Heuristics {
 				.build();
 
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(ExperimentalGroupSpecifications.systemsScope).apply()
+				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
 
@@ -111,16 +111,17 @@ public class Heuristics {
 									.getSlotFiller())
 							.filter(zzz -> zzz != null).distinct().count()));
 
-			countOrganismModels.put(i.getName(), Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
-					.map(gresult -> Arrays.asList(
-							gresult.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTargetGroup"))
-									.getSlotFiller(),
-							gresult.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasReferenceGroup"))
-									.getSlotFiller()))
-					.filter(zzz -> zzz != null).flatMap(a -> a.stream()).filter(zzz -> zzz != null)
-					.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
-							.getSlotFiller())
-					.filter(zzz -> zzz != null).distinct().count()));
+			countOrganismModels.put(i.getName(),
+					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
+							.map(gresult -> Arrays.asList(
+									gresult.asInstanceOfEntityTemplate()
+											.getSingleFillerSlot(SlotType.get("hasTargetGroup")).getSlotFiller(),
+									gresult.asInstanceOfEntityTemplate()
+											.getSingleFillerSlot(SlotType.get("hasReferenceGroup")).getSlotFiller()))
+							.filter(zzz -> zzz != null).flatMap(a -> a.stream()).filter(zzz -> zzz != null)
+							.map(b -> b.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
+									.getSlotFiller())
+							.filter(zzz -> zzz != null).distinct().count()));
 
 			countTreatments.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
