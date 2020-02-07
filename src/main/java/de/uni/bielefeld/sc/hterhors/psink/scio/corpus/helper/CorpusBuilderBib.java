@@ -16,17 +16,16 @@ public class CorpusBuilderBib {
 	public static final String SLOTS_FILE_NAME = "slots.csv";
 	public static final String STRUCTURES_FILE_NAME = "structures.csv";
 	public static final String HIERARCHIES_FILE_NAME = "hierarchies.csv";
-	public static final File SRC_MAIN_RESOURCES = new File("src/main/resources/");
+	public static final File DATA_DIRECTORY = new File("data/");
 
-	public final static File SLOT_FILLING_DIR = new File(SRC_MAIN_RESOURCES, SLOT_FILLING_DIR_NAME);
+	public final static File SLOT_FILLING_DIR = new File(DATA_DIRECTORY, SLOT_FILLING_DIR_NAME);
 
 	public static File getDefaultRegExNerlaDir(EntityType entityType) {
-		final String nerlaDirName = CorpusBuilderBib.toDirName(entityType)
-				+ CorpusBuilderBib.REGEX_NERLA_DIR_NAME;
+		final String nerlaDirName = CorpusBuilderBib.toDirName(entityType) + CorpusBuilderBib.REGEX_NERLA_DIR_NAME;
 		final File nerlaDiractory = new File(CorpusBuilderBib.SLOT_FILLING_DIR, nerlaDirName);
 		return nerlaDiractory;
 	}
-	
+
 	private static File finalInstanceDirectoryForEntity(String entityTypeName) {
 		final String instancesDirName = toDirName(entityTypeName) + CorpusBuilderBib.INSTANCES_DIR_NAME;
 		File finalInstancesDir = new File(CorpusBuilderBib.SLOT_FILLING_DIR, instancesDirName);

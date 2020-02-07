@@ -47,10 +47,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebrala
  */
 public class BuildCorpusFromRawData {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
+	public static final File SRC_MAIN_RESOURCES = new File("src/main/resources/");
 
-	private static final File SANTO_RAW_DATA_DIR = new File(CorpusBuilderBib.SRC_MAIN_RESOURCES,
-			CorpusBuilderBib.RAW_DATA_DIR_NAME);
-	private static final File ROOT_DATA_STRUCTURE_DIR = new File(CorpusBuilderBib.SRC_MAIN_RESOURCES,
+	private static final File SANTO_RAW_DATA_DIR = new File(SRC_MAIN_RESOURCES, CorpusBuilderBib.RAW_DATA_DIR_NAME);
+	private static final File ROOT_DATA_STRUCTURE_DIR = new File(SRC_MAIN_RESOURCES,
 			CorpusBuilderBib.DATA_STRUCTURE_DIR_NAME);
 
 	private static final File ROOT_DATA_STRUCTURE_ENTITIES = new File(ROOT_DATA_STRUCTURE_DIR,
@@ -93,16 +93,17 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForResult() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.result);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.result, true, true,
 				true);
 
-		File tmpUnrolledRawDataDir = new File(CorpusBuilderBib.SRC_MAIN_RESOURCES,
+		File tmpUnrolledRawDataDir = new File(SRC_MAIN_RESOURCES,
 				CorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
 		tmpUnrolledRawDataDir.mkdirs();
 
 		new ResolvePairwiseComparedGroups(CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
-				CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation), tmpUnrolledRawDataDir);
+				CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation),
+				tmpUnrolledRawDataDir);
 
 		convertFromSanto2JsonCorpus(tmpUnrolledRawDataDir, annotatedDocuments, Collections.emptySet(),
 				SCIOEntityTypes.result, true, true, true);
@@ -113,7 +114,7 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForObservation() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.observation);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.observation, true, true,
 				true);
 
@@ -122,7 +123,7 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForExperimentalGroup() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.experimentalGroup);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.experimentalGroup, true,
 				true, true);
 
@@ -139,7 +140,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.deliveryMethod, true,
 				true, false);
 		annotateWithRegularExpressions(new DeliveryMethodPattern(SCIOEntityTypes.deliveryMethod));
@@ -149,7 +150,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.investigationMethod);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 
 		Set<SlotType> investigationMethodSlotTypes = new HashSet<>();
 		investigationMethodSlotTypes.add(SCIOSlotTypes.hasLocation);
@@ -163,7 +164,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.treatment);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(CorpusBuilderBib.SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		Set<SlotType> treatmentSlotTypes = new HashSet<>();
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasCompound);
