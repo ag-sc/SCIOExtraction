@@ -88,6 +88,7 @@ public class BuildCorpusFromRawData {
 		buildCorpusForInvestigationMethod();
 		buildCorpusForObservation();
 		buildCorpusForResult();
+		System.exit(1);
 	}
 
 	private static void buildCorpusForResult() throws Exception {
@@ -97,9 +98,10 @@ public class BuildCorpusFromRawData {
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.result, true, true,
 				true);
 
-		File tmpUnrolledRawDataDir = new File(SRC_MAIN_RESOURCES,
+		File tmpUnrolledRawDataDir = new File(CorpusBuilderBib.DATA_DIRECTORY,
 				CorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
 		tmpUnrolledRawDataDir.mkdirs();
+		tmpUnrolledRawDataDir.deleteOnExit();
 
 		new ResolvePairwiseComparedGroups(CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
 				CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation),
@@ -107,7 +109,6 @@ public class BuildCorpusFromRawData {
 
 		convertFromSanto2JsonCorpus(tmpUnrolledRawDataDir, annotatedDocuments, Collections.emptySet(),
 				SCIOEntityTypes.result, true, true, true);
-		tmpUnrolledRawDataDir.delete();
 
 	}
 
