@@ -1,0 +1,27 @@
+
+samplingMode: TYPE_BASED
+assignmentMode: TREATMENT_ORGANISM_MODEL_INJURY
+cardinalityMode: PARALLEL_CARDINALITIES
+groupNameProcessingMode: WEKA_CLUSTERING
+groupNameProviderMode: PATTERN_NP_CHUNKS
+mainClassProviderMode: PRE_PREDICTED
+distinctGroupNamesMode: NOT_DISTINCT
+TREATMENTS MICRO: BOTH = Score [ getF1()=0.537, getPrecision()=0.786, getRecall()=0.407, tp=22, fp=6, fn=32, tn=0]
+TREATMENTS MICRO: Vehicle = Score [ getF1()=0.300, getPrecision()=0.750, getRecall()=0.188, tp=3, fp=1, fn=13, tn=0]
+TREATMENTS MICRO: Non Vehicle = Score [ getF1()=0.613, getPrecision()=0.792, getRecall()=0.500, tp=19, fp=5, fn=19, tn=0]
+ORGANISM MODEL MICRO: SCORE = Score [ getF1()=0.821, getPrecision()=0.842, getRecall()=0.800, tp=16, fp=3, fn=4, tn=0]
+INJURY MODEL MICRO: SCORE = Score [ getF1()=0.444, getPrecision()=0.500, getRecall()=0.400, tp=8, fp=8, fn=12, tn=0]
+EXP GROUP MICRO  CARDINALITY = Score [ getF1()=0.806, getPrecision()=0.722, getRecall()=0.912, tp=52, fp=20, fn=5, tn=0]
+EXP GROUP MICRO  INTERVALL CARDINALITY = 0:0.9142857142857143	1:0.9444444444444444	2:1.0	3:1.0
+EXP GROUP MICRO  CARDINALITY RMSE = 1.5727950313140984
+EXP GROUP MICRO  SCORE = Score [ getF1()=0.545, getPrecision()=0.658, getRecall()=0.464, tp=104, fp=54, fn=120, tn=0]
+EXP GROUP MICRO: TREATMENT BOTH = Score [ getF1()=0.590, getPrecision()=0.891, getRecall()=0.441, tp=49, fp=6, fn=62, tn=0]
+EXP GROUP MICRO: TREATMENT Vehicle = Score [ getF1()=0.261, getPrecision()=0.750, getRecall()=0.158, tp=3, fp=1, fn=16, tn=0]
+EXP GROUP MICRO: TREATMENT Non Vehicle = Score [ getF1()=0.643, getPrecision()=0.902, getRecall()=0.500, tp=46, fp=5, fn=46, tn=0]
+EXP GROUP MICRO: ORG MODEL = Score [ getF1()=0.667, getPrecision()=0.650, getRecall()=0.684, tp=39, fp=21, fn=18, tn=0]
+EXP GROUP MICRO: INJURY MODEL = Score [ getF1()=0.323, getPrecision()=0.372, getRecall()=0.286, tp=16, fp=27, fn=40, tn=0]
+CRFStatistics [context=Train, getTotalDuration()=17747729]
+CRFStatistics [context=Test, getTotalDuration()=142077]
+modelName: ExperimentalGroup71412
+States generated: 5586769
+

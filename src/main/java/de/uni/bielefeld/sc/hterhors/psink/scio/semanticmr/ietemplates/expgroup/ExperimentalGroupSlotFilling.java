@@ -191,13 +191,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
-		groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
-		groupNameProcessingMode = EGroupNamesPreProcessingMode.WEKA_CLUSTERING;
+		groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+		groupNameProcessingMode = EGroupNamesPreProcessingMode.GOLD_CLUSTERING;
 		distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
 
-		mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+		mainClassProviderMode = EMainClassMode.GOLD;
 
-		cardinalityMode = ECardinalityMode.PARALLEL_CARDINALITIES;
+		cardinalityMode = ECardinalityMode.GOLD_CARDINALITY;
 
 		assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 		complexityMode = EComplexityMode.ROOT;
