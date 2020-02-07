@@ -63,8 +63,6 @@ public class InjurySlotFilling {
 
 	private File instanceDirectory;
 
-	private EInjuryModifications rule;
-
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
