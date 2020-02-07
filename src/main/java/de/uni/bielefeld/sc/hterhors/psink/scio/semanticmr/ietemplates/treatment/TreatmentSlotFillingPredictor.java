@@ -32,6 +32,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodPredictor;
@@ -101,12 +102,12 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return new File("src/main/resources/slotfilling/treatment/corpus/nerla/");
+		return CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.treatment);
 	}
 
 	@Override
 	protected File getInstanceDirectory() {
-		return new File("src/main/resources/slotfilling/treatment/corpus/instances/");
+		return CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 	}
 
 	@Override

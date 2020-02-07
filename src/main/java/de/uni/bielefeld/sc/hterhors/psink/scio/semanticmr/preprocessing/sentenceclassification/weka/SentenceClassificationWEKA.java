@@ -61,7 +61,7 @@ public class SentenceClassificationWEKA {
 //				SystemScope.Builder.getScopeHandler().addScopeSpecification(OrgModelSpecs.systemsScopeReader).build();
 //				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build();
 
-		instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+		instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();

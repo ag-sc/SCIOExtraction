@@ -178,7 +178,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
-		this.instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
+		this.instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
 
 		Annotations.removeDuplicates = true;
 

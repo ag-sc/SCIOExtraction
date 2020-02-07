@@ -110,7 +110,7 @@ public class OrgModelSlotFilling {
 				 */
 				.build();
 
-		instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+		instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
 
 		PrintStream resultsOut = new PrintStream(new File("results/organismModelResults.csv"));
 

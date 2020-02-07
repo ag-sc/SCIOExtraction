@@ -28,7 +28,9 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.SlotIsFilledTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.vertebralarea.templates.VertebralAreaConditionTemplate;
@@ -69,12 +71,12 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return new File("src/main/resources/slotfilling/vertebral_area/corpus/nerla/");
+		return CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.vertebralArea);
 	}
 
 	@Override
 	protected File getInstanceDirectory() {
-		return new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
+		return CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.vertebralArea);
 	}
 
 	@Override

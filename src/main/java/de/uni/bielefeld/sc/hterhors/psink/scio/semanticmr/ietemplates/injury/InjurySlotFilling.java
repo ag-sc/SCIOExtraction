@@ -22,6 +22,8 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.DosageNormalization;
@@ -59,7 +61,7 @@ public class InjurySlotFilling {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
+	private File instanceDirectory;
 
 	private EInjuryModifications rule;
 
@@ -75,17 +77,7 @@ public class InjurySlotFilling {
 				.registerNormalizationFunction(new DosageNormalization())
 				.registerNormalizationFunction(new DurationNormalization()).build();
 
-//		SpecificationWriter w = new SpecificationWriter(scope);
-//		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/injury/entities.csv"),
-//				EntityType.get("Injury"));
-//		w.writeHierarchiesSpecificationFile(new File("src/main/resources/slotfilling/injury/hierarchies.csv"),
-//				EntityType.get("Injury"));
-//		w.writeSlotsSpecificationFile(new File("src/main/resources/slotfilling/injury/slots.csv"),
-//				EntityType.get("Injury"));
-//		w.writeStructuresSpecificationFile(ResultSpecifications.structures,new File("src/main/resources/slotfilling/injury/structures.csv"),
-//				EntityType.get("Injury"));
-//
-//		System.exit(1);
+		instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.injury);
 
 		PrintStream resultsOut = new PrintStream(new File("results/injuryResults.csv"));
 

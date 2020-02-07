@@ -101,8 +101,8 @@ public class BuildCorpusFromRawData {
 				CorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
 		tmpUnrolledRawDataDir.mkdirs();
 
-		new ResolvePairwiseComparedGroups(CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.result),
-				CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.observation), tmpUnrolledRawDataDir);
+		new ResolvePairwiseComparedGroups(CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation), tmpUnrolledRawDataDir);
 
 		convertFromSanto2JsonCorpus(tmpUnrolledRawDataDir, annotatedDocuments, Collections.emptySet(),
 				SCIOEntityTypes.result, true, true, true);
@@ -228,12 +228,10 @@ public class BuildCorpusFromRawData {
 	private static void annotateWithRegularExpressions(BasicRegExPattern patternCollection) {
 
 		File finalInstancesDir = CorpusBuilderBib
-				.finalInstanceDirectoryForEntity(patternCollection.getRootEntityType());
+				.getDefaultInstanceDirectoryForEntity(patternCollection.getRootEntityType());
 		finalInstancesDir.mkdirs();
 
-		final String nerlaDirName = CorpusBuilderBib.toDirName(patternCollection.getRootEntityType())
-				+ CorpusBuilderBib.REGEX_NERLA_DIR_NAME;
-		final File nerlaDiractory = new File(CorpusBuilderBib.SLOT_FILLING_DIR, nerlaDirName);
+		final File nerlaDiractory = CorpusBuilderBib.getDefaultRegExNerlaDir(patternCollection.getRootEntityType());
 		nerlaDiractory.mkdirs();
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(patternCollection);
@@ -262,7 +260,7 @@ public class BuildCorpusFromRawData {
 	private static void convertFromSanto2JsonCorpus(File rawDataFile, Set<String> filterNames,
 			Set<SlotType> filterSlotTypes, EntityType entityType, boolean includeSubEntities, boolean jsonPrettyString,
 			boolean deepRec) throws Exception {
-		File finalInstancesDir = CorpusBuilderBib.finalInstanceDirectoryForEntity(entityType);
+		File finalInstancesDir = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityType);
 		finalInstancesDir.mkdirs();
 
 		final Random random = new Random(RANDOM_SEED);

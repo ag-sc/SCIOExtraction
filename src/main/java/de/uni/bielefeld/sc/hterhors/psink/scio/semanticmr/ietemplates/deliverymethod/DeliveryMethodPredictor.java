@@ -33,7 +33,9 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
@@ -54,7 +56,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getInstanceDirectory() {
-		return new File("src/main/resources/slotfilling/delivery_method/corpus/instances/");
+		return CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.deliveryMethod);
 	}
 
 	@Override
@@ -69,14 +71,13 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return new File("src/main/resources/slotfilling/delivery_method/corpus/nerla/");
+		return CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.deliveryMethod);
 	}
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
 		return (instance -> {
-			return new State(instance,
-					new Annotations(new EntityTemplate(AnnotationBuilder.toAnnotation("DeliveryMethod"))));
+			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
 		});
 //		return (instance -> {
 //

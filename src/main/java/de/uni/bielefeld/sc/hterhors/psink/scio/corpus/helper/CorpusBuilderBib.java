@@ -20,13 +20,20 @@ public class CorpusBuilderBib {
 
 	public final static File SLOT_FILLING_DIR = new File(SRC_MAIN_RESOURCES, SLOT_FILLING_DIR_NAME);
 
+	public static File getDefaultRegExNerlaDir(EntityType entityType) {
+		final String nerlaDirName = CorpusBuilderBib.toDirName(entityType)
+				+ CorpusBuilderBib.REGEX_NERLA_DIR_NAME;
+		final File nerlaDiractory = new File(CorpusBuilderBib.SLOT_FILLING_DIR, nerlaDirName);
+		return nerlaDiractory;
+	}
+	
 	private static File finalInstanceDirectoryForEntity(String entityTypeName) {
 		final String instancesDirName = toDirName(entityTypeName) + CorpusBuilderBib.INSTANCES_DIR_NAME;
 		File finalInstancesDir = new File(CorpusBuilderBib.SLOT_FILLING_DIR, instancesDirName);
 		return finalInstancesDir;
 	}
 
-	public static File finalInstanceDirectoryForEntity(EntityType entityType) {
+	public static File getDefaultInstanceDirectoryForEntity(EntityType entityType) {
 		return finalInstanceDirectoryForEntity(entityType.name);
 	}
 

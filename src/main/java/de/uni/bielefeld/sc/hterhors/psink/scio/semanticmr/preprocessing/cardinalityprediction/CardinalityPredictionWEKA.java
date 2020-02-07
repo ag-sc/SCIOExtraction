@@ -54,7 +54,7 @@ public class CardinalityPredictionWEKA {
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).build();
 
-		instanceDirectory = CorpusBuilderBib.finalInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
+		instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
