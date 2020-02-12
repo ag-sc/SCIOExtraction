@@ -14,7 +14,7 @@ import com.opencsv.CSVReader;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 
 /**
  * This class reads all annotations from the extracted .annodb files and checks
