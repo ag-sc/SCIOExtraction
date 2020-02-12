@@ -209,17 +209,19 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			addSFSFactor(state, factors, experimentalGroup, SCIOSlotTypes.hasOrganismModel);
-			addSFSFactor(state, factors, experimentalGroup, SCIOSlotTypes.hasInjuryModel);
-			addMFSFactor(state, factors, experimentalGroup, SCIOSlotTypes.hasTreatmentType);
+			final Set<String> expGroupBOW = TB_BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
+
+			addSFSFactor(state, factors, expGroupBOW, experimentalGroup, SCIOSlotTypes.hasOrganismModel);
+			addSFSFactor(state, factors, expGroupBOW, experimentalGroup, SCIOSlotTypes.hasInjuryModel);
+			addMFSFactor(state, factors, expGroupBOW, experimentalGroup, SCIOSlotTypes.hasTreatmentType);
 
 		}
 
 		return factors;
 	}
 
-	private void addMFSFactor(State state, List<W2VScope> factors, EntityTemplate experimentalGroup,
-			SlotType slotType) {
+	private void addMFSFactor(State state, List<W2VScope> factors, Set<String> expGroupBOW,
+			EntityTemplate experimentalGroup, SlotType slotType) {
 
 		if (slotType.isExcluded())
 			return;
@@ -233,16 +235,14 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 
 			final EntityTemplate property = slotFillerAnnotation.asInstanceOfEntityTemplate();
 
-			final Set<String> expGroupBOW = TB_BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
-
 			final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(state.getInstance(), property);
 
 			factors.add(new W2VScope(this, slotType, expGroupBOW, propertyBOW));
 		}
 	}
 
-	private void addSFSFactor(State state, List<W2VScope> factors, EntityTemplate experimentalGroup,
-			SlotType slotType) {
+	private void addSFSFactor(State state, List<W2VScope> factors, Set<String> expGroupBOW,
+			EntityTemplate experimentalGroup, SlotType slotType) {
 
 		if (slotType.isExcluded())
 			return;
@@ -253,8 +253,6 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 			return;
 
 		final EntityTemplate property = sfs.getSlotFiller().asInstanceOfEntityTemplate();
-
-		final Set<String> expGroupBOW = TB_BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
 
 		final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(state.getInstance(), property);
 

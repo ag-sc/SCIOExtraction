@@ -36,19 +36,19 @@ public class GroupNameExtraction {
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
 			break;
 		case NP_CHUNKS:
+		case TRAINING_PATTERN_NP_CHUNKS:
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
 			break;
-		case PATTERN:
+		case TRAINING_MANUAL_PATTERN:
+		case MANUAL_PATTERN:
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 			break;
-		case PATTERN_NP_CHUNKS:
+		case MANUAL_PATTERN_NP_CHUNKS:
+		case TRAINING_MANUAL_PATTERN_NP_CHUNKS:
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
 			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
 			break;
-		case PATTERN_NP_CHUNKS_GOLD:
-			groupNames.addAll(GroupNameExtraction.extractGroupNamesFromGold(instance));
-			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
-			groupNames.addAll(GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
+		case TRAINING_PATTERN:
 			break;
 		}
 		return groupNames;
@@ -59,9 +59,8 @@ public class GroupNameExtraction {
 
 		for (Iterator<DocumentLinkedAnnotation> iterator = groupNames.iterator(); iterator.hasNext();) {
 			DocumentLinkedAnnotation groupName = iterator.next();
-			if (sectionification.getSection(groupName) != ESection.RESULTS
-					|| sectionification.getSection(groupName) != ESection.ABSTRACT
-					|| sectionification.getSection(groupName) != ESection.METHODS)
+			ESection section = sectionification.getSection(groupName);
+			if (section != ESection.RESULTS && section != ESection.ABSTRACT && section != ESection.METHODS)
 				iterator.remove();
 
 		}
@@ -124,28 +123,31 @@ public class GroupNameExtraction {
 		List<DocumentLinkedAnnotation> anns = new ArrayList<>();
 		try {
 			for (TermIndexPair groupName : new NPChunker(instance.getDocument()).getNPs()) {
-				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)")) {
-					DocumentLinkedAnnotation annotation;
-					if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName.term))
+				DocumentLinkedAnnotation annotation;
+				if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName.term))
+					continue;
+
+				if (groupName.term.length() > NPChunker.maxLength)
+					continue;
+
+				if (distinctGroupNamesMode == EDistinctGroupNamesMode.STRING_DISTINCT) {
+
+					if (distinct.contains(groupName.term))
 						continue;
-					if (distinctGroupNamesMode == EDistinctGroupNamesMode.STRING_DISTINCT) {
 
-						if (distinct.contains(groupName.term))
-							continue;
-
-						distinct.add(groupName.term);
-					}
-					try {
-						annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-								groupName.term, groupName.index);
-					} catch (Exception e) {
-						annotation = null;
-					}
-					if (annotation != null)
-						anns.add(annotation);
-
+					distinct.add(groupName.term);
 				}
+				try {
+					annotation = AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+							groupName.term, groupName.index);
+				} catch (Exception e) {
+					annotation = null;
+				}
+				if (annotation != null)
+					anns.add(annotation);
+
 			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

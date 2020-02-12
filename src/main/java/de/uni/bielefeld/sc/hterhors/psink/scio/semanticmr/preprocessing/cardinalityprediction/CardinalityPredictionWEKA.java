@@ -19,7 +19,7 @@ import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.preprocessing.DataPointCollector;
@@ -54,7 +54,7 @@ public class CardinalityPredictionWEKA {
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).build();
 
-		instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
+		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();

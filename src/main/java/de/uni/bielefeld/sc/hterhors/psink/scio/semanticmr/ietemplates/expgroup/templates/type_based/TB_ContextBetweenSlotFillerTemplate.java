@@ -59,31 +59,21 @@ public class TB_ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate
 	static class ContextBetweenScope extends AbstractFactorScope {
 
 		public final Instance instance;
-		public final EntityType fromEntity;
-		public final Integer fromTokenIndex;
-		public final EntityType toEntity;
-		public final Integer toTokenIndex;
+		Map<EntityType, Set<Integer>> map;
 
-		public ContextBetweenScope(AbstractFeatureTemplate<ContextBetweenScope> template, Instance instance,
-				EntityType fromEntity, Integer fromEntityCharacterOnset, EntityType toEntity,
-				Integer toEntityCharacterOnset) {
+		public ContextBetweenScope(AbstractFeatureTemplate<?> template, Instance instance,
+				Map<EntityType, Set<Integer>> map) {
 			super(template);
 			this.instance = instance;
-			this.fromEntity = fromEntity;
-			this.fromTokenIndex = fromEntityCharacterOnset;
-			this.toEntity = toEntity;
-			this.toTokenIndex = toEntityCharacterOnset;
+			this.map = map;
 		}
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = super.hashCode();
-			result = prime * result + ((fromEntity == null) ? 0 : fromEntity.hashCode());
-			result = prime * result + ((fromTokenIndex == null) ? 0 : fromTokenIndex.hashCode());
 			result = prime * result + ((instance == null) ? 0 : instance.hashCode());
-			result = prime * result + ((toEntity == null) ? 0 : toEntity.hashCode());
-			result = prime * result + ((toTokenIndex == null) ? 0 : toTokenIndex.hashCode());
+			result = prime * result + ((map == null) ? 0 : map.hashCode());
 			return result;
 		}
 
@@ -96,30 +86,15 @@ public class TB_ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate
 			if (getClass() != obj.getClass())
 				return false;
 			ContextBetweenScope other = (ContextBetweenScope) obj;
-			if (fromEntity == null) {
-				if (other.fromEntity != null)
-					return false;
-			} else if (!fromEntity.equals(other.fromEntity))
-				return false;
-			if (fromTokenIndex == null) {
-				if (other.fromTokenIndex != null)
-					return false;
-			} else if (!fromTokenIndex.equals(other.fromTokenIndex))
-				return false;
 			if (instance == null) {
 				if (other.instance != null)
 					return false;
 			} else if (!instance.equals(other.instance))
 				return false;
-			if (toEntity == null) {
-				if (other.toEntity != null)
+			if (map == null) {
+				if (other.map != null)
 					return false;
-			} else if (!toEntity.equals(other.toEntity))
-				return false;
-			if (toTokenIndex == null) {
-				if (other.toTokenIndex != null)
-					return false;
-			} else if (!toTokenIndex.equals(other.toTokenIndex))
+			} else if (!map.equals(other.map))
 				return false;
 			return true;
 		}
@@ -134,13 +109,6 @@ public class TB_ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate
 			return equals(obj);
 		}
 
-		@Override
-		public String toString() {
-			return "ContextBetweenScope [instance=" + instance + ", fromEntity=" + fromEntity
-					+ ", fromEntityCharacterOnset=" + fromTokenIndex + ", toEntity=" + toEntity
-					+ ", toEntityCharacterOnset=" + toTokenIndex + "]";
-		}
-
 	}
 
 	@Override
@@ -153,100 +121,65 @@ public class TB_ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
 
-			EntityType rootEntityType = experimentalGroup.getEntityType();
-			final Set<Integer> rootSentenceIndicies = collectExpGroupTokenIndicies(experimentalGroup);
+			if (SCIOSlotTypes.hasTreatmentType.isExcluded())
+				continue;
 
-			getMultiFllerSlotSentenceIndicies(factors, rootEntityType, rootSentenceIndicies, state, experimentalGroup,
-					SCIOSlotTypes.hasTreatmentType);
+			final MultiFillerSlot mfs = experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType);
+
+			if (mfs.containsSlotFiller()) {
+
+				EntityType rootEntityType = experimentalGroup.getEntityType();
+				final Set<Integer> rootSentenceIndicies = collectExpGroupTokenIndicies(experimentalGroup);
+				Map<EntityType, Set<Integer>> map = new HashMap<>();
+
+				map.put(rootEntityType, rootSentenceIndicies);
+
+				for (AbstractAnnotation treatment : mfs.getSlotFiller()) {
+					final Set<Integer> treatmentIndicies = new HashSet<>();
+
+					EntityType mainAnnotation = null;
+					if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
+						SingleFillerSlot sfs = treatment.asInstanceOfEntityTemplate()
+								.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
+						if (sfs.containsSlotFiller())
+							mainAnnotation = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation()
+									.getEntityType();
+					}
+
+					if (mainAnnotation == null)
+						mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation().getEntityType();
+
+					for (EntityTypeAnnotation tretamentAnnotation : state.getInstance()
+							.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, mainAnnotation)) {
+
+						if (tretamentAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
+							treatmentIndicies
+									.add(tretamentAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0)
+											.getDocTokenIndex());
+							//
+//							Pattern project = Pattern.compile(Pattern
+//									.quote(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
+//							Matcher m = project.matcher(state.getInstance().getDocument().documentContent);
+							//
+//							while (m.find()) {
+//								try {
+//									treatmentIndicies.add(state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
+//											.getDocTokenIndex());
+//								} catch (DocumentLinkedAnnotationMismatchException e) {
+//								}
+//							}
+
+						}
+						map.put(mainAnnotation, treatmentIndicies);
+					}
+				}
+
+				factors.add(new ContextBetweenScope(this, state.getInstance(), map));
+			}
+
 		}
 		return factors;
 
-	}
-
-	private void getMultiFllerSlotSentenceIndicies(List<ContextBetweenScope> factors, EntityType rootEntityType,
-			Set<Integer> rootSentenceIndicies, State state, EntityTemplate experimentalGroup, SlotType slotType) {
-
-		if (slotType.isExcluded())
-			return;
-
-		final MultiFillerSlot mfs = experimentalGroup.getMultiFillerSlot(slotType);
-
-		if (mfs.containsSlotFiller()) {
-
-			Map<EntityType, Set<Integer>> map = new HashMap<>();
-
-			map.put(rootEntityType, rootSentenceIndicies);
-
-			for (AbstractAnnotation treatment : mfs.getSlotFiller()) {
-				final Set<Integer> treatmentIndicies = new HashSet<>();
-
-				EntityType mainAnnotation = null;
-				if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {
-					SingleFillerSlot sfs = treatment.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
-					if (sfs.containsSlotFiller())
-						mainAnnotation = sfs.getSlotFiller().asInstanceOfEntityTemplate().getRootAnnotation()
-								.getEntityType();
-				}
-
-				if (mainAnnotation == null)
-					mainAnnotation = treatment.asInstanceOfEntityTemplate().getRootAnnotation().getEntityType();
-
-				for (EntityTypeAnnotation tretamentAnnotation : state.getInstance()
-						.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED, mainAnnotation)) {
-
-					if (tretamentAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
-						treatmentIndicies.add(tretamentAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens
-								.get(0).getDocTokenIndex());
-//
-//					Pattern project = Pattern.compile(Pattern
-//							.quote(mainAnnotation.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
-//					Matcher m = project.matcher(state.getInstance().getDocument().documentContent);
-//
-//					while (m.find()) {
-//						try {
-//							treatmentIndicies.add(state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
-//									.getDocTokenIndex());
-//						} catch (DocumentLinkedAnnotationMismatchException e) {
-//						}
-//					}
-
-					}
-					map.put(mainAnnotation, treatmentIndicies);
-				}
-			}
-
-			List<EntityType> types = new ArrayList<>(map.keySet());
-
-			Collections.sort(types);
-
-			for (int i = 0; i < types.size(); i++) {
-				EntityType fromType = types.get(i);
-				for (Integer fromTokenIndex : map.get(types.get(i))) {
-
-					for (int j = i + 1; j < types.size(); j++) {
-						EntityType toType = types.get(j);
-						for (Integer toTokenIndex : map.get(types.get(j))) {
-
-							if (Math.abs(toTokenIndex - fromTokenIndex) > MAX_TOKEN_DIST)
-								continue;
-
-							if (Math.abs(toTokenIndex - fromTokenIndex) < MIN_TOKEN_DIST)
-								continue;
-
-							if (fromTokenIndex < toTokenIndex)
-								factors.add(new ContextBetweenScope(this, state.getInstance(), fromType, fromTokenIndex,
-										toType, toTokenIndex));
-							else
-								factors.add(new ContextBetweenScope(this, state.getInstance(), toType, toTokenIndex,
-										fromType, fromTokenIndex));
-						}
-					}
-
-				}
-			}
-
-		}
 	}
 
 	public Set<Integer> collectExpGroupTokenIndicies(EntityTemplate experimentalGroup) {
@@ -274,30 +207,54 @@ public class TB_ContextBetweenSlotFillerTemplate extends AbstractFeatureTemplate
 
 	@Override
 	public void generateFeatureVector(Factor<ContextBetweenScope> factor) {
-
-		EntityType fromEntity = factor.getFactorScope().fromEntity;
-		EntityType toEntity = factor.getFactorScope().toEntity;
-
 		DoubleVector featureVector = factor.getFeatureVector();
 
-		final List<DocumentToken> tokens = factor.getFactorScope().instance.getDocument().tokenList
-				.subList(factor.getFactorScope().fromTokenIndex + 1, factor.getFactorScope().toTokenIndex); // exclude
-																											// start
-																											// token.
+		List<EntityType> types = new ArrayList<>(factor.getFactorScope().map.keySet());
 
-		if (tokens.size() > 2) {
+		Collections.sort(types);
 
-			getTokenNgrams(featureVector, fromEntity.name, toEntity.name, tokens);
+		for (int i = 0; i < types.size(); i++) {
+			EntityType fromType = types.get(i);
+			for (Integer fromTokenIndex : factor.getFactorScope().map.get(types.get(i))) {
 
-//			for (EntityType fe : fromEntity.getTransitiveClosureSuperEntityTypes()) {
-//				for (EntityType te : toEntity.getTransitiveClosureSuperEntityTypes()) {
-//
-//					if (tokens.size() > 2)
-//						getTokenNgrams(featureVector, fe.entityName, te.entityName, tokens);
-//				}
-//
-//			}
+				for (int j = i + 1; j < types.size(); j++) {
+					EntityType toType = types.get(j);
+					for (Integer toTokenIndex : factor.getFactorScope().map.get(types.get(j))) {
+
+						if (Math.abs(toTokenIndex - fromTokenIndex) > MAX_TOKEN_DIST)
+							continue;
+
+						if (Math.abs(toTokenIndex - fromTokenIndex) < MIN_TOKEN_DIST)
+							continue;
+
+						final List<DocumentToken> tokens;
+
+						if (fromTokenIndex < toTokenIndex)
+							tokens = factor.getFactorScope().instance.getDocument().tokenList
+									.subList(fromTokenIndex + 1, toTokenIndex); // exclude
+						else
+							tokens = factor.getFactorScope().instance.getDocument().tokenList.subList(toTokenIndex + 1,
+									fromTokenIndex); // exclude
+
+						if (tokens.size() > 2) {
+
+							getTokenNgrams(featureVector, fromType.name, toType.name, tokens);
+
+//										for (EntityType fe : fromEntity.getTransitiveClosureSuperEntityTypes()) {
+//											for (EntityType te : toEntity.getTransitiveClosureSuperEntityTypes()) {
+							//
+//												if (tokens.size() > 2)
+//													getTokenNgrams(featureVector, fe.entityName, te.entityName, tokens);
+//											}
+							//
+//										}
+						}
+					}
+				}
+
+			}
 		}
+
 	}
 
 	private void getTokenNgrams(DoubleVector featureVector, String fromClassName, String toClassName,

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -136,6 +137,31 @@ public class GroupNameClusteringWEKA {
 	}
 
 	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> anns, int k) throws Exception {
+		log.info("Number of annotations to cluster: " + anns.size());
+		/**
+		 * TODO: parameterize if distinction should happen or not .
+		 */
+		Map<String, Set<DocumentLinkedAnnotation>> distinctMap = new HashMap<>();
+		makeDistinct: {
+
+			for (DocumentLinkedAnnotation documentLinkedAnnotation : anns) {
+				distinctMap.putIfAbsent(documentLinkedAnnotation.getSurfaceForm(), new HashSet<>());
+
+				distinctMap.get(documentLinkedAnnotation.getSurfaceForm()).add(documentLinkedAnnotation);
+
+			}
+
+			List<DocumentLinkedAnnotation> distinctAnnotations = new ArrayList<>();
+			for (Set<DocumentLinkedAnnotation> dlas : distinctMap.values()) {
+				for (DocumentLinkedAnnotation documentLinkedAnnotation : dlas) {
+					distinctAnnotations.add(documentLinkedAnnotation);
+					break;
+				}
+			}
+
+			anns = distinctAnnotations;
+		}
+		log.info("Number of DISTINCT annotations to cluster: " + anns.size());
 
 		DataPointCollector predictions = new DataPointCollector();
 		List<GroupNamePair> pairs = new ArrayList<>();
@@ -180,7 +206,23 @@ public class GroupNameClusteringWEKA {
 
 		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
 
-		return kmeans.cluster(anns, k);
+		List<List<DocumentLinkedAnnotation>> distinctClusters = kmeans.cluster(anns, k);
+		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
+		resolveDistinction: {
+
+			for (List<DocumentLinkedAnnotation> list : distinctClusters) {
+
+				List<DocumentLinkedAnnotation> dlas = new ArrayList<>(list);
+
+				for (DocumentLinkedAnnotation dla : list) {
+					dlas.addAll(distinctMap.get(dla.getSurfaceForm()));
+				}
+				clusters.add(dlas);
+			}
+
+		}
+
+		return clusters;
 
 	}
 

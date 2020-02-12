@@ -23,7 +23,7 @@ public class Modes {
 
 	}
 
-	public enum EGroupNamesPreProcessingMode {
+	public enum EGroupNamesClusteringMode {
 		SAMPLE,
 
 		KMEANS_CLUSTERING,
@@ -58,12 +58,17 @@ public class Modes {
 		 * co-referenced and assigned to the correct DefindExperimentalGroup.
 		 */
 		GOLD,
+
+		/**
+		 * Constructs pattern from the training data and applies these to the documents.
+		 */
+		TRAINING_PATTERN,
 		/**
 		 * Add GroupName annotations from a set of predefined regular expression
 		 * pattern. Annotations are not clustered yet, as they are can be wrong.
 		 * Annotations however are used during sampling.
 		 */
-		PATTERN,
+		MANUAL_PATTERN,
 		/**
 		 * Add GroupName annotations from NP-Chunks extracted with Stanford Core NLP.
 		 * Annotations are not clustered yet, as they are can be wrong. Annotations
@@ -74,11 +79,19 @@ public class Modes {
 		/**
 		 * Combine Pattern and NP-Chunks
 		 */
-		PATTERN_NP_CHUNKS,
+		MANUAL_PATTERN_NP_CHUNKS,
 		/**
-		 * Combine Pattern and NP-Chunks with Gold
+		 * Combine training pattern and NP-Chunks
 		 */
-		PATTERN_NP_CHUNKS_GOLD,
+		TRAINING_PATTERN_NP_CHUNKS,
+		/**
+		 * Combine Pattern and NP-Chunks
+		 */
+		TRAINING_MANUAL_PATTERN,
+		/**
+		 * Combine training and manual Pattern and NP-Chunks
+		 */
+		TRAINING_MANUAL_PATTERN_NP_CHUNKS,
 
 	}
 
@@ -90,8 +103,8 @@ public class Modes {
 
 	public enum EAssignmentMode {
 
-		GROUP_NAME, TREATMENT, TREATMENT_ORGANISM_MODEL_INJURY, ORGANISM_MODEL, INJURY, INJURY_ORGANISM_MODEL, TREATMENT_ORGANISM_MODEL,
-		INJURY_TREATMENT;
+		GROUP_NAME, TREATMENT, TREATMENT_ORGANISM_MODEL_INJURY, ORGANISM_MODEL, INJURY, INJURY_ORGANISM_MODEL,
+		TREATMENT_ORGANISM_MODEL, INJURY_TREATMENT;
 
 	}
 

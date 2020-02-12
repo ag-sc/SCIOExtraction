@@ -20,7 +20,7 @@ import edu.stanford.nlp.trees.tregex.TregexPattern;
 
 public class NPChunker {
 
-	public static int maxLength = 80;
+	public static int maxLength = 25;
 
 	private final File npChunkerDir = new File("npchunker/");
 
@@ -56,13 +56,15 @@ public class NPChunker {
 
 	public NPChunker(final Document document) throws IOException {
 
-		System.out.println("Process: "+document.documentID);
+		System.out.println("Process: " + document.documentID);
 
 		chunks = new File(npChunkerDir, document.documentID);
 
 		if (chunks.exists())
 			nps = Files.readAllLines(chunks.toPath()).stream().map(l -> l.split(SPLITTER))
-					.map(l -> new TermIndexPair(l[0], Integer.parseInt(l[1]))).collect(Collectors.toList());
+					.map(l -> new TermIndexPair(l[0], Integer.parseInt(l[1])))
+					.filter(t -> t.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
+					.collect(Collectors.toList());
 		else {
 			Properties props = new Properties();
 			props.setProperty("parse.nthreads", "8");
@@ -90,8 +92,11 @@ public class NPChunker {
 			TregexMatcher matcher = NPpattern.matcher(constituencyParse);
 			while (matcher.findNextMatchingNode()) {
 				String term = SentenceUtils.listToString(matcher.getMatch().yield());
-				if (term.length() > maxLength)
+				if (term.length() > 80)
 					continue;
+				if (term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
+					continue;
+
 				nps.add(new TermIndexPair(term, matcher.getMatch().yieldWords().get(0).beginPosition()));
 			}
 		}

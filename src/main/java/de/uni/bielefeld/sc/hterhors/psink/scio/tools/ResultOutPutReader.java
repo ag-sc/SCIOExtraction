@@ -127,9 +127,9 @@ public class ResultOutPutReader {
 
 	public static void main(String[] args) throws Exception {
 
-		File dir = new File("results/experimentalgroupextratcion/");
+		File dir = new File("results/experimentalgroupextratcion/pairwise/");
 
-		PrintStream ps = new PrintStream(new File("results/merge.csv"));
+		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/pairwise/merge_pairwise.csv"));
 
 		int modeCounter = 0;
 

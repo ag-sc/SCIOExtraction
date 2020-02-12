@@ -31,7 +31,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -100,14 +100,14 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury);
+		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury);
 //		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
 //		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
 	}
 
 	@Override
 	protected File getInstanceDirectory() {
-		return CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.injury);
+		return SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.injury);
 	}
 
 	@Override

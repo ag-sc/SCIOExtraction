@@ -15,17 +15,17 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesClusteringMode;
 
 public class PredictCardinalityInitializer implements IStateInitializer {
 	private final EExtractGroupNamesMode groupNameMode;
 
-	private final EGroupNamesPreProcessingMode groupNameProcessingMode;
+	private final EGroupNamesClusteringMode groupNameProcessingMode;
 
 	private final Map<Instance, Integer> cache = new HashMap<>();
 
 	public PredictCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
-			EGroupNamesPreProcessingMode groupNameProcessingMode, List<Instance> instances) {
+			EGroupNamesClusteringMode groupNameProcessingMode, List<Instance> instances) {
 		this.groupNameMode = groupNameMode;
 		this.groupNameProcessingMode = groupNameProcessingMode;
 
@@ -56,7 +56,7 @@ public class PredictCardinalityInitializer implements IStateInitializer {
 					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 
 			if (groupNameMode == EExtractGroupNamesMode.GOLD
-					&& groupNameProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING) {
+					&& groupNameProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING) {
 
 				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,

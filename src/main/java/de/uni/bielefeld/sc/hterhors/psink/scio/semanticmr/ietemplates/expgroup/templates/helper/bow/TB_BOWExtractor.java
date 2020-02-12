@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.structure.EntityType;
@@ -79,7 +80,7 @@ public class TB_BOWExtractor {
 
 	}
 
-	public static Set<String> extractDocLinkedBOW(DocumentLinkedAnnotation docLinkedAnnotation) {
+	private static Set<String> extractDocLinkedBOW(DocumentLinkedAnnotation docLinkedAnnotation) {
 		Set<String> bow = new HashSet<>();
 		for (DocumentToken docToken : docLinkedAnnotation.relatedTokens) {
 //			if (docToken.isPunctuation() || docToken.isStopWord())
@@ -93,24 +94,37 @@ public class TB_BOWExtractor {
 
 	}
 
-	public static Set<String> extractEntityTypeBOW(Instance instance, EntityType entityType) {
-		Set<String> bow = extractEntityTypeBOW(entityType);
+	private static Map<Instance, Map<EntityType, Set<String>>> bowCache = new ConcurrentHashMap<>();
 
-		if (!entityType.isLiteral)
-			for (EntityTypeAnnotation eta : instance.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED,
-					entityType)) {
+	private synchronized static Set<String> extractEntityTypeBOW(Instance instance, EntityType entityType) {
 
-				if (eta.isInstanceOfDocumentLinkedAnnotation()) {
-					bow.addAll(extractDocLinkedBOW(eta.asInstanceOfDocumentLinkedAnnotation()));
+		Set<String> bow;
+
+		if (!bowCache.containsKey(instance))
+			bowCache.put(instance, new HashMap<>());
+
+		if ((bow = bowCache.get(instance).get(entityType)) == null) {
+
+			bow = extractEntityTypeBOW(entityType);
+
+			if (!entityType.isLiteral)
+				for (EntityTypeAnnotation eta : instance.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED,
+						entityType)) {
+
+					if (eta.isInstanceOfDocumentLinkedAnnotation()) {
+						bow.addAll(extractDocLinkedBOW(eta.asInstanceOfDocumentLinkedAnnotation()));
+					}
+
 				}
+			bowCache.get(instance).put(entityType, bow);
 
-			}
+		}
 
 		return bow;
 
 	}
 
-	public static Set<String> extractEntityTypeBOW(EntityType entityType) {
+	private static Set<String> extractEntityTypeBOW(EntityType entityType) {
 		Set<String> bow = new HashSet<>();
 		if (!entityType.isLiteral) {
 			for (String part : camelCaseSplit(entityType.name)) {
@@ -122,7 +136,7 @@ public class TB_BOWExtractor {
 
 	}
 
-	private static Map<String, String[]> camelCaseSplitCache = new HashMap<>();
+	private static Map<String, String[]> camelCaseSplitCache = new ConcurrentHashMap<>();
 
 	private static String[] camelCaseSplit(String entityName) {
 		String[] split;

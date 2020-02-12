@@ -22,7 +22,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.injury.InjuryRestrictionProvider.EInjuryModifications;
@@ -75,7 +75,7 @@ public class InjurySlotFilling {
 				.registerNormalizationFunction(new DosageNormalization())
 				.registerNormalizationFunction(new DurationNormalization()).build();
 
-		instanceDirectory = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.injury);
+		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.injury);
 
 		PrintStream resultsOut = new PrintStream(new File("results/injuryResults.csv"));
 

@@ -28,8 +28,8 @@ import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
 import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
-import de.hterhors.semanticmr.tools.specifications.SpecificationWriter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.hterhors.semanticmr.tools.specifications.DataStructureWriter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.deliverymethod.nerla.DeliveryMethodPattern;
@@ -49,18 +49,18 @@ public class BuildCorpusFromRawData {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 	public static final File SRC_MAIN_RESOURCES = new File("src/main/resources/");
 
-	private static final File SANTO_RAW_DATA_DIR = new File(SRC_MAIN_RESOURCES, CorpusBuilderBib.RAW_DATA_DIR_NAME);
+	private static final File SANTO_RAW_DATA_DIR = new File(SRC_MAIN_RESOURCES, SlotFillingCorpusBuilderBib.RAW_DATA_DIR_NAME);
 	private static final File ROOT_DATA_STRUCTURE_DIR = new File(SRC_MAIN_RESOURCES,
-			CorpusBuilderBib.DATA_STRUCTURE_DIR_NAME);
+			SlotFillingCorpusBuilderBib.DATA_STRUCTURE_DIR_NAME);
 
 	private static final File ROOT_DATA_STRUCTURE_ENTITIES = new File(ROOT_DATA_STRUCTURE_DIR,
-			CorpusBuilderBib.ENTITIES_FILE_NAME);
+			SlotFillingCorpusBuilderBib.ENTITIES_FILE_NAME);
 	private static final File ROOT_DATA_STRUCTURE_SLOTS = new File(ROOT_DATA_STRUCTURE_DIR,
-			CorpusBuilderBib.SLOTS_FILE_NAME);
+			SlotFillingCorpusBuilderBib.SLOTS_FILE_NAME);
 	private static final File ROOT_DATA_STRUCTURE_STRUCTURES = new File(ROOT_DATA_STRUCTURE_DIR,
-			CorpusBuilderBib.STRUCTURES_FILE_NAME);
+			SlotFillingCorpusBuilderBib.STRUCTURES_FILE_NAME);
 	private static final File ROOT_DATA_STRUCTURE_HIERARCHIES = new File(ROOT_DATA_STRUCTURE_DIR,
-			CorpusBuilderBib.HIERARCHIES_FILE_NAME);
+			SlotFillingCorpusBuilderBib.HIERARCHIES_FILE_NAME);
 
 	private static final CSVDataStructureReader dataStructureReader = new CSVDataStructureReader(
 			ROOT_DATA_STRUCTURE_ENTITIES, ROOT_DATA_STRUCTURE_HIERARCHIES, ROOT_DATA_STRUCTURE_SLOTS,
@@ -77,7 +77,7 @@ public class BuildCorpusFromRawData {
 
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
-		CorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
+		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 
 		buildCorpusForOrganismModel();
 		buildCorpusForInjuryModel();
@@ -98,13 +98,13 @@ public class BuildCorpusFromRawData {
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.result, true, true,
 				true);
 
-		File tmpUnrolledRawDataDir = new File(CorpusBuilderBib.DATA_DIRECTORY,
-				CorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
+		File tmpUnrolledRawDataDir = new File(SlotFillingCorpusBuilderBib.DATA_DIRECTORY,
+				SlotFillingCorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
 		tmpUnrolledRawDataDir.mkdirs();
 		tmpUnrolledRawDataDir.deleteOnExit();
 
-		new ResolvePairwiseComparedGroups(CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
-				CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation),
+		new ResolvePairwiseComparedGroups(SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation),
 				tmpUnrolledRawDataDir);
 
 		convertFromSanto2JsonCorpus(tmpUnrolledRawDataDir, annotatedDocuments, Collections.emptySet(),
@@ -202,20 +202,20 @@ public class BuildCorpusFromRawData {
 
 	private static void buildSubDataStructureFiles(EntityType rootEntityType) throws Exception {
 
-		final String dataStructureDirName = CorpusBuilderBib.toDirName(rootEntityType)
-				+ CorpusBuilderBib.DATA_STRUCTURE_DIR_NAME;
+		final String dataStructureDirName = SlotFillingCorpusBuilderBib.toDirName(rootEntityType)
+				+ SlotFillingCorpusBuilderBib.DATA_STRUCTURE_DIR_NAME;
 
-		File finalDataStructureDir = new File(CorpusBuilderBib.SLOT_FILLING_DIR, dataStructureDirName);
+		File finalDataStructureDir = new File(SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR, dataStructureDirName);
 		finalDataStructureDir.mkdirs();
 
-		SpecificationWriter.writeEntityDataStructureFile(CorpusBuilderBib.buildEntitiesFile(rootEntityType),
+		DataStructureWriter.writeEntityDataStructureFile(SlotFillingCorpusBuilderBib.buildEntitiesFile(rootEntityType),
 				rootEntityType);
-		SpecificationWriter.writeHierarchiesDataStructureFile(CorpusBuilderBib.buildHierarchiesFile(rootEntityType),
+		DataStructureWriter.writeHierarchiesDataStructureFile(SlotFillingCorpusBuilderBib.buildHierarchiesFile(rootEntityType),
 				rootEntityType);
-		SpecificationWriter.writeSlotsDataStructureFile(CorpusBuilderBib.buildSlotsFile(rootEntityType),
+		DataStructureWriter.writeSlotsDataStructureFile(SlotFillingCorpusBuilderBib.buildSlotsFile(rootEntityType),
 				rootEntityType);
-		SpecificationWriter.writeStructuresDataStructureFile(ROOT_DATA_STRUCTURE_STRUCTURES,
-				CorpusBuilderBib.buildStructuresFile(rootEntityType), rootEntityType);
+		DataStructureWriter.writeStructuresDataStructureFile(ROOT_DATA_STRUCTURE_STRUCTURES,
+				SlotFillingCorpusBuilderBib.buildStructuresFile(rootEntityType), rootEntityType);
 
 	}
 
@@ -229,11 +229,11 @@ public class BuildCorpusFromRawData {
 
 	private static void annotateWithRegularExpressions(BasicRegExPattern patternCollection) {
 
-		File finalInstancesDir = CorpusBuilderBib
+		File finalInstancesDir = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(patternCollection.getRootEntityType());
 		finalInstancesDir.mkdirs();
 
-		final File nerlaDiractory = CorpusBuilderBib.getDefaultRegExNerlaDir(patternCollection.getRootEntityType());
+		final File nerlaDiractory = SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(patternCollection.getRootEntityType());
 		nerlaDiractory.mkdirs();
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(patternCollection);
@@ -262,7 +262,7 @@ public class BuildCorpusFromRawData {
 	private static void convertFromSanto2JsonCorpus(File rawDataFile, Set<String> filterNames,
 			Set<SlotType> filterSlotTypes, EntityType entityType, boolean includeSubEntities, boolean jsonPrettyString,
 			boolean deepRec) throws Exception {
-		File finalInstancesDir = CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityType);
+		File finalInstancesDir = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityType);
 		finalInstancesDir.mkdirs();
 
 		final Random random = new Random(RANDOM_SEED);

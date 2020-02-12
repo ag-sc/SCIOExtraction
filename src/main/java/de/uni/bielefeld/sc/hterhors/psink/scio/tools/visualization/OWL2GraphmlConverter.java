@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithOutDataTypeProperties;
@@ -107,8 +107,8 @@ public class OWL2GraphmlConverter {
 
 		Set<Triple> objectTypeProperties = new HashSet<>();
 
-		List<String[]> structures = CorpusBuilderBib.buildStructuresFile("Result") == null ? Collections.emptyList()
-				: Files.readAllLines(CorpusBuilderBib.buildStructuresFile("Result").toPath()).stream()
+		List<String[]> structures = SlotFillingCorpusBuilderBib.buildStructuresFile("Result") == null ? Collections.emptyList()
+				: Files.readAllLines(SlotFillingCorpusBuilderBib.buildStructuresFile("Result").toPath()).stream()
 						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
 						.collect(Collectors.toList());
 
@@ -168,8 +168,8 @@ public class OWL2GraphmlConverter {
 
 		}
 
-		List<String[]> hierarchies = CorpusBuilderBib.buildHierarchiesFile("Result") == null ? Collections.emptyList()
-				: Files.readAllLines(CorpusBuilderBib.buildHierarchiesFile("Result").toPath()).stream()
+		List<String[]> hierarchies = SlotFillingCorpusBuilderBib.buildHierarchiesFile("Result") == null ? Collections.emptyList()
+				: Files.readAllLines(SlotFillingCorpusBuilderBib.buildHierarchiesFile("Result").toPath()).stream()
 						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
 						.collect(Collectors.toList());
 

@@ -28,7 +28,7 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.CorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
@@ -52,7 +52,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return CorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.organismModel);
+		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.organismModel);
 //		 final File externalNerlaAnnotations = new File(
 //				"src/main/resources/slotfilling/organism_model/corpus/Normal/");
 //		 final File externalNerlaAnnotations = new File(
@@ -70,7 +70,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getInstanceDirectory() {
-		return CorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+		return SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
 	}
 
 	@Override

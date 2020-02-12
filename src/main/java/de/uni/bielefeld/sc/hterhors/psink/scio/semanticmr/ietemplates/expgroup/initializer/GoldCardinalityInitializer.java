@@ -13,15 +13,15 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesClusteringMode;
 
 public class GoldCardinalityInitializer implements IStateInitializer {
 
 	private final EExtractGroupNamesMode groupNameMode;
-	private final EGroupNamesPreProcessingMode groupNamesPreProcessingMode;
+	private final EGroupNamesClusteringMode groupNamesPreProcessingMode;
 
 	public GoldCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
-			EGroupNamesPreProcessingMode groupNamesPreProcessingMode) {
+			EGroupNamesClusteringMode groupNamesPreProcessingMode) {
 		this.groupNameMode = groupNameMode;
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;
 	}
@@ -36,7 +36,7 @@ public class GoldCardinalityInitializer implements IStateInitializer {
 					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 
 			if (groupNameMode == EExtractGroupNamesMode.GOLD
-					&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING) {
+					&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING) {
 
 				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,

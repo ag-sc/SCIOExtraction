@@ -22,7 +22,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.kmeans.WordBasedKMeans;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.groupnames.clustering.weka.GroupNameClusteringWEKA;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EExtractGroupNamesMode;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesPreProcessingMode;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ietemplates.expgroup.modes.Modes.EGroupNamesClusteringMode;
 
 public class MultiCardinalityInitializer implements IStateInitializer {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -38,12 +38,12 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	private final int min;
 
 	private final EExtractGroupNamesMode groupNameMode;
-	private final EGroupNamesPreProcessingMode groupNamesPreProcessingMode;
+	private final EGroupNamesClusteringMode groupNamesPreProcessingMode;
 
 	private Map<Instance, List<List<DocumentLinkedAnnotation>>> preComputedClusters = new HashMap<>();
 
 	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
-			EGroupNamesPreProcessingMode groupNamesPreProcessingMode, List<Instance> instances, int min, int max,
+			EGroupNamesClusteringMode groupNamesPreProcessingMode, List<Instance> instances, int min, int max,
 			List<Instance> trainingInstances) {
 
 		if (max <= 0 || min <= 0) {
@@ -60,19 +60,19 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;
 
 		if (!(groupNameMode == EExtractGroupNamesMode.GOLD
-				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING)) {
+				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING)) {
 			if (groupNameMode != EExtractGroupNamesMode.EMPTY
-					&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING) {
+					&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING) {
 				wordBasedKMeans(instances);
 			} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
-					&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING) {
+					&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING) {
 				wekaBasedKmeans(instances, trainingInstances);
 			}
 		}
 	}
 
 	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameProviderMode,
-			EGroupNamesPreProcessingMode groupNameProcessingMode, List<Instance> instances,
+			EGroupNamesClusteringMode groupNameProcessingMode, List<Instance> instances,
 			List<Instance> trainingInstances) {
 		this(groupNameProviderMode, groupNameProcessingMode, instances, -1, -1, trainingInstances);
 
@@ -153,11 +153,11 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		List<State> list = new ArrayList<>();
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD
-				&& groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.GOLD_CLUSTERING) {
+				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING) {
 			goldBased(instance, list);
 		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
-				&& (groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.KMEANS_CLUSTERING
-						|| groupNamesPreProcessingMode == EGroupNamesPreProcessingMode.WEKA_CLUSTERING)) {
+				&& (groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING
+						|| groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING)) {
 			clusteringBased(instance, list);
 		} else if (groupNameMode == EExtractGroupNamesMode.EMPTY) {
 			empty(instance, list);

@@ -44,7 +44,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
 public class CollectExpGroupNames {
-	public static int maxLength = 80;
+	public static int maxLength = 25;
 
 	public static class PatternIndexPair {
 		public final int impact;

@@ -314,10 +314,11 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 		Map<Centroid, List<Record<E>>> lastState = new HashMap<>();
 		log.info("Max iterations = " + maxIterations);
 		// iterate for a pre-defined number of times
-		for (int i = 0; i < maxIterations; i++) {
+		int i = 0;
+		for (i =0; i < maxIterations; i++) {
 
 			if (i % (maxIterations / 10) == 0)
-				log.info("iterations = " + i);
+				log.info("Intermediate iteration = " + i);
 
 			final Map<Centroid, List<Record<E>>> clusters = new HashMap<>();
 
@@ -339,7 +340,7 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 			// at the end of each iteration we should relocate the centroids
 			centroids = relocateCentroids(clusters);
 		}
-
+		log.info("Last iteration = " + i);
 		return lastState;
 	}
 
