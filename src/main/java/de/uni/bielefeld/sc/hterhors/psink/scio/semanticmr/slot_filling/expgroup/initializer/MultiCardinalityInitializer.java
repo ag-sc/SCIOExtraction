@@ -83,7 +83,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 			WEKAClustering gnc = new WEKAClustering();
 
-			gnc.train(trainingInstances);
+			gnc.trainOrLoad(trainingInstances);
 
 			for (Instance instance : instances) {
 
@@ -97,8 +97,11 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 				}
 				log.info("Number of elements to cluster: " + datapoints.size());
 
+				System.out.println();
 				List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, max);
 
+				
+				System.out.println();
 				preComputedClusters.put(instance, clusters);
 
 			}

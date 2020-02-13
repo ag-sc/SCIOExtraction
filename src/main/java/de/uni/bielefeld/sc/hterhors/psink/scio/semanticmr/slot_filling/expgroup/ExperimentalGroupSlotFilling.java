@@ -909,7 +909,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		// .setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-				.setTestProportion(20).setSeed(1000L).build();
+				.setCorpusSizeFraction(0.1F).setTestProportion(20).setSeed(1000L).build();
 
 		InstanceProvider.maxNumberOfAnnotations = 8;
 		InstanceProvider.removeEmptyInstances = true;
@@ -1037,17 +1037,17 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			addGroupNameTrainingPattern();
 			break;
 		case PREDICTED:
-			int k = 50;
-			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(trainingInstances, k)
-					.entrySet()) {
+			int k = 1;
+			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(instanceProvider.getInstances(),
+					k).entrySet()) {
 				prediction.getKey().addCandidateAnnotations(prediction.getValue());
 			}
-			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(devInstances, k).entrySet()) {
-				prediction.getKey().addCandidateAnnotations(prediction.getValue());
-			}
-			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(testInstances, k).entrySet()) {
-				prediction.getKey().addCandidateAnnotations(prediction.getValue());
-			}
+//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(devInstances, k).entrySet()) {
+//				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//			}
+//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(testInstances, k).entrySet()) {
+//				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//			}
 			break;
 		}
 

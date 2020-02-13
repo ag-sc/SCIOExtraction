@@ -1,6 +1,5 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.eval;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,6 +24,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -35,17 +35,17 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.methods.wek
 
 public class EvaluateClusteringApproaches {
 
-	private static final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
-
 	public static void main(String[] args) throws Exception {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
-		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+		InstanceProvider instanceProvider = new InstanceProvider(
+				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup),
+				corpusDistributor);
 
 		EvaluateClusteringApproaches evaluator = new EvaluateClusteringApproaches();
 
@@ -62,6 +62,9 @@ public class EvaluateClusteringApproaches {
 		System.out.println();
 		evaluator.wordBasedKMeans(trainInstances, testInstances, k);
 
+//4 WordBasedKMeans overallBinaryClassificationScore  = Score [getAccuracy()=0.858,  getF1()=0.858, getPrecision()=1.000, getRecall()=0.751, tp=235, fp=0, fn=78, tn=236]
+//4 WordBasedKMeans overallClusteringScore  = Score [ getF1()=0.450, getPrecision()=0.458, getRecall()=0.443, tp=109, fp=129, fn=137, tn=0]
+
 	}
 
 	private final CartesianEvaluator cartesianEvaluator = new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED);
@@ -73,7 +76,7 @@ public class EvaluateClusteringApproaches {
 	public void wekaBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) throws Exception {
 		WEKAClustering gnc = new WEKAClustering();
 
-		gnc.train(trainInstances);
+		gnc.trainOrLoad(trainInstances);
 
 		Score binaryClassificationScore = gnc.test(testInstances);
 

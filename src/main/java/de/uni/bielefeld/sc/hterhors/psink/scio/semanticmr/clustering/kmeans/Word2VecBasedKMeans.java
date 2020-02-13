@@ -27,7 +27,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.
 public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 
 		/*
@@ -162,6 +163,17 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	final private int maxIterations = 1000;
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
+		if (datapoints.isEmpty() || k >= datapoints.size()) {
+			List<List<E>> unsufficient = new ArrayList<>();
+			for (int i = 0; i < k; i++) {
+				if (i < datapoints.size())
+					unsufficient.add(Arrays.asList(datapoints.get(i)));
+				else
+					unsufficient.add(Collections.emptyList());
+			}
+			return unsufficient;
+
+		}
 
 		Set<String> words = datapoints.stream()
 				.flatMap(a -> Arrays.stream(a.asInstanceOfLiteralAnnotation().getSurfaceForm().split(" ")))
@@ -237,13 +249,11 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	static class Centroid {
 
 		public final Double[] word;
-		public final int index;
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + index;
 			result = prime * result + Arrays.hashCode(word);
 			return result;
 		}
@@ -257,21 +267,13 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 			if (getClass() != obj.getClass())
 				return false;
 			Centroid other = (Centroid) obj;
-			if (index != other.index)
-				return false;
 			if (!Arrays.equals(word, other.word))
 				return false;
 			return true;
 		}
 
-		public Centroid(Double[] word, int index) {
-			this.index = index;
+		public Centroid(Double[] word) {
 			this.word = word;
-		}
-
-		@Override
-		public String toString() {
-			return "Centroid [word=" + word + ", index=" + index + "]";
 		}
 
 	}
@@ -436,7 +438,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		Set<Integer> chosen = new HashSet<>();
 		Integer rand = random.nextInt(records.size());
 		chosen.add(rand);
-		centroids.add(new Centroid(records.get(rand).word, 0));
+		centroids.add(new Centroid(records.get(rand).word));
 
 		for (int c = 1; c < k; c++) {
 			List<DistToPoint> distances = new ArrayList<>();
@@ -502,7 +504,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 			}
 
 			chosen.add(d.recordIndex);
-			centroids.add(new Centroid(recMap.get(d.recordIndex).word, c));
+			centroids.add(new Centroid(recMap.get(d.recordIndex).word));
 		}
 
 		return centroids;
@@ -589,7 +591,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 			vector[i] /= records.size();
 		}
 
-		return new Centroid(vector, centroid.index);
+		return new Centroid(vector);
 
 	}
 

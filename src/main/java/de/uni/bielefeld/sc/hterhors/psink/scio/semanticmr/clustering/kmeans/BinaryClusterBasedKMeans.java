@@ -34,7 +34,8 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 
 	public static void main(String[] args) {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 		log.info(getProb(0D));
 		log.info(getProb(0D));
@@ -189,6 +190,19 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 	}
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
+
+		if (datapoints.isEmpty() || k >= datapoints.size()) {
+			List<List<E>> unsufficient = new ArrayList<>();
+			for (int i = 0; i < k; i++) {
+				if (i < datapoints.size())
+					unsufficient.add(Arrays.asList(datapoints.get(i)));
+				else
+					unsufficient.add(Collections.emptyList());
+			}
+			return unsufficient;
+
+		}
+
 		log.info("Start k (" + k + ") - means clustering...");
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
@@ -219,13 +233,12 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 	static class Centroid {
 
 		public final List<String> words;
-		public final int index;
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + index;
+			result = prime * result + ((words == null) ? 0 : words.hashCode());
 			return result;
 		}
 
@@ -238,25 +251,21 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 			if (getClass() != obj.getClass())
 				return false;
 			Centroid other = (Centroid) obj;
-			if (index != other.index)
+			if (words == null) {
+				if (other.words != null)
+					return false;
+			} else if (!words.equals(other.words))
 				return false;
 			return true;
 		}
 
-		public Centroid(List<String> words, int index) {
-			this.index = index;
+		public Centroid(List<String> words) {
 			this.words = words;
 		}
 
-		public Centroid(String word, int index) {
-			this.index = index;
+		public Centroid(String word) {
 			this.words = new ArrayList<>();
 			this.words.add(word);
-		}
-
-		@Override
-		public String toString() {
-			return "Centroid [words=" + words + ", index=" + index + "]";
 		}
 
 	}
@@ -274,7 +283,6 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((annotation == null) ? 0 : annotation.hashCode());
 			result = prime * result + ((word == null) ? 0 : word.hashCode());
 			return result;
 		}
@@ -287,12 +295,7 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			Record<E> other = (Record<E>) obj;
-			if (annotation == null) {
-				if (other.annotation != null)
-					return false;
-			} else if (!annotation.equals(other.annotation))
-				return false;
+			Record other = (Record) obj;
 			if (word == null) {
 				if (other.word != null)
 					return false;
@@ -315,9 +318,9 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 		log.info("Max iterations = " + maxIterations);
 		// iterate for a pre-defined number of times
 		int i = 0;
-		for (i =0; i < maxIterations; i++) {
+		for (i = 0; i < maxIterations; i++) {
 
-			if (i % (maxIterations / 10) == 0)
+			if (i % ((double) maxIterations / 10) == 0)
 				log.info("Intermediate iteration = " + i);
 
 			final Map<Centroid, List<Record<E>>> clusters = new HashMap<>();
@@ -377,7 +380,7 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 		Set<Integer> chosen = new HashSet<>();
 		Integer rand = random.nextInt(records.size());
 		chosen.add(rand);
-		centroids.add(new Centroid(records.get(rand).word, 0));
+		centroids.add(new Centroid(records.get(rand).word));
 
 		for (int c = 1; c < k; c++) {
 			List<DistToPoint> distances = new ArrayList<>();
@@ -443,7 +446,7 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 			}
 
 			chosen.add(d.recordIndex);
-			centroids.add(new Centroid(recMap.get(d.recordIndex).word, c));
+			centroids.add(new Centroid(recMap.get(d.recordIndex).word));
 		}
 
 		return centroids;
@@ -480,7 +483,7 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 			return centroid;
 		}
 
-		return new Centroid(records.stream().map(r -> r.word).collect(Collectors.toList()), centroid.index);
+		return new Centroid(records.stream().map(r -> r.word).collect(Collectors.toList()));
 
 	}
 

@@ -62,7 +62,7 @@ public class WEKAClustering {
 
 	}
 
-	public void train(List<Instance> train) throws IOException {
+	public void trainOrLoad(List<Instance> train) throws IOException {
 
 		collectInstances(train, trainingDataCollector, true);
 		trainingDataCollector = trainingDataCollector.removeRareFeatures(25);
@@ -184,7 +184,7 @@ public class WEKAClustering {
 		log.info("Num of pairwise instances to classify = " + predictionInstances.size());
 
 		for (weka.core.Instance instance : predictionInstances) {
-			if (i % (predictionInstances.size() / 10) == 0)
+			if (i % ((double)predictionInstances.size() / 10) == 0)
 				log.info("Num of instances classified = " + i);
 			GroupNamePair gnp = (GroupNamePair) predictions.getDataPoints().get(i).parameter.get("groupNamePair");
 

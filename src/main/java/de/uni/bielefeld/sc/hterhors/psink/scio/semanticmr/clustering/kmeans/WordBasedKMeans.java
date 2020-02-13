@@ -20,11 +20,13 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
 
 public class WordBasedKMeans<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 
 		/*
@@ -157,6 +159,17 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 	final private int maxIterations = 1000;
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
+		if (datapoints.isEmpty() || k >= datapoints.size()) {
+			List<List<E>> unsufficient = new ArrayList<>();
+			for (int i = 0; i < k; i++) {
+				if (i < datapoints.size())
+					unsufficient.add(Arrays.asList(datapoints.get(i)));
+				else
+					unsufficient.add(Collections.emptyList());
+			}
+			return unsufficient;
+
+		}
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
 
@@ -182,16 +195,15 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return list;
 	}
 
-	class Centroid {
+	static class Centroid {
 
 		public final String word;
-		public final int index;
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + index;
+			result = prime * result + ((word == null) ? 0 : word.hashCode());
 			return result;
 		}
 
@@ -204,19 +216,16 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			if (getClass() != obj.getClass())
 				return false;
 			Centroid other = (Centroid) obj;
-			if (index != other.index)
+			if (word == null) {
+				if (other.word != null)
+					return false;
+			} else if (!word.equals(other.word))
 				return false;
 			return true;
 		}
 
-		public Centroid(String word, int index) {
-			this.index = index;
+		public Centroid(String word) {
 			this.word = word;
-		}
-
-		@Override
-		public String toString() {
-			return "Centroid [word=" + word + ", index=" + index + "]";
 		}
 
 	}
@@ -342,7 +351,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		Set<Integer> chosen = new HashSet<>();
 		Integer rand = random.nextInt(records.size());
 		chosen.add(rand);
-		centroids.add(new Centroid(records.get(rand).word, 0));
+		centroids.add(new Centroid(records.get(rand).word));
 
 		for (int c = 1; c < k; c++) {
 			List<DistToPoint> distances = new ArrayList<>();
@@ -354,7 +363,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 				double minDist = Double.MAX_VALUE;
 
 				for (Centroid centroid : centroids) {
-					double dist = levenshteinDistance(centroid.word, records.get(i).word);
+					double dist = distance(centroid.word, records.get(i).word);
 					if (dist < minDist) {
 						minDist = dist;
 					}
@@ -408,7 +417,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			}
 
 			chosen.add(d.recordIndex);
-			centroids.add(new Centroid(recMap.get(d.recordIndex).word, c));
+			centroids.add(new Centroid(recMap.get(d.recordIndex).word));
 		}
 
 		return centroids;
@@ -511,7 +520,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			average.append(maxChar);
 		}
 
-		return new Centroid(average.toString(), centroid.index);
+		return new Centroid(average.toString());
 
 	}
 
@@ -531,7 +540,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		Centroid nearest = null;
 
 		for (Centroid centroid : centroids) {
-			double currentDistance = levenshteinDistance(record.word, centroid.word);
+			double currentDistance = distance(record.word, centroid.word);
 
 			if (currentDistance < minimumDistance) {
 				minimumDistance = currentDistance;
@@ -542,8 +551,12 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return nearest;
 	}
 
-	private double levenshteinDistance(String word1, String word2) {
-		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
+	final private SmithWaterman smithWaterman = new SmithWaterman();
+
+	private double distance(String word1, String word2) {
+
+		return 1-smithWaterman.getSimilarity(word1, word2);
+//		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
 	}
 
 }
