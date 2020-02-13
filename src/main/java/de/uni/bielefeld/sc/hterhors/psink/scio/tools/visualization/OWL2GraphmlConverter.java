@@ -66,7 +66,7 @@ public class OWL2GraphmlConverter {
 		List<IGraphMLContent> listOfUnGroupedContent = new ArrayList<>();
 
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		/*
 		 * vis_group,ClassNames

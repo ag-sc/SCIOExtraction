@@ -15,7 +15,7 @@ public class EntityExtractor {
 	public static void main(String[] args) throws IOException {
 
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		System.exit(1);
 

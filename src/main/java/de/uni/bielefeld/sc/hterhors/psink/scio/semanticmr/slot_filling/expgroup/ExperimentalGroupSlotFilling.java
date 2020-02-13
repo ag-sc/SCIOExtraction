@@ -47,6 +47,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -67,8 +68,9 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNameExtraction;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.AgeNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.GroupNameNERLPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.evaluation.ExperimentalGroupEvaluation;
@@ -120,6 +122,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
+import java_cup.Main;
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
@@ -182,7 +185,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			/**
 			 * Test in eclipse
 			 */
-			groupNameProviderMode = EExtractGroupNamesMode.TRAINING_PATTERN;
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
 			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
 
@@ -307,8 +310,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public ExperimentalGroupSlotFilling(int parameterID) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup")).apply()
-				.registerNormalizationFunction(new WeightNormalization())
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
@@ -321,8 +324,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 
 		String rand = String.valueOf(new Random().nextInt(100000));
-//		modelName = "ExperimentalGroup" + 84338;
-		modelName = "ExperimentalGroup" + rand;
+		modelName = "ExperimentalGroup" + 46427;
+//		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 		setParameterByID(parameterID);
 
@@ -996,58 +999,98 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private void addGroupNameCandidates() {
 
-		if (groupNameProviderMode == EExtractGroupNamesMode.TRAINING_PATTERN
-				|| groupNameProviderMode == EExtractGroupNamesMode.TRAINING_PATTERN_NP_CHUNKS
-				|| groupNameProviderMode == EExtractGroupNamesMode.TRAINING_MANUAL_PATTERN_NP_CHUNKS
-				|| groupNameProviderMode == EExtractGroupNamesMode.TRAINING_MANUAL_PATTERN) {
-			Map<Instance, Set<AbstractAnnotation>> annotations = getDictionaryBasedCandidates();
-
-			for (Instance instance : annotations.keySet()) {
-
-				Set<String> distinctGroupNames = new HashSet<>();
-
-				for (AbstractAnnotation nerla : annotations.get(instance)) {
-
-					if (nerla.getEntityType() == SCIOEntityTypes.groupName) {
-
-						if (CollectExpGroupNames.STOP_TERM_LIST
-								.contains(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
-							continue;
-
-						if (distinctGroupNamesMode == EDistinctGroupNamesMode.STRING_DISTINCT) {
-
-							if (distinctGroupNames
-									.contains(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
-								continue;
-
-							distinctGroupNames.add(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm());
-						}
-
-						instance.addCandidateAnnotation(nerla);
-					}
-
-				}
+		switch (groupNameProviderMode) {
+		case EMPTY:
+			break;
+		case GOLD:
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(GroupNameExtraction.extractGroupNamesFromGold(instance));
 			}
+			break;
+		case TRAINING_PATTERN_NP_CHUNKS:
+			addGroupNameTrainingPattern();
+		case NP_CHUNKS:
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(
+						GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+			}
+			break;
+		case TRAINING_MANUAL_PATTERN:
+			addGroupNameTrainingPattern();
+		case MANUAL_PATTERN:
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(
+						GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
+			}
+			break;
+		case TRAINING_MANUAL_PATTERN_NP_CHUNKS:
+			addGroupNameTrainingPattern();
+		case MANUAL_PATTERN_NP_CHUNKS:
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(
+						GroupNameExtraction.extractGroupNamesWithNPCHunks(distinctGroupNamesMode, instance));
+				instance.addCandidateAnnotations(
+						GroupNameExtraction.extractGroupNamesWithPattern(distinctGroupNamesMode, instance));
+			}
+			break;
+		case TRAINING_PATTERN:
+			addGroupNameTrainingPattern();
+			break;
+		case PREDICTED:
+			int k = 50;
+			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(trainingInstances, k)
+					.entrySet()) {
+				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+			}
+			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(devInstances, k).entrySet()) {
+				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+			}
+			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(testInstances, k).entrySet()) {
+				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+			}
+			break;
 		}
 
-		for (Instance instance : instanceProvider.getInstances()) {
-			/**
-			 * Get and add group names
-			 */
-			List<DocumentLinkedAnnotation> candidates = GroupNameExtraction.extractGroupNames(instance,
-					distinctGroupNamesMode, groupNameProviderMode);
-
-			instance.addCandidateAnnotations(candidates);
-
-			/**
-			 * Add groupNames as DefinedExperimentalGroup
-			 */
-			if (mainClassProviderMode == EMainClassMode.SAMPLE)
-				for (DocumentLinkedAnnotation ec : candidates) {
+		if (mainClassProviderMode == EMainClassMode.SAMPLE)
+			for (Instance instance : instanceProvider.getInstances()) {
+				for (EntityTypeAnnotation ec : instance.getEntityTypeCandidates(EExplorationMode.ANNOTATION_BASED,
+						SCIOEntityTypes.groupName)) {
 					instance.addCandidateAnnotation(AnnotationBuilder.toAnnotation(instance.getDocument(),
-							SCIOEntityTypes.definedExperimentalGroup, ec.getSurfaceForm(), ec.getStartDocCharOffset()));
+							SCIOEntityTypes.definedExperimentalGroup,
+							ec.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(),
+							ec.asInstanceOfDocumentLinkedAnnotation().getStartDocCharOffset()));
+				}
+			}
+
+	}
+
+	public void addGroupNameTrainingPattern() {
+		Map<Instance, Set<AbstractAnnotation>> annotations = getDictionaryBasedCandidates();
+
+		for (Instance instance : annotations.keySet()) {
+
+			Set<String> distinctGroupNames = new HashSet<>();
+
+			for (AbstractAnnotation nerla : annotations.get(instance)) {
+
+				if (nerla.getEntityType() == SCIOEntityTypes.groupName) {
+
+					if (CollectExpGroupNames.STOP_TERM_LIST
+							.contains(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
+						continue;
+
+					if (distinctGroupNamesMode == EDistinctGroupNamesMode.STRING_DISTINCT) {
+
+						if (distinctGroupNames.contains(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
+							continue;
+
+						distinctGroupNames.add(nerla.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm());
+					}
+
+					instance.addCandidateAnnotation(nerla);
 				}
 
+			}
 		}
 	}
 
@@ -1340,7 +1383,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private void addTreatmentCandidatesFromNERLA() {
 
-		JSONNerlaReader prov = new JSONNerlaReader(SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.treatment));
+		JSONNerlaReader prov = new JSONNerlaReader(
+				SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.treatment));
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
@@ -1388,7 +1432,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private void addInjuryCandidatesFromNERLA() {
 
-		JSONNerlaReader prov = new JSONNerlaReader(SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury));
+		JSONNerlaReader prov = new JSONNerlaReader(
+				SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury));
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
@@ -1398,6 +1443,33 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			}
 		}
 
+	}
+
+	private Map<Instance, Set<AbstractAnnotation>> predictGroupName(List<Instance> instances, int k) {
+
+		/**
+		 * Predict OrganismModels
+		 */
+		SlotType.storeExcludance();
+		SlotType.excludeAll();
+
+		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("NERLA-1456807656", scope, trainingInstanceNames,
+				developInstanceNames, testInstanceNames);
+
+		predictor.trainOrLoadModel();
+
+		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations = predictor
+				.predictBatchHighRecallInstances(instances, k);
+
+		SlotType.restoreExcludance();
+		return groupNameAnnotations;
 	}
 
 	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances, int k) {

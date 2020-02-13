@@ -24,7 +24,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.
 public class WordBasedKMeans<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup"))
+		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 
 		/*

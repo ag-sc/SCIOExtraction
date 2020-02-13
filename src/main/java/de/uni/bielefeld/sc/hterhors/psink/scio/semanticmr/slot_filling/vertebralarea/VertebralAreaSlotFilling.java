@@ -62,7 +62,7 @@ public class VertebralAreaSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("VertebralArea"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("VertebralArea"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.

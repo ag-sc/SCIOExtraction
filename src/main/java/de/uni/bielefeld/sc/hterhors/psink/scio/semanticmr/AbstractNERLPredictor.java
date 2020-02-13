@@ -32,6 +32,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -39,6 +40,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.WeightInterpreter.EWeightUnits;
 
 public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
@@ -54,12 +56,18 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 	public final Map<String, Set<AbstractAnnotation>> annotations = new HashMap<>();
 
-	private final IObjectiveFunction objectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.LITERAL);
+//	private final IObjectiveFunction objectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.LITERAL);
+	public final IObjectiveFunction objectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.DOCUMENT_LINKED);
 
-	private final IObjectiveFunction evaluationObjectiveFunction = new NerlaObjectiveFunction(
-			EEvaluationDetail.LITERAL);
+	public final IObjectiveFunction evaluationObjectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.LITERAL);
 
-	private final InstanceProvider instanceProvider;
+	public final InstanceProvider instanceProvider;
+
+	public final ISamplingStoppingCriterion maxStepCrit;
+	public final ISamplingStoppingCriterion noModelChangeCrit;
+	public final ISamplingStoppingCriterion[] sampleStoppingCrits;
+
+	private final List<IExplorationStrategy> explorerList;
 
 	public AbstractNERLPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
@@ -75,7 +83,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * We chose to remove all empty instances from the corpus.
 		 */
 		InstanceProvider.removeEmptyInstances = true;
-		InstanceProvider.maxNumberOfAnnotations = 50;
+		InstanceProvider.maxNumberOfAnnotations = 20;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
 		/**
@@ -92,7 +100,24 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
+		Map<EntityType, Set<String>> words = new HashMap<>();
+		for (Instance trainingInstance : trainingInstances) {
+
+			for (DocumentLinkedAnnotation documentLinkedAnnotation : trainingInstance.getGoldAnnotations()
+					.<DocumentLinkedAnnotation>getAnnotations()) {
+				words.putIfAbsent(documentLinkedAnnotation.getEntityType(), new HashSet<>());
+				words.get(documentLinkedAnnotation.getEntityType()).addAll(documentLinkedAnnotation.relatedTokens
+						.stream().map(t -> t.getText()).collect(Collectors.toSet()));
+				words.get(documentLinkedAnnotation.getEntityType())
+						.add(documentLinkedAnnotation.textualContent.surfaceForm);
+			}
+
+		}
+
 		for (Instance instance : instanceProvider.getInstances()) {
+			for (Entry<EntityType, Set<String>> wm : words.entrySet()) {
+				instance.addCandidate(wm.getKey(), wm.getValue());
+			}
 			instance.addCandidates(getAdditionalCandidates());
 			if (getDictionaryFile() != null)
 				instance.addCandidates(getDictionaryFile());
@@ -104,7 +129,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * designed for NERLA and is parameterized with a candidate retrieval.
 		 */
 		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer();
-		explorer.MAX_WINDOW_SIZE = 4;
+		explorer.MAX_WINDOW_SIZE = 8;
 
 		explorerList = Arrays.asList(explorer);
 
@@ -116,12 +141,6 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 	protected File getDictionaryFile() {
 		return null;
 	}
-
-	ISamplingStoppingCriterion maxStepCrit;
-	ISamplingStoppingCriterion noModelChangeCrit;
-	ISamplingStoppingCriterion[] sampleStoppingCrits;
-
-	List<IExplorationStrategy> explorerList;
 
 	abstract protected File getInstanceDirectory();
 
@@ -298,27 +317,32 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		return annotations.getOrDefault(name, Collections.emptySet());
 	}
 
-	final public void evaluateOnDevelopment() {
-
-		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedDevelopmentInstances(), maxStepCrit,
-				noModelChangeCrit);
-
-		AbstractSemReadProject.evaluate(log, results, evaluationObjectiveFunction);
-
-		log.info(crf.getTrainingStatistics());
-		log.info(crf.getTestStatistics());
-	}
-
 	final public Map<String, Set<AbstractAnnotation>> predictBatchInstances() {
 		return predictBatchInstanceByNames(Streams.concat(trainingInstances.stream().map(i -> i.getName()),
 				developmentInstances.stream().map(i -> i.getName()), testInstances.stream().map(i -> i.getName()))
 				.collect(Collectors.toSet()));
 	}
 
-	final public Map<String, Set<AbstractAnnotation>> predictBatchHighRecallInstances(int n) {
-		return predictBatchHighRecallInstanceByNames(Streams.concat(trainingInstances.stream().map(i -> i.getName()),
-				developmentInstances.stream().map(i -> i.getName()), testInstances.stream().map(i -> i.getName()))
-				.collect(Collectors.toSet()), n);
+	final public Map<Instance, Set<AbstractAnnotation>> predictBatchHighRecallInstances(List<Instance> instances,
+			int n) {
+
+		Map<String, Instance> instanceMap = new HashMap<>();
+
+		for (Instance instance : instances) {
+			instanceMap.put(instance.getName(), instance);
+		}
+
+		Map<String, Set<AbstractAnnotation>> groupNames = predictBatchHighRecallInstanceByNames(instanceMap.keySet(),
+				n);
+
+		Map<Instance, Set<AbstractAnnotation>> pi = new HashMap<>();
+
+		for (Entry<String, Set<AbstractAnnotation>> gne : groupNames.entrySet()) {
+			pi.put(instanceMap.get(gne.getKey()), gne.getValue());
+		}
+
+		return pi;
+
 	}
 
 }

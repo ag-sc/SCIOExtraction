@@ -62,7 +62,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 		 * 
 		 */
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("VertebralArea")).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("VertebralArea")).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();

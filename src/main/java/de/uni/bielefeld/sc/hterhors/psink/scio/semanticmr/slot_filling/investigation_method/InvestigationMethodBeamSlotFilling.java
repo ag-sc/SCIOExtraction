@@ -92,7 +92,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * The scope mainly affects the exploration.
 		 */
 		super(SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("InvestigationMethod"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("InvestigationMethod"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.

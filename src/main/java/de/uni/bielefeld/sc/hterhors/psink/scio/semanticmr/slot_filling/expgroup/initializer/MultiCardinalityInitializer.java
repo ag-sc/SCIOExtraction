@@ -86,7 +86,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 			gnc.train(trainingInstances);
 
 			for (Instance instance : instances) {
-				
+
 				log.info("Cluster instance " + instance.getName());
 				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 				List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, max);
 
 				preComputedClusters.put(instance, clusters);
-			
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -179,23 +179,25 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	public void clusteringBased(Instance instance, List<State> list) {
 		List<List<DocumentLinkedAnnotation>> clusters = preComputedClusters.get(instance);
 
-		for (int current = min; current <= clusters.size(); current++) {
+		for (int current = min; current <= max; current++) {
 
-			List<AbstractAnnotation> experimentalGroups = new ArrayList<>(clusters.size());
+			List<AbstractAnnotation> experimentalGroups = new ArrayList<>();
 
-			for (int i = 0; i < current; i++) {
+			if (clusters != null) {
+				for (int i = 0; i < current; i++) {
 
-				EntityTemplate experimentalGroup = new EntityTemplate(
-						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+					EntityTemplate experimentalGroup = new EntityTemplate(
+							AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 
-				List<DocumentLinkedAnnotation> cluster = clusters.get(i);
+					List<DocumentLinkedAnnotation> cluster = clusters.get(i);
 
-				for (DocumentLinkedAnnotation groupName : cluster) {
-					experimentalGroup.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+					for (DocumentLinkedAnnotation groupName : cluster) {
+						experimentalGroup.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+					}
+
+					experimentalGroups.add(experimentalGroup);
+
 				}
-
-				experimentalGroups.add(experimentalGroup);
-
 			}
 			addEmpty(current, experimentalGroups);
 

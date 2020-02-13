@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.DosageInterpreter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.DurationInterpreter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.normalizer.interpreter.WeightInterpreter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.DosageInterpreter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.DurationInterpreter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.WeightInterpreter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.nerla.OrganismModelPattern;
 
 public class InjuryPattern extends BasicRegExPattern {

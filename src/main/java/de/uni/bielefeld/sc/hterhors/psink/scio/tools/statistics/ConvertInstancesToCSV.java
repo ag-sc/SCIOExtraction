@@ -42,7 +42,7 @@ public class ConvertInstancesToCSV {
 	public ConvertInstancesToCSV(File instancesfiledir) throws IOException {
 
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;

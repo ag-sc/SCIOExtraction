@@ -53,6 +53,8 @@ public class Modes {
 		 * Add no GroupNames for at all. Neither for sampling nor for gold data.
 		 */
 		EMPTY,
+
+		PREDICTED,
 		/**
 		 * Add GroupName annotations from gold data. GroupNames however are not
 		 * co-referenced and assigned to the correct DefindExperimentalGroup.

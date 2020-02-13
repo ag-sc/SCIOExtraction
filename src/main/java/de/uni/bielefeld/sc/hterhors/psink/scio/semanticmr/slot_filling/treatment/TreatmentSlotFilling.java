@@ -59,7 +59,7 @@ public class TreatmentSlotFilling {
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public TreatmentSlotFilling() throws IOException {
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadDataStructureReader("Treatment"))
+		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment"))
 				.build();
 
 		PrintStream resultsOut = new PrintStream(new File("results/treatmentResults.csv"));

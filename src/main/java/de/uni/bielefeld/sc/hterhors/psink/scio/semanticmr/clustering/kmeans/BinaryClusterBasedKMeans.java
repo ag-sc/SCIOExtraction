@@ -34,7 +34,7 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 
 	public static void main(String[] args) {
 
-		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadDataStructureReader("ExperimentalGroup"))
+		SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 		log.info(getProb(0D));
 		log.info(getProb(0D));

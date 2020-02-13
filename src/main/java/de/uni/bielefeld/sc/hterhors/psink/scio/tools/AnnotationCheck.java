@@ -28,7 +28,7 @@ public class AnnotationCheck {
 	public static void main(String[] args) throws IOException {
 
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadDataStructureReader("Result")).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		File rootDir = new File("rawData/export_29052019/");
 		List<File> files = new ArrayList<>(Arrays.asList(rootDir.listFiles()));
