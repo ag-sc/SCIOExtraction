@@ -555,7 +555,8 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 	private double distance(String word1, String word2) {
 
-		return 1-smithWaterman.getSimilarity(word1, word2);
+		return 1 - ((smithWaterman.getSimilarity(word1, word2)
+				+ LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100)) / 2);
 //		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
 	}
 

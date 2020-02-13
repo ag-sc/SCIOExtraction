@@ -341,8 +341,6 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 			pi.put(instanceMap.get(gne.getKey()), gne.getValue());
 		}
 
-		pi.entrySet().forEach(System.out::println);
-
 		return pi;
 
 	}

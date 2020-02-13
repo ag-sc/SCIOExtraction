@@ -186,7 +186,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * Test in eclipse
 			 */
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
 
 			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
@@ -308,6 +308,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	}
 
+	private final String rand;
+
 	public ExperimentalGroupSlotFilling(int parameterID) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
@@ -323,9 +325,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 
-		String rand = String.valueOf(new Random().nextInt(100000));
-		modelName = "ExperimentalGroup" + 46427;
-//		modelName = "ExperimentalGroup" + rand;
+		rand = String.valueOf(new Random().nextInt(100000));
+//		modelName = "ExperimentalGroup" + 46427;
+		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 		setParameterByID(parameterID);
 
@@ -808,7 +810,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * TODO: implement treatment prediction.
 			 */
 
-//			if (mainClassProviderMode == EMainClassMode.PREDICT) {
+//			if (mainClassProviderMode == EMainClassMode.PRE_PREDICTED) {
 //				int k = 1;
 //
 ////				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictTreatmentModel(trainingInstances,k)
@@ -909,7 +911,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		// .setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-				.setCorpusSizeFraction(0.1F).setTestProportion(20).setSeed(1000L).build();
+				.setTestProportion(20).setSeed(1000L).build();
 
 		InstanceProvider.maxNumberOfAnnotations = 8;
 		InstanceProvider.removeEmptyInstances = true;
@@ -1460,8 +1462,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
-		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("NERLA-1456807656", scope, trainingInstanceNames,
-				developInstanceNames, testInstanceNames);
+		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("GroupName_EXP_GROUP_" + rand, scope,
+				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
 		predictor.trainOrLoadModel();
 
@@ -1492,8 +1494,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
-		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_12345", scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_EXP_GROUP_" + rand,
+				scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
@@ -1518,7 +1520,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
-		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_12345", scope,
+		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_EXP_GROUP_" + rand, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 

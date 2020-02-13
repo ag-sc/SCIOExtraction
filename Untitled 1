@@ -1,0 +1,25 @@
+samplingMode: TYPE_BASED
+assignmentMode: TREATMENT
+cardinalityMode: PARALLEL_CARDINALITIES
+groupNameClusteringMode: KMEANS_CLUSTERING
+groupNameProviderMode: PREDICTED
+mainClassProviderMode: PRE_PREDICTED
+distinctGroupNamesMode: NOT_DISTINCT
+TREATMENTS MICRO: BOTH = Score [ getF1()=0.660, getPrecision()=0.673, getRecall()=0.648, tp=35, fp=17, fn=19, tn=0]
+TREATMENTS MICRO: Vehicle = Score [ getF1()=0.692, getPrecision()=0.900, getRecall()=0.562, tp=9, fp=1, fn=7, tn=0]
+TREATMENTS MICRO: Non Vehicle = Score [ getF1()=0.650, getPrecision()=0.619, getRecall()=0.684, tp=26, fp=16, fn=12, tn=0]
+ORGANISM MODEL MICRO: SCORE = Score [ getF1()=0.821, getPrecision()=0.842, getRecall()=0.800, tp=16, fp=3, fn=4, tn=0]
+INJURY MODEL MICRO: SCORE = Score [ getF1()=0.556, getPrecision()=0.625, getRecall()=0.500, tp=10, fp=6, fn=10, tn=0]
+EXP GROUP MICRO  CARDINALITY = Score [ getF1()=0.857, getPrecision()=0.797, getRecall()=0.927, tp=51, fp=13, fn=4, tn=0]
+EXP GROUP MICRO  INTERVALL CARDINALITY = 0:0.9444444444444444	1:0.972972972972973	2:0.972972972972973	3:1.0
+EXP GROUP MICRO  CARDINALITY RMSE = 1.3572417850765923
+EXP GROUP MICRO  SCORE = Score [ getF1()=0.612, getPrecision()=0.643, getRecall()=0.583, tp=119, fp=66, fn=85, tn=0]
+EXP GROUP MICRO: TREATMENT BOTH = Score [ getF1()=0.605, getPrecision()=0.731, getRecall()=0.516, tp=49, fp=18, fn=46, tn=0]
+EXP GROUP MICRO: TREATMENT Vehicle = Score [ getF1()=0.593, getPrecision()=0.889, getRecall()=0.444, tp=8, fp=1, fn=10, tn=0]
+EXP GROUP MICRO: TREATMENT Non Vehicle = Score [ getF1()=0.607, getPrecision()=0.707, getRecall()=0.532, tp=41, fp=17, fn=36, tn=0]
+EXP GROUP MICRO: ORG MODEL = Score [ getF1()=0.723, getPrecision()=0.672, getRecall()=0.782, tp=43, fp=21, fn=12, tn=0]
+EXP GROUP MICRO: INJURY MODEL = Score [ getF1()=0.500, getPrecision()=0.500, getRecall()=0.500, tp=27, fp=27, fn=27, tn=0]
+CRFStatistics [context=Train, getTotalDuration()=1917938]
+CRFStatistics [context=Test, getTotalDuration()=88942]
+modelName: ExperimentalGroup7153
+States generated: 6425517
