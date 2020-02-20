@@ -22,6 +22,8 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans.Centroid;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans.Record;
 
 public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -172,6 +174,49 @@ public class BinaryClusterBasedKMeans<E extends LiteralAnnotation> {
 			return ((double) new Random().nextInt(50)) / 100D;
 
 		return (60D + new Random().nextInt(40)) / 100D;
+	}
+
+	public List<List<E>> clusterRSS(List<E> datapoints, int min, int max) {
+
+		Map<Centroid, List<Record<E>>> clusterRecords = new HashMap<>();
+
+		List<Record<E>> vecs = toDataPoints(datapoints);
+
+		double smallestRSS = Double.MAX_VALUE;
+		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
+
+			Map<Centroid, List<Record<E>>> cR = kMeans(vecs, clusterSize, maxIterations);
+
+			double RSS = RSS(cR);
+
+			if (RSS < smallestRSS) {
+				smallestRSS = RSS;
+				clusterRecords = cR;
+			}
+
+		}
+
+		List<List<E>> clusters = new ArrayList<>();
+
+		for (List<Record<E>> records : clusterRecords.values()) {
+			clusters.add(records.stream().map(r -> r.annotation).collect(Collectors.toList()));
+		}
+
+		return clusters;
+
+	}
+
+	private double RSS(Map<Centroid, List<Record<E>>> clusterRecords) {
+
+		double rss = 0;
+
+		for (Entry<Centroid, List<Record<E>>> cluster : clusterRecords.entrySet()) {
+			Centroid c = cluster.getKey();
+			for (Record<E> r : cluster.getValue()) {
+				rss += distance(r, c);
+			}
+		}
+		return rss;
 	}
 
 	public BinaryClusterBasedKMeans(List<GroupNamePair> gnd) {

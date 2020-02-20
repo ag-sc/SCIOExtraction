@@ -19,11 +19,18 @@
 			<artifactId>opencsv</artifactId>
 			<version>3.8</version>
 		</dependency>
+	
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>apache-jena-libs</artifactId>
 			<version>3.8.0</version>
 			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>uk.ac.shef.wit</groupId>
+			<artifactId>simmetrics</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.w3c/dom -->

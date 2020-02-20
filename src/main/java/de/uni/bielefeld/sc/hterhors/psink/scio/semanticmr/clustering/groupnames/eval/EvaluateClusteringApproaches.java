@@ -54,10 +54,16 @@ public class EvaluateClusteringApproaches {
 
 		List<Instance> trainInstances = instanceProvider.getRedistributedTrainingInstances();
 		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
+		double x = 0;
+		for (Instance instance : trainInstances) {
+			x += instance.getGoldAnnotations().getAbstractAnnotations().size();
+		}
+		x /= trainInstances.size();
+		System.out.println((int) x);
 
 		int k = 4;
 
-		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
+//		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
 		System.out.println();
 		System.out.println();
 		evaluator.wordBasedKMeans(trainInstances, testInstances, k);
@@ -84,6 +90,11 @@ public class EvaluateClusteringApproaches {
 
 		Score overallPostClusteringBinaryClassificationScore = new Score();
 		Score overallClusteringScore = new Score();
+		Score overallCardinalityScore = new Score();
+
+		double cardinalityRMSE = 0;
+
+		Map<Integer, Score> intervallCardinality = new HashMap<>();
 
 		for (Instance instance : testInstances) {
 			Map<Boolean, Set<GroupNamePair>> goldPairs = GroupNameDataSetHelper
@@ -96,7 +107,12 @@ public class EvaluateClusteringApproaches {
 
 			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, k);
 
+			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
+			computeIntervallCardinality(intervallCardinality, instance, clusters);
+
 			Score clusteringScore = computeClusteringScore(instance, clusters);
+			Score cardinalityScore = computeCardinalityScore(instance, clusters);
+			overallCardinalityScore.add(cardinalityScore);
 
 			overallClusteringScore.add(clusteringScore);
 
@@ -108,7 +124,12 @@ public class EvaluateClusteringApproaches {
 		System.out.println(k + " GroupNameClusteringWEKA overallBinaryClassificationScore  = "
 				+ overallPostClusteringBinaryClassificationScore);
 		System.out.println(k + " GroupNameClusteringWEKA overallClusteringScore  = " + overallClusteringScore);
-
+		System.out.println(k + " GroupNameClusteringWEKA overall cardinality score  = " + overallCardinalityScore);
+		final StringBuffer cardString = new StringBuffer();
+		intervallCardinality.entrySet().forEach(e -> cardString.append("\n\t" + e.getKey() + ":" + e.getValue()));
+		System.out.println("GroupNameClusteringWEKA INTERVALL CARDINALITY = " + cardString.toString().trim());
+		System.out.println(
+				"GroupNameClusteringWEKA CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
 	}
 
 	public void wordBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) {
@@ -116,6 +137,12 @@ public class EvaluateClusteringApproaches {
 
 		Score overallBinaryClassificationScore = new Score();
 		Score overallClusteringScore = new Score();
+
+		Score overallCardinalityScore = new Score();
+
+		double cardinalityRMSE = 0;
+
+		Map<Integer, Score> intervallCardinality = new HashMap<>();
 
 		for (Instance instance : testInstances) {
 
@@ -127,9 +154,17 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
-			List<List<DocumentLinkedAnnotation>> clusters = kMeans.cluster(datapoints, k);
+			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, 3,5);
+
+			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
+
+			computeIntervallCardinality(intervallCardinality, instance, clusters);
 
 			Score clusteringScore = computeClusteringScore(instance, clusters);
+
+			Score cardinalityScore = computeCardinalityScore(instance, clusters);
+
+			overallCardinalityScore.add(cardinalityScore);
 
 			overallClusteringScore.add(clusteringScore);
 
@@ -141,6 +176,41 @@ public class EvaluateClusteringApproaches {
 		System.out.println(
 				k + " WordBasedKMeans overallBinaryClassificationScore  = " + overallBinaryClassificationScore);
 		System.out.println(k + " WordBasedKMeans overallClusteringScore  = " + overallClusteringScore);
+		System.out.println(k + " WordBasedKMeans overall cardinality score  = " + overallCardinalityScore);
+
+		final StringBuffer cardString = new StringBuffer();
+		intervallCardinality.entrySet().forEach(e -> cardString.append("\n\t" + e.getKey() + ":" + e.getValue()));
+		System.out.println("WordBasedKMeans INTERVALL CARDINALITY = " + cardString.toString().trim());
+		System.out.println("WordBasedKMeans CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
+	}
+
+	public void computeIntervallCardinality(Map<Integer, Score> intervallCardinality, Instance instance,
+			List<List<DocumentLinkedAnnotation>> clusters) {
+		for (int spread = 0; spread < 4; spread++) {
+			intervallCardinality.putIfAbsent(spread, new Score());
+
+			int tp = instance.getGoldAnnotations().getAbstractAnnotations().size() - clusters.size() <= spread ? 1 : 0;
+			int fn = tp == 1 ? 0 : 1;
+			intervallCardinality.get(spread).add(new Score(tp, 0, fn));
+
+		}
+	}
+
+	public double computeRMSE(double cardinalityRMSE, Instance instance,
+			List<List<DocumentLinkedAnnotation>> clusters) {
+		cardinalityRMSE += Math.pow(clusters.size() - instance.getGoldAnnotations().getAbstractAnnotations().size(), 2);
+		return cardinalityRMSE;
+	}
+
+	private Score computeCardinalityScore(Instance instance, List<List<DocumentLinkedAnnotation>> clusters) {
+		int tp = Math.min(instance.getGoldAnnotations().getAnnotations().size(), clusters.size());
+		int fp = clusters.size() > instance.getGoldAnnotations().getAnnotations().size()
+				? clusters.size() - instance.getGoldAnnotations().getAnnotations().size()
+				: 0;
+		int fn = clusters.size() < instance.getGoldAnnotations().getAnnotations().size()
+				? instance.getGoldAnnotations().getAnnotations().size() - clusters.size()
+				: 0;
+		return new Score(tp, fp, fn);
 
 	}
 

@@ -34,7 +34,13 @@ public class SCIOSlotTypes {
 	public static final SlotType hasDirection = getLazy("hasDirection");
 	public static final SlotType hasDosage = getLazy("hasDosage");
 	public static final SlotType hasInjuryLocation = getLazy("hasInjuryLocation");;
-	public static final SlotType hasInjuryAnaesthesia = getLazy("hasInjuryAnaesthesia");;
+	public static final SlotType hasInjuryAnaesthesia = getLazy("hasInjuryAnaesthesia");
+	public static final SlotType hasTrend = getLazy("hasTrend");
+	public static final SlotType hasJudgement = getLazy("hasJudgement");
+	public static final SlotType hasSignificance = getLazy("hasSignificance");
+	public static final SlotType hasDifference = getLazy("hasDifference");
+	public static final SlotType hasAlphaSignificanceNiveau = getLazy("hasAlphaSignificanceNiveau");
+	public static final SlotType hasPValue = getLazy("hasPValue");
 
 	private static SlotType getLazy(String name) {
 		try {

@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 
@@ -127,9 +130,7 @@ public class ResultOutPutReader {
 
 	public static void main(String[] args) throws Exception {
 
-		File dir = new File("results/experimentalgroupextratcion/pairwise/");
-
-		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/pairwise/merge_pairwise.csv"));
+		File dir = new File("results/experimentalgroupextratcion/new/");
 
 		int modeCounter = 0;
 
@@ -140,15 +141,29 @@ public class ResultOutPutReader {
 		Map<String, Map<String, Score>> dataMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (File file : dir.listFiles()) {
+		List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream().filter(n -> n.matches(".*Results.*"))
+				.collect(Collectors.toList());
+
+		Collections.sort(files, new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+				return Integer.compare(Integer.parseInt(o1.split("_")[0]), Integer.parseInt(o2.split("_")[0]));
+			}
+		});
+
+		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/new/merge_new.csv"));
+		for (String fileName : files) {
+			File file = new File(dir, fileName);
+			System.out.println(file);
 
 			if (!file.getName().contains("Results"))
 				continue;
 
-			final String modeName = "Mode" + modeCounter;
+			final String modeName = "Mode_" + modeCounter;
 			modePairsMap.put(modeName, new HashMap<>());
 			List<String> readAllLines = Files.readAllLines(file.toPath());
-			for (int i = 2; i < 6; i++) {
+			for (int i = 1; i < 6; i++) {
 				ModePair modePair = getModePattern(readAllLines.get(i));
 				modePairsMap.get(modeName).put(modePair.mode, modePair.value);
 				modeValueNames.add(modePair.mode);
@@ -164,7 +179,14 @@ public class ResultOutPutReader {
 			modeCounter++;
 		}
 		List<String> modeNames = new ArrayList<>(modePairsMap.keySet());
-		Collections.sort(modeNames);
+		Collections.sort(modeNames, new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+				return Integer.compare(Integer.parseInt(o1.split("_")[1]), Integer.parseInt(o2.split("_")[1]));
+			}
+		});
+
 		ps.println(toModeNamesHeaderLine(modeNames));
 
 		List<String> dataNameList = new ArrayList<>(dataNames);
@@ -182,21 +204,29 @@ public class ResultOutPutReader {
 
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 20; i++) {
 			ps.println();
 		}
 
 		List<String> mnvpl = new ArrayList<>(modeValueNames);
 		Collections.sort(mnvpl);
 
-		for (Entry<String, Map<String, String>> mnp : modePairsMap.entrySet()) {
-			ps.print(mnp.getKey() + "\t");
+		// header
+		ps.print("Mode \t");
+		for (String modeName : mnvpl) {
+			ps.print(modeName + "\t");
+		}
+
+		ps.println();
+		for (String modeName : modeNames) {
+			ps.print(modeName + "\t");
 
 			for (String mn : mnvpl) {
-				ps.print(mnp.getValue().get(mn) + "\t");
+
+				ps.print(modePairsMap.get(modeName).get(mn) + "\t");
+
 			}
 			ps.println();
-
 		}
 
 		ps.close();

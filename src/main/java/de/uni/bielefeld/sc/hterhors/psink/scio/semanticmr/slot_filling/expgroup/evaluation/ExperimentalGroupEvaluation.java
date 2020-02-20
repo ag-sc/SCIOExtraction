@@ -130,7 +130,8 @@ public class ExperimentalGroupEvaluation {
 		log.info("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
 		ps.println("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
 		final StringBuffer cardString = new StringBuffer();
-		intervallCardinality.entrySet().forEach(e -> cardString.append(e.getKey() + ":" + e.getValue().getF1() + "\t"));
+		intervallCardinality.entrySet()
+				.forEach(e -> cardString.append(e.getKey() + ":" + e.getValue().getRecall() + "\t"));
 		log.info("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
 		ps.println("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
 		log.info("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));

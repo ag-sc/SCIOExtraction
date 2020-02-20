@@ -26,6 +26,8 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractNERLPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.templates.GroupNamesInSameSentenceTemplate_FAST;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.templates.WBFGroupNamesTemplate_FAST;
 
 /**
  * Example of how to perform named entity recognition and linking.
@@ -71,12 +73,35 @@ public class GroupNameNERLPredictor extends AbstractNERLPredictor {
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
-
 //		featureTemplates.add(new ContextBetweenAnnotationsTemplate());
+//		featureTemplates.add(new LevenshteinTemplate());
+
+//Final Score: Score [ getF1()=0.170, getPrecision()=0.108, getRecall()=0.404, tp=72, fp=595, fn=106, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=1439006]
+//CRFStatistics [context=Test, getTotalDuration()=243879]
+//modelName: GroupName_504747574
+
 		featureTemplates.add(new MorphologicalNerlaTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
-//		featureTemplates.add(new LevenshteinTemplate());
+
+		/**
+		 * 
+		 * 
+		 */
+//		Final Score: Score [ getF1()=0.170, getPrecision()=0.107, getRecall()=0.404, tp=72, fp=599, fn=106, tn=0]
+//				CRFStatistics [context=Train, getTotalDuration()=1699948]
+//				CRFStatistics [context=Test, getTotalDuration()=302525]
+//				modelName: GroupName_895041394
+
+//		featureTemplates.add(new GroupNamesInSameSentenceTemplate_FAST());
+//		featureTemplates.add(new WBFGroupNamesTemplate_FAST());
+
+		// featureTemplates.add(new WBFGroupNamesTemplate_SLOW());
+//		featureTemplates.add(new WBFGroupNamesTemplate());
+//		featureTemplates.add(new WBGroupNamesTemplate());
+//		featureTemplates.add(new WBLGroupNamesTemplate());
+//		featureTemplates.add(new WordsInBetweenGroupNamesTemplate());
 
 		return featureTemplates;
 	}

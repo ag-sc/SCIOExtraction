@@ -83,7 +83,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * We chose to remove all empty instances from the corpus.
 		 */
 		InstanceProvider.removeEmptyInstances = true;
-		InstanceProvider.maxNumberOfAnnotations = 20;
+		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
 		/**

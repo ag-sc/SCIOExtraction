@@ -136,6 +136,67 @@ public class WEKAClustering {
 		return score;
 	}
 
+	public List<List<DocumentLinkedAnnotation>> clusterRSS(List<DocumentLinkedAnnotation> anns, int min, int max)
+			throws Exception {
+		log.info("Number of annotations to cluster: " + anns.size());
+		/**
+		 * TODO: parameterize if distinction should happen or not .
+		 */
+		Map<String, Set<DocumentLinkedAnnotation>> distinctMap = new HashMap<>();
+		makeDistinct: {
+			anns = makeDistinct(anns, distinctMap);
+		}
+		List<GroupNamePair> gnps = binaryClassification(anns);
+
+		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
+
+		List<List<DocumentLinkedAnnotation>> distinctClusters = kmeans.clusterRSS(anns, min, max);
+
+		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
+		resolveDistinction: {
+
+			resolveDistinction(distinctMap, distinctClusters, clusters);
+
+		}
+
+		return clusters;
+
+	}
+
+	public void resolveDistinction(Map<String, Set<DocumentLinkedAnnotation>> distinctMap,
+			List<List<DocumentLinkedAnnotation>> distinctClusters, List<List<DocumentLinkedAnnotation>> clusters) {
+		for (List<DocumentLinkedAnnotation> list : distinctClusters) {
+
+			List<DocumentLinkedAnnotation> dlas = new ArrayList<>(list);
+
+			for (DocumentLinkedAnnotation dla : list) {
+				dlas.addAll(distinctMap.get(dla.getSurfaceForm()));
+			}
+			clusters.add(dlas);
+		}
+	}
+
+	public List<DocumentLinkedAnnotation> makeDistinct(List<DocumentLinkedAnnotation> anns,
+			Map<String, Set<DocumentLinkedAnnotation>> distinctMap) {
+		for (DocumentLinkedAnnotation documentLinkedAnnotation : anns) {
+			distinctMap.putIfAbsent(documentLinkedAnnotation.getSurfaceForm(), new HashSet<>());
+
+			distinctMap.get(documentLinkedAnnotation.getSurfaceForm()).add(documentLinkedAnnotation);
+
+		}
+
+		List<DocumentLinkedAnnotation> distinctAnnotations = new ArrayList<>();
+		for (Set<DocumentLinkedAnnotation> dlas : distinctMap.values()) {
+			for (DocumentLinkedAnnotation documentLinkedAnnotation : dlas) {
+				distinctAnnotations.add(documentLinkedAnnotation);
+				break;
+			}
+		}
+
+		anns = distinctAnnotations;
+		return anns;
+	}
+
 	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> anns, int k) throws Exception {
 		log.info("Number of annotations to cluster: " + anns.size());
 		/**
@@ -143,24 +204,25 @@ public class WEKAClustering {
 		 */
 		Map<String, Set<DocumentLinkedAnnotation>> distinctMap = new HashMap<>();
 		makeDistinct: {
-
-			for (DocumentLinkedAnnotation documentLinkedAnnotation : anns) {
-				distinctMap.putIfAbsent(documentLinkedAnnotation.getSurfaceForm(), new HashSet<>());
-
-				distinctMap.get(documentLinkedAnnotation.getSurfaceForm()).add(documentLinkedAnnotation);
-
-			}
-
-			List<DocumentLinkedAnnotation> distinctAnnotations = new ArrayList<>();
-			for (Set<DocumentLinkedAnnotation> dlas : distinctMap.values()) {
-				for (DocumentLinkedAnnotation documentLinkedAnnotation : dlas) {
-					distinctAnnotations.add(documentLinkedAnnotation);
-					break;
-				}
-			}
-
-			anns = distinctAnnotations;
+			anns = makeDistinct(anns, distinctMap);
 		}
+		List<GroupNamePair> gnps = binaryClassification(anns);
+
+		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
+
+		List<List<DocumentLinkedAnnotation>> distinctClusters = kmeans.cluster(anns, k);
+		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
+		resolveDistinction: {
+
+			resolveDistinction(distinctMap, distinctClusters, clusters);
+
+		}
+
+		return clusters;
+
+	}
+
+	public List<GroupNamePair> binaryClassification(List<DocumentLinkedAnnotation> anns) throws Exception {
 		log.info("Number of DISTINCT annotations to cluster: " + anns.size());
 
 		DataPointCollector predictions = new DataPointCollector();
@@ -184,7 +246,7 @@ public class WEKAClustering {
 		log.info("Num of pairwise instances to classify = " + predictionInstances.size());
 
 		for (weka.core.Instance instance : predictionInstances) {
-			if (i % ((double)predictionInstances.size() / 10) == 0)
+			if (i % ((double) predictionInstances.size() / 10) == 0)
 				log.info("Num of instances classified = " + i);
 			GroupNamePair gnp = (GroupNamePair) predictions.getDataPoints().get(i).parameter.get("groupNamePair");
 
@@ -203,27 +265,7 @@ public class WEKAClustering {
 			i++;
 		}
 		log.info("Binary classification done...");
-
-		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
-
-		List<List<DocumentLinkedAnnotation>> distinctClusters = kmeans.cluster(anns, k);
-		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
-		resolveDistinction: {
-
-			for (List<DocumentLinkedAnnotation> list : distinctClusters) {
-
-				List<DocumentLinkedAnnotation> dlas = new ArrayList<>(list);
-
-				for (DocumentLinkedAnnotation dla : list) {
-					dlas.addAll(distinctMap.get(dla.getSurfaceForm()));
-				}
-				clusters.add(dlas);
-			}
-
-		}
-
-		return clusters;
-
+		return gnps;
 	}
 
 	private void collectInstances(List<Instance> instances, DataPointCollector collector, boolean training) {

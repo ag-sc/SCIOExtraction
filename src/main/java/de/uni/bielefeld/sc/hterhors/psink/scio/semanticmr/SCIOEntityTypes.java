@@ -19,6 +19,7 @@ public class SCIOEntityTypes {
 	public static final EntityType investigationMethod =  getLazy("InvestigationMethod");
 	public static final EntityType observation =  getLazy("Observation");
 	public static final EntityType result =  getLazy("Result");
+	public static final EntityType trend = getLazy("Trend");
 
 	private static EntityType getLazy(String name) {
 		try {

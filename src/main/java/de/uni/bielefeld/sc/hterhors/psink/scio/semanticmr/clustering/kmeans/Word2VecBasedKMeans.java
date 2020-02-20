@@ -141,8 +141,8 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 
 		List<LiteralAnnotation> datapoints = new ArrayList<>(gnd.stream()
 				.flatMap(a -> Arrays.asList(a.groupName1, a.groupName2).stream()).collect(Collectors.toSet()));
-
-		List<List<LiteralAnnotation>> clusters = c.cluster(datapoints, 4);
+//
+		List<List<LiteralAnnotation>> clusters = c.clusterRSS(datapoints, 1, 10);
 		System.out.println("Number of clusters = " + clusters.size());
 		for (List<LiteralAnnotation> cluster : clusters) {
 			System.out.println("Cluster size = " + cluster.size());
@@ -154,6 +154,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 			}
 			System.out.println("-------------------");
 		}
+
 	}
 
 	private Map<String, Double[]> wordEmbeddings = new HashMap<>();
@@ -161,6 +162,55 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	private final Random random = new Random(1000L);
 
 	final private int maxIterations = 1000;
+
+	public List<List<E>> clusterRSS(List<E> datapoints, int min, int max) {
+
+		Set<String> words = datapoints.stream()
+				.flatMap(a -> Arrays.stream(a.asInstanceOfLiteralAnnotation().getSurfaceForm().split(" ")))
+				.collect(Collectors.toSet());
+
+		readVectors(words);
+
+		Map<Centroid, List<Record<E>>> clusterRecords = new HashMap<>();
+
+		List<Record<E>> vecs = toDataPoints(datapoints);
+
+		double smallestRSS = Double.MAX_VALUE;
+		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
+
+			Map<Centroid, List<Record<E>>> cR = kMeans(vecs, clusterSize, maxIterations);
+
+			double RSS = RSS(cR);
+
+			if (RSS < smallestRSS) {
+				smallestRSS = RSS;
+				clusterRecords = cR;
+			}
+
+		}
+
+		List<List<E>> clusters = new ArrayList<>();
+
+		for (List<Record<E>> records : clusterRecords.values()) {
+			clusters.add(records.stream().map(r -> r.annotation).collect(Collectors.toList()));
+		}
+
+		return clusters;
+
+	}
+
+	private double RSS(Map<Centroid, List<Record<E>>> clusterRecords) {
+
+		double rss = 0;
+
+		for (Entry<Centroid, List<Word2VecBasedKMeans<E>.Record<E>>> cluster : clusterRecords.entrySet()) {
+			Centroid c = cluster.getKey();
+			for (Word2VecBasedKMeans<E>.Record<E> r : cluster.getValue()) {
+				rss += distance(c.word, r.word);
+			}
+		}
+		return rss;
+	}
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
 		if (datapoints.isEmpty() || k >= datapoints.size()) {
@@ -184,8 +234,6 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 //				.collect(Collectors.toSet());
 
 		readVectors(words);
-
-		wordEmbeddings.entrySet().forEach(System.out::println);
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
 
@@ -270,6 +318,10 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 			if (!Arrays.equals(word, other.word))
 				return false;
 			return true;
+		}
+
+		public Centroid() {
+			this.word = new Double[] { Math.random() };
 		}
 
 		public Centroid(Double[] word) {
@@ -365,10 +417,22 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	}
 
 	private Map<Centroid, List<Record<E>>> kMeans(List<Record<E>> records, int k, int maxIterations) {
-//		List<Centroid> centroids = randomCentroids(records, k);
-		List<Centroid> centroids = plusplusCentroids(records, k);
 
 		Map<Centroid, List<Record<E>>> lastState = new HashMap<>();
+
+		if (records.isEmpty() || k >= records.size()) {
+			for (int clusterC = 0; clusterC < k; clusterC++) {
+				if (clusterC < records.size())
+					lastState.put(new Centroid(), Arrays.asList(records.get(clusterC)));
+				else
+					lastState.put(new Centroid(), Collections.emptyList());
+			}
+			return lastState;
+
+		}
+
+		// List<Centroid> centroids = randomCentroids(records, k);
+		List<Centroid> centroids = plusplusCentroids(records, k);
 
 		// iterate for a pre-defined number of times
 		for (int i = 0; i < maxIterations; i++) {
@@ -450,7 +514,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 				double minDist = Double.MAX_VALUE;
 
 				for (Centroid centroid : centroids) {
-					double dist = calcEuklidDistance(centroid.word, records.get(i).word);
+					double dist = distance(centroid.word, records.get(i).word);
 					if (dist < minDist) {
 						minDist = dist;
 					}
@@ -611,7 +675,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		Centroid nearest = null;
 
 		for (Centroid centroid : centroids) {
-			double currentDistance = calcEuklidDistance(record.word, centroid.word);
+			double currentDistance = distance(record.word, centroid.word);
 
 			if (currentDistance < minimumDistance) {
 				minimumDistance = currentDistance;
@@ -622,7 +686,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		return nearest;
 	}
 
-	private static double calcEuklidDistance(Double[] vec1, Double[] vec2) {
+	private static double distance(Double[] vec1, Double[] vec2) {
 
 		double dist = 0;
 		for (int i = 0; i < vec1.length; i++) {
@@ -634,7 +698,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 
 	}
 
-	private double levenshteinSimilarty(String word1, String word2) {
+	private static double levenshteinSimilarty(String word1, String word2) {
 		return LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
 	}
 }

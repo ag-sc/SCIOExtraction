@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
@@ -20,6 +21,8 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans.Centroid;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans.Record;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
 
 public class WordBasedKMeans<E extends LiteralAnnotation> {
@@ -140,7 +143,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		List<LiteralAnnotation> datapoints = new ArrayList<>(gnd.stream()
 				.flatMap(a -> Arrays.asList(a.groupName1, a.groupName2).stream()).collect(Collectors.toSet()));
 
-		List<List<LiteralAnnotation>> clusters = c.cluster(datapoints, 4);
+		List<List<LiteralAnnotation>> clusters = c.clusterRSS(datapoints, 2, 6);
 		System.out.println("Number of clusters = " + clusters.size());
 		for (List<LiteralAnnotation> cluster : clusters) {
 			System.out.println("Cluster size = " + cluster.size());
@@ -152,11 +155,54 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			}
 			System.out.println("-------------------");
 		}
+
 	}
 
 	private final Random random = new Random(1000L);
 
 	final private int maxIterations = 1000;
+
+	public List<List<E>> clusterRSS(List<E> datapoints, int min, int max) {
+
+		Map<Centroid, List<Record<E>>> clusterRecords = new HashMap<>();
+
+		List<Record<E>> vecs = toDataPoints(datapoints);
+		double smallestRSS = Double.MAX_VALUE;
+		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
+
+			Map<Centroid, List<Record<E>>> cR = kMeans(vecs, clusterSize, maxIterations);
+
+			double RSS = RSS(cR);
+
+			if (RSS < smallestRSS) {
+				smallestRSS = RSS;
+				clusterRecords = cR;
+			}
+
+		}
+
+		List<List<E>> clusters = new ArrayList<>();
+
+		for (List<Record<E>> records : clusterRecords.values()) {
+			clusters.add(records.stream().map(r -> r.annotation).collect(Collectors.toList()));
+		}
+
+		return clusters;
+
+	}
+
+	private double RSS(Map<Centroid, List<Record<E>>> clusterRecords) {
+
+		double rss = 0;
+
+		for (Entry<Centroid, List<WordBasedKMeans<E>.Record<E>>> cluster : clusterRecords.entrySet()) {
+			Centroid c = cluster.getKey();
+			for (WordBasedKMeans<E>.Record<E> r : cluster.getValue()) {
+				rss += distance(c.word, r.word);
+			}
+		}
+		return rss;
+	}
 
 	public List<List<E>> cluster(List<E> datapoints, int k) {
 		if (datapoints.isEmpty() || k >= datapoints.size()) {
@@ -228,6 +274,10 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 			this.word = word;
 		}
 
+		public Centroid() {
+			this.word = UUID.randomUUID().toString();
+		}
+
 	}
 
 	class Record<E extends LiteralAnnotation> {
@@ -279,9 +329,21 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 	private Map<Centroid, List<Record<E>>> kMeans(List<Record<E>> records, int k, int maxIterations) {
 //		List<Centroid> centroids = randomCentroids(records, k);
-		List<Centroid> centroids = plusplusCentroids(records, k);
 
 		Map<Centroid, List<Record<E>>> lastState = new HashMap<>();
+
+		if (records.isEmpty() || k >= records.size()) {
+			for (int clusterC = 0; clusterC < k; clusterC++) {
+				if (clusterC < records.size())
+					lastState.put(new Centroid(), Arrays.asList(records.get(clusterC)));
+				else
+					lastState.put(new Centroid(), Collections.emptyList());
+			}
+			return lastState;
+
+		}
+
+		List<Centroid> centroids = plusplusCentroids(records, k);
 
 		// iterate for a pre-defined number of times
 		for (int i = 0; i < maxIterations; i++) {
@@ -554,6 +616,10 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 	final private SmithWaterman smithWaterman = new SmithWaterman();
 
 	private double distance(String word1, String word2) {
+		if (word1 == null) {
+			System.out.println("");
+			return 0;
+		}
 
 		return 1 - ((smithWaterman.getSimilarity(word1, word2)
 				+ LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100)) / 2);

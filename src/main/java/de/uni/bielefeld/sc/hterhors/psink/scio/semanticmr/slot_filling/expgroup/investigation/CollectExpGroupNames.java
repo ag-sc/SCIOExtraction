@@ -908,16 +908,16 @@ public class CollectExpGroupNames {
 			new PatternIndexPair(4, new HashSet<>(Arrays.asList(0, 3)),
 					Pattern.compile("((only|or) )?([a-z][^ ]+?) ?\\((n)\\W?=\\W?\\d{1,2}\\)", Pattern.CASE_INSENSITIVE),
 					5),
-			new PatternIndexPair(5, new HashSet<>(Arrays.asList(0, 2)),
+			new PatternIndexPair(5, new HashSet<>(Arrays.asList( 2)),
 					Pattern.compile(
 							"(a|the|in) ([\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs|transplantation))",
 							Pattern.CASE_INSENSITIVE)),
-			new PatternIndexPair(6, new HashSet<>(Arrays.asList(0, 3)),
+			new PatternIndexPair(6, new HashSet<>(Arrays.asList( 3)),
 					Pattern.compile(
 							"(,( ?and ?)?|;)([\\w-\\+ ']{3,20} ?(group|animals|mice|rats|cats|dogs|transplantation))",
 							Pattern.CASE_INSENSITIVE),
 					2),
-			new PatternIndexPair(7, new HashSet<>(Arrays.asList(0, 2)), Pattern.compile(
+			new PatternIndexPair(7, new HashSet<>(Arrays.asList( 2)), Pattern.compile(
 					"(\\)|;|:) ?((\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100})(\\( ?)?n\\W?=\\W?\\d{1,2}( ?\\))?(?=(,|\\.|;))",
 					Pattern.CASE_INSENSITIVE), 5),
 			new PatternIndexPair(8, new HashSet<>(Arrays.asList(0, 3)), Pattern.compile(

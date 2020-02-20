@@ -40,7 +40,10 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	private final EExtractGroupNamesMode groupNameMode;
 	private final EGroupNamesClusteringMode groupNamesPreProcessingMode;
 
-	private Map<Instance, List<List<DocumentLinkedAnnotation>>> preComputedClusters = new HashMap<>();
+	/**
+	 * k, cluster per instance
+	 */
+	private Map<Integer, Map<Instance, List<List<DocumentLinkedAnnotation>>>> preComputedClusters = new HashMap<>();
 
 	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
 			EGroupNamesClusteringMode groupNamesPreProcessingMode, List<Instance> instances, int min, int max,
@@ -61,6 +64,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 		if (!(groupNameMode == EExtractGroupNamesMode.GOLD
 				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING)) {
+
 			if (groupNameMode != EExtractGroupNamesMode.EMPTY
 					&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING) {
 				wordBasedKMeans(instances);
@@ -84,26 +88,24 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 			WEKAClustering gnc = new WEKAClustering();
 
 			gnc.trainOrLoad(trainingInstances);
+			for (int clusterSize = min; clusterSize <= max; clusterSize++) {
+				preComputedClusters.putIfAbsent(clusterSize, new HashMap<>());
+				for (Instance instance : instances) {
 
-			for (Instance instance : instances) {
+					log.info("Cluster instance " + instance.getName());
+					List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
-				log.info("Cluster instance " + instance.getName());
-				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
+					for (AbstractAnnotation ec : instance.getSlotTypeCandidates(EExplorationMode.ANNOTATION_BASED,
+							SCIOSlotTypes.hasGroupName)) {
+						if (ec.isInstanceOfDocumentLinkedAnnotation())
+							datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+					}
+					log.info("Number of elements to cluster: " + datapoints.size());
 
-				for (AbstractAnnotation ec : instance.getSlotTypeCandidates(EExplorationMode.ANNOTATION_BASED,
-						SCIOSlotTypes.hasGroupName)) {
-					if (ec.isInstanceOfDocumentLinkedAnnotation())
-						datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+					List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, clusterSize);
+
+					preComputedClusters.get(clusterSize).put(instance, clusters);
 				}
-				log.info("Number of elements to cluster: " + datapoints.size());
-
-				System.out.println();
-				List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, max);
-
-				
-				System.out.println();
-				preComputedClusters.put(instance, clusters);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,19 +113,22 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	}
 
 	private void wordBasedKMeans(List<Instance> instances) {
-		for (Instance instance : instances) {
-			List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
+		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
+			preComputedClusters.putIfAbsent(clusterSize, new HashMap<>());
+			for (Instance instance : instances) {
+				List<DocumentLinkedAnnotation> datapoints = new ArrayList<>();
 
-			for (AbstractAnnotation ec : instance.getSlotTypeCandidates(EExplorationMode.ANNOTATION_BASED,
-					SCIOSlotTypes.hasGroupName)) {
-				if (ec.isInstanceOfDocumentLinkedAnnotation())
-					datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+				for (AbstractAnnotation ec : instance.getSlotTypeCandidates(EExplorationMode.ANNOTATION_BASED,
+						SCIOSlotTypes.hasGroupName)) {
+					if (ec.isInstanceOfDocumentLinkedAnnotation())
+						datapoints.add(ec.asInstanceOfDocumentLinkedAnnotation());
+				}
+
+				List<List<DocumentLinkedAnnotation>> clusters = new WordBasedKMeans<DocumentLinkedAnnotation>()
+						.cluster(datapoints, clusterSize);
+
+				preComputedClusters.get(clusterSize).put(instance, clusters);
 			}
-
-			List<List<DocumentLinkedAnnotation>> clusters = new WordBasedKMeans<DocumentLinkedAnnotation>()
-					.cluster(datapoints, max);
-
-			preComputedClusters.put(instance, clusters);
 		}
 	}
 
@@ -180,14 +185,15 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	}
 
 	public void clusteringBased(Instance instance, List<State> list) {
-		List<List<DocumentLinkedAnnotation>> clusters = preComputedClusters.get(instance);
 
-		for (int current = min; current <= max; current++) {
+		final int maxGroupNames = SCIOSlotTypes.hasGroupName.slotMaxCapacity;
+		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 1000;
+		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
+			List<List<DocumentLinkedAnnotation>> clusters = preComputedClusters.get(clusterSize).get(instance);
 
 			List<AbstractAnnotation> experimentalGroups = new ArrayList<>();
-
 			if (clusters != null) {
-				for (int i = 0; i < current; i++) {
+				for (int i = 0; i < clusterSize; i++) {
 
 					EntityTemplate experimentalGroup = new EntityTemplate(
 							AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
@@ -202,18 +208,23 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 				}
 			}
-			addEmpty(current, experimentalGroups);
+			addEmpty(clusterSize, experimentalGroups);
 
 			list.add(new State(instance, new Annotations(experimentalGroups)));
 		}
+		SCIOSlotTypes.hasGroupName.slotMaxCapacity = maxGroupNames;
+
 	}
 
 	public void goldBased(Instance instance, List<State> list) {
+		final int maxGroupNames = SCIOSlotTypes.hasGroupName.slotMaxCapacity;
+		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 1000;
 		for (int current = min; current <= max; current++) {
 
 			List<AbstractAnnotation> experimentalGroups = new ArrayList<>();
 
-			for (int i = 0; i < instance.getGoldAnnotations().<EntityTemplate>getAnnotations().size(); i++) {
+			for (int i = 0; i < Math.min(instance.getGoldAnnotations().<EntityTemplate>getAnnotations().size(),
+					current); i++) {
 
 				EntityTemplate goldAnnotation = instance.getGoldAnnotations().<EntityTemplate>getAnnotations().get(i);
 
@@ -236,10 +247,9 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 			}
 
-			addEmpty(current, experimentalGroups);
-
 			list.add(new State(instance, new Annotations(experimentalGroups)));
 		}
+		SCIOSlotTypes.hasGroupName.slotMaxCapacity = maxGroupNames;
 	}
 
 	public void addEmpty(int current, List<AbstractAnnotation> experimentalGroups) {

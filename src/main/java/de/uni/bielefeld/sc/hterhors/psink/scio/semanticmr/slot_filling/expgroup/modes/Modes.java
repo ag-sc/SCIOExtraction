@@ -24,7 +24,7 @@ public class Modes {
 	}
 
 	public enum EGroupNamesClusteringMode {
-		SAMPLE,
+		NONE,
 
 		KMEANS_CLUSTERING,
 
@@ -99,7 +99,7 @@ public class Modes {
 
 	public enum ECardinalityMode {
 
-		SAMPLE_CARDINALITY, GOLD_CARDINALITY, PREDICTED_CARDINALITY, PARALLEL_CARDINALITIES;
+		SAMPLE, GOLD, RSS_PREDICTED,RSS_PREDICTED_SAMPLE, PARALLEL;
 
 	}
 

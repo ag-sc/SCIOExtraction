@@ -61,14 +61,28 @@ public class BuildNERCorpusFromSlotFillingData {
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
-		buildForOrganismModel();
-		buildForInjuryModel();
-		buildForTreatment();
-		buildForVertebralArea();
-		buildForDeliveryMethod();
-		buildForInvestigationMethod();
-		buildForGroupName();
+//		buildForOrganismModel();
+//		buildForInjuryModel();
+//		buildForTreatment();
+//		buildForVertebralArea();
+//		buildForDeliveryMethod();
+//		buildForInvestigationMethod();
+//		buildForGroupName();
+		buildForTrend();
 
+	}
+
+	private static void buildForTrend() throws Exception {
+		SlotType.storeExcludance();
+		SlotType.excludeAll();
+		SCIOSlotTypes.hasTrend.includeRec();
+//		SCIOSlotTypes.hasJudgement.includeRec();
+//		SCIOSlotTypes.hasAlphaSignificanceNiveau.include();
+//		SCIOSlotTypes.hasPValue.include();
+//		SCIOSlotTypes.hasDifference.include();
+		buildSubDataStructureFiles(SCIOEntityTypes.trend);
+		buildInstances(SCIOEntityTypes.trend);
+		SlotType.restoreExcludance();
 	}
 
 	private static void buildForGroupName() throws Exception {
@@ -167,11 +181,20 @@ public class BuildNERCorpusFromSlotFillingData {
 		File finalDataStructureDir = new File(NERCorpusBuilderBib.NER_DIR, dataStructureDirName);
 		finalDataStructureDir.mkdirs();
 
+//		DataStructureWriter.writeEntityDataStructureFile(NERCorpusBuilderBib.buildEntitiesFile(rootEntityType),
+//				rootEntityType);
+//		NERCorpusBuilderBib.buildHierarchiesFile(rootEntityType).createNewFile();
+//		NERCorpusBuilderBib.buildSlotsFile(rootEntityType).createNewFile();
+//		NERCorpusBuilderBib.buildStructuresFile(rootEntityType).createNewFile();
+
 		DataStructureWriter.writeEntityDataStructureFile(NERCorpusBuilderBib.buildEntitiesFile(rootEntityType),
 				rootEntityType);
-		NERCorpusBuilderBib.buildHierarchiesFile(rootEntityType).createNewFile();
-		NERCorpusBuilderBib.buildSlotsFile(rootEntityType).createNewFile();
-		NERCorpusBuilderBib.buildStructuresFile(rootEntityType).createNewFile();
+		DataStructureWriter.writeHierarchiesDataStructureFile(NERCorpusBuilderBib.buildHierarchiesFile(rootEntityType),
+				rootEntityType);
+		DataStructureWriter.writeSlotsDataStructureFile(NERCorpusBuilderBib.buildSlotsFile(rootEntityType),
+				rootEntityType);
+		DataStructureWriter.writeStructuresDataStructureFile(ROOT_DATA_STRUCTURE_STRUCTURES,
+				NERCorpusBuilderBib.buildStructuresFile(rootEntityType), rootEntityType);
 
 	}
 
@@ -185,7 +208,7 @@ public class BuildNERCorpusFromSlotFillingData {
 
 		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
 				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(RANDOM_SEED).build();
-
+		InstanceProvider.maxNumberOfAnnotations = 120;
 		InstanceProvider instanceProvider = new InstanceProvider(
 				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(rootEntityType),
 				shuffleCorpusDistributor);

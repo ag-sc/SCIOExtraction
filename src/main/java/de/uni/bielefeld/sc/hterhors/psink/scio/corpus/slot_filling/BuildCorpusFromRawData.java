@@ -49,7 +49,8 @@ public class BuildCorpusFromRawData {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 	public static final File SRC_MAIN_RESOURCES = new File("src/main/resources/");
 
-	private static final File SANTO_RAW_DATA_DIR = new File(SRC_MAIN_RESOURCES, SlotFillingCorpusBuilderBib.RAW_DATA_DIR_NAME);
+	private static final File SANTO_RAW_DATA_DIR = new File(SRC_MAIN_RESOURCES,
+			SlotFillingCorpusBuilderBib.RAW_DATA_DIR_NAME);
 	private static final File ROOT_DATA_STRUCTURE_DIR = new File(SRC_MAIN_RESOURCES,
 			SlotFillingCorpusBuilderBib.DATA_STRUCTURE_DIR_NAME);
 
@@ -79,16 +80,25 @@ public class BuildCorpusFromRawData {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 
-		buildCorpusForOrganismModel();
-		buildCorpusForInjuryModel();
-		buildCorpusForTreatmentType();
-		buildCorpusForVertebralArea();
-		buildCorpusForDeliveryMethod();
-		buildCorpusForExperimentalGroup();
-		buildCorpusForInvestigationMethod();
-		buildCorpusForObservation();
-		buildCorpusForResult();
+//		buildCorpusForOrganismModel();
+//		buildCorpusForInjuryModel();
+//		buildCorpusForTreatmentType();
+//		buildCorpusForVertebralArea();
+//		buildCorpusForDeliveryMethod();
+//		buildCorpusForExperimentalGroup();
+//		buildCorpusForInvestigationMethod();
+//		buildCorpusForObservation();
+//		buildCorpusForResult();
+		buildCorpusForTrend();
 		System.exit(1);
+	}
+
+	private static void buildCorpusForTrend() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.trend);
+		Set<String> annotatedDocuments = new HashSet<>(
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.trend, true, true,
+				true);
 	}
 
 	private static void buildCorpusForResult() throws Exception {
@@ -103,7 +113,8 @@ public class BuildCorpusFromRawData {
 		tmpUnrolledRawDataDir.mkdirs();
 		tmpUnrolledRawDataDir.deleteOnExit();
 
-		new ResolvePairwiseComparedGroups(SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
+		new ResolvePairwiseComparedGroups(
+				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
 				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.observation),
 				tmpUnrolledRawDataDir);
 
@@ -210,8 +221,8 @@ public class BuildCorpusFromRawData {
 
 		DataStructureWriter.writeEntityDataStructureFile(SlotFillingCorpusBuilderBib.buildEntitiesFile(rootEntityType),
 				rootEntityType);
-		DataStructureWriter.writeHierarchiesDataStructureFile(SlotFillingCorpusBuilderBib.buildHierarchiesFile(rootEntityType),
-				rootEntityType);
+		DataStructureWriter.writeHierarchiesDataStructureFile(
+				SlotFillingCorpusBuilderBib.buildHierarchiesFile(rootEntityType), rootEntityType);
 		DataStructureWriter.writeSlotsDataStructureFile(SlotFillingCorpusBuilderBib.buildSlotsFile(rootEntityType),
 				rootEntityType);
 		DataStructureWriter.writeStructuresDataStructureFile(ROOT_DATA_STRUCTURE_STRUCTURES,
@@ -233,7 +244,8 @@ public class BuildCorpusFromRawData {
 				.getDefaultInstanceDirectoryForEntity(patternCollection.getRootEntityType());
 		finalInstancesDir.mkdirs();
 
-		final File nerlaDiractory = SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(patternCollection.getRootEntityType());
+		final File nerlaDiractory = SlotFillingCorpusBuilderBib
+				.getDefaultRegExNerlaDir(patternCollection.getRootEntityType());
 		nerlaDiractory.mkdirs();
 
 		RegularExpressionNerlAnnotator annotator = new RegularExpressionNerlAnnotator(patternCollection);
