@@ -1,0 +1,30 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_519> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_519> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasWeight> "250 g ± 30" .
+<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/Contusion_2457> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion> .
+<http://scio/data/Contusion_2457> <http://www.w3.org/2000/01/rdf-schema#label> "contusion" .
+<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10> .
+<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/Anaesthetic_2460> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/SevereInjury> .
+<http://scio/data/MedicationDuringSurgery_2462> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/NYUImpactor_2464> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor> .
+<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_2464> .
+<http://scio/data/NYUImpactor_2464> <http://psink.de/scio/hasDistance> "50 mm" .
+<http://scio/data/NYUImpactor_2464> <http://psink.de/scio/hasWeight> "10-g  rod" .
+<http://scio/data/AntibioticMedication_3386> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3386> .
+<http://scio/data/AntibioticMedication_3386> <http://psink.de/scio/hasDosage> "80 mg/kg" .
+# RDF export of group: Treatments
+<http://scio/data/Treatment_3387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
+<http://scio/data/DeliveryMethod_3389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+# RDF export of group: Sacrifices

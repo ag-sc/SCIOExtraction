@@ -1,0 +1,41 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_525> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_525> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_525> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_525> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_525> <http://psink.de/scio/hasWeight> "240-300 g" .
+<http://scio/data/OrganismModel_525> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/LateralHemisection_2468> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_2468> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C2> .
+<http://scio/data/PostsurgicalMedication_2470> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2470> .
+<http://scio/data/KetamineAsAnaesthetic_2471> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2471> .
+<http://scio/data/KetamineAsAnaesthetic_2471> <http://psink.de/scio/hasDosage> "(70mg kg-1 body weight" .
+<http://scio/data/InjectionDelivery_3786> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_2471> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3786> .
+<http://scio/data/InjectionDelivery_3786> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_2473> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+<http://scio/data/Blade_2475> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_2475> .
+<http://scio/data/Left_2477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasDirection> <http://scio/data/Left_2477> .
+<http://scio/data/Xylazine_2480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2480> .
+<http://scio/data/Xylazine_2480> <http://psink.de/scio/hasDosage> "(7 mg kg-1 body weight" .
+<http://scio/data/InjectionDelivery_3787> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_2480> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3787> .
+<http://scio/data/InjectionDelivery_3787> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/PostsurgicalMedication_2483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2483> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

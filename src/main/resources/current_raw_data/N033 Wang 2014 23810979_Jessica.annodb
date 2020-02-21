@@ -1,0 +1,83 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48571, Adult, 7565, 7570, "adult", "", "<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48572, Female, 7571, 7577, "female", "", "<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48573, SpragueDawleyRat, 7578, 7585, "SD rats", "", "<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48574, Weight, 7587, 7596, "200-220 g", "", "<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasWeight> \"200-220 g\"."
+49778, Laminectomy, 9895, 9906, "laminectomy", "", 
+49779, DorsalHemisection, 10043, 10061, "dorsal hemisection", "", "<http://scio/data/DorsalHemisection_2252> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_2252> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+49780, C4, 10084, 10086, "C4", "", "<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4>."
+49781, Vibraknife, 10159, 10186, "VibraKnife lesioning device", "", "<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife>."
+49782, InjuryArea, 10358, 10409, "entire bilateral dorsal funiculi, including the CST", "", "<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+103000, C4, 10461, 10463, "C4", "", 
+103001, DorsalHemisection, 10464, 10466, "DH", "", 
+103022, SpragueDawleyRat, 10468, 10475, "animals", "", 
+103002, Randomization, 10481, 10489, "randomly", "", 
+103003, NNumber, 10518, 10519, "6", "", 
+103040, GroupNumber, 10529, 10530, "1", "", 
+103033, DorsalHemisection, 10532, 10534, "DH", "", 
+103047, DefinedExperimentalGroup, 10532, 10539, "DH only", "E1", 
+103041, GroupNumber, 10542, 10543, "2", "", 
+103034, DorsalHemisection, 10545, 10547, "DH", "", 
+103048, DefinedExperimentalGroup, 10545, 10568, "DH + dimethyl sulfoxide", "E2", 
+102997, DMSO, 10570, 10574, "DMSO", "", "<http://scio/data/DMSO_83299> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DMSO>. <http://scio/data/CompoundTreatment_83289> <http://psink.de/scio/hasCompound> <http://scio/data/DMSO_83299>."
+103031, Brain, 10576, 10584, "cortical", "", "<http://scio/data/Brain_83301> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/InjectionDelivery_83291> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_83301>."
+103023, InjectionDelivery, 10585, 10594, "injection", "", "<http://scio/data/InjectionDelivery_83291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83289> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83291>."
+103054, DosageExtracorporal, 10596, 10600, "0.1%", "", "<http://scio/data/CompoundTreatment_83289> <http://psink.de/scio/hasDosage> \"0.1%\"."
+103005, DMSO, 10601, 10605, "DMSO", "", 
+103042, GroupNumber, 10622, 10623, "3", "", 
+103035, DorsalHemisection, 10625, 10627, "DH", "", 
+103049, DefinedExperimentalGroup, 10625, 10641, "DH + lenti-ChABC", "E3", 
+103060, ChondroitinaseABC, 10630, 10641, "lenti-ChABC", "", 
+103008, ChondroitinaseABC, 10643, 10661, "Chondroitinase ABC", "", "<http://scio/data/ChondroitinaseABC_83316> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83316>."
+103062, SpinalLesionSite, 10663, 10674, "lesion site", "", "<http://scio/data/SpinalLesionSite_83318> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_83308> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_83318>."
+103024, InjectionDelivery, 10675, 10684, "injection", "", "<http://scio/data/InjectionDelivery_83308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83308>."
+103056, DosageExtracorporal, 10686, 10702, "1.96 x 106 TU/µL", "", "<http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDosage> \"1.96 x 106 TU/µL\"."
+103063, SpinalLesionSite, 10730, 10746, "lesion epicenter", "", "<http://scio/data/SpinalLesionSite_83319> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_83308> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_83319>."
+103009, Rostral, 10755, 10762, "rostral", "", "<http://scio/data/Rostral_83313> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_83313>."
+103010, Caudal, 10775, 10781, "caudal", "", "<http://scio/data/Caudal_83322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_83322>."
+103011, SpinalLesionSite, 10789, 10805, "lesion epicenter", "", "<http://scio/data/SpinalLesionSite_83320> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_83313> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83320>. <http://scio/data/SpinalLesionSite_83323> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_83322> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83323>."
+103025, InjectionDelivery, 10814, 10823, "injection", "", 
+103043, GroupNumber, 10890, 10891, "4", "", 
+103036, DorsalHemisection, 10893, 10895, "DH", "", 
+103050, DefinedExperimentalGroup, 10893, 10904, "DH + GÖ6976", "E4", 
+103069, Substance, 10898, 10904, "GÖ6976", "", "<http://scio/data/Substance_83335> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83325> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83335>."
+103032, Brain, 10905, 10913, "cortical", "", "<http://scio/data/Brain_83337> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/InjectionDelivery_83327> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_83337>."
+103026, InjectionDelivery, 10914, 10923, "injection", "", "<http://scio/data/InjectionDelivery_83327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83325> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83327>."
+103057, DosageExtracorporal, 10925, 10929, "1 mM", "", "<http://scio/data/CompoundTreatment_83325> <http://psink.de/scio/hasDosage> \"1 mM\"."
+103073, DosageExtracorporal, 10933, 10937, "0.1%", "", 
+103012, DMSO, 10938, 10942, "DMSO", "", 
+103044, GroupNumber, 10959, 10960, "5", "", 
+103037, DorsalHemisection, 10962, 10964, "DH", "", 
+103051, DefinedExperimentalGroup, 10962, 11046, "DH + GÖ6976 cortical injection ( same as Group 4 ) + lenti-ChABC lesion site injection", "E5", 
+103070, Substance, 10967, 10973, "GÖ6976", "", 
+103066, Brain, 10974, 10982, "cortical", "", 
+103029, InjectionDelivery, 10983, 10992, "injection", "", 
+103061, ChondroitinaseABC, 11013, 11024, "lenti-ChABC", "", 
+103064, SpinalLesionSite, 11025, 11036, "lesion site", "", 
+103028, InjectionDelivery, 11037, 11046, "injection", "", 
+103045, GroupNumber, 11067, 11068, "6", "", 
+103038, DorsalHemisection, 11070, 11072, "DH", "", 
+103052, DefinedExperimentalGroup, 11070, 11102, "DH + GÖ6976 intrathecal infusion", "E6", 
+103068, Substance, 11075, 11081, "GÖ6976", "", "<http://scio/data/Substance_83350> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83350>."
+103020, Intrathecal, 11082, 11093, "intrathecal", "", "<http://scio/data/Intrathecal_83352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InfusionDelivery_83342> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83352>."
+103030, InfusionDelivery, 11094, 11102, "infusion", "", "<http://scio/data/InfusionDelivery_83342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery>. <http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83342>."
+103058, DosageExtracorporal, 11104, 11117, "20 µM, 200 µL", "", "<http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasDosage> \"20 µM, 200 µL\"."
+103016, OsmoticMinipump, 11129, 11141, "osmotic pump", "", "<http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump>."
+103046, GroupNumber, 11199, 11200, "7", "", 
+103039, DorsalHemisection, 11202, 11204, "DH", "", 
+103053, DefinedExperimentalGroup, 11202, 11239, "DH + Gö6976 intraperitoneal injection", "E7", 
+103071, Substance, 11207, 11213, "Gö6976", "", "<http://scio/data/Substance_83363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83363>."
+103067, IntraperitonealLocation, 11214, 11229, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_83355> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_83368> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+103027, InjectionDelivery, 11230, 11239, "injection", "", "<http://scio/data/InjectionDelivery_83355> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83355>. <http://scio/data/InjectionDelivery_83368> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83368>."
+103021, DosageIntracorporal, 11241, 11251, "2.50 mg/kg", "", "<http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasDosage> \"2.50 mg/kg\"."
+103059, DosageExtracorporal, 11289, 11293, "0.1%", "", "<http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasDosage> \"0.1%\"."
+103018, DMSO, 11294, 11298, "DMSO", "", "<http://scio/data/DMSO_83378> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DMSO>. <http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasCompound> <http://scio/data/DMSO_83378>."
+103019, Frequency, 11300, 11312, "1 time daily", "", "<http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasFrequency> \"1 time daily\". <http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasFrequency> \"1 time daily\"."
+103074, Brain, 11318, 11331, "intracortical", "", 
+103077, Intrathecal, 11336, 11347, "intraspinal", "", 
+103075, InjectionDelivery, 11348, 11358, "injections", "", 
+102999, Duration, 11369, 11393, "immediately after the DH", "", "<http://scio/data/TemporalInterval_83381> <http://psink.de/scio/hasDuration> \"immediately after the DH\". <http://scio/data/TemporalInterval_83389> <http://psink.de/scio/hasDuration> \"immediately after the DH\". <http://scio/data/TemporalInterval_83397> <http://psink.de/scio/hasDuration> \"immediately after the DH\". <http://scio/data/TemporalInterval_83405> <http://psink.de/scio/hasDuration> \"immediately after the DH\"."
+103076, DorsalHemisection, 11391, 11393, "DH", "", 
+50811, SubcutaneousLocation, 11454, 11466, "subcutaneous", "", 
+50809, InjectionDelivery, 11467, 11477, "injections", "", 
+49785, PostsurgicalMedication, 11495, 11522, "buprenorphine hydrochloride", "", "<http://scio/data/PostsurgicalMedication_2254> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2254>."

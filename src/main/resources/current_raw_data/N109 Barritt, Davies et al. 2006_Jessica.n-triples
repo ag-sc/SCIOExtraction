@@ -1,0 +1,60 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_857> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_857> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_857> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
+<http://scio/data/OrganismModel_857> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_857> <http://psink.de/scio/hasWeight> "220-250g" .
+<http://scio/data/OrganismModel_857> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/Compression_3173> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_3173> <http://www.w3.org/2000/01/rdf-schema#label> "compression C4" .
+<http://scio/data/Compression_3173> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4> .
+<http://scio/data/Anaesthetic_3176> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/Compression_3173> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3176> .
+<http://scio/data/Anaesthetic_3176> <http://psink.de/scio/hasDosage> "0.25mg/kg" .
+<http://scio/data/InjectionDelivery_3982> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_3176> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3982> .
+<http://scio/data/InjectionDelivery_3982> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_3178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Compression_3173> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_3178> .
+<http://scio/data/DeliveryMethod_15239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/MedicationDuringSurgery_3178> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_15239> .
+<http://scio/data/SpinalCord_15241> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
+<http://scio/data/DeliveryMethod_15239> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_15241> .
+<http://scio/data/Compression_3173> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps> .
+<http://scio/data/Compression_3173> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/KetamineAsAnaesthetic_3185> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Compression_3173> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_3185> .
+<http://scio/data/KetamineAsAnaesthetic_3185> <http://psink.de/scio/hasDosage> "60mg/kg" .
+<http://scio/data/InjectionDelivery_3983> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_3185> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3983> .
+<http://scio/data/InjectionDelivery_3983> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Compression_3188> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_3188> <http://www.w3.org/2000/01/rdf-schema#label> "compression L2" .
+<http://scio/data/Compression_3188> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/L2> .
+<http://scio/data/Anaesthetic_3191> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/Compression_3188> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3191> .
+<http://scio/data/Anaesthetic_3191> <http://psink.de/scio/hasDosage> "0.25mg/kg" .
+<http://scio/data/InjectionDelivery_15242> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_3191> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15242> .
+<http://scio/data/InjectionDelivery_15242> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_3193> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Compression_3188> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_3193> .
+<http://scio/data/DeliveryMethod_15248> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/MedicationDuringSurgery_3193> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_15248> .
+<http://scio/data/SpinalCord_15250> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
+<http://scio/data/DeliveryMethod_15248> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_15250> .
+<http://scio/data/Compression_3188> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps> .
+<http://scio/data/Compression_3188> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/KetamineAsAnaesthetic_3200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Compression_3188> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_3200> .
+<http://scio/data/KetamineAsAnaesthetic_3200> <http://psink.de/scio/hasDosage> "60mg/kg" .
+<http://scio/data/InjectionDelivery_15245> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_3200> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15245> .
+<http://scio/data/InjectionDelivery_15245> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

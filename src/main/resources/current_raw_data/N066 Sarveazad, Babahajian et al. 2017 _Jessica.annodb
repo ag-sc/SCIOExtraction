@@ -1,0 +1,24 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48409, Adult, 5555, 5560, "adult", "", "<http://scio/data/OrganismModel_610> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48410, Male, 5561, 5565, "male", "", "<http://scio/data/OrganismModel_610> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+48411, WistarRat, 5566, 5577, "Wistar rats", "", "<http://scio/data/OrganismModel_610> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+48412, Weight, 5596, 5606, "200– 250 g", "", "<http://scio/data/OrganismModel_610> <http://psink.de/scio/hasWeight> \"200– 250 g\"."
+50155, Nutrition, 5835, 5858, "adequate access to food", "", "<http://scio/data/Contusion_2700> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+50156, Hydration, 5859, 5867, "andwater", "", "<http://scio/data/Contusion_2700> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+50167, Housing, 5867, 5914, ", temperature of 21 ± 3 °C, and 12 h dark/light", "", "<http://scio/data/Contusion_2700> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+54270, WistarRat, 7513, 7517, "Rats", "", 
+50157, KetamineAsAnaesthetic, 7561, 7569, "Ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2703> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2703>."
+50158, DosageIntracorporal, 7571, 7580, "80 mg/ kg", "", "<http://scio/data/KetamineAsAnaesthetic_2703> <http://psink.de/scio/hasDosage> \"80 mg/ kg\"."
+50159, Xylazine, 7586, 7594, "Xylazine", "", "<http://scio/data/Xylazine_2714> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2714>."
+50160, DosageIntracorporal, 7596, 7604, "10 mg/kg", "", "<http://scio/data/Xylazine_2714> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+50161, Laminectomy, 7777, 7788, "laminectomy", "", 
+54271, VertebralArea, 7792, 7799, "Th8-Th9", "", "<http://scio/data/VertebralArea_3854> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3854>."
+57362, WeightDrop, 7821, 7827, "Piston", "", "<http://scio/data/WeightDrop_14030> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/WeightDrop>. <http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/WeightDrop_14030>."
+54273, Weight, 7829, 7842, "weighing 10 g", "", "<http://scio/data/WeightDrop_14030> <http://psink.de/scio/hasWeight> \"weighing 10 g\"."
+54274, Distance, 7871, 7887, "12.5 cm distance", "", "<http://scio/data/WeightDrop_14030> <http://psink.de/scio/hasDistance> \"12.5 cm distance\"."
+50170, ModerateInjury, 7911, 7919, "moderate", "", "<http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+50162, Contusion, 7920, 7929, "contusion", "", "<http://scio/data/Contusion_2700> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2700> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+50164, DosageIntracorporal, 8000, 8007, "8 mg/kg", "", "<http://scio/data/AntibioticMedication_3855> <http://psink.de/scio/hasDosage> \"8 mg/kg\"."
+54275, AntibioticMedication, 8008, 8018, "gentamicin", "", "<http://scio/data/AntibioticMedication_3855> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3855>."
+50174, BladderExpression, 8048, 8066, "bladder evacuation", "", "<http://scio/data/Contusion_2700> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+54276, WistarRat, 8099, 8103, "rats", "", 

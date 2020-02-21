@@ -1,0 +1,404 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+22114, SpinalCord, 602, 613, "spinal cord", "", 
+22115, Injury, 614, 620, "injury", "", 
+22116, RepeatedMeasureTrend, 637, 657, "recovery of function", "", 
+22117, OlfactoryEnsheathingGliaCell, 711, 766, "olfactory bulb-derived olfactory ensheathing glia (OEG)", "", 
+22118, DeliveryMethod, 767, 782, "transplantation", "", 
+22119, TreadmillTraining, 787, 810, "treadmill step training", "", 
+22120, OlfactoryEnsheathingGliaCell, 872, 889, "ofOEGimplantation", "", 
+22122, TreadmillTraining, 999, 1021, "longterm step training", "", 
+22123, OlfactoryEnsheathingGliaCell, 1026, 1052, "olfactory bulb-derived OEG", "", 
+22124, DeliveryMethod, 1053, 1065, "implantation", "", 
+22125, CompleteTransection, 1078, 1122, "complete mid-thoracic spinal cord transected", "", 
+22126, Thoracic, 1087, 1099, "mid-thoracic", "", 
+22127, Adult, 1123, 1128, "adult", "", 
+22128, Female, 1129, 1135, "female", "", 
+48931, WistarRat, 1136, 1140, "rats", "", 
+22130, DefinedExperimentalGroup, 1180, 1195, "media-untrained", "", 
+22131, DefinedExperimentalGroup, 1197, 1210, "media-trained", "", 
+22132, DefinedExperimentalGroup, 1212, 1225, "OEG-untrained", "", 
+22133, DefinedExperimentalGroup, 1230, 1241, "OEG-trained", "", 
+22135, Duration, 1298, 1329, "4 and 7 months post-transection", "", 
+22136, LocomotorTest, 1338, 1385, "three quantitative measures of stepping ability", "", 
+22137, LocomotorTest, 1387, 1403, "plantar stepping", "", 
+78609, GroupName, 1487, 1500, "sham controls", "", "<http://scio/data/DefinedExperimentalGroup_18026> <http://psink.de/scio/hasGroupName> \"sham controls\"."
+78612, GroupName, 1502, 1527, "OEG transplantation alone", "", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEG transplantation alone\"."
+22142, PositiveSignificance, 1528, 1541, "significantly", "", 
+22143, Higher, 1542, 1551, "increased", "", 
+22145, Duration, 1593, 1618, "7 months post-transection", "", 
+78613, GroupName, 1620, 1640, "while training alone", "", "<http://scio/data/DefinedExperimentalGroup_18000> <http://psink.de/scio/hasGroupName> \"while training alone\"."
+22147, None, 1645, 1654, "no effect", "", 
+22148, Duration, 1655, 1680, "at either time point.Only", "", 
+22151, Duration, 1753, 1793, "by the 7-month endpoint of the study.OEG", "", 
+78614, GroupName, 1784, 1832, "study.OEG transplantation combined with training", "", "<http://scio/data/DefinedExperimentalGroup_18016> <http://psink.de/scio/hasGroupName> \"study.OEG transplantation combined with training\"."
+22153, Higher, 1849, 1856, "highest", "", 
+48932, WistarRat, 1878, 1882, "rats", "", 
+22156, PositiveSignificance, 1941, 1954, "significantly", "", 
+22157, Higher, 1955, 1962, "improve", "", 
+22159, Duration, 1986, 2025, "between the 4- and 7-month evaluations.", "", 
+22160, OlfactoryEnsheathingGliaCell, 2040, 2043, "OEG", "", 
+22161, DeliveryMethod, 2044, 2059, "transplantation", "", 
+22162, Higher, 2060, 2068, "promoted", "", 
+22163, TissueSparingTest, 2069, 2107, "tissue sparing at the transection site", "", 
+22164, AxonalRegenerationTest, 2109, 2167, "regeneration of noradrenergic axons and serotonergic axons", "", 
+22165, SpinalFiberTract, 2125, 2144, "noradrenergic axons", "", 
+22166, SpinalFiberTract, 2149, 2167, "serotonergic axons", "", 
+22167, SpinalLesionSite, 2181, 2192, "injury site", "", 
+22168, Caudal, 2213, 2219, "caudal", "", 
+22169, SpinalCord, 2220, 2225, "stump", "", 
+22170, AnalyzedExperimentalGroup, 2229, 2257, "media- and OEG-injected rats", "", 
+22171, None, 2270, 2277, "similar", "", 
+22172, AxonalRegenerationTest, 2278, 2307, "density of serotonergic axons", "", 
+22173, NeuroprotectionTest, 2323, 2354, "serotonin-labelled interneurons", "", 
+22174, OlfactoryEnsheathingGliaCell, 2384, 2410, "olfactory bulb-derived OEG", "", 
+22175, DeliveryMethod, 2411, 2426, "transplantation", "", 
+22176, Higher, 2427, 2435, "improves", "", 
+48933, WistarRat, 2468, 2472, "rats", "", 
+22179, TreadmillTraining, 2498, 2520, "task-specific training", "", 
+22180, Higher, 2525, 2532, "enhance", "", 
+22181, OlfactoryEnsheathingGliaCell, 2538, 2541, "OEG", "", 
+73777, WistarRat, 6044, 6064, "Wistar Hannover rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17950> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+22182, Allogeneic, 6044, 6064, "Wistar Hannover rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17950> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+22185, OlfactoryEnsheathingGliaCell, 6142, 6145, "OEG", "", 
+73778, AnatomicalLocation, 6169, 6208, "first two layers of the olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_17955> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_17950> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_17955>."
+22187, Purification, 6213, 6227, "immunopurified", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17950> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+22188, Duration, 6321, 6345, "Prior to transplantation", "", 
+22189, OlfactoryEnsheathingGliaCell, 6347, 6352, "cells", "", 
+22190, DosageExtracorporal, 6392, 6412, "100 000 cells per µl", "", 
+22191, Vehicle, 6416, 6460, "serumfree Dulbecco’s Modified Eagle’s Medium", "", 
+22192, Female, 6497, 6503, "Female", "", "<http://scio/data/OrganismModel_1140> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+22193, WistarRat, 6504, 6524, "Wistar Hannover rats", "", "<http://scio/data/OrganismModel_1140> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+22194, TreadmillTraining, 6530, 6557, "acclimated to the treadmill", "", 
+22195, Duration, 6575, 6601, "for 2 weeks before surgery", "", 
+22196, WistarRat, 6607, 6611, "rats", "", 
+22197, Age, 6617, 6632, "10–12 weeks old", "", "<http://scio/data/OrganismModel_1140> <http://psink.de/scio/hasAge> \"10–12 weeks old\"."
+22198, Duration, 6633, 6656, "at the time of surgery.", "", 
+22199, WistarRat, 6773, 6780, "Animals", "", 
+55454, DosageExtracorporal, 6805, 6807, "2%", "", "<http://scio/data/Isoflurane_9712> <http://psink.de/scio/hasDosage> \"2%\"."
+22201, Isoflurane, 6808, 6818, "isoflurane", "", "<http://scio/data/Isoflurane_9712> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_9712>."
+22202, Laminectomy, 6852, 6863, "laminectomy", "", 
+22203, T8, 6871, 6873, "T8", "", 
+22204, T9, 6878, 6880, "T9", "", 
+22205, SpinalCord, 6966, 6977, "spinal cord", "", 
+22206, SpinalCord, 6983, 6994, "spinal cord", "", 
+22207, CompleteTransection, 7004, 7025, "completely transected", "", "<http://scio/data/CompleteTransection_9709> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_9709> <http://www.w3.org/2000/01/rdf-schema#label> \"Complete Transection\"."
+22208, SpinalCord, 7043, 7054, "spinal cord", "", 
+22209, T9, 7061, 7063, "T9", "", "<http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9>."
+22210, Scissors, 7069, 7083, "micro-scissors", "", "<http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+73779, InjectionDelivery, 7310, 7316, "inject", "", "<http://scio/data/InjectionDelivery_17942> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_17940> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_17942>. <http://scio/data/InjectionDelivery_17960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_17958> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_17960>."
+22213, OlfactoryEnsheathingGliaCell, 7324, 7327, "OEG", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17950> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_17940> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_17950>."
+22214, Vehicle, 7341, 7375, "Dulbecco’s Modified Eagle’s Medium", "", 
+22215, Vehicle, 7379, 7396, "Dulbecco’s Medium", "", "<http://scio/data/Vehicle_17968> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_17958> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_17968>."
+73780, InjectionDelivery, 7404, 7414, "Injections", "", 
+22217, Cannula, 7430, 7451, "sterile glass needles", "", "<http://scio/data/CompoundTreatment_17940> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>."
+22218, LesionAdjacentTissue, 7470, 7499, "1mm from the transection site", "", "<http://scio/data/LesionAdjacentTissue_17957> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InjectionDelivery_17942> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_17957>. <http://scio/data/LesionAdjacentTissue_17972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InjectionDelivery_17960> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_17972>."
+22219, Distance, 7470, 7473, "1mm", "", 
+22220, CompleteTransection, 7483, 7499, "transection site", "", 
+22221, NNumber, 7501, 7505, "Four", "", 
+73781, InjectionDelivery, 7506, 7516, "injections", "", 
+22223, DosageExtracorporal, 7520, 7533, "≈50 000 cells", "", 
+22224, SpinalCord, 7559, 7576, "spinal cord stump", "", 
+78006, DosageExtracorporal, 7583, 7613, "total of 400 000 cells per rat", "", "<http://scio/data/CompoundTreatment_17940> <http://psink.de/scio/hasDosage> \"total of 400 000 cells per rat\"."
+22226, WistarRat, 7610, 7613, "rat", "", 
+98755, AntibioticMedication, 7936, 7943, "Baytril", "", "<http://scio/data/AntibioticMedication_9711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_9711>."
+22233, Dosage, 7945, 7951, "0.2 cc", "", "<http://scio/data/AntibioticMedication_9711> <http://psink.de/scio/hasDosage> \"0.2 cc\"."
+98775, InjectionDelivery, 7953, 7956, "i.m", "", 
+22234, IntramuscularLocation, 7953, 7956, "i.m", "", 
+22236, PostsurgicalMedication, 8030, 8038, "Buprenex", "", "<http://scio/data/PostsurgicalMedication_55849> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_55849>."
+22237, DosageIntracorporal, 8040, 8050, "0.05 mg/kg", "", "<http://scio/data/PostsurgicalMedication_55849> <http://psink.de/scio/hasDosage> \"0.05 mg/kg\"."
+98774, InjectionDelivery, 8052, 8055, "s.c", "", 
+22238, SubcutaneousLocation, 8052, 8055, "s.c", "", 
+22240, Duration, 8182, 8206, "first 2 days of recovery", "", 
+22241, BladderExpression, 8208, 8227, "Bladder expressions", "", "<http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+22246, WistarRat, 8329, 8333, "Rats", "", 
+22247, Housing, 8339, 8438, "housed individually in a room maintained at 24±1°C with 40% humidity and a 12:12 h light:dark cycle", "", "<http://scio/data/CompleteTransection_9709> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+78651, AnalyzedExperimentalGroup, 8440, 8449, "Sham rats", "", 
+22249, Laminectomy, 8469, 8480, "laminectomy", "", "<http://scio/data/Laminectomy_17981> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Laminectomy>. <http://scio/data/Laminectomy_17981> <http://www.w3.org/2000/01/rdf-schema#label> \"Laminectomy\"."
+73783, VertebralArea, 8488, 8497, "T8 and T9", "", "<http://scio/data/VertebralArea_17982> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Laminectomy_17981> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_17982>."
+22250, T8, 8488, 8490, "T8", "", "<http://scio/data/VertebralArea_17982> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T8>."
+22251, T9, 8495, 8497, "T9", "", "<http://scio/data/VertebralArea_17982> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9>."
+22252, WistarRat, 8688, 8695, "animals", "", 
+22253, Duration, 8727, 8737, "first week", "", "<http://scio/data/TreadmillTraining_19305> <http://psink.de/scio/hasDuration> \"first week\"."
+22254, Duration, 8749, 8754, "5 min", "", "<http://scio/data/DeliveryMethod_19307> <http://psink.de/scio/hasDuration> \"5 min\"."
+22255, TreadmillTraining, 8758, 8771, "step training", "", "<http://scio/data/TreadmillTraining_17973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TreadmillTraining>. <http://scio/data/TreadmillTraining_17973> <http://www.w3.org/2000/01/rdf-schema#label> \"HauptTraining\". <http://scio/data/TreadmillTraining_19305> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TreadmillTraining>. <http://scio/data/TreadmillTraining_19305> <http://www.w3.org/2000/01/rdf-schema#label> \"First week training\". <http://scio/data/TreadmillTraining_19313> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TreadmillTraining>. <http://scio/data/TreadmillTraining_19313> <http://www.w3.org/2000/01/rdf-schema#label> \"First month training\"."
+22258, Duration, 8827, 8846, "for the first month", "", "<http://scio/data/TreadmillTraining_19313> <http://psink.de/scio/hasDuration> \"for the first month\"."
+22259, Duration, 8848, 8869, "For the next 5 months", "", "<http://scio/data/TemporalInterval_19329> <http://psink.de/scio/hasDuration> \"For the next 5 months\". <http://scio/data/TemporalInterval_19337> <http://psink.de/scio/hasDuration> \"For the next 5 months\". <http://scio/data/TemporalInterval_19359> <http://psink.de/scio/hasDuration> \"For the next 5 months\". <http://scio/data/TreadmillTraining_17973> <http://psink.de/scio/hasDuration> \"For the next 5 months\"."
+22260, WistarRat, 8871, 8875, "rats", "", 
+22261, TreadmillTraining, 8881, 8888, "trained", "", 
+22262, Duration, 8889, 8899, "20 min/day", "", "<http://scio/data/DeliveryMethod_17975> <http://psink.de/scio/hasDuration> \"20 min/day\"."
+22263, Frequency, 8901, 8912, "5 days/week", "", "<http://scio/data/TreadmillTraining_17973> <http://psink.de/scio/hasFrequency> \"5 days/week\"."
+22264, LocomotorTest, 9546, 9562, "Stepping ability", "", 
+22265, Duration, 9577, 9607, "at 4 and 7 months post-surgery", "", 
+22266, LocomotorTest, 10217, 10235, "kinematic analyses", "", 
+22267, DoubleBlindStudy, 10281, 10303, "three evaluators blind", "", 
+22273, AxonalRegenerationTest, 12646, 12666, "5-HT-positive fibres", "", 
+22274, SpinalFiberTract, 12646, 12666, "5-HT-positive fibres", "", 
+22280, LocomotorTest, 15718, 15737, "stepping kinematics", "", 
+98756, WistarRat, 15747, 15750, "rat", "", 
+22281, BBBTest, 18870, 18879, "BBB scale", "", 
+22282, StatisticalTest, 19677, 19694, "resampling method", "", "<http://scio/data/Result_22883> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22896> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22912> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22928> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22944> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22960> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22973> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_22986> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23002> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23023> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23039> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23053> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23069> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23085> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23099> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23115> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23133> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23150> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23166> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23182> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23198> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23209> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23223> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23237> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23251> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23262> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23276> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23290> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23306> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23317> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23328> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23339> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23350> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23361> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23372> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23383> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23394> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23410> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23426> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23442> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23455> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23468> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23481> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_23494> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_27611> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_27624> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_27639> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_27652> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_27665> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+74653, Duration, 27226, 27278, "Immediately after a complete spinal cord transection", "", "<http://scio/data/TemporalInterval_20699> <http://psink.de/scio/hasDuration> \"Immediately after a complete spinal cord transection\". <http://scio/data/TemporalInterval_20707> <http://psink.de/scio/hasDuration> \"Immediately after a complete spinal cord transection\". <http://scio/data/TemporalInterval_20715> <http://psink.de/scio/hasDuration> \"Immediately after a complete spinal cord transection\". <http://scio/data/TemporalInterval_20723> <http://psink.de/scio/hasDuration> \"Immediately after a complete spinal cord transection\"."
+74656, CompleteTransection, 27246, 27278, "complete spinal cord transection", "", 
+74654, T9, 27282, 27284, "T9", "", 
+74655, Adult, 27289, 27294, "adult", "", 
+74657, WistarRat, 27295, 27299, "rats", "", 
+74658, InjectionDelivery, 27309, 27319, "injections", "", 
+98757, AnatomicalLocation, 27323, 27345, "olfactory bulb-derived", "", 
+74659, OlfactoryEnsheathingGliaCell, 27346, 27355, "OEG cells", "", 
+74660, Rostral, 27370, 27377, "rostral", "", 
+74661, Caudal, 27382, 27388, "caudal", "", 
+74662, WistarRat, 27406, 27410, "rats", "", 
+74663, InjectionDelivery, 27430, 27440, "injections", "", 
+74664, Vehicle, 27444, 27449, "media", "", 
+74665, Duration, 27457, 27472, "One month later", "", "<http://scio/data/TemporalInterval_20731> <http://psink.de/scio/hasDuration> \"One month later\". <http://scio/data/TemporalInterval_20739> <http://psink.de/scio/hasDuration> \"One month later\". <http://scio/data/TemporalInterval_20747> <http://psink.de/scio/hasDuration> \"One month later\". <http://scio/data/TemporalInterval_20755> <http://psink.de/scio/hasDuration> \"One month later\"."
+98758, Extremity, 27531, 27539, "hindlimb", "", 
+74666, TreadmillTraining, 27540, 27563, "treadmill step training", "", 
+22284, DefinedExperimentalGroup, 27604, 27619, "media-untrained", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17992> <http://www.w3.org/2000/01/rdf-schema#label> \"media-untrained E1\"."
+22285, NNumber, 27621, 27626, "n = 9", "", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasNNumber> \"n = 9\"."
+22286, DefinedExperimentalGroup, 27629, 27642, "media-trained", "", "<http://scio/data/DefinedExperimentalGroup_18000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18000> <http://www.w3.org/2000/01/rdf-schema#label> \"media-trained E2\"."
+22287, NNumber, 27644, 27649, "n = 9", "", "<http://scio/data/DefinedExperimentalGroup_18000> <http://psink.de/scio/hasNNumber> \"n = 9\"."
+22288, DefinedExperimentalGroup, 27652, 27665, "OEG-untrained", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18008> <http://www.w3.org/2000/01/rdf-schema#label> \"OEC-untrained E3\"."
+22289, NNumber, 27667, 27673, "n = 10", "", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasNNumber> \"n = 10\"."
+22290, DefinedExperimentalGroup, 27679, 27690, "OEG-trained", "E4", "<http://scio/data/DefinedExperimentalGroup_18016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18016> <http://www.w3.org/2000/01/rdf-schema#label> \"OEC-trained E4\"."
+22291, NNumber, 27692, 27698, "n = 10", "", "<http://scio/data/DefinedExperimentalGroup_18016> <http://psink.de/scio/hasNNumber> \"n = 10\"."
+22292, NNumber, 27701, 27706, "Eight", "", "<http://scio/data/DefinedExperimentalGroup_18026> <http://psink.de/scio/hasNNumber> \"Eight\"."
+22293, WistarRat, 27718, 27722, "rats", "", 
+22294, DefinedExperimentalGroup, 27733, 27772, "sham surgery and four were step-trained", "E6", "<http://scio/data/DefinedExperimentalGroup_19343> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_19343> <http://www.w3.org/2000/01/rdf-schema#label> \"sham trained E6\"."
+22295, DefinedExperimentalGroup, 27733, 27737, "sham", "E5", "<http://scio/data/DefinedExperimentalGroup_18026> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18026> <http://www.w3.org/2000/01/rdf-schema#label> \"sham E5\"."
+22296, NNumber, 27750, 27754, "four", "", "<http://scio/data/DefinedExperimentalGroup_19343> <http://psink.de/scio/hasNNumber> \"four\"."
+78618, GroupName, 30695, 30713, "Media-trained rats", "", "<http://scio/data/DefinedExperimentalGroup_18000> <http://psink.de/scio/hasGroupName> \"Media-trained rats\"."
+22312, Higher, 30724, 30728, "more", "R3", "<http://scio/data/Trend_22890> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+22314, LocomotorTest, 30729, 30742, "plantar steps", "", "<http://scio/data/LocomotorTest_62823> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75022> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (plantar steps)\". <http://scio/data/LocomotorTest_80346> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80346> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (plantar steps)\". <http://scio/data/Result_22883> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_22896> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78619, GroupName, 30748, 30771, "media-untrained animals", "", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"media-untrained animals\"."
+22316, Duration, 30775, 30796, "4 months post-surgery", "", 
+22317, MeanValue, 30798, 30799, "3", "", 
+22318, StandardError, 30799, 30801, "±3", "", 
+22319, MeanValue, 30809, 30810, "0", "", 
+22320, StandardError, 30810, 30812, "±0", "", 
+22321, PValue, 30824, 30832, "P = 0.01", "", "<http://scio/data/Significance_22892> <http://psink.de/scio/hasPValue> \"P = 0.01\"."
+22322, None, 30835, 30842, "but not", "R4", "<http://scio/data/Trend_22903> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22323, Duration, 30843, 30854, "at 7 months", "", 
+22324, MeanValue, 30856, 30857, "1", "", 
+22325, StandardError, 30857, 30859, "±1", "", 
+22326, MeanValue, 30867, 30868, "0", "", 
+22327, StandardError, 30868, 30870, "±0", "", 
+22328, PValue, 30872, 30880, "P = 0.08", "", "<http://scio/data/Significance_22904> <http://psink.de/scio/hasPValue> \"P = 0.08\"."
+22329, LocomotorTest, 31095, 31166, "movement frequency of the internal joint angles described with the IFFT", "", "<http://scio/data/LocomotorTest_62830> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75025> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75025> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (movement frequency of the internal joint angles described with the IFFT)\". <http://scio/data/Result_22912> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22330, ZeroSignificance, 31178, 31204, "no significant differences", "", "<http://scio/data/ZeroSignificance_22924> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_22919> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_22924>."
+22331, None, 31178, 31204, "no significant differences", "R5", "<http://scio/data/Trend_22919> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22332, Duration, 31205, 31216, "at 7 months", "", 
+22333, DefinedExperimentalGroup, 31225, 31239, "mediauntrained", "E1", 
+78620, GroupName, 31244, 31262, "media-trained rats", "E2", 
+22335, PValue, 31273, 31281, "P = 0.49", "", "<http://scio/data/ZeroSignificance_22924> <http://psink.de/scio/hasPValue> \"P = 0.49\"."
+22336, LocomotorTest, 31298, 31346, "hindlimb movement based on normalized PWR values", "", "<http://scio/data/LocomotorTest_62834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75027> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75027> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (hindlimb movement based on normalized PWR values)\". <http://scio/data/Result_22928> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22337, None, 31347, 31361, "did not differ", "R6", "<http://scio/data/Trend_22935> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22338, DefinedExperimentalGroup, 31370, 31385, "media-untrained", "E1", 
+78621, GroupName, 31390, 31408, "media-trained rats", "E2", 
+22340, Duration, 31409, 31437, "at 7 months post-transection", "", 
+22341, PValue, 31448, 31456, "P = 0.36", "", "<http://scio/data/Significance_22940> <http://psink.de/scio/hasPValue> \"P = 0.36\"."
+22342, LocomotorTest, 32037, 32050, "plantar steps", "", "<http://scio/data/LocomotorTest_62838> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75029> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75029> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (plantar steps)\". <http://scio/data/Result_22944> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22343, PositiveSignificance, 32065, 32078, "significantly", "", "<http://scio/data/PositiveSignificance_22956> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_22951> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_22956>."
+22344, Higher, 32079, 32085, "higher", "R7,R8", "<http://scio/data/RepeatedMeasureTrend_22951> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+78622, GroupName, 32093, 32110, "OEGuntrained rats", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEGuntrained rats\"."
+78623, GroupName, 32127, 32147, "media-untrained rats", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"media-untrained rats\"."
+75324, RepeatedMeasureTrend, 32148, 32155, "at both", "", "<http://scio/data/RepeatedMeasureTrend_22951> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_22944> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_22951>."
+22348, Duration, 32156, 32157, "4", "", 
+22349, MeanValue, 32159, 32160, "2", "", 
+22350, StandardError, 32160, 32162, "±2", "", 
+22351, MeanValue, 32170, 32171, "0", "", 
+22352, StandardError, 32171, 32173, "±0", "", 
+22353, PValue, 32175, 32183, "P = 0.04", "", 
+22354, Duration, 32189, 32190, "7", "", 
+22355, MeanValue, 32192, 32193, "6", "", 
+22356, StandardError, 32193, 32195, "±3", "", 
+22357, MeanValue, 32203, 32204, "0", "", 
+22358, StandardError, 32204, 32206, "±0", "", 
+22359, PValue, 32208, 32216, "P = 0.02", "", "<http://scio/data/PositiveSignificance_22956> <http://psink.de/scio/hasPValue> \"P = 0.02\"."
+22360, Duration, 32218, 32241, "months post-transection", "", 
+75325, LocomotorTest, 32445, 32466, "kinematic evaluations", "", 
+22362, Duration, 32470, 32478, "7 months", "", 
+22363, DefinedExperimentalGroup, 32490, 32503, "OEG-untrained", "E3", 
+78624, GroupName, 32508, 32531, "media-untrained animals", "E1", 
+22365, None, 32536, 32560, "not differ significantly", "R8,R9", "<http://scio/data/Trend_22967> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_22980> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22366, LocomotorTest, 32564, 32602, "the IFFT measure of stepping frequency", "", "<http://scio/data/LocomotorTest_62842> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75031> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75031> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (the IFFT measure of stepping frequency)\". <http://scio/data/Result_22960> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22367, PValue, 32613, 32621, "P = 0.09", "", "<http://scio/data/Significance_22969> <http://psink.de/scio/hasPValue> \"P = 0.09\"."
+22368, LocomotorTest, 32633, 32677, "mean stepping quality analysed by PWR scores", "", "<http://scio/data/LocomotorTest_62845> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75033> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75033> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (mean stepping quality analysed by PWR scores)\". <http://scio/data/Result_22973> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22369, PValue, 32688, 32696, "P = 0.18", "", "<http://scio/data/Significance_22981> <http://psink.de/scio/hasPValue> \"P = 0.18\"."
+78625, GroupName, 34097, 34113, "OEG-trained rats", "E4", "<http://scio/data/DefinedExperimentalGroup_18016> <http://psink.de/scio/hasGroupName> \"OEG-trained rats\"."
+22371, PositiveSignificance, 34124, 34137, "significantly", "", "<http://scio/data/PositiveSignificance_22995> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_22993> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_22995>."
+22372, Higher, 34138, 34142, "more", "R10,R11", "<http://scio/data/RepeatedMeasureTrend_22993> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+22374, LocomotorTest, 34143, 34156, "plantar steps", "", "<http://scio/data/LocomotorTest_62852> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75035> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75035> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (plantar steps)\". <http://scio/data/LocomotorTest_80348> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80348> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (plantar steps)\". <http://scio/data/Result_22986> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23002> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78626, GroupName, 34162, 34181, "mediauntrained rats", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"mediauntrained rats\"."
+75326, RepeatedMeasureTrend, 34182, 34189, "at both", "", "<http://scio/data/RepeatedMeasureTrend_22993> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_22986> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_22993>."
+22376, Duration, 34190, 34191, "4", "", 
+22377, MeanValue, 34193, 34194, "4", "", 
+22378, StandardError, 34194, 34196, "±2", "", 
+22379, MeanValue, 34204, 34205, "0", "", 
+22380, StandardError, 34205, 34207, "±0", "", 
+22381, PValue, 34209, 34217, "P = 0.02", "", 
+22382, Duration, 34223, 34224, "7", "", 
+22383, MeanValue, 34226, 34227, "9", "", 
+22384, StandardError, 34227, 34229, "±2", "", 
+22385, MeanValue, 34237, 34238, "0", "", 
+22386, StandardError, 34238, 34240, "±0", "", 
+22387, PValue, 34242, 34249, "P50.001", "", "<http://scio/data/PositiveSignificance_22995> <http://psink.de/scio/hasPValue> \"P50.001\"."
+22388, Higher, 34263, 34267, "more", "R12", "<http://scio/data/Trend_23018> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+78627, GroupName, 34279, 34297, "media-trained rats", "E2", 
+22391, Duration, 34298, 34309, "at 7 months", "", 
+22392, MeanValue, 34311, 34312, "9", "", 
+22393, StandardError, 34312, 34314, "±2", "", 
+22394, MeanValue, 34322, 34323, "1", "", 
+22395, StandardError, 34323, 34325, "±1", "", 
+22396, PValue, 34327, 34336, "P = 0.005", "", "<http://scio/data/Significance_23019> <http://psink.de/scio/hasPValue> \"P = 0.005\"."
+22397, LocomotorTest, 34375, 34400, "number of steps completed", "", "<http://scio/data/LocomotorTest_62856> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75038> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75038> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (number of steps completed)\". <http://scio/data/Result_23023> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78628, GroupName, 34408, 34424, "OEG-trained rats", "E4", 
+22399, None, 34425, 34439, "did not differ", "R13,R14", "<http://scio/data/Trend_23030> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+78629, GroupName, 34449, 34467, "OEG-untrained rats", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEG-untrained rats\"."
+22401, Duration, 34468, 34472, "at 4", "", 
+22402, MeanValue, 34474, 34475, "4", "", 
+22403, StandardError, 34475, 34477, "±2", "", 
+22404, MeanValue, 34485, 34486, "2", "", 
+22405, StandardError, 34486, 34488, "±2", "", 
+22406, PValue, 34490, 34499, "P = 0.27)", "", "<http://scio/data/Significance_23032> <http://psink.de/scio/hasPValue> \"P = 0.27)\"."
+22407, Duration, 34503, 34504, "7", "", 
+22408, MeanValue, 34506, 34507, "9", "", 
+22409, StandardError, 34507, 34509, "±2", "", 
+22410, MeanValue, 34517, 34518, "6", "", 
+22411, StandardError, 34518, 34520, "±3", "", 
+22412, PValue, 34522, 34530, "P = 0.07", "", 
+22413, Duration, 34532, 34556, "months after transection", "", 
+22414, LocomotorTest, 35672, 35701, "step frequency and step shape", "", 
+22415, PositiveSignificance, 35707, 35720, "significantly", "", "<http://scio/data/PositiveSignificance_23048> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23046> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23048>. <http://scio/data/PositiveSignificance_23064> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23063> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23064>."
+22416, UnspecifiedDifference, 35721, 35730, "different", "R15,16", "<http://scio/data/Trend_23046> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23063> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+22417, DefinedExperimentalGroup, 35739, 35750, "OEG-trained", "E4", 
+78630, GroupName, 35755, 35777, "mediauntrained animals", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"mediauntrained animals\"."
+22419, Duration, 35778, 35789, "at 7 months", "", 
+22420, LocomotorTest, 35800, 35804, "IFFT", "", "<http://scio/data/LocomotorTest_62860> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75040> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75040> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80350> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80350> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/Result_23039> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23069> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22421, PValue, 35806, 35814, "P = 0.03", "", 
+22422, LocomotorTest, 35816, 35819, "PWR", "", "<http://scio/data/LocomotorTest_62872> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75043> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75043> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80352> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/Result_23053> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23085> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22423, PValue, 35821, 35829, "P = 0.03", "", "<http://scio/data/PositiveSignificance_23064> <http://psink.de/scio/hasPValue> \"P = 0.03\"."
+22424, DefinedExperimentalGroup, 35838, 35851, "OEG-untrained", "E3", 
+78631, GroupName, 35856, 35879, "media-untrained animals", "E1", 
+22426, None, 35880, 35894, "did not differ", "R17", "<http://scio/data/Trend_23079> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_23095> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22427, DefinedExperimentalGroup, 35896, 35907, "OEG-trained", "E4", 
+78632, GroupName, 35912, 35930, "media-trained rats", "E2", 
+22429, UnspecifiedDifference, 35931, 35939, "differed", "R18,R19", "<http://scio/data/Trend_23106> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+22430, LocomotorTest, 35943, 35954, "IFFT scores", "", "<http://scio/data/LocomotorTest_62884> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75046> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT scores)\". <http://scio/data/LocomotorTest_80354> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80354> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT scores)\". <http://scio/data/Result_23099> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23133> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22431, PValue, 35965, 35974, "P = 0.03)", "", "<http://scio/data/Significance_23108> <http://psink.de/scio/hasPValue> \"P = 0.03)\"."
+22432, None, 35976, 35983, "but not", "R20,R21", "<http://scio/data/Trend_23125> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22433, LocomotorTest, 35984, 35997, "in PWR scores", "", "<http://scio/data/LocomotorTest_62888> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75049> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75049> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (in PWR scores)\". <http://scio/data/LocomotorTest_80356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80356> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (in PWR scores)\". <http://scio/data/Result_23115> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23150> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22434, PValue, 36008, 36016, "P = 0.10", "", "<http://scio/data/Significance_23126> <http://psink.de/scio/hasPValue> \"P = 0.10\"."
+78633, GroupName, 36027, 36048, "OEG-untrained animals", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEG-untrained animals\"."
+22436, None, 36049, 36063, "did not differ", "R22,R23", "<http://scio/data/Trend_23143> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_23160> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+78634, GroupName, 36069, 36090, "media-trained animals", "E2", "<http://scio/data/DefinedExperimentalGroup_18000> <http://psink.de/scio/hasGroupName> \"media-trained animals\"."
+22438, Duration, 36091, 36108, "in either measure", "", 
+22439, DefinedExperimentalGroup, 36141, 36153, "OEGuntrained", "E3", 
+78635, GroupName, 36158, 36176, "OEG-trained groups", "E4", "<http://scio/data/DefinedExperimentalGroup_18016> <http://psink.de/scio/hasGroupName> \"OEG-trained groups\"."
+22441, None, 36177, 36191, "did not differ", "R24,R25", "<http://scio/data/Trend_23173> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_23192> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22442, LocomotorTest, 36206, 36210, "IFFT", "", "<http://scio/data/LocomotorTest_62939> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75062> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75062> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80374> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80374> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80376> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80376> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80378> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80378> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80380> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80380> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80382> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80382> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80384> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80386> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80386> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80388> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80388> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/Result_23166> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23198> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23209> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23223> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23237> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23306> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23317> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23328> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23339> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22443, PValue, 36221, 36229, "P = 0.24", "", "<http://scio/data/Significance_23178> <http://psink.de/scio/hasPValue> \"P = 0.24\"."
+22444, LocomotorTest, 36234, 36237, "PWR", "", "<http://scio/data/LocomotorTest_62926> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75052> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75052> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80358> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80358> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80360> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80360> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80362> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80362> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80364> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80364> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80366> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80366> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80368> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80368> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80370> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80370> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80372> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80372> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/Result_23182> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23251> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23262> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23276> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23290> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23350> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23361> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23372> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23383> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22445, PValue, 36239, 36247, "P = 0.15", "", "<http://scio/data/Significance_23193> <http://psink.de/scio/hasPValue> \"P = 0.15\"."
+75327, AnalyzedExperimentalGroup, 36261, 36271, "two groups", "", 
+75328, UnspecifiedDifference, 36281, 36292, "differences", "", "<http://scio/data/Trend_23205> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23216> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23233> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23247> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23258> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23272> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23286> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23300> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23313> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23324> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23335> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23346> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23357> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23368> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23379> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23390> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+75329, AnalyzedExperimentalGroup, 36310, 36323, "mediainjected", "", 
+75330, AnalyzedExperimentalGroup, 36328, 36337, "sham rats", "", 
+78636, GroupName, 36357, 36373, "OEG-trained rats", "E4", 
+22447, ZeroSignificance, 36379, 36406, "not significantly different", "", "<http://scio/data/ZeroSignificance_23403> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_23401> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_23403>. <http://scio/data/ZeroSignificance_23421> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_23420> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_23421>."
+22448, None, 36379, 36406, "not significantly different", "R26,R27", "<http://scio/data/Trend_23401> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_23420> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+78637, GroupName, 36421, 36430, "sham rats", "E5", "<http://scio/data/DefinedExperimentalGroup_18026> <http://psink.de/scio/hasGroupName> \"sham rats\"."
+22451, LocomotorTest, 36441, 36445, "IFFT", "", "<http://scio/data/LocomotorTest_62954> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75072> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75072> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/Result_23394> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22452, PValue, 36447, 36455, "P = 0.48", "", "<http://scio/data/ZeroSignificance_23403> <http://psink.de/scio/hasPValue> \"P = 0.48\". <http://scio/data/ZeroSignificance_23421> <http://psink.de/scio/hasPValue> \"P = 0.48\"."
+22453, LocomotorTest, 36457, 36460, "PWR", "", "<http://scio/data/LocomotorTest_62958> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75074> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/Result_23410> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22454, PValue, 36462, 36470, "P = 0.11", "", 
+22455, DefinedExperimentalGroup, 36477, 36482, "shams", "E5", 
+22456, PositiveSignificance, 36487, 36500, "significantly", "", "<http://scio/data/PositiveSignificance_23436> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23433> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23436>."
+22457, UnspecifiedDifference, 36501, 36510, "different", "R28", "<http://scio/data/Trend_23433> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+22458, LocomotorTest, 36511, 36521, "PWR scores", "", "<http://scio/data/LocomotorTest_62962> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75076> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75076> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR scores)\". <http://scio/data/Result_23426> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78638, GroupName, 36527, 36548, "OEG-untrained animals", "E3", 
+22460, PValue, 36550, 36559, "P = 0.01)", "", "<http://scio/data/PositiveSignificance_23436> <http://psink.de/scio/hasPValue> \"P = 0.01)\"."
+78639, GroupName, 36561, 36570, "Sham rats", "E5", 
+22462, PositiveSignificance, 36580, 36593, "significantly", "", "<http://scio/data/PositiveSignificance_23451> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23449> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23451>. <http://scio/data/PositiveSignificance_23463> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23462> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23463>. <http://scio/data/PositiveSignificance_23476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23475> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23476>. <http://scio/data/PositiveSignificance_23489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23488> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23489>."
+22463, UnspecifiedDifference, 36594, 36603, "different", "R29,R30,R31,R32", "<http://scio/data/Trend_23449> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23462> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23475> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_23488> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+75331, LocomotorTest, 36639, 36643, "IFFT", "", "<http://scio/data/LocomotorTest_62975> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75081> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75081> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/LocomotorTest_80392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80392> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (IFFT)\". <http://scio/data/Result_23442> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23481> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+75332, LocomotorTest, 36648, 36651, "PWR", "", "<http://scio/data/LocomotorTest_62972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75078> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_75078> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/LocomotorTest_80390> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LocomotorTest>. <http://scio/data/LocomotorTest_80390> <http://www.w3.org/2000/01/rdf-schema#label> \"LocomotorTest (PWR)\". <http://scio/data/Result_23455> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_23468> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78640, AnalyzedExperimentalGroup, 36671, 36688, "both media groups", "E1, E2", 
+22466, PValue, 36690, 36696, "P50.02", "", "<http://scio/data/PositiveSignificance_23451> <http://psink.de/scio/hasPValue> \"P50.02\". <http://scio/data/PositiveSignificance_23463> <http://psink.de/scio/hasPValue> \"P50.02\". <http://scio/data/PositiveSignificance_23476> <http://psink.de/scio/hasPValue> \"P50.02\". <http://scio/data/PositiveSignificance_23489> <http://psink.de/scio/hasPValue> \"P50.02\"."
+22467, LesionVolumeTest, 38734, 38748, "lesion volumes", "", "<http://scio/data/LesionVolumeTest_62978> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_75084> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_75084> <http://www.w3.org/2000/01/rdf-schema#label> \"LesionVolumeTest (lesion volumes)\". <http://scio/data/Result_23494> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78642, GroupName, 38752, 38769, "OEG-injected rats", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEG-injected rats\"."
+22469, PositiveSignificance, 38775, 38788, "significantly", "", "<http://scio/data/PositiveSignificance_23503> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_23501> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_23503>."
+22470, Lower, 38789, 38796, "smaller", "R34", "<http://scio/data/Trend_23501> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+78643, GroupName, 38811, 38833, "media-injected animals", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"media-injected animals\"."
+22473, MeanValue, 38835, 38838, "1.8", "", 
+22474, StandardError, 38839, 38846, "0.33mm3", "", 
+22475, MeanValue, 38854, 38857, "3.3", "", 
+22476, StandardError, 38858, 38865, "0.52mm3", "", 
+22477, PValue, 38867, 38873, "P=0.02", "", "<http://scio/data/PositiveSignificance_23503> <http://psink.de/scio/hasPValue> \"P=0.02\"."
+22478, OlfactoryEnsheathingGliaCell, 38892, 38895, "OEG", "", 
+22479, PositiveSignificance, 39660, 39673, "significantly", "", "<http://scio/data/PositiveSignificance_27620> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_27618> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_27620>."
+22480, Higher, 39674, 39678, "more", "R34", "<http://scio/data/Trend_27618> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+22482, AxonalRegenerationTest, 39679, 39698, "DBH-positive fibres", "", "<http://scio/data/AxonalRegenerationTest_62982> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75086> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (DBH-positive fibres)\". <http://scio/data/Result_27611> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22483, Caudal, 39745, 39751, "caudal", "", 
+22484, SpinalCord, 39752, 39757, "stump", "", 
+78644, GroupName, 39761, 39764, "OEG", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEG\"."
+78645, GroupName, 39774, 39792, "mediainjected rats", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"mediainjected rats\"."
+22487, MeanValue, 39803, 39805, "14", "", 
+22488, StandardError, 39806, 39807, "7", "", 
+22489, MeanValue, 39815, 39816, "1", "", 
+22490, StandardError, 39816, 39818, "±0", "", 
+22491, PValue, 39820, 39826, "P=0.03", "", 
+22496, AxonalRegenerationTest, 40219, 40245, "DBH-positive fibre density", "", "<http://scio/data/AxonalRegenerationTest_62986> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75088> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75088> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (DBH-positive fibre density)\". <http://scio/data/Result_27624> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78646, GroupName, 40258, 40263, "media", "E1", "<http://scio/data/DefinedExperimentalGroup_17992> <http://psink.de/scio/hasGroupName> \"media\"."
+78647, GroupName, 40269, 40288, "OEGinjected animals", "E3", "<http://scio/data/DefinedExperimentalGroup_18008> <http://psink.de/scio/hasGroupName> \"OEGinjected animals\"."
+22499, Caudal, 40310, 40316, "caudal", "", 
+77041, SpinalLesionSite, 40317, 40335, "GFAP-negative zone", "", 
+22501, ZeroSignificance, 40340, 40369, "not statistically significant", "", "<http://scio/data/ZeroSignificance_27633> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_27631> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_27633>."
+22502, None, 40340, 40369, "not statistically significant", "R36", "<http://scio/data/Trend_27631> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22503, MeanValue, 40371, 40373, "10", "", 
+22504, StandardError, 40374, 40375, "3", "", 
+22505, MeanValue, 40383, 40385, "65", "", 
+22506, StandardError, 40386, 40388, "37", "", 
+22507, PValue, 40390, 40396, "P=0.09", "", "<http://scio/data/ZeroSignificance_27633> <http://psink.de/scio/hasPValue> \"P=0.09\"."
+22508, AxonalRegenerationTest, 40403, 40416, "fibre density", "", "<http://scio/data/AxonalRegenerationTest_62990> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75090> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75090> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (fibre density)\". <http://scio/data/Result_27639> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22509, Caudal, 40447, 40453, "caudal", "", 
+77042, SpinalLesionSite, 40461, 40467, "lesion", "", 
+22511, Higher, 40482, 40489, "greater", "R37", "<http://scio/data/Trend_27646> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+78648, GroupName, 40493, 40513, "OEG-injected animals", "E3", 
+22514, MeanValue, 40515, 40516, "0", "", 
+22515, StandardError, 40517, 40518, "0", "", 
+22516, MeanValue, 40526, 40527, "7", "", 
+22517, StandardError, 40528, 40529, "3", "", 
+22518, PValue, 40531, 40537, "P=0.01", "", "<http://scio/data/Significance_27648> <http://psink.de/scio/hasPValue> \"P=0.01\"."
+98759, OlfactoryEnsheathingGliaCell, 40546, 40549, "OEG", "", 
+98760, DeliveryMethod, 40550, 40565, "transplantation", "", 
+77043, Positive, 40583, 40590, "promote", "", "<http://scio/data/Result_27611> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_27639> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+98761, AxonalRegenerationTest, 40619, 40638, "DBH-positive fibres", "", 
+98763, CompleteTransection, 40716, 40736, "complete transection", "", 
+22525, AxonalRegenerationTest, 42335, 42367, "5-HT-positive fibre distribution", "", "<http://scio/data/AxonalRegenerationTest_62993> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75092> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75092> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (5-HT-positive fibre distribution)\". <http://scio/data/Result_27652> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22526, None, 42372, 42379, "similar", "R38", "<http://scio/data/Trend_27659> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+78649, AnalyzedExperimentalGroup, 42387, 42417, "media- and OEG-injected groups", "E1, E3", 
+22528, MeanValue, 42424, 42426, "88", "", 
+22529, MeanValue, 42431, 42434, "92%", "", 
+22530, AxonalRegenerationTest, 42442, 42462, "5-HT-positive fibres", "", 
+22531, Caudal, 42503, 42507, "past", "", 
+22532, SpinalLesionSite, 42512, 42523, "injury site", "", 
+22533, None, 42551, 42564, "no difference", "R39", "<http://scio/data/Trend_27672> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+22534, AxonalRegenerationTest, 42572, 42599, "5-HT-positive fibre density", "", "<http://scio/data/AxonalRegenerationTest_62997> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75094> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (5-HT-positive fibre density)\". <http://scio/data/Result_27665> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+22535, Caudal, 42600, 42605, "below", "", 
+22536, SpinalLesionSite, 42610, 42626, "transection site", "", 
+78650, AnalyzedExperimentalGroup, 42630, 42658, "media- and OEG-injected rats", "E1, E3", 
+22538, MeanValue, 42660, 42662, "18", "", 
+22539, StandardError, 42663, 42664, "3", "", 
+22540, MeanValue, 42672, 42674, "15", "", 
+22541, StandardError, 42674, 42676, "±6", "", 
+22542, PValue, 42678, 42684, "P=0.70", "", "<http://scio/data/Significance_27674> <http://psink.de/scio/hasPValue> \"P=0.70\"."
+98768, CompleteTransection, 42711, 42743, "complete spinal cord transection", "", 
+98769, Adult, 42747, 42752, "adult", "", 
+98770, WistarRat, 42753, 42757, "rats", "", 
+98773, AnatomicalLocation, 42772, 42794, "olfactory bulb-derived", "", 
+98771, OlfactoryEnsheathingGliaCell, 42795, 42798, "OEG", "", 
+98772, DeliveryMethod, 42799, 42814, "transplantation", "", 
+98764, PositiveSignificance, 42815, 42828, "significantly", "", 
+98765, Positive, 42829, 42837, "improves", "", "<http://scio/data/Result_22944> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_22986> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+98766, LocomotorTest, 42838, 42854, "plantar stepping", "", 
+98767, Duration, 42870, 42891, "for at least 7 months", "", 

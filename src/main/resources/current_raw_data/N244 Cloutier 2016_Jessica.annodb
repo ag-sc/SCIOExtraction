@@ -1,0 +1,254 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+84173, Injury, 204, 222, "spinal cord injury", "", 
+84174, Duration, 285, 290, "acute", "", 
+84216, DeliveryMethod, 291, 306, "transplantation", "", 
+84175, OlfactoryEnsheathingGliaCell, 310, 337, "olfactory ensheathing cells", "", 
+84176, SpinalLesionSite, 347, 358, "lesion site", "", 
+84217, WistarRat, 362, 366, "rats", "", 
+84177, CompleteTransection, 367, 377, "transected", "", 
+84178, T4, 385, 418, "fourth thoracic spinal cord level", "", 
+84179, Lower, 419, 426, "reduced", "", 
+84180, AutonomicDysreflexiaTest, 427, 448, "autonomic dysreflexia", "", 
+84181, Duration, 455, 487, "8 weeks after spinal cord injury", "", 
+84218, Injury, 469, 487, "spinal cord injury", "", 
+84182, Positive, 494, 511, "beneficial effect", "", 
+84219, ObservedDifference, 532, 539, "changes", "", 
+84220, AxonalChangesTest, 547, 594, "morphology of sympathetic preganglionic neurons", "", 
+84183, OlfactoryEnsheathingGliaCell, 607, 622, "olfactory cells", "", 
+84184, Duration, 633, 655, "no longer than 3 weeks", "", 
+84185, OlfactoryEnsheathingGliaCell, 689, 716, "olfactory ensheathing cells", "", 
+84186, SpinalLesionSite, 724, 735, "injury site", "", 
+86598, NeuronalChangesTest, 773, 837, "asmorphological changes in the sympathetic preganglionic neurons", "", 
+84188, OlfactoryEnsheathingGliaCell, 900, 927, "olfactory ensheathing cells", "", 
+84222, DeliveryMethod, 942, 957, "transplantation", "", 
+84189, AnatomicalLocation, 969, 979, "parenchyma", "", 
+84215, AnatomicalLocation, 989, 1022, "sympathetic preganglionic neurons", "", 
+84190, Lower, 1065, 1071, "reduce", "", 
+84191, Duration, 1076, 1084, "duration", "", 
+84192, AutonomicDysreflexiaTest, 1088, 1109, "autonomic dysreflexia", "", 
+86595, NeuronalChangesTest, 1114, 1165, "modulate sympathetic preganglionic neuronmorphology", "", 
+86597, NeuronalChangesTest, 1189, 1272, "quantify the density of synapses on the somata of sympathetic preganglionic neurons", "", 
+84193, Hypothesis, 1282, 1292, "hypothesis", "", 
+84194, Lower, 1302, 1311, "reduction", "", 
+84195, AutonomicDysreflexiaTest, 1315, 1336, "autonomic dysreflexia", "", 
+84225, ObservedDifference, 1355, 1362, "changes", "", 
+84196, OlfactoryEnsheathingGliaCell, 1422, 1449, "olfactory ensheathing cells", "", 
+84226, GroupName, 1484, 1497, "control group", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasGroupName> \"control group\"."
+84227, DeliveryMethod, 1498, 1510, "transplanted", "", 
+84197, Cell, 1516, 1527, "fibroblasts", "", 
+84228, WistarRat, 1529, 1536, "Animals", "", 
+84229, DeliveryMethod, 1537, 1549, "transplanted", "", 
+84230, OlfactoryEnsheathingGliaCell, 1555, 1559, "OECs", "", 
+84198, Higher, 1566, 1572, "faster", "", 
+84231, AutonomicDysreflexiaTest, 1573, 1632, "recovery from hypertension induced by colorectal distension", "", 
+84199, RepeatedMeasureTrend, 1573, 1581, "recovery", "", 
+84200, Duration, 1636, 1649, "6 and 7 weeks", "", 
+84201, Duration, 1658, 1701, "at 8 weeks after T4 spinal cord transection", "", 
+84202, T4, 1675, 1677, "T4", "", 
+84203, SpinalCord, 1678, 1689, "spinal cord", "", 
+84204, CompleteTransection, 1690, 1701, "transection", "", 
+84205, OlfactoryEnsheathingGliaCell, 1703, 1730, "Olfactory ensheathing cells", "", 
+84206, Duration, 1744, 1760, "at least 8 weeks", "", 
+84207, AnatomicalLocation, 1791, 1824, "sympathetic preganglionic neurons", "", 
+86603, NeuronalChangesTest, 1831, 1866, "overall number of primary dendrites", "", 
+84208, Lower, 1871, 1878, "reduced", "", 
+86601, NeuronalChangesTest, 1887, 1917, "synaptic density on the somata", "", 
+84209, Higher, 1918, 1927, "increased", "", 
+84210, Caudal, 1934, 1940, "caudal", "", 
+84211, SpinalLesionSite, 1948, 1963, "lesion site.Our", "", 
+84212, OlfactoryEnsheathingGliaCell, 2020, 2047, "olfactory ensheathing cells", "", 
+86600, NeuronalChangesTest, 2051, 2139, "sympathetic preganglionic neurons morphology and on the synaptic density on their somata", "", 
+84213, Lower, 2176, 2185, "reduction", "", 
+84214, AutonomicDysreflexiaTest, 2189, 2210, "autonomic dysreflexia", "", 
+55237, Adult, 7033, 7038, "adult", "", "<http://scio/data/OrganismModel_9212> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+55238, Male, 7039, 7043, "male", "", "<http://scio/data/OrganismModel_9212> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+55239, WistarRat, 7044, 7073, "Australian inbred Wistar rats", "", "<http://scio/data/OrganismModel_9212> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+55244, Weight, 7129, 7138, "350–400 g", "", "<http://scio/data/OrganismModel_9212> <http://psink.de/scio/hasWeight> \"350–400 g\"."
+83989, Housing, 7141, 7284, "They were housed in individual plastic home boxes (65 × 40 × 22 cm) with ad libitum food and water and maintained on a 12/12 h light/dark cycle", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+83990, Hydration, 7214, 7224, "ad libitum", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+55241, Nutrition, 7214, 7229, "ad libitum food", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+55242, Hydration, 7234, 7239, "water", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+76811, Adult, 7601, 7606, "adult", "", 
+76812, Male, 7607, 7611, "male", "", 
+76813, WistarRat, 7612, 7648, "albino Australian inbred Wistar rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_27079> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>. <http://scio/data/Cell_27111> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+76823, Allogeneic, 7644, 7648, "rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_27079> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>. <http://scio/data/Cell_27111> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+76814, Weight, 7704, 7713, "350–400 g", "", 
+76815, OlfactoryEnsheathingGliaCell, 7755, 7759, "OECs", "", 
+76816, Cell, 7764, 7775, "fibroblasts", "", 
+83991, OlfactoryEnsheathingGliaCell, 7934, 7942, "OECswere", "", 
+76824, AnatomicalLocation, 7960, 7976, "olfactory mucosa", "", "<http://scio/data/AnatomicalLocation_27089> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_27079> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_27089>."
+76827, WistarRat, 7980, 7984, "rats", "", 
+76826, Cell, 8193, 8204, "fibroblasts", "", 
+76828, WistarRat, 8229, 8232, "rat", "", 
+76825, AnatomicalLocation, 8253, 8257, "skin", "", "<http://scio/data/AnatomicalLocation_27116> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/Cell_27111> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_27116>."
+76829, InVitroExperimentalProcedure, 8324, 8449, "Only OECs were modified to express humanised Renilla green fluorescent protein as described previously (Gorrie et al., 2010).", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_27079> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+83992, WistarRat, 8627, 8635, "ratswere", "", 
+55062, KetamineAsAnaesthetic, 8667, 8689, "ketamine hydrochloride", "", "<http://scio/data/KetamineAsAnaesthetic_8010> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_8010>."
+55063, DosageIntracorporal, 8691, 8702, "100 mg kg−1", "", "<http://scio/data/KetamineAsAnaesthetic_8010> <http://psink.de/scio/hasDosage> \"100 mg kg−1\"."
+55068, IntraperitonealLocation, 8703, 8720, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_8016> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+57743, InjectionDelivery, 8703, 8720, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_8016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_8010> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_8016>."
+55064, Xylazine, 8784, 8792, "xylazine", "", "<http://scio/data/Xylazine_8020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_8020>."
+55065, DosageIntracorporal, 8794, 8803, "7 mg kg−1", "", "<http://scio/data/Xylazine_8020> <http://psink.de/scio/hasDosage> \"7 mg kg−1\"."
+55069, IntraperitonealLocation, 8805, 8822, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_8021> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+57744, InjectionDelivery, 8805, 8822, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_8021> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_8020> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_8021>."
+55067, Laminectomy, 8888, 8899, "Laminectomy", "", 
+83994, Vertebrae, 8907, 8918, "T3 vertebra", "", 
+55066, T3, 8907, 8909, "T3", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T3>."
+55389, T4, 8947, 8949, "T4", "", 
+83995, Rostral, 9060, 9067, "rostral", "", 
+76817, OlfactoryEnsheathingGliaCell, 9093, 9101, "GFP-OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_27079> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_27069> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_27079>."
+76830, NNumber, 9107, 9108, "9", "", 
+76833, WistarRat, 9109, 9116, "animals", "", 
+76835, InjectionDelivery, 9139, 9147, "injected", "", 
+76838, Syringe, 9164, 9282, "10 μl Hamilton syringe (Hamilton, Reno, NV) with a silicon-coated pulled glass tip (with inner diameter of 80– 100 μm)", "", "<http://scio/data/CompoundTreatment_27069> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_27098> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+76818, WistarRat, 9284, 9288, "Rats", "", 
+76831, NNumber, 9294, 9295, "9", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasNNumber> \"9\"."
+76836, InjectionDelivery, 9311, 9321, "injections", "", "<http://scio/data/InjectionDelivery_27120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_27098> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_27120>."
+76844, DefinedExperimentalGroup, 9311, 9333, "injections of GFP-OECs", "E1", "<http://scio/data/DefinedExperimentalGroup_27126> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_27126> <http://www.w3.org/2000/01/rdf-schema#label> \"injections of GFP-OECs, E1\"."
+76839, OlfactoryEnsheathingGliaCell, 9325, 9333, "GFP-OECs", "", 
+76846, DosageExtracorporal, 9335, 9361, "0.5 μl of 100,000 cells/μl", "", "<http://scio/data/CompoundTreatment_27069> <http://psink.de/scio/hasDosage> \"0.5 μl of 100,000 cells/μl\". <http://scio/data/CompoundTreatment_27098> <http://psink.de/scio/hasDosage> \"0.5 μl of 100,000 cells/μl\"."
+83996, Vehicle, 9381, 9389, "DMEM/F12", "", 
+76837, InjectionDelivery, 9396, 9406, "injections", "", "<http://scio/data/InjectionDelivery_27071> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_27069> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_27071>."
+83997, Distance, 9407, 9411, "2 mm", "", 
+76819, Rostral, 9412, 9419, "cranial", "", "<http://scio/data/Rostral_27076> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_27069> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_27076>. <http://scio/data/Rostral_27124> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_27098> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_27124>."
+83998, Distance, 9428, 9432, "2 mm", "", 
+76820, Caudal, 9433, 9439, "caudal", "", "<http://scio/data/Caudal_27083> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_27069> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_27083>. <http://scio/data/Caudal_38614> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_27098> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_38614>."
+76841, Location, 9447, 9465, "future lesion site", "", "<http://scio/data/Rostral_27076> <http://psink.de/scio/relativeTo> <http://psink.de/scio/Location>. <http://scio/data/Caudal_27083> <http://psink.de/scio/relativeTo> <http://psink.de/scio/Location>. <http://scio/data/Rostral_27124> <http://psink.de/scio/relativeTo> <http://psink.de/scio/Location>. <http://scio/data/Caudal_38614> <http://psink.de/scio/relativeTo> <http://psink.de/scio/Location>."
+83999, Distance, 9472, 9478, "0.5 mm", "", 
+84000, Direction, 9479, 9486, "lateral", "", 
+84001, Depth, 9505, 9511, "0.8 mm", "", 
+76842, DefinedExperimentalGroup, 9597, 9612, "Control animals", "E2", "<http://scio/data/DefinedExperimentalGroup_27134> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_27134> <http://www.w3.org/2000/01/rdf-schema#label> \"Control, E2\"."
+76834, WistarRat, 9605, 9612, "animals", "", 
+76832, NNumber, 9618, 9619, "9", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasNNumber> \"9\"."
+76821, Cell, 9630, 9641, "fibroblasts", "", "<http://scio/data/Cell_27111> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Cell>. <http://scio/data/CompoundTreatment_27098> <http://psink.de/scio/hasCompound> <http://scio/data/Cell_27111>."
+76822, SpinalCord, 9673, 9684, "spinal cord", "", 
+76845, Duration, 9685, 9715, "was then completely transected", "", "<http://scio/data/TemporalInterval_27144> <http://psink.de/scio/hasDuration> \"was then completely transected\". <http://scio/data/TemporalInterval_27152> <http://psink.de/scio/hasDuration> \"was then completely transected\"."
+55060, CompleteTransection, 9694, 9715, "completely transected", "", "<http://scio/data/CompleteTransection_8007> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_8007> <http://www.w3.org/2000/01/rdf-schema#label> \"Complete Transection\"."
+55061, Scissors, 9721, 9734, "microscissors", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+84002, Duration, 10299, 10324, "Immediately after surgery", "", 
+84003, WistarRat, 10330, 10334, "rats", "", 
+84004, AtropineSulfate, 10348, 10407, "muscarinic cholinoceptor antagonist atropine methyl nitrate", "", "<http://scio/data/AtropineSulfate_8009> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AtropineSulfate>. <http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AtropineSulfate_8009>."
+84005, DosageIntracorporal, 10409, 10418, "3 mg kg−1", "", 
+84006, SubcutaneousLocation, 10419, 10433, "subcutaneously", "", "<http://scio/data/InjectionDelivery_38426> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>."
+84007, InjectionDelivery, 10419, 10433, "subcutaneously", "", "<http://scio/data/InjectionDelivery_38426> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/AtropineSulfate_8009> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_38426>."
+84008, AntibioticMedication, 10466, 10489, "antibiotic (Cephalothin", "", "<http://scio/data/AntibioticMedication_38425> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_38425>."
+84009, DosageIntracorporal, 10491, 10501, "30 mg kg−1", "", "<http://scio/data/AntibioticMedication_38425> <http://psink.de/scio/hasDosage> \"30 mg kg−1\"."
+84010, SubcutaneousLocation, 10502, 10516, "subcutaneously", "", 
+84011, InjectionDelivery, 10502, 10516, "subcutaneously", "", 
+84012, Frequency, 10556, 10567, "twice daily", "", 
+84013, WistarRat, 10682, 10689, "Animals", "", 
+84014, PostsurgicalMedication, 10707, 10727, "analgesic (Carprofen", "", "<http://scio/data/PostsurgicalMedication_38430> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_38430>."
+84015, DosageIntracorporal, 10729, 10739, "50 mg kg−1", "", "<http://scio/data/PostsurgicalMedication_38430> <http://psink.de/scio/hasDosage> \"50 mg kg−1\"."
+84016, SubcutaneousLocation, 10740, 10754, "subcutaneously", "", 
+84017, InjectionDelivery, 10740, 10754, "subcutaneously", "", 
+84018, Frequency, 10788, 10793, "daily", "", 
+84019, Duration, 10794, 10806, "for 2–3 days", "", 
+84020, BladderExpression, 10986, 11024, "Manual emptying of the urinary bladder", "", "<http://scio/data/CompleteTransection_8007> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+84021, Frequency, 11041, 11054, "3 times a day", "", 
+84022, WistarRat, 11065, 11069, "rats", "", 
+84023, Duration, 11102, 11110, "~2 weeks", "", 
+84169, AutonomicDysreflexiaTest, 13121, 13279, "relativemean arterial pressure and heart rate,which represent deviations from baseline (obtained as averages of 8 measurements prior to colorectal distension)", "", 
+84170, AutonomicDysreflexiaTest, 13286, 13469, "max mean arterial pressure and max heart rate,whichwere defined as the maximal relative changes in mean arterial pressure and heart rate recorded in a rat during autonomic dysreflexia", "", 
+84171, AutonomicDysreflexiaTest, 13477, 13612, "T50 mean arterial pressure, which represent the time taken for the mean arterial pressure response to decrease to 50% of its peak value", "", 
+84030, NeuronalChangesTest, 15777, 15858, "anti-choline acetyltransferase, to identify the sympathetic preganglionic neurons", "", 
+84031, NeuronalChangesTest, 15868, 15916, "anti-synaptophysin, to identify synaptic boutons", "", 
+84032, NeuronalChangesTest, 16863, 16922, "Morphological features of sympathetic preganglionic neurons", "", 
+99052, Injury, 16930, 16937, "injured", "", 
+99053, SpinalCord, 16938, 16950, "spinal cords", "", 
+99055, AutonomicDysreflexiaTest, 17819, 17897, "Mean arterial pressure and heart rate measurements after colorectal distension", "", 
+84036, ANOVA, 17915, 17938, "repeated-measures ANOVA", "", 
+99056, AutonomicDysreflexiaTest, 18059, 18085, "Max mean arterial pressure", "", 
+99057, AutonomicDysreflexiaTest, 18087, 18101, "Max heart rate", "", 
+99058, AutonomicDysreflexiaTest, 18106, 18132, "T50 mean arterial pressure", "", 
+99059, T4, 18149, 18151, "T4", "", 
+99064, AnalyzedExperimentalGroup, 18152, 18169, "transected groups", "", 
+84037, TTest, 18188, 18213, "unpaired Student's t-test", "", "<http://scio/data/Result_38471> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_38484> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_38497> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_38523> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_38536> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>."
+99060, NeuronalChangesTest, 18229, 18312, "morphometric features and synaptic density of the sympathetic preganglionic neurons", "", 
+99061, Rostral, 18313, 18320, "rostral", "", 
+99062, Caudal, 18325, 18331, "caudal", "", 
+99063, SpinalLesionSite, 18339, 18345, "injury", "", 
+99065, GroupName, 18353, 18375, "OEC-transplanted group", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasGroupName> \"OEC-transplanted group\"."
+99066, GroupName, 18380, 18412, "fibroblast-transplanted groupwas", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasGroupName> \"fibroblast-transplanted groupwas\"."
+84038, StatisticalTest, 18432, 18535, "linear mixed model using a restricted maximum likelihood algorithm to estimate fixed and random effects", "", "<http://scio/data/Result_38555> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_38568> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_38596> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+84051, AutonomicDysreflexiaTest, 21291, 21322, "autonomic dysreflexic responses", "", 
+84052, Duration, 21323, 21362, "6–8 weeks after spinal cord transection", "", 
+84108, DeliveryMethod, 21367, 21382, "transplantation", "", 
+84053, OlfactoryEnsheathingGliaCell, 21386, 21394, "GFP-OECs", "", 
+84054, Cell, 21398, 21409, "fibroblasts", "", 
+84109, ANOVA, 21712, 21733, "repeatedmeasure ANOVA", "", "<http://scio/data/Result_38452> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>."
+84039, Duration, 21751, 21793, "first 10 min of the colorectal distensions", "", 
+84040, PositiveSignificance, 21806, 21817, "significant", "", 
+86605, ObservedDifference, 21818, 21834, "treatment effect", "", 
+84111, GroupName, 21847, 21873, "GFP-OEC-transplanted group", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasGroupName> \"GFP-OEC-transplanted group\"."
+84112, GroupName, 21882, 21911, "fibroblast-transplanted group", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasGroupName> \"fibroblast-transplanted group\"."
+84124, AutonomicDysreflexiaTest, 21920, 21951, "mean arterial pressure response", "", 
+84114, Value, 21953, 21965, "F(1,15)=7.89", "", 
+84115, PValue, 21967, 21974, "p=0.013", "", 
+84130, None, 21977, 21984, "but not", "R2", "<http://scio/data/Trend_38462> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+84125, AutonomicDysreflexiaTest, 21993, 22012, "heart rate response", "", "<http://scio/data/AutonomicDysreflexiaTest_64083> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75571> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75571> <http://www.w3.org/2000/01/rdf-schema#label> \"AutonomicDysreflexiaTest (heart rate response)\". <http://scio/data/Result_38452> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84118, Value, 22014, 22026, "F(1,15)=0.75", "", 
+84116, PValue, 22028, 22033, "p=0.4", "", "<http://scio/data/Significance_38468> <http://psink.de/scio/hasPValue> \"p=0.4\"."
+84131, ObservedDifference, 22081, 22097, "treatment effect", "R3, R4", "<http://scio/data/Trend_38478> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/RepeatedMeasureTrend_38491> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+84126, AutonomicDysreflexiaTest, 22102, 22124, "mean arterial pressure", "", "<http://scio/data/AutonomicDysreflexiaTest_64087> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75573> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75573> <http://www.w3.org/2000/01/rdf-schema#label> \"AutonomicDysreflexiaTest (mean arterial pressure)\". <http://scio/data/AutonomicDysreflexiaTest_80560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_80560> <http://www.w3.org/2000/01/rdf-schema#label> \"AutonomicDysreflexiaTest (mean arterial pressure)\". <http://scio/data/Result_38471> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_38484> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84042, PositiveSignificance, 22129, 22140, "significant", "", "<http://scio/data/PositiveSignificance_38480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_38478> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_38480>."
+84043, Duration, 22141, 22150, "at week 6", "", 
+84119, Value, 22152, 22166, "F(1,15) = 5.19", "", 
+84044, PValue, 22168, 22177, "p = 0.038", "", "<http://scio/data/PositiveSignificance_38480> <http://psink.de/scio/hasPValue> \"p = 0.038\"."
+84045, ZeroSignificance, 22184, 22212, "failed to reach significance", "", "<http://scio/data/ZeroSignificance_38492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_38491> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_38492>."
+84046, Duration, 22216, 22229, "weeks 7 and 8", "", 
+84133, RepeatedMeasureTrend, 22216, 22229, "weeks 7 and 8", "", "<http://scio/data/RepeatedMeasureTrend_38491> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_38484> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_38491>."
+84047, PValue, 22231, 22239, "p N 0.06", "", "<http://scio/data/ZeroSignificance_38492> <http://psink.de/scio/hasPValue> \"p N 0.06\"."
+84134, None, 22252, 22261, "no effect", "R5", "<http://scio/data/RepeatedMeasureTrend_38504> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+84127, AutonomicDysreflexiaTest, 22279, 22289, "heart rate", "", "<http://scio/data/AutonomicDysreflexiaTest_64094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75576> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75576> <http://www.w3.org/2000/01/rdf-schema#label> \"AutonomicDysreflexiaTest (heart rate)\". <http://scio/data/Result_38497> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84050, Duration, 22293, 22308, "weeks 6, 7 or 8", "", 
+84135, RepeatedMeasureTrend, 22293, 22308, "weeks 6, 7 or 8", "", "<http://scio/data/RepeatedMeasureTrend_38504> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_38497> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_38504>."
+84120, PValue, 22339, 22347, "p N 0.23", "", "<http://scio/data/Significance_38506> <http://psink.de/scio/hasPValue> \"p N 0.23\"."
+84128, AutonomicDysreflexiaTest, 22495, 22529, "average T50 mean arterial pressure", "", "<http://scio/data/AutonomicDysreflexiaTest_64100> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75578> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_75578> <http://www.w3.org/2000/01/rdf-schema#label> \"AutonomicDysreflexiaTest (average T50 mean arterial pressure)\". <http://scio/data/AutonomicDysreflexiaTest_80562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AutonomicDysreflexiaTest>. <http://scio/data/AutonomicDysreflexiaTest_80562> <http://www.w3.org/2000/01/rdf-schema#label> \"AutonomicDysreflexiaTest (average T50 mean arterial pressure)\". <http://scio/data/Result_38523> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_38536> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84056, Duration, 22530, 22545, "forweeks 6–8was", "", 
+84136, RepeatedMeasureTrend, 22530, 22545, "forweeks 6–8was", "", 
+84137, Lower, 22546, 22553, "reduced", "R6", "<http://scio/data/RepeatedMeasureTrend_38530> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_38550> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+86607, Value, 22557, 22560, "26%", "", 
+84121, GroupName, 22568, 22594, "GFP-OEC-transplanted group", "", 
+84122, GroupName, 22613, 22642, "fibroblast-transplanted group", "", 
+84058, MeanValue, 22644, 22647, "104", "", 
+84059, StandardError, 22648, 22653, "± 7 s", "", 
+84060, MeanValue, 22658, 22661, "142", "", 
+84061, StandardError, 22662, 22668, "± 10 s", "", 
+84062, PValue, 22670, 22678, "p = 0.01", "", 
+84063, Duration, 22711, 22723, "weeks 6 to 8", "", 
+84138, RepeatedMeasureTrend, 22711, 22723, "weeks 6 to 8", "", 
+84064, PositiveSignificance, 22748, 22759, "significant", "", "<http://scio/data/PositiveSignificance_38532> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_38530> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_38532>."
+84139, ObservedDifference, 22760, 22770, "difference", "R7", 
+84065, Duration, 22774, 22787, "weeks 6 and 7", "", 
+84141, RepeatedMeasureTrend, 22774, 22787, "weeks 6 and 7", "", "<http://scio/data/RepeatedMeasureTrend_38530> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_38523> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_38530>."
+84066, PValue, 22789, 22798, "p < 0.047", "", "<http://scio/data/PositiveSignificance_38532> <http://psink.de/scio/hasPValue> \"p < 0.047\"."
+84142, ZeroSignificance, 22800, 22807, "but not", "", "<http://scio/data/ZeroSignificance_38551> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_38550> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_38551>."
+84067, Duration, 22808, 22817, "at 8 week", "", 
+84068, PValue, 22819, 22826, "p= 0.17", "", "<http://scio/data/ZeroSignificance_38551> <http://psink.de/scio/hasPValue> \"p= 0.17\"."
+84069, Injury, 22838, 22856, "spinal cord injury", "", 
+84162, Lower, 24504, 24511, "smaller", "R9", "<http://scio/data/Trend_38562> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+84085, NeuronalChangesTest, 24512, 24521, "soma size", "", "<http://scio/data/NeuronalChangesTest_64103> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest>. <http://scio/data/NeuronalChangesTest_75581> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest>. <http://scio/data/NeuronalChangesTest_75581> <http://www.w3.org/2000/01/rdf-schema#label> \"NeuronalChangesTest (soma size)\". <http://scio/data/Result_38555> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84145, GroupName, 24538, 24557, "OEC-treated animals", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasGroupName> \"OEC-treated animals\"."
+84146, GroupName, 24574, 24600, "fibroblast-treated animals", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasGroupName> \"fibroblast-treated animals\"."
+84084, PValue, 24602, 24610, "p = 0.07", "", "<http://scio/data/Significance_38564> <http://psink.de/scio/hasPValue> \"p = 0.07\"."
+84147, NeuronalChangesTest, 24733, 24768, "overall number of primary dendrites", "", "<http://scio/data/NeuronalChangesTest_64106> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest>. <http://scio/data/NeuronalChangesTest_75583> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest>. <http://scio/data/NeuronalChangesTest_75583> <http://www.w3.org/2000/01/rdf-schema#label> \"NeuronalChangesTest (overall number of primary dendrites)\". <http://scio/data/Result_38568> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84166, Lower, 24773, 24780, "reduced", "R10", "<http://scio/data/Trend_38575> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+84091, Caudal, 24788, 24803, "caudal position", "", 
+84092, PValue, 24805, 24813, "p = 0.02", "", 
+84149, GroupName, 24826, 24844, "OECtreated animals", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasGroupName> \"OECtreated animals\"."
+84093, PValue, 24846, 24853, "p=0.005", "", "<http://scio/data/Significance_38577> <http://psink.de/scio/hasPValue> \"p=0.005\"."
+84157, GroupName, 25729, 25753, "OEC-transplanted animals", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasGroupName> \"OEC-transplanted animals\"."
+84158, GroupName, 25758, 25788, "fibroblasttransplanted animals", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasGroupName> \"fibroblasttransplanted animals\"."
+84168, Higher, 25801, 25810, "increased", "R12", "<http://scio/data/Trend_38603> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+86594, NeuronalChangesTest, 25811, 25827, "synaptic density", "", "<http://scio/data/NeuronalChangesTest_64785> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest>. <http://scio/data/NeuronalChangesTest_75855> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest>. <http://scio/data/NeuronalChangesTest_75855> <http://www.w3.org/2000/01/rdf-schema#label> \"NeuronalChangesTest (synaptic density)\". <http://scio/data/Result_38596> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+84159, GroupName, 25831, 25855, "OECstransplanted animals", "", "<http://scio/data/DefinedExperimentalGroup_27126> <http://psink.de/scio/hasGroupName> \"OECstransplanted animals\"."
+84104, Caudal, 25856, 25862, "caudal", "", 
+84105, SpinalLesionSite, 25870, 25881, "injury site", "", 
+84106, PValue, 25883, 25891, "p = 0.05", "", "<http://scio/data/Significance_38605> <http://psink.de/scio/hasPValue> \"p = 0.05\"."
+84235, OlfactoryEnsheathingGliaCell, 27270, 27273, "OEC", "", 
+84236, DeliveryMethod, 27274, 27289, "transplantation", "", 
+84237, SpinalLesionSite, 27299, 27310, "lesion site", "", 
+84238, AnatomicalLocation, 27343, 27365, "spinal cord parenchyma", "", 
+84172, Positive, 27393, 27408, "faster recovery", "", "<http://scio/data/Result_38471> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_38523> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_38536> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+84239, AutonomicDysreflexiaTest, 27416, 27473, "mean arterial pressure response to colorectal distensions", "", 
+84240, GroupName, 27490, 27504, "control groups", "", "<http://scio/data/DefinedExperimentalGroup_27134> <http://psink.de/scio/hasGroupName> \"control groups\"."

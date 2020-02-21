@@ -1,0 +1,29 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_459> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_459> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasWeight> "200-225 g" .
+<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_2308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_2308> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C3> .
+<http://scio/data/SodiumPentobarbital_2311> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital> .
+<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2311> .
+<http://scio/data/SodiumPentobarbital_2311> <http://psink.de/scio/hasDosage> "50 mg/kg" .
+<http://scio/data/InjectionDelivery_3682> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/SodiumPentobarbital_2311> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3682> .
+<http://scio/data/InjectionDelivery_3682> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_2313> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife> .
+<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/AntibioticMedication_14477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_14477> .
+<http://scio/data/AntibioticMedication_14477> <http://psink.de/scio/hasDosage> "0.03 mg/kg" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

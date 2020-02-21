@@ -1,0 +1,21 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48591, Adult, 6558, 6563, "Adult", "", "<http://scio/data/OrganismModel_471> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48592, Female, 6564, 6570, "female", "", "<http://scio/data/OrganismModel_471> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48593, SpragueDawleyRat, 6571, 6590, "Sprague Dawley rats", "", "<http://scio/data/OrganismModel_471> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>. <http://scio/data/OrganismModel_477> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48594, Weight, 6600, 6610, "200 -250 g", "", "<http://scio/data/OrganismModel_471> <http://psink.de/scio/hasWeight> \"200 -250 g\"."
+48595, Age, 6617, 6627, "2-3 months", "", "<http://scio/data/OrganismModel_471> <http://psink.de/scio/hasAge> \"2-3 months\"."
+49844, SpragueDawleyRat, 6845, 6852, "Animals", "", 
+49845, PartialTransection, 6873, 6895, "overhemisection injury", "", "<http://scio/data/PartialTransection_2331> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_2331> <http://www.w3.org/2000/01/rdf-schema#label> \"adult hemisection\". <http://scio/data/PartialTransection_14455> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_14455> <http://www.w3.org/2000/01/rdf-schema#label> \"fetal hemisection\"."
+49840, C4, 6903, 6905, "C4", "", "<http://scio/data/PartialTransection_2331> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4>. <http://scio/data/PartialTransection_14455> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4>."
+50816, ChloralHydrate, 7033, 7048, "chloral hydrate", "", "<http://scio/data/ChloralHydrate_2336> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChloralHydrate>. <http://scio/data/PartialTransection_2331> <http://psink.de/scio/hasMedication> <http://scio/data/ChloralHydrate_2336>."
+49842, DosageIntracorporal, 7050, 7060, "400  mg/kg", "", 
+49843, Laminectomy, 7081, 7092, "laminectomy", "", 
+49846, Scissors, 7119, 7138, "iridectomy scissors", "", "<http://scio/data/PartialTransection_2331> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+49847, PartialTransection, 7173, 7188, "overhemisection", "", 
+49848, PartialTransection, 7194, 7209, "overhemisection", "", 
+57472, InjuryArea, 7267, 7363, "entire right  side of the cord plus the left dorsal column and adjacent  gray matter are removed", "", "<http://scio/data/PartialTransection_2331> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>. <http://scio/data/PartialTransection_14455> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+49849, Right, 7274, 7279, "right", "", 
+49850, Left, 7307, 7311, "left", "", 
+48596, Age, 7607, 7627, "postnatal day 2 (P2)", "", "<http://scio/data/OrganismModel_477> <http://psink.de/scio/hasAge> \"postnatal day 2 (P2)\"."
+49852, Anaesthetic, 7639, 7668, "anesthetized with hypothermia", "", "<http://scio/data/Anaesthetic_14458> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/PartialTransection_14455> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_14458>."
+49853, PartialTransection, 7695, 7710, "overhemisection", "", 

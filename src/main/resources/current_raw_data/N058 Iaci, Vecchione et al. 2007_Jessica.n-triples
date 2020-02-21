@@ -1,0 +1,28 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_567> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_567> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_567> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat> .
+<http://scio/data/OrganismModel_567> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_567> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/Compression_2589> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_2589> <http://www.w3.org/2000/01/rdf-schema#label> "compression" .
+<http://scio/data/Isoflurane_2592> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2592> .
+<http://scio/data/DeliveryMethod_3403> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Isoflurane_2592> <http://psink.de/scio/hasDosage> "1.8%" .
+<http://scio/data/MedicationDuringSurgery_2594> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps> .
+<http://scio/data/AntibioticMedication_3405> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3405> .
+<http://scio/data/AntibioticMedication_3405> <http://psink.de/scio/hasDosage> "50 mg/kg" .
+<http://scio/data/VertebralArea_3818> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3818> .
+<http://scio/data/VertebralArea_3818> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T9> .
+<http://scio/data/VertebralArea_3818> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T10> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

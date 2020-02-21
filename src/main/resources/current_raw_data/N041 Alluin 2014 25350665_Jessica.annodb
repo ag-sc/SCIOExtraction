@@ -1,0 +1,30 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48597, Adult, 10801, 10806, "adult", "", "<http://scio/data/OrganismModel_483> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48598, Female, 10807, 10813, "female", "", "<http://scio/data/OrganismModel_483> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48599, WistarRat, 10814, 10825, "Wistar rats", "", "<http://scio/data/OrganismModel_483> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+48600, Weight, 10827, 10836, "250-275 g", "", "<http://scio/data/OrganismModel_483> <http://psink.de/scio/hasWeight> \"250-275 g\"."
+49868, WistarRat, 10934, 10941, "Animals", "", 
+49869, Housing, 10947, 10988, "housed in standard  plastic cages at 22uC", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+49870, Housing, 11025, 11076, "25uC  after SCI in a 12:12 h light/dark photoperiod", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+49855, Nutrition, 11078, 11082, "Food", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+49856, Hydration, 11125, 11139, "drinking water", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+50817, Hydration, 11155, 11166, "ad  libitum", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+50818, Nutrition, 11155, 11166, "ad  libitum", "", 
+49857, BladderExpression, 11405, 11426, "bladder was expressed", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+49873, InhalationDelivery, 13872, 13886, "gas anesthesia", "", "<http://scio/data/InhalationDelivery_2359> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery>. <http://scio/data/Isoflurane_2348> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2359>."
+49860, Isoflurane, 13917, 13927, "isoflurane", "", "<http://scio/data/Isoflurane_2348> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2348>."
+49874, DosageExtracorporal, 13930, 13932, "2%", "", "<http://scio/data/Isoflurane_2348> <http://psink.de/scio/hasDosage> \"2%\"."
+54211, WistarRat, 14027, 14031, "rats", "", 
+49875, PostSurgeryCondition, 14052, 14065, "heating  lamp", "", 
+54212, WistarRat, 14108, 14115, "Animals", "", 
+49861, DosageIntracorporal, 14153, 14161, "50 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2362> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+49876, PostsurgicalMedication, 14162, 14170, "Temgesic", "", "<http://scio/data/PostsurgicalMedication_2362> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2362>."
+50819, AntibioticMedication, 14294, 14305, "antibiotics", "", "<http://scio/data/AntibioticMedication_3372> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3372>."
+49879, OralDelivery, 14306, 14324, "in drinking  water", "", 
+49862, Duration, 14364, 14374, "for 1 week", "", 
+49863, AneurysmClip, 14410, 14423, "aneurysm clip", "", "<http://scio/data/AneurysmClip_2352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AneurysmClip>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/AneurysmClip_2352>."
+49880, Compression, 14432, 14443, "compression", "", "<http://scio/data/Compression_2345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression>. <http://scio/data/Compression_2345> <http://www.w3.org/2000/01/rdf-schema#label> \"compression\"."
+49864, Laminectomy, 14680, 14691, "laminectomy", "", 
+49865, Force, 14713, 14719, "23.8 g", "", "<http://scio/data/AneurysmClip_2352> <http://psink.de/scio/hasForce> \"23.8 g\"."
+49866, Duration, 14789, 14794, "1 min", "", 
+49867, T7, 14812, 14814, "T7", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T7>."

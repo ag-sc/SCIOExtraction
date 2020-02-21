@@ -1,0 +1,37 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_893> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_893> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_893> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
+<http://scio/data/OrganismModel_893> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_893> <http://psink.de/scio/hasWeight> "200–230 g" .
+<http://scio/data/OrganismModel_893> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/LateralHemisection_4065> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_4065> <http://www.w3.org/2000/01/rdf-schema#label> "lateral hemisection" .
+<http://scio/data/VertebralArea_4066> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_4066> .
+<http://scio/data/VertebralArea_4066> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T7> .
+<http://scio/data/VertebralArea_4066> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9> .
+<http://scio/data/AntibioticMedication_4067> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_4067> .
+<http://scio/data/AntibioticMedication_4067> <http://psink.de/scio/hasDosage> "160,000 U" .
+<http://scio/data/Anaesthetic_4068> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/ChloralHydrate_4070> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChloralHydrate> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasMedication> <http://scio/data/ChloralHydrate_4070> .
+<http://scio/data/InjectionDelivery_4075> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/ChloralHydrate_4070> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4075> .
+<http://scio/data/InjectionDelivery_4075> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+<http://scio/data/Blade_4072> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_4072> .
+<http://scio/data/Right_4074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasDirection> <http://scio/data/Right_4074> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/LateralHemisection_4065> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

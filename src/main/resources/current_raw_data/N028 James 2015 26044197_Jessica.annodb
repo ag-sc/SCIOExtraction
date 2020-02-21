@@ -1,0 +1,33 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+49676, ModerateInjury, 1578, 1586, "moderate", "", 
+48552, Adult, 5774, 5779, "Adult", "", "<http://scio/data/OrganismModel_411> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48553, Male, 5780, 5784, "male", "", "<http://scio/data/OrganismModel_411> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+48554, SpragueDawleyRat, 5785, 5804, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_411> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48555, Weight, 5806, 5815, "230-250 g", "", "<http://scio/data/OrganismModel_411> <http://psink.de/scio/hasWeight> \"230-250 g\"."
+50788, Housing, 5849, 5888, "housed under a 12 hour light/dark cycle", "", "<http://scio/data/Contusion_2152> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+49664, Nutrition, 5894, 5913, "free access to food", "", "<http://scio/data/Contusion_2152> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+49665, Hydration, 5918, 5923, "water", "", "<http://scio/data/Contusion_2152> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+54200, Female, 7576, 7580, "Male", "", 
+54201, Adult, 7581, 7586, "adult", "", 
+49677, SpragueDawleyRat, 7587, 7591, "rats", "", 
+49666, KetamineAsAnaesthetic, 7612, 7620, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2155>."
+49667, DosageIntracorporal, 7622, 7630, "60 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2155> <http://psink.de/scio/hasDosage> \"60 mg/kg\"."
+49678, Anaesthetic, 7636, 7648, "medetomidine", "", "<http://scio/data/Anaesthetic_2163> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2163>."
+49668, DosageIntracorporal, 7650, 7660, "0.25 mg/kg", "", "<http://scio/data/Anaesthetic_2163> <http://psink.de/scio/hasDosage> \"0.25 mg/kg\"."
+49669, Laminectomy, 7829, 7840, "laminectomy", "", 
+49670, C5, 7879, 7881, "C5", "", "<http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5>."
+54202, SpragueDawleyRat, 7920, 7927, "Animals", "", 
+49671, InfiniteHorizonImpactor, 7994, 8019, "Infinite Horizon impactor", "", "<http://scio/data/InfiniteHorizonImpactor_2159> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2159>."
+54203, InfiniteHorizonImpactor, 8124, 8132, "impactor", "", 
+49672, Force, 8173, 8182, "225 kdyne", "", "<http://scio/data/InfiniteHorizonImpactor_2159> <http://psink.de/scio/hasForce> \"225 kdyne\"."
+49679, ModerateInjury, 8214, 8222, "moderate", "", "<http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+49680, C5, 8233, 8235, "C5", "", 
+49673, Contusion, 8237, 8253, "contusion injury", "", "<http://scio/data/Contusion_2152> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2152> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+49681, SpragueDawleyRat, 8273, 8277, "rats", "", 
+54204, Contusion, 8294, 8303, "contusion", "", 
+49682, PostsurgicalMedication, 8380, 8405, "atipamezole hydrochloride", "", "<http://scio/data/PostsurgicalMedication_2169> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2169>."
+49674, DosageIntracorporal, 8407, 8414, "1 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2169> <http://psink.de/scio/hasDosage> \"1 mg/kg\"."
+50789, IntraperitonealLocation, 8428, 8431, "i.p", "", 
+54205, SpragueDawleyRat, 8815, 8822, "animals", "", 
+49683, PostsurgicalMedication, 8858, 8867, "carprofen", "", "<http://scio/data/PostsurgicalMedication_2154> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2154>."
+50791, AntibioticMedication, 8962, 8973, "antibiotics", "", "<http://scio/data/AntibioticMedication_3356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2152> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3356>."

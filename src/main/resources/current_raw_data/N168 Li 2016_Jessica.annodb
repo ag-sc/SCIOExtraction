@@ -1,0 +1,121 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+79878, DeliveryMethod, 333, 348, "transplantation", "", 
+79879, OlfactoryEnsheathingGliaCell, 352, 379, "olfactory ensheathing cells", "", 
+79880, AnatomicalLocation, 410, 424, "olfactory bulb", "", 
+79881, SpinalCord, 501, 512, "spinal cord", "", 
+79882, Injury, 513, 521, "injuries", "", 
+79885, Injury, 574, 582, "injuries", "", 
+79883, SpinalCord, 596, 607, "spinal cord", "", 
+79886, Injury, 608, 616, "injuries", "", 
+99134, AnimalSpecies, 632, 637, "human", "", 
+79884, AnatomicalLocation, 710, 724, "olfactory bulb", "", 
+79887, AnatomicalLocation, 787, 801, "olfactory bulb", "", 
+79888, Xenogeneic, 878, 889, "xenografted", "", 
+79889, MouseSpecies, 890, 895, "mouse", "", 
+79891, AnatomicalLocation, 896, 902, "bulbar", "", 
+79890, OlfactoryEnsheathingGliaCell, 903, 930, "olfactory ensheathing cells", "", 
+79893, Frequency, 950, 955, "daily", "", 
+79892, CyclosporineA, 956, 968, "cyclosporine", "", 
+79896, Positive, 969, 976, "restore", "", 
+79895, ForelimbAsymmetryTest, 986, 1011, "forepaw reaching function", "", 
+79897, RatSpecies, 1015, 1019, "rats", "", 
+79898, VertebralArea, 1033, 1037, "C1/2", "", 
+79899, UnilateralInjuryArea, 1038, 1076, "unilateral corticospinal tract lesions", "", 
+79900, CorticospinalTract, 1049, 1068, "corticospinal tract", "", 
+79902, Duration, 1113, 1124, "for 10 days", "", 
+79903, CyclosporineA, 1126, 1138, "cyclosporine", "", 
+99135, NNumber, 1154, 1162, "Thirteen", "", 
+99136, NNumber, 1170, 1172, "13", "", 
+79904, RatSpecies, 1173, 1177, "rats", "", 
+79905, Higher, 1191, 1199, "increase", "", 
+79906, ForelimbAsymmetryTest, 1209, 1225, "forepaw reaching", "", 
+79907, AxonalChangesTest, 1272, 1299, "neurofilamentpositive axons", "", 
+79908, SpinalLesionSite, 1320, 1326, "lesion", "", 
+79909, OlfactoryEnsheathingGliaCell, 1349, 1354, "cells", "", 
+79910, OlfactoryEnsheathingGliaCell, 1413, 1418, "cells", "", 
+99137, AxonalChangesTest, 1445, 1462, "axon regeneration", "", 
+79911, SpinalLesionSite, 1474, 1485, "lesion site", "", 
+79914, Allogeneic, 1739, 1750, "allografted", "", 
+79915, Cell, 1751, 1756, "cells", "", 
+79916, Cell, 1760, 1764, "cell", "", 
+79913, AnatomicalLocation, 1824, 1838, "olfactory bulb", "", 
+55489, NNumber, 3444, 3446, "58", "", 
+48951, Adult, 3476, 3481, "adult", "", "<http://scio/data/OrganismModel_1171> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48950, Female, 3482, 3488, "female", "", "<http://scio/data/OrganismModel_1171> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48952, AlbinoSwissRat, 3489, 3506, "Albino Swiss rats", "", "<http://scio/data/OrganismModel_1171> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/RatSpecies>."
+48953, Weight, 3546, 3555, "200–220 g", "", "<http://scio/data/OrganismModel_1171> <http://psink.de/scio/hasWeight> \"200–220 g\"."
+73786, DefinedExperimentalGroup, 3824, 3831, "Group 2", "", "<http://scio/data/DefinedExperimentalGroup_18078> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18078> <http://www.w3.org/2000/01/rdf-schema#label> \"Group2 Lesion no DFR E2\"."
+78281, GroupNumber, 3830, 3831, "2", "", "<http://scio/data/DefinedExperimentalGroup_18078> <http://psink.de/scio/hasGroupNumber> \"2\"."
+73787, NNumber, 3836, 3838, "11", "", "<http://scio/data/DefinedExperimentalGroup_18078> <http://psink.de/scio/hasNNumber> \"11\"."
+79917, RatSpecies, 3851, 3855, "rats", "", 
+79918, ForelimbAsymmetryTest, 3856, 3859, "DFR", "", 
+73788, DefinedExperimentalGroup, 3924, 3931, "Group 3", "", "<http://scio/data/DefinedExperimentalGroup_18086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18086> <http://www.w3.org/2000/01/rdf-schema#label> \"Group3 Lesion no DFR long-term E3\"."
+78282, GroupNumber, 3930, 3931, "3", "", "<http://scio/data/DefinedExperimentalGroup_18086> <http://psink.de/scio/hasGroupNumber> \"3\"."
+73789, NNumber, 3936, 3937, "8", "", "<http://scio/data/DefinedExperimentalGroup_18086> <http://psink.de/scio/hasNNumber> \"8\"."
+79919, RatSpecies, 3941, 3945, "rats", "", 
+79920, ForelimbAsymmetryTest, 3955, 3958, "DFR", "", 
+79921, Duration, 3993, 4005, "10–12 months", "", 
+79922, ForelimbAsymmetryTest, 4044, 4047, "DFR", "", 
+73790, NNumber, 4112, 4114, "19", "", 
+79923, RatSpecies, 4118, 4122, "rats", "", 
+73806, C57_BL6_Mouse, 4136, 4141, "mouse", "", 
+73808, OlfactoryEnsheathingGliaCell, 4142, 4145, "OEC", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_18053> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_18043> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_18053>."
+73815, Cell, 4146, 4149, "ONF", "", "<http://scio/data/Cell_19233> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Cell>. <http://scio/data/CompoundTreatment_19219> <http://psink.de/scio/hasCompound> <http://scio/data/Cell_19233>."
+73817, Xenogeneic, 4150, 4160, "xenografts", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_18053> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic>. <http://scio/data/Cell_19233> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic>."
+73791, Duration, 4161, 4193, "at 8 weeks after the CST lesions", "", "<http://scio/data/TemporalInterval_18130> <http://psink.de/scio/hasDuration> \"at 8 weeks after the CST lesions\". <http://scio/data/TemporalInterval_18138> <http://psink.de/scio/hasDuration> \"at 8 weeks after the CST lesions\". <http://scio/data/TemporalInterval_19265> <http://psink.de/scio/hasDuration> \"at 8 weeks after the CST lesions\". <http://scio/data/TemporalInterval_19273> <http://psink.de/scio/hasDuration> \"at 8 weeks after the CST lesions\"."
+73792, CorticospinalTract, 4182, 4185, "CST", "", 
+73793, Injury, 4186, 4193, "lesions", "", 
+73794, DefinedExperimentalGroup, 4294, 4301, "Group 4", "", "<http://scio/data/DefinedExperimentalGroup_18094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18094> <http://www.w3.org/2000/01/rdf-schema#label> \"Group4 Lesion Transplant no DFR E4\"."
+78283, GroupNumber, 4300, 4301, "4", "", "<http://scio/data/DefinedExperimentalGroup_18094> <http://psink.de/scio/hasGroupNumber> \"4\"."
+73795, NNumber, 4306, 4307, "6", "", "<http://scio/data/DefinedExperimentalGroup_18094> <http://psink.de/scio/hasNNumber> \"6\"."
+79925, RatSpecies, 4311, 4315, "rats", "", 
+79924, ForelimbAsymmetryTest, 4341, 4344, "DFR", "", 
+73821, C57_BL6_Mouse, 4372, 4377, "mouse", "", 
+73809, OlfactoryEnsheathingGliaCell, 4378, 4381, "OEC", "", 
+73796, DefinedExperimentalGroup, 4431, 4438, "Group 5", "", "<http://scio/data/DefinedExperimentalGroup_18103> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18103> <http://www.w3.org/2000/01/rdf-schema#label> \"Group5 Lesion Transplant DFR E5\"."
+78284, GroupNumber, 4437, 4438, "5", "", "<http://scio/data/DefinedExperimentalGroup_18103> <http://psink.de/scio/hasGroupNumber> \"5\"."
+73797, NNumber, 4457, 4459, "13", "", "<http://scio/data/DefinedExperimentalGroup_18103> <http://psink.de/scio/hasNNumber> \"13\"."
+79926, RatSpecies, 4463, 4467, "rats", "", 
+79927, ForelimbAsymmetryTest, 4474, 4477, "DFR", "", 
+73822, C57_BL6_Mouse, 4507, 4512, "mouse", "", 
+73810, OlfactoryEnsheathingGliaCell, 4513, 4516, "OEC", "", 
+73798, CyclosporineA, 4530, 4542, "cyclosporine", "", 
+73799, Duration, 4573, 4588, "further 10 days", "", 
+79928, ForelimbAsymmetryTest, 4608, 4611, "DFR", "", 
+79929, RatSpecies, 5408, 5412, "Rats", "", 
+55492, Isoflurane, 5436, 5446, "isoflurane", "", "<http://scio/data/Isoflurane_9833> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/Injury_9830> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_9833>."
+55503, Injury, 5506, 5528, "Unilateral CST lesions", "", 
+55506, UnilateralInjuryArea, 5506, 5528, "Unilateral CST lesions", "", "<http://scio/data/Injury_9830> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/UnilateralInjuryArea>."
+55495, CorticospinalTract, 5517, 5520, "CST", "", 
+55493, C1, 5547, 5549, "C1", "", 
+55500, VertebralArea, 5547, 5566, "C1 and C2 vertebrae", "", "<http://scio/data/VertebralArea_9831> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Injury_9830> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_9831>."
+55494, C2, 5554, 5556, "C2", "", "<http://scio/data/VertebralArea_9831> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C2>."
+55496, Electrodes, 5577, 5586, "electrode", "", 
+55504, CorticospinalTract, 5640, 5643, "CST", "", 
+55507, InjuryArea, 5640, 5668, "CST and adjacent gray matter", "", 
+55505, SpinalGrayMatter, 5657, 5668, "gray matter", "", 
+55502, Injury, 5689, 5700, "heat lesion", "", "<http://scio/data/Injury_9830> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Injury>. <http://scio/data/Injury_9830> <http://www.w3.org/2000/01/rdf-schema#label> \"Heat Lesion\"."
+55497, InjuryDevice, 5715, 5743, "radiofrequency lesion device", "", "<http://scio/data/Injury_9830> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/InjuryDevice>."
+55498, Voltage, 5806, 5810, "10 V", "", 
+55499, Duration, 5811, 5820, "for 1 min", "", 
+74239, AnatomicalLocation, 6196, 6207, "outer nerve", "", "<http://scio/data/AnatomicalLocation_19241> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/Cell_19233> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_19241>."
+74241, AnatomicalLocation, 6212, 6252, "glomerular layers of the olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_19242> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_18053> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_19242>."
+73696, Age, 6265, 6276, "5-month-old", "", 
+73697, Female, 6277, 6283, "female", "", 
+73698, C57_BL6_Mouse, 6284, 6291, "C57BL/6", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_18053> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse>. <http://scio/data/Cell_19233> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse>."
+79930, DeliveryMethod, 7072, 7087, "transplantation", "", 
+73824, Labeling, 7092, 7161, "cells were transfected with a GFP gene harboring lentiviral construct", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_18053> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/Cell_19233> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+99138, Cell, 7177, 7181, "cell", "", 
+79931, Vehicle, 7248, 7268, "DMEM-F12 without FCS", "", 
+78007, DosageExtracorporal, 7306, 7326, "around 100,000 cells", "", "<http://scio/data/CompoundTreatment_18043> <http://psink.de/scio/hasDosage> \"around 100,000 cells\". <http://scio/data/CompoundTreatment_19219> <http://psink.de/scio/hasDosage> \"around 100,000 cells\"."
+73828, InjectionDelivery, 7333, 7341, "injected", "", "<http://scio/data/InjectionDelivery_18045> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_18043> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_18045>. <http://scio/data/InjectionDelivery_19221> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_19219> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_19221>."
+73827, SpinalLesionSite, 7351, 7362, "lesion site", "", "<http://scio/data/SpinalLesionSite_18062> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_18045> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_18062>. <http://scio/data/SpinalLesionSite_19223> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_19221> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_19223>."
+73825, Micropipette, 7369, 7387, "glass micropipette", "", "<http://scio/data/CompoundTreatment_18043> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>. <http://scio/data/CompoundTreatment_19219> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>."
+73699, Duration, 7433, 7466, "Immediately after transplantation", "", "<http://scio/data/TemporalInterval_18114> <http://psink.de/scio/hasDuration> \"Immediately after transplantation\". <http://scio/data/TemporalInterval_18122> <http://psink.de/scio/hasDuration> \"Immediately after transplantation\". <http://scio/data/TemporalInterval_19249> <http://psink.de/scio/hasDuration> \"Immediately after transplantation\". <http://scio/data/TemporalInterval_19257> <http://psink.de/scio/hasDuration> \"Immediately after transplantation\"."
+73700, CyclosporineA, 7468, 7480, "cyclosporine", "", "<http://scio/data/CyclosporineA_18073> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CyclosporineA>. <http://scio/data/CompoundTreatment_18063> <http://psink.de/scio/hasCompound> <http://scio/data/CyclosporineA_18073>."
+73829, CompoundSupplier, 7482, 7502, "Novartis, Surrey, UK", "", "<http://scio/data/CyclosporineA_18073> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/CompoundSupplier>."
+73702, DosageIntracorporal, 7581, 7588, "6 mg/kg", "", "<http://scio/data/CompoundTreatment_18063> <http://psink.de/scio/hasDosage> \"6 mg/kg\"."
+73830, IntraperitonealLocation, 7655, 7672, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_18065> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+73831, InjectionDelivery, 7655, 7672, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_18065> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_18063> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_18065>."
+73703, Syringe, 7682, 7708, "Microfine insulin syringes", "", "<http://scio/data/CompoundTreatment_18063> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+73704, Frequency, 7746, 7760, "repeated daily", "", "<http://scio/data/CompoundTreatment_18063> <http://psink.de/scio/hasFrequency> \"repeated daily\"."

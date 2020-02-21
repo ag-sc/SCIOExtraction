@@ -1,0 +1,25 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48777, C57_BL6_Mouse, 5391, 5398, "C57BL/6", "", "<http://scio/data/OrganismModel_832> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse>."
+48780, MouseSpecies, 5403, 5412, "GAD67-GFP", "", "<http://scio/data/OrganismModel_838> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies>."
+48778, Female, 5413, 5419, "female", "", "<http://scio/data/OrganismModel_832> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>. <http://scio/data/OrganismModel_838> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48779, Age, 5435, 5445, "2.5 months", "", "<http://scio/data/OrganismModel_832> <http://psink.de/scio/hasAge> \"2.5 months\". <http://scio/data/OrganismModel_838> <http://psink.de/scio/hasAge> \"2.5 months\"."
+54385, MouseSpecies, 7006, 7010, "Mice", "", 
+50608, Anaesthetic, 7053, 7060, "Hypnorm", "", "<http://scio/data/Anaesthetic_3115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3115>."
+50609, DosageIntracorporal, 7079, 7088, "0.7 mg/kg", "", "<http://scio/data/Anaesthetic_3115> <http://psink.de/scio/hasDosage> \"0.7 mg/kg\"."
+50611, Anaesthetic, 7140, 7148, "Dormicum", "", "<http://scio/data/Anaesthetic_3127> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3127>."
+50610, DosageIntracorporal, 7160, 7170, "22.5 mg/kg", "", "<http://scio/data/Anaesthetic_3127> <http://psink.de/scio/hasDosage> \"22.5 mg/kg\"."
+54383, IntraperitonealLocation, 7212, 7227, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3972> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3973> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+54384, InjectionDelivery, 7228, 7237, "injection", "", "<http://scio/data/InjectionDelivery_3972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_3115> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3972>. <http://scio/data/InjectionDelivery_3973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_3127> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3973>."
+50605, Laminectomy, 7808, 7819, "laminectomy", "", 
+50606, T8, 7855, 7857, "T8", "", "<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+50613, DorsalHemisection, 7895, 7925, "dorsal spinal cord hemisection", "", "<http://scio/data/DorsalHemisection_3112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_3112> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+50607, Scissors, 7952, 7971, "iridectomy scissors", "", "<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+50615, PostsurgicalMedication, 8156, 8165, "analgesic", "", "<http://scio/data/PostsurgicalMedication_3121> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_3121>."
+50616, DosageIntracorporal, 8167, 8174, "5 mg/kg", "", "<http://scio/data/PostsurgicalMedication_3121> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+54386, SubcutaneousLocation, 8191, 8203, "subcutaneous", "", 
+54388, InjectionDelivery, 8204, 8213, "injection", "", 
+50618, AntibioticMedication, 8241, 8251, "antibiotic", "", "<http://scio/data/AntibioticMedication_3123> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3123>."
+50619, DosageIntracorporal, 8253, 8260, "5 mg/kg", "", "<http://scio/data/AntibioticMedication_3123> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+54389, IntraperitonealLocation, 8273, 8288, "intraperitoneal", "", 
+54391, InjectionDelivery, 8289, 8298, "injection", "", 
+50621, BladderExpression, 8361, 8382, "Bladders were checked", "", "<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."

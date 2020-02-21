@@ -1,0 +1,193 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+74256, Matrix, 364, 389, "muscle basal lamina (MBL)", "", 
+19768, StemCell, 395, 412, "neural stem cells", "", 
+19769, OlfactoryEnsheathingGliaCell, 424, 451, "olfactory ensheathing cells", "", 
+19770, SpinalCord, 462, 473, "spinal cord", "", 
+19771, Injury, 474, 480, "injury", "", 
+19772, NNumber, 489, 500, "Seventy-two", "", 
+19773, SpragueDawleyRat, 501, 520, "Sprague-Dawley rats", "", 
+19774, SpinalCord, 539, 550, "spinal cord", "", 
+19775, PartialTransection, 551, 562, "hemisection", "", 
+19777, DefinedExperimentalGroup, 593, 612, "blank control group", "", 
+78392, GroupNumber, 620, 621, "A", "", 
+19778, SpinalCord, 640, 651, "spinal cord", "", 
+19779, PartialTransection, 652, 669, "hemisection model", "", 
+19780, Saline, 688, 708, "physiological saline", "", 
+73740, StemCell, 713, 716, "NSC", "", 
+78393, GroupName, 713, 738, "NSC transplantation group", "", "<http://scio/data/DefinedExperimentalGroup_17794> <http://psink.de/scio/hasGroupName> \"NSC transplantation group\"."
+78398, GroupNumber, 740, 741, "B", "", 
+73746, OlfactoryEnsheathingGliaCell, 744, 747, "OEC", "", 
+78394, GroupName, 744, 769, "OEC transplantation group", "", "<http://scio/data/DefinedExperimentalGroup_17802> <http://psink.de/scio/hasGroupName> \"OEC transplantation group\"."
+78399, GroupNumber, 771, 772, "C", "", 
+74242, Matrix, 775, 778, "MBL", "", 
+74260, Conduit, 775, 787, "MBL with NSC", "", 
+78395, GroupName, 775, 809, "MBL with NSC transplantation group", "", "<http://scio/data/DefinedExperimentalGroup_17810> <http://psink.de/scio/hasGroupName> \"MBL with NSC transplantation group\"."
+73741, StemCell, 784, 787, "NSC", "", 
+78400, GroupNumber, 811, 812, "D", "", 
+74243, Matrix, 815, 818, "MBL", "", 
+74261, Conduit, 815, 827, "MBL with OEC", "", 
+78396, GroupName, 815, 849, "MBL with OEC transplantation group", "", "<http://scio/data/DefinedExperimentalGroup_17819> <http://psink.de/scio/hasGroupName> \"MBL with OEC transplantation group\"."
+73747, OlfactoryEnsheathingGliaCell, 824, 827, "OEC", "", 
+78401, GroupNumber, 851, 852, "E", "", 
+74244, Matrix, 859, 862, "MBL", "", 
+74262, Conduit, 859, 871, "MBL with NSC", "", 
+74263, Conduit, 859, 879, "MBL with NSC and OEC", "", 
+78397, GroupName, 859, 901, "MBL with NSC and OEC transplantation group", "", "<http://scio/data/DefinedExperimentalGroup_17828> <http://psink.de/scio/hasGroupName> \"MBL with NSC and OEC transplantation group\"."
+73742, StemCell, 868, 871, "NSC", "", 
+73748, OlfactoryEnsheathingGliaCell, 876, 879, "OEC", "", 
+78402, GroupNumber, 903, 904, "F", "", 
+19786, StemCell, 907, 911, "NSCs", "", 
+19787, OlfactoryEnsheathingGliaCell, 913, 917, "OECs", "", 
+74245, Matrix, 919, 922, "MBL", "", 
+74264, Conduit, 919, 932, "MBL with NSCs", "", 
+19789, StemCell, 928, 932, "NSCs", "", 
+74257, Matrix, 934, 937, "MBL", "", 
+74265, Conduit, 934, 947, "MBL with OECs", "", 
+19791, OlfactoryEnsheathingGliaCell, 943, 947, "OECs", "", 
+74246, Matrix, 953, 956, "MBL", "", 
+74266, Conduit, 953, 966, "MBL with NSCs", "", 
+74267, Conduit, 953, 975, "MBL with NSCs and OECs", "", 
+19793, StemCell, 962, 966, "NSCs", "", 
+19794, OlfactoryEnsheathingGliaCell, 971, 975, "OECs", "", 
+19795, DeliveryMethod, 981, 990, "implanted", "", 
+19796, LesionAdjacentTissue, 991, 1004, "into the ends", "", 
+19797, PartialTransection, 1012, 1029, "hemisection model", "", 
+19798, Cell, 1070, 1075, "cells", "", 
+19799, HistologicalInvestigationTest, 1093, 1136, "immunohistochemistry and immunofluorescence", "", 
+19800, Duration, 1143, 1156, "4 and 8 weeks", "", 
+19802, BBBTest, 1201, 1226, "Bundle branch block score", "", 
+19803, Duration, 1230, 1274, "various time points before and after surgery", "", 
+74247, Matrix, 1276, 1279, "MBL", "", 
+19805, StemCell, 1294, 1297, "NSC", "", 
+19806, Higher, 1325, 1332, "promote", "", 
+19807, Lower, 1369, 1377, "reducing", "", 
+19808, InflammationTest, 1384, 1406, "inflammatory responses", "", 
+74248, Matrix, 1414, 1417, "MBL", "", 
+19810, StemCell, 1423, 1427, "NSCs", "", 
+19811, OlfactoryEnsheathingGliaCell, 1435, 1439, "OECs", "", 
+19812, SpinalCord, 1444, 1455, "spinal cord", "", 
+19813, Observation, 1463, 1512, "shows advantages over simple cell transplantation", "", 
+19814, Cell, 1492, 1496, "cell", "", 
+19815, DeliveryMethod, 1497, 1512, "transplantation", "", 
+78403, GroupNumber, 1520, 1521, "F", "", 
+19817, NeuronalChangesTest, 1532, 1548, "more nerve cells", "", 
+74258, Matrix, 1552, 1571, "muscle basal lamina", "", 
+78405, GroupNumber, 1583, 1584, "E", "", 
+19820, Positive, 1601, 1607, "useful", "", 
+19821, Higher, 1620, 1624, "more", "", 
+19822, AxonalRegenerationTest, 1625, 1630, "axons", "", 
+19823, AxonalRegenerationTest, 1703, 1712, "new axons", "", 
+19824, MyelinationTest, 1726, 1739, "demyelination", "", 
+19825, Lower, 1751, 1764, "greatly limit", "", 
+78406, GroupNumber, 1799, 1800, "F", "", 
+19827, OlfactoryEnsheathingGliaCell, 1802, 1806, "OECs", "", 
+19828, StemCell, 1820, 1837, "neural stem cells", "", 
+19829, AxonalRegenerationTest, 1839, 1853, "axonal growth,", "", 
+19830, SpragueDawleyRat, 3215, 3229, "Sprague-Dawley", "", "<http://scio/data/OrganismModel_1116> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+91992, Mixed, 3265, 3280, "Male and female", "", "<http://scio/data/OrganismModel_1116> <http://psink.de/scio/hasGender> <http://psink.de/scio/Mixed>."
+19831, Male, 3265, 3269, "Male", "", 
+19832, Female, 3274, 3280, "female", "", 
+19833, SpragueDawleyRat, 3281, 3285, "rats", "", 
+19834, Weight, 3295, 3304, "200-250 g", "", "<http://scio/data/OrganismModel_1116> <http://psink.de/scio/hasWeight> \"200-250 g\"."
+73723, StemCell, 4230, 4234, "NSCs", "", 
+19836, Embryonic, 4235, 4244, "Embryonic", "", "<http://scio/data/StemCell_17693> <http://psink.de/scio/hasStemCellSourceType> <http://psink.de/scio/Embryonic>. <http://scio/data/StemCell_17733> <http://psink.de/scio/hasStemCellSourceType> <http://psink.de/scio/Embryonic>."
+19837, SpragueDawleyRat, 4245, 4252, "SD rats", "", "<http://scio/data/StemCell_17693> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>. <http://scio/data/StemCell_17733> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+73713, Allogeneic, 4248, 4252, "rats", "", "<http://scio/data/StemCell_17693> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>. <http://scio/data/StemCell_17733> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+19838, Age, 4270, 4285, "age of 14 weeks", "", 
+73714, AnatomicalLocation, 4461, 4473, "diencephalon", "", "<http://scio/data/AnatomicalLocation_17699> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/StemCell_17693> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_17699>. <http://scio/data/AnatomicalLocation_17739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/StemCell_17733> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_17739>."
+73755, OlfactoryEnsheathingGliaCell, 6050, 6054, "OECs", "", 
+19840, Sacrifice, 6061, 6068, "killing", "", 
+19841, Allogeneic, 6069, 6083, "selected rats,", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17714> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>. <http://scio/data/OlfactoryEnsheathingGliaCell_17752> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+73715, RatSpecies, 6078, 6082, "rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17714> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/RatSpecies>. <http://scio/data/OlfactoryEnsheathingGliaCell_17752> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/RatSpecies>."
+73716, AnatomicalLocation, 6118, 6132, "olfactory bulb", "", "<http://scio/data/AnatomicalLocation_17720> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_17714> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_17720>. <http://scio/data/AnatomicalLocation_17758> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_17752> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_17758>."
+74249, Matrix, 7442, 7445, "MBL", "", 
+19844, SpragueDawleyRat, 7446, 7453, "SD rats", "", 
+19843, Allogeneic, 7449, 7453, "rats", "", 
+91994, Mixed, 7457, 7470, "either gender", "", 
+19846, Weight, 7471, 7489, "weighing 200-250 g", "", 
+73717, AnatomicalLocation, 7613, 7644, "bilateral paravertebral muscles", "", 
+19852, SpragueDawleyRat, 7652, 7656, "rats", "", 
+74250, Matrix, 8414, 8417, "MBL", "", 
+73722, StemCell, 8447, 8451, "NSCs", "", 
+73724, Labeling, 8522, 8539, "adding 15 µM BrdU", "", "<http://scio/data/StemCell_17693> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/StemCell_17733> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+73725, InVitroExperimentalProcedure, 8628, 8641, "labeled cells", "", 
+73729, StemCell, 8898, 8902, "NSCs", "", 
+73726, Conduit, 8898, 8910, "NSCs and MBL", "", 
+74251, Matrix, 8907, 8910, "MBL", "", 
+73728, InVitroExperimentalProcedure, 8915, 8922, "labeled", "", 
+73727, StemCell, 8923, 8926, "NSC", "", 
+73731, InVitroExperimentalProcedure, 9029, 9126, "The prepared suspension was then injected into disinfected MBL using a 1-mL fine-needle injector.", "", 
+73733, OlfactoryEnsheathingGliaCell, 9924, 9928, "OECs", "", 
+73732, Labeling, 9936, 9980, "Hochest33342 was added to the culture medium", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17714> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_17752> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+73734, OlfactoryEnsheathingGliaCell, 10062, 10066, "OECs", "", 
+74272, Conduit, 10062, 10074, "OECs and MBL", "", 
+74252, Matrix, 10071, 10074, "MBL", "", 
+19853, NNumber, 10974, 10985, "Seventy-two", "", 
+19854, SpragueDawleyRat, 10986, 10990, "rats", "", 
+78379, DefinedExperimentalGroup, 11044, 11063, "blank control group", "E1", "<http://scio/data/DefinedExperimentalGroup_17785> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17785> <http://www.w3.org/2000/01/rdf-schema#label> \"A control E1\"."
+78381, GroupNumber, 11071, 11072, "A", "", "<http://scio/data/DefinedExperimentalGroup_17785> <http://psink.de/scio/hasGroupNumber> \"A\"."
+73737, StemCell, 11075, 11079, "NSCs", "", "<http://scio/data/StemCell_17693> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/StemCell>. <http://scio/data/CompoundTreatment_17683> <http://psink.de/scio/hasCompound> <http://scio/data/StemCell_17693>. <http://scio/data/StemCell_17733> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/StemCell>. <http://scio/data/CompoundTreatment_17721> <http://psink.de/scio/hasCompound> <http://scio/data/StemCell_17733>."
+78382, DefinedExperimentalGroup, 11075, 11090, "NSCs only group", "E2", "<http://scio/data/DefinedExperimentalGroup_17794> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17794> <http://www.w3.org/2000/01/rdf-schema#label> \"B NSCs E2\"."
+78387, GroupNumber, 11098, 11099, "B", "", "<http://scio/data/DefinedExperimentalGroup_17794> <http://psink.de/scio/hasGroupNumber> \"B\"."
+73743, OlfactoryEnsheathingGliaCell, 11102, 11106, "OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17714> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_17702> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_17714>. <http://scio/data/OlfactoryEnsheathingGliaCell_17752> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_17740> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_17752>."
+78383, DefinedExperimentalGroup, 11102, 11117, "OECs only group", "E3", "<http://scio/data/DefinedExperimentalGroup_17802> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17802> <http://www.w3.org/2000/01/rdf-schema#label> \"C OECs E3\"."
+78388, GroupNumber, 11125, 11126, "C", "", "<http://scio/data/DefinedExperimentalGroup_17802> <http://psink.de/scio/hasGroupNumber> \"C\"."
+73738, StemCell, 11129, 11133, "NSCs", "", 
+74273, Conduit, 11129, 11139, "NSCs + MBL", "", "<http://scio/data/Conduit_17765> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_17721> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_17765>."
+78384, DefinedExperimentalGroup, 11129, 11145, "NSCs + MBL group", "E4", "<http://scio/data/DefinedExperimentalGroup_17810> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17810> <http://www.w3.org/2000/01/rdf-schema#label> \"D NSCs + MBL E4\"."
+74253, Matrix, 11136, 11139, "MBL", "", 
+78389, GroupNumber, 11153, 11154, "D", "", "<http://scio/data/DefinedExperimentalGroup_17810> <http://psink.de/scio/hasGroupNumber> \"D\"."
+73744, OlfactoryEnsheathingGliaCell, 11157, 11161, "OECs", "", 
+74269, Conduit, 11157, 11167, "OECs + MBL", "", "<http://scio/data/Conduit_19304> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_17740> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_19304>."
+78385, DefinedExperimentalGroup, 11157, 11173, "OECs + MBL group", "E5", "<http://scio/data/DefinedExperimentalGroup_17819> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17819> <http://www.w3.org/2000/01/rdf-schema#label> \"E OECs + MBL E5\"."
+74254, Matrix, 11164, 11167, "MBL", "", 
+78390, GroupNumber, 11181, 11182, "E", "", "<http://scio/data/DefinedExperimentalGroup_17819> <http://psink.de/scio/hasGroupNumber> \"E\"."
+73739, StemCell, 11189, 11193, "NSCs", "", 
+74270, Conduit, 11189, 11206, "NSCs + OECs + MBL", "", 
+78386, DefinedExperimentalGroup, 11189, 11212, "NSCs + OECs + MBL group", "E6", "<http://scio/data/DefinedExperimentalGroup_17828> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17828> <http://www.w3.org/2000/01/rdf-schema#label> \"F NSCs + OECs + MBL E6\"."
+73745, OlfactoryEnsheathingGliaCell, 11196, 11200, "OECs", "", 
+74271, Conduit, 11196, 11206, "OECs + MBL", "", 
+74255, Matrix, 11203, 11206, "MBL", "", 
+78391, GroupNumber, 11220, 11221, "F", "", "<http://scio/data/DefinedExperimentalGroup_17828> <http://psink.de/scio/hasGroupNumber> \"F\"."
+19861, Randomization, 11231, 11241, "randomized", "", 
+19862, NNumber, 11277, 11279, "12", "", 
+19863, SpragueDawleyRat, 11280, 11284, "rats", "", 
+19864, SpragueDawleyRat, 11286, 11290, "Rats", "", 
+55446, IntraperitonealLocation, 11312, 11337, "intraperitoneal injection", "", "<http://scio/data/DeliveryMethod_9662> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+19865, DeliveryMethod, 11328, 11337, "injection", "", "<http://scio/data/DeliveryMethod_9662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod>. <http://scio/data/SodiumPentobarbital_9654> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_9662>."
+19866, Dosage, 11341, 11345, "0.4%", "", "<http://scio/data/SodiumPentobarbital_9654> <http://psink.de/scio/hasDosage> \"0.4%\"."
+19867, SodiumPentobarbital, 11346, 11366, "pentobarbital sodium", "", "<http://scio/data/SodiumPentobarbital_9654> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/LateralHemisection_9651> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_9654>."
+19868, T10, 11473, 11476, "T10", "", "<http://scio/data/LateralHemisection_9651> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+55444, LateralHemisection, 11556, 11589, "cut through the right spinal cord", "", "<http://scio/data/LateralHemisection_9651> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_9651> <http://www.w3.org/2000/01/rdf-schema#label> \"LateralHemisection\"."
+19869, PartialTransection, 11556, 11589, "cut through the right spinal cord", "", 
+55445, Right, 11572, 11577, "right", "", "<http://scio/data/Right_9660> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/LateralHemisection_9651> <http://psink.de/scio/hasDirection> <http://scio/data/Right_9660>."
+19870, Scissors, 11599, 11609, "iridectome", "", "<http://scio/data/LateralHemisection_9651> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+19871, SpinalCord, 11632, 11643, "spinal cord", "", 
+19872, SpragueDawleyRat, 11663, 11667, "rats", "", 
+78407, GroupNumber, 11677, 11678, "A", "", 
+19874, Saline, 11743, 11749, "saline", "", "<http://scio/data/Saline_17680> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline>. <http://scio/data/CompoundTreatment_17670> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_17680>."
+78409, GroupNumber, 11761, 11762, "B", "", 
+78411, GroupNumber, 11767, 11768, "C", "", 
+73720, InjectionDelivery, 11773, 11781, "injected", "", "<http://scio/data/InjectionDelivery_17685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_17683> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_17685>. <http://scio/data/InjectionDelivery_17704> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_17702> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_17704>."
+19877, DosageExtracorporal, 11782, 11794, "1.0 x 106/mL", "", "<http://scio/data/CompoundTreatment_17683> <http://psink.de/scio/hasDosage> \"1.0 x 106/mL\". <http://scio/data/CompoundTreatment_17702> <http://psink.de/scio/hasDosage> \"1.0 x 106/mL\"."
+73721, SpinalLesionSite, 11836, 11860, "injured spinal cord site", "", "<http://scio/data/SpinalLesionSite_17701> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_17685> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_17701>. <http://scio/data/SpinalLesionSite_17706> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_17704> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_17706>."
+19880, Cannula, 11869, 11889, "fine needle injector", "", "<http://scio/data/CompoundTreatment_17683> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>. <http://scio/data/CompoundTreatment_17702> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>."
+78412, GroupNumber, 11954, 11955, "D", "", 
+78413, GroupNumber, 11957, 11958, "E", "", 
+78414, GroupNumber, 11964, 11965, "F", "", 
+19883, Conduit, 11984, 11991, "complex", "", 
+19884, Injury, 12011, 12018, "injured", "", 
+19885, Duration, 12071, 12085, "One week later", "", 
+100382, InjectionDelivery, 12090, 12098, "injected", "", 
+98742, AntibioticMedication, 12099, 12109, "penicillin", "", "<http://scio/data/AntibioticMedication_55846> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/LateralHemisection_9651> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_55846>."
+19888, Frequency, 12110, 12122, "once per day", "", 
+19889, BladderExpression, 12137, 12160, "bladder massaging twice", "", "<http://scio/data/LateralHemisection_9651> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+19893, BBBTest, 12350, 12379, "Basso, Beattie, and Bresnahan", "", 
+19894, Duration, 12398, 12487, "On the day before transplantation and on the 2nd, 4th, and 8th days after transplantation", "", 
+19896, SpragueDawleyRat, 12527, 12531, "rats", "", 
+19897, DoubleBlindStudy, 12557, 12570, "independently", "", 
+19898, NNumber, 12717, 12721, "Four", "", 
+19899, SpragueDawleyRat, 12722, 12726, "rats", "", 
+75322, AnalyzedExperimentalGroup, 12746, 12756, "each group", "", 
+19901, Duration, 12764, 12799, "4th and 8th weeks after the surgery", "", 
+19902, StatisticalTest, 14071, 14077, "t-test", "", 

@@ -1,0 +1,20 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48583, Adult, 7072, 7077, "adult", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48584, Female, 7078, 7084, "female", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48585, SpragueDawleyRat, 7085, 7104, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48586, Weight, 7106, 7115, "200-225 g", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasWeight> \"200-225 g\"."
+49822, SodiumPentobarbital, 7140, 7160, "sodium pentobarbital", "", "<http://scio/data/SodiumPentobarbital_2311> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2311>."
+49823, DosageIntracorporal, 7162, 7170, "50 mg/kg", "", "<http://scio/data/SodiumPentobarbital_2311> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+50814, IntraperitonealLocation, 7172, 7174, "IP", "", "<http://scio/data/InjectionDelivery_3682> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+57473, InjectionDelivery, 7172, 7174, "IP", "", "<http://scio/data/InjectionDelivery_3682> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_2311> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3682>."
+49826, AntibioticMedication, 7206, 7216, "gentamicin", "", "<http://scio/data/AntibioticMedication_14477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_14477>."
+49825, DosageIntracorporal, 7218, 7228, "0.03 mg/kg", "", "<http://scio/data/AntibioticMedication_14477> <http://psink.de/scio/hasDosage> \"0.03 mg/kg\"."
+50815, IntramuscularLocation, 7230, 7232, "IM", "", 
+57474, InjectionDelivery, 7230, 7232, "IM", "", 
+49816, Laminectomy, 7242, 7253, "laminectomy", "", 
+49817, C3, 7294, 7296, "C3", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C3>."
+49818, Vibraknife, 7369, 7379, "Vibraknife", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife>."
+49820, C3, 7388, 7390, "C3", "", 
+49819, DorsalHemisection, 7391, 7409, "dorsal hemisection", "", "<http://scio/data/DorsalHemisection_2308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_2308> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+49821, Vibraknife, 7420, 7430, "Vibraknife", "", 
+49828, InjuryArea, 7678, 7736, "effectively transecting all fibers in the dorsal funiculus", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."

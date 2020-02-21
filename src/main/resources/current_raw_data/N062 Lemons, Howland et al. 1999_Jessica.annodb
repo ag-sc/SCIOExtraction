@@ -1,0 +1,20 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48669, Adult, 7715, 7720, "adult", "", "<http://scio/data/OrganismModel_591> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>. <http://scio/data/OrganismModel_598> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48672, LongEvansRat, 7721, 7736, "Long Evans rats", "", "<http://scio/data/OrganismModel_591> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>. <http://scio/data/OrganismModel_598> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>."
+50115, LongEvansRat, 9586, 9590, "Rats", "", 
+57480, InjectionDelivery, 9615, 9630, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3838> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_2656> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3838>."
+50850, IntraperitonealLocation, 9615, 9630, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3838> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50105, SodiumPentobarbital, 9644, 9664, "sodium pentobarbital", "", "<http://scio/data/SodiumPentobarbital_2656> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/Contusion_2653> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2656>."
+50106, DosageIntracorporal, 9666, 9674, "35 mg/kg", "", 
+48670, Female, 9679, 9686, "females", "", "<http://scio/data/OrganismModel_598> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+50107, DosageIntracorporal, 9691, 9699, "40 mg/kg", "", "<http://scio/data/SodiumPentobarbital_2656> <http://psink.de/scio/hasDosage> \"40 mg/kg\"."
+48671, Male, 9704, 9709, "males", "", "<http://scio/data/OrganismModel_591> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+50122, Thoracic, 9740, 9752, "low thoracic", "", "<http://scio/data/Contusion_2653> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/Thoracic>."
+50108, Laminectomy, 9753, 9764, "laminectomy", "", 
+50109, Contusion, 9813, 9821, "contused", "", "<http://scio/data/Contusion_2653> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2653> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+54258, Weight, 9836, 9844, "10-g rod", "", "<http://scio/data/NYUImpactor_2660> <http://psink.de/scio/hasWeight> \"10-g rod\"."
+54259, Distance, 9845, 9850, "25 mm", "", "<http://scio/data/NYUImpactor_2660> <http://psink.de/scio/hasDistance> \"25 mm\"."
+50110, NYUImpactor, 9890, 9902, "NYU impactor", "", "<http://scio/data/NYUImpactor_2660> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor>. <http://scio/data/Contusion_2653> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_2660>."
+50111, DosageIntracorporal, 10276, 10284, "50 mg/kg", "", "<http://scio/data/AntibioticMedication_14502> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+57479, AntibioticMedication, 10303, 10325, "Keflin or penicillin G", "", "<http://scio/data/AntibioticMedication_14502> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2653> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_14502>."
+50120, BladderExpression, 10404, 10464, "bladders of spinal cord-injured rats were manually expressed", "", "<http://scio/data/Contusion_2653> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."

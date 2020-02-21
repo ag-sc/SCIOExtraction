@@ -1,0 +1,16 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+49969, Contusion, 1030, 1046, "contusive injury", "", "<http://scio/data/Contusion_2457> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2457> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+49970, T10, 1054, 1088, "thoracic spinal cord at segment 10", "", "<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+48621, Female, 7645, 7651, "Female", "", "<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48622, Adult, 7652, 7657, "adult", "", "<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48623, SpragueDawleyRat, 7658, 7677, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48624, Weight, 7679, 7689, "250 g ± 30", "", "<http://scio/data/OrganismModel_519> <http://psink.de/scio/hasWeight> \"250 g ± 30\"."
+49961, Laminectomy, 7764, 7775, "laminectomy", "", 
+54224, Weight, 7802, 7811, "10-g  rod", "", "<http://scio/data/NYUImpactor_2464> <http://psink.de/scio/hasWeight> \"10-g  rod\"."
+54222, Distance, 7871, 7876, "50 mm", "", "<http://scio/data/NYUImpactor_2464> <http://psink.de/scio/hasDistance> \"50 mm\"."
+49963, SevereInjury, 7878, 7884, "severe", "", "<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/SevereInjury>."
+49962, NYUImpactor, 7894, 7938, "device developed at  the New York University", "", "<http://scio/data/NYUImpactor_2464> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor>. <http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_2464>."
+49965, BladderExpression, 8061, 8079, "bladder evacuation", "", "<http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+50828, AntibioticMedication, 8104, 8115, "Antibiotics", "", "<http://scio/data/AntibioticMedication_3386> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2457> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3386>."
+49967, DosageIntracorporal, 8136, 8144, "80 mg/kg", "", "<http://scio/data/AntibioticMedication_3386> <http://psink.de/scio/hasDosage> \"80 mg/kg\"."
+49968, InjectionDelivery, 8151, 8159, "injected", "", 

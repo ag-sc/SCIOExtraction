@@ -1,0 +1,27 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_507> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_507> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_507> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/ListerHoodedRat> .
+<http://scio/data/OrganismModel_507> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_507> <http://psink.de/scio/hasAge> "3 months" .
+<http://scio/data/OrganismModel_507> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/Compression_2429> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_2429> <http://www.w3.org/2000/01/rdf-schema#label> "compression" .
+<http://scio/data/Compression_2429> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4> .
+<http://scio/data/Isoflurane_2432> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/Compression_2429> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2432> .
+<http://scio/data/InhalationDelivery_2440> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery> .
+<http://scio/data/Isoflurane_2432> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2440> .
+<http://scio/data/Isoflurane_2432> <http://psink.de/scio/hasDosage> "1-2%" .
+<http://scio/data/MedicationDuringSurgery_2434> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Compression_2429> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps> .
+<http://scio/data/Compression_2429> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/Compression_2429> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+<http://scio/data/Compression_2429> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

@@ -1,0 +1,38 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_1537> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_1537> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_1537> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
+<http://scio/data/OrganismModel_1537> <http://psink.de/scio/hasWeight> "150–170 g" .
+<http://scio/data/OrganismModel_1537> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/Compression_11678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_11678> <http://www.w3.org/2000/01/rdf-schema#label> "compression" .
+<http://scio/data/VertebralArea_11679> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_11679> .
+<http://scio/data/VertebralArea_11679> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T13> .
+<http://scio/data/VertebralArea_11679> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/L1> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/KetamineAsAnaesthetic_11681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_11681> .
+<http://scio/data/DeliveryMethod_11695> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/KetamineAsAnaesthetic_11681> <http://psink.de/scio/hasDosage> "80 mg/kg" .
+<http://scio/data/MedicationDuringSurgery_11683> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/Clip_11685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Clip> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Clip_11685> .
+<http://scio/data/Clip_11685> <http://psink.de/scio/hasForce> "20 g/cm2" .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+<http://scio/data/Xylazine_11697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_11697> .
+<http://scio/data/DeliveryMethod_11698> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Xylazine_11697> <http://psink.de/scio/hasDosage> "10 mg/kg" .
+<http://scio/data/AntibioticMedication_15332> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Compression_11678> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_15332> .
+<http://scio/data/AntibioticMedication_15332> <http://psink.de/scio/hasDosage> "0.8 mg/100 g" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

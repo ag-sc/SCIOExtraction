@@ -1,0 +1,24 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48609, Adult, 7771, 7776, "Adult", "", "<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48610, Female, 7777, 7783, "female", "", "<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48611, SpragueDawleyRat, 7784, 7803, "Sprague Dawley rats", "", "<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48612, Weight, 7813, 7823, "200 -230 g", "", "<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasWeight> \"200 -230 g\"."
+49925, SpragueDawleyRat, 7860, 7867, "animals", "", 
+50825, IntraperitonealLocation, 7894, 7909, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3382> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3383> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50824, InjectionDelivery, 7910, 7919, "injection", "", "<http://scio/data/InjectionDelivery_3382> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2415> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3382>. <http://scio/data/InjectionDelivery_3383> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2423> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3383>."
+49914, KetamineAsAnaesthetic, 7923, 7931, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2415> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2415>."
+49915, DosageIntracorporal, 7933, 7943, "100 mg/kg)", "", "<http://scio/data/KetamineAsAnaesthetic_2415> <http://psink.de/scio/hasDosage> \"100 mg/kg)\"."
+49916, Xylazine, 7948, 7956, "xylazine", "", "<http://scio/data/Xylazine_2423> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2423>."
+49917, DosageIntracorporal, 7958, 7966, "10 mg/kg", "", "<http://scio/data/Xylazine_2423> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+49922, T9, 7976, 7979, "Th9", "", "<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9>."
+49918, Laminectomy, 7980, 7991, "laminectomy", "", 
+49919, Force, 8056, 8064, "200 kdyn", "", "<http://scio/data/InfiniteHorizonImpactor_2419> <http://psink.de/scio/hasForce> \"200 kdyn\"."
+49920, InfiniteHorizonImpactor, 8108, 8133, "Infinite Horizon Impactor", "", "<http://scio/data/InfiniteHorizonImpactor_2419> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2419>."
+49921, Contusion, 8223, 8232, "contusion", "", "<http://scio/data/Contusion_2412> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2412> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+49927, InjuryArea, 8267, 8300, "dorsal CST and dorsal gray matter", "", "<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+49928, BladderExpression, 9485, 9507, "bladder was compressed", "", "<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+49931, Nutrition, 9587, 9622, "Food was provided on the cage floor", "", "<http://scio/data/Contusion_2412> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+49933, SpragueDawleyRat, 9632, 9636, "rats", "", 
+49932, Hydration, 9637, 9684, "had no  difficulty reaching their water bottles", "", "<http://scio/data/Contusion_2412> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+50826, AntibioticMedication, 9709, 9720, "antibiotics", "", "<http://scio/data/AntibioticMedication_3384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3384>."
+54218, DosageExtracorporal, 9747, 9803, "1.0 ml of Bactramin (Roche) in 500 ml of acidified water", "", "<http://scio/data/AntibioticMedication_3384> <http://psink.de/scio/hasDosage> \"1.0 ml of Bactramin (Roche) in 500 ml of acidified water\"."

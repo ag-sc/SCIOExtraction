@@ -1,0 +1,245 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+86941, Negative, 628, 632, "lack", "", 
+86934, AxonalRegenerationTest, 636, 655, "axonal regeneration", "", 
+86935, Adult, 671, 676, "adult", "", 
+86936, AnimalSpecies, 677, 686, "mammalian", "", 
+86938, SpinalCord, 687, 698, "spinal cord", "", 
+86940, Negative, 729, 739, "impairment", "", 
+86942, AxonalRegenerationTest, 751, 770, "axonal regeneration", "", 
+86948, Injury, 778, 810, "transected adult rat spinal cord", "", 
+86943, Adult, 789, 794, "adult", "", 
+86944, FischerRat, 795, 798, "rat", "", 
+86945, SpinalCord, 799, 810, "spinal cord", "", 
+86946, Adult, 867, 872, "adult", "", 
+86947, OlfactoryEnsheathingGliaCell, 873, 909, "olfactory bulb ensheathing glia (EG)", "", 
+86949, SchwannCell, 911, 928, "Schwann cell (SC)", "", 
+86950, Conduit, 937, 954, "guidance channels", "", 
+86951, DeliveryMethod, 960, 967, "grafted", "", 
+86960, Location, 978, 994, "both cord stumps", "", 
+86953, Purification, 1015, 1019, "pure", "", 
+86954, InVitroExperimentalProcedure, 1026, 1041, "Hoechst-labeled", "", 
+86955, OlfactoryEnsheathingGliaCell, 1042, 1044, "EG", "", 
+86957, InjectionDelivery, 1066, 1074, "injected", "", 
+86958, Direction, 1084, 1091, "midline", "", 
+86959, Location, 1095, 1106, "both stumps", "", 
+86962, Distance, 1108, 1112, "1 mm", "", 
+86961, Location, 1118, 1142, "the edges of the channel", "", 
+86963, GroupName, 1147, 1170, "EG-transplanted animals", "", "<http://scio/data/DefinedExperimentalGroup_25114> <http://psink.de/scio/hasGroupName> \"EG-transplanted animals\"."
+86964, AxonalRegenerationTest, 1181, 1204, "neurofilament-, GAP-43-", "", 
+86965, AxonalRegenerationTest, 1206, 1249, "anti-calcitonin generelated peptide (CGRP)-", "", 
+86966, AxonalRegenerationTest, 1255, 1286, "serotonin-immunoreactive fibers", "", 
+86967, SpinalLesionSite, 1301, 1312, "glial scars", "", 
+86968, Location, 1323, 1349, "both cord–graft interfaces", "", 
+86969, AxonalRegenerationTest, 1351, 1381, "Supraspinal serotonergic axons", "", 
+86970, Direction, 1382, 1389, "crossed", "", 
+86971, SpinalLesionSite, 1390, 1409, "the transection gap", "", 
+86972, Direction, 1410, 1417, "through", "", 
+86973, Location, 1418, 1443, "connective tissue bridges", "", 
+86974, Direction, 1458, 1466, "exterior", "", 
+86975, Conduit, 1474, 1482, "channels", "", 
+86976, Conduit, 1497, 1504, "channel", "", 
+86977, Direction, 1505, 1513, "interior", "", 
+86978, Direction, 1533, 1541, "crossing", "", 
+86979, Direction, 1546, 1552, "distal", "", 
+86980, SpinalLesionSite, 1553, 1563, "glial scar", "", 
+86981, AxonalRegenerationTest, 1571, 1587, "fibers elongated", "", 
+86982, SpinalWhiteMatter, 1591, 1596, "white", "", 
+86983, SpinalGrayMatter, 1616, 1627, "gray matter", "", 
+86984, Distance, 1670, 1676, "1.5 cm", "", 
+86985, AxonalRegenerationTest, 1679, 1699, "Tracer-labeled axons", "", 
+86986, SchwannCell, 1711, 1720, "SC grafts", "", 
+86988, Direction, 1742, 1748, "across", "", 
+86987, Location, 1753, 1769, "distal interface", "", 
+86989, Distance, 1780, 1786, "800 mm", "", 
+86991, Direction, 1787, 1807, "beyond in the distal", "", 
+86990, SpinalCord, 1808, 1812, "cord", "", 
+86992, AxonalRegenerationTest, 1814, 1840, "Long-distance regeneration", "", 
+86994, Distance, 1851, 1857, "2.5 cm", "", 
+90842, SpinalFiberTract, 1870, 1899, "ascending propriospinal axons", "", 
+86995, Direction, 1920, 1927, "rostral", "", 
+86996, SpinalCord, 1928, 1939, "spinal cord", "", 
+86997, DeliveryMethod, 1941, 1953, "Transplanted", "", 
+86956, OlfactoryEnsheathingGliaCell, 1954, 1956, "EG", "", 
+87000, Direction, 1966, 1980, "longitudinally", "", 
+87001, Direction, 1985, 1994, "laterally", "", 
+87002, InjectionDelivery, 2004, 2013, "injection", "", 
+87003, Location, 2004, 2019, "injection sites", "", 
+87004, Distance, 2062, 2068, "1.5 cm", "", 
+87008, Direction, 2082, 2089, "through", "", 
+87005, SpinalWhiteMatter, 2090, 2109, "white matter tracts", "", 
+87006, SpinalGrayMatter, 2111, 2122, "gray matter", "", 
+87007, SpinalLesionSite, 2128, 2139, "glial scars", "", 
+87009, CentralNervousSystem, 2181, 2184, "CNS", "", 
+87010, SchwannCell, 2210, 2212, "SC", "", 
+87011, Direction, 2251, 2257, "dorsal", "", 
+87012, Direction, 2262, 2269, "ventral", "", 
+87013, AnatomicalLocation, 2270, 2275, "roots", "", 
+87014, LesionAdjacentTissue, 2276, 2308, "adjacent to the transection site", "", 
+87015, DeliveryMethod, 2310, 2322, "Transplanted", "", 
+87016, OlfactoryEnsheathingGliaCell, 2323, 2325, "EG", "", 
+87017, AxonalRegenerationTest, 2330, 2348, "regenerating axons", "", 
+87018, Location, 2367, 2381, "same locations", "", 
+87019, OlfactoryEnsheathingGliaCell, 2391, 2393, "EG", "", 
+87020, OlfactoryEnsheathingGliaCell, 2492, 2497, "cells", "", 
+87021, CentralNervousSystem, 2539, 2542, "CNS", "", 
+87022, AxonalRegenerationTest, 2567, 2586, "axonal regeneration", "", 
+86858, Purification, 6272, 6276, "pure", "", 
+56122, OlfactoryEnsheathingGliaCell, 6277, 6279, "EG", "", 
+86859, DeliveryMethod, 6280, 6291, "transplants", "", 
+86860, Higher, 6292, 6299, "enhance", "", 
+86861, AxonalRegenerationTest, 6304, 6323, "regenerative effect", "", 
+56123, SchwannCell, 6327, 6336, "SC-filled", "", 
+56124, Conduit, 6337, 6354, "guidance channels", "", "<http://scio/data/Conduit_29834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_25079> <http://psink.de/scio/hasCompound> <http://scio/data/Conduit_29834>."
+86862, Positive, 6377, 6384, "promote", "", 
+86863, AxonalRegenerationTest, 6385, 6418, "long-distance axonal regeneration", "", 
+56125, Adult, 6430, 6435, "adult", "", 
+86864, FischerRat, 6436, 6439, "rat", "", 
+56126, SpinalCord, 6440, 6451, "spinal cord", "", 
+56121, CompleteTransection, 6458, 6478, "complete transection", "", "<http://scio/data/CompleteTransection_10626> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_10626> <http://www.w3.org/2000/01/rdf-schema#label> \"Complete Transection\"."
+86865, Purification, 6546, 6550, "Pure", "", 
+75914, SchwannCell, 6563, 6566, "SCs", "", 
+75915, AnatomicalLocation, 6586, 6600, "sciatic nerves", "", "<http://scio/data/AnatomicalLocation_25076> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/SchwannCell_25071> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_25076>."
+75916, Adult, 6604, 6609, "adult", "", 
+75917, FischerRat, 6610, 6622, "Fischer rats", "", "<http://scio/data/SchwannCell_25071> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+75918, Allogeneic, 6618, 6622, "rats", "", "<http://scio/data/SchwannCell_25071> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+75919, Purification, 7992, 8000, "purified", "", "<http://scio/data/SchwannCell_25071> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+75920, SchwannCell, 8001, 8004, "SCs", "", 
+75922, Conduit, 8001, 8049, "SCs were suspended in DMEM/Matrigel (70:30, v/v)", "", "<http://scio/data/Conduit_25069> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_25061> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_25069>."
+86866, Vehicle, 8023, 8027, "DMEM", "", 
+75921, Matrix, 8028, 8036, "Matrigel", "", 
+75925, DosageExtracorporal, 8078, 8097, "120 x 10^6 cells/ml", "", "<http://scio/data/CompoundTreatment_25061> <http://psink.de/scio/hasDosage> \"120 x 10^6 cells/ml\"."
+77981, Conduit, 8120, 8136, "guidance channel", "", 
+75979, Location, 8120, 8136, "guidance channel", "", "<http://scio/data/DeliveryMethod_25063> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location>."
+77982, CompoundSupplier, 8194, 8251, "Patrick Aebischer and CytoTherapeutics, Inc., Lincoln, RI", "", "<http://scio/data/Conduit_29834> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/CompoundSupplier>."
+75926, Syringe, 8260, 8272, "5 ml syringe", "", 
+75927, AnatomicalLocation, 8416, 8430, "olfactory bulb", "", "<http://scio/data/AnatomicalLocation_25112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_25097> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_25112>."
+75928, Adult, 8457, 8462, "adult", "", 
+75929, Female, 8463, 8469, "female", "", 
+75930, FischerRat, 8470, 8482, "Fischer rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_25097> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+75934, Allogeneic, 8478, 8482, "rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_25097> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+75931, Age, 8484, 8499, "four months old", "", 
+86867, Duration, 8736, 8746, "Seven days", "", 
+75932, OlfactoryEnsheathingGliaCell, 8762, 8764, "EG", "", 
+86868, Cell, 8791, 8795, "cell", "", 
+75933, Purification, 8825, 8839, "immunoaffinity", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_25097> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+86869, Duration, 12752, 12789, "Fifteen days after immunopurification", "", 
+75935, Purification, 12771, 12789, "immunopurification", "", 
+75936, OlfactoryEnsheathingGliaCell, 12791, 12793, "EG", "", 
+75937, InVitroExperimentalProcedure, 12791, 12913, "EG were detached from the flasks (see above) and labeled with the nuclear fluorochrome bisbenzimide (Hoechst 33342; Sigma)", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_25097> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+56116, NNumber, 13258, 13265, "Sixteen", "", 
+55265, Adult, 13266, 13271, "adult", "", "<http://scio/data/OrganismModel_9242> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+55266, Age, 13273, 13285, "4 months old", "", "<http://scio/data/OrganismModel_9242> <http://psink.de/scio/hasAge> \"4 months old\"."
+55267, Female, 13287, 13293, "female", "", "<http://scio/data/OrganismModel_9242> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+55268, FischerRat, 13294, 13306, "Fischer rats", "", "<http://scio/data/OrganismModel_9242> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+75976, NNumber, 13308, 13312, "nine", "", "<http://scio/data/DefinedExperimentalGroup_25114> <http://psink.de/scio/hasNNumber> \"nine\"."
+75968, DefinedExperimentalGroup, 13313, 13325, "experimental", "E1", "<http://scio/data/DefinedExperimentalGroup_25114> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_25114> <http://www.w3.org/2000/01/rdf-schema#label> \"Experimental E1\"."
+75977, NNumber, 13330, 13335, "seven", "", "<http://scio/data/DefinedExperimentalGroup_25124> <http://psink.de/scio/hasNNumber> \"seven\"."
+75975, DefinedExperimentalGroup, 13336, 13348, "control rats", "E2", "<http://scio/data/DefinedExperimentalGroup_25124> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_25124> <http://www.w3.org/2000/01/rdf-schema#label> \"Control E2\"."
+75978, FischerRat, 13344, 13348, "rats", "", 
+56127, NitrousOxide, 13417, 13420, "N2O", "", "<http://scio/data/NitrousOxide_10629> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NitrousOxide>. <http://scio/data/CompleteTransection_10626> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/NitrousOxide_10629>."
+56128, DosageExtracorporal, 13425, 13427, "60", "", "<http://scio/data/NitrousOxide_10629> <http://psink.de/scio/hasDosage> \"60\"."
+56119, Laminectomy, 13679, 13690, "laminectomy", "", 
+56129, T8, 13715, 13717, "T8", "", 
+56130, T10, 13718, 13721, "T10", "", 
+56131, Thoracic, 13722, 13730, "thoracic", "", 
+56132, SpinalCord, 13731, 13742, "spinal cord", "", 
+56133, MedicationDuringSurgery, 13858, 13867, "Lidocaine", "", "<http://scio/data/MedicationDuringSurgery_10631> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/CompleteTransection_10626> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_10631>."
+56134, SpinalCord, 13902, 13913, "spinal cord", "", "<http://scio/data/SpinalCord_10641> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/DeliveryMethod_10639> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_10641>."
+56135, CompleteTransection, 13929, 13946, "transection at T9", "", 
+56120, T9, 13944, 13946, "T9", "", "<http://scio/data/CompleteTransection_10626> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9>."
+75938, SurgeryTreatment, 13951, 13976, "removal of a 4 mm segment", "", "<http://scio/data/SurgeryTreatment_25150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SurgeryTreatment>. <http://scio/data/SurgeryTreatment_25150> <http://www.w3.org/2000/01/rdf-schema#label> \"Surgery treatment\"."
+77983, Conduit, 14059, 14147, "PAN/PVC channel 6 mm long [inner diameter (i.d.), 2.8 mm; outer diameter (o.d.), 3.1 mm]", "", 
+75940, SchwannCell, 14164, 14166, "SC", "", "<http://scio/data/SchwannCell_25071> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SchwannCell>. <http://scio/data/CompoundTreatment_25061> <http://psink.de/scio/hasCompound> <http://scio/data/SchwannCell_25071>."
+75942, Conduit, 14164, 14183, "SC and Matrigel mix", "", 
+75941, Matrix, 14171, 14179, "Matrigel", "", 
+86872, SpinalCord, 14239, 14257, "spinal cord stumps", "", 
+86874, DeliveryMethod, 14264, 14272, "inserted", "", 
+86873, Distance, 14273, 14278, "≈1 mm", "", 
+77984, Conduit, 14288, 14295, "channel", "", 
+75943, OlfactoryEnsheathingGliaCell, 14348, 14350, "EG", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_25097> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_25087> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_25097>."
+75944, InjectionDelivery, 14372, 14380, "injected", "", "<http://scio/data/InjectionDelivery_25089> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_25087> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_25089>."
+86875, Cannula, 14388, 14408, "sterile glass needle", "", 
+75948, Syringe, 14603, 14660, "Needles were connected to a sterile 5 µl Hamilton syringe", "", "<http://scio/data/CompoundTreatment_25087> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+75949, OlfactoryEnsheathingGliaCell, 14763, 14765, "EG", "", 
+86876, Cannula, 14787, 14794, "needles", "", 
+75945, InjectionDelivery, 14815, 14823, "injected", "", 
+86877, Direction, 14833, 14840, "midline", "", "<http://scio/data/Direction_25094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction>. <http://scio/data/CompoundTreatment_25087> <http://psink.de/scio/hasDirection> <http://scio/data/Direction_25094>. <http://scio/data/Direction_25140> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction>. <http://scio/data/CompoundTreatment_25133> <http://psink.de/scio/hasDirection> <http://scio/data/Direction_25140>."
+75950, SpinalCord, 14844, 14867, "both spinal cord stumps", "", "<http://scio/data/SpinalCord_27720> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/Direction_25094> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalCord_27720>. <http://scio/data/SpinalCord_42061> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/Direction_25140> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalCord_42061>."
+86878, Distance, 14869, 14873, "1 mm", "", 
+86879, Location, 14883, 14903, "edges of the channel", "", 
+86880, Direction, 14920, 14927, "ventral", "", 
+86881, Direction, 14931, 14937, "dorsal", "", 
+75951, OlfactoryEnsheathingGliaCell, 14939, 14944, "cells", "", 
+75946, InjectionDelivery, 14950, 14958, "injected", "", 
+86882, Location, 14990, 15005, "each cord stump", "", "<http://scio/data/InjectionDelivery_25089> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location>. <http://scio/data/InjectionDelivery_25135> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location>."
+75952, AnatomicalLocation, 15011, 15028, "ventral funiculus", "", "<http://scio/data/AnatomicalLocation_25100> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_25089> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_25100>. <http://scio/data/AnatomicalLocation_25146> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_25135> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_25146>."
+75953, AnatomicalLocation, 15034, 15049, "gray commissure", "", "<http://scio/data/AnatomicalLocation_25101> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_25089> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_25101>. <http://scio/data/AnatomicalLocation_25147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_25135> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_25147>."
+75954, CorticospinalTract, 15055, 15081, "dorsal corticospinal tract", "", "<http://scio/data/CorticospinalTract_25102> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CorticospinalTract>. <http://scio/data/InjectionDelivery_25089> <http://psink.de/scio/hasLocations> <http://scio/data/CorticospinalTract_25102>. <http://scio/data/CorticospinalTract_25148> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CorticospinalTract>. <http://scio/data/InjectionDelivery_25135> <http://psink.de/scio/hasLocations> <http://scio/data/CorticospinalTract_25148>."
+75955, AnatomicalLocation, 15091, 15109, "gracile fasciculus", "", "<http://scio/data/AnatomicalLocation_25103> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_25089> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_25103>. <http://scio/data/AnatomicalLocation_25149> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_25135> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_25149>."
+75947, InjectionDelivery, 15302, 15310, "injected", "", 
+78049, DosageExtracorporal, 15311, 15345, "200,000 cells into each cord stump", "", "<http://scio/data/CompoundTreatment_25087> <http://psink.de/scio/hasDosage> \"200,000 cells into each cord stump\"."
+78354, GroupName, 15347, 15362, "Control animals", "", "<http://scio/data/DefinedExperimentalGroup_25124> <http://psink.de/scio/hasGroupName> \"Control animals\"."
+75958, FischerRat, 15355, 15362, "animals", "", 
+75959, SchwannCell, 15381, 15390, "SC-filled", "", 
+77985, Conduit, 15391, 15408, "guidance channels", "", 
+78356, GroupName, 15417, 15434, "experimental ones", "", "<http://scio/data/DefinedExperimentalGroup_25114> <http://psink.de/scio/hasGroupName> \"experimental ones\"."
+75961, OlfactoryEnsheathingGliaCell, 15461, 15463, "EG", "", 
+75962, InjectionDelivery, 15464, 15474, "injections", "", 
+75963, FischerRat, 15491, 15498, "animals", "", 
+75964, InjectionDelivery, 15504, 15512, "injected", "", "<http://scio/data/InjectionDelivery_25135> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_25133> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_25135>."
+86883, Volume, 15518, 15524, "0.5 µl", "", 
+75965, Vehicle, 15528, 15532, "DMEM", "", "<http://scio/data/Vehicle_25143> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_25133> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_25143>."
+75966, SpinalCord, 15545, 15556, "spinal cord", "", 
+78357, GroupName, 15577, 15594, "experimental rats", "", "<http://scio/data/DefinedExperimentalGroup_25114> <http://psink.de/scio/hasGroupName> \"experimental rats\"."
+75967, FischerRat, 15590, 15594, "rats", "", 
+86884, FischerRat, 15761, 15765, "rats", "", 
+86885, SubcutaneousLocation, 15808, 15820, "subcutaneous", "", 
+86886, InjectionDelivery, 15821, 15830, "injection", "", 
+86887, Volume, 15834, 15839, "10 ml", "", 
+86888, RingersSolution, 15843, 15869, "lactated Ringer’s solution", "", 
+86889, AntibioticMedication, 15892, 15900, "Bicillin", "", "<http://scio/data/AntibioticMedication_42062> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_10626> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_42062>."
+86890, DosageExtracorporal, 15902, 15912, "20,000 U/d", "", "<http://scio/data/AntibioticMedication_42062> <http://psink.de/scio/hasDosage> \"20,000 U/d\"."
+86891, BladderExpression, 15919, 15937, "bladder expression", "", "<http://scio/data/CompleteTransection_10626> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+86892, Duration, 15938, 15947, "for 7–10d", "", 
+86898, GroupName, 36650, 36665, "control animals", "", 
+86899, AxonalRegenerationTest, 36667, 36727, "regenerating neurofilament- and GAP-43- immunopositive axons", "", "<http://scio/data/AxonalRegenerationTest_64889> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75896> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75896> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (regenerating neurofilament- and GAP-43- immunopositive axons)\". <http://scio/data/Result_42065> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+86900, SchwannCell, 36751, 36764, "SC-containing", "", 
+86901, Conduit, 36765, 36771, "cables", "", 
+86902, AxonalRegenerationTest, 36791, 36810, "axonal regeneration", "", 
+86904, Lower, 36820, 36824, "less", "R1", "<http://scio/data/Trend_42072> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+86903, GroupName, 36838, 36859, "EG-transplanted cords", "", "<http://scio/data/DefinedExperimentalGroup_25114> <http://psink.de/scio/hasGroupName> \"EG-transplanted cords\"."
+86905, None, 36988, 37017, "As in EG-transplanted animals", "R2", "<http://scio/data/Trend_42083> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+86908, GroupName, 36994, 37017, "EG-transplanted animals", "", 
+86909, AxonalRegenerationTest, 37019, 37123, "noradrenergic axons reached the proximal cord–SC cable interface but did not regenerate into the bridges", "", "<http://scio/data/AxonalRegenerationTest_64892> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75898> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75898> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (noradrenergic axons reached the proximal cord–SC cable interface but did not regenerate into the bridges)\". <http://scio/data/Result_42076> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+86915, ObservedDifference, 37143, 37152, "different", "R3", "<http://scio/data/Trend_42094> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+86910, GroupName, 37158, 37181, "EG-transplanted animals", "", 
+86912, AxonalRegenerationTest, 37183, 37200, "axonal elongation", "", "<http://scio/data/AxonalRegenerationTest_64897> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75900> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75900> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (axonal elongation)\". <http://scio/data/Result_42087> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+86913, Location, 37201, 37233, "inside connective tissue bridges", "", "<http://scio/data/AxonalRegenerationTest_64897> <http://psink.de/scio/hasLocation> <http://psink.de/scio/Location>."
+86914, GroupName, 37254, 37269, "control animals", "", 
+91056, None, 37776, 37780, "Both", "R4", "<http://scio/data/Trend_42107> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+86924, DefinedExperimentalGroup, 37781, 37793, "experimental", "", 
+86918, DefinedExperimentalGroup, 37798, 37810, "control rats", "", 
+86919, AxonalRegenerationTest, 37811, 37894, "showed the presence of a cable, bridging the proximal and distal spinal cord stumps", "", "<http://scio/data/AxonalRegenerationTest_64901> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75902> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75902> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (showed the presence of a cable, bridging the proximal and distal spinal cord stumps)\". <http://scio/data/Result_42100> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+86921, ObservedDifference, 38977, 38988, "In contrast", "R5", "<http://scio/data/Trend_42118> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+86920, AxonalRegenerationTest, 38990, 39049, "no axons were seen to enter the distal gray or white matter", "", "<http://scio/data/AxonalRegenerationTest_64904> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75904> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_75904> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (no axons were seen to enter the distal gray or white matter)\". <http://scio/data/Result_42111> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+86897, DefinedExperimentalGroup, 39057, 39069, "control rats", "", 
+86922, AxonalRegenerationTest, 39212, 39252, "maximum number of 26 TMB-labeled neurons", "", 
+90843, NumericValue, 39230, 39232, "26", "", 
+86923, GroupName, 39277, 39295, "experimental cords", "", "<http://scio/data/DefinedExperimentalGroup_25114> <http://psink.de/scio/hasGroupName> \"experimental cords\"."
+86926, NumericValue, 39297, 39299, "21", "", 
+86929, AxonalChangesTest, 39328, 39334, "number", "", 
+86927, NumericValue, 39341, 39342, "7", "", 
+86928, MeanValue, 39360, 39362, "18", "", 
+86930, AxonalChangesTest, 39363, 39378, "labeled neurons", "", 
+86931, SpinalGrayMatter, 39393, 39404, "gray matter", "", 
+98511, OlfactoryEnsheathingGliaCell, 43452, 43454, "EG", "", 
+98514, AxonalRegenerationTest, 43482, 43507, "ingrowth of injured axons", "", 
+98515, Location, 43508, 43525, "into the channels", "", 
+86932, Positive, 43548, 43556, "improved", "", "<http://scio/data/Result_42065> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+98513, AxonalRegenerationTest, 43557, 43563, "growth", "", 
+98516, Location, 43564, 43592, "across graft–cord interfaces", "", 
+86933, Positive, 43597, 43605, "promoted", "", 
+98518, AxonalRegenerationTest, 43606, 43632, "long-distance regeneration", "", 
+98519, SpinalFiberTract, 43636, 43658, "descending supraspinal", "", 
+98520, AscendingFiberTract, 43663, 43692, "ascending propriospinal axons", "", 
+98517, Location, 43693, 43716, "within both cord stumps", "", 

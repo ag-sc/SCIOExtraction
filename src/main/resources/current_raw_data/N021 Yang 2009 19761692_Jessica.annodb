@@ -1,0 +1,108 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48528, Adult, 4942, 4947, "Adult", "", "<http://scio/data/OrganismModel_363> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+79448, Gender, 4948, 4963, "male and female", "", "<http://scio/data/OrganismModel_363> <http://psink.de/scio/hasGender> <http://psink.de/scio/Gender>."
+48529, Male, 4948, 4952, "male", "", 
+48530, Female, 4957, 4963, "female", "", 
+48531, SpragueDawleyRat, 4964, 4983, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_363> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48532, Weight, 4994, 5005, "180 - 250 g", "", "<http://scio/data/OrganismModel_363> <http://psink.de/scio/hasWeight> \"180 - 250 g\"."
+54197, SpragueDawleyRat, 5052, 5071, "Sprague-Dawley rats", "", 
+49522, AllenWeightDropDevice, 5122, 5136, "Allen's method", "", 
+79412, SpragueDawleyRat, 5144, 5148, "rats", "", 
+79368, Randomization, 5154, 5162, "randomly", "", 
+79395, GroupNumber, 5209, 5210, "A", "", "<http://scio/data/DefinedExperimentalGroup_32796> <http://psink.de/scio/hasGroupNumber> \"A\"."
+79413, DefinedExperimentalGroup, 5212, 5231, "treated with saline", "E1", "<http://scio/data/DefinedExperimentalGroup_32796> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32796> <http://www.w3.org/2000/01/rdf-schema#label> \"A treated with saline, E1\"."
+79419, Saline, 5225, 5231, "saline", "", "<http://scio/data/Saline_32713> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline>. <http://scio/data/CompoundTreatment_32703> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_32713>."
+79414, GroupName, 5233, 5246, "control group", "E1", "<http://scio/data/DefinedExperimentalGroup_32796> <http://psink.de/scio/hasGroupName> \"control group\"."
+79396, GroupNumber, 5255, 5256, "B", "", "<http://scio/data/DefinedExperimentalGroup_32804> <http://psink.de/scio/hasGroupNumber> \"B\"."
+79415, DefinedExperimentalGroup, 5258, 5278, "treated with insulin", "E2", "<http://scio/data/DefinedExperimentalGroup_32804> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32804> <http://www.w3.org/2000/01/rdf-schema#label> \"B treated with insulin, E2\"."
+79420, Substance, 5271, 5278, "insulin", "", "<http://scio/data/Substance_32726> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_32716> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_32726>."
+79397, GroupNumber, 5286, 5287, "C", "", "<http://scio/data/DefinedExperimentalGroup_32813> <http://psink.de/scio/hasGroupNumber> \"C\"."
+79416, DefinedExperimentalGroup, 5289, 5307, "treated with ChABC", "E3", "<http://scio/data/DefinedExperimentalGroup_32813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32813> <http://www.w3.org/2000/01/rdf-schema#label> \"C treated with ChABC, E3\"."
+79421, ChondroitinaseABC, 5302, 5307, "ChABC", "", "<http://scio/data/ChondroitinaseABC_32752> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_32752>."
+79398, GroupNumber, 5315, 5316, "D", "", "<http://scio/data/DefinedExperimentalGroup_32821> <http://psink.de/scio/hasGroupNumber> \"D\"."
+79417, DefinedExperimentalGroup, 5318, 5349, "treated with insulin plus ChABC", "E4", "<http://scio/data/DefinedExperimentalGroup_32821> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32821> <http://www.w3.org/2000/01/rdf-schema#label> \"D treated with insulin plus ChABC, E4\"."
+79422, Substance, 5331, 5338, "insulin", "", 
+79423, ChondroitinaseABC, 5344, 5349, "ChABC", "", 
+79399, GroupNumber, 5361, 5362, "E", "", "<http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasGroupNumber> \"E\"."
+79418, DefinedExperimentalGroup, 5364, 5395, "treated with methylprednisolone", "E5", "<http://scio/data/DefinedExperimentalGroup_32831> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32831> <http://www.w3.org/2000/01/rdf-schema#label> \"E treated with MP, E5\"."
+79424, MethylprednisoloneMP, 5377, 5395, "methylprednisolone", "", "<http://scio/data/MethylprednisoloneMP_32767> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MethylprednisoloneMP>. <http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasCompound> <http://scio/data/MethylprednisoloneMP_32767>. <http://scio/data/MethylprednisoloneMP_32795> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MethylprednisoloneMP>. <http://scio/data/CompoundTreatment_32783> <http://psink.de/scio/hasCompound> <http://scio/data/MethylprednisoloneMP_32795>."
+54198, SpragueDawleyRat, 5669, 5673, "Rats", "", 
+50768, IntraperitonealLocation, 5703, 5718, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3271> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50767, InjectionDelivery, 5719, 5728, "injection", "", "<http://scio/data/InjectionDelivery_3271> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/ChloralHydrate_2038> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3271>."
+49525, ChloralHydrate, 5732, 5747, "chloral hydrate", "", "<http://scio/data/ChloralHydrate_2038> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChloralHydrate>. <http://scio/data/Contusion_2033> <http://psink.de/scio/hasMedication> <http://scio/data/ChloralHydrate_2038>."
+49526, DosageIntracorporal, 5749, 5758, "300 mg/kg", "", 
+49527, Laminectomy, 5761, 5772, "Laminectomy", "", 
+79426, VertebralArea, 5801, 5809, "T8 - T10", "", 
+79425, SpinalCord, 5832, 5843, "spinal cord", "", 
+49528, T9, 5849, 5851, "T9", "", "<http://scio/data/Contusion_2033> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9>."
+79427, SpinalCord, 5926, 5937, "spinal cord", "", 
+57471, InjuryIntensity, 5953, 5971, "moderate or severe", "", "<http://scio/data/Contusion_2033> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/InjuryIntensity>."
+49531, Contusion, 5972, 5981, "contusion", "", "<http://scio/data/Contusion_2033> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2033> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+49532, AllenWeightDropDevice, 6006, 6024, "weight-drop device", "", 
+49533, AllenWeightDropDevice, 6056, 6070, "Allen's method", "", "<http://scio/data/AllenWeightDropDevice_2040> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AllenWeightDropDevice>. <http://scio/data/Contusion_2033> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/AllenWeightDropDevice_2040>."
+49534, Force, 6195, 6209, "force of 105 g", "", "<http://scio/data/AllenWeightDropDevice_2040> <http://psink.de/scio/hasForce> \"force of 105 g\"."
+79400, GroupNumber, 6221, 6222, "A", "", 
+79401, GroupNumber, 6227, 6228, "B", "", 
+79402, GroupNumber, 6289, 6290, "C", "", 
+79403, GroupNumber, 6295, 6296, "D", "", 
+79451, ApplicationInstrument, 6301, 6314, "microinjector", "", "<http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>."
+79428, Location, 6331, 6376, "dorsal over-hemisection lesion from T9 to T10", "", "<http://scio/data/InjectionDelivery_32744> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location>."
+79429, VertebralArea, 6367, 6376, "T9 to T10", "", 
+79404, GroupNumber, 6467, 6468, "E", "", 
+79430, TailVeinLocation, 6502, 6511, "tail vein", "", "<http://scio/data/DeliveryMethod_32770> <http://psink.de/scio/hasLocations> <http://psink.de/scio/TailVeinLocation>."
+79385, InjuryDevice, 6519, 6545, "4-gauge in-dwelling needle", "", 
+79386, Volume, 6563, 6567, "1 ml", "", 
+79387, Substance, 6568, 6582, "sodium heparin", "", "<http://scio/data/Substance_32778> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_32768> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_32778>."
+54199, SpragueDawleyRat, 6738, 6742, "rats", "", 
+49537, Housing, 6753, 6775, "housed singly in cages", "", "<http://scio/data/Contusion_2033> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+57751, Nutrition, 6801, 6815, "free access to", "", "<http://scio/data/Contusion_2033> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+57753, Hydration, 6801, 6830, "free access to drinking water", "", "<http://scio/data/Contusion_2033> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+49539, Nutrition, 6835, 6839, "food", "", "<http://scio/data/Contusion_2033> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+79369, Duration, 7065, 7104, "started 30 min after spinal cord injury", "", "<http://scio/data/TemporalInterval_32843> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32851> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32859> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32867> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32875> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32883> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32891> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\". <http://scio/data/TemporalInterval_32907> <http://psink.de/scio/hasDuration> \"started 30 min after spinal cord injury\"."
+79432, SpragueDawleyRat, 7106, 7110, "Rats", "", 
+79431, GroupName, 7118, 7131, "control group", "E1", 
+79405, GroupNumber, 7139, 7140, "A", "", 
+79436, IntraperitonealLocation, 7154, 7169, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_32705> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+79437, InjectionDelivery, 7170, 7179, "injection", "", "<http://scio/data/InjectionDelivery_32705> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32703> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32705>."
+79370, Volume, 7183, 7189, "1.0 ml", "", 
+79371, Saline, 7190, 7196, "saline", "", 
+79372, Frequency, 7197, 7206, "every day", "", "<http://scio/data/CompoundTreatment_32703> <http://psink.de/scio/hasFrequency> \"every day\"."
+79373, Duration, 7207, 7217, "for 1 week", "", "<http://scio/data/CompoundTreatment_32703> <http://psink.de/scio/hasDuration> \"for 1 week\"."
+79433, SpragueDawleyRat, 7219, 7223, "Rats", "", 
+79406, GroupNumber, 7233, 7234, "B", "", 
+79439, IntraperitonealLocation, 7247, 7262, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_32718> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_32731> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+79438, InjectionDelivery, 7263, 7272, "injection", "", "<http://scio/data/InjectionDelivery_32718> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32716> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32718>. <http://scio/data/InjectionDelivery_32731> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32729> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32731>."
+79440, DosageIntracorporal, 7276, 7283, "1 IU/kg", "", "<http://scio/data/CompoundTreatment_32716> <http://psink.de/scio/hasDosage> \"1 IU/kg\"."
+79374, Substance, 7284, 7291, "insulin", "", 
+79375, DosageIntracorporal, 7297, 7303, "1 g/kg", "", "<http://scio/data/CompoundTreatment_32729> <http://psink.de/scio/hasDosage> \"1 g/kg\"."
+79376, Substance, 7304, 7311, "glucose", "", "<http://scio/data/Substance_32741> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_32729> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_32741>."
+79377, Frequency, 7332, 7349, "three times a day", "", "<http://scio/data/CompoundTreatment_32716> <http://psink.de/scio/hasFrequency> \"three times a day\". <http://scio/data/CompoundTreatment_32729> <http://psink.de/scio/hasFrequency> \"three times a day\"."
+79378, Duration, 7350, 7360, "for 1 week", "", "<http://scio/data/CompoundTreatment_32716> <http://psink.de/scio/hasDuration> \"for 1 week\". <http://scio/data/CompoundTreatment_32729> <http://psink.de/scio/hasDuration> \"for 1 week\"."
+79407, GroupNumber, 7439, 7440, "C", "", 
+79450, ApplicationInstrument, 7470, 7488, "microinjector tube", "", 
+79441, InjectionDelivery, 7542, 7551, "injection", "", "<http://scio/data/InjectionDelivery_32744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32744>."
+79380, Volume, 7555, 7560, "6 ¬µl", "", 
+79379, ChondroitinaseABC, 7561, 7566, "ChABC", "", 
+79442, DosageExtracorporal, 7579, 7585, "1 U/ml", "", "<http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasDosage> \"1 U/ml\"."
+79443, SigmaAldrich, 7587, 7619, "Sigma-Aldrich, St Louis, MO, USA", "", "<http://scio/data/ChondroitinaseABC_32752> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>."
+79381, Volume, 7625, 7630, "6 ¬µl", "", 
+79382, Saline, 7634, 7640, "saline", "", 
+79444, Frequency, 7651, 7684, "on each of the subsequent 6 days.", "", "<http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasFrequency> \"on each of the subsequent 6 days.\"."
+79445, Duration, 7651, 7683, "on each of the subsequent 6 days", "", "<http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasDuration> \"on each of the subsequent 6 days\"."
+79434, SpragueDawleyRat, 7685, 7689, "Rats", "", 
+79408, GroupNumber, 7699, 7700, "D", "", 
+79389, Substance, 7719, 7726, "insulin", "", 
+79388, ChondroitinaseABC, 7732, 7737, "ChABC", "", 
+79409, GroupNumber, 7787, 7788, "B", "", 
+79410, GroupNumber, 7793, 7794, "C", "", 
+79435, SpragueDawleyRat, 7796, 7800, "Rats", "", 
+79411, GroupNumber, 7810, 7811, "E", "", 
+79446, InjectionDelivery, 7817, 7825, "injected", "", 
+79390, MethylprednisoloneMP, 7831, 7849, "methylprednisolone", "", 
+79391, TailVeinLocation, 7862, 7871, "tail vein", "", "<http://scio/data/DeliveryMethod_32759> <http://psink.de/scio/hasLocations> <http://psink.de/scio/TailVeinLocation>. <http://scio/data/DeliveryMethod_32785> <http://psink.de/scio/hasLocations> <http://psink.de/scio/TailVeinLocation>."
+79452, Duration, 7873, 7887, "the first time", "", 
+79392, DosageIntracorporal, 7891, 7899, "30 mg/kg", "", "<http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasDosage> \"30 mg/kg\"."
+79453, Duration, 7900, 7908, "and then", "", "<http://scio/data/TemporalInterval_32915> <http://psink.de/scio/hasDuration> \"and then\"."
+79393, DosageIntracorporal, 7912, 7921, "5.4 mg/kg", "", "<http://scio/data/CompoundTreatment_32783> <http://psink.de/scio/hasDosage> \"5.4 mg/kg\"."
+79447, Interval, 7925, 7944, "intervals of 45 min", "", "<http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasInterval> \"intervals of 45 min\". <http://scio/data/CompoundTreatment_32783> <http://psink.de/scio/hasInterval> \"intervals of 45 min\"."
+79394, Duration, 7945, 7953, "for 23 h", "", "<http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasDuration> \"for 23 h\". <http://scio/data/CompoundTreatment_32783> <http://psink.de/scio/hasDuration> \"for 23 h\"."

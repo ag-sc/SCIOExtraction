@@ -1,0 +1,37 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_622> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_622> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_622> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat> .
+<http://scio/data/OrganismModel_622> <http://psink.de/scio/hasAge> "77 days (±10 days) old" .
+<http://scio/data/OrganismModel_622> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/Contusion_2739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion> .
+<http://scio/data/Contusion_2739> <http://www.w3.org/2000/01/rdf-schema#label> "contusion" .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/SodiumPentobarbital_2742> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2742> .
+<http://scio/data/SodiumPentobarbital_2742> <http://psink.de/scio/hasDosage> "0.1 ml/100 g" .
+<http://scio/data/InjectionDelivery_3870> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/SodiumPentobarbital_2742> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3870> .
+<http://scio/data/InjectionDelivery_3870> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury> .
+<http://scio/data/MedicationDuringSurgery_2744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/NYUImpactor_2746> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_2746> .
+<http://scio/data/NYUImpactor_2746> <http://psink.de/scio/hasDistance> "height of 25 mm" .
+<http://scio/data/NYUImpactor_2746> <http://psink.de/scio/hasWeight> "10 g impactor rod" .
+<http://scio/data/PostsurgicalMedication_2750> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2750> .
+<http://scio/data/PostsurgicalMedication_2750> <http://psink.de/scio/hasDosage> "0.03 ml" .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+<http://scio/data/AntibioticMedication_15112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_15112> .
+<http://scio/data/AntibioticMedication_15112> <http://psink.de/scio/hasDosage> "0.03 ml" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

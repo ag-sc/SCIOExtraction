@@ -1,0 +1,108 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+51030, OlfactoryEnsheathingGliaCell, 265, 299, "olfactory ensheathing cells (OECs)", "", 
+51031, DeliveryMethod, 300, 312, "transplanted", "", 
+51032, Contusion, 320, 328, "contused", "", 
+51033, SpinalCord, 329, 340, "spinal cord", "", 
+51034, OlfactoryEnsheathingGliaCell, 413, 417, "OECs", "", 
+78076, SpragueDawleyRat, 432, 435, "rat", "", 
+51036, SpinalCord, 436, 448, "spinal cords", "", 
+51037, Contusion, 454, 462, "contused", "", 
+51038, NYUImpactor, 468, 483, "NYU-impactor II", "", 
+51039, T10, 487, 490, "T10", "", 
+51040, Force, 511, 542, "10 g rod from a height of 25 mm", "", 
+51041, Duration, 544, 572, "At the 1st week after injury", "", 
+51042, OlfactoryEnsheathingGliaCell, 574, 578, "OECs", "", 
+51043, Allogeneic, 596, 644, "from green fluorecense protein (GFP) of the rats", "", 
+51044, DeliveryMethod, 650, 662, "transplanted", "", 
+51045, SpinalCord, 672, 683, "spinal cord", "", 
+51046, SpinalLesionSite, 684, 699, "at injured site", "", 
+51047, Distance, 720, 724, "1 mm", "", 
+51048, Caudal, 740, 746, "caudal", "", 
+51049, Rostral, 751, 758, "rostral", "", 
+51050, OlfactoryEnsheathingGliaCell, 773, 777, "OECs", "", 
+51051, DosageExtracorporal, 788, 805, "30000/μl×3 =90000", "", 
+51052, OlfactoryEnsheathingGliaCell, 838, 842, "OECs", "", 
+51053, Duration, 936, 974, "week to 13 weeks after transplantation", "", 
+51055, SpinalCord, 1002, 1006, "cord", "", 
+51056, BBBTest, 1026, 1035, "BBB score", "", 
+51057, OlfactoryEnsheathingGliaCell, 1046, 1054, "GFP-OECs", "", 
+51058, Duration, 1078, 1090, "for 13 weeks", "", 
+51059, Contusion, 1102, 1110, "contused", "", 
+51060, SpinalCord, 1111, 1122, "spinal cord", "", 
+51061, Lower, 1187, 1196, "decreased", "", 
+51062, Duration, 1202, 1233, "1 week to 13 weeks after injury", "", 
+51063, OlfactoryEnsheathingGliaCell, 1257, 1265, "GFP-OECs", "", 
+51064, MeanValue, 1270, 1273, "536", "", 
+51065, Duration, 1281, 1289, "1st week", "", 
+51066, OlfactoryEnsheathingGliaCell, 1397, 1405, "GFP-OECs", "", 
+51067, Lower, 1422, 1431, "decreased", "", 
+51068, Lower, 1454, 1462, "decrease", "", 
+51069, Duration, 1473, 1497, "during 1 week to 2 weeks", "", 
+51070, Lower, 1513, 1521, "decrease", "", 
+51072, SpinalCord, 1618, 1622, "cord", "", 
+51073, RepeatedMeasureTrend, 1637, 1646, "recovered", "", 
+51074, DeliveryMethod, 1653, 1668, "transplantation", "", 
+51075, OlfactoryEnsheathingGliaCell, 1714, 1721, "GFPOECs", "", 
+78077, SpragueDawleyRat, 1748, 1755, "animals", "", 
+51077, SpinalCord, 1814, 1818, "cord", "", 
+51079, RepeatedMeasureTrend, 1861, 1869, "recovery", "", 
+51080, Contusion, 1877, 1885, "contused", "", 
+51081, SpinalCord, 1886, 1890, "cord", "", 
+48940, SpragueDawleyRat, 3575, 3577, "SD", "", "<http://scio/data/OrganismModel_1153> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48938, Adult, 3578, 3583, "adult", "", "<http://scio/data/OrganismModel_1153> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48939, Weight, 3598, 3607, "350-400 g", "", "<http://scio/data/OrganismModel_1153> <http://psink.de/scio/hasWeight> \"350-400 g\"."
+55471, IntraperitonealLocation, 3634, 3660, "intraperitioneal injection", "", "<http://scio/data/InjectionDelivery_9788> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+55468, InjectionDelivery, 3651, 3660, "injection", "", "<http://scio/data/InjectionDelivery_9788> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_9782> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9788>."
+51086, SodiumPentobarbital, 3664, 3684, "pentobarbital sodium", "", "<http://scio/data/SodiumPentobarbital_9782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/Contusion_9779> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_9782>."
+51087, DosageIntracorporal, 3686, 3696, "30 mg/ kg)", "", "<http://scio/data/SodiumPentobarbital_9782> <http://psink.de/scio/hasDosage> \"30 mg/ kg)\"."
+51088, T10, 3766, 3769, "T10", "", "<http://scio/data/Contusion_9779> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+51089, Contusion, 3819, 3827, "contused", "", "<http://scio/data/Contusion_9779> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_9779> <http://www.w3.org/2000/01/rdf-schema#label> \"Contusion\"."
+51090, NYUImpactor, 3833, 3845, "NYU-impactor", "", "<http://scio/data/NYUImpactor_9786> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor>. <http://scio/data/Contusion_9779> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_9786>."
+55472, Weight, 3863, 3867, "10 g", "", "<http://scio/data/NYUImpactor_9786> <http://psink.de/scio/hasWeight> \"10 g\"."
+55473, Distance, 3889, 3908, "25 mm.Postoperative", "", "<http://scio/data/NYUImpactor_9786> <http://psink.de/scio/hasDistance> \"25 mm.Postoperative\"."
+51092, BladderExpression, 3969, 3989, "artificial urination", "", 
+102848, Labeling, 4018, 4021, "GFP", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_13866> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling>."
+102849, GreenFluorescentProtein, 4018, 4021, "GFP", "", 
+57355, RatSpecies, 4033, 4037, "rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_13866> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/RatSpecies>."
+51093, Allogeneic, 4033, 4037, "rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_13866> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+98829, Weight, 4038, 4050, "weighing 220", "", 
+98830, SodiumPentobarbital, 4091, 4105, "pentobarbitone", "", 
+72762, AnatomicalLocation, 4310, 4325, "olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_15526> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_13866> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_15526>."
+51095, Duration, 6772, 6810, "Seven days after spinal cord contusion", "", "<http://scio/data/TemporalInterval_13988> <http://psink.de/scio/hasDuration> \"Seven days after spinal cord contusion\". <http://scio/data/TemporalInterval_13996> <http://psink.de/scio/hasDuration> \"Seven days after spinal cord contusion\"."
+51096, Contusion, 6816, 6824, "contused", "", 
+51097, SpinalCord, 6825, 6837, "spinal cords", "", 
+51098, SpragueDawleyRat, 6905, 6909, "rats", "", 
+57347, Volume, 6914, 6918, "1 μl", "", 
+51100, OlfactoryEnsheathingGliaCell, 6919, 6923, "OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_13866> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_13561> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_13866>."
+51101, DosageExtracorporal, 6936, 6944, "30000/μl", "", "<http://scio/data/CompoundTreatment_13561> <http://psink.de/scio/hasDosage> \"30000/μl\"."
+98831, InjectionDelivery, 6950, 6958, "injected", "", "<http://scio/data/InjectionDelivery_55880> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_13561> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_55880>. <http://scio/data/InjectionDelivery_55883> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_13949> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_55883>."
+51103, SpinalLesionSite, 6968, 6979, "injury site", "", "<http://scio/data/SpinalLesionSite_57471> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_15487> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_57471>. <http://scio/data/SpinalLesionSite_57472> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_20178> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_57472>. <http://scio/data/SpinalLesionSite_55882> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_55880> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_55882>. <http://scio/data/SpinalLesionSite_57476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_15530> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_57476>. <http://scio/data/SpinalLesionSite_57477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_20181> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_57477>. <http://scio/data/SpinalLesionSite_57475> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_55883> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_57475>."
+51104, Distance, 7000, 7004, "1 mm", "", 
+51105, Caudal, 7020, 7026, "caudal", "", "<http://scio/data/Caudal_15487> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_13561> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_15487>. <http://scio/data/Caudal_15530> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_13949> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_15530>."
+51106, Rostral, 7031, 7038, "rostral", "", "<http://scio/data/Rostral_20178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_13561> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_20178>. <http://scio/data/Rostral_20181> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_13949> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_20181>."
+51107, SpinalCord, 7051, 7062, "spinal cord", "", 
+78085, DefinedExperimentalGroup, 7272, 7285, "control group", "", 
+78086, OlfactoryEnsheathingGliaCell, 7291, 7295, "OECs", "", 
+51111, Vehicle, 7318, 7326, "DMEM.The", "", "<http://scio/data/Vehicle_13967> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_13949> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_13967>."
+51115, NNumber, 8075, 8085, "Sixty rats", "", 
+51116, Duration, 8096, 8116, "at the 6 time points", "", 
+51117, NNumber, 8122, 8124, "10", "", 
+51118, SpragueDawleyRat, 8125, 8129, "rats", "", 
+51119, NNumber, 8148, 8149, "5", "", "<http://scio/data/DefinedExperimentalGroup_13970> <http://psink.de/scio/hasNNumber> \"5\"."
+51120, SpragueDawleyRat, 8150, 8154, "rats", "", 
+51121, DefinedExperimentalGroup, 8158, 8176, "experimental group", "E2", "<http://scio/data/DefinedExperimentalGroup_13970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_13970> <http://www.w3.org/2000/01/rdf-schema#label> \"Experimental Group E2\"."
+51122, NNumber, 8181, 8182, "5", "", "<http://scio/data/DefinedExperimentalGroup_13978> <http://psink.de/scio/hasNNumber> \"5\"."
+51123, DefinedExperimentalGroup, 8186, 8199, "control group", "E1", "<http://scio/data/DefinedExperimentalGroup_13978> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_13978> <http://www.w3.org/2000/01/rdf-schema#label> \"Control Group E1\"."
+51125, SpragueDawleyRat, 8928, 8932, "rats", "", 
+51126, BBBTest, 8953, 8962, "BBB scale", "", 
+51127, DoubleBlindStudy, 8970, 8981, "doubleblind", "", 
+51128, StatisticalTest, 9344, 9372, "Turkey Test of One-Way ANOVA", "", 
+51129, PValue, 9447, 9453, "P<0.05", "", 
+78081, BBBTest, 12158, 12163, "scale", "", "<http://scio/data/BBBTest_63008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75099> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75099> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (scale)\". <http://scio/data/Result_29964> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+51131, DefinedExperimentalGroup, 12319, 12332, "control group", "E1", 
+51132, SpragueDawleyRat, 12360, 12364, "rats", "", 
+51133, Lower, 12398, 12401, "low", "R2", "<http://scio/data/RepeatedMeasureTrend_29971> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+51134, DefinedExperimentalGroup, 12422, 12446, "experimental group.There", "E2", 
+51135, PositiveSignificance, 12451, 12462, "significant", "", "<http://scio/data/PositiveSignificance_29973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_29971> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_29973>."
+51136, AnalyzedExperimentalGroup, 12486, 12496, "two groups", "E1,E2", 
+78080, RepeatedMeasureTrend, 12497, 12515, "at each time point", "", "<http://scio/data/RepeatedMeasureTrend_29971> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_29964> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_29971>."

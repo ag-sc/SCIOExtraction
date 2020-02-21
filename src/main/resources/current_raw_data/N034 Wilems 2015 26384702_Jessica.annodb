@@ -1,0 +1,58 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+103113, MouseSpecies, 4800, 4805, "mouse", "", 
+103107, StemCell, 9498, 9506, "ESC line", "", 
+103106, Labeling, 9894, 9897, "GFP", "", 
+103108, Cell, 10747, 10750, "pMN", "", 
+103110, Differentiation, 10751, 10760, "induction", "", 
+103109, StemCell, 10770, 10778, "ES cells", "", 
+103112, ChondroitinaseABC, 13583, 13588, "ChABC", "", 
+103111, Enzyme, 13606, 13615, "trehalose", "", 
+48575, Female, 16815, 16821, "female", "", "<http://scio/data/OrganismModel_447> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48576, LongEvansRat, 16822, 16837, "Long-Evans rats", "", "<http://scio/data/OrganismModel_447> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>."
+48577, Weight, 16839, 16848, "250-275 g", "", "<http://scio/data/OrganismModel_447> <http://psink.de/scio/hasWeight> \"250-275 g\"."
+49809, DosageExtracorporal, 16873, 16875, "5%", "", "<http://scio/data/Isoflurane_2279> <http://psink.de/scio/hasDosage> \"5%\"."
+49788, Isoflurane, 16876, 16886, "isoflurane", "", "<http://scio/data/Isoflurane_2279> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2279>."
+49810, InhalationDelivery, 16887, 16890, "gas", "", "<http://scio/data/InhalationDelivery_2285> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery>. <http://scio/data/Isoflurane_2279> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2285>."
+49811, InjectionDelivery, 16898, 16907, "injection", "", "<http://scio/data/InjectionDelivery_2288> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2287> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_2288>."
+49789, DosageIntracorporal, 16911, 16918, "5 mg/kg", "", "<http://scio/data/Xylazine_2287> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+49790, Xylazine, 16919, 16927, "xylazine", "", "<http://scio/data/Xylazine_2287> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2287>."
+49808, T8, 17153, 17155, "T8", "", "<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+49791, Scissors, 17419, 17427, "scissors", "", "<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+49801, DorsalHemisection, 17431, 17457, "lateral dorsal hemisection", "", "<http://scio/data/DorsalHemisection_2276> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_2276> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+49803, LongEvansRat, 17691, 17698, "Animals", "", 
+50813, AntibioticMedication, 17710, 17719, "cefazolin", "", "<http://scio/data/AntibioticMedication_3369> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3369>."
+49792, DosageIntracorporal, 17721, 17729, "25 mg/kg", "", 
+49805, PostsurgicalMedication, 17735, 17748, "buprenorphine", "", "<http://scio/data/PostsurgicalMedication_2291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2291>."
+49806, DosageIntracorporal, 17750, 17760, "0.04 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2291> <http://psink.de/scio/hasDosage> \"0.04 mg/kg\"."
+50812, AntibioticMedication, 17768, 17777, "Cefazolin", "", 
+49813, PostsurgicalMedication, 17820, 17833, "buprenorphine", "", "<http://scio/data/PostsurgicalMedication_2293> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2293>."
+49795, DosageIntracorporal, 17835, 17846, "0.04 mg/ kg", "", 
+49798, DosageIntracorporal, 17885, 17895, "0.01 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2293> <http://psink.de/scio/hasDosage> \"0.01 mg/kg\"."
+49799, Duration, 17905, 17916, "next 3 days", "", 
+49807, BladderExpression, 17940, 17972, "bladders were manually expressed", "", "<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+103078, Duration, 18025, 18063, "Two weeks after the dorsal hemisection", "", 
+103079, DorsalHemisection, 18045, 18063, "dorsal hemisection", "", 
+103082, SurgeryTreatment, 18139, 18163, "removing the scar tissue", "", 
+103083, Matrix, 18180, 18196, "fibrin scaffolds", "", 
+103086, Substance, 18298, 18305, "heparin", "", 
+103087, Substance, 18315, 18328, "ATIII peptide", "", 
+103088, Neurotrophin3, 18337, 18340, "NT3", "", 
+103089, Substance, 18348, 18355, "PDGF-AA", "", 
+103090, Substance, 18363, 18390, "NEP1-40-loaded microspheres", "", 
+103091, ChondroitinaseABC, 18402, 18414, "ChABC-loaded", "", 
+103080, Substance, 18671, 18678, "heparin", "", 
+103081, Substance, 18680, 18693, "ATIII peptide", "", 
+103092, Substance, 18699, 18713, "growth factors", "", 
+103093, Matrix, 18733, 18748, "fibrin scaffold", "", 
+103094, Substance, 18775, 18778, "GFs", "", 
+103095, Substance, 18783, 18787, "pMNs", "", 
+103096, Substance, 18889, 18893, "AIMS", "", 
+103097, Substance, 18898, 18902, "pMNs", "", 
+103098, Substance, 18904, 18911, "heparin", "", 
+103099, Substance, 18913, 18926, "ATIII peptide", "", 
+103100, Substance, 18932, 18946, "growth factors", "", 
+103101, Substance, 19030, 19034, "pMNs", "", 
+103105, Cell, 19826, 19837, "mouse cells", "", 
+103104, InjectionDelivery, 19845, 19855, "injections", "", 
+103102, CyclosporineA, 19859, 19873, "cyclosporine-A", "", 
+103103, DosageIntracorporal, 19875, 19883, "10 mg/kg", "", 

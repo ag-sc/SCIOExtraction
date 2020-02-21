@@ -1,0 +1,30 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_495> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_495> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_495> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
+<http://scio/data/OrganismModel_495> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_495> <http://psink.de/scio/hasWeight> "290-320 g" .
+<http://scio/data/OrganismModel_495> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/Compression_2401> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_2401> <http://www.w3.org/2000/01/rdf-schema#label> "compression" .
+<http://scio/data/Compression_2401> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/Halothane_2404> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Halothane> .
+<http://scio/data/Compression_2401> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Halothane_2404> .
+<http://scio/data/InhalationDelivery_2410> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery> .
+<http://scio/data/Halothane_2404> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2410> .
+<http://scio/data/Halothane_2404> <http://psink.de/scio/hasDosage> "1.5-2%" .
+<http://scio/data/MedicationDuringSurgery_2406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Balloon_2408> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Balloon> .
+<http://scio/data/Compression_2401> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Balloon_2408> .
+<http://scio/data/Balloon_2408> <http://psink.de/scio/hasVolume> "12.5 ll" .
+<http://scio/data/VertebralArea_3767> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/Compression_2401> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3767> .
+<http://scio/data/VertebralArea_3767> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T8> .
+<http://scio/data/VertebralArea_3767> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

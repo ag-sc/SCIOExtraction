@@ -1,0 +1,542 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+80503, OlfactoryEnsheathingGliaCell, 276, 308, "olfactory ensheathing glia (OEG)", "", 
+80504, SchwannCell, 313, 331, "Schwann cell (SCs)", "", 
+80573, DeliveryMethod, 332, 347, "transplantation", "", 
+80505, Positive, 352, 362, "beneficial", "", 
+80576, Injury, 402, 408, "injury", "", 
+80506, Duration, 427, 458, "acute and sub-acute time points", "", 
+80578, DeliveryMethod, 478, 490, "transplanted", "", 
+80577, InVitroExperimentalProcedure, 491, 507, "DsRED transduced", "", 
+80507, Adult, 508, 513, "adult", "", 
+80508, OlfactoryEnsheathingGliaCell, 514, 517, "OEG", "", 
+80509, SchwannCell, 522, 525, "SCs", "", 
+80510, Duration, 526, 537, "sub-acutely", "", 
+80579, Duration, 539, 546, "14 days", "", 
+80511, T10, 560, 563, "T10", "", 
+80512, ModerateInjury, 564, 572, "moderate", "", 
+80513, SpinalCord, 573, 584, "spinal cord", "", 
+80514, Contusion, 585, 594, "contusion", "", 
+80515, Injury, 595, 601, "injury", "", 
+80516, AnimalModel, 609, 612, "rat", "", 
+80517, ObservationOfAnimalBehaviour, 614, 623, "Behaviour", "", 
+80518, BBBTest, 640, 656, "open field (BBB)", "", 
+80519, LadderRungTest, 661, 692, "horizontal ladder walking tests", "", 
+80580, Positive, 706, 718, "improvements", "", 
+80522, Substance, 742, 761, "Fluorogold staining", "", 
+80581, InjectionDelivery, 766, 774, "injected", "", 
+96646, Distance, 784, 790, "distal", "", 
+80583, SpinalCord, 791, 802, "spinal cord", "", 
+96645, AxonalChangesTest, 830, 887, "supraspinal and propriospinal axonal sparing/regeneration", "", 
+80524, Duration, 891, 914, "4 months post injection", "", 
+80525, OlfactoryEnsheathingGliaCell, 975, 978, "OEG", "", 
+80526, SchwannCell, 983, 986, "SCs", "", 
+80584, InjectionDelivery, 993, 1001, "injected", "", 
+80527, Duration, 1002, 1013, "sub acutely", "", 
+80585, Duration, 1015, 1035, "14 days after injury", "", 
+80528, Higher, 1048, 1055, "improve", "", 
+80529, ObservationOfAnimalBehaviour, 1056, 1075, "behavioral outcomes", "", 
+80586, Higher, 1082, 1088, "induce", "", 
+96644, AxonalChangesTest, 1089, 1154, "sparing/regeneration of propriospinal and supraspinal projections", "", 
+80531, Lower, 1166, 1172, "reduce", "", 
+80532, TissueSparingTest, 1173, 1184, "tissue loss", "", 
+80587, OlfactoryEnsheathingGliaCell, 1195, 1198, "OEG", "", 
+80588, SchwannCell, 1203, 1206, "SCs", "", 
+80589, DeliveryMethod, 1207, 1219, "transplanted", "", 
+80590, FischerRat, 1220, 1224, "rats", "", 
+80533, PositiveSignificance, 1232, 1243, "significant", "", 
+80534, Higher, 1244, 1253, "increased", "", 
+96627, GroupName, 1282, 1301, "control injury only", "E4", "<http://scio/data/DefinedExperimentalGroup_29374> <http://psink.de/scio/hasGroupName> \"control injury only\"."
+80592, OpenFieldTest, 1309, 1325, "open field tests", "", 
+80537, BBBTest, 1327, 1330, "BBB", "", 
+80538, LadderRungTest, 1342, 1362, "the ladder walk test", "", 
+80539, None, 1363, 1375, "did not show", "", 
+80540, ZeroSignificance, 1376, 1413, "statistically significant differences", "", 
+96630, GroupName, 1422, 1431, "treatment", "A1", "<http://scio/data/AnalyzedExperimentalGroup_53628> <http://psink.de/scio/hasGroupName> \"treatment\"."
+96631, GroupName, 1436, 1450, "control groups", "A2", "<http://scio/data/AnalyzedExperimentalGroup_53639> <http://psink.de/scio/hasGroupName> \"control groups\"."
+80541, PositiveSignificance, 1505, 1516, "significant", "", 
+80542, Higher, 1517, 1525, "increase", "", 
+96643, AxonalChangesTest, 1533, 1561, "number of supraspinal nuclei", "", 
+80544, Location, 1582, 1600, "distal spinal cord", "", 
+80594, OlfactoryEnsheathingGliaCell, 1609, 1612, "OEG", "", 
+80595, SchwannCell, 1617, 1620, "SCs", "", 
+80596, DeliveryMethod, 1621, 1633, "transplanted", "", 
+80597, FischerRat, 1634, 1638, "rats", "", 
+80545, PositiveSignificance, 1771, 1782, "significant", "", 
+80546, Higher, 1783, 1791, "increase", "", 
+96642, AxonalChangesTest, 1795, 1819, "raphe projecting neurons", "", 
+96632, GroupName, 1823, 1844, "OEG transplanted rats", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEG transplanted rats\"."
+96633, GroupName, 1862, 1886, "SCs transplanted animals", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs transplanted animals\"."
+80601, SpinalCord, 1912, 1923, "spinal cord", "", 
+80548, Duration, 1933, 1952, "short term (2 weeks", "", 
+80549, Duration, 1958, 1978, "long term (4 months)", "", 
+80550, ObservedDifference, 1986, 1997, "differences", "", 
+80551, AstrogliosisTest, 2006, 2020, "glial activity", "", 
+80552, HistologicalInvestigationTest, 2086, 2108, "Histochemical staining", "", 
+80553, SpinalLesionSite, 2157, 2172, "the lesion site", "", 
+80554, Higher, 2177, 2186, "increased", "", 
+96638, DefinedExperimentalGroup, 2194, 2197, "OEG", "", 
+80603, OlfactoryEnsheathingGliaCell, 2194, 2197, "OEG", "", 
+96634, GroupName, 2202, 2220, "SCs treated groups", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs treated groups\"."
+80555, PositiveSignificance, 2222, 2233, "Significant", "", 
+80556, TissueSparingTest, 2234, 2248, "tissue sparing", "", 
+96635, SchwannCell, 2298, 2301, "SCs", "", 
+96637, DeliveryMethod, 2302, 2317, "transplantation", "", 
+96639, OlfactoryEnsheathingGliaCell, 2332, 2335, "OEG", "", 
+80558, PositiveSignificance, 2355, 2368, "significantly", "", 
+80559, Lower, 2369, 2378, "decreased", "", 
+96640, HistologicalInvestigationTest, 2379, 2413, "chondroitin proteoglycan synthesis", "", 
+80560, SpinalLesionSite, 2421, 2432, "lesion site", "", 
+80606, DeliveryMethod, 2509, 2524, "transplantation", "", 
+80561, OlfactoryEnsheathingGliaCell, 2528, 2531, "OEG", "", 
+80562, SchwannCell, 2536, 2539, "SCs", "", 
+80563, Duration, 2545, 2560, "sub-acute phase", "", 
+80564, Higher, 2565, 2572, "improve", "", 
+80565, Contusion, 2601, 2610, "contusion", "", 
+80566, Injury, 2611, 2636, "injury to the spinal cord", "", 
+80567, Higher, 2641, 2651, "increasing", "", 
+96641, AxonalChangesTest, 2656, 2703, "number of spared/regenerated supraspinal fibers", "", 
+80569, Lower, 2705, 2713, "reducing", "", 
+80570, CystVolumeTest, 2714, 2724, "cavitation", "", 
+80571, Higher, 2729, 2738, "enhancing", "", 
+80572, TissueSparingTest, 2739, 2755, "tissue integrity", "", 
+48855, Adult, 6850, 6855, "Adult", "", "<http://scio/data/OrganismModel_971> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48856, Weight, 6857, 6866, "180-200 g", "", "<http://scio/data/OrganismModel_971> <http://psink.de/scio/hasWeight> \"180-200 g\"."
+48857, Female, 6868, 6874, "female", "", "<http://scio/data/OrganismModel_971> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48858, FischerRat, 6875, 6891, "Fischer 344 rats", "", "<http://scio/data/OrganismModel_971> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+80607, Housing, 6950, 7031, "housed in groups of three under controlled conditions of temperature and humidity", "", "<http://scio/data/Contusion_7485> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+80608, Nutrition, 7038, 7057, "free access to food", "", "<http://scio/data/Contusion_7485> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+80609, Hydration, 7038, 7067, "free access to food and water", "", "<http://scio/data/Contusion_7485> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+77736, Duration, 7198, 7224, "Fourteen days after injury", "", "<http://scio/data/TemporalInterval_29384> <http://psink.de/scio/hasDuration> \"Fourteen days after injury\". <http://scio/data/TemporalInterval_29392> <http://psink.de/scio/hasDuration> \"Fourteen days after injury\". <http://scio/data/TemporalInterval_29400> <http://psink.de/scio/hasDuration> \"Fourteen days after injury\"."
+96168, Injury, 7218, 7224, "injury", "", 
+77760, InjectionDelivery, 7247, 7256, "injection", "", "<http://scio/data/InjectionDelivery_29282> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_29280> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_29282>. <http://scio/data/InjectionDelivery_29304> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_29302> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_29304>."
+80610, DeliveryMethod, 7285, 7295, "transplant", "", 
+77761, DefinedExperimentalGroup, 7296, 7299, "OEG", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_29350> <http://www.w3.org/2000/01/rdf-schema#label> \"OEG, E1\"."
+77769, OlfactoryEnsheathingGliaCell, 7296, 7299, "OEG", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_29280> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_29293>."
+77763, DefinedExperimentalGroup, 7357, 7360, "SCs", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_29358> <http://www.w3.org/2000/01/rdf-schema#label> \"SCs, E2\"."
+77771, SchwannCell, 7357, 7360, "SCs", "", "<http://scio/data/SchwannCell_29317> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SchwannCell>. <http://scio/data/CompoundTreatment_29302> <http://psink.de/scio/hasCompound> <http://scio/data/SchwannCell_29317>."
+77739, SpinalLesionSite, 7423, 7434, "lesion site", "", 
+77765, DefinedExperimentalGroup, 7435, 7488, "controls received an injection of cell culture medium", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_29366> <http://www.w3.org/2000/01/rdf-schema#label> \"controls received an injection of cell medium, E3\"."
+77772, InjectionDelivery, 7456, 7465, "injection", "", 
+77741, Vehicle, 7469, 7488, "cell culture medium", "", 
+77767, DefinedExperimentalGroup, 7545, 7557, "injury alone", "E4", "<http://scio/data/DefinedExperimentalGroup_29374> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_29374> <http://www.w3.org/2000/01/rdf-schema#label> \"injury alone, E4\"."
+77743, OlfactoryEnsheathingGliaCell, 8104, 8107, "OEG", "", 
+77773, AnatomicalLocation, 8131, 8146, "olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_29300> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_29300>."
+77744, Adult, 8150, 8155, "adult", "", 
+77745, Female, 8156, 8162, "female", "", 
+77774, FischerRat, 8163, 8179, "Fischer 344 rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+77776, Allogeneic, 8175, 8179, "rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+77779, OlfactoryEnsheathingGliaCell, 8820, 8823, "OEG", "", 
+77778, Purification, 8829, 8855, "purified by immunoaffinity", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+77746, SchwannCell, 8910, 8913, "SCs", "", 
+77747, Adult, 8933, 8938, "adult", "", 
+77748, Female, 8939, 8945, "female", "", 
+77775, FischerRat, 8946, 8962, "Fischer 344 rats", "", "<http://scio/data/SchwannCell_29317> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+77777, Allogeneic, 8958, 8962, "rats", "", "<http://scio/data/SchwannCell_29317> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+77780, AnatomicalLocation, 8985, 8999, "sciatic nerves", "", "<http://scio/data/AnatomicalLocation_29322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/SchwannCell_29317> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_29322>."
+77784, InVitroExperimentalProcedure, 9597, 9718, "Lentiviral labelling of glia Lentiviral vectors encoding the gene for DSRED-2 were made according to methods described by", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/SchwannCell_29317> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+77781, InVitroExperimentalProcedure, 9726, 9928, "Cultured OEG or SCs were labeled by adding the vector (using a multiplicity of infection of 100 [12] to the culture medium for 16 hours, followed by 2 washes in culture medium and fresh media for growth", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_29293> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/SchwannCell_29317> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+77782, OlfactoryEnsheathingGliaCell, 9735, 9738, "OEG", "", 
+77783, SchwannCell, 9742, 9745, "SCs", "", 
+55390, DosageExtracorporal, 10001, 10009, "5% (v/v)", "", 
+54966, Halothane, 10010, 10019, "halothane", "", "<http://scio/data/Halothane_7488> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Halothane>. <http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Halothane_7488>. <http://scio/data/Halothane_9417> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Halothane>. <http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Halothane_9417>."
+54968, NitrousOxide, 10033, 10036, "N2O", "", "<http://scio/data/NitrousOxide_7498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NitrousOxide>. <http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/NitrousOxide_7498>."
+54967, DosageExtracorporal, 10057, 10061, "2-3%", "", "<http://scio/data/Halothane_9417> <http://psink.de/scio/hasDosage> \"2-3%\"."
+54958, T10, 10153, 10156, "T10", "", "<http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+54959, Laminectomy, 10157, 10168, "laminectomy", "", 
+54960, NYUImpactor, 10192, 10226, "New York University (NYU) impactor", "", "<http://scio/data/NYUImpactor_7492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor>. <http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_7492>."
+54961, ModerateInjury, 10230, 10238, "moderate", "", "<http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+54962, Contusion, 10239, 10255, "contusion injury", "", "<http://scio/data/Contusion_7485> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_7485> <http://www.w3.org/2000/01/rdf-schema#label> \"Contusion\"."
+54963, Weight, 10282, 10286, "10 g", "", "<http://scio/data/NYUImpactor_7492> <http://psink.de/scio/hasWeight> \"10 g\"."
+54964, Distance, 10301, 10308, "12.5 mm", "", "<http://scio/data/NYUImpactor_7492> <http://psink.de/scio/hasDistance> \"12.5 mm\"."
+54965, Gelfoam, 10325, 10333, "Gel-Foam", "", 
+96169, FischerRat, 10404, 10411, "animals", "", 
+96170, FischerRat, 10861, 10867, "animal", "", 
+96171, AntibioticMedication, 10886, 10896, "penicillin", "", "<http://scio/data/AntibioticMedication_7487> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_7487>."
+96172, PostsurgicalMedication, 10936, 10958, "Temgesic buprenorphine", "", "<http://scio/data/PostsurgicalMedication_53580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_53580>."
+96173, DosageIntracorporal, 10973, 10982, "0.1 mg/kg", "", "<http://scio/data/PostsurgicalMedication_53580> <http://psink.de/scio/hasDosage> \"0.1 mg/kg\"."
+96174, BladderExpression, 11249, 11288, "Manual bladder expression was performed", "", "<http://scio/data/Contusion_7485> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+96175, FischerRat, 11343, 11350, "animals", "", 
+77749, Duration, 11465, 11493, "Fourteen days post-contusion", "", 
+77750, Adult, 11495, 11500, "adult", "", 
+77751, Female, 11501, 11507, "female", "", 
+77785, FischerRat, 11508, 11512, "rats", "", 
+77786, SpinalCord, 11539, 11550, "spinal cord", "", 
+96176, Volume, 11586, 11590, "5 μL", "", 
+96177, Cell, 11596, 11600, "cell", "", 
+78000, DosageExtracorporal, 11623, 11630, "5 × 105", "", "<http://scio/data/CompoundTreatment_29280> <http://psink.de/scio/hasDosage> \"5 × 105\". <http://scio/data/CompoundTreatment_29302> <http://psink.de/scio/hasDosage> \"5 × 105\"."
+77752, OlfactoryEnsheathingGliaCell, 11631, 11634, "OEG", "", 
+77753, SchwannCell, 11638, 11641, "SCs", "", 
+77754, Vehicle, 11645, 11659, "culture medium", "", 
+77755, Vehicle, 11664, 11670, "medium", "", 
+77756, Vehicle, 11683, 11698, "DMEM/F-12 Sigma", "", "<http://scio/data/Vehicle_29340> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_29325> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_29340>."
+77788, InjectionDelivery, 11704, 11712, "injected", "", "<http://scio/data/InjectionDelivery_29327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_29325> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_29327>."
+77757, SpinalLesionSite, 11722, 11742, "center of the lesion", "", "<http://scio/data/SpinalLesionSite_29295> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_29282> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_29295>. <http://scio/data/SpinalLesionSite_29306> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_29304> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_29306>. <http://scio/data/SpinalLesionSite_29329> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_29327> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_29329>."
+77758, Duration, 11760, 11769, "3 minutes", "", "<http://scio/data/InjectionDelivery_29282> <http://psink.de/scio/hasDuration> \"3 minutes\". <http://scio/data/InjectionDelivery_29304> <http://psink.de/scio/hasDuration> \"3 minutes\". <http://scio/data/InjectionDelivery_29327> <http://psink.de/scio/hasDuration> \"3 minutes\"."
+77759, Syringe, 11778, 11790, "5 μL syringe", "", "<http://scio/data/CompoundTreatment_29280> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_29302> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_29325> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+96178, BBBTest, 12059, 12062, "BBB", "", 
+96179, LadderRungTest, 12067, 12078, "ladder walk", "", 
+96180, DoubleBlindStudy, 12099, 12116, "observers blinded", "", 
+99536, SpinalLesionSite, 17339, 17356, "total tissue area", "", 
+96185, TissueSparingTest, 17383, 17419, "value for the total tissue remaining", "", 
+96186, HistologicalInvestigationTest, 18290, 18402, "anti-chondroitin sulfate proteoglycans (CS-56 1:50 Sigma) to identify proteoglycan deposition at the lesion site", "", 
+99537, OlfactoryEnsheathingGliaCell, 18489, 18492, "OEG", "", 
+99538, SchwannCell, 18497, 18510, "Schwann cells", "", 
+96618, AxonalChangesTest, 18640, 18678, "stain for spared and regenerated axons", "", 
+96189, AstrogliosisTest, 18761, 18855, "Glial fibrillary acidic protein (GFAP) (1:500 DakoCytomation, Denmark) to stain for astrocytes", "", 
+99539, SchwannCell, 18870, 18883, "Schwann cells", "", 
+99540, OlfactoryEnsheathingGliaCell, 18888, 18902, "olfactory glia", "", 
+96191, AngiogenesisTest, 18908, 19029, "anti-collagen IV (1:200 Rockland Inc., Gilbertsville, PA) to ascertain the distribution of basal lamina and blood vessels", "", 
+96192, AngiogenesisTest, 19039, 19102, "anti-laminin-1 (1:200 Sigma) for basal lamina and blood vessels", "", 
+96625, NeuronalChangesTest, 21246, 21352, "To quantify sparing/regeneration of descending propriospinal neurons, the labeled cell bodies were counted", "", 
+96194, SpinalFiberTract, 21282, 21314, "descending propriospinal neurons", "", 
+99541, SpinalCord, 21386, 21404, "spinal cord region", "", 
+99542, Rostral, 21405, 21412, "rostral", "", 
+99543, SpinalLesionSite, 21420, 21431, "lesion site", "", 
+99544, AxonalRegenerationTest, 21634, 21699, "Fluorogold labeling of supraspinal projecting nuclei in the brain", "", 
+99548, AnalyzedExperimentalGroup, 21701, 21720, "experimental groups", "", 
+96195, ANOVA, 21743, 21779, "one-way analysis of variance (ANOVA)", "", 
+96198, StatisticalTest, 21796, 21836, "Dunnetts methods of multiple comparisons", "", 
+99545, GroupName, 21853, 21866, "control group", "", "<http://scio/data/DefinedExperimentalGroup_29374> <http://psink.de/scio/hasGroupName> \"control group\"."
+99546, GroupName, 21868, 21879, "injury only", "", 
+96199, StatisticalTest, 21890, 21939, "the Tukey test for multiple comparison procedures", "", 
+99549, AnalyzedExperimentalGroup, 21948, 21964, "all experimental", "", 
+99547, GroupName, 21969, 21983, "control groups", "", 
+99552, AxonalRegenerationTest, 21985, 22033, "Fluorogold analysis of propriospinal projections", "", 
+99550, Caudal, 22043, 22049, "distal", "", 
+99551, SpinalCord, 22050, 22061, "spinal cord", "", 
+96196, ANOVA, 22084, 22120, "one way analysis of variance (ANOVA)", "", "<http://scio/data/Result_54341> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>. <http://scio/data/Result_54352> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>. <http://scio/data/Result_54365> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>."
+99553, BBBTest, 22236, 22246, "BBB scores", "", 
+96197, ANOVA, 22279, 22324, "non parametric Kruskal Wallace ANOVA on ranks", "", 
+96200, StatisticalTest, 22347, 22386, "Dunnetts method of multiple comparisons", "", "<http://scio/data/Result_54988> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_55001> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+99554, GroupName, 22403, 22416, "control group", "", 
+97311, PositiveSignificance, 30224, 30249, "statistically significant", "", "<http://scio/data/PositiveSignificance_54997> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54995> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54997>."
+97321, Higher, 30250, 30258, "increase", "R35", "<http://scio/data/Trend_54995> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+97313, BBBTest, 30262, 30272, "BBB scores", "", "<http://scio/data/BBBTest_67877> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77121> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77121> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scores)\". <http://scio/data/Result_54988> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+97315, GroupName, 30289, 30307, "Schwann cell group", "E2", 
+97316, GroupName, 30325, 30339, "contusion only", "E4", 
+97319, PValue, 30344, 30350, "p<0.05", "", "<http://scio/data/PositiveSignificance_54997> <http://psink.de/scio/hasPValue> \"p<0.05\"."
+97312, PositiveSignificance, 30355, 30366, "significant", "", "<http://scio/data/PositiveSignificance_55010> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_55008> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_55010>."
+97322, Higher, 30367, 30375, "increase", "R36", "<http://scio/data/Trend_55008> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+97314, BBBTest, 30379, 30389, "BBB scores", "", "<http://scio/data/BBBTest_67880> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77122> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77122> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scores)\". <http://scio/data/Result_55001> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+97318, GroupName, 30411, 30420, "OEG group", "E1", 
+97317, GroupName, 30438, 30457, "control injury only", "E4", 
+97320, PValue, 30462, 30468, "p<0.05", "", "<http://scio/data/PositiveSignificance_55010> <http://psink.de/scio/hasPValue> \"p<0.05\"."
+96207, Duration, 31981, 32025, "Two weeks following cell SCs transplantation", "", 
+96350, SchwannCell, 32006, 32009, "SCs", "", 
+96356, OlfactoryEnsheathingGliaCell, 32027, 32030, "OEG", "", 
+96354, SchwannCell, 32034, 32037, "SCs", "", 
+96355, ZeroSignificance, 32051, 32065, "no significant", "", "<http://scio/data/ZeroSignificance_53594> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_53592> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_53594>."
+96380, None, 32051, 32077, "no significant differences", "R1", "<http://scio/data/Trend_53592> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96379, AnalyzedExperimentalGroup, 32078, 32092, "between groups", "", 
+96362, HistologicalInvestigationTest, 32096, 32122, "the amount of total tissue", "", "<http://scio/data/HistologicalInvestigationTest_67554> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76999> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76999> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (the amount of total tissue)\". <http://scio/data/Result_53585> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96210, PValue, 32124, 32130, "p=0.27", "", "<http://scio/data/ZeroSignificance_53594> <http://psink.de/scio/hasPValue> \"p=0.27\"."
+96211, MeanValue, 32138, 32142, "72.4", "", 
+96212, StandardError, 32142, 32147, "±3.7%", "", 
+96213, NNumber, 32153, 32154, "6", "", 
+96357, GroupName, 32173, 32194, "medium-injected group", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium-injected group\"."
+96214, MeanValue, 32196, 32200, "74.6", "", 
+96215, StandardError, 32200, 32205, "±9.2%", "", 
+96216, NNumber, 32209, 32210, "6", "", 
+96358, GroupName, 32219, 32241, "OEG-transplanted group", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEG-transplanted group\"."
+96217, MeanValue, 32246, 32250, "85.1", "", 
+96218, StandardError, 32250, 32255, "±2.9%", "", 
+96219, NNumber, 32259, 32260, "6", "", 
+96359, GroupName, 32269, 32291, "SCs-transplanted group", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs-transplanted group\"."
+96360, ZeroSignificance, 32315, 32329, "no significant", "", "<http://scio/data/ZeroSignificance_53607> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_53605> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_53607>."
+96381, None, 32315, 32341, "no significant differences", "R2", "<http://scio/data/Trend_53605> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96221, PValue, 32343, 32349, "p=0.25", "", "<http://scio/data/ZeroSignificance_53607> <http://psink.de/scio/hasPValue> \"p=0.25\"."
+96361, AnalyzedExperimentalGroup, 32351, 32365, "between groups", "", 
+96222, TissueSparingTest, 32370, 32393, "intact tissue remaining", "", "<http://scio/data/TissueSparingTest_67558> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_77001> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_77001> <http://www.w3.org/2000/01/rdf-schema#label> \"TissueSparingTest (intact tissue remaining)\". <http://scio/data/Result_53598> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96223, MeanValue, 32405, 32409, "29.5", "", 
+96224, StandardError, 32409, 32414, "±4.6%", "", 
+96225, NNumber, 32418, 32419, "6", "", 
+96365, GroupName, 32438, 32459, "medium-injected group", "E3", 
+96226, MeanValue, 32461, 32465, "38.9", "", 
+96227, StandardError, 32465, 32470, "±7.7%", "", 
+96228, NNumber, 32474, 32475, "6", "", 
+96366, GroupName, 32484, 32506, "OEG-transplanted group", "E1", 
+96229, MeanValue, 32511, 32515, "41.6", "", 
+96230, StandardError, 32515, 32520, "±2.3%", "", 
+96231, NNumber, 32524, 32525, "6", "", 
+96367, GroupName, 32534, 32556, "SCs-transplanted group", "E2", 
+96232, Duration, 32569, 32597, "until the 4 month time point", "", 
+96370, HistologicalInvestigationTest, 32603, 32615, "total tissue", "", "<http://scio/data/HistologicalInvestigationTest_67562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77003> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77003> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (total tissue)\". <http://scio/data/Result_53615> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96368, AnalyzedExperimentalGroup, 32623, 32642, "transplanted groups", "", "<http://scio/data/AnalyzedExperimentalGroup_53628> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnalyzedExperimentalGroup>. <http://scio/data/AnalyzedExperimentalGroup_53628> <http://www.w3.org/2000/01/rdf-schema#label> \"transplanted groups, A1\"."
+96234, PositiveSignificance, 32659, 32672, "significantly", "", "<http://scio/data/PositiveSignificance_53624> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_53622> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_53624>."
+96382, Higher, 32673, 32680, "greater", "R3", "<http://scio/data/Trend_53622> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96369, AnalyzedExperimentalGroup, 32686, 32694, "controls", "", "<http://scio/data/AnalyzedExperimentalGroup_53639> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnalyzedExperimentalGroup>. <http://scio/data/AnalyzedExperimentalGroup_53639> <http://www.w3.org/2000/01/rdf-schema#label> \"controls, A2\"."
+96236, PValue, 32696, 32704, "p=0.028)", "", "<http://scio/data/PositiveSignificance_53624> <http://psink.de/scio/hasPValue> \"p=0.028)\"."
+96371, HistologicalInvestigationTest, 32706, 32718, "Total tissue", "", 
+96237, MeanValue, 32723, 32727, "46.5", "", 
+96238, StandardError, 32727, 32732, "±6.2%", "", 
+96239, NNumber, 32736, 32738, "11", "", 
+96372, GroupName, 32779, 32800, "medium-injected group", "E3", 
+96240, MeanValue, 32802, 32806, "63.1", "", 
+96241, StandardError, 32806, 32811, "±3.7%", "", 
+96242, NNumber, 32815, 32817, "11", "", 
+96373, GroupName, 32826, 32847, "OEGtransplanted group", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEGtransplanted group\"."
+96243, MeanValue, 32852, 32856, "64.1", "", 
+96244, StandardError, 32856, 32861, "±5.7%", "", 
+96245, NNumber, 32865, 32867, "11", "", 
+96374, GroupName, 32876, 32897, "SCstransplanted group", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCstransplanted group\"."
+96246, PositiveSignificance, 32901, 32912, "significant", "", "<http://scio/data/PositiveSignificance_53659> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_53657> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_53659>."
+96384, ObservedDifference, 32913, 32923, "difference", "R4", "<http://scio/data/Trend_53657> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+96247, PValue, 32925, 32932, "p=0.028", "", "<http://scio/data/PositiveSignificance_53659> <http://psink.de/scio/hasPValue> \"p=0.028\"."
+96383, AnalyzedExperimentalGroup, 32948, 32962, "between groups", "", 
+96248, Duration, 32963, 32974, "at 4 months", "", 
+96249, TissueSparingTest, 32982, 33015, "amount of intact tissue remaining", "", "<http://scio/data/TissueSparingTest_67566> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_77005> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_77005> <http://www.w3.org/2000/01/rdf-schema#label> \"TissueSparingTest (amount of intact tissue remaining)\". <http://scio/data/Result_53650> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96250, MeanValue, 33027, 33031, "26.0", "", 
+96251, StandardError, 33031, 33036, "±3.9%", "", 
+96252, NNumber, 33040, 33042, "11", "", 
+96376, GroupName, 33061, 33082, "medium-injected group", "E3", 
+96253, MeanValue, 33084, 33088, "39.5", "", 
+96254, StandardError, 33088, 33093, "±4.1%", "", 
+96255, NNumber, 33097, 33099, "11", "", 
+96377, GroupName, 33108, 33130, "OEG-transplanted group", "E1", 
+96256, MeanValue, 33136, 33140, "35.1", "", 
+96257, StandardError, 33140, 33145, "±6.4%", "", 
+96375, GroupName, 33153, 33175, "SCs-transplanted group", "E2", 
+96258, Duration, 37437, 37471, "After 2 weeks post transplantation", "", 
+96389, GroupName, 37473, 37489, "OEG spinal cords", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEG spinal cords\"."
+96396, ObservedDifference, 37499, 37514, "moderate change", "R5, R6", "<http://scio/data/Trend_54010> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_54021> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+96260, AstrogliosisTest, 37518, 37531, "GFAP staining", "", "<http://scio/data/AstrogliosisTest_67669> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77039> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77039> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (GFAP staining)\". <http://scio/data/AstrogliosisTest_81686> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_81686> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (GFAP staining)\". <http://scio/data/Result_54003> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54014> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96261, DefinedExperimentalGroup, 37549, 37552, "SCs", "", 
+96391, GroupName, 37557, 37584, "medium treated spinal cords", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium treated spinal cords\"."
+96262, NNumber, 37588, 37589, "6", "", 
+96395, Duration, 37694, 37746, "At 4 months following OEG, SCs and medium injections", "", 
+96399, OlfactoryEnsheathingGliaCell, 37716, 37719, "OEG", "", 
+96400, SchwannCell, 37721, 37724, "SCs", "", 
+96401, Vehicle, 37729, 37735, "medium", "", 
+96402, InjectionDelivery, 37736, 37746, "injections", "", 
+96403, AstrogliosisTest, 37748, 37810, "GFAP immunofluorescence staining (analyzed by pixel intensity)", "", 
+96404, AstrogliosisTest, 37854, 37877, "GFAP immunofluorescence", "", 
+96405, SpinalLesionSite, 37885, 37896, "injury zone", "", 
+96390, GroupName, 37902, 37924, "OEG transplanted group", "E1", 
+96397, Lower, 37934, 37943, "reduction", "R7", "<http://scio/data/Trend_54032> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+96393, NumericValue, 37947, 37950, "27%", "", 
+96265, AstrogliosisTest, 37954, 37977, "GFAP immunofluorescence", "", "<http://scio/data/AstrogliosisTest_67672> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77042> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77042> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (GFAP immunofluorescence)\". <http://scio/data/Result_54025> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96388, GroupName, 37999, 38021, "SCs transplanted group", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs transplanted group\"."
+96394, NumericValue, 38028, 38031, "23%", "", 
+96398, Lower, 38032, 38041, "reduction", "R8", "<http://scio/data/Trend_54045> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+96267, AstrogliosisTest, 38045, 38068, "GFAP immunofluorescence", "", "<http://scio/data/AstrogliosisTest_67675> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77044> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (GFAP immunofluorescence)\". <http://scio/data/Result_54038> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96392, GroupName, 38090, 38111, "medium-injected group", "E3", 
+96269, ZeroSignificance, 38142, 38171, "not statistically significant", "", "<http://scio/data/ZeroSignificance_54034> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54032> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54034>. <http://scio/data/ZeroSignificance_54046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54045> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54046>."
+96268, PValue, 38173, 38179, "p<0.05", "", "<http://scio/data/ZeroSignificance_54034> <http://psink.de/scio/hasPValue> \"p<0.05\". <http://scio/data/ZeroSignificance_54046> <http://psink.de/scio/hasPValue> \"p<0.05\"."
+96450, HistologicalInvestigationTest, 38457, 38493, "Immunofluorescence staining for CS56", "", "<http://scio/data/HistologicalInvestigationTest_67678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77046> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (Immunofluorescence staining for CS56)\". <http://scio/data/Result_54051> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96451, SchwannCell, 38501, 38504, "SCs", "", 
+96455, GroupName, 38501, 38523, "SCs transplanted group", "E2", 
+96270, PositiveSignificance, 38540, 38553, "significantly", "", "<http://scio/data/PositiveSignificance_54060> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54058> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54060>."
+96464, Higher, 38554, 38561, "greater", "R9", "<http://scio/data/Trend_54058> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96456, GroupName, 38567, 38599, "medium injected control sections", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium injected control sections\"."
+96461, PValue, 38601, 38608, "p<0.001", "", "<http://scio/data/PositiveSignificance_54060> <http://psink.de/scio/hasPValue> \"p<0.001\"."
+96462, HistologicalInvestigationTest, 38630, 38653, "CS56 immunofluorescence", "", "<http://scio/data/HistologicalInvestigationTest_67681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77048> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77048> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (CS56 immunofluorescence)\". <http://scio/data/Result_54064> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96465, Higher, 38658, 38665, "greater", "R10", "<http://scio/data/Trend_54071> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96452, SchwannCell, 38673, 38676, "SCs", "", 
+96457, GroupName, 38673, 38682, "SCs group", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs group\"."
+96453, OlfactoryEnsheathingGliaCell, 38699, 38702, "OEG", "", 
+96458, GroupName, 38699, 38721, "OEG transplanted group", "E1", 
+96273, PValue, 38723, 38729, "p<0.01", "", "<http://scio/data/Significance_54073> <http://psink.de/scio/hasPValue> \"p<0.01\"."
+96463, HistologicalInvestigationTest, 38744, 38767, "CS56 immunofluorescence", "", "<http://scio/data/HistologicalInvestigationTest_67684> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77050> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77050> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (CS56 immunofluorescence)\". <http://scio/data/Result_54077> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96454, OlfactoryEnsheathingGliaCell, 38775, 38778, "OEG", "", 
+96459, GroupName, 38775, 38784, "OEG group", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEG group\"."
+96275, ZeroSignificance, 38789, 38806, "not significantly", "", "<http://scio/data/ZeroSignificance_54086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54084> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54086>."
+96466, None, 38789, 38816, "not significantly different", "R11", "<http://scio/data/Trend_54084> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96460, GroupName, 38845, 38869, "medium injected controls", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium injected controls\"."
+96472, GroupName, 39345, 39374, "medium injected control group", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium injected control group\"."
+96482, AngiogenesisTest, 39380, 39402, "laminin-1-stained area", "", "<http://scio/data/AngiogenesisTest_67687> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77052> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77052> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (laminin-1-stained area)\". <http://scio/data/AngiogenesisTest_81688> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_81688> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (laminin-1-stained area)\". <http://scio/data/Result_54088> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54101> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96473, Higher, 39412, 39426, "more extensive", "R12, R13", "<http://scio/data/Trend_54095> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_54108> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96470, DefinedExperimentalGroup, 39439, 39442, "OEG", "", 
+96471, GroupName, 39447, 39470, "SCs transplanted groups", "E2", 
+96276, ZeroSignificance, 39499, 39528, "not statistically significant", "", "<http://scio/data/ZeroSignificance_54097> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54095> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54097>. <http://scio/data/ZeroSignificance_54109> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54108> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54109>."
+96467, PValue, 39530, 39536, "p=0.15", "", "<http://scio/data/ZeroSignificance_54097> <http://psink.de/scio/hasPValue> \"p=0.15\". <http://scio/data/ZeroSignificance_54109> <http://psink.de/scio/hasPValue> \"p=0.15\"."
+96476, Location, 40366, 40376, "graft site", "", "<http://scio/data/AngiogenesisTest_67697> <http://psink.de/scio/hasLocation> <http://psink.de/scio/Location>."
+96475, GroupName, 40384, 40406, "OEG transplanted group", "E1", 
+96474, Higher, 40417, 40421, "more", "R14, R15", "<http://scio/data/Trend_54121> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_54138> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96483, AngiogenesisTest, 40422, 40452, "collagen IV immunofluorescence", "", "<http://scio/data/AngiogenesisTest_67697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77055> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77055> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (collagen IV immunofluorescence)\". <http://scio/data/AngiogenesisTest_81690> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_81690> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (collagen IV immunofluorescence)\". <http://scio/data/Result_54114> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54129> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96478, AnalyzedExperimentalGroup, 40470, 40482, "other groups", "", 
+96484, AngiogenesisTest, 40555, 40585, "collagen IV immunofluorescence", "", 
+96480, ZeroSignificance, 40607, 40628, "statistically similar", "", "<http://scio/data/ZeroSignificance_54125> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54121> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54125>. <http://scio/data/ZeroSignificance_54139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54138> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54139>."
+96481, PValue, 40630, 40636, "p=0.10", "", "<http://scio/data/ZeroSignificance_54125> <http://psink.de/scio/hasPValue> \"p=0.10\". <http://scio/data/ZeroSignificance_54139> <http://psink.de/scio/hasPValue> \"p=0.10\"."
+96623, AxonalChangesTest, 43087, 43204, "Retrograde labeling with Fluorogold was used to quantify extension of spared/regenerated descending supraspinal axons", "", 
+96624, SpinalFiberTract, 43176, 43204, "descending supraspinal axons", "", 
+96277, PositiveSignificance, 43367, 43392, "statistically significant", "", "<http://scio/data/PositiveSignificance_54153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54151> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54153>. <http://scio/data/PositiveSignificance_54165> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54164> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54165>."
+96516, ObservedDifference, 43393, 43404, "differences", "R16, R17", "<http://scio/data/Trend_54151> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>. <http://scio/data/Trend_54164> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+96278, PValue, 43406, 43412, "p<0.05", "", "<http://scio/data/PositiveSignificance_54153> <http://psink.de/scio/hasPValue> \"p<0.05\". <http://scio/data/PositiveSignificance_54165> <http://psink.de/scio/hasPValue> \"p<0.05\"."
+96486, AxonalChangesTest, 43426, 43444, "total brain counts", "", "<http://scio/data/AxonalChangesTest_67701> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77058> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77058> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (total brain counts)\". <http://scio/data/AxonalChangesTest_81692> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81692> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (total brain counts)\". <http://scio/data/Result_54144> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54157> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96495, GroupName, 43452, 43474, "OEG transplanted group", "E1", 
+96279, MeanValue, 43476, 43480, "3019", "", 
+96280, StandardError, 43480, 43484, "±216", "", 
+96500, GroupName, 43499, 43521, "SCs transplanted group", "E2", 
+96281, MeanValue, 43523, 43527, "2767", "", 
+96282, StandardError, 43527, 43531, "±411", "", 
+96509, GroupName, 43554, 43579, "control injury only group", "E4", "<http://scio/data/DefinedExperimentalGroup_29374> <http://psink.de/scio/hasGroupName> \"control injury only group\"."
+96283, MeanValue, 43581, 43585, "1204", "", 
+96284, StandardError, 43585, 43589, "±331", "", 
+96520, PositiveSignificance, 43592, 43603, "Statistical", "", 
+96286, PValue, 43617, 43623, "p<0.05", "", "<http://scio/data/PositiveSignificance_54179> <http://psink.de/scio/hasPValue> \"p<0.05\". <http://scio/data/PositiveSignificance_54263> <http://psink.de/scio/hasPValue> \"p<0.05\". <http://scio/data/PositiveSignificance_54277> <http://psink.de/scio/hasPValue> \"p<0.05\"."
+96487, AxonalChangesTest, 43640, 43716, "number of separate brain regions projecting distally through the injury zone", "", "<http://scio/data/AxonalChangesTest_67707> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77061> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77061> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (number of separate brain regions projecting distally through the injury zone)\". <http://scio/data/Result_54170> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96496, GroupName, 43718, 43739, "OEG transplanted rats", "E1", 
+96287, PositiveSignificance, 43747, 43772, "statistically significant", "", "<http://scio/data/PositiveSignificance_54179> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54177> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54179>."
+96545, ObservedDifference, 43773, 43784, "differences", "R18", "<http://scio/data/Trend_54177> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+96521, SpinalFiberTract, 43792, 43816, "Raphe projecting neurons", "", "<http://scio/data/SpinalFiberTract_67708> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalFiberTract>. <http://scio/data/AxonalChangesTest_67707> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalFiberTract_67708>."
+96288, MeanValue, 43818, 43821, "562", "", 
+96289, StandardError, 43821, 43824, "±43", "", 
+96512, GroupName, 43838, 43846, "controls", "E4", "<http://scio/data/DefinedExperimentalGroup_29374> <http://psink.de/scio/hasGroupName> \"controls\"."
+96290, MeanValue, 43848, 43851, "184", "", 
+96291, StandardError, 43851, 43854, "±62", "", 
+96488, AxonalChangesTest, 43857, 43886, "Numbers of Fluorogold neurons", "", "<http://scio/data/AxonalChangesTest_67711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77063> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77063> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Numbers of Fluorogold neurons)\". <http://scio/data/Result_54200> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96522, AnatomicalLocation, 43894, 43899, "Raphe", "", "<http://scio/data/AnatomicalLocation_67712> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/AxonalChangesTest_67711> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_67712>."
+96501, GroupName, 43904, 43925, "SCs transplanted rats", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs transplanted rats\"."
+96292, MeanValue, 43927, 43930, "296", "", 
+96293, StandardError, 43930, 43933, "±50", "", 
+96546, None, 43939, 43971, "not show significant differences", "R19", "<http://scio/data/Trend_54207> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96295, ZeroSignificance, 43939, 43959, "not show significant", "", "<http://scio/data/ZeroSignificance_54211> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54207> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54211>."
+96510, GroupName, 43989, 44010, "control injuries only", "E4", 
+96296, RubrospinalTract, 44012, 44023, "Rubrospinal", "", "<http://scio/data/RubrospinalTract_67724> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RubrospinalTract>. <http://scio/data/AxonalChangesTest_67723> <http://psink.de/scio/hasLocation> <http://scio/data/RubrospinalTract_67724>."
+96490, AxonalChangesTest, 44024, 44042, "Fluorogold numbers", "", "<http://scio/data/AxonalChangesTest_67723> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77065> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77065> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Fluorogold numbers)\". <http://scio/data/AxonalChangesTest_81694> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81694> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Fluorogold numbers)\". <http://scio/data/AxonalChangesTest_81696> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81696> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Fluorogold numbers)\". <http://scio/data/Result_54213> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54226> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54239> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96524, DefinedExperimentalGroup, 44050, 44053, "OEG", "", 
+96502, GroupName, 44058, 44076, "SCs grafted groups", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs grafted groups\"."
+96547, None, 44082, 44089, "similar", "R20", "<http://scio/data/Trend_54220> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96298, MeanValue, 44091, 44094, "243", "", 
+96299, StandardError, 44094, 44097, "±34", "", 
+96300, MeanValue, 44102, 44105, "244", "", 
+96301, StandardError, 44105, 44108, "±50", "", 
+96548, None, 44127, 44168, "not statistically significantly different", "R21, R22", "<http://scio/data/Trend_54235> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_54248> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96305, ZeroSignificance, 44127, 44158, "not statistically significantly", "", "<http://scio/data/ZeroSignificance_54236> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54235> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54236>. <http://scio/data/ZeroSignificance_54249> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54248> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54249>."
+96511, GroupName, 44178, 44203, "control injury only group", "E4", 
+96303, MeanValue, 44205, 44208, "115", "", 
+96304, StandardError, 44208, 44211, "±42", "", 
+96491, AxonalChangesTest, 44218, 44255, "numbers of Fluorogold labeled neurons", "", "<http://scio/data/AxonalChangesTest_67731> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77069> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77069> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (numbers of Fluorogold labeled neurons)\". <http://scio/data/AxonalChangesTest_81698> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81698> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (numbers of Fluorogold labeled neurons)\". <http://scio/data/Result_54252> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54267> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96306, AnatomicalLocation, 44263, 44275, "hypothalamus", "", "<http://scio/data/AnatomicalLocation_67732> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/AxonalChangesTest_67731> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_67732>."
+96313, PositiveSignificance, 44281, 44294, "significantly", "", "<http://scio/data/PositiveSignificance_54263> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54259> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54263>. <http://scio/data/PositiveSignificance_54277> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54276> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54277>."
+96549, Higher, 44295, 44301, "higher", "R23, R24", "<http://scio/data/Trend_54259> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_54276> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96525, DefinedExperimentalGroup, 44314, 44317, "OEG", "", 
+96503, GroupName, 44322, 44332, "SCs groups", "E2", 
+96307, MeanValue, 44334, 44337, "135", "", 
+96308, StandardError, 44337, 44340, "±16", "", 
+96309, MeanValue, 44345, 44348, "116", "", 
+96310, StandardError, 44348, 44351, "±23", "", 
+96513, GroupName, 44383, 44391, "controls", "E4", 
+96311, MeanValue, 44393, 44395, "60", "", 
+96312, StandardError, 44395, 44398, "±15", "", 
+96492, AxonalChangesTest, 44401, 44427, "Fluorogold labeled neurons", "", 
+96315, AnatomicalLocation, 44435, 44454, "reticular formation", "", 
+96514, GroupName, 44458, 44482, "control injury only rats", "E4", "<http://scio/data/DefinedExperimentalGroup_29374> <http://psink.de/scio/hasGroupName> \"control injury only rats\"."
+96316, MeanValue, 44492, 44495, "632", "", 
+96317, StandardError, 44495, 44499, "±165", "", 
+96318, MeanValue, 44516, 44520, "1590", "", 
+96319, StandardError, 44520, 44524, "±100", "", 
+96497, GroupName, 44529, 44545, "OEG treated rats", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEG treated rats\"."
+96320, MeanValue, 44550, 44554, "1635", "", 
+96321, StandardError, 44554, 44557, "±23", "", 
+96504, GroupName, 44562, 44581, "SCs grafted animals", "E2", "<http://scio/data/DefinedExperimentalGroup_29358> <http://psink.de/scio/hasGroupName> \"SCs grafted animals\"."
+96493, AxonalChangesTest, 44606, 44624, "Fluorogold numbers", "", "<http://scio/data/AxonalChangesTest_67735> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_67739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77072> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77072> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Fluorogold numbers)\". <http://scio/data/AxonalChangesTest_77074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77074> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Fluorogold numbers)\". <http://scio/data/Result_54282> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54299> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96526, AnatomicalLocation, 44632, 44645, "trigeminal/DC", "", "<http://scio/data/AnatomicalLocation_67736> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/AxonalChangesTest_67735> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_67736>."
+96528, ZeroSignificance, 44651, 44682, "not statistically significantly", "", "<http://scio/data/ZeroSignificance_54293> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54289> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54293>. <http://scio/data/ZeroSignificance_54308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54307> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54308>."
+96553, None, 44651, 44692, "not statistically significantly different", "R25, R26", "<http://scio/data/Trend_54289> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_54307> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96530, AnalyzedExperimentalGroup, 44696, 44706, "all groups", "", 
+96552, None, 44731, 44753, "This was also the case", "", 
+96527, AnatomicalLocation, 44758, 44787, "corticospinal layer V neurons", "", "<http://scio/data/AnatomicalLocation_67740> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/AxonalChangesTest_67739> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_67740>."
+96494, AxonalChangesTest, 44905, 44920, "neurons labeled", "", "<http://scio/data/AxonalChangesTest_67743> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77076> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77076> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (neurons labeled)\". <http://scio/data/AxonalChangesTest_81700> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81700> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (neurons labeled)\". <http://scio/data/Result_54315> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54328> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96322, AnatomicalLocation, 44928, 44945, "vestibular system", "", "<http://scio/data/AnatomicalLocation_67744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/AxonalChangesTest_67743> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_67744>."
+96323, PositiveSignificance, 44951, 44964, "significantly", "", "<http://scio/data/PositiveSignificance_54324> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54322> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54324>. <http://scio/data/PositiveSignificance_54338> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54337> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54338>."
+96554, Higher, 44965, 44974, "increased", "R27, R28", "<http://scio/data/Trend_54322> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_54337> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96531, DefinedExperimentalGroup, 44982, 44985, "OEG", "", 
+96505, GroupName, 44990, 45011, "SCs transplanted rats", "E2", 
+96325, MeanValue, 45013, 45016, "373", "", 
+96326, StandardError, 45016, 45019, "±65", "", 
+96327, MeanValue, 45024, 45027, "360", "", 
+96328, StandardError, 45027, 45030, "±51", "", 
+96515, GroupName, 45062, 45086, "control injury only rats", "E4", 
+96329, MeanValue, 45088, 45091, "117", "", 
+96330, StandardError, 45091, 45094, "±27", "", 
+96559, AxonalChangesTest, 45189, 45234, "Fluorogold propriospinal neurons were counted", "", 
+96560, SpinalCord, 45240, 45251, "spinal cord", "", 
+96561, VertebralSegment, 45252, 45260, "segments", "", 
+96562, VertebralSegment, 45261, 45268, "rostral", "", 
+96563, SpinalLesionSite, 45276, 45303, "lesion/transplantation site", "", 
+96532, AxonalChangesTest, 45334, 45355, "Propriospinal neurons", "", "<http://scio/data/AxonalChangesTest_67751> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77079> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77079> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (Propriospinal neurons)\". <http://scio/data/Result_54341> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96331, Caudal, 45377, 45383, "caudal", "", 
+96332, Distance, 45405, 45409, "8 mm", "", 
+96333, Caudal, 45410, 45416, "caudal", "", 
+96533, Caudal, 45426, 45432, "caudal", "", 
+96534, SpinalLesionSite, 45448, 45459, "injury site", "", 
+96334, MeanValue, 45470, 45471, "6", "", 
+96335, StandardError, 45471, 45473, "±3", "", 
+96535, GroupName, 45481, 45502, "medium injected group", "E3", 
+96336, MeanValue, 45503, 45505, "38", "", 
+96337, StandardError, 45505, 45508, "±26", "", 
+96498, GroupName, 45516, 45538, "OEG transplanted group", "E1", 
+96338, MeanValue, 45543, 45546, "131", "", 
+96339, StandardError, 45546, 45549, "±59", "", 
+96506, GroupName, 45557, 45579, "SCs transplanted group", "E2", 
+96538, PositiveSignificance, 45629, 45640, "significant", "", "<http://scio/data/PositiveSignificance_54350> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54348> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54350>."
+96555, ObservedDifference, 45641, 45651, "difference", "R29", "<http://scio/data/Trend_54348> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+96536, GroupName, 45664, 45679, "medium injected", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium injected\"."
+96499, GroupName, 45684, 45707, "OEG transplanted groups", "E1", 
+96540, PositiveSignificance, 45715, 45728, "significantly", "", "<http://scio/data/PositiveSignificance_54361> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_54359> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_54361>."
+96557, Higher, 45729, 45735, "larger", "R30", "<http://scio/data/Trend_54359> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+96542, AxonalChangesTest, 45736, 45775, "number of labeled propriospinal neurons", "", "<http://scio/data/AxonalChangesTest_67757> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77081> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77081> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (number of labeled propriospinal neurons)\". <http://scio/data/AxonalChangesTest_81702> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81702> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (number of labeled propriospinal neurons)\". <http://scio/data/Result_54352> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54365> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96507, GroupName, 45796, 45805, "SCs group", "E2", 
+96537, GroupName, 45825, 45846, "medium injected group", "E3", "<http://scio/data/DefinedExperimentalGroup_29366> <http://psink.de/scio/hasGroupName> \"medium injected group\"."
+96543, PValue, 45848, 45854, "p<0.03", "", "<http://scio/data/PositiveSignificance_54361> <http://psink.de/scio/hasPValue> \"p<0.03\"."
+96558, None, 45867, 45906, "no statistically significant difference", "R31", "<http://scio/data/Trend_54372> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96341, ZeroSignificance, 45867, 45895, "no statistically significant", "", "<http://scio/data/ZeroSignificance_54374> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_54372> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54374>."
+96544, DefinedExperimentalGroup, 45919, 45922, "OEG", "", 
+96508, GroupName, 45927, 45950, "SCs transplanted groups", "E2", 
+96564, Duration, 46299, 46333, "One week following transplantation", "", 
+96565, OlfactoryEnsheathingGliaCell, 46337, 46340, "OEG", "", 
+96566, SchwannCell, 46344, 46347, "SCs", "", 
+96567, Duration, 46354, 46373, "21 days post injury", "", 
+96568, Injury, 46367, 46373, "injury", "", 
+96569, BBBTest, 46375, 46387, "these scores", "", "<http://scio/data/BBBTest_67763> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77084> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77084> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (these scores)\". <http://scio/data/BBBTest_80074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80074> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (these scores)\". <http://scio/data/Result_54376> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_54387> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96616, None, 46388, 46410, "did not increase above", "R32, R33", "<http://scio/data/Trend_54383> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_54394> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96647, GroupName, 46411, 46425, "control scores", "A2", "<http://scio/data/AnalyzedExperimentalGroup_53639> <http://psink.de/scio/hasGroupName> \"control scores\"."
+96570, AnalyzedExperimentalGroup, 46432, 46442, "all groups", "", 
+96578, MeanValue, 46451, 46456, "10–11", "", 
+96573, Duration, 46458, 46484, "At 2 weeks after treatment", "", 
+96574, Cell, 46490, 46495, "cells", "", 
+96575, Vehicle, 46499, 46505, "medium", "", 
+96593, GroupName, 46507, 46531, "control injury only rats", "E4", 
+96577, MeanValue, 46549, 46551, "11", "", 
+96576, Vehicle, 46553, 46559, "medium", "", 
+96594, GroupName, 46553, 46568, "medium injected", "E3", 
+96579, MeanValue, 46576, 46578, "10", "", 
+96597, DefinedExperimentalGroup, 46580, 46583, "OEG", "", 
+96580, MeanValue, 46591, 46593, "12", "", 
+96598, DefinedExperimentalGroup, 46598, 46601, "SCs", "", 
+96581, MeanValue, 46609, 46611, "11", "", 
+96602, Duration, 46624, 46664, "Three weeks following injection of cells", "", 
+96603, InjectionDelivery, 46646, 46655, "injection", "", 
+96604, Cell, 46659, 46664, "cells", "", 
+96605, BBBTest, 46675, 46685, "BBB scores", "", 
+96606, GroupName, 46690, 46707, "OEG injected rats", "E1", "<http://scio/data/DefinedExperimentalGroup_29350> <http://psink.de/scio/hasGroupName> \"OEG injected rats\"."
+96582, MeanValue, 46713, 46715, "13", "", 
+96599, DefinedExperimentalGroup, 46717, 46720, "SCs", "", 
+96583, MeanValue, 46728, 46730, "12", "", 
+96595, GroupName, 46732, 46747, "medium injected", "E3", 
+96584, MeanValue, 46755, 46757, "10", "", 
+96607, GroupName, 46762, 46773, "injury only", "E4", "<http://scio/data/DefinedExperimentalGroup_29374> <http://psink.de/scio/hasGroupName> \"injury only\"."
+96585, MeanValue, 46781, 46783, "11", "", 
+96609, Duration, 46849, 46862, "until day 133", "", 
+96610, Duration, 46867, 46870, "144", "", 
+96601, DefinedExperimentalGroup, 46876, 46879, "OEG", "", 
+96591, MeanValue, 46897, 46899, "14", "", 
+96600, DefinedExperimentalGroup, 46901, 46904, "SCs", "", 
+96590, MeanValue, 46912, 46914, "13", "", 
+96596, GroupName, 46916, 46931, "medium injected", "E3", 
+96589, MeanValue, 46939, 46941, "11", "", 
+96588, MeanValue, 46946, 46948, "10", "", 
+96608, GroupName, 46954, 46965, "injury only", "E4", 
+96587, MeanValue, 46973, 46975, "11", "", 
+96586, MeanValue, 46980, 46982, "11", "", 
+96611, Duration, 47117, 47127, "At 6 weeks", "", 
+96615, RepeatedMeasureTrend, 47117, 47155, "At 6 weeks or 4 months after treatment", "", "<http://scio/data/RepeatedMeasureTrend_54405> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_54398> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_54405>."
+96346, Duration, 47131, 47155, "4 months after treatment", "", 
+96612, FischerRat, 47162, 47166, "rats", "", 
+96613, MeanValue, 47182, 47216, "3.5 and 5.5 (see Table 2) out of 6", "", 
+96347, LadderRungTest, 47224, 47254, "horizontal ladder walking test", "", "<http://scio/data/LadderRungTest_67766> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_77085> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_77085> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (horizontal ladder walking test)\". <http://scio/data/Result_54398> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+96617, None, 47276, 47302, "no significant differences", "R34", "<http://scio/data/RepeatedMeasureTrend_54405> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+96364, ZeroSignificance, 47276, 47290, "no significant", "", "<http://scio/data/ZeroSignificance_54407> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_54405> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_54407>."
+96349, AnalyzedExperimentalGroup, 47312, 47326, "between groups", "", 
+97323, Positive, 47403, 47410, "promote", "", "<http://scio/data/Result_54988> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_55001> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."

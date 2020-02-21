@@ -1,0 +1,123 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+95009, SpinalCord, 203, 214, "spinal cord", "", 
+95012, Injury, 215, 221, "injury", "", 
+95000, Adult, 231, 236, "adult", "", 
+95013, CompleteTransection, 429, 437, "complete", "", 
+95014, FischerRat, 445, 449, "rats", "", 
+95003, SchwannCell, 493, 505, "Schwann cell", "", 
+95015, Conduit, 493, 535, "Schwann cell (SC)–filled guidance channels", "", 
+95004, OlfactoryEnsheathingGliaCell, 537, 563, "olfactory ensheathing glia", "", 
+95016, DeliveryMethod, 564, 576, "implantation", "", 
+95005, ChondroitinaseABC, 582, 600, "chondroitinase ABC", "", 
+95017, SpinalFiberTract, 635, 654, "serotonergic fibers", "", 
+95018, Lumbar, 664, 670, "lumbar", "", 
+95019, SpinalCord, 671, 682, "spinal cord", "", 
+95020, PositiveSignificance, 724, 737, "significantly", "", 
+95006, Higher, 738, 746, "improved", "", 
+95021, Positive, 738, 746, "improved", "", 
+95007, RepeatedMeasureTrend, 757, 765, "recovery", "", 
+95023, SpinalFiberTract, 869, 887, "serotonergic axons", "", 
+95024, Caudal, 921, 927, "caudal", "", 
+95025, SpinalCord, 928, 939, "spinal cord", "", 
+95026, InjectionDelivery, 964, 972, "injected", "", 
+56051, SpinalCord, 1020, 1031, "spinal cord", "", 
+95027, Caudal, 1032, 1038, "caudal", "", 
+56050, CompleteTransection, 1044, 1064, "complete transection", "", "<http://scio/data/CompleteTransection_10557> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_10557> <http://www.w3.org/2000/01/rdf-schema#label> \"Complete Transection\"."
+95028, GroupName, 1070, 1077, "control", "", "<http://scio/data/DefinedExperimentalGroup_15681> <http://psink.de/scio/hasGroupName> \"control\"."
+95029, GroupName, 1084, 1097, "treated group", "", 
+95030, Rostral, 1117, 1124, "rostral", "", 
+95031, SpinalLesionSite, 1132, 1138, "lesion", "", 
+95032, BloodBrainBarrierTest, 1150, 1159, "brainstem", "", 
+95033, FischerRat, 1163, 1170, "animals", "", 
+95034, GroupName, 1178, 1191, "treated group", "", 
+95035, AxonalRegenerationTest, 1204, 1233, "axons were able to regenerate", "", 
+95036, Conduit, 1245, 1254, "SC bridge", "", 
+95037, SchwannCell, 1245, 1247, "SC", "", 
+95038, Caudal, 1268, 1274, "caudal", "", 
+95039, SpinalCord, 1275, 1286, "spinal cord", "", 
+95040, GroupName, 1288, 1300, "Treated rats", "", "<http://scio/data/DefinedExperimentalGroup_15673> <http://psink.de/scio/hasGroupName> \"Treated rats\"."
+95041, FischerRat, 1296, 1300, "rats", "", 
+95043, AnatomicalLocation, 1326, 1347, "reticulospinal nuclei", "", 
+95044, AnatomicalLocation, 1349, 1366, "vestibular nuclei", "", 
+95045, AnatomicalLocation, 1376, 1389, "raphe nucleus", "", 
+95042, SpinalCord, 1408, 1419, "spinal cord", "", 
+95049, NeuronalChangesTest, 1421, 1433, "Cell numbers", "", 
+95008, Higher, 1439, 1446, "highest", "", 
+95046, Thoracic, 1454, 1462, "thoracic", "", 
+95048, SpinalCord, 1463, 1474, "spinal cord", "", 
+95047, AnatomicalLocation, 1483, 1509, "lateral vestibular nucleus", "", 
+49111, Adult, 3360, 3365, "adult", "", "<http://scio/data/OrganismModel_1423> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+49112, Female, 3366, 3372, "female", "", "<http://scio/data/OrganismModel_1423> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+49113, FischerRat, 3373, 3385, "Fischer rats", "", "<http://scio/data/OrganismModel_1423> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+72793, SchwannCell, 3551, 3554, "SCs", "", 
+72796, AnatomicalLocation, 3574, 3588, "sciatic nerves", "", "<http://scio/data/AnatomicalLocation_15649> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/SchwannCell_15647> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_15649>."
+72772, Adult, 3592, 3597, "adult", "", 
+72773, Female, 3598, 3604, "female", "", 
+72797, FischerRat, 3605, 3617, "Fischer rats", "", "<http://scio/data/SchwannCell_15647> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+72808, Allogeneic, 3605, 3617, "Fischer rats", "", "<http://scio/data/SchwannCell_15647> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+80901, Purification, 3646, 3654, "Purified", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_15605> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+72801, OlfactoryEnsheathingGliaCell, 3667, 3670, "OEG", "", 
+72803, AnatomicalLocation, 3694, 3733, "nerve fiber layer of the olfactory bulb", "", "<http://scio/data/AnatomicalLocation_15616> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_15605> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_15616>."
+72799, Adult, 3737, 3742, "adult", "", 
+72800, Female, 3743, 3749, "female", "", 
+72798, FischerRat, 3750, 3762, "Fischer rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_15605> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+72809, Allogeneic, 3750, 3762, "Fischer rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_15605> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+72804, Conduit, 4031, 4099, "SCs were resuspended in a 60:40 (v/v) solution of DMEM/F-12/Matrigel", "", 
+73656, SchwannCell, 4031, 4034, "SCs", "", 
+73657, Matrix, 4091, 4099, "Matrigel", "", 
+72813, CompoundSupplier, 4101, 4129, "BD Biosciences, San Jose, CA", "", 
+80902, FischerRat, 4165, 4171, "animal", "", 
+72795, DosageExtracorporal, 4192, 4200, "5 x 10^6", "", "<http://scio/data/CompoundTreatment_15637> <http://psink.de/scio/hasDosage> \"5 x 10^6\"."
+72794, SchwannCell, 4201, 4204, "SCs", "", 
+80903, FischerRat, 4372, 4379, "animals", "", 
+56042, Anaesthetic, 4403, 4410, "Hypnorm", "", "<http://scio/data/Anaesthetic_10560> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/CompleteTransection_10557> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_10560>."
+56043, DosageIntracorporal, 4412, 4431, "120 µL per 200 g bw", "", "<http://scio/data/Anaesthetic_10560> <http://psink.de/scio/hasDosage> \"120 µL per 200 g bw\"."
+56044, Anaesthetic, 4477, 4486, "Midazolam", "", "<http://scio/data/Anaesthetic_10568> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/CompleteTransection_10557> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_10568>."
+56045, DosageIntracorporal, 4488, 4515, "0.75 mg in 150 µL/200 g bwt", "", "<http://scio/data/Anaesthetic_10568> <http://psink.de/scio/hasDosage> \"0.75 mg in 150 µL/200 g bwt\"."
+57714, InjectionDelivery, 4517, 4521, "s.c.", "", "<http://scio/data/InjectionDelivery_10569> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_10568> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_10569>."
+56046, SubcutaneousLocation, 4517, 4521, "s.c.", "", "<http://scio/data/InjectionDelivery_10569> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>."
+56048, Laminectomy, 4605, 4616, "laminectomy", "", 
+56054, Thoracic, 4624, 4654, "thoracic 7–9 vertebral segment", "", 
+56052, CompleteTransection, 4658, 4713, "4-mm region of spinal cord encompassing Th8 was removed", "", 
+56047, T8, 4698, 4701, "Th8", "", "<http://scio/data/CompleteTransection_10557> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+72774, DefinedExperimentalGroup, 4722, 4735, "treated group", "", "<http://scio/data/DefinedExperimentalGroup_15673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_15673> <http://www.w3.org/2000/01/rdf-schema#label> \"combined treatment E2\"."
+72784, DosageExtracorporal, 4749, 4773, "1 µL containing ≈105 OEG", "", "<http://scio/data/CompoundTreatment_15595> <http://psink.de/scio/hasDosage> \"1 µL containing ≈105 OEG\"."
+72811, OlfactoryEnsheathingGliaCell, 4770, 4773, "OEG", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_15605> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_15595> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_15605>."
+72810, SpinalLesionSite, 4809, 4814, "stump", "", "<http://scio/data/SpinalLesionSite_15614> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/DeliveryMethod_15597> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_15614>."
+72817, Duration, 4816, 4820, "Next", "", 
+73658, SpinalLesionSite, 4826, 4844, "spinal cord stumps", "", "<http://scio/data/SpinalLesionSite_17412> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/DeliveryMethod_15624> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_17412>."
+77989, Conduit, 4955, 4971, "guidance channel", "", "<http://scio/data/Conduit_17356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_15622> <http://psink.de/scio/hasCompound> <http://scio/data/Conduit_17356>."
+72812, CompoundSupplier, 5034, 5075, "Hazlett, CytoTherapeutics, Providence, RI", "", "<http://scio/data/Conduit_17356> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/CompoundSupplier>."
+72786, SchwannCell, 5100, 5102, "SC", "", "<http://scio/data/SchwannCell_15647> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SchwannCell>. <http://scio/data/CompoundTreatment_15637> <http://psink.de/scio/hasCompound> <http://scio/data/SchwannCell_15647>."
+72805, Conduit, 5100, 5163, "SC suspended in a 60:40 (v/v) solution of DMEM/F-12 in Matrigel", "", "<http://scio/data/Conduit_15645> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_15637> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_15645>."
+72787, Matrix, 5155, 5163, "Matrigel", "", 
+72814, InjectionDelivery, 5168, 5176, "injected", "", "<http://scio/data/InjectionDelivery_15639> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_15637> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15639>."
+77990, Conduit, 5186, 5193, "channel", "", 
+72775, ChondroitinaseABC, 5211, 5229, "Chondroitinase ABC", "", "<http://scio/data/ChondroitinaseABC_15668> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_15658> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_15668>."
+72816, Seikagaku, 5237, 5246, "Seikagaku", "", "<http://scio/data/ChondroitinaseABC_15668> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku>."
+100407, SchwannCell, 5299, 5301, "SC", "", 
+100408, Conduit, 5299, 5309, "SC bridge/", "", 
+100409, LesionAdjacentTissue, 5314, 5336, "spinal cord interfaces", "", "<http://scio/data/LesionAdjacentTissue_57480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/DeliveryMethod_15660> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_57480>."
+72776, OsmoticMinipump, 5343, 5361, "osmotic mini-pumps", "", "<http://scio/data/CompoundTreatment_15658> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump>."
+80904, OsmoticMinipump, 5402, 5407, "pumps", "", 
+80905, Catheter, 5426, 5435, "catheters", "", 
+80906, Catheter, 5477, 5486, "catheters", "", 
+80907, ChondroitinaseABC, 5522, 5526, "cABC", "", 
+80908, InjectionDelivery, 5527, 5537, "injections", "", 
+72789, DosageExtracorporal, 5539, 5555, "2 µL of 10 µg/mL", "", "<http://scio/data/CompoundTreatment_15658> <http://psink.de/scio/hasDosage> \"2 µL of 10 µg/mL\"."
+72807, ChondroitinaseABC, 5556, 5560, "cABC", "", 
+80909, InjectionDelivery, 5563, 5573, "Injections", "", 
+72790, ChondroitinaseABC, 5577, 5581, "cABC", "", 
+80910, Catheter, 5591, 5600, "catheters", "", 
+72777, Frequency, 5616, 5631, "every other day", "", "<http://scio/data/CompoundTreatment_15658> <http://psink.de/scio/hasFrequency> \"every other day\"."
+72778, Duration, 5636, 5643, "4 weeks", "", "<http://scio/data/CompoundTreatment_15658> <http://psink.de/scio/hasDuration> \"4 weeks\"."
+80911, Catheter, 5665, 5673, "catheter", "", 
+80912, OsmoticMinipump, 5683, 5687, "pump", "", 
+72779, Isoflurane, 5694, 5704, "isoflurane", "", 
+72791, DefinedExperimentalGroup, 5721, 5734, "control group", "", "<http://scio/data/DefinedExperimentalGroup_15681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_15681> <http://www.w3.org/2000/01/rdf-schema#label> \"control E1\"."
+72792, CompleteTransection, 5746, 5757, "transection", "", 
+72780, NNumber, 6816, 6820, "five", "", "<http://scio/data/DefinedExperimentalGroup_15673> <http://psink.de/scio/hasNNumber> \"five\"."
+98473, FischerRat, 6821, 6828, "animals", "", 
+78353, GroupName, 6836, 6854, "combined treatment", "", "<http://scio/data/DefinedExperimentalGroup_15673> <http://psink.de/scio/hasGroupName> \"combined treatment\"."
+72782, NNumber, 6859, 6863, "four", "", "<http://scio/data/DefinedExperimentalGroup_15681> <http://psink.de/scio/hasNNumber> \"four\"."
+72783, DefinedExperimentalGroup, 6871, 6884, "control group", "", 

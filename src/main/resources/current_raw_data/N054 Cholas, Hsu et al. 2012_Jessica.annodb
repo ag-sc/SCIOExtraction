@@ -1,0 +1,29 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48644, Adult, 15608, 15613, "Adult", "", "<http://scio/data/OrganismModel_549> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48645, Female, 15614, 15620, "female", "", "<http://scio/data/OrganismModel_549> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+49565, LewisRat, 15621, 15631, "Lewis rats", "", "<http://scio/data/OrganismModel_549> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LewisRat>."
+48647, Weight, 15711, 15724, "150–175 grams", "", "<http://scio/data/OrganismModel_549> <http://psink.de/scio/hasWeight> \"150–175 grams\"."
+54239, LewisRat, 16027, 16031, "Rats", "", 
+50834, IntraperitonealLocation, 16056, 16071, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3399> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50833, InjectionDelivery, 16072, 16081, "injection", "", "<http://scio/data/InjectionDelivery_3399> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_2557> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3399>."
+50047, SodiumPentobarbital, 16087, 16107, "sodium pentobarbital", "", "<http://scio/data/SodiumPentobarbital_2557> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2557>."
+50048, DosageIntracorporal, 16193, 16201, "45 mg/kg", "", "<http://scio/data/SodiumPentobarbital_2557> <http://psink.de/scio/hasDosage> \"45 mg/kg\"."
+50030, Laminectomy, 16814, 16825, "laminectomy", "", 
+54240, VertebralArea, 16843, 16852, "T8 and T9", "", "<http://scio/data/VertebralArea_3813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3813>."
+50031, LateralHemisection, 17261, 17282, "lateral hemiresection", "", "<http://scio/data/LateralHemisection_2554> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2554> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+50032, Left, 17361, 17365, "left", "", "<http://scio/data/Left_2563> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left>. <http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasDirection> <http://scio/data/Left_2563>."
+50033, Blade, 17398, 17422, "ultrafine surgical blade", "", "<http://scio/data/Blade_2561> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade>. <http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_2561>."
+54241, LewisRat, 18664, 18667, "rat", "", 
+54242, SubcutaneousLocation, 18715, 18727, "subcutaneous", "", 
+54243, InjectionDelivery, 18728, 18737, "injection", "", 
+54244, RingersSolution, 18759, 18776, "Ringer’s solution", "", 
+50841, SubcutaneousLocation, 18822, 18834, "subcutaneous", "", 
+50840, InjectionDelivery, 18835, 18844, "injection", "", 
+50842, AntibioticMedication, 18848, 18859, "antibiotics", "", "<http://scio/data/AntibioticMedication_3398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3398>."
+50040, Nutrition, 19135, 19139, "food", "", "<http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+50050, Hydration, 19144, 19149, "water", "", "<http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+50043, PostsurgicalMedication, 19165, 19172, "ketofen", "", "<http://scio/data/PostsurgicalMedication_2571> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2571>."
+50044, DosageIntracorporal, 19179, 19186, "5 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2571> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+50835, SubcutaneousLocation, 19245, 19257, "subcutaneous", "", 
+50837, InjectionDelivery, 19258, 19267, "injection", "", 
+50042, BladderExpression, 19610, 19645, "bladders had to be emptied manually", "", "<http://scio/data/LateralHemisection_2554> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."

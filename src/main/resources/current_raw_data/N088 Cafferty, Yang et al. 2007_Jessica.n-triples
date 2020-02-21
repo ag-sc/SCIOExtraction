@@ -1,0 +1,67 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_736> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_736> <http://www.w3.org/2000/01/rdf-schema#label> "WT mouse" .
+<http://scio/data/OrganismModel_736> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse> .
+<http://scio/data/OrganismModel_736> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_736> <http://psink.de/scio/hasAge> "4 – 6 months" .
+<http://scio/data/OrganismModel_736> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_742> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_742> <http://www.w3.org/2000/01/rdf-schema#label> "transgenic mouse" .
+<http://scio/data/OrganismModel_742> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies> .
+<http://scio/data/OrganismModel_742> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_742> <http://psink.de/scio/hasAge> "4 – 6 months" .
+<http://scio/data/OrganismModel_742> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_748> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_748> <http://www.w3.org/2000/01/rdf-schema#label> "female mouse" .
+<http://scio/data/OrganismModel_748> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies> .
+<http://scio/data/OrganismModel_748> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_748> <http://psink.de/scio/hasAge> "4 – 6 months" .
+<http://scio/data/OrganismModel_748> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_754> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_754> <http://www.w3.org/2000/01/rdf-schema#label> "male mouse" .
+<http://scio/data/OrganismModel_754> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies> .
+<http://scio/data/OrganismModel_754> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_754> <http://psink.de/scio/hasAge> "4 – 6 months" .
+<http://scio/data/OrganismModel_754> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+<http://scio/data/OrganismModel_760> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_760> <http://www.w3.org/2000/01/rdf-schema#label> "female mouse WT" .
+<http://scio/data/OrganismModel_760> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse> .
+<http://scio/data/OrganismModel_760> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_760> <http://psink.de/scio/hasAge> "4 – 6 months" .
+<http://scio/data/OrganismModel_760> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_766> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_766> <http://www.w3.org/2000/01/rdf-schema#label> "male mouse WT" .
+<http://scio/data/OrganismModel_766> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse> .
+<http://scio/data/OrganismModel_766> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_766> <http://psink.de/scio/hasAge> "4 – 6 months" .
+<http://scio/data/OrganismModel_766> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_2923> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_2923> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/DorsalHemisection_2923> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T6> .
+<http://scio/data/KetamineAsAnaesthetic_2926> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/DorsalHemisection_2923> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2926> .
+<http://scio/data/KetamineAsAnaesthetic_2926> <http://psink.de/scio/hasDosage> "100 mg/kg" .
+<http://scio/data/InjectionDelivery_3933> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_2926> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3933> .
+<http://scio/data/InjectionDelivery_3933> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_2928> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DorsalHemisection_2923> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_2928> .
+<http://scio/data/DeliveryMethod_2937> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/MedicationDuringSurgery_2928> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_2937> .
+<http://scio/data/SpinalCord_15155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
+<http://scio/data/DeliveryMethod_2937> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_15155> .
+<http://scio/data/DorsalHemisection_2923> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+<http://scio/data/DorsalHemisection_2923> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/Xylazine_2934> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/DorsalHemisection_2923> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2934> .
+<http://scio/data/Xylazine_2934> <http://psink.de/scio/hasDosage> "15 mg/kg" .
+<http://scio/data/InjectionDelivery_3934> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_2934> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3934> .
+<http://scio/data/InjectionDelivery_3934> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

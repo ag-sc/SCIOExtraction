@@ -1,0 +1,22 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+54314, SpragueDawleyRat, 5902, 5909, "animals", "", 
+54318, AntibioticMedication, 5921, 5931, "ampicillin", "", "<http://scio/data/AntibioticMedication_3898> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2817> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3898>."
+50274, DosageIntracorporal, 5933, 5942, "200 mg/kg", "", "<http://scio/data/AntibioticMedication_3898> <http://psink.de/scio/hasDosage> \"200 mg/kg\"."
+50285, PostsurgicalMedication, 5948, 5961, "buprenorphine", "", "<http://scio/data/PostsurgicalMedication_2827> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2817> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2827>."
+50275, DosageIntracorporal, 5963, 5972, "0.1 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2827> <http://psink.de/scio/hasDosage> \"0.1 mg/kg\"."
+48713, Adult, 6573, 6587, "injuries—Adult", "", "<http://scio/data/OrganismModel_700> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48392, Female, 6588, 6594, "female", "", "<http://scio/data/OrganismModel_700> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48393, SpragueDawleyRat, 6595, 6614, "Sprague Dawley rats", "", "<http://scio/data/OrganismModel_700> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+50287, SpragueDawleyRat, 6685, 6692, "animals", "", 
+54316, InjectionDelivery, 6698, 6706, "injected", "", "<http://scio/data/InjectionDelivery_3900> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2820> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3900>. <http://scio/data/InjectionDelivery_3901> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2832> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3901>."
+54317, IntraperitonealLocation, 6707, 6724, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_3900> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3901> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50273, KetamineAsAnaesthetic, 6730, 6738, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2820> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2817> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2820>."
+50276, DosageIntracorporal, 6740, 6748, "60 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2820> <http://psink.de/scio/hasDosage> \"60 mg/kg\"."
+50277, Xylazine, 6754, 6762, "xylazine", "", "<http://scio/data/Xylazine_2832> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2817> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2832>."
+50278, DosageIntracorporal, 6764, 6772, "10 mg/kg", "", "<http://scio/data/Xylazine_2832> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+50279, C5, 6804, 6806, "C5", "", "<http://scio/data/Contusion_2817> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5>."
+50280, Laminectomy, 6822, 6833, "laminectomy", "", 
+50281, InfiniteHorizonImpactor, 6951, 6981, "Infinite Horizon Impact Device", "", "<http://scio/data/InfiniteHorizonImpactor_2824> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2817> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2824>."
+50289, SpragueDawleyRat, 7194, 7201, "animals", "", 
+50282, Force, 7223, 7238, "200 kdyne force", "", "<http://scio/data/InfiniteHorizonImpactor_2824> <http://psink.de/scio/hasForce> \"200 kdyne force\"."
+50283, Contusion, 7443, 7452, "contusion", "", "<http://scio/data/Contusion_2817> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2817> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."

@@ -1,0 +1,12 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+49958, PartialTransection, 1501, 1517, "bilateral injury", "", "<http://scio/data/PartialTransection_2445> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_2445> <http://www.w3.org/2000/01/rdf-schema#label> \"partial transection\"."
+49959, InjuryArea, 1525, 1633, "corticospinal tract at the level of the medullar pyramids and a bilateral ablation of the  rubrospinal axons", "", "<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+48617, Adult, 7507, 7512, "adult", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48618, Female, 7513, 7519, "female", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48619, LongEvansRat, 7520, 7535, "Long Evans rats", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>."
+48620, Weight, 7537, 7546, "280-300 g", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasWeight> \"280-300 g\"."
+49954, DosageExtracorporal, 7571, 7579, "1.5-2.5%", "", "<http://scio/data/Isoflurane_2448> <http://psink.de/scio/hasDosage> \"1.5-2.5%\"."
+49949, Isoflurane, 7580, 7590, "isoflurane", "", "<http://scio/data/Isoflurane_2448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2448>."
+49951, Laminectomy, 8015, 8026, "laminectomy", "", 
+54221, VertebralArea, 8047, 8052, "C4-C5", "", "<http://scio/data/VertebralArea_3778> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3778>."
+49950, Blade, 8233, 8252, "sharp scalpel blade", "", "<http://scio/data/Blade_2452> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade>. <http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_2452>."

@@ -1,0 +1,22 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48636, Adult, 7599, 7604, "Adult", "", "<http://scio/data/OrganismModel_537> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48637, Female, 7605, 7611, "female", "", "<http://scio/data/OrganismModel_537> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48638, SpragueDawleyRat, 7612, 7631, "Sprague Dawley rats", "", "<http://scio/data/OrganismModel_537> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48639, Weight, 7633, 7642, "200-220 g", "", "<http://scio/data/OrganismModel_537> <http://psink.de/scio/hasWeight> \"200-220 g\"."
+50000, Housing, 7719, 7740, "12 h light/dark cycle", "", "<http://scio/data/Contusion_2502> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+50001, Nutrition, 7746, 7771, "ad libitum access to food", "", "<http://scio/data/Contusion_2502> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+50002, Hydration, 7776, 7781, "water", "", "<http://scio/data/Contusion_2502> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+50003, KetamineAsAnaesthetic, 8127, 8135, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2505> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2502> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2505>."
+50004, DosageIntracorporal, 8137, 8145, "60 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2505> <http://psink.de/scio/hasDosage> \"60 mg/kg\"."
+50005, Anaesthetic, 8151, 8163, "medetomidine", "", "<http://scio/data/Anaesthetic_2515> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/Contusion_2502> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2515>."
+50006, DosageIntracorporal, 8165, 8175, "0.25 mg/kg", "", "<http://scio/data/Anaesthetic_2515> <http://psink.de/scio/hasDosage> \"0.25 mg/kg\"."
+54231, Adult, 8177, 8182, "adult", "", 
+54232, Female, 8183, 8189, "female", "", 
+54233, SpragueDawleyRat, 8190, 8209, "Sprague Dawley rats", "", 
+50011, Force, 8229, 8238, "150 kdyne", "", "<http://scio/data/InfiniteHorizonImpactor_2509> <http://psink.de/scio/hasForce> \"150 kdyne\"."
+50007, Contusion, 8239, 8262, "spinal contusion injury", "", "<http://scio/data/Contusion_2502> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2502> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+54230, VertebralArea, 8279, 8285, "T10/11", "", "<http://scio/data/VertebralArea_3794> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Contusion_2502> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3794>."
+50009, InfiniteHorizonImpactor, 8295, 8321, "Infinite Horizons impactor", "", "<http://scio/data/InfiniteHorizonImpactor_2509> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2502> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2509>."
+54234, SpragueDawleyRat, 9183, 9190, "animals", "", 
+50010, ModerateInjury, 9200, 9208, "moderate", "", "<http://scio/data/Contusion_2502> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+54235, Contusion, 9218, 9227, "contusion", "", 

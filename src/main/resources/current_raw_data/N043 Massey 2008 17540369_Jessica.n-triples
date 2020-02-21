@@ -1,0 +1,41 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_489> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasWeight> "275-350 g" .
+<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/PartialTransection_2384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection> .
+<http://scio/data/PartialTransection_2384> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/KetamineAsAnaesthetic_2387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2387> .
+<http://scio/data/KetamineAsAnaesthetic_2387> <http://psink.de/scio/hasDosage> "50 mg/kg" .
+<http://scio/data/InjectionDelivery_3376> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_2387> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3376> .
+<http://scio/data/InjectionDelivery_3376> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation> .
+<http://scio/data/MedicationDuringSurgery_2389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/Xylazine_2395> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2395> .
+<http://scio/data/Xylazine_2395> <http://psink.de/scio/hasDosage> "6.5 mg/kg" .
+<http://scio/data/InjectionDelivery_3380> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_2395> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3380> .
+<http://scio/data/InjectionDelivery_3380> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation> .
+<http://scio/data/Anaesthetic_2398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2398> .
+<http://scio/data/Anaesthetic_2398> <http://psink.de/scio/hasDosage> "2.5 mg/kg" .
+<http://scio/data/InjectionDelivery_3381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_2398> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3381> .
+<http://scio/data/InjectionDelivery_3381> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation> .
+<http://scio/data/VertebralArea_3764> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3764> .
+<http://scio/data/VertebralArea_3764> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/C3> .
+<http://scio/data/VertebralArea_3764> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C4> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

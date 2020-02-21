@@ -1,0 +1,137 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+<http://scio/data/Observation_83379> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83379> <http://www.w3.org/2000/01/rdf-schema#label> "TP DMSO" .
+<http://scio/data/TemporalInterval_83381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83379> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83381> .
+<http://scio/data/TemporalInterval_83381> <http://psink.de/scio/hasDuration> "immediately after the DH" .
+<http://scio/data/TemporalInterval_83381> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2252> .
+<http://scio/data/TemporalInterval_83381> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83289> .
+<http://scio/data/NumericValue_83382> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83383> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83387> <http://www.w3.org/2000/01/rdf-schema#label> "TP ChABC" .
+<http://scio/data/TemporalInterval_83389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83387> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83389> .
+<http://scio/data/TemporalInterval_83389> <http://psink.de/scio/hasDuration> "immediately after the DH" .
+<http://scio/data/TemporalInterval_83389> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2252> .
+<http://scio/data/TemporalInterval_83389> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83306> .
+<http://scio/data/NumericValue_83390> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83391> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83395> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83395> <http://www.w3.org/2000/01/rdf-schema#label> "TP GÖ6976 cortical Injection" .
+<http://scio/data/TemporalInterval_83397> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83395> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83397> .
+<http://scio/data/TemporalInterval_83397> <http://psink.de/scio/hasDuration> "immediately after the DH" .
+<http://scio/data/TemporalInterval_83397> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2252> .
+<http://scio/data/TemporalInterval_83397> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83325> .
+<http://scio/data/NumericValue_83398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83399> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83403> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83403> <http://www.w3.org/2000/01/rdf-schema#label> "TP GÖ6976 intrathecal infusion" .
+<http://scio/data/TemporalInterval_83405> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83403> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83405> .
+<http://scio/data/TemporalInterval_83405> <http://psink.de/scio/hasDuration> "immediately after the DH" .
+<http://scio/data/TemporalInterval_83405> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2252> .
+<http://scio/data/TemporalInterval_83405> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83340> .
+<http://scio/data/NumericValue_83406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83407> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_441> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_441> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasWeight> "200-220 g" .
+<http://scio/data/OrganismModel_441> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_2252> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_2252> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4> .
+<http://scio/data/PostsurgicalMedication_2254> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2254> .
+<http://scio/data/Anaesthetic_2255> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/MedicationDuringSurgery_2257> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife> .
+<http://scio/data/DorsalHemisection_2252> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_83289> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83289> <http://www.w3.org/2000/01/rdf-schema#label> "DMSO" .
+<http://scio/data/InjectionDelivery_83291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83289> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83291> .
+<http://scio/data/Brain_83301> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain> .
+<http://scio/data/InjectionDelivery_83291> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_83301> .
+<http://scio/data/Direction_83296> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/CompoundTreatment_83289> <http://psink.de/scio/hasDosage> "0.1%" .
+<http://scio/data/DMSO_83299> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DMSO> .
+<http://scio/data/CompoundTreatment_83289> <http://psink.de/scio/hasCompound> <http://scio/data/DMSO_83299> .
+<http://scio/data/Compound_83305> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83306> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83306> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/InjectionDelivery_83308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83308> .
+<http://scio/data/SpinalLesionSite_83318> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_83308> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_83318> .
+<http://scio/data/SpinalLesionSite_83319> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_83308> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_83319> .
+<http://scio/data/Rostral_83313> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_83313> .
+<http://scio/data/SpinalLesionSite_83320> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_83313> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83320> .
+<http://scio/data/Distance_83321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
+<http://scio/data/Compound_83314> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDosage> "1.96 x 106 TU/µL" .
+<http://scio/data/ChondroitinaseABC_83316> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83316> .
+<http://scio/data/Caudal_83322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_83322> .
+<http://scio/data/SpinalLesionSite_83323> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_83322> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83323> .
+<http://scio/data/Distance_83324> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
+<http://scio/data/CompoundTreatment_83325> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83325> <http://www.w3.org/2000/01/rdf-schema#label> "GÖ6976 cortical Injection" .
+<http://scio/data/InjectionDelivery_83327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83325> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83327> .
+<http://scio/data/Brain_83337> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain> .
+<http://scio/data/InjectionDelivery_83327> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_83337> .
+<http://scio/data/Direction_83332> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/CompoundTreatment_83325> <http://psink.de/scio/hasDosage> "1 mM" .
+<http://scio/data/Substance_83335> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_83325> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83335> .
+<http://scio/data/Compound_83338> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83340> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83340> <http://www.w3.org/2000/01/rdf-schema#label> "GÖ6976 intrathecal infusion" .
+<http://scio/data/InfusionDelivery_83342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
+<http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83342> .
+<http://scio/data/Intrathecal_83352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InfusionDelivery_83342> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83352> .
+<http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump> .
+<http://scio/data/Direction_83347> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83348> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasDosage> "20 µM, 200 µL" .
+<http://scio/data/Substance_83350> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_83340> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83350> .
+<http://scio/data/CompoundTreatment_83353> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83353> <http://www.w3.org/2000/01/rdf-schema#label> "GÖ6976 intraperitoneal injection" .
+<http://scio/data/InjectionDelivery_83355> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83355> .
+<http://scio/data/InjectionDelivery_83355> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasFrequency> "1 time daily" .
+<http://scio/data/Direction_83360> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83361> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasDosage> "2.50 mg/kg" .
+<http://scio/data/Substance_83363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_83353> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83363> .
+<http://scio/data/CompoundTreatment_83366> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83366> <http://www.w3.org/2000/01/rdf-schema#label> "DMSO for i.p. Injection" .
+<http://scio/data/InjectionDelivery_83368> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83368> .
+<http://scio/data/InjectionDelivery_83368> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasFrequency> "1 time daily" .
+<http://scio/data/Direction_83375> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83376> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasDosage> "0.1%" .
+<http://scio/data/DMSO_83378> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DMSO> .
+<http://scio/data/CompoundTreatment_83366> <http://psink.de/scio/hasCompound> <http://scio/data/DMSO_83378> .
+# RDF export of group: Sacrifices

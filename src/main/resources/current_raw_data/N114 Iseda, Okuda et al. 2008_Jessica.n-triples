@@ -1,0 +1,40 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_887> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_887> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_887> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_887> <http://psink.de/scio/hasAge> "10–12 weeks old" .
+<http://scio/data/OrganismModel_887> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/PartialTransection_4039> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection> .
+<http://scio/data/PartialTransection_4039> <http://www.w3.org/2000/01/rdf-schema#label> "partial transection" .
+<http://scio/data/PartialTransection_4039> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T11> .
+<http://scio/data/SodiumPentobarbital_4042> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital> .
+<http://scio/data/PartialTransection_4039> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_4042> .
+<http://scio/data/InjectionDelivery_4048> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/SodiumPentobarbital_4042> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4048> .
+<http://scio/data/InjectionDelivery_4048> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/SodiumPentobarbital_4042> <http://psink.de/scio/hasDosage> "40 mg/kg;" .
+<http://scio/data/MedicationDuringSurgery_4044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Blade_4046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade> .
+<http://scio/data/PartialTransection_4039> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_4046> .
+<http://scio/data/PartialTransection_4039> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/Contusion_4050> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion> .
+<http://scio/data/Contusion_4050> <http://www.w3.org/2000/01/rdf-schema#label> "contusion" .
+<http://scio/data/Contusion_4050> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T11> .
+<http://scio/data/SodiumPentobarbital_4053> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital> .
+<http://scio/data/Contusion_4050> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_4053> .
+<http://scio/data/InjectionDelivery_4063> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/SodiumPentobarbital_4053> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4063> .
+<http://scio/data/InjectionDelivery_4063> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/SodiumPentobarbital_4053> <http://psink.de/scio/hasDosage> "40 mg/kg;" .
+<http://scio/data/MedicationDuringSurgery_4055> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/MASCISImpactor_4057> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MASCISImpactor> .
+<http://scio/data/Contusion_4050> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/MASCISImpactor_4057> .
+<http://scio/data/MASCISImpactor_4057> <http://psink.de/scio/hasDistance> "12.5 mm" .
+<http://scio/data/MASCISImpactor_4057> <http://psink.de/scio/hasWeight> "10.0-g" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

@@ -1,0 +1,252 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+102378, ChondroitinaseABC, 113, 131, "Chondroitinase ABC", "", 
+102388, ChondroitinaseABC, 133, 137, "cABC", "", 
+102379, Positive, 149, 157, "improves", "", 
+102380, RepeatedMeasureTrend, 169, 177, "recovery", "", 
+102381, Duration, 178, 206, "following spinal cord injury", "", 
+102382, SpinalCord, 188, 199, "spinal cord", "", 
+102383, Injury, 200, 206, "injury", "", 
+102395, Injury, 208, 211, "SCI", "", 
+102389, ChondroitinaseABC, 277, 281, "cABC", "", 
+102396, Injury, 342, 345, "SCI", "", 
+102390, ChondroitinaseABC, 405, 409, "cABC", "", 
+102401, OxidativeStressTest, 415, 431, "oxidative stress", "", 
+102402, InflammationTest, 436, 448, "inflammation", "", 
+102403, WistarRat, 464, 467, "rat", "", 
+102404, Injury, 477, 480, "SCI", "", 
+102405, Male, 505, 509, "Male", "", 
+102406, WistarRat, 510, 514, "rats", "", 
+102411, Weight, 516, 525, "220–250 g", "", 
+102412, NNumber, 561, 563, "28", "", 
+102407, WistarRat, 575, 579, "rats", "", 
+102397, Injury, 595, 598, "SCI", "", 
+102413, GroupName, 600, 609, "SCI group", "E1", "<http://scio/data/DefinedExperimentalGroup_60041> <http://psink.de/scio/hasGroupName> \"SCI group\"."
+102421, Injury, 600, 603, "SCI", "", 
+102408, WistarRat, 612, 616, "rats", "", 
+102398, Injury, 630, 633, "SCI", "", 
+102416, Intrathecal, 650, 661, "intrathecal", "", 
+102417, InjectionDelivery, 662, 671, "injection", "", 
+102418, PBS, 675, 698, "phosphate buffer saline", "", 
+102414, GroupName, 700, 713, "SCI+PBS group", "E2", "<http://scio/data/DefinedExperimentalGroup_60049> <http://psink.de/scio/hasGroupName> \"SCI+PBS group\"."
+102420, Injury, 700, 703, "SCI", "", 
+102419, PBS, 704, 707, "PBS", "", 
+102409, WistarRat, 720, 724, "rats", "", 
+102399, Injury, 740, 743, "SCI", "", 
+102391, ChondroitinaseABC, 757, 761, "cABC", "", 
+102423, Intrathecal, 762, 775, "intrathecally", "", 
+102415, GroupName, 777, 788, "SCI+E group", "E3", "<http://scio/data/DefinedExperimentalGroup_60057> <http://psink.de/scio/hasGroupName> \"SCI+E group\"."
+102422, Injury, 777, 780, "SCI", "", 
+102424, InflammationTest, 801, 815, "level of TNF-α", "", 
+102425, InflammationTest, 817, 822, "Il-1β", "", 
+102426, OxidativeStressTest, 824, 839, "malondialdehyde", "", 
+102427, OxidativeStressTest, 841, 853, "nitric oxide", "", 
+102428, OxidativeStressTest, 859, 874, "myeloperoxidase", "", 
+102431, Duration, 945, 978, "at 4 hr, 1, 3 and 7 days post-SCI", "", 
+102392, ChondroitinaseABC, 1010, 1014, "cABC", "", 
+102384, Lower, 1025, 1032, "reduced", "", 
+102433, InflammationTest, 1052, 1064, "inflammation", "", 
+102429, OxidativeStressTest, 1069, 1085, "oxidative stress", "", 
+102400, Injury, 1102, 1105, "SCI", "", 
+102435, RepeatedMeasureTrend, 1106, 1124, "at all-time points", "", 
+102385, Duration, 1106, 1124, "at all-time points", "", 
+102436, RepeatedMeasureTrend, 1150, 1158, "recovery", "", 
+102386, Positive, 1163, 1171, "improved", "", 
+102410, WistarRat, 1175, 1179, "rats", "", 
+102393, ChondroitinaseABC, 1194, 1198, "cABC", "", 
+102387, Duration, 1199, 1217, "at 7 days post-SCI", "", 
+102394, ChondroitinaseABC, 1266, 1270, "cABC", "", 
+102434, InflammationTest, 1355, 1367, "inflammatory", "", 
+102430, OxidativeStressTest, 1372, 1390, "oxidative response", "", 
+49173, Adult, 4937, 4942, "Adult", "", "<http://scio/data/OrganismModel_1525> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+49174, Male, 4943, 4947, "male", "", "<http://scio/data/OrganismModel_1525> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+49175, WistarRat, 4948, 4959, "Wistar rats", "", "<http://scio/data/OrganismModel_1525> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+49176, Weight, 4961, 4970, "220–250 g", "", "<http://scio/data/OrganismModel_1525> <http://psink.de/scio/hasWeight> \"220–250 g\"."
+101941, WistarRat, 5080, 5087, "Animals", "", 
+101942, Housing, 5093, 5127, "housed in a controlled environment", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+101925, Nutrition, 5146, 5166, "standard rodent chow", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+101926, Hydration, 5171, 5187, "water ad libitum", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+101949, GroupNumber, 5396, 5397, "i", "", "<http://scio/data/DefinedExperimentalGroup_60041> <http://psink.de/scio/hasGroupNumber> \"i\"."
+101961, DefinedExperimentalGroup, 5399, 5402, "SCI", "E1", "<http://scio/data/DefinedExperimentalGroup_60041> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_60041> <http://www.w3.org/2000/01/rdf-schema#label> \"SCI, E1\"."
+101943, WistarRat, 5404, 5408, "rats", "", 
+101946, Injury, 5424, 5427, "SCI", "", 
+101928, NNumber, 5450, 5452, "28", "", "<http://scio/data/DefinedExperimentalGroup_60041> <http://psink.de/scio/hasNNumber> \"28\"."
+101950, GroupNumber, 5455, 5457, "ii", "", "<http://scio/data/DefinedExperimentalGroup_60049> <http://psink.de/scio/hasGroupNumber> \"ii\"."
+101962, DefinedExperimentalGroup, 5459, 5494, "SCI + phosphate buffer saline ( PBS )", "E2", "<http://scio/data/DefinedExperimentalGroup_60049> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_60049> <http://www.w3.org/2000/01/rdf-schema#label> \"SCI + phosphate buffer saline (PBS), E2\"."
+101944, WistarRat, 5496, 5500, "rats", "", 
+101947, Injury, 5519, 5522, "SCI", "", 
+101930, Intrathecal, 5527, 5538, "intrathecal", "", 
+101948, InjectionDelivery, 5539, 5548, "injection", "", 
+101931, PBS, 5552, 5555, "PBS", "", 
+101932, NNumber, 5559, 5561, "28", "", "<http://scio/data/DefinedExperimentalGroup_60049> <http://psink.de/scio/hasNNumber> \"28\"."
+101952, GroupNumber, 5564, 5567, "III", "", 
+101963, DefinedExperimentalGroup, 5569, 5581, "SCI + Enzyme", "E3", "<http://scio/data/DefinedExperimentalGroup_60057> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_60057> <http://www.w3.org/2000/01/rdf-schema#label> \"SCI + Enzyme, E3\"."
+101951, GroupNumber, 5600, 5602, "ii", "", 
+101953, WistarRat, 5608, 5612, "rats", "", 
+101954, InjectionDelivery, 5624, 5640, "single injection", "", 
+101934, ChondroitinaseABC, 5644, 5648, "cABC", "", 
+101935, Intrathecal, 5649, 5662, "intrathecally", "", 
+101936, NNumber, 5666, 5668, "28", "", "<http://scio/data/DefinedExperimentalGroup_60057> <http://psink.de/scio/hasNNumber> \"28\"."
+101945, WistarRat, 5708, 5715, "Animals", "", 
+56526, IntraperitonealLocation, 5742, 5758, "intraperi toneal", "", "<http://scio/data/InjectionDelivery_11644> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_11649> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+56527, InjectionDelivery, 5759, 5768, "injection", "", "<http://scio/data/InjectionDelivery_11644> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_11627> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11644>. <http://scio/data/InjectionDelivery_11649> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_11648> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11649>."
+56504, DosageIntracorporal, 5772, 5780, "50 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_11627> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+56505, KetamineAsAnaesthetic, 5781, 5789, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_11627> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_11624> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_11627>."
+56506, DosageIntracorporal, 5794, 5801, "5 mg/kg", "", "<http://scio/data/Xylazine_11648> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+56507, Xylazine, 5802, 5810, "xylazine", "", "<http://scio/data/Xylazine_11648> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_11624> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_11648>."
+56508, Laminectomy, 5892, 5903, "laminectomy", "", 
+57732, VertebralArea, 5928, 5934, "T9-T10", "", "<http://scio/data/VertebralArea_11625> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Contusion_11624> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_11625>."
+56510, Contusion, 5961, 5970, "contusion", "", "<http://scio/data/Contusion_11624> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_11624> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+56511, Weight, 6001, 6005, "10 g", "", "<http://scio/data/NYUImpactor_11631> <http://psink.de/scio/hasWeight> \"10 g\"."
+56512, Distance, 6020, 6035, "height of 25 mm", "", "<http://scio/data/NYUImpactor_11631> <http://psink.de/scio/hasDistance> \"height of 25 mm\"."
+56513, NYUImpactor, 6037, 6049, "NYU impactor", "", "<http://scio/data/NYUImpactor_11631> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor>. <http://scio/data/Contusion_11624> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_11631>."
+56514, Duration, 6056, 6084, "immediately after the injury", "", "<http://scio/data/TemporalInterval_60027> <http://psink.de/scio/hasDuration> \"immediately after the injury\". <http://scio/data/TemporalInterval_60035> <http://psink.de/scio/hasDuration> \"immediately after the injury\"."
+101957, Volume, 6086, 6090, "6 μl", "", 
+56515, ChondroitinaseABC, 6094, 6098, "cABC", "", "<http://scio/data/ChondroitinaseABC_60004> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_59994> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_60004>."
+101955, DosageExtracorporal, 6100, 6107, "10 U/ml", "", "<http://scio/data/CompoundTreatment_59994> <http://psink.de/scio/hasDosage> \"10 U/ml\"."
+101958, SigmaAldrich, 6109, 6114, "Sigma", "", "<http://scio/data/ChondroitinaseABC_60004> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>."
+101937, PBS, 6124, 6127, "PBS", "", "<http://scio/data/PBS_60021> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PBS>. <http://scio/data/CompoundTreatment_60009> <http://psink.de/scio/hasCompound> <http://scio/data/PBS_60021>."
+101956, DosageExtracorporal, 6129, 6134, "0.1 M", "", "<http://scio/data/CompoundTreatment_60009> <http://psink.de/scio/hasDosage> \"0.1 M\"."
+101959, InjectionDelivery, 6148, 6161, "microinjected", "", "<http://scio/data/InjectionDelivery_59996> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_59994> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_59996>. <http://scio/data/InjectionDelivery_60011> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_60009> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_60011>."
+56516, Intrathecal, 6162, 6175, "intrathecally", "", "<http://scio/data/Intrathecal_60008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_59996> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_60008>. <http://scio/data/Intrathecal_60013> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_60011> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_60013>."
+57731, AntibioticMedication, 6349, 6359, "gentamicin", "", "<http://scio/data/AntibioticMedication_15326> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_11624> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_15326>."
+56518, DosageIntracorporal, 6378, 6386, "12 mg/kg", "", "<http://scio/data/AntibioticMedication_15326> <http://psink.de/scio/hasDosage> \"12 mg/kg\"."
+56528, IntraperitonealLocation, 6388, 6390, "IP", "", 
+56520, BladderExpression, 6422, 6440, "Bladder expression", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+101960, WistarRat, 6509, 6516, "Animals", "", 
+56521, Housing, 6532, 6559, "temperature controlled room", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+56522, Nutrition, 6566, 6570, "food", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+56523, Hydration, 6575, 6580, "water", "", 
+56524, Nutrition, 6586, 6605, "provided ad libitum", "", "<http://scio/data/Contusion_11624> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+56525, Hydration, 6586, 6605, "provided ad libitum", "", 
+102437, Duration, 6679, 6709, "at 1, 3 and 7 days post-injury", "", 
+101938, BBBTest, 6720, 6781, "open field Basso, Beattie, and Bresnahan (BBB) locomotor test", "", 
+101964, InflammationTest, 7616, 7653, "investigate the level of inflammation", "", 
+102439, InflammationTest, 7672, 7677, "TNF-α", "", 
+102440, InflammationTest, 7682, 7687, "IL-1β", "", 
+101966, OxidativeStressTest, 8015, 8067, "concen-tration of malondialdehyde (MDA) was measured", "", 
+102442, OxidativeStressTest, 8603, 8616, "To measure NO", "", 
+102441, OxidativeStressTest, 9233, 9263, "Myeloperoxidase (MPO) activity", "", 
+101939, StatisticalTest, 10209, 10243, "non-parametric Kruskal-Wallis test", "", 
+101940, StatisticalTest, 10256, 10277, "Mann-Whitney analysis", "", "<http://scio/data/Result_61175> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61188> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61201> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61214> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61227> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61240> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61258> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61271> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61284> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61297> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61311> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61328> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61341> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61354> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61367> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61380> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61393> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61406> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61419> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61432> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61445> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_61458> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+102367, ChondroitinaseABC, 11077, 11081, "cABC", "", 
+102368, Lower, 11092, 11101, "decreased", "", 
+102369, InflammationTest, 11106, 11130, "level of these cytokines", "", 
+102370, PositiveSignificance, 11131, 11144, "significantly", "", "<http://scio/data/PositiveSignificance_61280> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61278> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61280>. <http://scio/data/PositiveSignificance_61292> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61291> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61292>."
+102028, BBBTest, 12030, 12039, "BBB scale", "", "<http://scio/data/BBBTest_68978> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77580> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scale)\". <http://scio/data/BBBTest_82028> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_82028> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scale)\". <http://scio/data/Result_61175> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61188> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102025, Higher, 12251, 12266, "slight recovery", "R1, R2", "<http://scio/data/Trend_61182> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_61195> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101970, Positive, 12258, 12266, "recovery", "", "<http://scio/data/Result_61175> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61188> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+102348, RepeatedMeasureTrend, 12258, 12266, "recovery", "", 
+102022, GroupName, 12283, 12296, "treated group", "E3", "<http://scio/data/DefinedExperimentalGroup_60057> <http://psink.de/scio/hasGroupName> \"treated group\"."
+102024, DefinedExperimentalGroup, 12309, 12312, "SCI", "", 
+102023, GroupName, 12317, 12327, "PBS groups", "E2", "<http://scio/data/DefinedExperimentalGroup_60049> <http://psink.de/scio/hasGroupName> \"PBS groups\"."
+101971, Duration, 12328, 12346, "one week after SCI", "", 
+102027, Injury, 12343, 12346, "SCI", "", 
+101972, PositiveSignificance, 12357, 12382, "statistically significant", "", "<http://scio/data/PositiveSignificance_61184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61182> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61184>. <http://scio/data/PositiveSignificance_61196> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61195> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61196>."
+101973, PValue, 12384, 12390, "P<0.01", "", "<http://scio/data/PositiveSignificance_61184> <http://psink.de/scio/hasPValue> \"P<0.01\". <http://scio/data/PositiveSignificance_61196> <http://psink.de/scio/hasPValue> \"P<0.01\"."
+102349, InflammationTest, 12441, 12446, "TNF-α", "", 
+102350, InflammationTest, 12451, 12456, "IL-1β", "", 
+102029, InflammationTest, 12496, 12522, "indicators of inflammation", "", 
+102355, InflammationTest, 12665, 12676, "TNF-α level", "", "<http://scio/data/InflammationTest_68984> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_77583> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_77583> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (TNF-α level)\". <http://scio/data/Result_61201> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101974, DefinedExperimentalGroup, 12710, 12713, "SCI", "", 
+102030, GroupName, 12718, 12728, "PBS groups", "E2", 
+101975, ZeroSignificance, 12730, 12744, "no significant", "", "<http://scio/data/ZeroSignificance_61210> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_61208> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61210>."
+102351, None, 12730, 12755, "no significant difference", "R3", "<http://scio/data/RepeatedMeasureTrend_61208> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101976, Duration, 12766, 12784, "at any time points", "", 
+102040, RepeatedMeasureTrend, 12766, 12784, "at any time points", "", "<http://scio/data/RepeatedMeasureTrend_61208> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61201> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61208>."
+101977, PValue, 12786, 12792, "P>0.05", "", "<http://scio/data/ZeroSignificance_61210> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102041, ChondroitinaseABC, 12804, 12808, "cABC", "", 
+102352, Lower, 12819, 12826, "reduced", "R4, R5", "<http://scio/data/RepeatedMeasureTrend_61221> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_61234> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_61253> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_61266> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102042, InflammationTest, 12831, 12842, "TNF-α level", "", "<http://scio/data/InflammationTest_68996> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_77585> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_77585> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (TNF-α level)\". <http://scio/data/InflammationTest_82030> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_82030> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (TNF-α level)\". <http://scio/data/InflammationTest_82032> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_82032> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (TNF-α level)\". <http://scio/data/InflammationTest_82034> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_82034> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (TNF-α level)\". <http://scio/data/Result_61214> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61227> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61240> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61258> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101979, Duration, 12843, 12873, "at 4 hr, 1 and 3 day after SCI", "", 
+102044, RepeatedMeasureTrend, 12843, 12873, "at 4 hr, 1 and 3 day after SCI", "", "<http://scio/data/RepeatedMeasureTrend_61221> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61214> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61221>. <http://scio/data/RepeatedMeasureTrend_61234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61227> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61234>."
+102043, Injury, 12870, 12873, "SCI", "", 
+101980, PositiveSignificance, 12874, 12887, "significantly", "", "<http://scio/data/PositiveSignificance_61223> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61221> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61223>. <http://scio/data/PositiveSignificance_61235> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61234> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61235>."
+102045, DefinedExperimentalGroup, 12900, 12903, "SCI", "", 
+102031, GroupName, 12908, 12918, "PBS groups", "E2", 
+101981, PValue, 12920, 12926, "P<0.05", "", "<http://scio/data/PositiveSignificance_61223> <http://psink.de/scio/hasPValue> \"P<0.05\". <http://scio/data/PositiveSignificance_61235> <http://psink.de/scio/hasPValue> \"P<0.05\"."
+102354, ZeroSignificance, 12946, 12961, "not significant", "R6, R7", "<http://scio/data/ZeroSignificance_61254> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_61253> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61254>. <http://scio/data/ZeroSignificance_61267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_61266> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61267>."
+101983, Duration, 12962, 12982, "at day 7 post-damage", "", 
+101984, PValue, 12984, 12990, "P>0.05", "", "<http://scio/data/ZeroSignificance_61254> <http://psink.de/scio/hasPValue> \"P>0.05\". <http://scio/data/ZeroSignificance_61267> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102046, ChondroitinaseABC, 13141, 13145, "cABC", "", 
+102356, Lower, 13146, 13153, "reduced", "R8, R9", "<http://scio/data/RepeatedMeasureTrend_61278> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_61291> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102047, InflammationTest, 13158, 13169, "IL-1β level", "", "<http://scio/data/InflammationTest_69005> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_77590> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_77590> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (IL-1β level)\". <http://scio/data/InflammationTest_82036> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_82036> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (IL-1β level)\". <http://scio/data/InflammationTest_82038> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_82038> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (IL-1β level)\". <http://scio/data/Result_61271> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61284> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61297> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101986, Duration, 13170, 13188, "at all time points", "", 
+102048, RepeatedMeasureTrend, 13170, 13188, "at all time points", "", "<http://scio/data/RepeatedMeasureTrend_61278> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61271> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61278>. <http://scio/data/RepeatedMeasureTrend_61291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61284> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61291>."
+102049, DefinedExperimentalGroup, 13201, 13204, "SCI", "", 
+102032, GroupName, 13209, 13219, "PBS groups", "E2", 
+101987, PValue, 13221, 13227, "P<0.01", "", "<http://scio/data/PositiveSignificance_61280> <http://psink.de/scio/hasPValue> \"P<0.01\". <http://scio/data/PositiveSignificance_61292> <http://psink.de/scio/hasPValue> \"P<0.01\"."
+101988, ZeroSignificance, 13249, 13263, "no significant", "", "<http://scio/data/ZeroSignificance_61306> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_61304> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61306>."
+102357, None, 13249, 13274, "no significant difference", "R10", "<http://scio/data/RepeatedMeasureTrend_61304> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101989, DefinedExperimentalGroup, 13283, 13286, "SCI", "", 
+102033, GroupName, 13291, 13301, "PBS groups", "E2", 
+101990, Duration, 13302, 13320, "at any time points", "", 
+102052, RepeatedMeasureTrend, 13302, 13320, "at any time points", "", "<http://scio/data/RepeatedMeasureTrend_61304> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61297> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61304>."
+101991, PValue, 13322, 13328, "P>0.05", "", "<http://scio/data/ZeroSignificance_61306> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102054, ChondroitinaseABC, 13401, 13405, "cABC", "", 
+102055, SpinalLesionSite, 13443, 13457, "area of injury", "", 
+102053, OxidativeStressTest, 13463, 13488, "level of MDA was measured", "", "<http://scio/data/OxidativeStressTest_69009> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77594> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77594> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MDA was measured)\". <http://scio/data/Result_61311> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101992, ZeroSignificance, 13696, 13710, "No significant", "", "<http://scio/data/ZeroSignificance_61320> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_61318> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61320>."
+102359, None, 13696, 13721, "No significant difference", "R11", "<http://scio/data/Trend_61318> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101993, DefinedExperimentalGroup, 13743, 13746, "SCI", "", 
+102034, GroupName, 13751, 13761, "PBS groups", "E2", 
+101994, PValue, 13777, 13783, "P>0.05", "", "<http://scio/data/ZeroSignificance_61320> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102057, ChondroitinaseABC, 13810, 13814, "cABC", "", 
+102360, Lower, 13815, 13822, "reduced", "R12, R13", "<http://scio/data/RepeatedMeasureTrend_61335> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_61348> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102058, OxidativeStressTest, 13827, 13839, "level of MDA", "", "<http://scio/data/OxidativeStressTest_69017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77596> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77596> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MDA)\". <http://scio/data/OxidativeStressTest_82040> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82040> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MDA)\". <http://scio/data/Result_61328> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61341> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101996, PositiveSignificance, 13840, 13853, "significantly", "", "<http://scio/data/PositiveSignificance_61337> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61335> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61337>. <http://scio/data/PositiveSignificance_61349> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61348> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61349>."
+101997, Duration, 13854, 13872, "at all time points", "", 
+102059, RepeatedMeasureTrend, 13854, 13872, "at all time points", "", "<http://scio/data/RepeatedMeasureTrend_61335> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61328> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61335>. <http://scio/data/RepeatedMeasureTrend_61348> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61341> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61348>."
+101998, AnalyzedExperimentalGroup, 13887, 13903, "two other groups", "", 
+101999, PValue, 13905, 13911, "P<0.05", "", "<http://scio/data/PositiveSignificance_61337> <http://psink.de/scio/hasPValue> \"P<0.05\". <http://scio/data/PositiveSignificance_61349> <http://psink.de/scio/hasPValue> \"P<0.05\"."
+102063, OxidativeStressTest, 13933, 13962, "nitric oxide concentration NO", "", 
+102060, OxidativeStressTest, 13997, 14026, "indicator of oxidative stress", "", 
+102061, ChondroitinaseABC, 14192, 14196, "cABC", "", 
+102361, Lower, 14207, 14214, "reduced", "R14, R15", "<http://scio/data/Trend_61361> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_61374> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102062, OxidativeStressTest, 14215, 14223, "NO level", "", "<http://scio/data/OxidativeStressTest_69029> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77599> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77599> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (NO level)\". <http://scio/data/OxidativeStressTest_82042> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82042> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (NO level)\". <http://scio/data/OxidativeStressTest_82044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82044> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (NO level)\". <http://scio/data/OxidativeStressTest_82046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82046> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (NO level)\". <http://scio/data/OxidativeStressTest_82048> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82048> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (NO level)\". <http://scio/data/Result_61354> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61367> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61380> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61393> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61406> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102001, PositiveSignificance, 14224, 14237, "significantly", "", "<http://scio/data/PositiveSignificance_61363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61361> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61363>. <http://scio/data/PositiveSignificance_61375> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61374> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61375>. <http://scio/data/PositiveSignificance_61389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61387> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61389>. <http://scio/data/PositiveSignificance_61401> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61400> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61401>."
+102064, DefinedExperimentalGroup, 14250, 14253, "SCI", "", 
+102035, GroupName, 14258, 14268, "PBS groups", "E2", 
+102002, PValue, 14270, 14276, "P<0.01", "", "<http://scio/data/PositiveSignificance_61363> <http://psink.de/scio/hasPValue> \"P<0.01\". <http://scio/data/PositiveSignificance_61375> <http://psink.de/scio/hasPValue> \"P<0.01\"."
+102362, Lower, 14303, 14312, "reduction", "R16, R17", "<http://scio/data/Trend_61387> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_61400> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102008, Duration, 14326, 14334, "at day 3", "", 
+102065, GroupName, 14342, 14360, "cABC treated group", "E3", "<http://scio/data/DefinedExperimentalGroup_60057> <http://psink.de/scio/hasGroupName> \"cABC treated group\"."
+102009, PValue, 14362, 14369, "P<0.001", "", "<http://scio/data/PositiveSignificance_61389> <http://psink.de/scio/hasPValue> \"P<0.001\". <http://scio/data/PositiveSignificance_61401> <http://psink.de/scio/hasPValue> \"P<0.001\"."
+102003, ZeroSignificance, 14382, 14396, "no significant", "", "<http://scio/data/ZeroSignificance_61415> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_61413> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61415>."
+102363, None, 14382, 14407, "no significant difference", "R18", "<http://scio/data/RepeatedMeasureTrend_61413> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+102004, DefinedExperimentalGroup, 14425, 14428, "SCI", "", 
+102036, GroupName, 14433, 14443, "PBS groups", "E2", 
+102005, Duration, 14444, 14462, "at any time points", "", 
+102068, RepeatedMeasureTrend, 14444, 14462, "at any time points", "", "<http://scio/data/RepeatedMeasureTrend_61413> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61406> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61413>."
+102006, PValue, 14464, 14470, "P>0.05", "", "<http://scio/data/ZeroSignificance_61415> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102085, OxidativeStressTest, 14568, 14595, "MPO activity was determined", "", 
+102010, ZeroSignificance, 14775, 14789, "no significant", "", "<http://scio/data/ZeroSignificance_61428> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_61426> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61428>."
+102364, None, 14775, 14800, "no significant difference", "R19", "<http://scio/data/RepeatedMeasureTrend_61426> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+102011, DefinedExperimentalGroup, 14822, 14825, "SCI", "", 
+102038, GroupName, 14830, 14840, "PBS groups", "E2", 
+102012, Duration, 14841, 14859, "at any time points", "", 
+102071, RepeatedMeasureTrend, 14841, 14859, "at any time points", "", "<http://scio/data/RepeatedMeasureTrend_61426> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61419> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61426>."
+102013, PValue, 14861, 14867, "P>0.05", "", "<http://scio/data/ZeroSignificance_61428> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102088, OxidativeStressTest, 14874, 14886, "level of MPO", "", "<http://scio/data/OxidativeStressTest_69038> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77605> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_77605> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MPO)\". <http://scio/data/OxidativeStressTest_82050> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82050> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MPO)\". <http://scio/data/OxidativeStressTest_82052> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82052> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MPO)\". <http://scio/data/OxidativeStressTest_82054> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OxidativeStressTest>. <http://scio/data/OxidativeStressTest_82054> <http://www.w3.org/2000/01/rdf-schema#label> \"OxidativeStressTest (level of MPO)\". <http://scio/data/Result_61419> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61432> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61445> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61458> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102073, GroupName, 14894, 14907, "treated group", "E3", 
+102014, PositiveSignificance, 14912, 14925, "significantly", "", "<http://scio/data/PositiveSignificance_61440> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61439> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61440>. <http://scio/data/PositiveSignificance_61453> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_61452> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61453>."
+102365, Lower, 14926, 14931, "lower", "R20, R21", "<http://scio/data/RepeatedMeasureTrend_61439> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_61452> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102016, Duration, 14932, 14966, "at 4 hr, 1 and 7 days after injury", "", 
+102075, RepeatedMeasureTrend, 14932, 14966, "at 4 hr, 1 and 7 days after injury", "", "<http://scio/data/RepeatedMeasureTrend_61439> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61432> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61439>. <http://scio/data/RepeatedMeasureTrend_61452> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61445> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61452>."
+102074, Injury, 14960, 14966, "injury", "", 
+102017, AnalyzedExperimentalGroup, 14981, 14997, "two other groups", "", 
+102018, PValue, 14999, 15005, "P<0.05", "", "<http://scio/data/PositiveSignificance_61440> <http://psink.de/scio/hasPValue> \"P<0.05\". <http://scio/data/PositiveSignificance_61453> <http://psink.de/scio/hasPValue> \"P<0.05\"."
+102019, ZeroSignificance, 15017, 15044, "no statistical significance", "", "<http://scio/data/ZeroSignificance_61467> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_61465> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_61467>."
+102366, None, 15017, 15044, "no statistical significance", "R22", "<http://scio/data/Trend_61465> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+102076, ChondroitinaseABC, 15061, 15065, "cABC", "", 
+102077, DefinedExperimentalGroup, 15067, 15070, "SCI", "", 
+102037, GroupName, 15076, 15086, "PBS groups", "E2", 
+102020, Duration, 15087, 15104, "at day 3 post-SCI", "", 
+102078, PValue, 15106, 15112, "P>0.05", "", "<http://scio/data/ZeroSignificance_61467> <http://psink.de/scio/hasPValue> \"P>0.05\"."
+102371, ChondroitinaseABC, 16535, 16539, "cABC", "", 
+102021, Positive, 16554, 16578, "effective in alleviation", "", "<http://scio/data/Result_61214> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61227> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61271> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61284> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+102372, InflammationTest, 16582, 16594, "inflammation", "", 
+102375, Lower, 16603, 16612, "reduction", "", 
+102373, InflammationTest, 16616, 16621, "TNF-α", "", 
+102374, InflammationTest, 16626, 16637, "Il-1β level", "", 
+102376, Thoracic, 16652, 16660, "thoracic", "", 
+102377, Contusion, 16661, 16677, "contusion injury", "", 
