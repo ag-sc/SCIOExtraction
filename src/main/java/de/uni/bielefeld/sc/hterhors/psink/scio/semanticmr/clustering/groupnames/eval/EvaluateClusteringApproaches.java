@@ -154,7 +154,7 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
-			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, 3,5);
+			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, 3, 5);
 
 			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
 
@@ -189,7 +189,9 @@ public class EvaluateClusteringApproaches {
 		for (int spread = 0; spread < 4; spread++) {
 			intervallCardinality.putIfAbsent(spread, new Score());
 
-			int tp = instance.getGoldAnnotations().getAbstractAnnotations().size() - clusters.size() <= spread ? 1 : 0;
+			int tp = Math.abs(instance.getGoldAnnotations().getAbstractAnnotations().size() - clusters.size()) <= spread
+					? 1
+					: 0;
 			int fn = tp == 1 ? 0 : 1;
 			intervallCardinality.get(spread).add(new Score(tp, 0, fn));
 

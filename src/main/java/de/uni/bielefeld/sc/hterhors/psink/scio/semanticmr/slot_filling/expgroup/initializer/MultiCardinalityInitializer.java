@@ -162,7 +162,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD
 				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING) {
-			goldBased(instance, list);
+//			goldBased(instance, list);
 		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
 				&& (groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING
 						|| groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING)) {
@@ -216,41 +216,6 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 	}
 
-	public void goldBased(Instance instance, List<State> list) {
-		final int maxGroupNames = SCIOSlotTypes.hasGroupName.slotMaxCapacity;
-		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 1000;
-		for (int current = min; current <= max; current++) {
-
-			List<AbstractAnnotation> experimentalGroups = new ArrayList<>();
-
-			for (int i = 0; i < Math.min(instance.getGoldAnnotations().<EntityTemplate>getAnnotations().size(),
-					current); i++) {
-
-				EntityTemplate goldAnnotation = instance.getGoldAnnotations().<EntityTemplate>getAnnotations().get(i);
-
-				EntityTemplate init = new EntityTemplate(
-						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
-
-				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
-					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
-							AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
-									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
-											.getSurfaceForm(),
-									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
-											.getStartDocCharOffset()));
-
-				for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
-						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
-					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
-				}
-				experimentalGroups.add(init);
-
-			}
-
-			list.add(new State(instance, new Annotations(experimentalGroups)));
-		}
-		SCIOSlotTypes.hasGroupName.slotMaxCapacity = maxGroupNames;
-	}
 
 	public void addEmpty(int current, List<AbstractAnnotation> experimentalGroups) {
 		if (experimentalGroups.size() < current)

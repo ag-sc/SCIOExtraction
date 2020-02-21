@@ -81,6 +81,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.evaluation.OrganismModelEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.evaluation.TreatmentEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.hardconstraints.DistinctExperimentalGroupConstraint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.GoldCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.MultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.PredictKMultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.SampleCardinalityInitializer;
@@ -130,9 +131,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	public static void main(String[] args) throws Exception {
 
 		if (args.length == 0)
-			new ExperimentalGroupSlotFilling(-1);
+			new ExperimentalGroupSlotFilling(-1, 100);
 		else
-			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]));
+			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -187,175 +188,162 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * Test in eclipse
 			 */
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			groupNameProviderMode = EExtractGroupNamesMode.MANUAL_PATTERN;
-			mainClassProviderMode = EMainClassMode.GOLD;
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
+			cardinalityMode = ECardinalityMode.GOLD;
+		} else if (id == 0) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
+			cardinalityMode = ECardinalityMode.GOLD;
+		} else if (id == 1) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.GOLD;
+
+		} else if (id == 2) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL;
+
+		} else if (id == 3) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
+
+		} else if (id == 4) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED_SAMPLE;
 
-		} else if (id == 0) {
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.GOLD;
-
-			cardinalityMode = ECardinalityMode.GOLD;
-
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
-		} else if (id == 1) {
-
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.GOLD;
-
-			cardinalityMode = ECardinalityMode.GOLD;
-
-			assignmentMode = EAssignmentMode.TREATMENT;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
-		} else if (id == 2) {
-			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.GOLD;
-
-			cardinalityMode = ECardinalityMode.GOLD;
-
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
-		} else if (id == 3) {
-			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.GOLD;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
-		} else if (id == 4) {
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.GOLD;
-
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
 		} else if (id == 5) {
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.SAMPLE;
 
 		} else if (id == 6) {
-			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL;
 
 		} else if (id == 7) {
-			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
 
 		} else if (id == 8) {
-			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			cardinalityMode = ECardinalityMode.RSS_PREDICTED_SAMPLE;
 
 		} else if (id == 9) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
-			assignmentMode = EAssignmentMode.TREATMENT;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
+			cardinalityMode = ECardinalityMode.SAMPLE;
 		} else if (id == 10) {
-			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
-		} else if (id == 11) {
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
+			cardinalityMode = ECardinalityMode.SAMPLE;
+		} else if (id == 11) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-
-			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
-
-			cardinalityMode = ECardinalityMode.PARALLEL;
-
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
+			cardinalityMode = ECardinalityMode.SAMPLE;
 		}
 
 	}
 
 	private final String rand;
 
-	public ExperimentalGroupSlotFilling(int parameterID) throws Exception {
+	public ExperimentalGroupSlotFilling(int parameterID, int dataRandomSeed) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.apply().registerNormalizationFunction(new WeightNormalization())
@@ -371,14 +359,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 
 		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 20;
-		
+
 		rand = String.valueOf(new Random().nextInt(100000));
-//		modelName = "ExperimentalGroup" + 71310;
+//		modelName = "ExperimentalGroup" + 53584;
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 		setParameterByID(parameterID);
 
-		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand);
+		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed);
 
 		trainingObjectiveFunction = new SlotFillingObjectiveFunction(
 				new CartesianEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
@@ -400,7 +388,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<IExplorationStrategy> explorerList = buildExplorer();
 
-		getData();
+		getData(dataRandomSeed);
 
 		addGroupNameCandidates();
 
@@ -416,10 +404,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Map<Class<? extends AbstractFeatureTemplate<?>>, Object[]> parameter = getParameter();
 
-
 		ISampler sampler = getSampler();
 
-		MaxChainLengthCrit maxStepCrit = new MaxChainLengthCrit(100);
+		MaxChainLengthCrit maxStepCrit = new MaxChainLengthCrit(200);
 
 		ConverganceCrit noModelChangeCrit = new ConverganceCrit(10 * explorerList.size(), s -> s.getModelScore());
 
@@ -966,11 +953,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		return injuries;
 	}
 
-	public void getData() throws IOException {
+	public void getData(int dataRandomSeed) throws IOException {
 		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
 		Collections.sort(docs);
 
-		Collections.shuffle(docs, new Random(100L));
+		Collections.shuffle(docs, new Random(dataRandomSeed));
 
 		final int x = (int) (((double) docs.size() / 100D) * 80D);
 		List<String> trainingInstanceNames = docs.subList(0, x);
@@ -999,10 +986,16 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<IExplorationStrategy> explorerList = new ArrayList<>();
 
-		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
+		HardConstraintsProvider hardConstraintsProviderR = new HardConstraintsProvider();
+		hardConstraintsProviderR.addHardConstraints(
+				new DistinctExperimentalGroupConstraint(predictionObjectiveFunction.getEvaluator()));
 
+		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
 		hardConstraintsProvider.addHardConstraints(
 				new DistinctExperimentalGroupConstraint(predictionObjectiveFunction.getEvaluator()));
+
+//		hardConstraintsProvider.addHardConstraints(
+//				new DistinctExperimentalGroupNameConstraint(predictionObjectiveFunction.getEvaluator()));
 
 		SlotFillingExplorer slotFillingExplorer = new SlotFillingExplorer(explorationMode, predictionObjectiveFunction,
 				hardConstraintsProvider);
@@ -1010,7 +1003,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		if (cardinalityMode == ECardinalityMode.SAMPLE || cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
 			RootTemplateCardinalityExplorer rootTemplateCardinalityExplorer = new RootTemplateCardinalityExplorer(
-					explorationMode, AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+					hardConstraintsProviderR, predictionObjectiveFunction.getEvaluator(), explorationMode,
+					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 			explorerList.add(rootTemplateCardinalityExplorer);
 		}
 		return explorerList;
@@ -1441,6 +1435,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	 * 
 	 */
 	private IStateInitializer buildStateInitializer() {
+
+		if (cardinalityMode == ECardinalityMode.GOLD
+				&& groupNameClusteringMode == EGroupNamesClusteringMode.GOLD_CLUSTERING)
+			return new GoldCardinalityInitializer(groupNameProviderMode, groupNameClusteringMode);
 
 		if (cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
 			PredictKMultiCardinalityInitializer init = new PredictKMultiCardinalityInitializer(cardinalityMode,

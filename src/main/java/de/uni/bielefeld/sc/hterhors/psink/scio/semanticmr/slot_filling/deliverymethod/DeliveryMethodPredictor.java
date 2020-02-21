@@ -128,8 +128,8 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	public List<IExplorationStrategy> getAdditionalExplorer() {
-		return Arrays.asList(new RootTemplateCardinalityExplorer(EExplorationMode.ANNOTATION_BASED,
-				AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
+		return Arrays.asList(new RootTemplateCardinalityExplorer( trainingObjectiveFunction.getEvaluator(),
+				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
 	}
 
 }

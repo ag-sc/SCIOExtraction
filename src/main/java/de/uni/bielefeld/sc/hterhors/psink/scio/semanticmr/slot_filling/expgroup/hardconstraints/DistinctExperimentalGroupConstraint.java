@@ -18,11 +18,11 @@ public class DistinctExperimentalGroupConstraint extends AbstractHardConstraint 
 	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
 
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
-
-			if (currentPrediction.evaluate(evaluator, entityTemplate).getF1() == 1.0D) {
+			if (currentPrediction.evaluateEquals(evaluator, entityTemplate)) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

@@ -244,6 +244,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
+				objectiveFunction.getEvaluator(),
 				EExplorationMode.ANNOTATION_BASED,
 				AnnotationBuilder.toAnnotation(EntityType.get("InvestigtaionMethod")));
 

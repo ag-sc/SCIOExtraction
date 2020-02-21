@@ -68,17 +68,17 @@ public class PredictKMultiCardinalityInitializer implements IStateInitializer {
 		this.groupNameMode = groupNameMode;
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;
 
-		if (!(groupNameMode == EExtractGroupNamesMode.GOLD
-				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING)) {
+//		if (!(groupNameMode == EExtractGroupNamesMode.GOLD
+//				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING)) {
 
-			if (groupNameMode != EExtractGroupNamesMode.EMPTY
-					&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING) {
-				wordBasedKMeans(instances);
-			} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
-					&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING) {
-				wekaBasedKmeans(instances, trainingInstances);
-			}
+		if (groupNameMode != EExtractGroupNamesMode.EMPTY
+				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING) {
+			wordBasedKMeans(instances);
+		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
+				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING) {
+			wekaBasedKmeans(instances, trainingInstances);
 		}
+//		}
 	}
 
 	public PredictKMultiCardinalityInitializer(ECardinalityMode cardinalityMode,
@@ -167,9 +167,7 @@ public class PredictKMultiCardinalityInitializer implements IStateInitializer {
 
 	@Override
 	public State getInitState(Instance instance) {
-		if (groupNameMode == EExtractGroupNamesMode.GOLD
-				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING) {
-		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
+		if (groupNameMode != EExtractGroupNamesMode.EMPTY
 				&& (groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING
 						|| groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING)) {
 			return clusteringBased(instance);

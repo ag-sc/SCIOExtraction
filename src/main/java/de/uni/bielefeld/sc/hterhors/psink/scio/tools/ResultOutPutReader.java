@@ -94,6 +94,9 @@ public class ResultOutPutReader {
 	final private static Pattern dataPattern = Pattern.compile(
 			"(.*) = Score \\[ getF1\\(\\)=(.+?), getPrecision\\(\\)=(.+?), * getRecall\\(\\)=(.+?), tp=(.+?), fp=(.+?), fn=(.+?), tn=(.+?)\\]");
 
+	final private static Pattern intervalCardinalityPattern = Pattern
+			.compile("EXP GROUP MICRO  INTERVALL CARDINALITY = (.*?)	(.*?)	(.*?)	(.*?)");
+
 	static class ModePair {
 
 		final public String mode;
@@ -130,7 +133,7 @@ public class ResultOutPutReader {
 
 	public static void main(String[] args) throws Exception {
 
-		File dir = new File("results/experimentalgroupextratcion/new/");
+		File dir = new File("results/experimentalgroupextratcion/cardinality/");
 
 		int modeCounter = 0;
 
@@ -152,7 +155,8 @@ public class ResultOutPutReader {
 			}
 		});
 
-		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/new/merge_new.csv"));
+		PrintStream ps = new PrintStream(
+				new File("results/experimentalgroupextratcion/cardinality/merge_cardinality.csv"));
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);
@@ -168,8 +172,8 @@ public class ResultOutPutReader {
 				modePairsMap.get(modeName).put(modePair.mode, modePair.value);
 				modeValueNames.add(modePair.mode);
 			}
-			for (int i = 7; i < readAllLines.size(); i++) {
-				if (i == 13 || i == 14)
+			for (int i = 8; i < readAllLines.size(); i++) {
+				if (i == 14 || i == 15)
 					continue;
 				DataPair dataPair = getDataPattern(readAllLines.get(i));
 				dataMap.putIfAbsent(dataPair.mode, new HashMap<>());

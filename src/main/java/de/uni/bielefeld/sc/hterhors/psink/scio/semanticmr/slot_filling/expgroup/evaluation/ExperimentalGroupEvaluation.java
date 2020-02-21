@@ -71,7 +71,7 @@ public class ExperimentalGroupEvaluation {
 			for (int spread = 0; spread < 4; spread++) {
 				intervallCardinality.putIfAbsent(spread, new Score());
 
-				int tp = goldAnnotations.size() - predictedAnnotations.size() <= spread ? 1 : 0;
+				int tp = Math.abs(goldAnnotations.size() - predictedAnnotations.size()) <= spread ? 1 : 0;
 				int fn = tp == 1 ? 0 : 1;
 				intervallCardinality.get(spread).add(new Score(tp, 0, fn));
 

@@ -266,7 +266,8 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction, constraintsProvider);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
-				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation("OrganismModel"));
+				objectiveFunction.getEvaluator(), EExplorationMode.ANNOTATION_BASED,
+				AnnotationBuilder.toAnnotation("OrganismModel"));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer
 //				, cardExplorer
