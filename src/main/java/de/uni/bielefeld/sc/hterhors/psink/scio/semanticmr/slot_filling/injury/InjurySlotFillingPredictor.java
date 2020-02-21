@@ -100,9 +100,25 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury);
-//		 final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/Normal/");
-//		final File externalNerlaAnnotations = new File("src/main/resources/slotfilling/injury/corpus/HighRecall20/");
+//		standard: Score [ getF1()=0.415, getPrecision()=0.560, getRecall()=0.330, tp=61, fp=48, fn=124, tn=0]
+//				only root: Score [ getF1()=0.571, getPrecision()=0.600, getRecall()=0.545, tp=24, fp=16, fn=20, tn=0]
+//				CRFStatistics [context=Train, getTotalDuration()=91841]
+//				CRFStatistics [context=Test, getTotalDuration()=491]
+//		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.injury);
+
+//		standard: Score [ getF1()=0.439, getPrecision()=0.618, getRecall()=0.341, tp=63, fp=39, fn=122, tn=0]
+//				only root: Score [ getF1()=0.571, getPrecision()=0.600, getRecall()=0.545, tp=24, fp=16, fn=20, tn=0]
+//				CRFStatistics [context=Train, getTotalDuration()=79462]
+//				CRFStatistics [context=Test, getTotalDuration()=312]
+		
+//		return new File("src/main/resources/additional_nerla/injury/LITERAL");
+		
+//		standard: Score [ getF1()=0.425, getPrecision()=0.598, getRecall()=0.330, tp=61, fp=41, fn=124, tn=0]
+//				only root: Score [ getF1()=0.548, getPrecision()=0.575, getRecall()=0.523, tp=23, fp=17, fn=21, tn=0]
+//				CRFStatistics [context=Train, getTotalDuration()=78526]
+//				CRFStatistics [context=Test, getTotalDuration()=244]
+//				Compute coverage...
+		return new File("src/main/resources/additional_nerla/injury/DOCUMENT_LINKED");
 	}
 
 	@Override

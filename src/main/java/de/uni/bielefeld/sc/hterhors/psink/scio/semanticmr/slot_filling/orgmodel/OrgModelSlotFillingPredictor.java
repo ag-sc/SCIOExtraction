@@ -52,20 +52,17 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
+		// Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE 0.95 0.96 0.94
+		// modelName: OrganismModel-1205615375
 		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.organismModel);
-//		 final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/Normal/");
-//		 final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall5/");
-//		 final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall10/");
-//		 final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall15/");
-//		 final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall20/");
-//		final File externalNerlaAnnotations = new File(
-//				"src/main/resources/slotfilling/organism_model/corpus/HighRecall30/");
 
+		// Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE 0.85 0.88 0.83
+		// modelName: OrganismModel-673015650
+		// return new
+		// File("src/main/resources/additional_nerla/organism_model/LITERAL");
+//		Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE	0.87	0.91	0.83
+//		modelName: OrganismModel1469327283
+//		return new File("src/main/resources/additional_nerla/organism_model/DOCUMENT_LINKED");
 	}
 
 	@Override
