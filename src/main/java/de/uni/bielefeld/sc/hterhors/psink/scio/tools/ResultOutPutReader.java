@@ -1,6 +1,8 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.tools;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -132,8 +134,122 @@ public class ResultOutPutReader {
 	}
 
 	public static void main(String[] args) throws Exception {
+		PrintStream ps = new PrintStream(
+				new File("results/experimentalgroupextratcion/cardinality/merge_cardinality.csv"));
+		Map<String, Map<String, List<Score>>> dataMap = new HashMap<>();
+		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
+		Set<String> dataNames = new HashSet<>();
+		Set<String> modeValueNames = new HashSet<>();
+		for (int run = 0; run < 11; run++) {
 
-		File dir = new File("results/experimentalgroupextratcion/cardinality/");
+			File dir = new File("results/experimentalgroupextratcion/cardinality/" + run + "/");
+
+			int modeCounter = 0;
+
+			List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream()
+					.filter(n -> n.matches(".*Results.*")).collect(Collectors.toList());
+
+			Collections.sort(files, new Comparator<String>() {
+
+				@Override
+				public int compare(String o1, String o2) {
+					return Integer.compare(Integer.parseInt(o1.split("_")[0]), Integer.parseInt(o2.split("_")[0]));
+				}
+			});
+
+			for (String fileName : files) {
+				File file = new File(dir, fileName);
+				System.out.println(file);
+
+				if (!file.getName().contains("Results"))
+					continue;
+
+				final String modeName = "Mode_" + modeCounter;
+				modePairsMap.put(modeName, new HashMap<>());
+				List<String> readAllLines = Files.readAllLines(file.toPath());
+				for (int i = 1; i < 6; i++) {
+					ModePair modePair = getModePattern(readAllLines.get(i));
+					modePairsMap.get(modeName).put(modePair.mode, modePair.value);
+					modeValueNames.add(modePair.mode);
+				}
+				for (int i = 8; i < readAllLines.size(); i++) {
+					if (i == 14 || i == 15)
+						continue;
+					DataPair dataPair = getDataPattern(readAllLines.get(i));
+					dataMap.putIfAbsent(dataPair.mode, new HashMap<>());
+					if (!dataMap.get(dataPair.mode).containsKey(modeName)) {
+						dataMap.get(dataPair.mode).put(modeName, new ArrayList<>());
+					}
+					dataMap.get(dataPair.mode).get(modeName).add(dataPair.score);
+
+					dataNames.add(dataPair.mode);
+				}
+				modeCounter++;
+			}
+
+//			singleFolder(run);
+		}
+		List<String> modeNames = new ArrayList<>(modePairsMap.keySet());
+		Collections.sort(modeNames, new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+				return Integer.compare(Integer.parseInt(o1.split("_")[1]), Integer.parseInt(o2.split("_")[1]));
+			}
+		});
+
+		ps.println(toModeNamesHeaderLine(modeNames));
+
+		List<String> dataNameList = new ArrayList<>(dataNames);
+		Collections.sort(dataNameList);
+
+		for (String dataName : dataNameList) {
+			StringBuffer buffer = new StringBuffer(dataName);
+			buffer.append("\t");
+			for (String modeName : modeNames) {
+				double avg = 0;
+				for (Score score : dataMap.get(dataName).get(modeName)) {
+					avg += score.getF1();
+				}
+				buffer.append(avg / dataMap.get(dataName).get(modeName).size());
+				buffer.append("\t");
+			}
+
+			ps.println(buffer.toString().trim());
+
+		}
+
+		for (int i = 0; i < 20; i++) {
+			ps.println();
+		}
+
+		List<String> mnvpl = new ArrayList<>(modeValueNames);
+		Collections.sort(mnvpl);
+
+		// header
+		ps.print("Mode \t");
+		for (String modeName : mnvpl) {
+			ps.print(modeName + "\t");
+		}
+
+		ps.println();
+		for (String modeName : modeNames) {
+			ps.print(modeName + "\t");
+
+			for (String mn : mnvpl) {
+
+				ps.print(modePairsMap.get(modeName).get(mn) + "\t");
+
+			}
+			ps.println();
+		}
+
+		ps.close();
+
+	}
+
+	public static void singleFolder(int run) throws FileNotFoundException, IOException {
+		File dir = new File("results/experimentalgroupextratcion/cardinality/" + run + "/");
 
 		int modeCounter = 0;
 
@@ -156,7 +272,7 @@ public class ResultOutPutReader {
 		});
 
 		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/cardinality/merge_cardinality.csv"));
+				new File("results/experimentalgroupextratcion/cardinality/" + run + "/merge_cardinality.csv"));
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);
@@ -234,7 +350,6 @@ public class ResultOutPutReader {
 		}
 
 		ps.close();
-
 	}
 
 	private static String toModeNamesHeaderLine(List<String> l) {

@@ -188,18 +188,18 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * Test in eclipse
 			 */
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
-			cardinalityMode = ECardinalityMode.GOLD;
+			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
+			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
+			cardinalityMode = ECardinalityMode.PARALLEL;
 		} else if (id == 0) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -210,7 +210,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			cardinalityMode = ECardinalityMode.GOLD;
 		} else if (id == 1) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -218,11 +218,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
-			cardinalityMode = ECardinalityMode.GOLD;
+			cardinalityMode = ECardinalityMode.PARALLEL;
 
 		} else if (id == 2) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -230,23 +230,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
-			cardinalityMode = ECardinalityMode.PARALLEL;
+			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
 
 		} else if (id == 3) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
-			mainClassProviderMode = EMainClassMode.GOLD;
-
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
-			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
-
-		} else if (id == 4) {
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -255,22 +243,21 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED_SAMPLE;
-
-		} else if (id == 5) {
+		} else if (id == 4) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
 			cardinalityMode = ECardinalityMode.SAMPLE;
 
-		} else if (id == 6) {
+		} else if (id == 5) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -280,9 +267,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL;
 
-		} else if (id == 7) {
+		} else if (id == 6) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -292,9 +279,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
 
-		} else if (id == 8) {
+		} else if (id == 7) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
@@ -304,39 +291,39 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED_SAMPLE;
 
-		} else if (id == 9) {
+		} else if (id == 8) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
+			cardinalityMode = ECardinalityMode.SAMPLE;
+		} else if (id == 9) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT;
+			complexityMode = EComplexityMode.ROOT;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
+			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
 			cardinalityMode = ECardinalityMode.SAMPLE;
 		} else if (id == 10) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
 			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
-			cardinalityMode = ECardinalityMode.SAMPLE;
-		} else if (id == 11) {
-			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
-			complexityMode = EComplexityMode.ROOT;
-			explorationMode = EExplorationMode.TYPE_BASED;
-
-			mainClassProviderMode = EMainClassMode.GOLD;
-
-			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
-			cardinalityMode = ECardinalityMode.SAMPLE;
+			cardinalityMode = ECardinalityMode.PARALLEL;
 		}
 
 	}
@@ -497,8 +484,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		log.info(crf.getTestStatistics());
 		log.info("modelName: " + modelName);
 
-		postPredictOrganismModel(results);
-		postPredictInjuryModel(results);
+//		postPredictOrganismModel(results);
+//		postPredictInjuryModel(results);
 
 		/**
 		 * Evaluate with objective function
@@ -1025,6 +1012,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 					+ groupNameClusteringMode + " with groupNameProviderMode = " + groupNameProviderMode);
 		}
 
+		if (groupNameClusteringMode != EGroupNamesClusteringMode.NONE && (cardinalityMode == ECardinalityMode.SAMPLE)) {
+			throw new IllegalArgumentException("Can not combine modes: groupNameClusteringMode = "
+					+ groupNameClusteringMode + " with cardinalityMode = " + cardinalityMode);
+		}
+
 		SCIOSlotTypes.hasGender.exclude();
 		SCIOSlotTypes.hasWeight.exclude();
 		SCIOSlotTypes.hasAgeCategory.exclude();
@@ -1437,7 +1429,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private IStateInitializer buildStateInitializer() {
 
 		if (cardinalityMode == ECardinalityMode.GOLD
-				&& groupNameClusteringMode == EGroupNamesClusteringMode.GOLD_CLUSTERING)
+				&& (groupNameClusteringMode == EGroupNamesClusteringMode.GOLD_CLUSTERING
+						|| groupNameClusteringMode == EGroupNamesClusteringMode.NONE))
 			return new GoldCardinalityInitializer(groupNameProviderMode, groupNameClusteringMode);
 
 		if (cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
