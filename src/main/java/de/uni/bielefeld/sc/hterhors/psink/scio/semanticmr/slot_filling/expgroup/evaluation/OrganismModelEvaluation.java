@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -27,9 +28,9 @@ public class OrganismModelEvaluation {
 		this.evaluator = evaluator;
 	}
 
-	public Score evaluate(PrintStream ps, Map<Instance, State> results) {
+	public Score evaluate(PrintStream ps, Map<Instance, State> results, EScoreType scoreType) {
 
-		Score score = new Score();
+		Score score = new Score(scoreType);
 //		double macroF1 = 0;
 //		double macroPrecision = 0;
 //		double macroRecall = 0;
@@ -55,7 +56,7 @@ public class OrganismModelEvaluation {
 //			i++;
 //			log.info(e.getKey().getName());
 
-			Score s = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotations);
+			Score s = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotations, scoreType);
 //			log.info("nerl based score: " + s);
 
 			score.add(s);
@@ -71,8 +72,8 @@ public class OrganismModelEvaluation {
 //		macroPrecision /= results.entrySet().size();
 //		macroRecall /= results.entrySet().size();
 //		log.info("ORGANISM MODEL MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
-		log.info("ORGANISM MODEL MICRO: SCORE = " + score);
-		ps.println("ORGANISM MODEL MICRO: SCORE = " + score);
+		log.info("ORGANISM MODEL " + scoreType + ": SCORE = " + score);
+		ps.println("ORGANISM MODEL " + scoreType + ": SCORE = " + score);
 		return score;
 	}
 

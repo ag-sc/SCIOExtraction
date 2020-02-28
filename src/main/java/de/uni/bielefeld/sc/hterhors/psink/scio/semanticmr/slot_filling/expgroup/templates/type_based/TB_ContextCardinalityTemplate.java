@@ -179,9 +179,6 @@ public class TB_ContextCardinalityTemplate extends AbstractFeatureTemplate<Conte
 
 		getContextFeatures(featureVector, entity.name, leftContext, rightContext, cardinality);
 
-//		for (EntityType e : entity.getDirectSuperEntityTypes()) {
-//			getContextFeatures(featureVector, e.entityName, leftContext, rightContext,cardinality);
-//		}
 	}
 
 	private String[] extractLeftContext(List<DocumentToken> tokens, int beginTokenIndex) {

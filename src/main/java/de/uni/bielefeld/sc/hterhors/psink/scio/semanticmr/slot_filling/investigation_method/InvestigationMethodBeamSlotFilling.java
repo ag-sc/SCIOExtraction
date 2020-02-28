@@ -31,6 +31,7 @@ import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.IBeamSamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -173,7 +174,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * Here only the entity type is required.
 		 *
 		 */
-		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(
+		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
 		/**
@@ -244,8 +245,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		SlotFillingExplorer explorer = new SlotFillingExplorer(objectiveFunction);
 
 		RootTemplateCardinalityExplorer cardExplorer = new RootTemplateCardinalityExplorer(
-				objectiveFunction.getEvaluator(),
-				EExplorationMode.ANNOTATION_BASED,
+				objectiveFunction.getEvaluator(), EExplorationMode.ANNOTATION_BASED,
 				AnnotationBuilder.toAnnotation(EntityType.get("InvestigtaionMethod")));
 
 		List<IExplorationStrategy> explorerList = Arrays.asList(explorer, cardExplorer);
@@ -463,7 +463,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * training we are interested in finding the correct document linked annotation
 		 * but for prediction we are only interested in the entity type.
 		 */
-		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
 		/**

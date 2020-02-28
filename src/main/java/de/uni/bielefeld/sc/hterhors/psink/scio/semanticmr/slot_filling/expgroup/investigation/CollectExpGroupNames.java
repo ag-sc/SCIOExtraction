@@ -26,6 +26,7 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
@@ -265,8 +266,8 @@ public class CollectExpGroupNames {
 
 		SystemScope.verbose = false;
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup")).apply()
-				.registerNormalizationFunction(new WeightNormalization())
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
 
 		InstanceProvider.maxNumberOfAnnotations = 100;
@@ -382,13 +383,13 @@ public class CollectExpGroupNames {
 //			predictedAnnotationsBaseline.forEach(g -> System.out.println(g.toPrettyString()));
 
 			List<Integer> randomBestAssignemnt = evaluator.getBestAssignment(goldAnnotations,
-					predictedAnnotationsBaseline);
+					predictedAnnotationsBaseline, EScoreType.MICRO);
 			Score simpleRandomS = simpleEvaluate(false, simpleEval, randomBestAssignemnt, goldAnnotations,
 					predictedAnnotationsBaseline);
 			overallSimpleEvalRandomScore.add(simpleRandomS);
 			System.out.println("---");
 			List<Integer> heuristicBestAssignment = evaluator.getBestAssignment(goldAnnotations,
-					predictedAnnotationsHeuristics);
+					predictedAnnotationsHeuristics, EScoreType.MICRO);
 			Score simpleHeuristicS = simpleEvaluate(true, simpleEval, heuristicBestAssignment, goldAnnotations,
 					predictedAnnotationsHeuristics);
 			overallSimpleEvalHeuristicsScore.add(simpleHeuristicS);
@@ -396,10 +397,12 @@ public class CollectExpGroupNames {
 			System.out.println("Simple Random: " + simpleRandomS);
 			System.out.println("Simple Heuristics: " + simpleHeuristicS);
 
-			Score fullRandomS = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotationsBaseline);
+			Score fullRandomS = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotationsBaseline,
+					EScoreType.MICRO);
 			overallFullRandomScore.add(fullRandomS);
 
-			Score fullHeuristicS = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotationsHeuristics);
+			Score fullHeuristicS = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotationsHeuristics,
+					EScoreType.MICRO);
 			overallFullHeuristicsScore.add(fullHeuristicS);
 
 			System.out.println("Full Random: " + fullRandomS);
@@ -908,16 +911,16 @@ public class CollectExpGroupNames {
 			new PatternIndexPair(4, new HashSet<>(Arrays.asList(0, 3)),
 					Pattern.compile("((only|or) )?([a-z][^ ]+?) ?\\((n)\\W?=\\W?\\d{1,2}\\)", Pattern.CASE_INSENSITIVE),
 					5),
-			new PatternIndexPair(5, new HashSet<>(Arrays.asList( 2)),
+			new PatternIndexPair(5, new HashSet<>(Arrays.asList(2)),
 					Pattern.compile(
 							"(a|the|in) ([\\w-\\+ ']{3,20} (group|animals|mice|rats|cats|dogs|transplantation))",
 							Pattern.CASE_INSENSITIVE)),
-			new PatternIndexPair(6, new HashSet<>(Arrays.asList( 3)),
+			new PatternIndexPair(6, new HashSet<>(Arrays.asList(3)),
 					Pattern.compile(
 							"(,( ?and ?)?|;)([\\w-\\+ ']{3,20} ?(group|animals|mice|rats|cats|dogs|transplantation))",
 							Pattern.CASE_INSENSITIVE),
 					2),
-			new PatternIndexPair(7, new HashSet<>(Arrays.asList( 2)), Pattern.compile(
+			new PatternIndexPair(7, new HashSet<>(Arrays.asList(2)), Pattern.compile(
 					"(\\)|;|:) ?((\\(\\w\\) ?)?([\\w-\\+ ',\\.]|[^\\x20-\\x7E]){5,100})(\\( ?)?n\\W?=\\W?\\d{1,2}( ?\\))?(?=(,|\\.|;))",
 					Pattern.CASE_INSENSITIVE), 5),
 			new PatternIndexPair(8, new HashSet<>(Arrays.asList(0, 3)), Pattern.compile(
@@ -1295,7 +1298,7 @@ public class CollectExpGroupNames {
 	final private static String resultsKeyPointTerm = "results";
 
 	final public static Set<String> STOP_TERM_LIST = new HashSet<>(
-			Arrays.asList("spinal", "injured", "lesion", "experimental", "group", "animals", "rats", "cats","SCI"));
+			Arrays.asList("spinal", "injured", "lesion", "experimental", "group", "animals", "rats", "cats", "SCI"));
 
 	private Integer getReferencePoint(Instance instance) {
 		/*

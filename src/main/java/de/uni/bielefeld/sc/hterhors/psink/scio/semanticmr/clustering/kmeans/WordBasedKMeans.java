@@ -16,14 +16,12 @@ import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent;
-import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans.Centroid;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans.Record;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.FeatureFactory;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 
 public class WordBasedKMeans<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
@@ -162,6 +160,8 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 	final private int maxIterations = 1000;
 
+	public double lambda = 0;
+
 	public List<List<E>> clusterRSS(List<E> datapoints, int min, int max) {
 
 		Map<Centroid, List<Record<E>>> clusterRecords = new HashMap<>();
@@ -172,7 +172,7 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 
 			Map<Centroid, List<Record<E>>> cR = kMeans(vecs, clusterSize, maxIterations);
 
-			double RSS = RSS(cR);
+			double RSS = RSS(cR) + lambda * clusterSize;
 
 			if (RSS < smallestRSS) {
 				smallestRSS = RSS;
@@ -613,17 +613,34 @@ public class WordBasedKMeans<E extends LiteralAnnotation> {
 		return nearest;
 	}
 
-	final private SmithWaterman smithWaterman = new SmithWaterman();
+	final static Map<String, Map<String, Double>> cache = new HashMap<>();
 
 	private double distance(String word1, String word2) {
-		if (word1 == null) {
-			System.out.println("");
-			return 0;
+		Map<String, Double> c;
+
+		if ((c = cache.get(word1)) == null) {
+			cache.put(word1, c = new HashMap<>());
 		}
 
-		return 1 - ((smithWaterman.getSimilarity(word1, word2)
-				+ LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100)) / 2);
-//		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
+		Double d = 0D;
+		if ((d = c.get(word2)) == null) {
+			c.put(word2, d = computeDistance(word1, word2));
+		}
+
+		return d;
+	}
+
+	public double computeDistance(String word1, String word2) {
+		if (word1 == null)
+			return 0;
+
+		double val = 0;
+		for (AbstractStringMetric iterable_element : FeatureFactory.metrics) {
+			val += iterable_element.getSimilarity(word1, word2);
+		}
+
+		val /= FeatureFactory.metrics.size();
+		return 1 - val;
 	}
 
 }

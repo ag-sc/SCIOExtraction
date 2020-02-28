@@ -23,14 +23,14 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TB_BOWExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TypedBOW;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWTemplate.BOWScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWInverseTemplate.BOWScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
+public class TB_ExGrBOWInverseTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 	private static final Set<String> SPECIAL_KEEPWORDS = new HashSet<>(
 			Arrays.asList("media", "single", "alone", "only", "control", "sham", "low", "high"));
@@ -55,29 +55,17 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 	static class BOWScope extends AbstractFactorScope {
 
-		final String context;
-
-		public final SlotType slotTypeContext;
 		public final Set<String> expGroupBOW;
 
-		public BOWScope(AbstractFeatureTemplate<?> template, String context, SlotType slotTypeContext,
-				Set<String> expGroupBOW, Set<TypedBOW> propertyBOW) {
-			super(template);
-			this.context = context;
-			this.slotTypeContext = slotTypeContext;
-			this.expGroupBOW = expGroupBOW;
-			this.propertyBOW = propertyBOW;
-		}
-
 		public final Set<TypedBOW> propertyBOW;
+		public final SlotType slotTypeContext;
 
-		public BOWScope(AbstractFeatureTemplate<?> template, String context, Set<String> expGroupBOW,
-				Set<TypedBOW> propertyBOW, SlotType slotTypeContext) {
+		public BOWScope(AbstractFeatureTemplate<?> template, SlotType slotType, Set<String> expGroupBOW,
+				Set<TypedBOW> popertyBOW) {
 			super(template);
-			this.context = context;
 			this.expGroupBOW = expGroupBOW;
-			this.propertyBOW = propertyBOW;
-			this.slotTypeContext = slotTypeContext;
+			this.propertyBOW = popertyBOW;
+			this.slotTypeContext = slotType;
 		}
 
 		@Override
@@ -94,7 +82,6 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 		public int hashCode() {
 			final int prime = 31;
 			int result = super.hashCode();
-			result = prime * result + ((context == null) ? 0 : context.hashCode());
 			result = prime * result + ((expGroupBOW == null) ? 0 : expGroupBOW.hashCode());
 			result = prime * result + ((propertyBOW == null) ? 0 : propertyBOW.hashCode());
 			result = prime * result + ((slotTypeContext == null) ? 0 : slotTypeContext.hashCode());
@@ -110,11 +97,6 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 			if (getClass() != obj.getClass())
 				return false;
 			BOWScope other = (BOWScope) obj;
-			if (context == null) {
-				if (other.context != null)
-					return false;
-			} else if (!context.equals(other.context))
-				return false;
 			if (expGroupBOW == null) {
 				if (other.expGroupBOW != null)
 					return false;
@@ -146,32 +128,25 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 			final Set<String> expGroupBOW = TB_BOWExtractor.getExpGroupPlusNameBOW(experimentalGroup);
 
-			addSFSFactor("DIRECT", factors, state.getInstance(), expGroupBOW, experimentalGroup,
-					SCIOSlotTypes.hasOrganismModel);
-			addSFSFactor("DIRECT", factors, state.getInstance(), expGroupBOW, experimentalGroup,
-					SCIOSlotTypes.hasInjuryModel);
-			addMFSFactor("DIRECT", factors, state.getInstance(), expGroupBOW, experimentalGroup,
-					SCIOSlotTypes.hasTreatmentType);
+			for (EntityTemplate experimentalGroup2 : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-//			for (EntityTemplate experimentalGroup2 : super.<EntityTemplate>getPredictedAnnotations(state)) {
-//
-//				if (experimentalGroup2 == experimentalGroup)
-//					continue;
-//
-//				addSFSFactor("INVERSE", factors, state.getInstance(), expGroupBOW, experimentalGroup2,
-//						SCIOSlotTypes.hasOrganismModel);
-//				addSFSFactor("INVERSE", factors, state.getInstance(), expGroupBOW, experimentalGroup2,
-//						SCIOSlotTypes.hasInjuryModel);
-//				addMFSFactor("INVERSE", factors, state.getInstance(), expGroupBOW, experimentalGroup2,
-//						SCIOSlotTypes.hasTreatmentType);
-//
-//			}
+				if (experimentalGroup2 == experimentalGroup)
+					continue;
+
+				addSFSFactor(factors, state.getInstance(), expGroupBOW, experimentalGroup2,
+						SCIOSlotTypes.hasOrganismModel);
+				addSFSFactor(factors, state.getInstance(), expGroupBOW, experimentalGroup2,
+						SCIOSlotTypes.hasInjuryModel);
+				addMFSFactor(factors, state.getInstance(), expGroupBOW, experimentalGroup2,
+						SCIOSlotTypes.hasTreatmentType);
+
+			}
 		}
 
 		return factors;
 	}
 
-	private void addMFSFactor(String context, List<BOWScope> factors, Instance instance, Set<String> expGroupBOW,
+	private void addMFSFactor(List<BOWScope> factors, Instance instance, Set<String> expGroupBOW,
 			EntityTemplate experimentalGroup, SlotType slotType) {
 		if (slotType.isExcluded())
 			return;
@@ -187,12 +162,12 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 			final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(instance, property);
 
-			factors.add(new BOWScope(this, context, slotType, expGroupBOW, propertyBOW));
+			factors.add(new BOWScope(this, slotType, expGroupBOW, propertyBOW));
 
 		}
 	}
 
-	private void addSFSFactor(String context, List<BOWScope> factors, Instance instance, Set<String> expGroupBOW,
+	private void addSFSFactor(List<BOWScope> factors, Instance instance, Set<String> expGroupBOW,
 			EntityTemplate experimentalGroup, SlotType slotType) {
 		if (slotType.isExcluded())
 			return;
@@ -206,7 +181,7 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 		final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(instance, property);
 
-		factors.add(new BOWScope(this, context, slotType, expGroupBOW, propertyBOW));
+		factors.add(new BOWScope(this, slotType, expGroupBOW, propertyBOW));
 	}
 
 	@Override
@@ -223,8 +198,8 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 			if (ALL_STOPWORDS.contains(expBOWTerm))
 				continue;
-
 			List<String> nGrams1 = getNGrams(expBOWTerm);
+
 			for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
 				for (String typedBOWTerm : typedBOW.bow) {
 
@@ -241,6 +216,14 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 						termPair(factor, typedBOWTerm, expBOWTerm);
 						nGramPair(factor, nGrams2, nGrams1);
 					}
+//					
+//					if (expBOWTerm.compareTo(typedBOWTerm) < 0)
+//						factor.getFeatureVector().set("INVERSE Context: " + factor.getFactorScope().slotTypeContext.name
+//								+ ", sorted TermPair: " + typedBOWTerm + "\t" + expBOWTerm, true);
+//					else
+//						factor.getFeatureVector().set("INVERSE Context: " + factor.getFactorScope().slotTypeContext.name
+//								+ ", sorted TermPair: " + expBOWTerm + "\t" + typedBOWTerm, true);
+
 				}
 			}
 		}
@@ -282,9 +265,8 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 	}
 
 	public void termPair(Factor<BOWScope> factor, String expBOWTerm, String typedBOWTerm) {
-		factor.getFeatureVector()
-				.set(factor.getFactorScope().context + "_context: " + factor.getFactorScope().slotTypeContext.name
-						+ ", sorted TermPair: " + expBOWTerm + "\t" + typedBOWTerm, true);
+		factor.getFeatureVector().set("INVERSE Context: " + factor.getFactorScope().slotTypeContext.name
+				+ ", sorted TermPair: " + expBOWTerm + "\t" + typedBOWTerm, true);
 	}
 
 	private String normalize(String expBOWTerm) {

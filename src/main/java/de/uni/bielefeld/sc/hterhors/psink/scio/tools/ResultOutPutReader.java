@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -140,7 +139,7 @@ public class ResultOutPutReader {
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 0; run < 11; run++) {
+		for (int run = 0; run < 4; run++) {
 
 			File dir = new File("results/experimentalgroupextratcion/cardinality/" + run + "/");
 
@@ -173,7 +172,7 @@ public class ResultOutPutReader {
 					modeValueNames.add(modePair.mode);
 				}
 				for (int i = 8; i < readAllLines.size(); i++) {
-					if (i == 14 || i == 15)
+					if (i == 12 || i == 13)
 						continue;
 					DataPair dataPair = getDataPattern(readAllLines.get(i));
 					dataMap.putIfAbsent(dataPair.mode, new HashMap<>());
@@ -187,7 +186,7 @@ public class ResultOutPutReader {
 				modeCounter++;
 			}
 
-//			singleFolder(run);
+			singleFolder(run);
 		}
 		List<String> modeNames = new ArrayList<>(modePairsMap.keySet());
 		Collections.sort(modeNames, new Comparator<String>() {
@@ -289,7 +288,7 @@ public class ResultOutPutReader {
 				modeValueNames.add(modePair.mode);
 			}
 			for (int i = 8; i < readAllLines.size(); i++) {
-				if (i == 14 || i == 15)
+				if (i == 12 || i == 13)
 					continue;
 				DataPair dataPair = getDataPattern(readAllLines.get(i));
 				dataMap.putIfAbsent(dataPair.mode, new HashMap<>());

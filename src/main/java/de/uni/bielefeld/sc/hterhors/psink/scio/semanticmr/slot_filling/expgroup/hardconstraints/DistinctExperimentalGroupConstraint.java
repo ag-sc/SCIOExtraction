@@ -5,6 +5,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class DistinctExperimentalGroupConstraint extends AbstractHardConstraint {
 
@@ -16,14 +17,19 @@ public class DistinctExperimentalGroupConstraint extends AbstractHardConstraint 
 
 	@Override
 	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
-
+		boolean violates = false;
+		boolean inclTmp = SCIOSlotTypes.hasGroupName.isIncluded();
+		SCIOSlotTypes.hasGroupName.exclude();
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
 			if (currentPrediction.evaluateEquals(evaluator, entityTemplate)) {
-				return true;
+				violates = true;
+				break;
 			}
 		}
+		if (inclTmp)
+			SCIOSlotTypes.hasGroupName.include();
 
-		return false;
+		return violates;
 	}
 
 }

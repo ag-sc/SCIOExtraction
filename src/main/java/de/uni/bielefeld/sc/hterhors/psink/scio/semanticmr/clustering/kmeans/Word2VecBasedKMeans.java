@@ -137,16 +137,24 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		gnd.add(new GroupNamePair(new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(H)),
 				new LiteralAnnotation(SCIOEntityTypes.groupName, new TextualContent(I)), true, 0D));
 //		
-		Word2VecBasedKMeans<LiteralAnnotation> c = new Word2VecBasedKMeans<>();
 
 		List<LiteralAnnotation> datapoints = new ArrayList<>(gnd.stream()
 				.flatMap(a -> Arrays.asList(a.groupName1, a.groupName2).stream()).collect(Collectors.toSet()));
+
+		Word2VecBasedKMeans<LiteralAnnotation> c = new Word2VecBasedKMeans<>(
+				datapoints.stream().map(a -> a.getSurfaceForm()).collect(Collectors.toSet()));
 //
+
+		for (GroupNamePair gnp : gnd) {
+			System.out.println(
+					gnp.groupName1.getSurfaceForm() + " " + gnp.groupName2.getSurfaceForm() + " -> " + gnp.probability);
+			System.out
+					.println(Word2VecBasedKMeans.squareDistance(c.getAdditiveEmbedding(gnp.groupName1.getSurfaceForm()),
+							c.getAdditiveEmbedding(gnp.groupName2.getSurfaceForm())));
+		}
+
 		List<List<LiteralAnnotation>> clusters = c.clusterRSS(datapoints, 1, 10);
 		System.out.println("Number of clusters = " + clusters.size());
-		for (List<LiteralAnnotation> cluster : clusters) {
-			System.out.println("Cluster size = " + cluster.size());
-		}
 
 		for (List<LiteralAnnotation> cluster : clusters) {
 			for (LiteralAnnotation groupName : cluster) {
@@ -157,35 +165,58 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 
 	}
 
+	public Word2VecBasedKMeans(Set<String> words) {
+		Set<String> _words = words.stream().flatMap(a -> Arrays.stream(a.split(" "))).collect(Collectors.toSet());
+
+		readVectors(_words);
+		System.out.println(wordEmbeddings.size());
+	}
+
 	private Map<String, Double[]> wordEmbeddings = new HashMap<>();
 
 	private final Random random = new Random(1000L);
 
 	final private int maxIterations = 1000;
 
+	public double lambda;
+
 	public List<List<E>> clusterRSS(List<E> datapoints, int min, int max) {
 
-		Set<String> words = datapoints.stream()
-				.flatMap(a -> Arrays.stream(a.asInstanceOfLiteralAnnotation().getSurfaceForm().split(" ")))
-				.collect(Collectors.toSet());
-
-		readVectors(words);
+//		double lambda = (double) min / (double) max;
 
 		Map<Centroid, List<Record<E>>> clusterRecords = new HashMap<>();
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
 
 		double smallestRSS = Double.MAX_VALUE;
-		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
 
+		for (int clusterSize = min; clusterSize <= max; clusterSize++) {
 			Map<Centroid, List<Record<E>>> cR = kMeans(vecs, clusterSize, maxIterations);
 
-			double RSS = RSS(cR);
+			double RSS = RSS(cR) + (lambda * clusterSize);
 
 			if (RSS < smallestRSS) {
 				smallestRSS = RSS;
 				clusterRecords = cR;
 			}
+
+			List<List<E>> clusters = new ArrayList<>();
+
+			for (List<Record<E>> records : cR.values()) {
+				clusters.add(records.stream().map(r -> r.annotation).collect(Collectors.toList()));
+			}
+//			System.out.println("Number of clusters = " + clusters.size());
+//			System.out.println("RSS = " + RSS);
+
+//			for (List<E> cluster : clusters) {
+//				for (LiteralAnnotation groupName : cluster) {
+//					System.out.println(groupName.getSurfaceForm());
+//				}
+//				System.out.println("-------------------");
+//			}
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
 
 		}
 
@@ -206,7 +237,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		for (Entry<Centroid, List<Word2VecBasedKMeans<E>.Record<E>>> cluster : clusterRecords.entrySet()) {
 			Centroid c = cluster.getKey();
 			for (Word2VecBasedKMeans<E>.Record<E> r : cluster.getValue()) {
-				rss += distance(c.word, r.word);
+				rss += squareDistance(c.word, r.word);
 			}
 		}
 		return rss;
@@ -225,15 +256,16 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 
 		}
 
-		Set<String> words = datapoints.stream()
-				.flatMap(a -> Arrays.stream(a.asInstanceOfLiteralAnnotation().getSurfaceForm().split(" ")))
-				.collect(Collectors.toSet());
+//		Set<String> words = datapoints.stream()
+//				.flatMap(a -> Arrays.stream(a.asInstanceOfLiteralAnnotation().getSurfaceForm().split(" ")))
+//				.collect(Collectors.toSet());
+
 //		Set<String> words =
 //				datapoints.stream().flatMap(
 //						a -> a.asInstanceOfDocumentLinkedAnnotation().relatedTokens.stream().map(t -> t.getText()))
 //				.collect(Collectors.toSet());
 
-		readVectors(words);
+//		readVectors(words);
 
 		List<Record<E>> vecs = toDataPoints(datapoints);
 
@@ -255,11 +287,11 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 	private void readVectors(Set<String> words) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File("wordvector/w2v.csv")));
-
 			String line = null;
 			int lineC = 0;
 			System.out.println("Read embeddings...");
 			while ((line = br.readLine()) != null) {
+
 				lineC++;
 				if (lineC % 100000 == 0)
 					System.out.println(lineC);
@@ -281,7 +313,6 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 			}
 
 			br.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -330,30 +361,49 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 
 	}
 
+	public Double[] getAdditiveEmbedding(String surfaceForm) {
+		Double[] vec = new Double[200];
+		for (int i = 0; i < vec.length; i++) {
+			vec[i] = 0D;
+		}
+
+		String[] words = surfaceForm.split(" ");
+		int count = 0;
+		for (String d : words) {
+			Double[] embedding = getBestEmbedding(d);
+			if (embedding == null)
+				continue;
+			count++;
+			for (int i = 0; i < embedding.length; i++) {
+
+				vec[i] += embedding[i];
+			}
+
+		}
+		if (count > 0)
+			for (int i = 0; i < words.length; i++) {
+				vec[i] /= count;
+			}
+		else {
+			for (int i = 0; i < vec.length; i++) {
+				/**
+				 * TODO:
+				 */
+				// In case vector is 0 which means that the datapoint is has no embedding at all
+				// than make random vector to put i in any cluster.
+				vec[i] = Math.random();
+			}
+		}
+		return vec;
+	}
+
 	class Record<E extends LiteralAnnotation> {
 		public final Double[] word;
 		public final E annotation;
 
 		public Record(E annotation) {
 			this.annotation = annotation;
-			this.word = new Double[200];
-
-			for (int i = 0; i < this.word.length; i++) {
-
-				this.word[i] = 0D;
-			}
-			String[] words = annotation.getSurfaceForm().split(" ");
-			for (String d : words) {
-				Double[] embedding = getBestEmbedding(d);
-				for (int i = 0; i < embedding.length; i++) {
-
-					this.word[i] += embedding[i];
-				}
-
-			}
-			for (int i = 0; i < words.length; i++) {
-				this.word[i] /= words.length;
-			}
+			this.word = getAdditiveEmbedding(annotation.getSurfaceForm());
 
 		}
 
@@ -400,20 +450,23 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		if (wordEmbeddings.containsKey(d))
 			return wordEmbeddings.get(d);
 
-		double mostSim = 0;
+		double mostSim = 0.7;
 		String bestMatch = null;
 		for (String embedding : wordEmbeddings.keySet()) {
 
 			double sim = levenshteinSimilarty(embedding, d);
 
-			if (sim < mostSim) {
-				sim = mostSim;
+			if (mostSim <= sim) {
+				mostSim = sim;
 				bestMatch = embedding;
 			}
 
 		}
+		if (bestMatch == null)
+			return null;
 
 		return wordEmbeddings.get(bestMatch);
+
 	}
 
 	private Map<Centroid, List<Record<E>>> kMeans(List<Record<E>> records, int k, int maxIterations) {
@@ -514,7 +567,7 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 				double minDist = Double.MAX_VALUE;
 
 				for (Centroid centroid : centroids) {
-					double dist = distance(centroid.word, records.get(i).word);
+					double dist = cosineSimilarityDistance(centroid.word, records.get(i).word);
 					if (dist < minDist) {
 						minDist = dist;
 					}
@@ -675,26 +728,42 @@ public class Word2VecBasedKMeans<E extends LiteralAnnotation> {
 		Centroid nearest = null;
 
 		for (Centroid centroid : centroids) {
-			double currentDistance = distance(record.word, centroid.word);
+			double currentDistance = cosineSimilarityDistance(record.word, centroid.word);
 
 			if (currentDistance < minimumDistance) {
 				minimumDistance = currentDistance;
 				nearest = centroid;
 			}
 		}
-
 		return nearest;
 	}
 
-	private static double distance(Double[] vec1, Double[] vec2) {
+	public static double cosineSimilarityDistance(Double[] vec1, Double[] vec2) {
+
+		if (vec1 == null || vec2 == null)
+			return 1;
+
+		double dotProduct = 0.0;
+		double normA = 0.0;
+		double normB = 0.0;
+		for (int i = 0; i < vec1.length; i++) {
+			dotProduct += vec1[i] * vec2[i];
+			normA += Math.pow(vec1[i], 2);
+			normB += Math.pow(vec2[i], 2);
+		}
+		return 1 - (dotProduct / (Math.sqrt(normA) * Math.sqrt(normB)));
+	}
+
+	private static double squareDistance(Double[] vec1, Double[] vec2) {
 
 		double dist = 0;
+
 		for (int i = 0; i < vec1.length; i++) {
 
 			dist += Math.pow(vec1[i] - vec2[i], 2);
 
 		}
-		return Math.sqrt(dist);
+		return dist;
 
 	}
 

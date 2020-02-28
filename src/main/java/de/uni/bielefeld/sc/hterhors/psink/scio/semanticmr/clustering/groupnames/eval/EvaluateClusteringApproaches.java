@@ -16,6 +16,7 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
@@ -30,8 +31,9 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNameDataSetHelper;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.WordBasedKMeans;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.methods.weka.WEKAClustering;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.Word2VecBasedKMeans;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.WordBasedKMeansMedoid;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.WEKAClustering;
 
 public class EvaluateClusteringApproaches {
 
@@ -51,32 +53,111 @@ public class EvaluateClusteringApproaches {
 
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasGroupName.include();
-
 		List<Instance> trainInstances = instanceProvider.getRedistributedTrainingInstances();
 		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
-		double x = 0;
-		for (Instance instance : trainInstances) {
-			x += instance.getGoldAnnotations().getAbstractAnnotations().size();
-		}
-		x /= trainInstances.size();
-		System.out.println((int) x);
 
 		int k = 4;
 
-//		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
-		System.out.println();
-		System.out.println();
-		evaluator.wordBasedKMeans(trainInstances, testInstances, k);
-
-//4 WordBasedKMeans overallBinaryClassificationScore  = Score [getAccuracy()=0.858,  getF1()=0.858, getPrecision()=1.000, getRecall()=0.751, tp=235, fp=0, fn=78, tn=236]
-//4 WordBasedKMeans overallClusteringScore  = Score [ getF1()=0.450, getPrecision()=0.458, getRecall()=0.443, tp=109, fp=129, fn=137, tn=0]
+//		evaluator.word2VecBasedMeans(trainInstances, testInstances, k);
+//		System.out.println();
+//		System.out.println();
+		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
+//		System.out.println();
+//		System.out.println();
+//		evaluator.wordBasedKMeans(trainInstances, testInstances, k);
 
 	}
 
-	private final CartesianEvaluator cartesianEvaluator = new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED);
+	private static final CartesianEvaluator cartesianEvaluator = new CartesianEvaluator(
+			EEvaluationDetail.DOCUMENT_LINKED);
 
 	public EvaluateClusteringApproaches() {
 
+	}
+
+	public void word2VecBasedMeans(List<Instance> trainInstances, List<Instance> testInstances, int k)
+			throws Exception {
+		Set<String> words = new HashSet<>();
+		for (Instance instance : trainInstances) {
+
+			Map<Boolean, Set<GroupNamePair>> goldPairs = GroupNameDataSetHelper
+					.getGroupNameClusterDataSet(Arrays.asList(instance));
+
+			List<DocumentLinkedAnnotation> datapoints = GroupNameDataSetHelper.extractGroupNameAnnotations(goldPairs);
+
+			for (DocumentLinkedAnnotation string : datapoints) {
+				words.add(string.getSurfaceForm());
+			}
+
+		}
+		for (Instance instance : testInstances) {
+
+			Map<Boolean, Set<GroupNamePair>> goldPairs = GroupNameDataSetHelper
+					.getGroupNameClusterDataSet(Arrays.asList(instance));
+
+			List<DocumentLinkedAnnotation> datapoints = GroupNameDataSetHelper.extractGroupNameAnnotations(goldPairs);
+
+			for (DocumentLinkedAnnotation string : datapoints) {
+				words.add(string.getSurfaceForm());
+			}
+
+		}
+		Word2VecBasedKMeans<DocumentLinkedAnnotation> gnc = new Word2VecBasedKMeans<>(words);
+
+		Score overallBinaryClassificationScore = new Score();
+		Score overallClusteringScore = new Score();
+
+		Score overallCardinalityScore = new Score();
+
+		double cardinalityRMSE = 0;
+
+		Map<Integer, Score> intervallCardinality = new HashMap<>();
+
+		for (Instance instance : testInstances) {
+
+			Map<Boolean, Set<GroupNamePair>> goldPairs = GroupNameDataSetHelper
+					.getGroupNameClusterDataSet(Arrays.asList(instance));
+
+			List<DocumentLinkedAnnotation> datapoints = GroupNameDataSetHelper.extractGroupNameAnnotations(goldPairs);
+
+			if (datapoints.size() == 0)
+				continue;
+
+//			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints,
+//					instance.getGoldAnnotations().getAnnotations().size());
+//			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, 1);
+//			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints,
+//					instance.getGoldAnnotations().getAnnotations().size(),
+//					instance.getGoldAnnotations().getAnnotations().size());
+			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints, k - 1, k + 1);
+
+			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
+
+			computeIntervallCardinality(intervallCardinality, instance, clusters);
+
+			Score clusteringScore = computeClusteringScore(instance, clusters);
+
+			Score cardinalityScore = computeCardinalityScore(instance, clusters);
+
+			overallCardinalityScore.add(cardinalityScore);
+
+			overallClusteringScore.add(clusteringScore);
+
+			Score binaryClassificationScore = computeBinaryClassificationScore(goldPairs, clusters);
+
+			overallBinaryClassificationScore.add(binaryClassificationScore);
+		}
+
+		System.out.println(
+				k + " Word2VecBasedKMeans overallBinaryClassificationScore  = " + overallBinaryClassificationScore);
+		System.out.println(k + " Word2VecBasedKMeans overallClusteringScore  = " + overallClusteringScore);
+		System.out.println(k + " Word2VecBasedKMeans overall cardinality score  = " + overallCardinalityScore);
+
+		final StringBuffer cardString = new StringBuffer();
+		intervallCardinality.entrySet().forEach(e -> cardString.append("\n\t" + e.getKey() + ":" + e.getValue()));
+		System.out.println("Word2VecBasedKMeans INTERVALL CARDINALITY = " + cardString.toString().trim());
+		System.out
+				.println("Word2VecBasedKMeans CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
 	}
 
 	public void wekaBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) throws Exception {
@@ -105,7 +186,8 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
-			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, k);
+//			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, k);
+			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints, 1, 8);
 
 			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
 			computeIntervallCardinality(intervallCardinality, instance, clusters);
@@ -119,9 +201,9 @@ public class EvaluateClusteringApproaches {
 			Score postClusteringBinaryClassificationScore = computeBinaryClassificationScore(goldPairs, clusters);
 
 			overallPostClusteringBinaryClassificationScore.add(postClusteringBinaryClassificationScore);
-		}
 
-		System.out.println(k + " GroupNameClusteringWEKA overallBinaryClassificationScore  = "
+		}
+		System.out.println(k + " GroupNameClusteringWEKA overallPostClusteringBinaryClassificationScore  = "
 				+ overallPostClusteringBinaryClassificationScore);
 		System.out.println(k + " GroupNameClusteringWEKA overallClusteringScore  = " + overallClusteringScore);
 		System.out.println(k + " GroupNameClusteringWEKA overall cardinality score  = " + overallCardinalityScore);
@@ -132,9 +214,9 @@ public class EvaluateClusteringApproaches {
 				"GroupNameClusteringWEKA CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
 	}
 
-	public void wordBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) {
-		WordBasedKMeans<DocumentLinkedAnnotation> kMeans = new WordBasedKMeans<>();
-
+	public Score wordBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) {
+		WordBasedKMeansMedoid<DocumentLinkedAnnotation> kMeans = new WordBasedKMeansMedoid<>();
+		kMeans.lambda = 5.2;
 		Score overallBinaryClassificationScore = new Score();
 		Score overallClusteringScore = new Score();
 
@@ -154,7 +236,10 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
-			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, 3, 5);
+//			List<List<DocumentLinkedAnnotation>> clusters = kMeans.cluster(datapoints,k);
+//			List<List<DocumentLinkedAnnotation>> clusters = kMeans.cluster(datapoints,
+//					instance.getGoldAnnotations().getAnnotations().size());
+			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, k - 1, k + 1);
 
 			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
 
@@ -182,9 +267,10 @@ public class EvaluateClusteringApproaches {
 		intervallCardinality.entrySet().forEach(e -> cardString.append("\n\t" + e.getKey() + ":" + e.getValue()));
 		System.out.println("WordBasedKMeans INTERVALL CARDINALITY = " + cardString.toString().trim());
 		System.out.println("WordBasedKMeans CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
+		return overallClusteringScore;
 	}
 
-	public void computeIntervallCardinality(Map<Integer, Score> intervallCardinality, Instance instance,
+	public static void computeIntervallCardinality(Map<Integer, Score> intervallCardinality, Instance instance,
 			List<List<DocumentLinkedAnnotation>> clusters) {
 		for (int spread = 0; spread < 4; spread++) {
 			intervallCardinality.putIfAbsent(spread, new Score());
@@ -198,13 +284,13 @@ public class EvaluateClusteringApproaches {
 		}
 	}
 
-	public double computeRMSE(double cardinalityRMSE, Instance instance,
+	public static double computeRMSE(double cardinalityRMSE, Instance instance,
 			List<List<DocumentLinkedAnnotation>> clusters) {
 		cardinalityRMSE += Math.pow(clusters.size() - instance.getGoldAnnotations().getAbstractAnnotations().size(), 2);
 		return cardinalityRMSE;
 	}
 
-	private Score computeCardinalityScore(Instance instance, List<List<DocumentLinkedAnnotation>> clusters) {
+	public static Score computeCardinalityScore(Instance instance, List<List<DocumentLinkedAnnotation>> clusters) {
 		int tp = Math.min(instance.getGoldAnnotations().getAnnotations().size(), clusters.size());
 		int fp = clusters.size() > instance.getGoldAnnotations().getAnnotations().size()
 				? clusters.size() - instance.getGoldAnnotations().getAnnotations().size()
@@ -216,7 +302,7 @@ public class EvaluateClusteringApproaches {
 
 	}
 
-	private Score computeBinaryClassificationScore(Map<Boolean, Set<GroupNamePair>> goldPairs,
+	public static Score computeBinaryClassificationScore(Map<Boolean, Set<GroupNamePair>> goldPairs,
 			List<List<DocumentLinkedAnnotation>> clusters) {
 
 		Map<Boolean, Set<GroupNamePair>> predictedPairs = new HashMap<>();
@@ -245,6 +331,19 @@ public class EvaluateClusteringApproaches {
 				}
 			}
 		}
+//		for (Entry<Boolean, Set<GroupNamePair>> goldC : goldPairs.entrySet()) {
+//			for (GroupNamePair instance2 : goldC.getValue()) {
+//				System.out.println(instance2.groupName1.getSurfaceForm() + "\t" + instance2.groupName2.getSurfaceForm()
+//						+ "\t" + instance2.sameCluster);
+//			}
+//		}
+//		System.out.println("-----------------");
+//		for (Entry<Boolean, Set<GroupNamePair>> goldC : predictedPairs.entrySet()) {
+//			for (GroupNamePair instance2 : goldC.getValue()) {
+//				System.out.println(instance2.groupName1.getSurfaceForm() + "\t" + instance2.groupName2.getSurfaceForm()
+//						+ "\t" + instance2.sameCluster);
+//			}
+//		}
 
 		return prf1(
 				Streams.concat(goldPairs.get(true).stream(), goldPairs.get(false).stream()).collect(Collectors.toSet()),
@@ -252,7 +351,7 @@ public class EvaluateClusteringApproaches {
 						.collect(Collectors.toSet()));
 	}
 
-	public boolean validPairToTest(Map<Boolean, Set<GroupNamePair>> goldPairs, LiteralAnnotation l1,
+	public static boolean validPairToTest(Map<Boolean, Set<GroupNamePair>> goldPairs, LiteralAnnotation l1,
 			LiteralAnnotation l2) {
 		Set<LiteralAnnotation> sPred = new HashSet<>();
 		sPred.add(l1);
@@ -282,7 +381,7 @@ public class EvaluateClusteringApproaches {
 		return validPair;
 	}
 
-	private Score computeClusteringScore(Instance instance, List<List<DocumentLinkedAnnotation>> clusters) {
+	public static Score computeClusteringScore(Instance instance, List<List<DocumentLinkedAnnotation>> clusters) {
 		List<EntityTemplate> predictedCluster = new ArrayList<>();
 
 		for (List<DocumentLinkedAnnotation> groupNames : clusters) {
@@ -295,11 +394,13 @@ public class EvaluateClusteringApproaches {
 			predictedCluster.add(et);
 		}
 
-		return cartesianEvaluator.scoreMultiValues(instance.getGoldAnnotations().getAnnotations(), predictedCluster);
+		return cartesianEvaluator.scoreMultiValues(instance.getGoldAnnotations().getAnnotations(), predictedCluster,
+				EScoreType.MICRO);
 
 	}
 
-	private Score prf1(Collection<GroupNamePair> goldAnnotations, Collection<GroupNamePair> predictedAnnotations) {
+	public static Score prf1(Collection<GroupNamePair> goldAnnotations,
+			Collection<GroupNamePair> predictedAnnotations) {
 
 		int tp = 0;
 		int fp = 0;
@@ -317,22 +418,17 @@ public class EvaluateClusteringApproaches {
 					continue outer;
 				}
 			}
-			if (a.sameCluster) {
-				fn++;
-			} else {
-				if (a.sameCluster) {
-					fp++;
-				} else {
-					inner: {
-						for (GroupNamePair oa : predictedAnnotations) {
-							if (oa.equals(a)) {
-								break inner;
-							}
-						}
-						tn++;
-					}
+
+			fn++;
+		}
+
+		outer: for (GroupNamePair a : predictedAnnotations) {
+			for (GroupNamePair oa : goldAnnotations) {
+				if (oa.equals(a)) {
+					continue outer;
 				}
 			}
+			fp++;
 		}
 
 		return new Score(tp, fp, fn, tn);

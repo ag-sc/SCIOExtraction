@@ -15,28 +15,34 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentPriorTemplate.TreatmentPriorScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentInGroupCardinalityTemplate.TreatmentGroupCardinalityScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
 
 /**
- * 
- * Prior of assigned treatments for each exp group.
- * 
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class TB_TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPriorScope> {
+public class TB_TreatmentInGroupCardinalityTemplate extends AbstractFeatureTemplate<TreatmentGroupCardinalityScope> {
 
-	static class TreatmentPriorScope extends AbstractFactorScope {
+	static class TreatmentGroupCardinalityScope extends AbstractFactorScope {
 
-		final Set<EntityType> entityTypes;
+		final int numOfTreatments;
+		final int numOfGroups;
+
+		public TreatmentGroupCardinalityScope(AbstractFeatureTemplate<?> template, int numOfTreatments,
+				int numOfGroups) {
+			super(template);
+			this.numOfTreatments = numOfTreatments;
+			this.numOfGroups = numOfGroups;
+		}
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = super.hashCode();
-			result = prime * result + ((entityTypes == null) ? 0 : entityTypes.hashCode());
+			result = prime * result + numOfGroups;
+			result = prime * result + numOfTreatments;
 			return result;
 		}
 
@@ -48,18 +54,12 @@ public class TB_TreatmentPriorTemplate extends AbstractFeatureTemplate<Treatment
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			TreatmentPriorScope other = (TreatmentPriorScope) obj;
-			if (entityTypes == null) {
-				if (other.entityTypes != null)
-					return false;
-			} else if (!entityTypes.equals(other.entityTypes))
+			TreatmentGroupCardinalityScope other = (TreatmentGroupCardinalityScope) obj;
+			if (numOfGroups != other.numOfGroups)
+				return false;
+			if (numOfTreatments != other.numOfTreatments)
 				return false;
 			return true;
-		}
-
-		public TreatmentPriorScope(AbstractFeatureTemplate<?> template, Set<EntityType> entityType) {
-			super(template);
-			this.entityTypes = entityType;
 		}
 
 		@Override
@@ -79,12 +79,13 @@ public class TB_TreatmentPriorTemplate extends AbstractFeatureTemplate<Treatment
 	private static final String PREFIX = "TrtPr\t";
 
 	@Override
-	public List<TreatmentPriorScope> generateFactorScopes(State state) {
+	public List<TreatmentGroupCardinalityScope> generateFactorScopes(State state) {
 
 		if (SCIOSlotTypes.hasTreatmentType.isExcluded())
 			return Collections.emptyList();
 
-		List<TreatmentPriorScope> factors = new ArrayList<>();
+		List<TreatmentGroupCardinalityScope> factors = new ArrayList<>();
+		Set<EntityType> allTypes = new HashSet<>();
 
 		for (EntityTemplate experimentalGroup : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
@@ -93,29 +94,20 @@ public class TB_TreatmentPriorTemplate extends AbstractFeatureTemplate<Treatment
 
 			DefinedExperimentalGroup definedExpGroup = new DefinedExperimentalGroup(experimentalGroup);
 
-			Set<EntityType> types = definedExpGroup.getRelevantTreatments().stream().map(a -> a.getEntityType())
-					.collect(Collectors.toSet());
+			allTypes.addAll(definedExpGroup.getRelevantTreatments().stream().map(a -> a.getEntityType())
+					.collect(Collectors.toSet()));
 
-			factors.add(new TreatmentPriorScope(this, types));
 		}
+		factors.add(new TreatmentGroupCardinalityScope(this, allTypes.size(),
+				super.<EntityTemplate>getPredictedAnnotations(state).size()));
 
 		return factors;
 	}
 
 	@Override
-	public void generateFeatureVector(Factor<TreatmentPriorScope> factor) {
-
-		List<EntityType> sorted = new ArrayList<>(factor.getFactorScope().entityTypes);
-
-		Collections.sort(sorted);
-
-		for (int i = 0; i < sorted.size(); i++) {
-			factor.getFeatureVector().set(PREFIX + sorted.get(i).name + " + " + (sorted.size() - 1), true);
-			for (int j = i + 1; j < sorted.size(); j++) {
-				factor.getFeatureVector().set(
-						PREFIX + sorted.get(i).name + "--" + sorted.get(j).name + " + " + (sorted.size() - 2), true);
-			}
-		}
+	public void generateFeatureVector(Factor<TreatmentGroupCardinalityScope> factor) {
+		factor.getFeatureVector().set(PREFIX + "#Groups: " + factor.getFactorScope().numOfGroups + ", #Treatments: "
+				+ factor.getFactorScope().numOfTreatments, true);
 	}
 
 }

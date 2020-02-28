@@ -37,6 +37,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -81,10 +82,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
 
-	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
-	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;

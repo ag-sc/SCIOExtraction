@@ -38,6 +38,7 @@ import de.hterhors.semanticmr.crf.sampling.impl.SamplerCollection;
 import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.IBeamSamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -81,10 +82,10 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 	}
 
-	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
-	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 	private final File instanceDirectory = new File(
@@ -94,8 +95,8 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 	public ExperimentalGroupBeamSlotFiller() throws IOException {
 		super(SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup")).apply()
-				.registerNormalizationFunction(new WeightNormalization())
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
 		List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
@@ -284,7 +285,7 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 		 * training we are interested in finding the correct document linked annotation
 		 * but for prediction we are only interested in the entity type.
 		 */
-		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**

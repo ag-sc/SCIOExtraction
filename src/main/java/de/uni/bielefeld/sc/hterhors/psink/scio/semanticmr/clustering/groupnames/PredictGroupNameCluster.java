@@ -1,6 +1,5 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNameExtraction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.WordBasedKMeans;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.methods.weka.WEKAClustering;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.WEKAClustering;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.EExtractGroupNamesMode;
 
@@ -41,7 +40,7 @@ public class PredictGroupNameCluster {
 			System.out.println("*********" + instance.getName() + "********");
 			System.out.println(instance.getGoldAnnotations().getAbstractAnnotations().size());
 			List<DocumentLinkedAnnotation> annotations = GroupNameExtraction.extractGroupNames(instance,
-					EDistinctGroupNamesMode.NOT_DISTINCT, EExtractGroupNamesMode.PREDICTED);
+					EDistinctGroupNamesMode.NOT_DISTINCT, EExtractGroupNamesMode.NP_CHUNKS);
 			List<List<DocumentLinkedAnnotation>> clusters = clustering.clusterWordBased(annotations, 4);
 
 			for (List<DocumentLinkedAnnotation> cluster : clusters) {
@@ -73,7 +72,7 @@ public class PredictGroupNameCluster {
 
 	public List<List<DocumentLinkedAnnotation>> clusterWordBased(List<DocumentLinkedAnnotation> annotations, int k) {
 		WordBasedKMeans<DocumentLinkedAnnotation> kMeans = new WordBasedKMeans<>();
-		return kMeans.cluster(annotations, k);
+		return kMeans.clusterRSS(annotations, 1,8);
 	}
 
 }

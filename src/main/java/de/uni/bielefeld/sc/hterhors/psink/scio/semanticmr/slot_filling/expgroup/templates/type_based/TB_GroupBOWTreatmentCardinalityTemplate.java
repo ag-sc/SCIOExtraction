@@ -12,14 +12,14 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TB_BOWExtractor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_BOWCardinalityTemplate.BOWCardScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_GroupBOWTreatmentCardinalityTemplate.BOWCardScope;
 
 /**
  * @author hterhors
  *
  * @date Nov 15, 2017
  */
-public class TB_BOWCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope> {
+public class TB_GroupBOWTreatmentCardinalityTemplate extends AbstractFeatureTemplate<BOWCardScope> {
 
 	static class BOWCardScope extends AbstractFactorScope {
 

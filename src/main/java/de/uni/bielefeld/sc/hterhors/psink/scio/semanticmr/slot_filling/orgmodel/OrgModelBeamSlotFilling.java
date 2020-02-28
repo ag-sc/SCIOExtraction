@@ -32,6 +32,7 @@ import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
 import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.IBeamSamplingStoppingCriterion;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -221,7 +222,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * Here only the entity type is required.
 		 *
 		 */
-		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(
+		IObjectiveFunction objectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 				new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 		/**
@@ -465,7 +466,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * training we are interested in finding the correct document linked annotation
 		 * but for prediction we are only interested in the entity type.
 		 */
-		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(
+		IObjectiveFunction predictionOF = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
 		/**

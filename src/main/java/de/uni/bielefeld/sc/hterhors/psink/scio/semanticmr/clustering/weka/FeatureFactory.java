@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.methods.weka;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +7,54 @@ import java.util.Map;
 import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.JaccardSimilarity;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.SmithWaterman;
+import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3;
 
-public class FeaturesFactory {
+public class FeatureFactory {
 	private static GroupNamePair groupNamePair;
 	private static Map<String, Double> features;
 
 	public static void set(Map<String, Double> features, GroupNamePair groupNamePair) {
-		FeaturesFactory.groupNamePair = groupNamePair;
-		FeaturesFactory.features = features;
+		FeatureFactory.groupNamePair = groupNamePair;
+		FeatureFactory.features = features;
+	}
+
+	public static final List<AbstractStringMetric> metrics = new ArrayList<>();
+
+	static {
+//		metrics.add(new JaroWinkler());
+//		metrics.add(new Soundex());
+//		metrics.add(new QGramsDistance(new TokeniserQGram2()));
+//		metrics.add(new CosineSimilarity(new TokeniserQGram3()));
+//		metrics.add(new Levenshtein());
+//		metrics.add(new BlockDistance(new TokeniserQGram2()));
+//		metrics.add(new ChapmanLengthDeviation());
+//		metrics.add(new Jaro());
+//		metrics.add(new NeedlemanWunch(1));
+
+		metrics.add(new SmithWaterman());
+//		metrics.add(new QGramsDistance(new TokeniserQGram3()));
+//		metrics.add(new CosineSimilarity(new TokeniserQGram2()));
+//		metrics.add(new BlockDistance(new TokeniserQGram3()));
+//		metrics.add(new JaccardSimilarity(new TokeniserQGram2()));
+		metrics.add(new JaccardSimilarity(new TokeniserQGram3()));
+//		metrics.add(new OverlapCoefficient(new TokeniserQGram2()));
+//		metrics.add(new OverlapCoefficient(new TokeniserQGram3()));
+	}
+
+	public static void similarities() {
+		int i = 0;
+
+		for (AbstractStringMetric abstractStringMetric : metrics) {
+
+			features.put(abstractStringMetric.getClass().getSimpleName() + "_" + i,
+					(double) abstractStringMetric.getSimilarity(groupNamePair.groupName1.getSurfaceForm(),
+							groupNamePair.groupName2.getSurfaceForm()));
+			i++;
+		}
+
 	}
 
 	/**

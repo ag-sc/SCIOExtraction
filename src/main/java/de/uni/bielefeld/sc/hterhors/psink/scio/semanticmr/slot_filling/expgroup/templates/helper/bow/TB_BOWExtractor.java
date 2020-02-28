@@ -157,8 +157,7 @@ public class TB_BOWExtractor {
 	public static Set<String> getExpGroupPlusNameBOW(EntityTemplate experimentalGroup) {
 
 		final AbstractAnnotation rootAnnotation = experimentalGroup.getRootAnnotation();
-
-		final Set<String> bow = extractEntityTypeBOW(rootAnnotation.getEntityType());
+		final Set<String> bow = new HashSet<>();
 
 		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation())
 			bow.addAll(extractDocLinkedBOW(rootAnnotation.asInstanceOfDocumentLinkedAnnotation()));

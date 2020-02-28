@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -27,9 +28,9 @@ public class InjuryEvaluation {
 		this.evaluator = evaluator;
 	}
 
-	public Score evaluate(PrintStream ps, Map<Instance, State> results) {
+	public Score evaluate(PrintStream ps, Map<Instance, State> results, EScoreType scoreType) {
 
-		Score score = new Score();
+		Score score = new Score(scoreType);
 //		double macroF1 = 0;
 //		double macroPrecision = 0;
 //		double macroRecall = 0;
@@ -57,7 +58,7 @@ public class InjuryEvaluation {
 //			i++;
 //			log.info(e.getKey().getName());
 
-			Score s = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotations);
+			Score s = evaluator.scoreMultiValues(goldAnnotations, predictedAnnotations, scoreType);
 //			log.info("nerl based score: " + s);
 
 			score.add(s);
@@ -66,15 +67,15 @@ public class InjuryEvaluation {
 //			macroRecall += s.getRecall();
 //			log.info("INJURY MODEL INTERMEDIATE MACRO: F1 = " + macroF1 / i + ", P = " + macroPrecision / i + ", R = "
 //					+ macroRecall / i);
-//			log.info("INJURY MODEL INTERMEDIATE MICRO: " + score);
+//			log.info("INJURY MODEL INTERMEDIATE "+scoreType+": " + score);
 //			log.info("");
 		}
 //		macroF1 /= results.entrySet().size();
 //		macroPrecision /= results.entrySet().size();
 //		macroRecall /= results.entrySet().size();
 //		log.info("INJURY MODEL MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
-		log.info("INJURY MODEL MICRO: SCORE = " + score);
-		ps.println("INJURY MODEL MICRO: SCORE = " + score);
+		log.info("INJURY MODEL " + scoreType + ": SCORE = " + score);
+		ps.println("INJURY MODEL " + scoreType + ": SCORE = " + score);
 		return score;
 	}
 

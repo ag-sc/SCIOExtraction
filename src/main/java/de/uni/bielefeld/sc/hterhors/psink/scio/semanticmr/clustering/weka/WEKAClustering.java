@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.methods.weka;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector.DataPoint;
@@ -58,18 +60,17 @@ public class WEKAClustering {
 
 	private Classifier rf = null;
 
-	public WEKAClustering() {
-
-	}
+	public double lambda = 1.1D;
 
 	public void trainOrLoad(List<Instance> train) throws IOException {
 
+		String modelName = "wekamodels/smithwaterman_jaccard_q3.model";
 		collectInstances(train, trainingDataCollector, true);
 		trainingDataCollector = trainingDataCollector.removeRareFeatures(25);
 
 		try {
 			log.info("Load classifier...");
-			rf = (RandomForest) SerializationHelper.read(new FileInputStream("wekamodels/rfsmall.model"));
+			rf = (RandomForest) SerializationHelper.read(new FileInputStream(modelName));
 			log.info("Done...");
 
 		} catch (Exception e1) {
@@ -96,10 +97,34 @@ public class WEKAClustering {
 
 		try {
 			log.info("Save classifier...");
-			SerializationHelper.write(new FileOutputStream("wekamodels/rfsmall.model"), rf);
+			SerializationHelper.write(new FileOutputStream(modelName), rf);
 		} catch (Exception e3) {
 			e3.printStackTrace();
 		}
+	}
+
+	private Map<String, Double> getFeatures(GroupNamePair groupNamePair) {
+
+		Map<String, Double> features = new HashMap<>();
+		FeatureFactory.set(features, groupNamePair);
+
+		String surfaceForm1 = groupNamePair.groupName1.getSurfaceForm().replaceAll("groups?|rats?|animals?|mice", "")
+				.trim();
+		String surfaceForm2 = groupNamePair.groupName2.getSurfaceForm().replaceAll("groups?|rats?|animals?|mice", "")
+				.trim();
+
+		GroupNamePair mod = new GroupNamePair(
+				new LiteralAnnotation(groupNamePair.groupName1.entityType, new TextualContent(surfaceForm1)),
+				new LiteralAnnotation(groupNamePair.groupName2.entityType, new TextualContent(surfaceForm2)),
+				groupNamePair.sameCluster, groupNamePair.probability);
+		FeatureFactory.set(features, mod);
+
+//		FeaturesFactory.levenshtein();
+//		FeaturesFactory.overlap();
+//		FeaturesFactory.charBasedNGrams();
+		FeatureFactory.similarities();
+
+		return features;
 	}
 
 	public Score test(List<Instance> test) throws Exception {
@@ -138,7 +163,7 @@ public class WEKAClustering {
 
 	public List<List<DocumentLinkedAnnotation>> clusterRSS(List<DocumentLinkedAnnotation> anns, int min, int max)
 			throws Exception {
-		log.info("Number of annotations to cluster: " + anns.size());
+//		log.info("Number of annotations to cluster: " + anns.size());
 		/**
 		 * TODO: parameterize if distinction should happen or not .
 		 */
@@ -149,7 +174,7 @@ public class WEKAClustering {
 		List<GroupNamePair> gnps = binaryClassification(anns);
 
 		BinaryClusterBasedKMeans<DocumentLinkedAnnotation> kmeans = new BinaryClusterBasedKMeans<>(gnps);
-
+		kmeans.lambda = lambda;
 		List<List<DocumentLinkedAnnotation>> distinctClusters = kmeans.clusterRSS(anns, min, max);
 
 		List<List<DocumentLinkedAnnotation>> clusters = new ArrayList<>();
@@ -198,7 +223,7 @@ public class WEKAClustering {
 	}
 
 	public List<List<DocumentLinkedAnnotation>> cluster(List<DocumentLinkedAnnotation> anns, int k) throws Exception {
-		log.info("Number of annotations to cluster: " + anns.size());
+//		log.info("Number of annotations to cluster: " + anns.size());
 		/**
 		 * TODO: parameterize if distinction should happen or not .
 		 */
@@ -223,7 +248,7 @@ public class WEKAClustering {
 	}
 
 	public List<GroupNamePair> binaryClassification(List<DocumentLinkedAnnotation> anns) throws Exception {
-		log.info("Number of DISTINCT annotations to cluster: " + anns.size());
+//		log.info("Number of DISTINCT annotations to cluster: " + anns.size());
 
 		DataPointCollector predictions = new DataPointCollector();
 		List<GroupNamePair> pairs = new ArrayList<>();
@@ -243,11 +268,11 @@ public class WEKAClustering {
 		Instances predictionInstances = convertToWekaInstances("CLUSTER", predictions.getDataPoints());
 		int i = 0;
 		List<GroupNamePair> gnps = new ArrayList<>();
-		log.info("Num of pairwise instances to classify = " + predictionInstances.size());
+//		log.info("Num of pairwise instances to classify = " + predictionInstances.size());
 
 		for (weka.core.Instance instance : predictionInstances) {
-			if (i % ((double) predictionInstances.size() / 10) == 0)
-				log.info("Num of instances classified = " + i);
+//			if (i % ((double) predictionInstances.size() / 10) == 0)
+//				log.info("Num of instances classified = " + i);
 			GroupNamePair gnp = (GroupNamePair) predictions.getDataPoints().get(i).parameter.get("groupNamePair");
 
 			double[] pred = rf.distributionForInstance(instance);
@@ -264,7 +289,7 @@ public class WEKAClustering {
 
 			i++;
 		}
-		log.info("Binary classification done...");
+//		log.info("Binary classification done...");
 		return gnps;
 	}
 
@@ -302,18 +327,6 @@ public class WEKAClustering {
 		}
 		return -1;
 
-	}
-
-	private Map<String, Double> getFeatures(GroupNamePair groupNamePair) {
-
-		Map<String, Double> features = new HashMap<>();
-
-		FeaturesFactory.set(features, groupNamePair);
-		FeaturesFactory.levenshtein();
-		FeaturesFactory.overlap();
-		FeaturesFactory.charBasedNGrams();
-
-		return features;
 	}
 
 	private List<DataPoint> convertToDataPoints(Collection<GroupNamePair> pairs, boolean training) {

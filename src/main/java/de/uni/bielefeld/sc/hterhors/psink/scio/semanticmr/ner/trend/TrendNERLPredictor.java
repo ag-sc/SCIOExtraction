@@ -26,8 +26,6 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractNERLPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.templates.GroupNamesInSameSentenceTemplate_FAST;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.templates.WBFGroupNamesTemplate_FAST;
 
 /**
  * Example of how to perform named entity recognition and linking.

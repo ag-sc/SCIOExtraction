@@ -20,7 +20,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.kmeans.WordBasedKMeans;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.methods.weka.WEKAClustering;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.WEKAClustering;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.EExtractGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.EGroupNamesClusteringMode;
 
@@ -162,7 +162,7 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 		if (groupNameMode == EExtractGroupNamesMode.GOLD
 				&& groupNamesPreProcessingMode == EGroupNamesClusteringMode.GOLD_CLUSTERING) {
-//			goldBased(instance, list);
+			goldBased(instance, list);
 		} else if (groupNameMode != EExtractGroupNamesMode.EMPTY
 				&& (groupNamesPreProcessingMode == EGroupNamesClusteringMode.KMEANS_CLUSTERING
 						|| groupNamesPreProcessingMode == EGroupNamesClusteringMode.WEKA_CLUSTERING)) {
@@ -216,7 +216,6 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 
 	}
 
-
 	public void addEmpty(int current, List<AbstractAnnotation> experimentalGroups) {
 		if (experimentalGroups.size() < current)
 			for (int i = experimentalGroups.size(); i < current; i++) {
@@ -224,6 +223,41 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 				experimentalGroups.add(init);
 			}
+	}
+
+	public void goldBased(Instance instance, List<State> list) {
+		for (int current = min; current <= max; current++) {
+
+			List<AbstractAnnotation> experimentalGroups = new ArrayList<>();
+
+			for (int i = 0; i < Math.min(current,
+					instance.getGoldAnnotations().<EntityTemplate>getAnnotations().size()); i++) {
+
+				EntityTemplate goldAnnotation = instance.getGoldAnnotations().<EntityTemplate>getAnnotations().get(i);
+
+				EntityTemplate init = new EntityTemplate(
+						AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+
+				if (goldAnnotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName,
+							AnnotationBuilder.toAnnotation(instance.getDocument(), SCIOEntityTypes.groupName,
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getSurfaceForm(),
+									goldAnnotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+											.getStartDocCharOffset()));
+
+				for (AbstractAnnotation groupName : goldAnnotation.asInstanceOfEntityTemplate()
+						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+					init.addMultiSlotFiller(SCIOSlotTypes.hasGroupName, groupName);
+				}
+				experimentalGroups.add(init);
+
+			}
+
+			addEmpty(current, experimentalGroups);
+
+			list.add(new State(instance, new Annotations(experimentalGroups)));
+		}
 	}
 
 }

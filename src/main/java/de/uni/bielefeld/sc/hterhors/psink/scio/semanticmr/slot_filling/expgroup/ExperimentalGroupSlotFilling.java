@@ -46,6 +46,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -55,9 +56,9 @@ import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
-import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.DuplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -103,18 +104,21 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.ExGrOuterNameBOWTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.ExpGroupTreatmentLocalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.Word2VecClusterTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_BOWCardinalityTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ContextBetweenSlotFillerTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ContextCardinalityTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWInverseTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExpGroupTreatmentLocalityTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_GroupBOWTreatmentCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_IntraTokenCardinalityTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_NGramTokenContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_RemainingTypesTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_SameOrganismModelTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_SingleTokenContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_SlotIsFilledTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentCardinalityTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentCardinalityPriorTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentInGroupCardinalityTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentPriorInverseTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentPriorTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_Word2VecClusterTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjurySlotFillingPredictor;
@@ -127,13 +131,35 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebral
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
-//	EXP GROUP MICRO  CARDINALITY = Score [ getF1()=0.832, getPrecision()=0.746, getRecall()=0.940, tp=47, fp=16, fn=3, tn=0]
-//			EXP GROUP MICRO  INTERVALL CARDINALITY = 0:0.35	1:0.7	2:1.0	3:1.0
-//			EXP GROUP MICRO  CARDINALITY RMSE = 1.2449899597988732
+
+//1 103
+//explorationMode: TYPE_BASED
+//assignmentMode: TREATMENT
+//cardinalityMode: PARALLEL
+//groupNameClusteringMode: KMEANS_CLUSTERING
+//groupNameProviderMode: GOLD
+//mainClassProviderMode: GOLD
+//distinctGroupNamesMode: NOT_DISTINCT
+//complexityMode: ROOT
+//TREATMENTS MICRO: BOTH = Score [ getF1()=0.972, getPrecision()=1.000, getRecall()=0.945, tp=52, fp=0, fn=3, tn=0]
+//TREATMENTS MICRO: Vehicle = Score [ getF1()=0.973, getPrecision()=1.000, getRecall()=0.947, tp=18, fp=0, fn=1, tn=0]
+//TREATMENTS MICRO: Non Vehicle = Score [ getF1()=0.971, getPrecision()=1.000, getRecall()=0.944, tp=34, fp=0, fn=2, tn=0]
+//EXP GROUP MICRO  CARDINALITY = Score [ getF1()=0.832, getPrecision()=0.740, getRecall()=0.950, tp=57, fp=20, fn=3, tn=0]
+//EXP GROUP MICRO  INTERVALL CARDINALITY = 0:0.3	1:0.55	2:1.0	3:1.0
+//EXP GROUP MICRO  CARDINALITY RMSE = 1.4317821063276353
+//EXP GROUP MICRO  SCORE = Score [ getF1()=0.822, getPrecision()=0.786, getRecall()=0.863, tp=88, fp=24, fn=14, tn=0]
+//EXP GROUP MICRO: TREATMENT BOTH = Score [ getF1()=0.822, getPrecision()=0.786, getRecall()=0.863, tp=88, fp=24, fn=14, tn=0]
+//EXP GROUP MICRO: TREATMENT Vehicle = Score [ getF1()=0.844, getPrecision()=0.905, getRecall()=0.792, tp=19, fp=2, fn=5, tn=0]
+//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [ getF1()=0.817, getPrecision()=0.758, getRecall()=0.885, tp=69, fp=22, fn=9, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=243470]
+//CRFStatistics [context=Test, getTotalDuration()=12559]
+//modelName: ExperimentalGroup96917
+//States generated: 494433
+
 	public static void main(String[] args) throws Exception {
 
 		if (args.length == 0)
-			new ExperimentalGroupSlotFilling(-1, 10000);
+			new ExperimentalGroupSlotFilling(-1, 100);
 		else
 			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
@@ -196,9 +222,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
-			groupNameProviderMode = EExtractGroupNamesMode.EMPTY;
-			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
-			cardinalityMode = ECardinalityMode.PARALLEL;
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
 
 		} else if (id == 0) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -220,7 +246,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL;
 		} else if (id == 2) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -231,7 +257,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
 
 		} else if (id == 3) {
@@ -243,7 +269,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
 
 		} else if (id == 4) {
@@ -255,7 +281,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED_SAMPLE;
 		} else if (id == 5) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -278,7 +304,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL;
 		} else if (id == 7) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -289,7 +315,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
 
 		} else if (id == 8) {
@@ -301,7 +327,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED;
 
 		} else if (id == 9) {
@@ -313,7 +339,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			mainClassProviderMode = EMainClassMode.GOLD;
 
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.KMEANS_CLUSTERING;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.RSS_PREDICTED_SAMPLE;
 
 		} else if (id == 10) {
@@ -373,6 +399,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private final String rand;
+	private final String dataRandomSeed;
 
 	public ExperimentalGroupSlotFilling(int parameterID, int dataRandomSeed) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
@@ -383,7 +410,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
 
-		Annotations.REMOVE_DUPLICATES = true;
+		EScoreType scoreType = EScoreType.MACRO;
 
 		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
 
@@ -392,7 +419,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 20;
 
 		rand = String.valueOf(new Random().nextInt(100000));
-//		modelName = "ExperimentalGroup" + 53584;
+		this.dataRandomSeed = "" + dataRandomSeed;
 		modelName = "ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
@@ -400,11 +427,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed);
 
-		trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+		trainingObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
 				new CartesianEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
 						: EEvaluationDetail.DOCUMENT_LINKED, EEvaluationDetail.DOCUMENT_LINKED));
 
-		predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+		predictionObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
 				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.DOCUMENT_LINKED));
 		/**
 		 * Exclude some slots that are not needed for now
@@ -534,6 +561,20 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 //		postPredictOrganismModel(results);
 //		postPredictInjuryModel(results);
 
+		eval(results);
+
+		log.info(crf.getTrainingStatistics());
+		log.info(crf.getTestStatistics());
+		log.info("modelName: " + modelName);
+		log.info("States generated: " + SlotFillingExplorer.statesgenerated);
+
+	}
+
+	public void eval(Map<Instance, State> results) throws Exception {
+		/*
+		 * Exclude from evaluation.
+		 */
+		SCIOSlotTypes.hasGroupName.exclude();
 		/**
 		 * Evaluate with objective function
 		 */
@@ -545,12 +586,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 */
 
 		evaluateDetailed(results);
-
-		log.info(crf.getTrainingStatistics());
-		log.info(crf.getTestStatistics());
-		log.info("modelName: " + modelName);
-		log.info("States generated: " + SlotFillingExplorer.statesgenerated);
-
 	}
 
 	public void postPredictOrganismModel(Map<Instance, State> results) {
@@ -655,7 +690,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			SCIOSlotTypes.hasCompound.include();
 			SCIOSlotTypes.hasTreatmentType.include();
 			TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(nerlaEvaluator);
-			treatmentEvaluation.evaluate(ps, results);
+			treatmentEvaluation.evaluate(ps, results, EScoreType.MICRO);
+			treatmentEvaluation.evaluate(ps, results, EScoreType.MACRO);
 			SlotType.restoreExcludance();
 		}
 		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
@@ -664,7 +700,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			SCIOSlotTypes.hasOrganismModel.include();
 			SCIOSlotTypes.hasOrganismSpecies.include();
 			OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(nerlaEvaluator);
-			organismModelEvaluation.evaluate(ps, results);
+			organismModelEvaluation.evaluate(ps, results, EScoreType.MICRO);
+			organismModelEvaluation.evaluate(ps, results, EScoreType.MACRO);
 			SlotType.restoreExcludance();
 		}
 
@@ -673,7 +710,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			SlotType.excludeAll();
 			SCIOSlotTypes.hasInjuryModel.include();
 			InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(nerlaEvaluator);
-			injuryModelEvaluation.evaluate(ps, results);
+			injuryModelEvaluation.evaluate(ps, results, EScoreType.MICRO);
+			injuryModelEvaluation.evaluate(ps, results, EScoreType.MACRO);
 			SlotType.restoreExcludance();
 		}
 
@@ -692,7 +730,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		ExperimentalGroupEvaluation expGroupEval = new ExperimentalGroupEvaluation(predictionObjectiveFunction,
 				nerlaEvaluator);
 
-		expGroupEval.evaluate(ps, results);
+		expGroupEval.evaluate(ps, results, EScoreType.MICRO);
+		expGroupEval.evaluate(ps, results, EScoreType.MACRO);
 		SlotType.restoreExcludance();
 
 		ps.flush();
@@ -963,17 +1002,37 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private Set<AbstractAnnotation> extractGoldTreatments(Instance instance) {
 		Set<AbstractAnnotation> treatments = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
-			treatments.addAll(expGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
-					.filter(a -> a != null).collect(Collectors.toList()));
+
+			for (AbstractAnnotation abstractAnnotation : expGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType)
+					.getSlotFiller().stream().filter(a -> a != null).collect(Collectors.toList())) {
+
+				treatments.add(abstractAnnotation);
+
+				if (abstractAnnotation.getEntityType() == SCIOEntityTypes.compoundTreatment) {
+
+					SingleFillerSlot sfs = abstractAnnotation.asInstanceOfEntityTemplate()
+							.getSingleFillerSlot(SCIOSlotTypes.hasCompound);
+					if (sfs.containsSlotFiller())
+						treatments.add(sfs.getSlotFiller());
+				}
+			}
 		}
+
 		return treatments;
 	}
 
 	private Set<AbstractAnnotation> extractGoldOrganismModels(Instance instance) {
 		Set<AbstractAnnotation> orgModels = new HashSet<>();
 		for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+
+			DefinedExperimentalGroup wrapper = new DefinedExperimentalGroup(expGroup);
+
 			if (expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
 				orgModels.add(expGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).getSlotFiller());
+
+			AbstractAnnotation species = wrapper.getOrganismSpecies();
+			if (species != null)
+				orgModels.add(species);
 		}
 		return orgModels;
 	}
@@ -1008,8 +1067,17 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
 		Collection<GoldModificationRule> goldModificationRules = getGoldModificationRules();
+		DuplicationRule duplicationRule = (a1, a2) -> {
+			boolean inclTmp = SCIOSlotTypes.hasGroupName.isIncluded();
+			SCIOSlotTypes.hasGroupName.exclude();
+			boolean equals = a1.evaluateEquals(predictionObjectiveFunction.getEvaluator(), a2);
+			if (inclTmp)
+				SCIOSlotTypes.hasGroupName.include();
+			return equals;
+		};
 
-		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules);
+		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules,
+				duplicationRule);
 
 		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
@@ -1270,8 +1338,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private int getNumberOfEpochs() {
-		return 10;
-//		return 1;
+//		return 10;
+		return 1;
 	}
 
 	private Collection<GoldModificationRule> getGoldModificationRules() {
@@ -1344,16 +1412,14 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 				l_1: for (AbstractAnnotation abstractAnnotation : newTreatments) {
 
-					if (Annotations.REMOVE_DUPLICATES)
-						for (AbstractAnnotation abstractAnnotation2 : distinctAnnotations) {
+					for (AbstractAnnotation abstractAnnotation2 : distinctAnnotations) {
 
-							if (abstractAnnotation2
-									.evaluate(predictionObjectiveFunction.getEvaluator(), abstractAnnotation)
-									.getF1() == 1.0D) {
-								continue l_1;
-							}
-
+						if (abstractAnnotation2.evaluateEquals(predictionObjectiveFunction.getEvaluator(),
+								abstractAnnotation)) {
+							continue l_1;
 						}
+
+					}
 
 					distinctAnnotations.add(abstractAnnotation);
 				}
@@ -1482,7 +1548,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		if (cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
 			PredictKMultiCardinalityInitializer init = new PredictKMultiCardinalityInitializer(cardinalityMode,
-					groupNameProviderMode, groupNameClusteringMode, instanceProvider.getInstances(), trainingInstances);
+					groupNameProviderMode, groupNameClusteringMode, instanceProvider.getInstances(), 1, 8,
+					trainingInstances);
 			RootTemplateCardinalityExplorer.MAX_NUMBER_OF_ANNOTATIONS = init.max;
 			RootTemplateCardinalityExplorer.MIN_NUMBER_OF_ANNOTATIONS = init.min;
 
@@ -1491,7 +1558,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 		if (cardinalityMode == ECardinalityMode.GOLD || cardinalityMode == ECardinalityMode.RSS_PREDICTED) {
 			return new PredictKMultiCardinalityInitializer(cardinalityMode, groupNameProviderMode,
-					groupNameClusteringMode, instanceProvider.getInstances(), trainingInstances);
+					groupNameClusteringMode, instanceProvider.getInstances(), 1, 8, trainingInstances);
 
 		}
 
@@ -1592,7 +1659,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
-		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("GroupName_EXP_GROUP_" + 1234, scope,
+		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("GroupName_EXP_GROUP_" + dataRandomSeed, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
 		predictor.trainOrLoadModel();
@@ -1624,7 +1691,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
-		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_EXP_GROUP_" + 1234,
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_EXP_GROUP_" + rand,
 				scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
@@ -1650,7 +1717,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
-		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_EXP_GROUP_" + 1234, scope,
+		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_EXP_GROUP_" + rand, scope,
 				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
@@ -1716,7 +1783,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			featureTemplates.add(new TB_TreatmentPriorTemplate());
 
-			featureTemplates.add(new TB_TreatmentCardinalityTemplate());
+			featureTemplates.add(new TB_TreatmentInGroupCardinalityTemplate());
 
 			featureTemplates.add(new ExGrBOWTemplate());
 			//
@@ -1750,162 +1817,28 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		}
 		if (explorationMode == EExplorationMode.TYPE_BASED) {
 
-			featureTemplates.add(new TB_Word2VecClusterTemplate());
-			featureTemplates.add(new TB_IntraTokenCardinalityTemplate());
-			featureTemplates.add(new TB_ContextCardinalityTemplate());
-			featureTemplates.add(new TB_ContextBetweenSlotFillerTemplate());
-			featureTemplates.add(new TB_ExpGroupTreatmentLocalityTemplate());
-			featureTemplates.add(new TB_BOWCardinalityTemplate());
+//			featureTemplates.add(new TB_NGramTokenContextTemplate());
+//			featureTemplates.add(new TB_SingleTokenContextTemplate());
+
+//			featureTemplates.add(new TB_Word2VecClusterTemplate());
+//			featureTemplates.add(new TB_IntraTokenCardinalityTemplate());
+//			featureTemplates.add(new TB_ContextCardinalityTemplate());
+//			featureTemplates.add(new TB_ContextBetweenSlotFillerTemplate());
+//			featureTemplates.add(new TB_ExpGroupTreatmentLocalityTemplate());
+
+//			featureTemplates.add(new TB_GroupBOWTreatmentCardinalityTemplate());
+
 			featureTemplates.add(new TB_ExGrBOWTemplate());
-			featureTemplates.add(new TB_SlotIsFilledTemplate());
-			featureTemplates.add(new TB_RemainingTypesTemplate());
-			featureTemplates.add(new TB_SameOrganismModelTemplate());
-			featureTemplates.add(new TB_SlotIsFilledTemplate());
-			featureTemplates.add(new TB_TreatmentPriorTemplate());
+//			featureTemplates.add(new TB_ExGrBOWInverseTemplate());
+			
+//			featureTemplates.add(new TB_RemainingTypesTemplate());
+//			featureTemplates.add(new TB_TreatmentPriorTemplate());
+//			featureTemplates.add(new TB_TreatmentPriorInverseTemplate());
+//			featureTemplates.add(new TB_TreatmentCardinalityPriorTemplate());
+//			featureTemplates.add(new TB_TreatmentInGroupCardinalityTemplate());
 
 		}
 
 		return featureTemplates;
 	}
 }
-
-// ALl REAl
-
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.393, getPrecision()=1.000, getRecall()=0.245, tp=12, fp=0, fn=37, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=14, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.511, getPrecision()=1.000, getRecall()=0.343, tp=12, fp=0, fn=23, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.500, getPrecision()=0.346, getRecall()=0.900, tp=18, fp=34, fn=2, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=0.478, getPrecision()=0.423, getRecall()=0.550, tp=11, fp=15, fn=9, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=0.806, getPrecision()=0.722, getRecall()=0.912, tp=52, fp=20, fn=5, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 1.5727950313140984
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.455, getPrecision()=0.517, getRecall()=0.407, tp=92, fp=86, fn=134, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.519, getPrecision()=0.976, getRecall()=0.354, tp=40, fp=1, fn=73, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=19, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.593, getPrecision()=0.976, getRecall()=0.426, tp=40, fp=1, fn=54, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.406, getPrecision()=0.366, getRecall()=0.456, tp=26, fp=45, fn=31, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.426, getPrecision()=0.394, getRecall()=0.464, tp=26, fp=40, fn=30, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=76819290]
-//CRFStatistics [context=Test, getTotalDuration()=4336707]
-//modelName: ExperimentalGroup42009
-//States generated: 3500250
-//----------------------------------------------------------------
-
-//Additional Template: RemainingTypesTemplate
-
-//ALL REAL
-
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.500, getPrecision()=0.704, getRecall()=0.388, tp=19, fp=8, fn=30, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=14, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.613, getPrecision()=0.704, getRecall()=0.543, tp=19, fp=8, fn=16, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.633, getPrecision()=0.475, getRecall()=0.950, tp=19, fp=21, fn=1, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=0.522, getPrecision()=0.462, getRecall()=0.600, tp=12, fp=14, fn=8, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=0.810, getPrecision()=0.739, getRecall()=0.895, tp=51, fp=18, fn=6, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 1.5559732104309982
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.473, getPrecision()=0.500, getRecall()=0.450, tp=98, fp=98, fn=120, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.491, getPrecision()=0.661, getRecall()=0.390, tp=41, fp=21, fn=64, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=0, fn=19, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.554, getPrecision()=0.661, getRecall()=0.477, tp=41, fp=21, fn=45, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.524, getPrecision()=0.478, getRecall()=0.579, tp=33, fp=36, fn=24, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.397, getPrecision()=0.369, getRecall()=0.429, tp=24, fp=41, fn=32, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=75242255]
-//CRFStatistics [context=Test, getTotalDuration()=5241078]
-//modelName: ExperimentalGroup49767
-//States generated: 3562396
-
-//----------------------------------------------------------------
-
-//ALL GOLD
-
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.957, getPrecision()=1.000, getRecall()=0.918, tp=45, fp=0, fn=4, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=0.833, getPrecision()=1.000, getRecall()=0.714, tp=10, fp=0, fn=4, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=35, fp=0, fn=0, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=20, fp=0, fn=0, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=57, fp=0, fn=0, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 0.0
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.886, getPrecision()=0.871, getRecall()=0.901, tp=182, fp=27, fn=20, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.817, getPrecision()=0.765, getRecall()=0.876, tp=78, fp=24, fn=11, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.774, getPrecision()=1.000, getRecall()=0.632, tp=12, fp=0, fn=7, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.825, getPrecision()=0.733, getRecall()=0.943, tp=66, fp=24, fn=4, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.945, getPrecision()=0.981, getRecall()=0.912, tp=52, fp=1, fn=5, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.945, getPrecision()=0.963, getRecall()=0.929, tp=52, fp=2, fn=4, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=169806]
-//CRFStatistics [context=Test, getTotalDuration()=5461]
-//modelName: ExperimentalGroup20719
-//States generated: 252855
-
-// MAIN CLASS PREDICT REST GOLD
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.545, getPrecision()=0.615, getRecall()=0.490, tp=24, fp=15, fn=25, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=0.250, getPrecision()=1.000, getRecall()=0.143, tp=2, fp=0, fn=12, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.611, getPrecision()=0.595, getRecall()=0.629, tp=22, fp=15, fn=13, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.642, getPrecision()=0.515, getRecall()=0.850, tp=17, fp=16, fn=3, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=0.449, getPrecision()=0.379, getRecall()=0.550, tp=11, fp=18, fn=9, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=57, fp=0, fn=0, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 0.0
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.475, getPrecision()=0.470, getRecall()=0.480, tp=95, fp=107, fn=103, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.425, getPrecision()=0.416, getRecall()=0.435, tp=37, fp=52, fn=48, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.273, getPrecision()=1.000, getRecall()=0.158, tp=3, fp=0, fn=16, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.447, getPrecision()=0.395, getRecall()=0.515, tp=34, fp=52, fn=32, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.579, getPrecision()=0.579, getRecall()=0.579, tp=33, fp=24, fn=24, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.446, getPrecision()=0.446, getRecall()=0.446, tp=25, fp=31, fn=31, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=460965]
-//CRFStatistics [context=Test, getTotalDuration()=57495]
-//modelName: ExperimentalGroup35429
-//States generated: 2031996
-
-//ALL GOLD BUT NO GROUPNAMES
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.990, getPrecision()=1.000, getRecall()=0.980, tp=48, fp=0, fn=1, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=14, fp=0, fn=0, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.986, getPrecision()=1.000, getRecall()=0.971, tp=34, fp=0, fn=1, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=57, fp=0, fn=0, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 0.0
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.812, getPrecision()=0.778, getRecall()=0.848, tp=168, fp=48, fn=30, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.722, getPrecision()=0.617, getRecall()=0.871, tp=74, fp=46, fn=11, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.723, getPrecision()=0.607, getRecall()=0.895, tp=17, fp=11, fn=2, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.722, getPrecision()=0.620, getRecall()=0.864, tp=57, fp=35, fn=9, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.907, getPrecision()=0.961, getRecall()=0.860, tp=49, fp=2, fn=8, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.891, getPrecision()=1.000, getRecall()=0.804, tp=45, fp=0, fn=11, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=25583]
-//CRFStatistics [context=Test, getTotalDuration()=2984]
-//modelName: ExperimentalGroup39554
-//States generated: 260627
-
-// MAIN GOLD, NO GROUPNAMES, MULTI CARD
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.860, getPrecision()=1.000, getRecall()=0.755, tp=37, fp=0, fn=12, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=0.783, getPrecision()=1.000, getRecall()=0.643, tp=9, fp=0, fn=5, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.889, getPrecision()=1.000, getRecall()=0.800, tp=28, fp=0, fn=7, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=0.784, getPrecision()=0.950, getRecall()=0.667, tp=38, fp=2, fn=19, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 1.5727950313140984
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.743, getPrecision()=0.934, getRecall()=0.617, tp=127, fp=9, fn=79, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.701, getPrecision()=0.885, getRecall()=0.581, tp=54, fp=7, fn=39, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.667, getPrecision()=0.909, getRecall()=0.526, tp=10, fp=1, fn=9, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.710, getPrecision()=0.880, getRecall()=0.595, tp=44, fp=6, fn=30, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.792, getPrecision()=0.974, getRecall()=0.667, tp=38, fp=1, fn=19, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.761, getPrecision()=0.972, getRecall()=0.625, tp=35, fp=1, fn=21, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=70814]
-//CRFStatistics [context=Test, getTotalDuration()=4821]
-//modelName: ExperimentalGroup36084
-//States generated: 760057
-
-// ALL GOLD BUT CLUSTERING NAD CARDINALITIES
-//TREATMENTS MICRO: BOTH = Score [getF1()=0.886, getPrecision()=1.000, getRecall()=0.796, tp=39, fp=0, fn=10, tn=0]
-//TREATMENTS MICRO: Vehicle = Score [getF1()=0.444, getPrecision()=1.000, getRecall()=0.286, tp=4, fp=0, fn=10, tn=0]
-//TREATMENTS MICRO: Non Vehicle = Score [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=35, fp=0, fn=0, tn=0]
-//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//INJURY MODEL MICRO: SCORE = Score [getF1()=0.974, getPrecision()=1.000, getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
-//EXP GROUP MICRO  CARDINALITY = Score [getF1()=0.850, getPrecision()=0.771, getRecall()=0.947, tp=54, fp=16, fn=3, tn=0]
-//EXP GROUP MICRO  CARDINALITY RMSE = 1.2773327473170102
-//EXP GROUP MICRO  SCORE = Score [getF1()=0.792, getPrecision()=0.745, getRecall()=0.845, tp=175, fp=60, fn=32, tn=0]
-//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.738, getPrecision()=0.679, getRecall()=0.809, tp=76, fp=36, fn=18, tn=0]
-//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.462, getPrecision()=0.857, getRecall()=0.316, tp=6, fp=1, fn=13, tn=0]
-//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.778, getPrecision()=0.667, getRecall()=0.933, tp=70, fp=35, fn=5, tn=0]
-//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.864, getPrecision()=0.836, getRecall()=0.895, tp=51, fp=10, fn=6, tn=0]
-//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.814, getPrecision()=0.774, getRecall()=0.857, tp=48, fp=14, fn=8, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=1731228]
-//CRFStatistics [context=Test, getTotalDuration()=12861]
-//modelName: ExperimentalGroup93583
-//States generated: 692301

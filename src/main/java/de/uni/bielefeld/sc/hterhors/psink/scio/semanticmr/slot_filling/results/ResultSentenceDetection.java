@@ -1,7 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.results;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -15,7 +14,6 @@ import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
@@ -47,7 +45,6 @@ public class ResultSentenceDetection {
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
 
-		Annotations.REMOVE_DUPLICATES = true;
 
 		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
 

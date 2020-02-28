@@ -10,11 +10,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -36,27 +38,33 @@ public class ExperimentalGroupEvaluation {
 		this.evaluator = evaluator;
 	}
 
-	public Score evaluate(PrintStream ps, Map<Instance, State> results) {
+	public Score evaluate(PrintStream ps, Map<Instance, State> results, EScoreType scoreType) {
 
 		double cardinalityRMSE = 0;
 
 		Map<Integer, Score> intervallCardinality = new HashMap<>();
 
-		Score experimentalCardinality = new Score();
-		Score experimentalGroupScore = new Score();
-		Score organismModelScore = new Score();
-		Score injuryModelScore = new Score();
-		Score vehicleScore = new Score();
-		Score nonVehicleScore = new Score();
-		Score bothS = new Score();
+		Score experimentalCardinality = new Score(scoreType);
+		Score experimentalGroupComponentScore = new Score(scoreType);
+		Score experimentalGroupOverallScore = new Score(scoreType);
+		Score organismModelScore = new Score(scoreType);
+		Score injuryModelScore = new Score(scoreType);
+		Score vehicleScore = new Score(scoreType);
+		Score nonVehicleScore = new Score(scoreType);
+		Score bothS = new Score(scoreType);
 //		double macroF1 = 0;
 //		double macroPrecision = 0;
 //		double macroRecall = 0;
 //		int i = 0;
 
 		for (Entry<Instance, State> e : results.entrySet()) {
-			cardinalityRMSE += Math.pow(e.getValue().getCurrentPredictions().getAbstractAnnotations().size()
-					- e.getValue().getGoldAnnotations().getAbstractAnnotations().size(), 2);
+
+			List<EntityTemplate> goldAnnotations = e.getValue().getGoldAnnotations().getAnnotations();
+			List<EntityTemplate> predictedAnnotations = e.getValue().getCurrentPredictions().getAnnotations();
+
+//			System.out.println(goldAnnotations.size());
+//			System.out.println(predictedAnnotations.size());
+
 			/*
 			 * 
 			 * Evaluate clustering of Treatments
@@ -65,17 +73,26 @@ public class ExperimentalGroupEvaluation {
 //			i++;
 //			log.info(e.getKey().getName());
 
-			List<EntityTemplate> goldAnnotations = e.getValue().getGoldAnnotations().getAnnotations();
-			List<EntityTemplate> predictedAnnotations = e.getValue().getCurrentPredictions().getAnnotations();
+			cardinalityRMSE += Math.pow(predictedAnnotations.size() - goldAnnotations.size(), 2);
+
+//			System.out.println(cardinalityRMSE);
 
 			for (int spread = 0; spread < 4; spread++) {
-				intervallCardinality.putIfAbsent(spread, new Score());
+				intervallCardinality.putIfAbsent(spread, new Score(scoreType));
 
 				int tp = Math.abs(goldAnnotations.size() - predictedAnnotations.size()) <= spread ? 1 : 0;
 				int fn = tp == 1 ? 0 : 1;
-				intervallCardinality.get(spread).add(new Score(tp, 0, fn));
 
+				Score s = new Score(tp, 0, fn);
+
+				if (scoreType == EScoreType.MACRO)
+					s.toMacro();
+
+//				System.out.println(s);
+
+				intervallCardinality.get(spread).add(s);
 			}
+//			intervallCardinality.entrySet().forEach(System.out::println);
 
 			int tp = Math.min(goldAnnotations.size(), predictedAnnotations.size());
 			int fp = predictedAnnotations.size() > goldAnnotations.size()
@@ -85,31 +102,42 @@ public class ExperimentalGroupEvaluation {
 					? goldAnnotations.size() - predictedAnnotations.size()
 					: 0;
 
-			experimentalCardinality.add(new Score(tp, fp, fn));
+			Score sC = new Score(tp, fp, fn);
+
+			if (scoreType == EScoreType.MACRO)
+				sC.toMacro();
+//			System.out.println(sC);
+//			System.out.println();
+			experimentalCardinality.add(sC);
 
 			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
-					.getBestAssignment(goldAnnotations, predictedAnnotations);
+					.getBestAssignment(goldAnnotations, predictedAnnotations, scoreType);
+			if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
 
-			Score both = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.BOTH);
-//			log.info("Both: " + both);
+				Score both = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,
+						ESimpleEvaluationMode.BOTH, scoreType);
+//				log.info(scoreType + "Both: " + both);
 
-			Score vs = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.VEHICLE);
-//			log.info("Vehicles: " + vs);
+				Score vs = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,
+						ESimpleEvaluationMode.VEHICLE, scoreType);
+//				log.info("Vehicles: " + vs);
 
-			Score nvs = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,
-					ESimpleEvaluationMode.NON_VEHICLE);
-//			log.info("Non Vehicles: " + nvs);
+				Score nvs = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,
+						ESimpleEvaluationMode.NON_VEHICLE, scoreType);
+//				log.info("Non Vehicles: " + nvs);
 
-			vehicleScore.add(vs);
-			nonVehicleScore.add(nvs);
-			bothS.add(both);
-
-			organismModelScore
-					.add(organismModelInExpGroupEvaluate(bestAssignment, goldAnnotations, predictedAnnotations));
-			injuryModelScore.add(injuryModelInExpGroupEvaluate(bestAssignment, goldAnnotations, predictedAnnotations));
-
+				vehicleScore.add(vs);
+				nonVehicleScore.add(nvs);
+				bothS.add(both);
+			}
+			if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
+				organismModelScore.add(organismModelInExpGroupEvaluate(bestAssignment, goldAnnotations,
+						predictedAnnotations, scoreType));
+			}
+			if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
+				injuryModelScore.add(injuryModelInExpGroupEvaluate(bestAssignment, goldAnnotations,
+						predictedAnnotations, scoreType));
+			}
 //			macroF1 += score.getF1();
 //			macroPrecision += score.getPrecision();
 //			macroRecall += score.getRecall();
@@ -117,51 +145,63 @@ public class ExperimentalGroupEvaluation {
 //					+ macroRecall / i);
 //			log.info("EXP GROUP INTERMEDIATE MICRO: " + bothS);
 //			log.info("");
+			Score overall = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
+					.scoreMultiValues(goldAnnotations, predictedAnnotations, scoreType);
+			experimentalGroupOverallScore.add(overall);
 		}
-
-		experimentalGroupScore.add(bothS);
-		experimentalGroupScore.add(organismModelScore);
-		experimentalGroupScore.add(injuryModelScore);
+		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
+			experimentalGroupComponentScore.add(bothS);
+		}
+		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
+			experimentalGroupComponentScore.add(organismModelScore);
+		}
+		if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
+			experimentalGroupComponentScore.add(injuryModelScore);
+		}
 
 //		macroF1 /= results.entrySet().size();
 //		macroPrecision /= results.entrySet().size();
 //		macroRecall /= results.entrySet().size();
 //		log.info("EXP GROUP MACRO: F1 = " + macroF1 + ", P = " + macroPrecision + ", R = " + macroRecall);
-		log.info("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
-		ps.println("EXP GROUP MICRO  CARDINALITY = " + experimentalCardinality);
+		log.info("EXP GROUP " + scoreType + "  CARDINALITY = " + experimentalCardinality);
+		ps.println("EXP GROUP " + scoreType + "CARDINALITY = " + experimentalCardinality);
 		final StringBuffer cardString = new StringBuffer();
 		intervallCardinality.entrySet()
 				.forEach(e -> cardString.append(e.getKey() + ":" + e.getValue().getRecall() + "\t"));
-		log.info("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
-		ps.println("EXP GROUP MICRO  INTERVALL CARDINALITY = " + cardString.toString().trim());
-		log.info("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));
-		ps.println("EXP GROUP MICRO  CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / results.entrySet().size()));
-		log.info("EXP GROUP MICRO  SCORE = " + experimentalGroupScore);
-		ps.println("EXP GROUP MICRO  SCORE = " + experimentalGroupScore);
+		log.info("EXP GROUP " + scoreType + "  INTERVALL CARDINALITY = " + cardString.toString().trim());
+		ps.println("EXP GROUP " + scoreType + "  INTERVALL CARDINALITY = " + cardString.toString().trim());
+		log.info("EXP GROUP " + scoreType + "  CARDINALITY RMSE = "
+				+ Math.sqrt(cardinalityRMSE / results.entrySet().size()));
+		ps.println("EXP GROUP " + scoreType + "  CARDINALITY RMSE = "
+				+ Math.sqrt(cardinalityRMSE / results.entrySet().size()));
+		log.info("EXP GROUP " + scoreType + "  OVERALL SCORE = " + experimentalGroupOverallScore);
+		ps.println("EXP GROUP " + scoreType + "  OVERALL SCORE = " + experimentalGroupOverallScore);
+		log.info("EXP GROUP " + scoreType + "  COMPONENTS SCORE = " + experimentalGroupComponentScore);
+		ps.println("EXP GROUP " + scoreType + " COMPONENTS SCORE = " + experimentalGroupComponentScore);
 		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
-			log.info("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
-			ps.println("EXP GROUP MICRO: TREATMENT BOTH = " + bothS);
-			log.info("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);
-			ps.println("EXP GROUP MICRO: TREATMENT Vehicle = " + vehicleScore);
-			log.info("EXP GROUP MICRO: TREATMENT Non Vehicle = " + nonVehicleScore);
-			ps.println("EXP GROUP MICRO: TREATMENT Non Vehicle = " + nonVehicleScore);
+			log.info("EXP GROUP " + scoreType + ": TREATMENT BOTH = " + bothS);
+			ps.println("EXP GROUP " + scoreType + ": TREATMENT BOTH = " + bothS);
+			log.info("EXP GROUP " + scoreType + ": TREATMENT Vehicle = " + vehicleScore);
+			ps.println("EXP GROUP " + scoreType + ": TREATMENT Vehicle = " + vehicleScore);
+			log.info("EXP GROUP " + scoreType + ": TREATMENT Non Vehicle = " + nonVehicleScore);
+			ps.println("EXP GROUP " + scoreType + ": TREATMENT Non Vehicle = " + nonVehicleScore);
 		}
 		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
-			log.info("EXP GROUP MICRO: ORG MODEL = " + organismModelScore);
-			ps.println("EXP GROUP MICRO: ORG MODEL = " + organismModelScore);
+			log.info("EXP GROUP " + scoreType + ": ORG MODEL = " + organismModelScore);
+			ps.println("EXP GROUP " + scoreType + ": ORG MODEL = " + organismModelScore);
 		}
 		if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
-			log.info("EXP GROUP MICRO: INJURY MODEL = " + injuryModelScore);
-			ps.println("EXP GROUP MICRO: INJURY MODEL = " + injuryModelScore);
+			log.info("EXP GROUP " + scoreType + ": INJURY MODEL = " + injuryModelScore);
+			ps.println("EXP GROUP " + scoreType + ": INJURY MODEL = " + injuryModelScore);
 		}
-		return experimentalGroupScore;
+		return experimentalGroupComponentScore;
 	}
 
 	private Score treatmentsInExpGroupEvaluate(boolean print, List<Integer> bestAssignment,
-			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations,
-			ESimpleEvaluationMode mode) {
+			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations, ESimpleEvaluationMode mode,
+			EScoreType scoreType) {
 
-		Score simpleScore = new Score();
+		Score simpleScore = new Score(scoreType);
 		if (SCIOSlotTypes.hasTreatmentType.isExcluded())
 			return simpleScore;
 
@@ -300,7 +340,7 @@ public class ExperimentalGroupEvaluation {
 			}
 
 			Score s;
-			if (goldTreatments.isEmpty() && predictTreatments.isEmpty()) {
+			if (goldTreatments.isEmpty() && predictTreatments.isEmpty())
 				if (mode == ESimpleEvaluationMode.BOTH) {
 					s = new Score(1, 0, 0);
 				} else {
@@ -308,11 +348,12 @@ public class ExperimentalGroupEvaluation {
 							&& mode == ESimpleEvaluationMode.NON_VEHICLE) {
 						s = new Score(1, 0, 0);
 					} else {
-						s = new Score(0, 0, 0);
+						// No influence on micro score
+						s = Score.getZero(scoreType);
 					}
 				}
-			} else
-				s = evaluator.scoreMultiValues(goldTreatments, predictTreatments);
+			else
+				s = evaluator.scoreMultiValues(goldTreatments, predictTreatments, scoreType);
 
 			if (print) {
 				log.info("Compare: g" + goldIndex);
@@ -323,6 +364,9 @@ public class ExperimentalGroupEvaluation {
 				log.info("-----");
 			}
 
+			if (scoreType == EScoreType.MACRO)
+				s.toMacro();
+
 			simpleScore.add(s);
 
 		}
@@ -331,9 +375,9 @@ public class ExperimentalGroupEvaluation {
 	}
 
 	private Score organismModelInExpGroupEvaluate(List<Integer> bestAssignment, List<EntityTemplate> goldAnnotations,
-			List<EntityTemplate> predictedAnnotations) {
+			List<EntityTemplate> predictedAnnotations, EScoreType scoreType) {
 
-		Score simpleScore = new Score();
+		Score simpleScore = new Score(scoreType);
 
 		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
 			final int predictIndex = bestAssignment.get(goldIndex);
@@ -363,7 +407,7 @@ public class ExperimentalGroupEvaluation {
 				else
 					predictOrganismModel = Collections.emptyList();
 
-				simpleScore.add(evaluator.scoreMultiValues(goldOrganismModel, predictOrganismModel));
+				simpleScore.add(evaluator.scoreMultiValues(goldOrganismModel, predictOrganismModel, scoreType));
 			}
 
 		}
@@ -372,9 +416,9 @@ public class ExperimentalGroupEvaluation {
 	}
 
 	private Score injuryModelInExpGroupEvaluate(List<Integer> bestAssignment, List<EntityTemplate> goldAnnotations,
-			List<EntityTemplate> predictedAnnotations) {
+			List<EntityTemplate> predictedAnnotations, EScoreType scoreType) {
 
-		Score simpleScore = new Score();
+		Score simpleScore = new Score(scoreType);
 		if (SCIOSlotTypes.hasInjuryModel.isExcluded())
 			return simpleScore;
 		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
@@ -400,7 +444,7 @@ public class ExperimentalGroupEvaluation {
 			else
 				predictInjuryModel = Collections.emptyList();
 
-			simpleScore.add(evaluator.scoreMultiValues(goldInjuryModel, predictInjuryModel));
+			simpleScore.add(evaluator.scoreMultiValues(goldInjuryModel, predictInjuryModel, scoreType));
 
 		}
 
