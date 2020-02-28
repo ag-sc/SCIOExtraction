@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -23,11 +23,11 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 /**
  * Example of how to perform named entity recognition and linking.
  * 
- * @author hterhors
- *Final Score: Score [ getF1()=0.170, getPrecision()=0.107, getRecall()=0.404, tp=72, fp=599, fn=106, tn=0]
-CRFStatistics [context=Train, getTotalDuration()=1699948]
-CRFStatistics [context=Test, getTotalDuration()=302525]
-modelName: GroupName_895041394
+ * @author hterhors Final Score: Score [ getF1()=0.170, getPrecision()=0.107,
+ *         getRecall()=0.404, tp=72, fp=599, fn=106, tn=0] CRFStatistics
+ *         [context=Train, getTotalDuration()=1699948] CRFStatistics
+ *         [context=Test, getTotalDuration()=302525] modelName:
+ *         GroupName_895041394
  */
 public class GroupNameNER {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -41,6 +41,11 @@ public class GroupNameNER {
 	public static void main(String[] args) {
 		new GroupNameNER();
 	}
+//	Without Speed up!
+//	Final Score: Score [getF1()=0.176, getPrecision()=0.115, getRecall()=0.380, tp=82, fp=633, fn=134, tn=0]
+//			CRFStatistics [context=Train, getTotalDuration()=2617000]
+//			CRFStatistics [context=Test, getTotalDuration()=341705]
+//			modelName: GroupName_123888444
 
 	public GroupNameNER() {
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
@@ -55,16 +60,18 @@ public class GroupNameNER {
 //		String modelName = "NERLA1387292063";
 		String modelName = "GroupName_" + new Random().nextInt();
 		log.info("modelName: " + modelName);
+//
+//		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
+//				.setCorpusSizeFraction(1F).build();
 
-		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
-				.setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setTestProportion(20).setSeed(1000L).build();
 
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.maxNumberOfAnnotations = 20;
 
 		InstanceProvider instanceProvider = new InstanceProvider(
-				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.groupName),
-				originalCorpusDistributor);
+				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.groupName), corpusDistributor);
 
 		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
@@ -80,9 +87,8 @@ public class GroupNameNER {
 
 		predictor.trainOrLoadModel();
 
-		Map<Instance, State> results = predictor.crf.predict(
-				predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
-				predictor.noModelChangeCrit);
+		Map<Instance, State> results = predictor.crf.predict(predictor.instanceProvider.getRedistributedTestInstances(),
+				predictor.maxStepCrit, predictor.noModelChangeCrit);
 
 		log.info(
 				"Final Score: " + AbstractSemReadProject.evaluate(log, results, predictor.evaluationObjectiveFunction));
