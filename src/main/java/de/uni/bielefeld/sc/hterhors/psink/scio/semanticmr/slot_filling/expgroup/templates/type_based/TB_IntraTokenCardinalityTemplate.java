@@ -142,9 +142,21 @@ public class TB_IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<In
 	@Override
 	public void generateFeatureVector(Factor<IntraTokenScope> factor) {
 
-		getTokenNgrams(factor.getFeatureVector(), factor.getFactorScope().entityType.name,
-				factor.getFactorScope().surfaceForm, factor.getFactorScope().cardinality);
+		final String cM = START_SIGN + TOKEN_SPLITTER_SPACE + factor.getFactorScope().surfaceForm + TOKEN_SPLITTER_SPACE
+				+ END_SIGN;
 
+		factor.getFeatureVector().set(PREFIX + LEFT + factor.getFactorScope().entityType.name + RIGHT
+				+ TOKEN_SPLITTER_SPACE + cM + ", cardinality " + factor.getFactorScope().cardinality, true);
+
+		final String[] tokens = cM.split(TOKEN_SPLITTER_SPACE);
+
+		getTokenNgrams(factor.getFeatureVector(), factor.getFactorScope().entityType.name, tokens,
+				factor.getFactorScope().cardinality);
+
+		for (String string : getNGrams(factor.getFactorScope().surfaceForm)) {
+			factor.getFeatureVector().set(PREFIX + LEFT + factor.getFactorScope().entityType.name + RIGHT
+					+ TOKEN_SPLITTER_SPACE + string + ", cardinality " + factor.getFactorScope().cardinality, true);
+		}
 //		for (EntityType e : factor.getFactorScope().entityType.getDirectSuperEntityTypes()) {
 //
 //			getTokenNgrams(factor.getFeatureVector(), e.entityName, factor.getFactorScope().surfaceForm);
@@ -152,16 +164,9 @@ public class TB_IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<In
 
 	}
 
-	private void getTokenNgrams(DoubleVector featureVector, String name, String surfaceForm, final int cardinality) {
-
-		final String cM = START_SIGN + TOKEN_SPLITTER_SPACE + surfaceForm + TOKEN_SPLITTER_SPACE + END_SIGN;
-
-		final String[] tokens = cM.split(TOKEN_SPLITTER_SPACE);
+	private void getTokenNgrams(DoubleVector featureVector, String name, final String[] tokens, final int cardinality) {
 
 		final int maxNgramSize = tokens.length;
-
-		featureVector.set(PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + cM + ", cardinality " + cardinality,
-				true);
 
 		for (int ngram = 1; ngram < maxNgramSize; ngram++) {
 			for (int i = 0; i < maxNgramSize - 1; i++) {
@@ -205,6 +210,25 @@ public class TB_IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<In
 			}
 		}
 
+	}
+
+	private final String[] getNGrams(final String input) {
+		final StringBuffer adjustedString = new StringBuffer();
+		adjustedString.append("#");
+		adjustedString.append("#");
+		adjustedString.append(input);
+		adjustedString.append("#");
+		adjustedString.append("#");
+		int curPos = 0;
+		final int length = adjustedString.length() - 2;
+		final String[] returnVect = new String[adjustedString.length() - 2];
+		while (curPos < length) {
+			final String term = adjustedString.substring(curPos, curPos + 3);
+			returnVect[curPos] = term;
+			curPos++;
+		}
+
+		return returnVect;
 	}
 
 }

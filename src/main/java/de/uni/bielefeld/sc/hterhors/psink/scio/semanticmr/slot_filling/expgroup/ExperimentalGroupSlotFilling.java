@@ -104,9 +104,11 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.ExGrOuterNameBOWTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.ExpGroupTreatmentLocalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.Word2VecClusterTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ContextBetweenSlotFillerTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ContextCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWInverseTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExpGroupTreatmentLocalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_GroupBOWTreatmentCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_IntraTokenCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_NGramTokenContextTemplate;
@@ -222,8 +224,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			mainClassProviderMode = EMainClassMode.GOLD;
 
-			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
-			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
 
 		} else if (id == 0) {
@@ -1338,8 +1340,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	}
 
 	private int getNumberOfEpochs() {
-//		return 10;
-		return 1;
+		return 10;
+//		return 1;
 	}
 
 	private Collection<GoldModificationRule> getGoldModificationRules() {
@@ -1819,23 +1821,23 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 //			featureTemplates.add(new TB_NGramTokenContextTemplate());
 //			featureTemplates.add(new TB_SingleTokenContextTemplate());
-
+//
 //			featureTemplates.add(new TB_Word2VecClusterTemplate());
-//			featureTemplates.add(new TB_IntraTokenCardinalityTemplate());
-//			featureTemplates.add(new TB_ContextCardinalityTemplate());
+			featureTemplates.add(new TB_IntraTokenCardinalityTemplate());
+			featureTemplates.add(new TB_ContextCardinalityTemplate());
 //			featureTemplates.add(new TB_ContextBetweenSlotFillerTemplate());
 //			featureTemplates.add(new TB_ExpGroupTreatmentLocalityTemplate());
-
-//			featureTemplates.add(new TB_GroupBOWTreatmentCardinalityTemplate());
+//
+			featureTemplates.add(new TB_GroupBOWTreatmentCardinalityTemplate());
 
 			featureTemplates.add(new TB_ExGrBOWTemplate());
 //			featureTemplates.add(new TB_ExGrBOWInverseTemplate());
-			
-//			featureTemplates.add(new TB_RemainingTypesTemplate());
-//			featureTemplates.add(new TB_TreatmentPriorTemplate());
-//			featureTemplates.add(new TB_TreatmentPriorInverseTemplate());
-//			featureTemplates.add(new TB_TreatmentCardinalityPriorTemplate());
-//			featureTemplates.add(new TB_TreatmentInGroupCardinalityTemplate());
+
+			featureTemplates.add(new TB_RemainingTypesTemplate());
+			featureTemplates.add(new TB_TreatmentPriorTemplate());
+			featureTemplates.add(new TB_TreatmentPriorInverseTemplate());
+			featureTemplates.add(new TB_TreatmentCardinalityPriorTemplate());
+			featureTemplates.add(new TB_TreatmentInGroupCardinalityTemplate());
 
 		}
 
