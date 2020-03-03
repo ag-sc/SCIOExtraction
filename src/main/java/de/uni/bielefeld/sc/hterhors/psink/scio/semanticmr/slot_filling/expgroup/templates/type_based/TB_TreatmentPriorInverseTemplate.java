@@ -31,10 +31,10 @@ public class TB_TreatmentPriorInverseTemplate extends AbstractFeatureTemplate<Tr
 
 	static class TreatmentPriorInverseScope extends AbstractFactorScope {
 
-		final Set<Set<EntityType>> entityTypes;
+		final List<Set<EntityType>> entityTypes;
 		final int numberOfGroups;
 
-		public TreatmentPriorInverseScope(AbstractFeatureTemplate<?> template, Set<Set<EntityType>> entityTypes,
+		public TreatmentPriorInverseScope(AbstractFeatureTemplate<?> template, List<Set<EntityType>> entityTypes,
 				int numberOfGroups) {
 			super(template);
 			this.entityTypes = entityTypes;
@@ -110,8 +110,8 @@ public class TB_TreatmentPriorInverseTemplate extends AbstractFeatureTemplate<Tr
 
 		for (int i = 0; i < listOfTypes.size(); i++) {
 			for (int j = i + 1; j < listOfTypes.size(); j++) {
-				factors.add(new TreatmentPriorInverseScope(this,
-						new HashSet<>(Arrays.asList(listOfTypes.get(i), listOfTypes.get(j))), listOfTypes.size()));
+				factors.add(new TreatmentPriorInverseScope(this, Arrays.asList(listOfTypes.get(i), listOfTypes.get(j)),
+						listOfTypes.size()));
 			}
 		}
 
@@ -127,7 +127,6 @@ public class TB_TreatmentPriorInverseTemplate extends AbstractFeatureTemplate<Tr
 			types.add(new ArrayList<>(entityTypes));
 		}
 
-		
 		for (int i = 0; i < types.get(0).size(); i++) {
 			final String name1 = types.get(0).get(i).name;
 			for (int j = i + 1; j < types.get(1).size(); j++) {

@@ -47,6 +47,11 @@ public class GroupNameNER {
 //			CRFStatistics [context=Test, getTotalDuration()=341705]
 //			modelName: GroupName_123888444
 
+//	Mit SPeed up ... 
+//	Final Score: Score [getF1()=0.104, getPrecision()=0.066, getRecall()=0.241, tp=52, fp=732, fn=164, tn=0]
+//			CRFStatistics [context=Train, getTotalDuration()=2453041]
+//			CRFStatistics [context=Test, getTotalDuration()=298542]
+//			modelName: GroupName_343400040
 	public GroupNameNER() {
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
 				/**

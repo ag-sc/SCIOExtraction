@@ -92,8 +92,11 @@ public class ResultOutPutReader {
 
 	final private static Pattern modePattern = Pattern.compile("(.*): (.*)");
 
-	final private static Pattern dataPattern = Pattern.compile(
-			"(.*) = Score \\[ getF1\\(\\)=(.+?), getPrecision\\(\\)=(.+?), * getRecall\\(\\)=(.+?), tp=(.+?), fp=(.+?), fn=(.+?), tn=(.+?)\\]");
+	final private static Pattern microDataPattern = Pattern.compile(
+			"(.*) = Score \\[getF1\\(\\)=(.+?), getPrecision\\(\\)=(.+?), getRecall\\(\\)=(.+?), tp=(.+?), fp=(.+?), fn=(.+?), tn=(.+?)\\]");
+
+	final private static Pattern macroDataPattern = Pattern
+			.compile("(.*) = Score \\[macroF1=(.+?), macroPrecision=(.+?), macroRecall=(.+?)\\]");
 
 	final private static Pattern intervalCardinalityPattern = Pattern
 			.compile("EXP GROUP MICRO  INTERVALL CARDINALITY = (.*?)	(.*?)	(.*?)	(.*?)");
@@ -139,7 +142,7 @@ public class ResultOutPutReader {
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 0; run < 4; run++) {
+		for (int run = 100; run < 110; run++) {
 
 			File dir = new File("results/experimentalgroupextratcion/cardinality/" + run + "/");
 
@@ -166,13 +169,15 @@ public class ResultOutPutReader {
 				final String modeName = "Mode_" + modeCounter;
 				modePairsMap.put(modeName, new HashMap<>());
 				List<String> readAllLines = Files.readAllLines(file.toPath());
-				for (int i = 1; i < 6; i++) {
+				for (int i = 2; i < 6; i++) {
 					ModePair modePair = getModePattern(readAllLines.get(i));
 					modePairsMap.get(modeName).put(modePair.mode, modePair.value);
 					modeValueNames.add(modePair.mode);
 				}
 				for (int i = 8; i < readAllLines.size(); i++) {
-					if (i == 12 || i == 13)
+					if (i == 15 || i == 16)
+						continue;
+					if (i == 23 || i == 24)
 						continue;
 					DataPair dataPair = getDataPattern(readAllLines.get(i));
 					dataMap.putIfAbsent(dataPair.mode, new HashMap<>());
@@ -206,11 +211,13 @@ public class ResultOutPutReader {
 			StringBuffer buffer = new StringBuffer(dataName);
 			buffer.append("\t");
 			for (String modeName : modeNames) {
-				double avg = 0;
+				Score s = null;
 				for (Score score : dataMap.get(dataName).get(modeName)) {
-					avg += score.getF1();
+					if (s == null)
+						s = score;
+					s.add(score);
 				}
-				buffer.append(avg / dataMap.get(dataName).get(modeName).size());
+				buffer.append(s.getF1(Score.SCORE_FORMAT));
 				buffer.append("\t");
 			}
 
@@ -282,13 +289,15 @@ public class ResultOutPutReader {
 			final String modeName = "Mode_" + modeCounter;
 			modePairsMap.put(modeName, new HashMap<>());
 			List<String> readAllLines = Files.readAllLines(file.toPath());
-			for (int i = 1; i < 6; i++) {
+			for (int i = 2; i < 6; i++) {
 				ModePair modePair = getModePattern(readAllLines.get(i));
 				modePairsMap.get(modeName).put(modePair.mode, modePair.value);
 				modeValueNames.add(modePair.mode);
 			}
 			for (int i = 8; i < readAllLines.size(); i++) {
-				if (i == 12 || i == 13)
+				if (i == 15 || i == 16)
+					continue;
+				if (i == 23 || i == 24)
 					continue;
 				DataPair dataPair = getDataPattern(readAllLines.get(i));
 				dataMap.putIfAbsent(dataPair.mode, new HashMap<>());
@@ -362,15 +371,23 @@ public class ResultOutPutReader {
 		return line.toString().trim();
 	}
 
-	private static void convertToA(PrintStream ps, List<String> readAllLines) throws Exception {
-
-	}
-
 	private static DataPair getDataPattern(String string) {
-		Matcher m = dataPattern.matcher(string);
-		m.find();
-		return new DataPair(m.group(1), new Score(Integer.parseInt(m.group(5)), Integer.parseInt(m.group(6)),
-				Integer.parseInt(m.group(7)), Integer.parseInt(m.group(8))));
+		Matcher micro = microDataPattern.matcher(string);
+
+		if (micro.find()) {
+			return new DataPair(micro.group(1),
+					new Score(Integer.parseInt(micro.group(5)), Integer.parseInt(micro.group(6)),
+							Integer.parseInt(micro.group(7)), Integer.parseInt(micro.group(8))));
+		} else {
+			Matcher macro = macroDataPattern.matcher(string);
+			if (macro.find()) {
+				return new DataPair(macro.group(1), new Score(Double.parseDouble(macro.group(2)),
+						Double.parseDouble(macro.group(3)), Double.parseDouble(macro.group(4))));
+			} else {
+				return null;
+			}
+		}
+
 	}
 
 	private static ModePair getModePattern(String string) {
