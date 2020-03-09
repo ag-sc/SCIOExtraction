@@ -52,6 +52,10 @@ public class GroupNameNER {
 //			CRFStatistics [context=Train, getTotalDuration()=2453041]
 //			CRFStatistics [context=Test, getTotalDuration()=298542]
 //			modelName: GroupName_343400040
+
+	//	Mit speed up and cache
+	
+	
 	public GroupNameNER() {
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
 				/**
