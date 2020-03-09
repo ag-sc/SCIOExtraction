@@ -217,8 +217,8 @@ public class ResultOutPutReader {
 						s = score;
 					s.add(score);
 				}
-				buffer.append(s.getF1(Score.SCORE_FORMAT));
-				buffer.append("\t");
+//				buffer.append(s.getF1(Score.SCORE_FORMAT));
+//				buffer.append("\t");
 			}
 
 			ps.println(buffer.toString().trim());

@@ -1,12 +1,18 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.results;
 
+import java.io.File;
+
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 
 public class ResultSlotFilling extends AbstractSemReadProject {
 
 	public ResultSlotFilling(SystemScope scope) {
 		super(scope);
+		
+
+		
 		// TODO Auto-generated constructor stub
 	}
 //
