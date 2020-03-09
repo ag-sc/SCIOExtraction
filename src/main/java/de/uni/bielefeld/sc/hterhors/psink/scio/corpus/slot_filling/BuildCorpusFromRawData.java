@@ -30,6 +30,7 @@ import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.hterhors.semanticmr.tools.specifications.DataStructureWriter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.nerla.DeliveryMethodPattern;
@@ -63,7 +64,7 @@ public class BuildCorpusFromRawData {
 	private static final File ROOT_DATA_STRUCTURE_HIERARCHIES = new File(ROOT_DATA_STRUCTURE_DIR,
 			SlotFillingCorpusBuilderBib.HIERARCHIES_FILE_NAME);
 
-	private static final CSVDataStructureReader dataStructureReader = new CSVDataStructureReader(
+	public static final CSVDataStructureReader dataStructureReader = new CSVDataStructureReader(
 			ROOT_DATA_STRUCTURE_ENTITIES, ROOT_DATA_STRUCTURE_HIERARCHIES, ROOT_DATA_STRUCTURE_SLOTS,
 			ROOT_DATA_STRUCTURE_STRUCTURES);
 
@@ -88,8 +89,8 @@ public class BuildCorpusFromRawData {
 //		buildCorpusForExperimentalGroup();
 //		buildCorpusForInvestigationMethod();
 //		buildCorpusForObservation();
-//		buildCorpusForResult();
-		buildCorpusForTrend();
+		buildCorpusForResult();
+//		buildCorpusForTrend();
 		System.exit(1);
 	}
 
