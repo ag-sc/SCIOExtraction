@@ -25,3 +25,6 @@
 79548, InfusionDelivery, 3534, 3542, "infusion", "", 
 79553, DefinedExperimentalGroup, 3534, 3554, "infusion of ChaseABC", "E1", "<http://scio/data/DefinedExperimentalGroup_33003> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33003> <http://www.w3.org/2000/01/rdf-schema#label> \"infusion of ChaseABC, E1\"."
 79550, ChondroitinaseABC, 3546, 3554, "ChaseABC", "", 
+103464, ChondroitinaseABC, 10294, 10300, "enzyme", "", 
+103463, Matrix, 10367, 10375, "Matrigel", "", "<http://scio/data/Matrix_84307> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Matrix>. <http://scio/data/CompoundTreatment_84297> <http://psink.de/scio/hasCompound> <http://scio/data/Matrix_84307>."
+103465, TreatmentSite, 10383, 10395, "graft tissue", "", "<http://scio/data/DeliveryMethod_84299> <http://psink.de/scio/hasLocations> <http://psink.de/scio/TreatmentSite>."

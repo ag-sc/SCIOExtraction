@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.jena.query.Query;
@@ -38,30 +40,30 @@ public class KwonSPARQLExtraction {
 
 	public KwonSPARQLExtraction() throws IOException {
 
-//		model.read(new FileInputStream("Excel2RDF.n-triples"), null, "N-TRIPLES");
-		model.read(new FileInputStream("OEC.n-triples"), null, "N-TRIPLES");
-		dataPrinter = new PrintStream(new File("oec_data.csv"));
-
+		model.read(new FileInputStream("Excel2RDF.n-triples"), null, "N-TRIPLES");
+		dataPrinter = new PrintStream(new File("kwon_data.csv"));
+//		model.read(new FileInputStream("OEC.n-triples"), null, "N-TRIPLES");
+//		dataPrinter = new PrintStream(new File("oec_data.csv"));
+//
 		String pubmedIds = getPubmedIDsOfEffacyPublications();
-//		String notPpubmedIds = getPubmedIDsOfNONEffacyPublications(pubmedIds);
-//		System.out.println(notPpubmedIds);
-
+////
 //		getAnimalScore(EScoreTypes.PRIMATE, pubmedIds, getPrimateSpecies());
 //		getAnimalScore(EScoreTypes.LARGER_ANIMAL, pubmedIds, getLargerAnimalSpecies());
-		getAnimalScore(EScoreTypes.RAT, pubmedIds, getRatSpecies());
+//		getAnimalScore(EScoreTypes.RAT, pubmedIds, getRatSpecies());
 //		getAnimalScore(EScoreTypes.MOUSE, pubmedIds, getMouseSpecies());
-//
+////
 //		getContusionScore(pubmedIds);
 //		getClipCompressionScore(pubmedIds);
 //		getPartialTransectionSharpScore(pubmedIds);
-
-//		timeWindowScore(pubmedIds);
-//
+////
+		timeWindowScore(pubmedIds);
+////
 //		clinicallyMeaningFullBBB();
 //		clinicallyMeaningFullOtherMotor();
 //		clinicallyMeaningFullCervicalMotor();
 //		clinicallyMeaningFullCervicalNonMotor();
 //		clinicallyMeaningFullDosageResponseResult();
+//		publicationReproduceability();
 	}
 
 	private int hourToMin(int hour) {
@@ -80,7 +82,8 @@ public class KwonSPARQLExtraction {
 //			1Treat Dosage != 2treat Dosage &
 //			1 judgement != 2 Judgement (Neutral+negative vs. positive )
 	public void clinicallyMeaningFullDosageResponseResult() {
-		final String queryString = "SELECT DISTINCT " + "?compoundType ?pubmedID ?posDosage ?negDosage ?injuryLocation "
+		final String queryString = "SELECT DISTINCT ?pubmedID "
+				+ "(GROUP_CONCAT (DISTINCT ?posTreat) AS ?posTreats) ?injuryLocation (GROUP_CONCAT (DISTINCT ?negTreat) AS ?negTreats)"
 				+ "WHERE {" + " ?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
 				+ " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -88,32 +91,39 @@ public class KwonSPARQLExtraction {
 				+ " ?experiment <http://psink.de/scio/hasResult> ?resultPos ."
 				+ " ?resultPos <http://psink.de/scio/hasJudgement> ?judgementPos ."
 				+ " ?judgementPos a <http://psink.de/scio/Positive> ."
-				+ " {?resultPos <http://psink.de/scio/hasTargetGroup> ?posGroup ."
+
+				//
+				+ " {" + "?resultPos <http://psink.de/scio/hasTargetGroup> ?posGroup ."
 				+ " ?posGroup <http://psink.de/scio/hasTreatmentType> ?posTreatment ."
 
 				+ " ?experiment <http://psink.de/scio/hasResult> ?resultNeg ."
 				+ " ?resultNeg <http://psink.de/scio/hasJudgement> ?judgementNeg ."
-				+ " FILTER(?judgementNeg != <http://psink.de/scio/Positive>) "
+				+ " ?judgementNeg a ?judgementNegV ." + " FILTER(?judgementNegV != <http://psink.de/scio/Positive>) "
 
 				+ " ?resultNeg <http://psink.de/scio/hasTargetGroup> ?negGroup ."
-//				multi result
+//				compare two result
 				+ "}UNION{"
-//				single result
+//				within single result
 				+ " ?resultPos <http://psink.de/scio/hasTargetGroup> ?posGroup ."
 				+ " ?posGroup <http://psink.de/scio/hasTreatmentType> ?posTreatment ."
 				+ " ?resultPos <http://psink.de/scio/hasReferenceGroup> ?negGroup ." + "}"
-
-				+ " ?negGroup <http://psink.de/scio/hasTreatmentType> ?negTreatment ."
+				//
 
 				+ "{?posTreatment a ?compoundType . "
 				+ "?posTreatment <http://psink.de/scio/hasTemperature> ?posDosage ." + "}UNION{"
 				+ " ?posTreatment <http://psink.de/scio/hasDosage> ?posDosage ."
 				+ " ?posTreatment <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType ." + "}"
 
+				+ " BIND (CONCAT(STR(?compoundType),\" \", STR(?posDosage)) AS ?posTreat)"
+
+				+ " ?negGroup <http://psink.de/scio/hasTreatmentType> ?negTreatment ."
+
 				+ "{?negTreatment a ?compoundType . "
 				+ "?negTreatment <http://psink.de/scio/hasTemperature> ?negDosage ." + "}UNION{"
 				+ " ?negTreatment <http://psink.de/scio/hasDosage> ?negDosage ."
 				+ " ?negTreatment <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType .}"
+
+				+ " BIND (CONCAT(STR(?compoundType),\" \", STR(?negDosage)) AS ?negTreat)"
 
 				+ " ?posGroup <http://psink.de/scio/hasInjuryModel> ?posInjuryModel ."
 				+ " ?posInjuryModel <http://psink.de/scio/hasInjuryLocation> ?injuryLocation."
@@ -123,23 +133,24 @@ public class KwonSPARQLExtraction {
 
 				+ " VALUES ?injuryLocation { <http://psink.de/scio/Cervical> <http://psink.de/scio/Thoracic> }."
 
-				+ "}";
+				+ "} GROUP BY ?pubmedID ?injuryLocation ?posTreat ?negTreat ";
 
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
-
 		try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
 			ResultSet results = qexec.execSelect();
 
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
-//				System.out.println(querySolution.toString());
-				String dosage1 = querySolution.getLiteral("posDosage").getString();
-				String dosage2 = querySolution.getLiteral("negDosage").getString();
+
+				String dosage1 = querySolution.getLiteral("posTreats").getString();
+				String dosage2 = querySolution.getLiteral("negTreats").getString();
 				if (!dosage1.equals(dosage2)) {
 					String line = EScoreTypes.CLINICALLY_MF_DOSAGE_RESPONSE + "\t"
-							+ querySolution.getLiteral("pubmedID") + "\t" + getTreatment(querySolution) + "\t" + dosage1
-							+ "\t" + dosage2 + "\t" + querySolution.getResource("injuryLocation");
+							+ querySolution.getLiteral("pubmedID") + "\t" + dosage1 + "\t" + dosage2 + "\t"
+							+ querySolution.getResource("injuryLocation") + "\t"
+							+ querySolution.getResource("judgementPos") + "\t"
+							+ querySolution.getResource("judgementNeg");
 					dataPrinter.println(line);
 					System.out.println(line);
 				}
@@ -149,7 +160,7 @@ public class KwonSPARQLExtraction {
 
 //	Interpretation Cervical  + FuncTest (ohne MotorTest +LocomotorTest + GaitTest ) + Positive Judgement  & Positive Judgement in NonFuncTest
 	public void clinicallyMeaningFullCervicalNonMotor() {
-		final String queryString = "SELECT DISTINCT ?compoundType ?pubmedID WHERE {"
+		final String queryString = "SELECT DISTINCT (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
 				+ " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -179,7 +190,7 @@ public class KwonSPARQLExtraction {
 				+ " }. " + "}UNION{"
 				+ " ?nonFuncTreatmentGroup <http://psink.de/scio/hasTreatmentType> ?nonFuncTreatmentType."
 				+ " ?nonFuncTreatmentType <http://psink.de/scio/hasCompound> ?compound ."
-				+ " ?compound a ?compoundType .}" + "}";
+				+ " ?compound a ?compoundType .}" + "} GROUP BY ?pubmedID ?treatmentGroup";
 
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
@@ -190,7 +201,7 @@ public class KwonSPARQLExtraction {
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
 				String line = EScoreTypes.CLINICALLY_MF_CERVICAL_NON_MOTOR + "\t" + querySolution.getLiteral("pubmedID")
-						+ "\t" + getTreatment(querySolution);
+						+ "\t" + querySolution.getLiteral("compoundTypes");
 				dataPrinter.println(line);
 				System.out.println(line);
 			}
@@ -218,7 +229,7 @@ public class KwonSPARQLExtraction {
 
 //	Interpretation Cervical  + MotorTest +LocomotorTest + GaitTest + Positive Judgement  & Positive Judgement in NonFuncTest
 	public void clinicallyMeaningFullCervicalMotor() {
-		final String queryString = "SELECT DISTINCT ?compoundType ?pubmedID WHERE {"
+		final String queryString = "SELECT DISTINCT (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
 				+ " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -249,7 +260,7 @@ public class KwonSPARQLExtraction {
 				+ " }. " + "}" + " UNION{"
 				+ " ?nonFuncTreatmentGroup <http://psink.de/scio/hasTreatmentType> ?nonFuncTreatmentType."
 				+ " ?nonFuncTreatmentType <http://psink.de/scio/hasCompound> ?compound ."
-				+ " ?compound a ?compoundType .}" + "}";
+				+ " ?compound a ?compoundType .}" + "} GROUP BY ?pubmedID ?treatmentGroup";
 
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
@@ -260,7 +271,7 @@ public class KwonSPARQLExtraction {
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
 				String line = EScoreTypes.CLINICALLY_MF_CERVICAL_MOTOR + "\t" + querySolution.getLiteral("pubmedID")
-						+ "\t" + getTreatment(querySolution);
+						+ "\t" + querySolution.getLiteral("compoundTypes");
 				dataPrinter.println(line);
 				System.out.println(line);
 			}
@@ -273,7 +284,7 @@ public class KwonSPARQLExtraction {
 
 //	Interpretation Thoracic Functest (ohne BBBTest )+ Positive Judgement  & Positive Judgement in NonFuncTest
 	public void clinicallyMeaningFullOtherMotor() {
-		final String queryString = "SELECT DISTINCT ?compoundType ?pubmedID WHERE {"
+		final String queryString = "SELECT DISTINCT (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
 				+ " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -305,7 +316,7 @@ public class KwonSPARQLExtraction {
 				+ " }. " + "}" + " UNION{"
 				+ " ?nonFuncTreatmentGroup <http://psink.de/scio/hasTreatmentType> ?nonFuncTreatmentType."
 				+ " ?nonFuncTreatmentType <http://psink.de/scio/hasCompound> ?compound ."
-				+ " ?compound a ?compoundType .}" + "}";
+				+ " ?compound a ?compoundType .}" + "}  GROUP BY ?pubmedID ?treatmentGroup";
 
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
@@ -316,7 +327,7 @@ public class KwonSPARQLExtraction {
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
 				String line = EScoreTypes.CLINICALLY_MF_NON_BBB + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-						+ getTreatment(querySolution);
+						+ querySolution.getLiteral("compoundTypes");
 				dataPrinter.println(line);
 				System.out.println(line);
 			}
@@ -326,7 +337,7 @@ public class KwonSPARQLExtraction {
 
 //	Interpretation Thoracic + Positive Judgement in NonFuncTest + BBBTest >= 9 & < 9 | >= 14 & < 14 + BBBTest Positive Judgement
 	public void clinicallyMeaningFullBBB() {
-		final String queryString = "SELECT DISTINCT ?compoundType ?pubmedID ?BBBTreatValue ?BBBRefValue WHERE {"
+		final String queryString = "SELECT DISTINCT (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID ?BBBTreatValue ?BBBRefValue WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
 				+ " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -364,7 +375,7 @@ public class KwonSPARQLExtraction {
 				+ " VALUES ?compoundType { " + getNonCompoundTreatments() + " }. " + "}" + " UNION{"
 				+ " ?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treatmentType."
 				+ " ?treatmentType <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType .}"
-				+ "}"
+				+ "} GROUP BY ?pubmedID ?BBBTreatValue ?BBBRefValue ?treatmentGroup"
 
 		;
 		Query query = QueryFactory.create(queryString);
@@ -382,7 +393,8 @@ public class KwonSPARQLExtraction {
 					double BBBTreatValue = Double.parseDouble(BBBTreat);
 					double BBBRefValue = Double.parseDouble(BBBRef);
 					String line = EScoreTypes.CLINICALLY_MF_BBB + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-							+ getTreatment(querySolution) + "\t" + BBBTreatValue + "\t" + BBBRefValue + "\t"
+							+ querySolution.getLiteral("compoundTypes") + "\t" + BBBTreatValue + "\t" + BBBRefValue
+							+ "\t"
 							+ ((BBBRefValue < 9 && BBBTreatValue >= 9) || (BBBRefValue < 14 && BBBTreatValue >= 14));
 					dataPrinter.println(line);
 					System.out.println(line);
@@ -394,7 +406,7 @@ public class KwonSPARQLExtraction {
 	}
 
 	public void timeWindowScore(String listOfPublications) {
-		final String queryString = "SELECT DISTINCT  ?compoundType ?pubmedID ?timepoint  WHERE {"
+		final String queryString = "SELECT DISTINCT  (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID ?timepoint  WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ." + " VALUES ?pubmedID { "
 				+ listOfPublications + " } ." + " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -412,7 +424,7 @@ public class KwonSPARQLExtraction {
 				+ " VALUES ?compoundType { " + getNonCompoundTreatments() + " }. " + "}" + " UNION{"
 				+ " ?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treatmentType."
 				+ " ?treatmentType <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType .}"
-				+ "}";
+				+ "} GROUP BY ?pubmedID ?timepoint ?treatmentGroup";
 
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
@@ -440,12 +452,12 @@ public class KwonSPARQLExtraction {
 			int timepoint = Integer.parseInt(timepointString.substring(0, timepointString.length() - 3).trim());
 			if (timepoint >= minMin && timepoint < maxMin) {
 				line = EScoreTypes.TIME_MIN_MAX + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-						+ querySolution.getResource("compoundType") + "\t" + querySolution.getLiteral("timepoint")
+						+ querySolution.getLiteral("compoundTypes") + "\t" + querySolution.getLiteral("timepoint")
 						+ "\t" + minMin + "\t" + maxMin;
 			}
-		} else if (timepointString.matches("prior") && minMin < 0 && maxMin < 0) {
+		} else if (timepointString.trim().equals("prior")) {
 			line = EScoreTypes.TIME_PRIOR + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-					+ getTreatment(querySolution) + "\t" + querySolution.getLiteral("timepoint");
+					+ querySolution.getLiteral("compoundTypes") + "\t" + querySolution.getLiteral("timepoint");
 		} else {
 			throw new IllegalArgumentException("Unkown timepointString string: " + timepointString);
 		}
@@ -456,7 +468,7 @@ public class KwonSPARQLExtraction {
 	}
 
 	public void getContusionScore(String listOfPublications) {
-		final String queryString = "SELECT DISTINCT ?injuryType ?compoundType ?pubmedID WHERE {"
+		final String queryString = "SELECT DISTINCT ?injuryType (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ." + " VALUES ?pubmedID { "
 				+ listOfPublications + " } ." + " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -470,7 +482,7 @@ public class KwonSPARQLExtraction {
 				+ " VALUES ?compoundType { " + getNonCompoundTreatments() + " }. " + "}" + " UNION{"
 				+ " ?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treatmentType."
 				+ " ?treatmentType <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType .}"
-				+ "}";
+				+ "} GROUP BY ?pubmedID ?injuryType ?treatmentGroup";
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
 		try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
@@ -479,7 +491,7 @@ public class KwonSPARQLExtraction {
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
 				String line = EScoreTypes.CONTUSION + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-						+ getTreatment(querySolution) + "\t" + querySolution.getResource("injuryType");
+						+ querySolution.getLiteral("compoundTypes") + "\t" + querySolution.getResource("injuryType");
 				dataPrinter.println(line);
 				System.out.println(line);
 			}
@@ -487,7 +499,7 @@ public class KwonSPARQLExtraction {
 	}
 
 	public void getClipCompressionScore(String listOfPublications) {
-		final String queryString = "SELECT DISTINCT ?compoundType ?pubmedID ?injuryType  WHERE {"
+		final String queryString = "SELECT DISTINCT (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID ?injuryType  WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ." + " VALUES ?pubmedID { "
 				+ listOfPublications + " } ." + " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -503,7 +515,7 @@ public class KwonSPARQLExtraction {
 				+ " VALUES ?compoundType { " + getNonCompoundTreatments() + " }. " + "}" + " UNION{"
 				+ " ?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treatmentType."
 				+ " ?treatmentType <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType .}"
-				+ "}";
+				+ "}" + "GROUP BY ?pubmedID ?injuryType ?treatmentGroup";
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
 
@@ -513,7 +525,7 @@ public class KwonSPARQLExtraction {
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
 				String line = EScoreTypes.CLIP_COMPRESSION + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-						+ getTreatment(querySolution) + "\t" + querySolution.getResource("injuryType");
+						+ querySolution.getLiteral("compoundTypes") + "\t" + querySolution.getResource("injuryType");
 				dataPrinter.println(line);
 				System.out.println(line);
 			}
@@ -521,7 +533,7 @@ public class KwonSPARQLExtraction {
 	}
 
 	public void getPartialTransectionSharpScore(String listOfPublications) {
-		final String queryString = "SELECT DISTINCT ?compoundType ?pubmedID ?injuryLocation WHERE {"
+		final String queryString = "SELECT DISTINCT (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes) ?pubmedID ?injuryLocation WHERE {"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ." + " VALUES ?pubmedID { "
 				+ listOfPublications + " } ." + " ?publication a <http://psink.de/scio/Publication> ."
 				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
@@ -536,7 +548,8 @@ public class KwonSPARQLExtraction {
 
 				+ " ?injuryModel <http://psink.de/scio/hasInjuryLocation> ?injuryLocation ."
 				+ " VALUES ?injuryLocation { <http://psink.de/scio/Thoracic> <http://psink.de/scio/Cervical> }."
-				+ " ?injuryModel a  ?injuryType ." + " VALUES ?injuryType { " + getPartialTransection() + " }" + "}";
+				+ " ?injuryModel a  ?injuryType ." + " VALUES ?injuryType { " + getPartialTransection() + " }" + "}"
+				+ "GROUP BY ?pubmedID ?injuryLocation ?treatmentGroup";
 		Query query = QueryFactory.create(queryString);
 		System.out.println(query);
 
@@ -546,7 +559,8 @@ public class KwonSPARQLExtraction {
 			for (; results.hasNext();) {
 				QuerySolution querySolution = results.nextSolution();
 				String line = EScoreTypes.PARTIAL_TRANSECTION + "\t" + querySolution.getLiteral("pubmedID") + "\t"
-						+ getTreatment(querySolution) + "\t" + querySolution.getResource("injuryLocation");
+						+ querySolution.getLiteral("compoundTypes") + "\t"
+						+ querySolution.getResource("injuryLocation");
 				dataPrinter.println(line);
 				System.out.println(line);
 			}
@@ -601,8 +615,56 @@ public class KwonSPARQLExtraction {
 		}
 	}
 
-	private Resource getTreatment(QuerySolution querySolution) {
-		return querySolution.getResource("compoundTypes");
+	private void publicationReproduceability() {
+		final String queryString = "SELECT DISTINCT "
+				+ "?pubmedID ?judgement (GROUP_CONCAT (DISTINCT ?compoundTypes) as ?compoundType)" 
+				+ "WHERE{"
+				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
+				+ " ?publication a <http://psink.de/scio/Publication> ."
+				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
+				+ " ?experiment <http://psink.de/scio/hasResult> ?result ."
+
+				+ " ?result <http://psink.de/scio/hasTargetGroup> ?treatmentGroup ."
+
+				+ " {?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treat ." + " ?treat a ?compoundTypes. "
+				+ " VALUES ?compoundTypes { " + getNonCompoundTreatments() + "}. " + "}" + " UNION{"
+				+ " ?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treatmentType."
+				+ " ?treatmentType <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundTypes .}"
+
+				+ " ?result <http://psink.de/scio/hasJudgement> ?judgementNode ." 
+				+ " ?judgementNode a ?judgement ." // shouldn't this point to the type judgement instead?
+				+ " } GROUP BY ?pubmedID ?judgement ?treatmentGroup";
+		
+//		final String queryString = "SELECT DISTINCT "
+//				+ "?pubmedID ?judgement (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes)" + "WHERE{"
+//				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
+//				+ " ?publication a <http://psink.de/scio/Publication> ."
+//				+ " ?publication <http://psink.de/scio/describes> ?experiment ."
+//				+ " ?experiment <http://psink.de/scio/hasResult> ?result ."
+//
+//				+ " ?result <http://psink.de/scio/hasTargetGroup> ?treatmentGroup ."
+//
+//				+ " {?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treat ." + " ?treat a ?compoundType. "
+//				+ " VALUES ?compoundType { " + getNonCompoundTreatments() + "}. " + "}" + " UNION{"
+//				+ " ?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treatmentType."
+//				+ " ?treatmentType <http://psink.de/scio/hasCompound> ?compound ." + " ?compound a ?compoundType .}"
+//
+//				+ " ?result <http://psink.de/scio/hasJudgement> ?judgementNode ." + " ?judgementNode a ?judgement ."
+//				+ " } GROUP BY ?pubmedID ?judgement ?treatmentGroup";
+		Query query = QueryFactory.create(queryString);
+		System.out.println(query);
+		try (QueryExecution qexec = QueryExecutionFactory.create(query, model)) {
+			ResultSet results = qexec.execSelect();
+
+			for (; results.hasNext();) {
+				QuerySolution querySolution = results.nextSolution();
+				String pubmedID = querySolution.getLiteral("pubmedID").getString();
+				String judgement = querySolution.getResource("judgement").toString();
+				String treatmens = querySolution.getLiteral("compoundType").getString();
+				System.out.println(pubmedID + "\t" + judgement + "\t" + treatmens);
+			}
+		}
+
 	}
 
 	public String getPubmedIDsOfEffacyPublications() {
@@ -617,10 +679,10 @@ public class KwonSPARQLExtraction {
 				+ " ?experiment <http://psink.de/scio/hasResult> ?functionalResult ."
 				+ " ?experiment <http://psink.de/scio/hasResult> ?nonFunctionalResult ."
 				+ " ?functionalResult <http://psink.de/scio/hasInvestigationMethod> ?functionalMethod ."
-//				+ " ?functionalResult <http://psink.de/scio/hasJudgement> ?functionJudgement ."
-//				+ " ?functionJudgement a <http://psink.de/scio/Positive> ."
-//				+ " ?nonFunctionalResult <http://psink.de/scio/hasJudgement> ?nonFunctionJudgement ."
-//				+ " ?nonFunctionJudgement a <http://psink.de/scio/Positive> ."
+				+ " ?functionalResult <http://psink.de/scio/hasJudgement> ?functionJudgement ."
+				+ " ?functionJudgement a <http://psink.de/scio/Positive> ."
+				+ " ?nonFunctionalResult <http://psink.de/scio/hasJudgement> ?nonFunctionJudgement ."
+				+ " ?nonFunctionJudgement a <http://psink.de/scio/Positive> ."
 				+ " ?functionalMethod a ?functionalTest ." + " VALUES ?functionalTest { " + getFunctionalTests()
 				+ " } ." + " ?nonFunctionalResult <http://psink.de/scio/hasInvestigationMethod> ?nonFunctionalMethod ."
 				+ " ?nonFunctionalMethod a ?nonFunctionalTest ." + " VALUES ?nonFunctionalTest { "

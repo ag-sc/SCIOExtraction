@@ -674,6 +674,7 @@
 <http://scio/data/DefinedExperimentalGroup_26840> <http://psink.de/scio/hasGroupName> "veh-DMEM" .
 <http://scio/data/DefinedExperimentalGroup_26840> <http://psink.de/scio/hasGroupName> "veh-DMEM controls" .
 <http://scio/data/DefinedExperimentalGroup_26840> <http://psink.de/scio/hasGroupName> "control group (vehicle-DMEM)" .
+<http://scio/data/ShamOperation_83713> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_26850> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_26850> <http://www.w3.org/2000/01/rdf-schema#label> "veh-OEC, E2" .
 <http://scio/data/DefinedExperimentalGroup_26850> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_9200> .
@@ -684,6 +685,7 @@
 <http://scio/data/DefinedExperimentalGroup_26850> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26822> .
 <http://scio/data/DefinedExperimentalGroup_26850> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26717> .
 <http://scio/data/DefinedExperimentalGroup_26850> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_29724> .
+<http://scio/data/ShamOperation_83710> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_26860> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_26860> <http://www.w3.org/2000/01/rdf-schema#label> "cAMP-OEC, E3" .
 <http://scio/data/DefinedExperimentalGroup_26860> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_9200> .
@@ -694,6 +696,7 @@
 <http://scio/data/DefinedExperimentalGroup_26860> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26717> .
 <http://scio/data/DefinedExperimentalGroup_26860> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_29724> .
 <http://scio/data/DefinedExperimentalGroup_26860> <http://psink.de/scio/hasGroupName> "dbcAMP-OEC" .
+<http://scio/data/ShamOperation_83711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_26870> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_26870> <http://www.w3.org/2000/01/rdf-schema#label> "OEC, E4" .
 <http://scio/data/DefinedExperimentalGroup_26870> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_9200> .
@@ -701,6 +704,7 @@
 <http://scio/data/DefinedExperimentalGroup_26870> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_8025> .
 <http://scio/data/DefinedExperimentalGroup_26870> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26732> .
 <http://scio/data/DefinedExperimentalGroup_26870> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26717> .
+<http://scio/data/ShamOperation_83712> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_26878> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_26878> <http://www.w3.org/2000/01/rdf-schema#label> "rolip-OEC, E5" .
 <http://scio/data/DefinedExperimentalGroup_26878> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_9200> .
@@ -710,6 +714,7 @@
 <http://scio/data/DefinedExperimentalGroup_26878> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26806> .
 <http://scio/data/DefinedExperimentalGroup_26878> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26717> .
 <http://scio/data/DefinedExperimentalGroup_26878> <http://psink.de/scio/hasGroupName> "OEC-rolipram group" .
+<http://scio/data/ShamOperation_83709> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_26891> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_26891> <http://www.w3.org/2000/01/rdf-schema#label> "rolipram-DMEM, E6" .
 <http://scio/data/DefinedExperimentalGroup_26891> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_9200> .
@@ -717,6 +722,7 @@
 <http://scio/data/DefinedExperimentalGroup_26891> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26751> .
 <http://scio/data/DefinedExperimentalGroup_26891> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26806> .
 <http://scio/data/DefinedExperimentalGroup_26891> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26717> .
+<http://scio/data/ShamOperation_83708> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_26901> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_26901> <http://www.w3.org/2000/01/rdf-schema#label> "cAMP-DMEM-treated, E7" .
 <http://scio/data/DefinedExperimentalGroup_26901> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_9200> .
@@ -725,6 +731,7 @@
 <http://scio/data/DefinedExperimentalGroup_26901> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26751> .
 <http://scio/data/DefinedExperimentalGroup_26901> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26717> .
 <http://scio/data/DefinedExperimentalGroup_26901> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_29724> .
+<http://scio/data/ShamOperation_83707> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_9200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
 <http://scio/data/OrganismModel_9200> <http://www.w3.org/2000/01/rdf-schema#label> "rat" .

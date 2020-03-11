@@ -87,7 +87,7 @@
 <http://scio/data/Trend_11125> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None> .
 <http://scio/data/ExperimentalGroup_22182> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
-<http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationMethod> <http://psink.de/scio/InvestigationMethod> .
+<http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BladderFunctionTest_74792> .
 # RDF export of group: Observations
 <http://scio/data/Observation_22162> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Observation_22162> <http://www.w3.org/2000/01/rdf-schema#label> "TP OEC transplantation" .

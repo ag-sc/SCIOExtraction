@@ -42,7 +42,6 @@
 <http://scio/data/AxonalChangesTest_76213> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76213> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axonal density)" .
 <http://scio/data/Direction_77657> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_77660> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_77658> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76215> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76215> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axonal density)" .
@@ -98,7 +97,6 @@
 <http://scio/data/AxonalChangesTest_81130> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81130> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (DBH appositions)" .
 <http://scio/data/Direction_82519> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_82523> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_82521> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81132> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81132> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (DBH appositions)" .

@@ -44,7 +44,6 @@
 <http://scio/data/HistologicalInvestigationTest_76999> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
 <http://scio/data/HistologicalInvestigationTest_76999> <http://www.w3.org/2000/01/rdf-schema#label> "HistologicalInvestigationTest (the amount of total tissue)" .
 <http://scio/data/Direction_77679> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_77683> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_77681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/TissueSparingTest_77001> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest> .
 <http://scio/data/TissueSparingTest_77001> <http://www.w3.org/2000/01/rdf-schema#label> "TissueSparingTest (intact tissue remaining)" .

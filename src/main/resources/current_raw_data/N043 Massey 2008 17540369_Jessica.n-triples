@@ -20,7 +20,10 @@
 <http://scio/data/InjectionDelivery_3376> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation> .
 <http://scio/data/MedicationDuringSurgery_2389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
 <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife> .
-<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea> .
+<http://scio/data/DorsalInjuryArea_2392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalInjuryArea> .
+<http://scio/data/DorsalColumn_84358> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalColumn> .
+<http://scio/data/DorsalInjuryArea_2392> <http://psink.de/scio/hasIntraSpinalLocation> <http://scio/data/DorsalColumn_84358> .
 <http://scio/data/Xylazine_2395> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
 <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2395> .
 <http://scio/data/Xylazine_2395> <http://psink.de/scio/hasDosage> "6.5 mg/kg" .

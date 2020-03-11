@@ -4,7 +4,6 @@
 <http://scio/data/HistologicalInvestigationParameter_69406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/NeuroprotectionTest_63699> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuroprotectionTest> .
 <http://scio/data/Direction_69200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_69204> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_69202> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/NeuroprotectionTest_63705> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuroprotectionTest> .
 <http://scio/data/AxonalChangesTest_63708> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .

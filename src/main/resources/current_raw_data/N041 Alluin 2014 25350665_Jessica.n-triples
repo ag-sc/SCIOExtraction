@@ -1,6 +1,60 @@
 # RDF export of group: InvestigationMethod
 # RDF export of group: Results
 # RDF export of group: Observations
+<http://scio/data/Observation_84055> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84055> <http://www.w3.org/2000/01/rdf-schema#label> "TP ChABC" .
+<http://scio/data/TemporalInterval_84057> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84055> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84057> .
+<http://scio/data/TemporalInterval_84057> <http://psink.de/scio/hasDuration> "At four  days post SCI" .
+<http://scio/data/TemporalInterval_84057> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2345> .
+<http://scio/data/TemporalInterval_84057> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83943> .
+<http://scio/data/NumericValue_84058> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84059> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84063> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84063> <http://www.w3.org/2000/01/rdf-schema#label> "TP BSA" .
+<http://scio/data/TemporalInterval_84065> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84063> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84065> .
+<http://scio/data/TemporalInterval_84065> <http://psink.de/scio/hasDuration> "At four  days post SCI" .
+<http://scio/data/TemporalInterval_84065> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2345> .
+<http://scio/data/TemporalInterval_84065> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83958> .
+<http://scio/data/NumericValue_84069> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84070> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84071> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84071> <http://www.w3.org/2000/01/rdf-schema#label> "TP PDGFAA" .
+<http://scio/data/TemporalInterval_84073> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84071> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84073> .
+<http://scio/data/TemporalInterval_84073> <http://psink.de/scio/hasDuration> "At four  days post SCI" .
+<http://scio/data/TemporalInterval_84073> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2345> .
+<http://scio/data/TemporalInterval_84073> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83973> .
+<http://scio/data/NumericValue_84077> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84078> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84079> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84079> <http://www.w3.org/2000/01/rdf-schema#label> "TP bFGF" .
+<http://scio/data/TemporalInterval_84081> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84079> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84081> .
+<http://scio/data/TemporalInterval_84081> <http://psink.de/scio/hasDuration> "At four  days post SCI" .
+<http://scio/data/TemporalInterval_84081> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2345> .
+<http://scio/data/TemporalInterval_84081> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83988> .
+<http://scio/data/NumericValue_84085> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84087> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84087> <http://www.w3.org/2000/01/rdf-schema#label> "TP EGF" .
+<http://scio/data/TemporalInterval_84089> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84087> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84089> .
+<http://scio/data/TemporalInterval_84089> <http://psink.de/scio/hasDuration> "At four  days post SCI" .
+<http://scio/data/TemporalInterval_84089> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2345> .
+<http://scio/data/TemporalInterval_84089> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84003> .
+<http://scio/data/NumericValue_84093> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84095> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84095> <http://www.w3.org/2000/01/rdf-schema#label> "TP Reha" .
+<http://scio/data/TemporalInterval_84097> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84095> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84097> .
+<http://scio/data/TemporalInterval_84097> <http://psink.de/scio/hasDuration> "from 1 day to 7 weeks following SCI" .
+<http://scio/data/TemporalInterval_84097> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2345> .
+<http://scio/data/TemporalInterval_84097> <http://psink.de/scio/hasEventAfter> <http://scio/data/RehabilitativeTraining_84044> .
+<http://scio/data/NumericValue_84101> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84102> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 # RDF export of group: Experimental groups
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
@@ -32,4 +86,96 @@
 <http://scio/data/AntibioticMedication_3372> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
 <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3372> .
 # RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_83943> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83943> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDuration> "for seven days" .
+<http://scio/data/InfusionDelivery_83945> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
+<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83945> .
+<http://scio/data/SpinalSubduralArea_83955> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea> .
+<http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83955> .
+<http://scio/data/LesionAdjacentTissue_83956> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue> .
+<http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83956> .
+<http://scio/data/Intrathecal_83957> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83957> .
+<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_83950> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83951> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDosage> "5 U/ml" .
+<http://scio/data/ChondroitinaseABC_83953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83953> .
+<http://scio/data/CompoundTreatment_83958> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83958> <http://www.w3.org/2000/01/rdf-schema#label> "BSA" .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDuration> "for seven days" .
+<http://scio/data/InfusionDelivery_83960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83960> .
+<http://scio/data/SpinalSubduralArea_83962> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea> .
+<http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83962> .
+<http://scio/data/LesionAdjacentTissue_83963> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue> .
+<http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83963> .
+<http://scio/data/Intrathecal_83964> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83964> .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_83969> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDosage> "0.1%" .
+<http://scio/data/Albumin_83972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasCompound> <http://scio/data/Albumin_83972> .
+<http://scio/data/CompoundTreatment_83973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83973> <http://www.w3.org/2000/01/rdf-schema#label> "PDGFAA" .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDuration> "for seven days" .
+<http://scio/data/InfusionDelivery_83975> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83975> .
+<http://scio/data/SpinalSubduralArea_83977> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea> .
+<http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83977> .
+<http://scio/data/LesionAdjacentTissue_83978> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue> .
+<http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83978> .
+<http://scio/data/Intrathecal_83979> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83979> .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_83984> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83985> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDosage> "1 mg/100 ml" .
+<http://scio/data/Substance_83987> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83987> .
+<http://scio/data/CompoundTreatment_83988> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83988> <http://www.w3.org/2000/01/rdf-schema#label> "bFGF" .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDuration> "for seven days" .
+<http://scio/data/InfusionDelivery_83990> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83990> .
+<http://scio/data/SpinalSubduralArea_83992> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea> .
+<http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83992> .
+<http://scio/data/LesionAdjacentTissue_83993> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue> .
+<http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83993> .
+<http://scio/data/Intrathecal_83994> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83994> .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_83999> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDosage> "3 mg/100 ml" .
+<http://scio/data/Substance_84002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_84002> .
+<http://scio/data/CompoundTreatment_84003> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84003> <http://www.w3.org/2000/01/rdf-schema#label> "EGF" .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDuration> "for seven days" .
+<http://scio/data/InfusionDelivery_84005> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_84005> .
+<http://scio/data/SpinalSubduralArea_84007> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea> .
+<http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_84007> .
+<http://scio/data/LesionAdjacentTissue_84008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue> .
+<http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_84008> .
+<http://scio/data/Intrathecal_84009> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84009> .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_84014> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDosage> "3 mg/100 ml" .
+<http://scio/data/Substance_84017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_84017> .
+<http://scio/data/RehabilitativeTraining_84044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RehabilitativeTraining> .
+<http://scio/data/RehabilitativeTraining_84044> <http://www.w3.org/2000/01/rdf-schema#label> "Reha" .
+<http://scio/data/DeliveryMethod_84046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/RehabilitativeTraining_84044> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84046> .
+<http://scio/data/DeliveryMethod_84046> <http://psink.de/scio/hasDuration> "10 min" .
+<http://scio/data/RehabilitativeTraining_84044> <http://psink.de/scio/hasFrequency> "5 days/week" .
+<http://scio/data/Direction_84051> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 # RDF export of group: Sacrifices

@@ -48,8 +48,8 @@
 57359, PartialTransection, 5731, 5831, "spinal cord parenchyma spanning the gap between the dorsal root entries and down to the spinal canal", "", "<http://scio/data/PartialTransection_14017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_14017> <http://www.w3.org/2000/01/rdf-schema#label> \"partial transection\"."
 99303, Location, 5731, 5831, "spinal cord parenchyma spanning the gap between the dorsal root entries and down to the spinal canal", "", 
 99304, Injury, 5837, 5843, "injury", "", 
-49786, InjuryArea, 5853, 5943, "the descending dorsal corticospinal tracts (CSTs) and the ascending sensory dorsal columns", "", "<http://scio/data/PartialTransection_14017> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>. <http://scio/data/InjuryArea_14025> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjuryArea>."
-99305, CorticospinalTract, 5875, 5902, "corticospinal tracts (CSTs)", "", 
+103466, DorsalInjuryArea, 5868, 5943, "dorsal corticospinal tracts ( CSTs ) and the ascending sensory dorsal columns", "", "<http://scio/data/PartialTransection_14017> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea>. <http://scio/data/DorsalInjuryArea_84342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalInjuryArea>."
+99305, CorticospinalTract, 5875, 5902, "corticospinal tracts (CSTs)", "", "<http://scio/data/CorticospinalTract_84343> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CorticospinalTract>. <http://scio/data/DorsalInjuryArea_84342> <http://psink.de/scio/hasIntraSpinalLocation> <http://scio/data/CorticospinalTract_84343>."
 99307, AscendingFiberTract, 5911, 5943, "ascending sensory dorsal columns", "", 
 99306, DorsalColumn, 5929, 5943, "dorsal columns", "", 
 79797, Duration, 5975, 5998, "One month after the SCI", "", "<http://scio/data/TemporalInterval_83267> <http://psink.de/scio/hasDuration> \"One month after the SCI\". <http://scio/data/TemporalInterval_83275> <http://psink.de/scio/hasDuration> \"One month after the SCI\"."
@@ -113,8 +113,8 @@
 99344, LadderRungTest, 8706, 8723, "horizontal ladder", "", 
 99345, NarrowBeamTest, 8874, 8894, "walking along a beam", "", 
 99346, FootprintAnalysisTest, 9077, 9106, "footprints were made on paper", "", 
-99353, SensoryTest, 9886, 9938, "Fine touch and mechanical hyperalgesia were assessed", "", 
-99351, VonFreyFilaments, 9946, 9990, "fine probe and an electronic anesthesiometer", "", 
+99353, SensoryTest, 9886, 9896, "Fine touch", "", 
+99351, VonFreyFilaments, 9946, 9956, "fine probe", "", 
 99298, ThermalHyperalgesiaTest, 10521, 10541, "Thermal hyperalgesia", "", 
 99354, HargreavesApparatus, 10564, 10579, "hotplate device", "", 
 99355, AxonalChangesTest, 12198, 12232, "visualization of BDAlabeled fibers", "", 

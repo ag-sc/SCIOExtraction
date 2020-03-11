@@ -14,6 +14,10 @@
 49982, LateralHemisection, 26154, 26165, "hemisection", "", "<http://scio/data/LateralHemisection_2468> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2468> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
 49983, Left, 26193, 26197, "left", "", "<http://scio/data/Left_2477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left>. <http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasDirection> <http://scio/data/Left_2477>."
 49977, C2, 26225, 26227, "C2", "", "<http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C2>."
+103456, Vertebrae, 27625, 27633, "C3 to C5", "", 
+103457, Duration, 27800, 27812, "After 1 week", "", 
+103458, ChondroitinaseABC, 27821, 27826, "ChABC", "", 
+103459, C4, 27946, 27948, "C4", "", 
 54226, SpragueDawleyRat, 28128, 28135, "animals", "", 
 49984, PostsurgicalMedication, 28145, 28153, "Marcaine", "", "<http://scio/data/PostsurgicalMedication_2470> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2470>."
 49985, PostsurgicalMedication, 28158, 28171, "Buprenorphine", "", "<http://scio/data/PostsurgicalMedication_2483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/LateralHemisection_2468> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2483>."

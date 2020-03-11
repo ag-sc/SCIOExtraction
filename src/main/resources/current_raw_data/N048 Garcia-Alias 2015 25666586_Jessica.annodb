@@ -1,6 +1,8 @@
 # AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
 49958, PartialTransection, 1501, 1517, "bilateral injury", "", "<http://scio/data/PartialTransection_2445> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_2445> <http://www.w3.org/2000/01/rdf-schema#label> \"partial transection\"."
-49959, InjuryArea, 1525, 1633, "corticospinal tract at the level of the medullar pyramids and a bilateral ablation of the  rubrospinal axons", "", "<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+49959, InjuryArea, 1589, 1633, "bilateral ablation of the  rubrospinal axons", "", "<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>. <http://scio/data/InjuryArea_2456> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjuryArea>."
+103436, RubrospinalTract, 1616, 1633, "rubrospinal axons", "", "<http://scio/data/RubrospinalTract_84229> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RubrospinalTract>. <http://scio/data/InjuryArea_2456> <http://psink.de/scio/hasIntraSpinalLocation> <http://scio/data/RubrospinalTract_84229>."
+103435, C4, 1637, 1639, "C4", "", 
 48617, Adult, 7507, 7512, "adult", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
 48618, Female, 7513, 7519, "female", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
 48619, LongEvansRat, 7520, 7535, "Long Evans rats", "", "<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>."

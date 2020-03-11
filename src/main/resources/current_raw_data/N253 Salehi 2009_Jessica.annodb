@@ -93,7 +93,9 @@
 73261, OlfactoryEnsheathingGliaCell, 4684, 4687, "OEC", "", 
 73260, AnatomicalLocation, 5219, 5281, "outer two layers of the olfactory bulb and the olfactory nerve", "", "<http://scio/data/AnatomicalLocation_16336> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_16336>."
 73255, Cell, 6577, 6581, "ESMN", "", 
-73262, MouseSpecies, 6641, 6664, "GFP-positive CGR8 mouse", "", "<http://scio/data/Cell_16339> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies>."
+103487, Labeling, 6641, 6653, "GFP-positive", "", "<http://scio/data/Cell_16339> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling>."
+103491, GreenFluorescentProtein, 6641, 6653, "GFP-positive", "", 
+73262, MouseSpecies, 6659, 6664, "mouse", "", "<http://scio/data/Cell_16339> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies>."
 73269, Xenogeneic, 6659, 6664, "mouse", "", "<http://scio/data/Cell_16339> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic>."
 73265, StemCell, 6665, 6673, "ES cells", "", 
 73216, Adult, 9709, 9714, "adult", "", 
@@ -124,7 +126,8 @@
 99202, PostsurgicalMedication, 10292, 10301, "analgesic", "", "<http://scio/data/PostsurgicalMedication_56270> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_16250> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_56270>."
 99201, DosageExtracorporal, 10303, 10326, "acetaminophen 1-2 mg/ml", "", "<http://scio/data/PostsurgicalMedication_56270> <http://psink.de/scio/hasDosage> \"acetaminophen 1-2 mg/ml\"."
 99203, BladderExpression, 10347, 10365, "Bladder expression", "", "<http://scio/data/Contusion_16250> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
-73280, InVitroExperimentalProcedure, 10609, 10751, "OEC were incubated at 37°C for 30 minutes in the dark in cultured medium containing 10 μg/ml Hoechst 33342 (Sigma, USA) before transplantation", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+103488, OlfactoryEnsheathingGliaCell, 10609, 10612, "OEC", "", 
+103489, Labeling, 10702, 10715, "Hoechst 33342", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling>."
 73235, Duration, 10942, 10965, "9 days after the injury", "", "<http://scio/data/TemporalInterval_16423> <http://psink.de/scio/hasDuration> \"9 days after the injury\". <http://scio/data/TemporalInterval_16431> <http://psink.de/scio/hasDuration> \"9 days after the injury\". <http://scio/data/TemporalInterval_16439> <http://psink.de/scio/hasDuration> \"9 days after the injury\". <http://scio/data/TemporalInterval_16447> <http://psink.de/scio/hasDuration> \"9 days after the injury\"."
 73286, WistarRat, 10976, 10983, "animals", "", 
 73281, CyclosporineA, 10998, 11010, "cyclosporine", "", "<http://scio/data/CyclosporineA_16283> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CyclosporineA>. <http://scio/data/CompoundTreatment_16273> <http://psink.de/scio/hasCompound> <http://scio/data/CyclosporineA_16283>."

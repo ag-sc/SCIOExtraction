@@ -11,20 +11,86 @@
 50817, Hydration, 11155, 11166, "ad  libitum", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
 50818, Nutrition, 11155, 11166, "ad  libitum", "", 
 49857, BladderExpression, 11405, 11426, "bladder was expressed", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+103325, Duration, 12233, 12252, "Four days after SCI", "", 
+103356, Injury, 12249, 12252, "SCI", "", 
+103357, WistarRat, 12254, 12258, "rats", "", 
+103330, Randomization, 12265, 12275, "randomized", "", 
+103360, GroupNumber, 12307, 12308, "1", "", 
+103326, DefinedExperimentalGroup, 12310, 12335, "vehicle/  untrained group", "", 
+103331, NNumber, 12341, 12343, "12", "", 
+103361, GroupNumber, 12346, 12347, "2", "", 
+103327, DefinedExperimentalGroup, 12349, 12370, "vehicle/trained group", "", 
+103332, NNumber, 12376, 12378, "12", "", 
+103362, GroupNumber, 12381, 12382, "3", "", 
+103328, DefinedExperimentalGroup, 12385, 12410, "ChABC+GFs/untrained group", "", 
+103333, NNumber, 12416, 12418, "11", "", 
+103363, GroupNumber, 12425, 12426, "4", "", 
+103329, DefinedExperimentalGroup, 12428, 12453, "ChABC+GFs/  trained group", "", 
+103334, NNumber, 12459, 12461, "12", "", 
+103369, Injury, 12468, 12471, "SCI", "", 
+103358, WistarRat, 12472, 12476, "rats", "", 
+103364, GroupNumber, 12489, 12490, "3", "", 
+103365, GroupNumber, 12491, 12492, "4", "", 
+103370, Injury, 12500, 12503, "SCI", "", 
+103359, WistarRat, 12505, 12509, "rats", "", 
+103366, GroupNumber, 12522, 12523, "1", "", 
+103367, GroupNumber, 12524, 12525, "2", "", 
+103368, NNumber, 12527, 12528, "5", "", 
+103335, ChondroitinaseABC, 12589, 12594, "ChABC", "", 
+103336, Substance, 12595, 12598, "GFs", "", 
+103371, Vehicle, 12602, 12609, "vehicle", "", 
+103339, Intrathecal, 12617, 12628, "intrathecal", "", "<http://scio/data/Intrathecal_83957> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83957>. <http://scio/data/Intrathecal_83964> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83964>. <http://scio/data/Intrathecal_83979> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83979>. <http://scio/data/Intrathecal_83994> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83994>. <http://scio/data/Intrathecal_84009> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84009>."
+103337, Catheter, 12630, 12638, "catheter", "", 
+103338, OsmoticMinipump, 12655, 12677, "Alzet osmotic minipump", "", 
 49873, InhalationDelivery, 13872, 13886, "gas anesthesia", "", "<http://scio/data/InhalationDelivery_2359> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery>. <http://scio/data/Isoflurane_2348> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2359>."
 49860, Isoflurane, 13917, 13927, "isoflurane", "", "<http://scio/data/Isoflurane_2348> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2348>."
 49874, DosageExtracorporal, 13930, 13932, "2%", "", "<http://scio/data/Isoflurane_2348> <http://psink.de/scio/hasDosage> \"2%\"."
-54211, WistarRat, 14027, 14031, "rats", "", 
-49875, PostSurgeryCondition, 14052, 14065, "heating  lamp", "", 
 54212, WistarRat, 14108, 14115, "Animals", "", 
 49861, DosageIntracorporal, 14153, 14161, "50 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2362> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
 49876, PostsurgicalMedication, 14162, 14170, "Temgesic", "", "<http://scio/data/PostsurgicalMedication_2362> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2362>."
 50819, AntibioticMedication, 14294, 14305, "antibiotics", "", "<http://scio/data/AntibioticMedication_3372> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3372>."
-49879, OralDelivery, 14306, 14324, "in drinking  water", "", 
-49862, Duration, 14364, 14374, "for 1 week", "", 
 49863, AneurysmClip, 14410, 14423, "aneurysm clip", "", "<http://scio/data/AneurysmClip_2352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AneurysmClip>. <http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/AneurysmClip_2352>."
 49880, Compression, 14432, 14443, "compression", "", "<http://scio/data/Compression_2345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression>. <http://scio/data/Compression_2345> <http://www.w3.org/2000/01/rdf-schema#label> \"compression\"."
+103372, WistarRat, 14656, 14660, "rats", "", 
 49864, Laminectomy, 14680, 14691, "laminectomy", "", 
 49865, Force, 14713, 14719, "23.8 g", "", "<http://scio/data/AneurysmClip_2352> <http://psink.de/scio/hasForce> \"23.8 g\"."
+103373, Compression, 14766, 14777, "compression", "", 
 49866, Duration, 14789, 14794, "1 min", "", 
 49867, T7, 14812, 14814, "T7", "", "<http://scio/data/Compression_2345> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T7>."
+103340, Duration, 15160, 15182, "At four  days post SCI", "", "<http://scio/data/TemporalInterval_84057> <http://psink.de/scio/hasDuration> \"At four  days post SCI\". <http://scio/data/TemporalInterval_84065> <http://psink.de/scio/hasDuration> \"At four  days post SCI\". <http://scio/data/TemporalInterval_84073> <http://psink.de/scio/hasDuration> \"At four  days post SCI\". <http://scio/data/TemporalInterval_84081> <http://psink.de/scio/hasDuration> \"At four  days post SCI\". <http://scio/data/TemporalInterval_84089> <http://psink.de/scio/hasDuration> \"At four  days post SCI\"."
+103374, Injury, 15179, 15182, "SCI", "", 
+103375, WistarRat, 15188, 15192, "rats", "", 
+103341, ChondroitinaseABC, 15340, 15345, "ChABC", "", "<http://scio/data/ChondroitinaseABC_83953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83953>."
+103345, DosageExtracorporal, 15385, 15391, "5 U/ml", "", "<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDosage> \"5 U/ml\"."
+103378, DosageExtracorporal, 15407, 15411, "0.1%", "", "<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDosage> \"0.1%\"."
+103377, Albumin, 15412, 15430, "rat serum  albumin", "", "<http://scio/data/Albumin_83972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin>. <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasCompound> <http://scio/data/Albumin_83972>."
+103346, Substance, 15482, 15488, "PDGFAA", "", "<http://scio/data/Substance_83987> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83987>."
+103347, DosageExtracorporal, 15497, 15508, "1 mg/100 ml", "", "<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDosage> \"1 mg/100 ml\"."
+103348, Substance, 15511, 15515, "bFGF", "", "<http://scio/data/Substance_84002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_84002>."
+103349, DosageExtracorporal, 15524, 15535, "3 mg/100 ml", "", "<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDosage> \"3 mg/100 ml\"."
+103350, Substance, 15541, 15544, "EGF", "", "<http://scio/data/Substance_84017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_84017>."
+103351, DosageExtracorporal, 15554, 15565, "3 mg/100 ml", "", "<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDosage> \"3 mg/100 ml\"."
+103379, DosageExtracorporal, 15603, 15607, "0.1%", "", 
+103380, Albumin, 15608, 15626, "rat  serum albumin", "", 
+103381, InfusionDelivery, 15632, 15639, "infused", "", "<http://scio/data/InfusionDelivery_83945> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery>. <http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83945>. <http://scio/data/InfusionDelivery_83960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery>. <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83960>. <http://scio/data/InfusionDelivery_83975> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery>. <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83975>. <http://scio/data/InfusionDelivery_83990> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery>. <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83990>. <http://scio/data/InfusionDelivery_84005> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery>. <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_84005>."
+103342, Duration, 15640, 15654, "for seven days", "", "<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDuration> \"for seven days\". <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDuration> \"for seven days\". <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDuration> \"for seven days\". <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDuration> \"for seven days\". <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDuration> \"for seven days\"."
+103382, SpinalSubduralArea, 15663, 15675, "subarachnoid", "", "<http://scio/data/SpinalSubduralArea_83955> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea>. <http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83955>. <http://scio/data/SpinalSubduralArea_83962> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea>. <http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83962>. <http://scio/data/SpinalSubduralArea_83977> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea>. <http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83977>. <http://scio/data/SpinalSubduralArea_83992> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea>. <http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_83992>. <http://scio/data/SpinalSubduralArea_84007> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalSubduralArea>. <http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalSubduralArea_84007>."
+103343, Catheter, 15677, 15685, "catheter", "", "<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>."
+103344, OsmoticMinipump, 15752, 15768, "osmotic minipump", "", 
+103385, Catheter, 15854, 15862, "catheter", "", 
+103383, SpinalSubduralArea, 15883, 15901, "subarachnoid space", "", 
+103384, LesionAdjacentTissue, 15902, 15926, "around the  injured area", "", "<http://scio/data/LesionAdjacentTissue_83956> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83956>. <http://scio/data/LesionAdjacentTissue_83963> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83963>. <http://scio/data/LesionAdjacentTissue_83978> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83978>. <http://scio/data/LesionAdjacentTissue_83993> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_83993>. <http://scio/data/LesionAdjacentTissue_84008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_84008>."
+103386, NNumber, 15928, 15932, "Five", "", 
+103390, WistarRat, 15933, 15937, "rats", "", 
+103391, Vehicle, 15946, 15953, "vehicle", "", 
+103394, DosageExtracorporal, 16026, 16030, "0.1%", "", 
+103393, Albumin, 16031, 16049, "rat serum  albumin", "", 
+103395, WistarRat, 17901, 17905, "Rats", "", 
+103396, GroupNumber, 17918, 17919, "2", "", 
+103397, GroupNumber, 17924, 17925, "4", "", 
+103398, RehabilitativeTraining, 17969, 17978, "treadmill", "", 
+103352, Duration, 17984, 18019, "from 1 day to 7 weeks following SCI", "", "<http://scio/data/TemporalInterval_84097> <http://psink.de/scio/hasDuration> \"from 1 day to 7 weeks following SCI\"."
+103399, Injury, 18016, 18019, "SCI", "", 
+103400, RehabilitativeTraining, 18026, 18042, "training program", "", "<http://scio/data/RehabilitativeTraining_84044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RehabilitativeTraining>. <http://scio/data/RehabilitativeTraining_84044> <http://www.w3.org/2000/01/rdf-schema#label> \"Reha\"."
+103353, Frequency, 18057, 18068, "5 days/week", "", "<http://scio/data/RehabilitativeTraining_84044> <http://psink.de/scio/hasFrequency> \"5 days/week\"."
+103354, Duration, 18108, 18114, "10 min", "", "<http://scio/data/DeliveryMethod_84046> <http://psink.de/scio/hasDuration> \"10 min\"."

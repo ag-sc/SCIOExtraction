@@ -61,13 +61,13 @@ public class BuildNERCorpusFromSlotFillingData {
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
-//		buildForOrganismModel();
-//		buildForInjuryModel();
-//		buildForTreatment();
-//		buildForVertebralArea();
-//		buildForDeliveryMethod();
-//		buildForInvestigationMethod();
-//		buildForGroupName();
+		buildForOrganismModel();
+		buildForInjuryModel();
+		buildForTreatment();
+		buildForVertebralArea();
+		buildForDeliveryMethod();
+		buildForInvestigationMethod();
+		buildForGroupName();
 		buildForTrend();
 
 	}
@@ -76,7 +76,6 @@ public class BuildNERCorpusFromSlotFillingData {
 		SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasTrend.includeRec();
-//		SCIOSlotTypes.hasJudgement.includeRec();
 //		SCIOSlotTypes.hasAlphaSignificanceNiveau.include();
 //		SCIOSlotTypes.hasPValue.include();
 //		SCIOSlotTypes.hasDifference.include();

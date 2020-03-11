@@ -81,16 +81,16 @@ public class BuildCorpusFromRawData {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 
-//		buildCorpusForOrganismModel();
-//		buildCorpusForInjuryModel();
-//		buildCorpusForTreatmentType();
-//		buildCorpusForVertebralArea();
-//		buildCorpusForDeliveryMethod();
-//		buildCorpusForExperimentalGroup();
-//		buildCorpusForInvestigationMethod();
-//		buildCorpusForObservation();
 		buildCorpusForResult();
-//		buildCorpusForTrend();
+		buildCorpusForExperimentalGroup();
+		buildCorpusForObservation();
+		buildCorpusForOrganismModel();
+		buildCorpusForInjuryModel();
+		buildCorpusForTreatmentType();
+		buildCorpusForVertebralArea();
+		buildCorpusForDeliveryMethod();
+		buildCorpusForInvestigationMethod();
+		buildCorpusForTrend();
 		System.exit(1);
 	}
 

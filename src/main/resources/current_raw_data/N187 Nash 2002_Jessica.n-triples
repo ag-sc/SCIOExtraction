@@ -30,8 +30,7 @@
 <http://scio/data/AxonalChangesTest_76733> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82560> .
 <http://scio/data/SpinalLesionSite_82563> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82560> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82563> .
-<http://scio/data/Distance_82564> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82560> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82564> .
+<http://scio/data/Caudal_82560> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76739> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of labeled axons)" .
@@ -39,8 +38,7 @@
 <http://scio/data/AxonalChangesTest_76739> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82573> .
 <http://scio/data/SpinalLesionSite_82575> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82573> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82575> .
-<http://scio/data/Distance_82576> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82573> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82576> .
+<http://scio/data/Caudal_82573> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82574> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76745> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76745> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of labeled axons)" .
@@ -48,8 +46,7 @@
 <http://scio/data/AxonalChangesTest_76745> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82659> .
 <http://scio/data/SpinalLesionSite_82662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82659> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82662> .
-<http://scio/data/Distance_82663> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82659> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82663> .
+<http://scio/data/Caudal_82659> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82661> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76747> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76747> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -57,8 +54,7 @@
 <http://scio/data/AxonalChangesTest_76747> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82666> .
 <http://scio/data/SpinalLesionSite_82669> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82666> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82669> .
-<http://scio/data/Distance_82670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82666> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82670> .
+<http://scio/data/Caudal_82666> <http://psink.de/scio/hasDistance> "1, 4, and 7 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82668> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76750> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76750> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -66,8 +62,7 @@
 <http://scio/data/AxonalChangesTest_76750> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82680> .
 <http://scio/data/SpinalLesionSite_82683> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82680> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82683> .
-<http://scio/data/Distance_82684> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82680> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82684> .
+<http://scio/data/Caudal_82680> <http://psink.de/scio/hasDistance> "at 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82682> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76752> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76752> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -75,8 +70,7 @@
 <http://scio/data/AxonalChangesTest_76752> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82687> .
 <http://scio/data/SpinalLesionSite_82690> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82687> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82690> .
-<http://scio/data/Distance_82691> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82687> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82691> .
+<http://scio/data/Caudal_82687> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82689> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76756> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76756> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -84,8 +78,7 @@
 <http://scio/data/AxonalChangesTest_76756> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82708> .
 <http://scio/data/SpinalLesionSite_82711> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82708> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82711> .
-<http://scio/data/Distance_82712> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82708> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82712> .
+<http://scio/data/Caudal_82708> <http://psink.de/scio/hasDistance> "At 1 mm distal" .
 <http://scio/data/HistologicalInvestigationParameter_82710> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76758> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76758> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -93,8 +86,7 @@
 <http://scio/data/AxonalChangesTest_76758> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82715> .
 <http://scio/data/SpinalLesionSite_82718> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82715> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82718> .
-<http://scio/data/Distance_82719> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82715> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82719> .
+<http://scio/data/Caudal_82715> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82717> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76762> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76762> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -102,8 +94,7 @@
 <http://scio/data/AxonalChangesTest_76762> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82736> .
 <http://scio/data/SpinalLesionSite_82739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82736> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82739> .
-<http://scio/data/Distance_82740> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82736> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82740> .
+<http://scio/data/Caudal_82736> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, and 13 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82738> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_76764> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76764> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -111,8 +102,7 @@
 <http://scio/data/AxonalChangesTest_76764> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82743> .
 <http://scio/data/SpinalLesionSite_82746> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82743> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82746> .
-<http://scio/data/Distance_82747> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82743> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82747> .
+<http://scio/data/Caudal_82743> <http://psink.de/scio/hasDistance> "at 16 and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82745> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/SinglePelletReachingTest_81452> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SinglePelletReachingTest> .
 <http://scio/data/SinglePelletReachingTest_81452> <http://www.w3.org/2000/01/rdf-schema#label> "SinglePelletReachingTest (DFR task)" .
@@ -140,8 +130,7 @@
 <http://scio/data/AxonalChangesTest_81472> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82567> .
 <http://scio/data/SpinalLesionSite_82570> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82567> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82570> .
-<http://scio/data/Distance_82571> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82567> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82571> .
+<http://scio/data/Caudal_82567> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82569> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81474> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81474> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of axons)" .
@@ -149,8 +138,7 @@
 <http://scio/data/AxonalChangesTest_81474> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82579> .
 <http://scio/data/SpinalLesionSite_82625> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82579> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82625> .
-<http://scio/data/Distance_82626> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82579> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82626> .
+<http://scio/data/Caudal_82579> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82581> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81476> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of axons)" .
@@ -158,8 +146,7 @@
 <http://scio/data/AxonalChangesTest_81476> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82629> .
 <http://scio/data/SpinalLesionSite_82632> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82629> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82632> .
-<http://scio/data/Distance_82633> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82629> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82633> .
+<http://scio/data/Caudal_82629> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82631> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81478> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81478> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of axons)" .
@@ -167,8 +154,7 @@
 <http://scio/data/AxonalChangesTest_81478> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82636> .
 <http://scio/data/SpinalLesionSite_82639> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82636> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82639> .
-<http://scio/data/Distance_82640> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82636> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82640> .
+<http://scio/data/Caudal_82636> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82638> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81480> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of labeled axons)" .
@@ -176,8 +162,7 @@
 <http://scio/data/AxonalChangesTest_81480> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82643> .
 <http://scio/data/SpinalLesionSite_82646> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82643> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82646> .
-<http://scio/data/Distance_82647> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82643> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82647> .
+<http://scio/data/Caudal_82643> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82645> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81482> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81482> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of labeled axons)" .
@@ -185,8 +170,7 @@
 <http://scio/data/AxonalChangesTest_81482> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82584> .
 <http://scio/data/SpinalLesionSite_82587> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82584> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82587> .
-<http://scio/data/Distance_82588> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82584> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82588> .
+<http://scio/data/Caudal_82584> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82586> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81484> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81484> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of labeled axons)" .
@@ -194,8 +178,7 @@
 <http://scio/data/AxonalChangesTest_81484> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82652> .
 <http://scio/data/SpinalLesionSite_82655> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82652> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82655> .
-<http://scio/data/Distance_82656> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82652> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82656> .
+<http://scio/data/Caudal_82652> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82654> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81486> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81486> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (mean number of labeled axons)" .
@@ -203,8 +186,7 @@
 <http://scio/data/AxonalChangesTest_81486> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82526> .
 <http://scio/data/SpinalLesionSite_82529> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82526> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82529> .
-<http://scio/data/Distance_82531> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82526> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82531> .
+<http://scio/data/Caudal_82526> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82528> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81488> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81488> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -212,8 +194,7 @@
 <http://scio/data/AxonalChangesTest_81488> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82673> .
 <http://scio/data/SpinalLesionSite_82676> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82673> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82676> .
-<http://scio/data/Distance_82677> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82673> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82677> .
+<http://scio/data/Caudal_82673> <http://psink.de/scio/hasDistance> "1, 4, and 7 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82675> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81490> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81490> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -221,8 +202,7 @@
 <http://scio/data/AxonalChangesTest_81490> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82694> .
 <http://scio/data/SpinalLesionSite_82697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82694> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82697> .
-<http://scio/data/Distance_82698> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82694> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82698> .
+<http://scio/data/Caudal_82694> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82696> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81492> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -230,8 +210,7 @@
 <http://scio/data/AxonalChangesTest_81492> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82701> .
 <http://scio/data/SpinalLesionSite_82704> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82701> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82704> .
-<http://scio/data/Distance_82705> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82701> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82705> .
+<http://scio/data/Caudal_82701> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82703> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81494> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -239,8 +218,7 @@
 <http://scio/data/AxonalChangesTest_81494> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82722> .
 <http://scio/data/SpinalLesionSite_82725> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82722> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82725> .
-<http://scio/data/Distance_82726> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82722> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82726> .
+<http://scio/data/Caudal_82722> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82724> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_81496> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_81496> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons)" .
@@ -248,8 +226,7 @@
 <http://scio/data/AxonalChangesTest_81496> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_82729> .
 <http://scio/data/SpinalLesionSite_82732> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_82729> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_82732> .
-<http://scio/data/Distance_82733> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
-<http://scio/data/Caudal_82729> <http://psink.de/scio/hasDistance> <http://scio/data/Distance_82733> .
+<http://scio/data/Caudal_82729> <http://psink.de/scio/hasDistance> "1, 4, 7, 10, 13, 16, and 19 mm" .
 <http://scio/data/HistologicalInvestigationParameter_82731> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 # RDF export of group: Results
 <http://scio/data/Result_50523> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .

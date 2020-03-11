@@ -1,6 +1,42 @@
 # RDF export of group: InvestigationMethod
 # RDF export of group: Results
 # RDF export of group: Observations
+<http://scio/data/Observation_84129> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84129> <http://www.w3.org/2000/01/rdf-schema#label> "TP ChABC 1" .
+<http://scio/data/TemporalInterval_84131> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84129> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84131> .
+<http://scio/data/TemporalInterval_84131> <http://psink.de/scio/hasDuration> "Two days after SCI" .
+<http://scio/data/TemporalInterval_84131> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2401> .
+<http://scio/data/TemporalInterval_84131> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84103> .
+<http://scio/data/NumericValue_84132> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84133> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84137> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84137> <http://www.w3.org/2000/01/rdf-schema#label> "TP ChABC 2" .
+<http://scio/data/TemporalInterval_84139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84137> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84139> .
+<http://scio/data/TemporalInterval_84139> <http://psink.de/scio/hasDuration> "day 3 and 4 after SCI" .
+<http://scio/data/TemporalInterval_84139> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2401> .
+<http://scio/data/TemporalInterval_84139> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84103> .
+<http://scio/data/NumericValue_84143> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84144> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84145> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84145> <http://www.w3.org/2000/01/rdf-schema#label> "TP Penicinillase 1" .
+<http://scio/data/TemporalInterval_84147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84145> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84147> .
+<http://scio/data/TemporalInterval_84147> <http://psink.de/scio/hasDuration> "Two days after SCI" .
+<http://scio/data/TemporalInterval_84147> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2401> .
+<http://scio/data/TemporalInterval_84147> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84116> .
+<http://scio/data/NumericValue_84151> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84152> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84153> <http://www.w3.org/2000/01/rdf-schema#label> "TP Penicinillase 2" .
+<http://scio/data/TemporalInterval_84155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84153> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84155> .
+<http://scio/data/TemporalInterval_84155> <http://psink.de/scio/hasDuration> "day 3 and 4 after SCI" .
+<http://scio/data/TemporalInterval_84155> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_2401> .
+<http://scio/data/TemporalInterval_84155> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84116> .
+<http://scio/data/NumericValue_84159> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84160> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 # RDF export of group: Experimental groups
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_495> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
@@ -27,4 +63,30 @@
 <http://scio/data/VertebralArea_3767> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T8> .
 <http://scio/data/VertebralArea_3767> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9> .
 # RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_84103> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84103> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/DeliveryMethod_84105> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84103> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84105> .
+<http://scio/data/DeliveryMethod_84105> <http://psink.de/scio/hasDuration> "during 15 min" .
+<http://scio/data/Intrathecal_84115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/DeliveryMethod_84105> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84115> .
+<http://scio/data/CompoundTreatment_84103> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_84110> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84111> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_84103> <http://psink.de/scio/hasDosage> "10 U/ml" .
+<http://scio/data/ChondroitinaseABC_84113> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_84103> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_84113> .
+<http://scio/data/CompoundTreatment_84116> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84116> <http://www.w3.org/2000/01/rdf-schema#label> "Penicinillase" .
+<http://scio/data/DeliveryMethod_84118> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84116> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84118> .
+<http://scio/data/DeliveryMethod_84118> <http://psink.de/scio/hasDuration> "during 15 min" .
+<http://scio/data/Intrathecal_84120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/DeliveryMethod_84118> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84120> .
+<http://scio/data/CompoundTreatment_84116> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/Direction_84125> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84126> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_84116> <http://psink.de/scio/hasDosage> "30 lg/ml" .
+<http://scio/data/Penicillinase_84128> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase> .
+<http://scio/data/CompoundTreatment_84116> <http://psink.de/scio/hasCompound> <http://scio/data/Penicillinase_84128> .
 # RDF export of group: Sacrifices

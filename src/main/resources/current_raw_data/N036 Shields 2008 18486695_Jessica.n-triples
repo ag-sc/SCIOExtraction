@@ -1,6 +1,87 @@
 # RDF export of group: InvestigationMethod
 # RDF export of group: Results
 # RDF export of group: Observations
+<http://scio/data/Observation_83631> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83631> <http://www.w3.org/2000/01/rdf-schema#label> "TP1 Penicinillase" .
+<http://scio/data/TemporalInterval_83633> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83631> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83633> .
+<http://scio/data/TemporalInterval_83633> <http://psink.de/scio/hasDuration> "On the day of surgery" .
+<http://scio/data/TemporalInterval_83633> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2308> .
+<http://scio/data/TemporalInterval_83633> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83570> .
+<http://scio/data/NumericValue_83634> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83635> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83639> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83639> <http://www.w3.org/2000/01/rdf-schema#label> "TP2 Penicinillase" .
+<http://scio/data/TemporalInterval_83641> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83639> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83641> .
+<http://scio/data/TemporalInterval_83641> <http://psink.de/scio/hasDuration> "days 0, 2, 4, 6, and 8" .
+<http://scio/data/TemporalInterval_83641> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2308> .
+<http://scio/data/TemporalInterval_83641> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83570> .
+<http://scio/data/NumericValue_83645> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83646> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83647> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83647> <http://www.w3.org/2000/01/rdf-schema#label> "TP Saline Penicinillase" .
+<http://scio/data/TemporalInterval_83649> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83647> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83649> .
+<http://scio/data/TemporalInterval_83649> <http://psink.de/scio/hasDuration> "solution was injected IT followed by 3 μL saline" .
+<http://scio/data/TemporalInterval_83649> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_83570> .
+<http://scio/data/TemporalInterval_83649> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83584> .
+<http://scio/data/NumericValue_83653> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83654> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83655> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83655> <http://www.w3.org/2000/01/rdf-schema#label> "TP1 Low-dose ChABC" .
+<http://scio/data/TemporalInterval_83657> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83655> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83657> .
+<http://scio/data/TemporalInterval_83657> <http://psink.de/scio/hasDuration> "On the day of surgery" .
+<http://scio/data/TemporalInterval_83657> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2308> .
+<http://scio/data/TemporalInterval_83657> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83599> .
+<http://scio/data/NumericValue_83661> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83663> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83663> <http://www.w3.org/2000/01/rdf-schema#label> "TP2 Low-dose ChABC" .
+<http://scio/data/TemporalInterval_83665> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83663> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83665> .
+<http://scio/data/TemporalInterval_83665> <http://psink.de/scio/hasDuration> "days 0, 2, 4, 6, and 8" .
+<http://scio/data/TemporalInterval_83665> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2308> .
+<http://scio/data/TemporalInterval_83665> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83599> .
+<http://scio/data/NumericValue_83669> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83671> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83671> <http://www.w3.org/2000/01/rdf-schema#label> "TP Saline Low-dose ChABC" .
+<http://scio/data/TemporalInterval_83673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83671> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83673> .
+<http://scio/data/TemporalInterval_83673> <http://psink.de/scio/hasDuration> "solution was injected IT followed by 3 μL saline" .
+<http://scio/data/TemporalInterval_83673> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_83599> .
+<http://scio/data/TemporalInterval_83673> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83584> .
+<http://scio/data/NumericValue_83677> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83679> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83679> <http://www.w3.org/2000/01/rdf-schema#label> "TP1 High-dose ChABC" .
+<http://scio/data/TemporalInterval_83681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83679> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83681> .
+<http://scio/data/TemporalInterval_83681> <http://psink.de/scio/hasDuration> "On the day of surgery" .
+<http://scio/data/TemporalInterval_83681> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2308> .
+<http://scio/data/TemporalInterval_83681> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83615> .
+<http://scio/data/NumericValue_83685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83686> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83687> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83687> <http://www.w3.org/2000/01/rdf-schema#label> "TP2 High-dose ChABC" .
+<http://scio/data/TemporalInterval_83689> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83687> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83689> .
+<http://scio/data/TemporalInterval_83689> <http://psink.de/scio/hasDuration> "days 0, 2, 4, 6, and 8" .
+<http://scio/data/TemporalInterval_83689> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2308> .
+<http://scio/data/TemporalInterval_83689> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83615> .
+<http://scio/data/NumericValue_83693> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83694> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_83695> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_83695> <http://www.w3.org/2000/01/rdf-schema#label> "TP Saline High-dose ChABC" .
+<http://scio/data/TemporalInterval_83697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_83695> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_83697> .
+<http://scio/data/TemporalInterval_83697> <http://psink.de/scio/hasDuration> "solution was injected IT followed by 3 μL saline" .
+<http://scio/data/TemporalInterval_83697> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_83615> .
+<http://scio/data/TemporalInterval_83697> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_83584> .
+<http://scio/data/NumericValue_83701> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_83702> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 # RDF export of group: Experimental groups
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_459> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
@@ -21,9 +102,67 @@
 <http://scio/data/InjectionDelivery_3682> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
 <http://scio/data/MedicationDuringSurgery_2313> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
 <http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife> .
-<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
 <http://scio/data/AntibioticMedication_14477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
 <http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_14477> .
 <http://scio/data/AntibioticMedication_14477> <http://psink.de/scio/hasDosage> "0.03 mg/kg" .
 # RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_83570> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83570> <http://www.w3.org/2000/01/rdf-schema#label> "Penicinillase" .
+<http://scio/data/InjectionDelivery_83572> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83572> .
+<http://scio/data/InjectionDelivery_83572> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3> .
+<http://scio/data/Intrathecal_83580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InjectionDelivery_83572> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83580> .
+<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasFrequency> "alternate days" .
+<http://scio/data/Direction_83577> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83581> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasDosage> "30 μg/mL" .
+<http://scio/data/Penicillinase_83583> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase> .
+<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasCompound> <http://scio/data/Penicillinase_83583> .
+<http://scio/data/CompoundTreatment_83584> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83584> <http://www.w3.org/2000/01/rdf-schema#label> "Saline" .
+<http://scio/data/InjectionDelivery_83586> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83586> .
+<http://scio/data/InjectionDelivery_83586> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3> .
+<http://scio/data/Intrathecal_83589> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InjectionDelivery_83586> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83589> .
+<http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasFrequency> "alternate days" .
+<http://scio/data/Direction_83594> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83595> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Saline_83597> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline> .
+<http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_83597> .
+<http://scio/data/CompoundTreatment_83599> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83599> <http://www.w3.org/2000/01/rdf-schema#label> "Low-dose ChABC" .
+<http://scio/data/InjectionDelivery_83601> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83601> .
+<http://scio/data/InjectionDelivery_83601> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3> .
+<http://scio/data/Intrathecal_83604> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InjectionDelivery_83601> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83604> .
+<http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasFrequency> "alternate days" .
+<http://scio/data/Direction_83609> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83610> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasDosage> "0.06 units/treatment" .
+<http://scio/data/ChondroitinaseABC_83612> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83612> .
+<http://scio/data/ChondroitinaseABC_83612> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich> .
+<http://scio/data/AnatomicalLocation_83614> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/CompoundTreatment_83615> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_83615> <http://www.w3.org/2000/01/rdf-schema#label> "High-dose ChABC" .
+<http://scio/data/InjectionDelivery_83617> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83617> .
+<http://scio/data/InjectionDelivery_83617> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3> .
+<http://scio/data/Intrathecal_83620> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InjectionDelivery_83617> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83620> .
+<http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
+<http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasFrequency> "alternate days" .
+<http://scio/data/Direction_83625> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_83626> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasDosage> "0.18 units/treatment" .
+<http://scio/data/ChondroitinaseABC_83628> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83628> .
+<http://scio/data/ChondroitinaseABC_83628> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich> .
+<http://scio/data/AnatomicalLocation_83630> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 # RDF export of group: Sacrifices

@@ -81,7 +81,6 @@
 <http://scio/data/AxonalChangesTest_76421> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_76421> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (subP-positive axons)" .
 <http://scio/data/Direction_82968> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_82972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_82970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalSproutingTest_76423> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest> .
 <http://scio/data/AxonalSproutingTest_76423> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalSproutingTest (sprouting)" .

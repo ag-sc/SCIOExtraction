@@ -619,42 +619,6 @@
 <http://scio/data/TemporalInterval_32665> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_32467> .
 <http://scio/data/NumericValue_32669> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
 <http://scio/data/Observation_32663> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_32579> .
-<http://scio/data/Observation_32671> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
-<http://scio/data/Observation_32671> <http://www.w3.org/2000/01/rdf-schema#label> "TP BrdU, E1" .
-<http://scio/data/TemporalInterval_32673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
-<http://scio/data/Observation_32671> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_32673> .
-<http://scio/data/TemporalInterval_32673> <http://psink.de/scio/hasDuration> "At four days post SCI" .
-<http://scio/data/TemporalInterval_32673> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_1986> .
-<http://scio/data/TemporalInterval_32673> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_32537> .
-<http://scio/data/NumericValue_32677> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
-<http://scio/data/Observation_32671> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_32550> .
-<http://scio/data/Observation_32679> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
-<http://scio/data/Observation_32679> <http://www.w3.org/2000/01/rdf-schema#label> "TP BrdU, E2" .
-<http://scio/data/TemporalInterval_32681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
-<http://scio/data/Observation_32679> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_32681> .
-<http://scio/data/TemporalInterval_32681> <http://psink.de/scio/hasDuration> "At four days post SCI" .
-<http://scio/data/TemporalInterval_32681> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_1986> .
-<http://scio/data/TemporalInterval_32681> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_32537> .
-<http://scio/data/NumericValue_32685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
-<http://scio/data/Observation_32679> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_32558> .
-<http://scio/data/Observation_32687> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
-<http://scio/data/Observation_32687> <http://www.w3.org/2000/01/rdf-schema#label> "TP BrdU, E3" .
-<http://scio/data/TemporalInterval_32689> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
-<http://scio/data/Observation_32687> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_32689> .
-<http://scio/data/TemporalInterval_32689> <http://psink.de/scio/hasDuration> "At four days post SCI" .
-<http://scio/data/TemporalInterval_32689> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_1986> .
-<http://scio/data/TemporalInterval_32689> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_32537> .
-<http://scio/data/NumericValue_32693> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
-<http://scio/data/Observation_32687> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_32568> .
-<http://scio/data/Observation_32695> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
-<http://scio/data/Observation_32695> <http://www.w3.org/2000/01/rdf-schema#label> "TP BrdU, E4" .
-<http://scio/data/TemporalInterval_32697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
-<http://scio/data/Observation_32695> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_32697> .
-<http://scio/data/TemporalInterval_32697> <http://psink.de/scio/hasDuration> "At four days post SCI" .
-<http://scio/data/TemporalInterval_32697> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_1986> .
-<http://scio/data/TemporalInterval_32697> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_32537> .
-<http://scio/data/NumericValue_32701> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
-<http://scio/data/Observation_32695> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_32579> .
 # RDF export of group: Experimental groups
 <http://scio/data/DefinedExperimentalGroup_32550> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_32550> <http://www.w3.org/2000/01/rdf-schema#label> "injuredvehicle, E1" .
@@ -662,7 +626,7 @@
 <http://scio/data/DefinedExperimentalGroup_32550> <http://psink.de/scio/hasGroupName> "vehicle-treated counterparts" .
 <http://scio/data/DefinedExperimentalGroup_32550> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_1986> .
 <http://scio/data/DefinedExperimentalGroup_32550> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32452> .
-<http://scio/data/DefinedExperimentalGroup_32550> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32537> .
+<http://scio/data/Treatment_32566> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
 <http://scio/data/DefinedExperimentalGroup_32550> <http://psink.de/scio/hasGroupName> "vehicle-treated group" .
 <http://scio/data/DefinedExperimentalGroup_32550> <http://psink.de/scio/hasGroupName> "vehicletreated rats" .
 <http://scio/data/DefinedExperimentalGroup_32558> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
@@ -671,7 +635,7 @@
 <http://scio/data/DefinedExperimentalGroup_32558> <http://psink.de/scio/hasGroupName> "ChABC-treated injured rats" .
 <http://scio/data/DefinedExperimentalGroup_32558> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_1986> .
 <http://scio/data/DefinedExperimentalGroup_32558> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32467> .
-<http://scio/data/DefinedExperimentalGroup_32558> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32537> .
+<http://scio/data/Treatment_32567> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
 <http://scio/data/DefinedExperimentalGroup_32558> <http://psink.de/scio/hasGroupName> "groups treated with ChABC" .
 <http://scio/data/DefinedExperimentalGroup_32568> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_32568> <http://www.w3.org/2000/01/rdf-schema#label> "Injured-Growth Factors, E3" .
@@ -680,7 +644,7 @@
 <http://scio/data/DefinedExperimentalGroup_32568> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32486> .
 <http://scio/data/DefinedExperimentalGroup_32568> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32503> .
 <http://scio/data/DefinedExperimentalGroup_32568> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32520> .
-<http://scio/data/DefinedExperimentalGroup_32568> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32537> .
+<http://scio/data/Treatment_32578> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://www.w3.org/2000/01/rdf-schema#label> "InjuredChABC + GFs, E4" .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_339> .
@@ -689,7 +653,7 @@
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32486> .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32503> .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32520> .
-<http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32537> .
+<http://scio/data/Treatment_32589> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32467> .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasGroupName> "ChABC+GFs" .
 <http://scio/data/DefinedExperimentalGroup_32579> <http://psink.de/scio/hasGroupName> "group with ChABC+GF treatments" .
@@ -762,7 +726,8 @@
 <http://scio/data/CompoundTreatment_32467> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_32481> .
 <http://scio/data/ChondroitinaseABC_32481> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku> .
 <http://scio/data/AnatomicalLocation_32485> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
-<http://scio/data/Compound_32483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_32483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_32467> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_32483> .
 <http://scio/data/CompoundTreatment_32486> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_32486> <http://www.w3.org/2000/01/rdf-schema#label> "PDGF-AA" .
 <http://scio/data/CompoundTreatment_32486> <http://psink.de/scio/hasDuration> "for 7 days" .
@@ -781,7 +746,8 @@
 <http://scio/data/CompoundTreatment_32486> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_32499> .
 <http://scio/data/Protein_32499> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich> .
 <http://scio/data/AnatomicalLocation_32501> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
-<http://scio/data/Compound_32502> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_32502> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_32486> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_32502> .
 <http://scio/data/CompoundTreatment_32503> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_32503> <http://www.w3.org/2000/01/rdf-schema#label> "bFGF" .
 <http://scio/data/CompoundTreatment_32503> <http://psink.de/scio/hasDuration> "for 7 days" .
@@ -800,7 +766,8 @@
 <http://scio/data/CompoundTreatment_32503> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_32516> .
 <http://scio/data/Protein_32516> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich> .
 <http://scio/data/AnatomicalLocation_32518> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
-<http://scio/data/Compound_32519> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_32519> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_32503> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_32519> .
 <http://scio/data/CompoundTreatment_32520> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_32520> <http://www.w3.org/2000/01/rdf-schema#label> "EGF" .
 <http://scio/data/CompoundTreatment_32520> <http://psink.de/scio/hasDuration> "for 7 days" .
@@ -819,16 +786,6 @@
 <http://scio/data/CompoundTreatment_32520> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_32533> .
 <http://scio/data/Protein_32533> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich> .
 <http://scio/data/AnatomicalLocation_32535> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
-<http://scio/data/Compound_32536> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
-<http://scio/data/CompoundTreatment_32537> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
-<http://scio/data/CompoundTreatment_32537> <http://www.w3.org/2000/01/rdf-schema#label> "BrdU" .
-<http://scio/data/InjectionDelivery_32539> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
-<http://scio/data/CompoundTreatment_32537> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32539> .
-<http://scio/data/InjectionDelivery_32539> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
-<http://scio/data/CompoundTreatment_32537> <http://psink.de/scio/hasFrequency> "two daily injections" .
-<http://scio/data/Direction_32544> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_32545> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
-<http://scio/data/CompoundTreatment_32537> <http://psink.de/scio/hasDosage> "50 mg/kg" .
-<http://scio/data/Substance_32547> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_32537> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_32547> .
+<http://scio/data/Albumin_32536> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_32520> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_32536> .
 # RDF export of group: Sacrifices

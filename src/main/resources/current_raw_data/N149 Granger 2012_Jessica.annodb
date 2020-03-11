@@ -198,7 +198,7 @@
 56421, StatisticalTest, 33122, 33140, "Fisher exact test,", "", "<http://scio/data/Result_11093> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_11105> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
 47762, PValue, 33145, 33149, "1.00", "", "<http://scio/data/Significance_11101> <http://psink.de/scio/hasPValue> \"1.00\"."
 102677, UrineVoiding, 33161, 33187, "Urinary bladder compliance", "", 
-47763, BladderFunctionTest, 33161, 33187, "Urinary bladder compliance", "", "<http://scio/data/BladderFunctionTest_74792> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionTest>. <http://scio/data/BladderFunctionTest_74792> <http://www.w3.org/2000/01/rdf-schema#label> \"BladderFunctionTest (Urinary bladder compliance)\". <http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+47763, BladderFunctionTest, 33161, 33187, "Urinary bladder compliance", "", "<http://scio/data/BladderFunctionTest_74792> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionTest>. <http://scio/data/BladderFunctionTest_74792> <http://www.w3.org/2000/01/rdf-schema#label> \"BladderFunctionTest (Urinary bladder compliance)\"."
 47764, BladderExpression, 33220, 33236, "bladder activity", "", 
 47765, NNumber, 33288, 33295, "31 dogs", "", 
 75147, DogSpecies, 33291, 33295, "dogs", "", 

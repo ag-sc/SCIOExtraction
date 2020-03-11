@@ -137,14 +137,16 @@ public class ResultOutPutReader {
 
 	public static void main(String[] args) throws Exception {
 		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/cardinality/merge_cardinality.csv"));
+				new File("results/experimentalgroupextratcion/cardinality_semantic/merge_cardinality.csv"));
 		Map<String, Map<String, List<Score>>> dataMap = new HashMap<>();
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
 		for (int run = 100; run < 110; run++) {
 
-			File dir = new File("results/experimentalgroupextratcion/cardinality/" + run + "/");
+			if(run!=106)
+				continue;
+			File dir = new File("results/experimentalgroupextratcion/cardinality_semantic/" + run + "/");
 
 			int modeCounter = 0;
 
@@ -217,8 +219,8 @@ public class ResultOutPutReader {
 						s = score;
 					s.add(score);
 				}
-//				buffer.append(s.getF1(Score.SCORE_FORMAT));
-//				buffer.append("\t");
+				buffer.append(s.getF1(Score.SCORE_FORMAT));
+				buffer.append("\t");
 			}
 
 			ps.println(buffer.toString().trim());
@@ -255,7 +257,7 @@ public class ResultOutPutReader {
 	}
 
 	public static void singleFolder(int run) throws FileNotFoundException, IOException {
-		File dir = new File("results/experimentalgroupextratcion/cardinality/" + run + "/");
+		File dir = new File("results/experimentalgroupextratcion/cardinality_semantic/" + run + "/");
 
 		int modeCounter = 0;
 
@@ -278,7 +280,7 @@ public class ResultOutPutReader {
 		});
 
 		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/cardinality/" + run + "/merge_cardinality.csv"));
+				new File("results/experimentalgroupextratcion/cardinality_semantic/" + run + "/merge_cardinality.csv"));
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);

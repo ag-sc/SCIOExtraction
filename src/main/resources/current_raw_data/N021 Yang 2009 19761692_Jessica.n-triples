@@ -114,14 +114,16 @@
 <http://scio/data/DefinedExperimentalGroup_32821> <http://psink.de/scio/hasGroupNumber> "D" .
 <http://scio/data/DefinedExperimentalGroup_32821> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32729> .
 <http://scio/data/DefinedExperimentalGroup_32821> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32742> .
+<http://scio/data/ShamOperation_84293> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://www.w3.org/2000/01/rdf-schema#label> "E treated with MP, E5" .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_363> .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Contusion_2033> .
-<http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32768> .
+<http://scio/data/Treatment_32837> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasGroupNumber> "E" .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32757> .
 <http://scio/data/DefinedExperimentalGroup_32831> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32783> .
+<http://scio/data/ShamOperation_84292> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
 <http://scio/data/OrganismModel_363> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
@@ -188,8 +190,8 @@
 <http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasDuration> "on each of the subsequent 6 days" .
 <http://scio/data/InjectionDelivery_32744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
 <http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32744> .
-<http://scio/data/InjectionDelivery_32744> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location> .
-<http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument> .
+<http://scio/data/SpinalLesionSite_32754> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_32744> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_32754> .
 <http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasFrequency> "on each of the subsequent 6 days." .
 <http://scio/data/Direction_32749> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/Compound_32750> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
@@ -198,6 +200,7 @@
 <http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_32752> .
 <http://scio/data/ChondroitinaseABC_32752> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich> .
 <http://scio/data/AnatomicalLocation_32756> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/CompoundTreatment_32742> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
 <http://scio/data/CompoundTreatment_32757> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_32757> <http://www.w3.org/2000/01/rdf-schema#label> "MP 1" .
 <http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasDuration> "for 23 h" .
@@ -210,16 +213,6 @@
 <http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasDosage> "30 mg/kg" .
 <http://scio/data/MethylprednisoloneMP_32767> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MethylprednisoloneMP> .
 <http://scio/data/CompoundTreatment_32757> <http://psink.de/scio/hasCompound> <http://scio/data/MethylprednisoloneMP_32767> .
-<http://scio/data/CompoundTreatment_32768> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
-<http://scio/data/CompoundTreatment_32768> <http://www.w3.org/2000/01/rdf-schema#label> "Heparin" .
-<http://scio/data/DeliveryMethod_32770> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
-<http://scio/data/CompoundTreatment_32768> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_32770> .
-<http://scio/data/DeliveryMethod_32770> <http://psink.de/scio/hasLocations> <http://psink.de/scio/TailVeinLocation> .
-<http://scio/data/Direction_32775> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_32776> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
-<http://scio/data/Substance_32778> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_32768> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_32778> .
-<http://scio/data/AnatomicalLocation_83160> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/CompoundTreatment_32783> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_32783> <http://www.w3.org/2000/01/rdf-schema#label> "MP 2" .
 <http://scio/data/CompoundTreatment_32783> <http://psink.de/scio/hasDuration> "for 23 h" .

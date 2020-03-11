@@ -3,13 +3,11 @@
 <http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasLocation> <http://psink.de/scio/C1> .
 <http://scio/data/Left_69155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left> .
 <http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasDirection> <http://scio/data/Left_69155> .
-<http://scio/data/Distance_69164> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasLocationDeprecated> <http://psink.de/scio/C3> .
 <http://scio/data/HistologicalInvestigationParameter_69157> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasLocation> <http://psink.de/scio/C2> .
 <http://scio/data/HistologicalInvestigationTest_69827> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
 <http://scio/data/Left_69830> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left> .
-<http://scio/data/Distance_69832> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_69834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 # RDF export of group: Results
 # RDF export of group: Observations
@@ -190,12 +188,10 @@
 <http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16194> .
 <http://scio/data/SpinalLesionSite_16195> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Rostral_16194> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_16195> .
-<http://scio/data/Distance_82974> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/Caudal_30762> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
 <http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_30762> .
 <http://scio/data/SpinalLesionSite_30763> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_30762> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30763> .
-<http://scio/data/Distance_82975> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/CompoundTreatment_4115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_4115> <http://www.w3.org/2000/01/rdf-schema#label> "ARSB" .
 <http://scio/data/InjectionDelivery_4117> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
@@ -237,10 +233,8 @@
 <http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16202> .
 <http://scio/data/SpinalLesionSite_30770> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Rostral_16202> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30770> .
-<http://scio/data/Distance_69266> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/Caudal_30769> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
 <http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_30769> .
 <http://scio/data/SpinalLesionSite_30771> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_30769> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30771> .
-<http://scio/data/Distance_69267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 # RDF export of group: Sacrifices

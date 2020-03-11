@@ -50,10 +50,10 @@
 <http://scio/data/BBBTest_75147> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
 <http://scio/data/BBBTest_75150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/BBBTest_75150> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (scores)" .
+<http://scio/data/NeurologicScaleParameter_83447> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
 <http://scio/data/AxonalRegenerationTest_75153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
 <http://scio/data/AxonalRegenerationTest_75153> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalRegenerationTest (number of HRP-labeled neurons)" .
 <http://scio/data/Direction_82593> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_82605> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_82595> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MotorEvokedPotentialsTest_80398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest> .
 <http://scio/data/MotorEvokedPotentialsTest_80398> <http://www.w3.org/2000/01/rdf-schema#label> "MotorEvokedPotentialsTest (motor evoked potentials)" .
@@ -76,7 +76,6 @@
 <http://scio/data/AxonalRegenerationTest_80416> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
 <http://scio/data/AxonalRegenerationTest_80416> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalRegenerationTest (number of HRP-labeled neurons)" .
 <http://scio/data/Direction_82600> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_82604> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_82602> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 # RDF export of group: Results
 <http://scio/data/Result_33763> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
@@ -380,9 +379,9 @@
 <http://scio/data/Result_34040> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_15992> .
 <http://scio/data/Trend_34047> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
 <http://scio/data/Result_34040> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_34047> .
-<http://scio/data/Significance_34052> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
-<http://scio/data/Trend_34047> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_34052> .
-<http://scio/data/Significance_34052> <http://psink.de/scio/hasPValue> "P<0.01" .
+<http://scio/data/PositiveSignificance_34052> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_34047> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_34052> .
+<http://scio/data/PositiveSignificance_34052> <http://psink.de/scio/hasPValue> "P<0.01" .
 <http://scio/data/Trend_34047> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference> .
 <http://scio/data/ExperimentalGroup_34048> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_34040> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .

@@ -27,11 +27,14 @@
 <http://scio/data/DefinedExperimentalGroup_33003> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32949> .
 <http://scio/data/DefinedExperimentalGroup_33003> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32981> .
 <http://scio/data/DefinedExperimentalGroup_33003> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32992> .
+<http://scio/data/ShamOperation_84295> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_33003> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_84297> .
 <http://scio/data/DefinedExperimentalGroup_33013> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_33013> <http://www.w3.org/2000/01/rdf-schema#label> "vehicle infusion, E2" .
 <http://scio/data/DefinedExperimentalGroup_33013> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_393> .
 <http://scio/data/DefinedExperimentalGroup_33013> <http://psink.de/scio/hasInjuryModel> <http://scio/data/PartialTransection_2109> .
 <http://scio/data/DefinedExperimentalGroup_33013> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_32964> .
+<http://scio/data/ShamOperation_84296> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_393> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
 <http://scio/data/OrganismModel_393> <http://www.w3.org/2000/01/rdf-schema#label> "rat" .
@@ -55,7 +58,6 @@
 <http://scio/data/Caudal_32956> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
 <http://scio/data/CompoundTreatment_32949> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_32956> .
 <http://scio/data/Caudal_32956> <http://psink.de/scio/relativeTo> <http://psink.de/scio/Location> .
-<http://scio/data/Distance_83167> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/ChondroitinaseABC_32959> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
 <http://scio/data/CompoundTreatment_32949> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_32959> .
 <http://scio/data/Compound_69840> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
@@ -87,4 +89,13 @@
 <http://scio/data/Compound_33000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/Conduit_33002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit> .
 <http://scio/data/CompoundTreatment_32992> <http://psink.de/scio/hasCompound> <http://scio/data/Conduit_33002> .
+<http://scio/data/CompoundTreatment_84297> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84297> <http://www.w3.org/2000/01/rdf-schema#label> "Matrix" .
+<http://scio/data/DeliveryMethod_84299> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84297> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84299> .
+<http://scio/data/DeliveryMethod_84299> <http://psink.de/scio/hasLocations> <http://psink.de/scio/TreatmentSite> .
+<http://scio/data/Direction_84304> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84305> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Matrix_84307> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Matrix> .
+<http://scio/data/CompoundTreatment_84297> <http://psink.de/scio/hasCompound> <http://scio/data/Matrix_84307> .
 # RDF export of group: Sacrifices

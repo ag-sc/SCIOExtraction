@@ -72,13 +72,14 @@
 <http://scio/data/Isoflurane_14020> <http://psink.de/scio/hasDosage> "1-2%" .
 <http://scio/data/MedicationDuringSurgery_14022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
 <http://scio/data/PartialTransection_14017> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps> .
-<http://scio/data/PartialTransection_14017> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
-<http://scio/data/InjuryArea_14025> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjuryArea> .
-<http://scio/data/Intraspinal_83172> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal> .
 <http://scio/data/NitrousOxide_15056> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NitrousOxide> .
 <http://scio/data/PartialTransection_14017> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/NitrousOxide_15056> .
 <http://scio/data/DeliveryMethod_15057> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
 <http://scio/data/NitrousOxide_15056> <http://psink.de/scio/hasDosage> "25%" .
+<http://scio/data/PartialTransection_14017> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea> .
+<http://scio/data/DorsalInjuryArea_84342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalInjuryArea> .
+<http://scio/data/CorticospinalTract_84343> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CorticospinalTract> .
+<http://scio/data/DorsalInjuryArea_84342> <http://psink.de/scio/hasIntraSpinalLocation> <http://scio/data/CorticospinalTract_84343> .
 # RDF export of group: Treatments
 <http://scio/data/CompoundTreatment_56436> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_56436> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC Injection" .
@@ -90,7 +91,6 @@
 <http://scio/data/CompoundTreatment_56436> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_56443> .
 <http://scio/data/SpinalLesionSite_56451> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Rostral_56443> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_56451> .
-<http://scio/data/Distance_83174> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/Compound_56444> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_56436> <http://psink.de/scio/hasDosage> "100 U/ml" .
 <http://scio/data/ChondroitinaseABC_56446> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
@@ -101,7 +101,6 @@
 <http://scio/data/CompoundTreatment_56436> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_56452> .
 <http://scio/data/SpinalLesionSite_56453> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_56452> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_56453> .
-<http://scio/data/Distance_83175> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/CompoundTreatment_83176> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83176> <http://www.w3.org/2000/01/rdf-schema#label> "Pen Injection" .
 <http://scio/data/InjectionDelivery_83178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
@@ -112,7 +111,6 @@
 <http://scio/data/CompoundTreatment_83176> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_83185> .
 <http://scio/data/SpinalLesionSite_83186> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Rostral_83185> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83186> .
-<http://scio/data/Distance_83187> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/Compound_83188> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_83176> <http://psink.de/scio/hasDosage> "2 mg/ml" .
 <http://scio/data/Penicillinase_83190> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase> .
@@ -123,7 +121,6 @@
 <http://scio/data/CompoundTreatment_83176> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_83193> .
 <http://scio/data/SpinalLesionSite_83194> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_83193> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83194> .
-<http://scio/data/Distance_83195> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/CompoundTreatment_83196> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83196> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC Infusion" .
 <http://scio/data/InjectionDelivery_83198> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .

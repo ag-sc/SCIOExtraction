@@ -21,7 +21,6 @@
 <http://scio/data/AstrogliosisTest_74780> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest> .
 <http://scio/data/AstrogliosisTest_74780> <http://www.w3.org/2000/01/rdf-schema#label> "AstrogliosisTest (GFAP staining intensity)" .
 <http://scio/data/Direction_82404> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_82408> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_82406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/InflammationTest_74782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest> .
 <http://scio/data/InflammationTest_74782> <http://www.w3.org/2000/01/rdf-schema#label> "InflammationTest (macrophage staining)" .

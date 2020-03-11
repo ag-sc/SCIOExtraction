@@ -160,7 +160,6 @@
 <http://scio/data/Direction_31396> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/LateralHemisection_1833> <http://psink.de/scio/hasDirection> <http://scio/data/Direction_31396> .
 <http://scio/data/Direction_31396> <http://psink.de/scio/relativeTo> <http://psink.de/scio/Location> .
-<http://scio/data/Distance_83144> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/Blade_83145> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade> .
 <http://scio/data/LateralHemisection_1833> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_83145> .
 # RDF export of group: Treatments

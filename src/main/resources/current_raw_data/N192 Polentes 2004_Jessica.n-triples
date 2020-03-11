@@ -4,7 +4,6 @@
 <http://scio/data/ElectromyographyTest_76439> <http://www.w3.org/2000/01/rdf-schema#label> "I1, ElectromyographyTest (EMG analysis)" .
 <http://scio/data/Right_82755> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
 <http://scio/data/ElectromyographyTest_76439> <http://psink.de/scio/hasDirection> <http://scio/data/Right_82755> .
-<http://scio/data/Distance_82765> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/ElectromyographyTest_76439> <http://psink.de/scio/hasElectrophysiologyParameter> <http://psink.de/scio/ElectrophysiologicalFrequency> .
 <http://scio/data/AnatomicalLocation_82757> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/ElectromyographyTest_76439> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_82757> .
@@ -12,7 +11,6 @@
 <http://scio/data/ElectromyographyTest_76441> <http://www.w3.org/2000/01/rdf-schema#label> "I2, ElectrophysiologyTest (intensity of the right diaphragm activity)" .
 <http://scio/data/Right_82761> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
 <http://scio/data/ElectromyographyTest_76441> <http://psink.de/scio/hasDirection> <http://scio/data/Right_82761> .
-<http://scio/data/Distance_82941> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/ElectromyographyTest_76441> <http://psink.de/scio/hasElectrophysiologyParameter> <http://psink.de/scio/ElectrophysiologicalAmplitude> .
 <http://scio/data/AnatomicalLocation_82763> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/ElectromyographyTest_76441> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_82763> .
@@ -28,7 +26,6 @@
 <http://scio/data/ElectrophysiologyTest_82951> <http://www.w3.org/2000/01/rdf-schema#label> "I3, ElectrophysiologyTest, PhrenicNerve, IntAmplitude" .
 <http://scio/data/Right_82955> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
 <http://scio/data/ElectrophysiologyTest_82951> <http://psink.de/scio/hasDirection> <http://scio/data/Right_82955> .
-<http://scio/data/Distance_82959> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/ElectrophysiologyTest_82951> <http://psink.de/scio/hasElectrophysiologyParameter> <http://psink.de/scio/IntegratedAmplitude> .
 <http://scio/data/AnatomicalLocation_82957> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/ElectrophysiologyTest_82951> <http://psink.de/scio/hasLocation> <http://scio/data/AnatomicalLocation_82957> .

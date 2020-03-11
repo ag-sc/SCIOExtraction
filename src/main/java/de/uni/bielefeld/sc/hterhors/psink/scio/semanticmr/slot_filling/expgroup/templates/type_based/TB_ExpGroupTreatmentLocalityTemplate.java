@@ -132,22 +132,6 @@ public class TB_ExpGroupTreatmentLocalityTemplate extends AbstractFeatureTemplat
 							treatmentIndicies
 									.add(tretamentAnnotation.asInstanceOfDocumentLinkedAnnotation().relatedTokens.get(0)
 											.getSentenceIndex());
-							//
-//						Pattern project = Pattern.compile(
-//								Pattern.quote(main.asInstanceOfDocumentLinkedAnnotation().textualContent.surfaceForm));
-//						Matcher m = project.matcher(state.getInstance().getDocument().documentContent);
-							//
-//						while (m.find()) {
-//							try {
-							//
-//								int sentence = state.getInstance().getDocument().getTokenByCharStartOffset(m.start())
-//										.getSentenceIndex();
-							//
-//								treatmentIndicies.add(sentence);
-//							} catch (DocumentLinkedAnnotationMismatchException e) {
-//							}
-//						}
-
 						}
 					}
 

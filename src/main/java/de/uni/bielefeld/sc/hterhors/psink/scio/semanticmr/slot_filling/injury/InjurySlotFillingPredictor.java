@@ -118,7 +118,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 //				CRFStatistics [context=Train, getTotalDuration()=78526]
 //				CRFStatistics [context=Test, getTotalDuration()=244]
 //				Compute coverage...
-		return new File("src/main/resources/additional_nerla/injury/DOCUMENT_LINKED");
+		return new File("data/additional_nerla/injury/DOCUMENT_LINKED");
 	}
 
 	@Override

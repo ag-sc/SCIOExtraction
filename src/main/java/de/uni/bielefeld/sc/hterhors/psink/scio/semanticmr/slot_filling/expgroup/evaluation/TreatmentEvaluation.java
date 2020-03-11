@@ -87,6 +87,7 @@ public class TreatmentEvaluation {
 //					+ macroRecall / i);
 //			log.info("TREATMENTS INTERMEDIATE MICRO: " + bothS);
 //			log.info("");
+			
 		}
 //		macroF1 /= results.entrySet().size();
 //		macroPrecision /= results.entrySet().size();

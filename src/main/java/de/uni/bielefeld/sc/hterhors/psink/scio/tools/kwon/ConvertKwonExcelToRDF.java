@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,43 +29,16 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 
 public class ConvertKwonExcelToRDF {
 
-	
 //	OEC
 //	OEC+CELL
 //	OEC+SUBSTANCE
-	
+
 //	Liste mit pubulcations + treatment(s) an Nicole
 //	judgements 
-	
-	
+
 	public static void main(String[] args) throws IOException {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(BuildCorpusFromRawData.dataStructureReader).build();
 
-		
-		
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
-				.setTestProportion(20).setSeed(1000L).build();
-
-		InstanceProvider.maxNumberOfAnnotations = 1000;
-		InstanceProvider.removeEmptyInstances = true;
-		InstanceProvider.removeInstancesWithToManyAnnotations = true;
-
-		File instanceDirectory = SlotFillingCorpusBuilderBib
-				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
-
-		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
-
-		List<EntityTemplate> annotations = new ArrayList<>();
-
-		instanceProvider.getInstances().stream().filter(a->a.toString().contains("N075"))
-				.forEach(a -> annotations.add(toPublication(a.getGoldAnnotations().getAnnotations())));
-
-		ConvertToRDF convertToRDF = new ConvertToRDF(new File("OEC.n-triples"), annotations);
-
-		System.exit(1);
-		
-		
-		
 //		EntityType.get("FunctionalTest").getTransitiveClosureSubEntityTypes().stream()
 //				.filter(a -> !EntityType.get("MotorTest").getTransitiveClosureSubEntityTypes().contains(a))
 //				.filter(a -> !EntityType.get("GaitTest").getTransitiveClosureSubEntityTypes().contains(a))
@@ -96,7 +70,7 @@ public class ConvertKwonExcelToRDF {
 
 //		System.exit(1);
 
-		List<String> lines = Files.readAllLines(new File("AccessDB_Cleaned_v65.csv").toPath()).stream().skip(1)
+		List<String> lines = Files.readAllLines(new File("Kwon_HtH_NB_cleaned_v65.csv").toPath()).stream().skip(1)
 				.collect(Collectors.toList());
 
 		List<EntityTemplate> dataPoints = new ArrayList<>();
@@ -113,7 +87,6 @@ public class ConvertKwonExcelToRDF {
 		}
 		new ConvertToRDF(new File("Excel2RDF.n-triples"), dataPoints);
 
-		int count = 0;
 		for (EntityTemplate publication : dataPoints) {
 
 			boolean containsNonFuc = false;
@@ -153,12 +126,11 @@ public class ConvertKwonExcelToRDF {
 
 		}
 
-		System.out.println(count);
 	}
 
-	private static EntityTemplate toPublication(List<AbstractAnnotation> results) {
+	private static EntityTemplate toPublication(String docName, List<AbstractAnnotation> results) {
 		EntityTemplate publication = new EntityTemplate(EntityType.get("Publication"));
-		publication.setSingleSlotFiller(SlotType.get("hasPubmedID"), getPubmedID(results));
+		publication.setSingleSlotFiller(SlotType.get("hasPubmedID"), getPubmedID(docName));
 		EntityTemplate experiment = new EntityTemplate(EntityType.get("Experiment"));
 
 		publication.addMultiSlotFiller(SlotType.get("describes"), experiment);
@@ -170,11 +142,11 @@ public class ConvertKwonExcelToRDF {
 		return publication;
 	}
 
-	private static AbstractAnnotation getPubmedID(List<AbstractAnnotation> results) {
+	private static AbstractAnnotation getPubmedID(String docName) {
 		/**
 		 * TODO: how to get correct pubmed id???
 		 */
-		return AnnotationBuilder.toAnnotation("PubmedID", UUID.randomUUID().toString());
+		return AnnotationBuilder.toAnnotation("PubmedID", docName);
 	}
 
 	/*
@@ -265,9 +237,8 @@ public class ConvertKwonExcelToRDF {
 			treatment.setSingleSlotFiller(SlotType.get("hasDosage"),
 					AnnotationBuilder.toAnnotation("Dosage", data[21]));
 
-		}
-		if (!data[24].trim().isEmpty()) {
-			treatment.setSingleSlotFiller(SlotType.get("hasTemperture"),
+		} else if (data.length > 24 && !data[24].trim().isEmpty()) {
+			treatment.setSingleSlotFiller(SlotType.get("hasTemperature"),
 					AnnotationBuilder.toAnnotation("Temperature", data[24]));
 
 		}

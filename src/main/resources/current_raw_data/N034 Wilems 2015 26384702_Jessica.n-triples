@@ -34,4 +34,17 @@
 <http://scio/data/AntibioticMedication_3369> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
 <http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3369> .
 # RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_84345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84345> <http://www.w3.org/2000/01/rdf-schema#label> "matrix + factors" .
+<http://scio/data/DeliveryMethod_84347> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_84352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Neurotrophin3_84353> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Neurotrophin3> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Neurotrophin3_84353> .
+<http://scio/data/Matrix_84355> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Matrix> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasCompound> <http://scio/data/Matrix_84355> .
+<http://scio/data/Compound_84356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Treatment_84363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
+<http://scio/data/Treatment_84363> <http://www.w3.org/2000/01/rdf-schema#label> "Trehalose" .
+<http://scio/data/DeliveryMethod_84365> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_84370> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 # RDF export of group: Sacrifices

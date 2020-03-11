@@ -99,7 +99,6 @@
 <http://scio/data/CompoundTreatment_31655> <http://psink.de/scio/hasDirection> <http://scio/data/Direction_31666> .
 <http://scio/data/SpinalLesionSite_31667> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Direction_31666> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_31667> .
-<http://scio/data/Distance_83158> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/CompoundTreatment_31655> <http://psink.de/scio/hasDosage> "100 U/ml" .
 <http://scio/data/CompoundTreatment_31655> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette> .
 <http://scio/data/Rostral_31671> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .

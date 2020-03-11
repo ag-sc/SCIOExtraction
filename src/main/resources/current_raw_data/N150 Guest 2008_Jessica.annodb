@@ -99,14 +99,14 @@
 56444, MonkeySpecies, 8730, 8738, "primates", "", 
 26139, Age, 8753, 8772, "from1.5 to 10 years", "", 
 26140, MeanValue, 8779, 8782, "4.8", "", 
-26142, StandardDeviation, 8782, 8786, "+/−3", "", 
+26142, StandardDeviation, 8782, 8792, "+/−3 years", "", 
 26147, NNumber, 8878, 8880, "11", "", 
 26148, Male, 8881, 8886, "males", "", 
 26149, NNumber, 8891, 8892, "6", "", 
 26150, Female, 8893, 8900, "females", "", 
 26151, MeanValue, 8923, 8926, "4.9", "", 
 26152, Weight, 8923, 8926, "4.9", "", 
-26153, StandardDeviation, 8926, 8932, "+/−2.2", "", 
+26153, StandardDeviation, 8926, 8935, "+/−2.2 kg", "", 
 26154, Purification, 10538, 10555, "p75 immunopanning", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_11139> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>. <http://scio/data/OlfactoryEnsheathingGliaCell_11173> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
 26155, OlfactoryEnsheathingGliaCell, 12278, 12282, "POEG", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_11139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_11130> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_11139>. <http://scio/data/OlfactoryEnsheathingGliaCell_11173> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_11164> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_11173>."
 56451, InVitroExperimentalProcedure, 12317, 12336, "lentivirus 6/VS-GFP", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_11173> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
@@ -118,11 +118,11 @@
 26163, IntramuscularLocation, 12846, 12859, "intramuscular", "", "<http://scio/data/InjectionDelivery_9479> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_9484> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_9489> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>."
 57675, InjectionDelivery, 12846, 12859, "intramuscular", "", "<http://scio/data/InjectionDelivery_9479> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_9354> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9479>. <http://scio/data/InjectionDelivery_9484> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_9483> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9484>. <http://scio/data/InjectionDelivery_9489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_9488> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9489>."
 26164, KetamineAsAnaesthetic, 12874, 12882, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_9354> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_9354>."
-26165, DosageIntracorporal, 12883, 12891, "43 mg/ml", "", "<http://scio/data/KetamineAsAnaesthetic_9354> <http://psink.de/scio/hasDosage> \"43 mg/ml\"."
+103131, DosageExtracorporal, 12883, 12891, "43 mg/ml", "", "<http://scio/data/KetamineAsAnaesthetic_9354> <http://psink.de/scio/hasDosage> \"43 mg/ml\"."
 26166, Xylazine, 12893, 12901, "xylazine", "", "<http://scio/data/Xylazine_9483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_9483>."
-26167, DosageIntracorporal, 12902, 12912, "8.6 mg/ ml", "", "<http://scio/data/Xylazine_9483> <http://psink.de/scio/hasDosage> \"8.6 mg/ ml\"."
+103129, DosageExtracorporal, 12902, 12912, "8.6 mg/ ml", "", "<http://scio/data/Xylazine_9483> <http://psink.de/scio/hasDosage> \"8.6 mg/ ml\"."
 26168, Anaesthetic, 12914, 12926, "acepromacine", "", "<http://scio/data/Anaesthetic_9488> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_9488>."
-26169, DosageIntracorporal, 12927, 12936, "1.4 mg/ml", "", "<http://scio/data/Anaesthetic_9488> <http://psink.de/scio/hasDosage> \"1.4 mg/ml\"."
+103130, DosageExtracorporal, 12927, 12936, "1.4 mg/ml", "", "<http://scio/data/Anaesthetic_9488> <http://psink.de/scio/hasDosage> \"1.4 mg/ml\"."
 26170, DosageIntracorporal, 12941, 12950, "0.5 ml/kg", "", 
 26172, MedicationDuringSurgery, 12981, 12987, "Kefzol", "", "<http://scio/data/MedicationDuringSurgery_9356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_9356>."
 98263, AntibioticMedication, 12981, 12987, "Kefzol", "", "<http://scio/data/AntibioticMedication_55737> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_55737>."
@@ -132,7 +132,7 @@
 26179, BladderExpression, 13172, 13179, "voiding", "", "<http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
 98268, AntibioticMedication, 13202, 13214, "tetracycline", "", "<http://scio/data/AntibioticMedication_55739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_55739>."
 26181, DosageExtracorporal, 13216, 13223, "1 mg/ml", "", "<http://scio/data/AntibioticMedication_55739> <http://psink.de/scio/hasDosage> \"1 mg/ml\"."
-26182, PostsurgicalMedication, 13229, 13236, "Vitamin", "", "<http://scio/data/PostsurgicalMedication_55741> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_55741>."
+26182, PostsurgicalMedication, 13229, 13238, "Vitamin C", "", "<http://scio/data/PostsurgicalMedication_55741> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_55741>."
 26183, DosageExtracorporal, 13240, 13248, "200 mg/L", "", "<http://scio/data/PostsurgicalMedication_55741> <http://psink.de/scio/hasDosage> \"200 mg/L\"."
 98269, AntibioticMedication, 13323, 13330, "Baytril", "", "<http://scio/data/AntibioticMedication_55743> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_9351> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_55743>."
 26185, DosageIntracorporal, 13332, 13340, "15 mg/kg", "", "<http://scio/data/AntibioticMedication_55743> <http://psink.de/scio/hasDosage> \"15 mg/kg\"."
@@ -233,9 +233,9 @@
 26299, SpinalCord, 24787, 24798, "spinal cord", "", 
 26300, CystVolumeTest, 24822, 24846, "volume of cavitieswithin", "", 
 26301, AnalyzedExperimentalGroup, 24877, 24893, "control injected", "E2", 
-26302, NNumber, 24895, 24898, "n=5", "", 
+26302, NNumber, 24897, 24898, "5", "", 
 26303, AnalyzedExperimentalGroup, 24904, 24908, "POEG", "E1", 
-26304, NNumber, 24910, 24913, "n=5", "", 
+26304, NNumber, 24912, 24913, "5", "", 
 56437, RatSpecies, 24928, 24932, "rats", "", 
 26306, StatisticalTest, 25506, 25521, "2 tailed t-test", "", "<http://scio/data/Result_11337> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
 56438, RatSpecies, 25570, 25577, "animals", "", 
@@ -269,20 +269,20 @@
 26345, ZeroSignificance, 37019, 37047, "no statistically significant", "R4", "<http://scio/data/ZeroSignificance_11269> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_11267> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_11269>."
 98223, GroupName, 37086, 37103, "POEG-transplanted", "", 
 26347, MeanValue, 37104, 37106, "63", "", 
-26348, StandardDeviation, 37107, 37110, "9.5", "", 
+26348, StandardDeviation, 37106, 37110, "±9.5", "", 
 98224, GroupName, 37115, 37137, "control media-injected", "", 
 26350, MeanValue, 37143, 37145, "54", "", 
-26351, StandardDeviation, 37146, 37150, "10.5", "", 
+26351, StandardDeviation, 37145, 37150, "±10.5", "", 
 26352, VerticalGrid, 37198, 37202, "grid", "", "<http://scio/data/LadderRungTest_62312> <http://psink.de/scio/makesUseOf> <http://psink.de/scio/VerticalGrid>."
 26353, StatisticalTest, 37204, 37227, "Student's 2-tailed test", "", "<http://scio/data/Result_11260> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
-26354, PValue, 37231, 37235, "0.06", "", "<http://scio/data/ZeroSignificance_11269> <http://psink.de/scio/hasPValue> \"0.06\"."
+26354, PValue, 37229, 37235, "p=0.06", "", "<http://scio/data/ZeroSignificance_11269> <http://psink.de/scio/hasPValue> \"p=0.06\"."
 26355, NonFunctionalTest, 37721, 37747, "mean renal pathology score", "", "<http://scio/data/NonFunctionalTest_62316> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NonFunctionalTest>. <http://scio/data/NonFunctionalTest_74800> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NonFunctionalTest>. <http://scio/data/NonFunctionalTest_74800> <http://www.w3.org/2000/01/rdf-schema#label> \"NonFunctionalTest (mean renal pathology score)\". <http://scio/data/Result_11273> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
 26356, DefinedExperimentalGroup, 37752, 37770, "control animalswas", "E2", 
 26357, MeanValue, 37771, 37775, "2.75", "", 
-26358, StandardDeviation, 37776, 37779, "1.1", "", 
+26358, StandardDeviation, 37775, 37779, "±1.1", "", 
 75187, GroupName, 37788, 37802, "transplantswas", "", "<http://scio/data/DefinedExperimentalGroup_11181> <http://psink.de/scio/hasGroupName> \"transplantswas\"."
 26360, MeanValue, 37803, 37806, "3.0", "", 
-26361, StandardDeviation, 37807, 37810, "1.2", "", 
+26361, StandardDeviation, 37806, 37810, "±1.2", "", 
 26362, StatisticalTest, 37813, 37838, "Student's 2 tailed t-test", "", "<http://scio/data/Result_11273> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
 26363, PValue, 37840, 37846, "p=0.58", "R5", "<http://scio/data/Significance_11281> <http://psink.de/scio/hasPValue> \"p=0.58\"."
 75188, GroupName, 38679, 38691, "Transplanted", "", "<http://scio/data/DefinedExperimentalGroup_11181> <http://psink.de/scio/hasGroupName> \"Transplanted\"."
@@ -315,10 +315,10 @@
 26396, AxonalSproutingTest, 43081, 43109, "primary collateral processes", "", "<http://scio/data/AxonalSproutingTest_62333> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74810> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74810> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (primary collateral processes)\". <http://scio/data/Result_11325> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
 98225, GroupName, 43123, 43147, "POEGtransplanted animals", "", 
 26398, MeanValue, 43149, 43152, "1.4", "", 
-26399, StandardDeviation, 43155, 43158, "0.6", "", 
+26399, StandardDeviation, 43152, 43180, "+/−0.6 processes per axon/mm", "", 
 26400, DefinedExperimentalGroup, 43197, 43212, "control animals", "E2", 
 26401, MeanValue, 43214, 43217, "0.7", "", 
-26402, StandardDeviation, 43220, 43223, "0.5", "", 
+26402, StandardDeviation, 43217, 43245, "+/−0.5 processes per axon/mm", "", 
 26403, Distance, 43254, 43265, "2.5– 5.0 mm", "", 
 26404, Rostral, 43266, 43278, "rostral zone", "", 
 26405, PValue, 43280, 43286, "p=0.03", "", "<http://scio/data/PositiveSignificance_11333> <http://psink.de/scio/hasPValue> \"p=0.03\"."
@@ -327,10 +327,10 @@
 98226, GroupName, 43528, 43553, "POEG-transplanted animals", "", 
 26409, CystVolumeTest, 43569, 43575, "volume", "", "<http://scio/data/CystVolumeTest_62337> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CystVolumeTest>. <http://scio/data/CystVolumeTest_74812> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CystVolumeTest>. <http://scio/data/CystVolumeTest_74812> <http://www.w3.org/2000/01/rdf-schema#label> \"CystVolumeTest (volume)\". <http://scio/data/Result_11337> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
 26410, MeanValue, 43579, 43582, "4.5", "", 
-26411, StandardDeviation, 43585, 43589, "0.77", "", 
+26411, StandardDeviation, 43582, 43593, "+/−0.77 mm3", "", 
 75192, GroupName, 43609, 43632, "medium injected animals", "", "<http://scio/data/DefinedExperimentalGroup_22191> <http://psink.de/scio/hasGroupName> \"medium injected animals\"."
 26413, MeanValue, 43633, 43636, "5.9", "", 
-26414, StandardDeviation, 43639, 43643, "0.65", "", 
+26414, StandardDeviation, 43636, 43647, "+/−0.65 mm3", "", 
 26415, ObservedDifference, 43654, 43664, "difference", "R11", "<http://scio/data/Trend_11344> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
 26416, PositiveSignificance, 43669, 43694, "statistically significant", "R11", "<http://scio/data/PositiveSignificance_11345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_11344> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_11345>."
 56461, PValue, 43696, 43702, "p=0.01", "", "<http://scio/data/PositiveSignificance_11345> <http://psink.de/scio/hasPValue> \"p=0.01\"."

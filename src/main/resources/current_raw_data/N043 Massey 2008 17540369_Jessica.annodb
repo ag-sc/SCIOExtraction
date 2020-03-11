@@ -16,9 +16,10 @@
 49901, PartialTransection, 9109, 9126, "transverse lesion", "", "<http://scio/data/PartialTransection_2384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_2384> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
 54216, VertebralArea, 9139, 9148, "C3 and C4", "", "<http://scio/data/VertebralArea_3764> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3764>."
 49897, Vibraknife, 9179, 9189, "Vibraknife", "", "<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife>."
-49898, InjuryArea, 9239, 9302, "severing most primary afferents in the dorsal columnDCN pathway", "", "<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+103401, DorsalInjuryArea, 9278, 9294, "dorsal columnDCN", "", "<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea>. <http://scio/data/DorsalInjuryArea_2392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalInjuryArea>."
 49893, T1, 9446, 9448, "T1", "", 
 49894, Laminectomy, 9484, 9495, "laminectomy", "", 
 49899, Forceps, 9518, 9530, "microforceps", "", 
 49892, Forceps, 9694, 9701, "forceps", "", 
 54214, Duration, 9743, 9747, "10 s", "", 
+103402, ChondroitinaseABC, 17063, 17068, "chABC", "", 

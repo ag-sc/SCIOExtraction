@@ -1,4 +1,6 @@
 # AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+103240, Intrathecal, 2912, 2914, "IT", "", 
+103238, Intrathecal, 2916, 2927, "intrathecal", "", 
 48583, Adult, 7072, 7077, "adult", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
 48584, Female, 7078, 7084, "female", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
 48585, SpragueDawleyRat, 7085, 7104, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_459> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
@@ -12,9 +14,35 @@
 50815, IntramuscularLocation, 7230, 7232, "IM", "", 
 57474, InjectionDelivery, 7230, 7232, "IM", "", 
 49816, Laminectomy, 7242, 7253, "laminectomy", "", 
-49817, C3, 7294, 7296, "C3", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C3>."
-49818, Vibraknife, 7369, 7379, "Vibraknife", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife>."
-49820, C3, 7388, 7390, "C3", "", 
+49820, C3, 7388, 7390, "C3", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C3>."
 49819, DorsalHemisection, 7391, 7409, "dorsal hemisection", "", "<http://scio/data/DorsalHemisection_2308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_2308> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
-49821, Vibraknife, 7420, 7430, "Vibraknife", "", 
-49828, InjuryArea, 7678, 7736, "effectively transecting all fibers in the dorsal funiculus", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+49821, Vibraknife, 7420, 7430, "Vibraknife", "", "<http://scio/data/DorsalHemisection_2308> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife>."
+103220, Catheter, 7843, 7851, "catheter", "", 
+103221, C3, 7983, 7985, "C3", "", "<http://scio/data/InjectionDelivery_83572> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3>. <http://scio/data/InjectionDelivery_83586> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3>. <http://scio/data/InjectionDelivery_83601> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3>. <http://scio/data/InjectionDelivery_83617> <http://psink.de/scio/hasLocations> <http://psink.de/scio/C3>."
+103222, Duration, 9184, 9205, "On the day of surgery", "", "<http://scio/data/TemporalInterval_83633> <http://psink.de/scio/hasDuration> \"On the day of surgery\". <http://scio/data/TemporalInterval_83657> <http://psink.de/scio/hasDuration> \"On the day of surgery\". <http://scio/data/TemporalInterval_83681> <http://psink.de/scio/hasDuration> \"On the day of surgery\"."
+103231, Frequency, 9210, 9224, "alternate days", "", "<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasFrequency> \"alternate days\". <http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasFrequency> \"alternate days\". <http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasFrequency> \"alternate days\". <http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasFrequency> \"alternate days\"."
+103232, InjectionDelivery, 9242, 9252, "injections", "", 
+103223, Duration, 9254, 9276, "days 0, 2, 4, 6, and 8", "", "<http://scio/data/TemporalInterval_83641> <http://psink.de/scio/hasDuration> \"days 0, 2, 4, 6, and 8\". <http://scio/data/TemporalInterval_83665> <http://psink.de/scio/hasDuration> \"days 0, 2, 4, 6, and 8\". <http://scio/data/TemporalInterval_83689> <http://psink.de/scio/hasDuration> \"days 0, 2, 4, 6, and 8\"."
+103233, SpragueDawleyRat, 9284, 9290, "animal", "", 
+103234, Intrathecal, 9303, 9305, "IT", "", "<http://scio/data/Intrathecal_83580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_83572> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83580>. <http://scio/data/Intrathecal_83589> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_83586> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83589>. <http://scio/data/Intrathecal_83604> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_83601> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83604>. <http://scio/data/Intrathecal_83620> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_83617> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83620>."
+103237, InjectionDelivery, 9306, 9315, "injection", "", "<http://scio/data/InjectionDelivery_83572> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83572>. <http://scio/data/InjectionDelivery_83586> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83586>. <http://scio/data/InjectionDelivery_83601> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83601>. <http://scio/data/InjectionDelivery_83617> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83617>."
+103224, Catheter, 9328, 9336, "catheter", "", "<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>. <http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter>."
+103255, Duration, 9386, 9434, "solution was injected IT followed by 3 μL saline", "", "<http://scio/data/TemporalInterval_83649> <http://psink.de/scio/hasDuration> \"solution was injected IT followed by 3 μL saline\". <http://scio/data/TemporalInterval_83673> <http://psink.de/scio/hasDuration> \"solution was injected IT followed by 3 μL saline\". <http://scio/data/TemporalInterval_83697> <http://psink.de/scio/hasDuration> \"solution was injected IT followed by 3 μL saline\"."
+103241, Intrathecal, 9408, 9410, "IT", "", 
+103243, Saline, 9428, 9434, "saline", "", "<http://scio/data/Saline_83597> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline>. <http://scio/data/CompoundTreatment_83584> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_83597>."
+103242, InjectionDelivery, 9435, 9443, "injected", "", 
+103250, Catheter, 9453, 9459, "tubing", "", 
+103251, Syringe, 9468, 9484, "Hamilton syringe", "", 
+103244, Penicillinase, 9486, 9499, "Penicillinase", "", "<http://scio/data/Penicillinase_83583> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase>. <http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasCompound> <http://scio/data/Penicillinase_83583>."
+103246, DosageExtracorporal, 9501, 9509, "30 μg/mL", "", "<http://scio/data/CompoundTreatment_83570> <http://psink.de/scio/hasDosage> \"30 μg/mL\"."
+103227, DefinedExperimentalGroup, 9527, 9534, "control", "", 
+103226, NNumber, 9540, 9541, "5", "", 
+103228, ChondroitinaseABC, 9544, 9562, "Chondroitinase ABC", "", "<http://scio/data/ChondroitinaseABC_83612> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83612>. <http://scio/data/ChondroitinaseABC_83628> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83628>."
+103249, SigmaAldrich, 9581, 9594, "Sigma-Aldrich", "", "<http://scio/data/ChondroitinaseABC_83612> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>. <http://scio/data/ChondroitinaseABC_83628> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>."
+103252, DefinedExperimentalGroup, 9942, 9956, "Highdose ChABC", "", 
+103247, DosageExtracorporal, 9958, 9978, "0.18 units/treatment", "", "<http://scio/data/CompoundTreatment_83615> <http://psink.de/scio/hasDosage> \"0.18 units/treatment\"."
+103229, NNumber, 9984, 9985, "9", "", 
+103253, DefinedExperimentalGroup, 9991, 10005, "low-dose ChABC", "", 
+103248, DosageExtracorporal, 10007, 10027, "0.06 units/treatment", "", "<http://scio/data/CompoundTreatment_83599> <http://psink.de/scio/hasDosage> \"0.06 units/treatment\"."
+103230, NNumber, 10033, 10034, "8", "", 
+103254, InjectionDelivery, 10041, 10049, "injected", "", 

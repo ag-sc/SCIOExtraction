@@ -483,7 +483,6 @@
 <http://scio/data/AnatomicalLocation_19463> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/Tissue_6115> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_19463> .
 <http://scio/data/Direction_19462> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_69294> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/CompoundTreatment_6121> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_6121> <http://www.w3.org/2000/01/rdf-schema#label> "2 Wochen treated" .
 <http://scio/data/DeliveryMethod_6123> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
@@ -537,5 +536,4 @@
 <http://scio/data/SurgeryTreatment_34470> <http://www.w3.org/2000/01/rdf-schema#label> "acute Surgery Treatment" .
 <http://scio/data/DeliveryMethod_34472> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
 <http://scio/data/Direction_34477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_69296> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 # RDF export of group: Sacrifices

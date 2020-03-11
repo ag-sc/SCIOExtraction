@@ -1,14 +1,12 @@
 # RDF export of group: InvestigationMethod
 <http://scio/data/HistologicalInvestigationTest_64334> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
 <http://scio/data/Direction_69589> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_69629> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_69591> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/CystVolumeTest_64354> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CystVolumeTest> .
 <http://scio/data/Direction_69683> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/HistologicalInvestigationParameter_69685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_64358> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/Direction_69598> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_69660> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_69600> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_64364> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/Direction_69647> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .

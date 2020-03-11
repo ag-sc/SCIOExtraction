@@ -42,7 +42,6 @@
 <http://scio/data/NeuronalChangesTest_75216> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest> .
 <http://scio/data/NeuronalChangesTest_75216> <http://www.w3.org/2000/01/rdf-schema#label> "NeuronalChangesTest (soma size)" .
 <http://scio/data/Direction_77714> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_77718> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_77716> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/NeuronalChangesTest_75218> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest> .
 <http://scio/data/NeuronalChangesTest_75218> <http://www.w3.org/2000/01/rdf-schema#label> "NeuronalChangesTest (soma size)" .

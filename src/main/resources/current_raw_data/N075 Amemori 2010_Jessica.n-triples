@@ -31,7 +31,6 @@
 <http://scio/data/TissueSparingTest_77167> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest> .
 <http://scio/data/TissueSparingTest_77167> <http://www.w3.org/2000/01/rdf-schema#label> "TissueSparingTest (cross-sectional area of the spared white and gray matter)" .
 <http://scio/data/Direction_82217> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Distance_82221> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/HistologicalInvestigationParameter_82219> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/TissueSparingTest_77169> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest> .
 <http://scio/data/TissueSparingTest_77169> <http://www.w3.org/2000/01/rdf-schema#label> "TissueSparingTest (cross-sectional area of the spared white and gray matter)" .

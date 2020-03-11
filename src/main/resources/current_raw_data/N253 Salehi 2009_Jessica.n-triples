@@ -694,9 +694,9 @@
 <http://scio/data/CompoundTreatment_16304> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_16329> .
 <http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
 <http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic> .
-<http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure> .
 <http://scio/data/AnatomicalLocation_16336> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_16336> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_16329> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling> .
 <http://scio/data/CompoundTreatment_16304> <http://psink.de/scio/hasDosage> "1 × 106" .
 <http://scio/data/CompoundTreatment_16312> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_16312> <http://www.w3.org/2000/01/rdf-schema#label> "ESMN" .
@@ -712,6 +712,7 @@
 <http://scio/data/CompoundTreatment_16312> <http://psink.de/scio/hasCompound> <http://scio/data/Cell_16339> .
 <http://scio/data/Cell_16339> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies> .
 <http://scio/data/Cell_16339> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic> .
+<http://scio/data/Cell_16339> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling> .
 <http://scio/data/AnatomicalLocation_16346> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/CompoundTreatment_16312> <http://psink.de/scio/hasDosage> "1 × 106" .
 # RDF export of group: Sacrifices

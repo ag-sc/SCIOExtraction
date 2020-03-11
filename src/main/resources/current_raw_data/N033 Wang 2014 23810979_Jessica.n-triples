@@ -79,7 +79,6 @@
 <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_83313> .
 <http://scio/data/SpinalLesionSite_83320> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Rostral_83313> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83320> .
-<http://scio/data/Distance_83321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/Compound_83314> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDosage> "1.96 x 106 TU/µL" .
 <http://scio/data/ChondroitinaseABC_83316> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
@@ -88,7 +87,6 @@
 <http://scio/data/CompoundTreatment_83306> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_83322> .
 <http://scio/data/SpinalLesionSite_83323> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
 <http://scio/data/Caudal_83322> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_83323> .
-<http://scio/data/Distance_83324> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Distance> .
 <http://scio/data/CompoundTreatment_83325> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83325> <http://www.w3.org/2000/01/rdf-schema#label> "GÖ6976 cortical Injection" .
 <http://scio/data/InjectionDelivery_83327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .

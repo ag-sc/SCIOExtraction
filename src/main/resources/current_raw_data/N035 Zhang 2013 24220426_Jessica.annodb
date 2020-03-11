@@ -4,7 +4,49 @@
 48580, SpragueDawleyRat, 6879, 6898, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_453> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
 48582, Age, 6900, 6910, "2Y3 mo old", "", "<http://scio/data/OrganismModel_453> <http://psink.de/scio/hasAge> \"2Y3 mo old\"."
 48581, Weight, 6912, 6921, "200Y250 g", "", "<http://scio/data/OrganismModel_453> <http://psink.de/scio/hasWeight> \"200Y250 g\"."
+103152, Randomization, 7937, 7945, "randomly", "", 
+103167, DefinedExperimentalGroup, 7969, 7982, "control group", "E1", 
+103168, DefinedExperimentalGroup, 7988, 7998, "sham group", "E2", 
+103169, DefinedExperimentalGroup, 8004, 8019, "SCI model group", "E3", 
+103170, DefinedExperimentalGroup, 8025, 8045, "GDNF treatment group", "E4", 
+103175, Substance, 8025, 8029, "GDNF", "", 
+103171, DefinedExperimentalGroup, 8051, 8076, "PLGA-GDNF treatment group", "E5", 
+103176, Substance, 8051, 8060, "PLGA-GDNF", "", 
+103172, DefinedExperimentalGroup, 8082, 8108, "PLGA-ChABC treatment group", "E6", 
+103178, ChondroitinaseABC, 8082, 8092, "PLGA-ChABC", "", 
+103173, DefinedExperimentalGroup, 8114, 8150, "PLGA-Nogo A antibody treatment group", "E7", 
+103180, AntiNogoAAntibody, 8114, 8134, "PLGA-Nogo A antibody", "", 
+103174, DefinedExperimentalGroup, 8161, 8217, "PLGA-GDNF , PLGA-ChABC , and PLGA-Nogo A combination group", "E8", 
+103177, Substance, 8161, 8170, "PLGA-GDNF", "", 
+103179, ChondroitinaseABC, 8172, 8182, "PLGA-ChABC", "", 
+103181, AntiNogoAAntibody, 8188, 8199, "PLGA-Nogo A", "", 
 49814, T10, 8223, 8226, "T10", "", "<http://scio/data/Injury_14466> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
 57360, Injury, 8227, 8255, "segmental transversal injury", "", "<http://scio/data/Injury_14466> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Injury>. <http://scio/data/Injury_14466> <http://www.w3.org/2000/01/rdf-schema#label> \"segemental transversal injury\"."
 54208, SpragueDawleyRat, 8263, 8266, "rat", "", 
 57361, SpinalCord, 8267, 8278, "spinal cord", "", 
+103182, SpragueDawleyRat, 8300, 8304, "rats", "", 
+103206, GroupName, 8325, 8332, "control", "E1", 
+103204, GroupName, 8337, 8348, "sham groups", "E2", 
+103185, Duration, 8397, 8414, "After the surgery", "", "<http://scio/data/TemporalInterval_83530> <http://psink.de/scio/hasDuration> \"After the surgery\". <http://scio/data/TemporalInterval_83538> <http://psink.de/scio/hasDuration> \"After the surgery\". <http://scio/data/TemporalInterval_83546> <http://psink.de/scio/hasDuration> \"After the surgery\". <http://scio/data/TemporalInterval_83554> <http://psink.de/scio/hasDuration> \"After the surgery\". <http://scio/data/TemporalInterval_83562> <http://psink.de/scio/hasDuration> \"After the surgery\"."
+103213, SpinalCord, 8435, 8446, "spinal cord", "", "<http://scio/data/SpinalCord_83463> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_83453> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83463>. <http://scio/data/SpinalCord_83468> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_83466> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83468>. <http://scio/data/SpinalCord_83481> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_83479> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83481>. <http://scio/data/SpinalCord_83498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_83496> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83498>. <http://scio/data/SpinalCord_83515> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_83513> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83515>."
+103187, InjectionDelivery, 8452, 8460, "injected", "", "<http://scio/data/InjectionDelivery_83453> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83451> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83453>. <http://scio/data/InjectionDelivery_83466> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83466>. <http://scio/data/InjectionDelivery_83479> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83479>. <http://scio/data/InjectionDelivery_83496> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83496>. <http://scio/data/InjectionDelivery_83513> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83513>."
+103161, Syringe, 8498, 8510, "microsyringe", "", "<http://scio/data/CompoundTreatment_83451> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+103214, Saline, 8521, 8536, "sodium chloride", "", "<http://scio/data/Saline_83461> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline>. <http://scio/data/CompoundTreatment_83451> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_83461>."
+103207, GroupName, 8555, 8570, "SCI model group", "E1", 
+103188, Substance, 8573, 8577, "GDNF", "", "<http://scio/data/Substance_83476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83476>."
+103193, DosageExtracorporal, 8579, 8594, "0.4 µg in 50-µL", "", "<http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasDosage> \"0.4 µg in 50-µL\"."
+103208, GroupName, 8612, 8622, "GDNF group", "E4", 
+103190, Substance, 8625, 8642, "GDNF microspheres", "", "<http://scio/data/Substance_83489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83489>."
+103215, InVitroExperimentalProcedure, 8630, 8642, "microspheres", "", 
+103194, DosageExtracorporal, 8644, 8659, "0.4 µg in 50-µL", "", "<http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasDosage> \"0.4 µg in 50-µL\"."
+103209, GroupName, 8677, 8699, "GDNF microsphere group", "E5", 
+103191, AntiNogoAAntibody, 8702, 8730, "Nogo A antibody microspheres", "", "<http://scio/data/AntiNogoAAntibody_83506> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntiNogoAAntibody>. <http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasCompound> <http://scio/data/AntiNogoAAntibody_83506>."
+103216, InVitroExperimentalProcedure, 8718, 8730, "microspheres", "", 
+103195, DosageExtracorporal, 8732, 8746, "50 Kg in 50-KL", "", "<http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasDosage> \"50 Kg in 50-KL\"."
+103210, GroupName, 8764, 8789, "Nogo A microspheres group", "E7", 
+103192, ChondroitinaseABC, 8792, 8810, "ChABC microspheres", "", "<http://scio/data/ChondroitinaseABC_83523> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83523>."
+103217, InVitroExperimentalProcedure, 8798, 8810, "microspheres", "", 
+103196, DosageExtracorporal, 8812, 8827, "0.25 U in 50-µL", "", "<http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasDosage> \"0.25 U in 50-µL\"."
+103211, GroupName, 8845, 8869, "ChABC microspheres group", "E6", 
+103218, InVitroExperimentalProcedure, 8884, 8896, "microspheres", "", 
+103212, GroupName, 8924, 8951, "combined microspheres group", "E8", 
