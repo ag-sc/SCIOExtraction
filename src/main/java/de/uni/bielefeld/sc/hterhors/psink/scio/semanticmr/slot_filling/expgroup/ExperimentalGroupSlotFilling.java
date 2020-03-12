@@ -136,7 +136,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	public static void main(String[] args) throws Exception {
 
 		if (args.length == 0)
-			new ExperimentalGroupSlotFilling(-1, 100);
+			new ExperimentalGroupSlotFilling(9, 100);
 		else
 			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
@@ -1074,6 +1074,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<IExplorationStrategy> explorerList = new ArrayList<>();
 
 		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
+	
 		if (cardinalityMode == ECardinalityMode.SAMPLE || cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
 			hardConstraintsProvider.addHardConstraints(
 					new DistinctCompleteExpGroupConstraint(predictionObjectiveFunction.getEvaluator()));

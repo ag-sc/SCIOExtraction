@@ -135,18 +135,19 @@ public class ResultOutPutReader {
 
 	}
 
+	static String folder = "new_cardinality";
+
 	public static void main(String[] args) throws Exception {
+
 		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/cardinality_semantic/merge_cardinality.csv"));
+				new File("results/experimentalgroupextratcion/" + folder + "/merge_cardinality.csv"));
 		Map<String, Map<String, List<Score>>> dataMap = new HashMap<>();
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 100; run < 110; run++) {
+		for (int run = 100; run < 101; run++) {
 
-			if(run!=106)
-				continue;
-			File dir = new File("results/experimentalgroupextratcion/cardinality_semantic/" + run + "/");
+			File dir = new File("results/experimentalgroupextratcion/" + folder + "/" + run + "/");
 
 			int modeCounter = 0;
 
@@ -177,11 +178,15 @@ public class ResultOutPutReader {
 					modeValueNames.add(modePair.mode);
 				}
 				for (int i = 8; i < readAllLines.size(); i++) {
-					if (i == 15 || i == 16)
-						continue;
-					if (i == 23 || i == 24)
-						continue;
+//					if (i == 15 || i == 16)
+//						continue;
+//					if (i == 23 || i == 24)
+//						continue;
 					DataPair dataPair = getDataPattern(readAllLines.get(i));
+			
+					if (dataPair == null)
+						continue;
+
 					dataMap.putIfAbsent(dataPair.mode, new HashMap<>());
 					if (!dataMap.get(dataPair.mode).containsKey(modeName)) {
 						dataMap.get(dataPair.mode).put(modeName, new ArrayList<>());
@@ -257,7 +262,7 @@ public class ResultOutPutReader {
 	}
 
 	public static void singleFolder(int run) throws FileNotFoundException, IOException {
-		File dir = new File("results/experimentalgroupextratcion/cardinality_semantic/" + run + "/");
+		File dir = new File("results/experimentalgroupextratcion/" + folder + "/" + run + "/");
 
 		int modeCounter = 0;
 
@@ -280,7 +285,7 @@ public class ResultOutPutReader {
 		});
 
 		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/cardinality_semantic/" + run + "/merge_cardinality.csv"));
+				new File("results/experimentalgroupextratcion/" + folder + "/" + run + "/merge_cardinality.csv"));
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);
@@ -297,11 +302,10 @@ public class ResultOutPutReader {
 				modeValueNames.add(modePair.mode);
 			}
 			for (int i = 8; i < readAllLines.size(); i++) {
-				if (i == 15 || i == 16)
-					continue;
-				if (i == 23 || i == 24)
-					continue;
+
 				DataPair dataPair = getDataPattern(readAllLines.get(i));
+				if (dataPair == null)
+					continue;
 				dataMap.putIfAbsent(dataPair.mode, new HashMap<>());
 				dataMap.get(dataPair.mode).put(modeName, dataPair.score);
 				dataNames.add(dataPair.mode);
@@ -326,7 +330,7 @@ public class ResultOutPutReader {
 			StringBuffer buffer = new StringBuffer(dataName);
 			buffer.append("\t");
 			for (String modeName : modeNames) {
-				buffer.append(dataMap.get(dataName).get(modeName).getF1());
+				buffer.append(dataMap.get(dataName).get(modeName).getF1(Score.SCORE_FORMAT));
 				buffer.append("\t");
 			}
 
