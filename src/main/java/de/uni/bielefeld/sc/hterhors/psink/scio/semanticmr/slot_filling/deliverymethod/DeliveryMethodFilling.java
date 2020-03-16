@@ -100,7 +100,7 @@ public class DeliveryMethodFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/delivery_method/corpus/instances/");
+	private final File instanceDirectory = new File("data/slot_filling/delivery_method/instances/");
 
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 

@@ -136,7 +136,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	public static void main(String[] args) throws Exception {
 
 		if (args.length == 0)
-			new ExperimentalGroupSlotFilling(9, 100);
+			new ExperimentalGroupSlotFilling(-1, 100);
 		else
 			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
@@ -147,7 +147,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	private final IObjectiveFunction predictionObjectiveFunction;
 //
-//	te
 //	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
 //			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED,3));
 //	
@@ -193,15 +192,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			 * Test in eclipse
 			 */
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
-			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			assignmentMode = EAssignmentMode.TREATMENT;
 			complexityMode = EComplexityMode.ROOT;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
 			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
 
 			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
-			cardinalityMode = ECardinalityMode.SAMPLE;
+			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL;
 
 		} else if (id == 0) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -382,12 +381,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public ExperimentalGroupSlotFilling(int parameterID, int dataRandomSeed) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("DefinedExperimentalGroup"))
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
-				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup);
+				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.definedExperimentalGroup);
 
 		EScoreType scoreType = EScoreType.MACRO;
 
@@ -1074,7 +1073,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<IExplorationStrategy> explorerList = new ArrayList<>();
 
 		HardConstraintsProvider hardConstraintsProvider = new HardConstraintsProvider();
-	
+
 		if (cardinalityMode == ECardinalityMode.SAMPLE || cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
 			hardConstraintsProvider.addHardConstraints(
 					new DistinctCompleteExpGroupConstraint(predictionObjectiveFunction.getEvaluator()));
@@ -1090,15 +1089,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		explorerList.add(slotFillingExplorer);
 
 		if (cardinalityMode == ECardinalityMode.SAMPLE || cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
-		
+
 			RootTemplateCardinalityExplorer rootTemplateCardinalityExplorer = new RootTemplateCardinalityExplorer(
 					hardConstraintsProvider, predictionObjectiveFunction.getEvaluator(), explorationMode,
 					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
 			explorerList.add(rootTemplateCardinalityExplorer);
 		}
-		
-		
-		
+
 		return explorerList;
 	}
 

@@ -1,0 +1,94 @@
+InvestigationMethod	judgement on increase	Sicherheit
+ForelimbStrengthTest	Positive	100
+MechanicalAllodyniaTest	Positive	50
+OxidativeStressTest	Negative	100
+AxonalDiebackTest	Negative	100
+NormoxicBreathingTest	Positive	70
+NonNeuronalCellChangesTest	na	
+LesionVolumeTest	Negative	100
+RearingTest	Positive	100
+InflammationTest	Negative	70
+GaitTest	Positive	100
+SchwannCellChangesTest	na	
+BBBTest	Positive	100
+SpasticityObservation	Negative	100
+SurfaceRightingReflexTest	Positive	100
+MolecularChangesTest	na	
+MotorEvokedPotentialsTest	na	
+AutomatedGaitAnalysis	na	
+FunctionalTest	na	
+GaleRatingScoreTest	Positive	100
+HReflexTest	na	
+SecondaryDegenerationTest	Negative	100
+LouisvilleSwimScale	Positive	100
+FootprintAnalysisTest	na	
+TailFlickReflexTest	na	
+ElectromyographyTest	Positive	100
+AxonalSproutingTest	Positive	100
+ScarringTest	Negative	100
+PhysiologyTest	na	
+ForelimbAsymmetryTest	Negative	100
+MyelinationTest	Positive	70
+BladderFunctionTest	Positive	100
+PainTest	Negative	50
+BloodCirculationExamination	na	
+AngiogenesisTest	na	
+NeuronalCellLossTest	Negative	100
+BodyWeightExamination	na	
+ToxicityTest	Negative	100
+BMSTest	Positive	100
+ObservationOfAnimalBehaviour	na	
+AvoidanceResponseTest	na	
+MotorTest	na	
+GastricUlcerogenesisTest	Negative	100
+AstrogliosisTest	Negative	70
+OpenFieldTest	Positive	100
+InclinedPlaneTest	Positive	70
+TissueSparingTest	Positive	100
+WalkingAnalysisTest	na	
+SomatosensoryEvokedPotentialsTest	Positive	70
+NeurogenesisTest	Positive	100
+SwimmingTest	Positive	70
+SelfMutilationObservation	Negative	100
+MotorReflexTest	Positive	100
+LethargyObservation	Negative	100
+ContactPlacingResponseTest	Positive	100
+StaircaseTest	Positive	50
+GroomingObservation	na	
+BreathingTest	Positive	70
+HemorrhageTest	Negative	70
+NeuronalChangesTest	na	
+SurvivalObservation	Positive	100
+OligodendrogliaChangesTest	na	
+HypoxicBreathingTest	Negative	100
+HistologicalInvestigationTest	na	
+InfectionExamination	Negative	100
+ApoptosisTest	Negative	100
+LadderRungTest	Negative	70
+GeneExpressionAnalysis	na	
+AxonalRegenerationTest	Positive	100
+CardioVascularFunctionTest	Positive	70
+SinglePelletReachingTest	Positive	50
+NeuroprotectionTest	Positive	100
+LimbMuscleStrengthTest	Positive	100
+AdhesiveRemovalTest	Positive	50
+AutonomicDysreflexiaTest	na	
+SensoryTest	na	
+AxonalChangesTest	na	
+CystVolumeTest	Negative	100
+BBBSubscoreTest	Positive	100
+AxonalDamageTest	Negative	100
+NeuronalActivityTest	Positive	100
+ImagingTest	na	
+ProteinLevelAnalysis	na	
+LocomotorTest	Positive	70
+BloodBrainBarrierTest	na	
+ThermalHyperalgesiaTest	Positive	50
+NeurologicScalesTest	Positive	100
+HindpawSensationTest	Positive	70
+ElectrophysiologyTest	na	
+ManualDexterityTest	Positive	50
+SpinalCordEvokedPotentialsTest	Positive	70
+MortalityObservation	Negative	100
+NonFunctionalTest	na	
+NarrowBeamTest	Negative	50

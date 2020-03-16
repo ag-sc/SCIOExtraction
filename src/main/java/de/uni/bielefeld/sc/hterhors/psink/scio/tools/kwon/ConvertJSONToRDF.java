@@ -28,6 +28,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling.BuildCorpusFromRawData;
 import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
 import weka.gui.ETable;
 
 public class ConvertJSONToRDF {
@@ -171,47 +172,83 @@ public class ConvertJSONToRDF {
 
 	private static void setJudgement(AbstractAnnotation result) {
 
-		AbstractAnnotation invest = result.asInstanceOfEntityTemplate()
-				.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller();
+		try {
+			DefinedExperimentalGroup ref = new DefinedExperimentalGroup(
+					result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasReferenceGroup"))
+							.getSlotFiller().asInstanceOfEntityTemplate());
+			DefinedExperimentalGroup target = new DefinedExperimentalGroup(result.asInstanceOfEntityTemplate()
+					.getSingleFillerSlot(SlotType.get("hasTargetGroup")).getSlotFiller().asInstanceOfEntityTemplate());
 
-		if (invest == null)
-			return;
+			AbstractAnnotation invest = result.asInstanceOfEntityTemplate()
+					.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller();
 
-		System.out.print(invest.getEntityType().name);
+			try {
+				System.out.print(invest.getEntityType().name);
+			} catch (Exception e) {
+				System.out.print("-");
+			}
 
-		AbstractAnnotation trend = result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTrend"))
-				.getSlotFiller();
-		if (trend == null)
-			return;
-
-		trend = trend.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasDifference")).getSlotFiller();
-
-		if (trend == null)
-			return;
-
-		System.out.print("\t");
-		System.out.print(trend.getEntityType().name);
-
-		if (judgement.get(invest.getEntityType()) == null)
-			return;
-
-		EntityType _judgement = judgement.get(invest.getEntityType()).get(trend.getEntityType());
-
-		if (_judgement == null)
-			return;
-
-		System.out.print("\t");
-		System.out.print(_judgement.name);
-
-		AbstractAnnotation annJudgement = result.asInstanceOfEntityTemplate()
-				.getSingleFillerSlot(SlotType.get("hasJudgement")).getSlotFiller();
-
-		if (annJudgement == null)
-			result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
-					AnnotationBuilder.toAnnotation(_judgement));
-		else {
 			System.out.print("\t");
-			System.out.print(annJudgement.getEntityType().name);
+			AbstractAnnotation trend = null;
+			try {
+				trend = result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTrend"))
+						.getSlotFiller();
+
+				trend = trend.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasDifference"))
+						.getSlotFiller();
+
+				System.out.print(trend.getEntityType().name);
+			} catch (Exception e) {
+				System.out.print("-");
+			}
+			EntityType _judgement = null;
+			System.out.print("\t");
+			try {
+				_judgement = judgement.get(invest.getEntityType()).get(trend.getEntityType());
+
+				System.out.print(_judgement.name);
+			} catch (Exception e) {
+				System.out.print("-");
+			}
+
+			System.out.print("\t");
+			try {
+				AbstractAnnotation annJudgement = result.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SlotType.get("hasJudgement")).getSlotFiller();
+
+				if (annJudgement == null && _judgement != null)
+					result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
+							AnnotationBuilder.toAnnotation(_judgement));
+				else {
+					System.out.print(annJudgement.getEntityType().name);
+				}
+			} catch (Exception e) {
+				System.out.print("-");
+			}
+
+			String refT = ref.getRelevantTreatments().stream()
+					.map(e -> e.getEntityType().name + " '"
+							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
+					.reduce("", String::concat);
+			String targetT = target.getRelevantTreatments().stream()
+					.map(e -> e.getEntityType().name + " '"
+							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
+					.reduce("", String::concat);
+
+			System.out.print("\t\"");
+			if (refT.trim().isEmpty()) {
+				System.out.print("-");
+			} else {
+				System.out.print(refT.trim());
+			}
+			System.out.print("\"\t\"");
+			if (targetT.trim().isEmpty()) {
+				System.out.print("-");
+			} else {
+				System.out.print(targetT.trim());
+			}
+			System.out.print("\"");
+		} catch (Exception e) {
 		}
 
 	}

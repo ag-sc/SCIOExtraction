@@ -81,16 +81,16 @@ public class BuildCorpusFromRawData {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 
-		buildCorpusForResult();
-		buildCorpusForExperimentalGroup();
-		buildCorpusForObservation();
-		buildCorpusForOrganismModel();
-		buildCorpusForInjuryModel();
-		buildCorpusForTreatmentType();
-		buildCorpusForVertebralArea();
-		buildCorpusForDeliveryMethod();
-		buildCorpusForInvestigationMethod();
-		buildCorpusForTrend();
+//		buildCorpusForResult();
+		buildCorpusForDefinedExperimentalGroup();
+//		buildCorpusForObservation();
+//		buildCorpusForOrganismModel();
+//		buildCorpusForInjuryModel();
+//		buildCorpusForTreatmentType();
+//		buildCorpusForVertebralArea();
+//		buildCorpusForDeliveryMethod();
+//		buildCorpusForInvestigationMethod();
+//		buildCorpusForTrend();
 		System.exit(1);
 	}
 
@@ -133,11 +133,11 @@ public class BuildCorpusFromRawData {
 
 	}
 
-	private static void buildCorpusForExperimentalGroup() throws Exception {
-		buildSubDataStructureFiles(SCIOEntityTypes.experimentalGroup);
+	private static void buildCorpusForDefinedExperimentalGroup() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.definedExperimentalGroup);
 		Set<String> annotatedDocuments = new HashSet<>(
 				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
-		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.experimentalGroup, true,
+		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.definedExperimentalGroup, true,
 				true, true);
 
 	}

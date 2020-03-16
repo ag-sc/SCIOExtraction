@@ -18,7 +18,7 @@ public class DeliveryMethodRestrictionProvider {
 	}
 
 	private static final SlotType durationSlot = SCIOSlotTypes.hasDuration;
-	private static final SlotType locationsSlot = SCIOSlotTypes.hasLocation;
+	private static final SlotType locationsSlot = SCIOSlotTypes.hasLocations;
 
 	public static List<GoldModificationRule> getByRule(EDeliveryMethodModifications modelModifications) {
 
