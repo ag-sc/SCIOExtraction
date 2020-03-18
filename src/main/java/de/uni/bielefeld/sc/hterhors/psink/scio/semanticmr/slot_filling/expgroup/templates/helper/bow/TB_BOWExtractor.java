@@ -20,25 +20,25 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class TB_BOWExtractor {
 
-	public static Set<TypedBOW> extractTypedBOW(Instance instance, EntityTemplate annotation) {
-		Set<TypedBOW> typedBOW;
-		fillTypedBOW(instance, typedBOW = new HashSet<>(), annotation);
-		return typedBOW;
+	public static Set<TB_TypedBOW> extractTypedBOW(Instance instance, EntityTemplate annotation) {
+		Set<TB_TypedBOW> TB_TypedBOW;
+		fillTypedBOW(instance, TB_TypedBOW = new HashSet<>(), annotation);
+		return TB_TypedBOW;
 	}
 
 	/**
 	 * Recursive walk through annotation and its properties.
 	 * 
-	 * @param typedBOW
+	 * @param TB_TypedBOW
 	 * @param annotation
 	 */
-	private static void fillTypedBOW(Instance instance, Set<TypedBOW> typedBOW, EntityTemplate annotation) {
+	private static void fillTypedBOW(Instance instance, Set<TB_TypedBOW> TB_TypedBOW, EntityTemplate annotation) {
 
 		AbstractAnnotation rootAnnotation = annotation.getRootAnnotation();
 
 		final Set<String> bow = extractEntityTypeBOW(instance, rootAnnotation.getEntityType());
 
-		typedBOW.add(new TypedBOW(bow, null));
+		TB_TypedBOW.add(new TB_TypedBOW(instance, bow, null));
 
 		final Map<SlotType, Set<AbstractAnnotation>> propertyAnnotations = annotation.filter().entityTypeAnnoation()
 				.multiSlots().singleSlots().merge().nonEmpty().build().getMergedAnnotations();
@@ -64,7 +64,7 @@ public class TB_BOWExtractor {
 				}
 			}
 
-			typedBOW.add(new TypedBOW(tmp, prop.getKey()));
+			TB_TypedBOW.add(new TB_TypedBOW(instance, tmp, prop.getKey()));
 
 		}
 
@@ -74,7 +74,7 @@ public class TB_BOWExtractor {
 		for (Set<AbstractAnnotation> props : annotation.filter().entityTemplateAnnoation().multiSlots().singleSlots()
 				.merge().nonEmpty().build().getMergedAnnotations().values()) {
 			for (AbstractAnnotation prop : props) {
-				fillTypedBOW(instance, typedBOW, prop.asInstanceOfEntityTemplate());
+				fillTypedBOW(instance, TB_TypedBOW, prop.asInstanceOfEntityTemplate());
 			}
 		}
 

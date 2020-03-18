@@ -1,5 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.hardconstraints;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -25,6 +29,17 @@ public class DistinctCompleteExpGroupConstraint extends AbstractHardConstraint {
 		}
 
 		return violates;
+	}
+
+	@Override
+	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
+
+		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
+
+		filteredList = candidateListToFilter.parallelStream()
+				.filter(candidate -> !violatesConstraint(currentState, candidate)).collect(Collectors.toList());
+
+		return filteredList;
 	}
 
 }

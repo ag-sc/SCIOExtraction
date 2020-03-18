@@ -34,6 +34,7 @@ import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvide
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
+import de.hterhors.semanticmr.crf.model.FactorPoolCache;
 import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
@@ -135,9 +136,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 	public static void main(String[] args) throws Exception {
 
-		if (args.length == 0)
-			new ExperimentalGroupSlotFilling(-1, 100);
-		else
+		if (args.length == 0) {
+
+			ExperimentalGroupSlotFilling a = new ExperimentalGroupSlotFilling(4, 100);
+			a.maxCacheSize = 800_000;
+			a.minCacheSize = 400_000;
+		} else
 			new ExperimentalGroupSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
 
@@ -198,9 +202,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
 
-			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
-			groupNameClusteringMode = EGroupNamesClusteringMode.GOLD_CLUSTERING;
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL;
+
 
 		} else if (id == 0) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
@@ -378,10 +383,13 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private final String dataRandomSeed;
 
 	private File cacheDir = new File("data/cache/");
+	private int maxCacheSize = 80_000_000;
+	private int minCacheSize = 40_000_000;
 
 	public ExperimentalGroupSlotFilling(int parameterID, int dataRandomSeed) throws Exception {
 		super(SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("DefinedExperimentalGroup"))
+				.addScopeSpecification(
+						DataStructureLoader.loadSlotFillingDataStructureReader("DefinedExperimentalGroup"))
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build());
 
@@ -479,8 +487,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setParameter(parameter);
+		model.setfeatureTemplateParameter(parameter);
 
+		model.setCache(new FactorPoolCache(model, maxCacheSize, minCacheSize));
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
@@ -1634,7 +1643,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private Map<Instance, Set<AbstractAnnotation>> predictGroupName(List<Instance> instances, int k) {
 		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations;
 
-		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
+		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
+//		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
 		if (!groupNamesCacheDir.exists() || groupNamesCacheDir.list().length == 0) {
 			groupNamesCacheDir.mkdirs();
 

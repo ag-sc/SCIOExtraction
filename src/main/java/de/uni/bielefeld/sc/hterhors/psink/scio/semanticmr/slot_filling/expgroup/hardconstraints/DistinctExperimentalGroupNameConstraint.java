@@ -1,6 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.hardconstraints;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
@@ -49,6 +52,20 @@ public class DistinctExperimentalGroupNameConstraint extends AbstractHardConstra
 		}
 
 		return false;
+	}
+
+	@Override
+	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
+
+		if (SCIOSlotTypes.hasGroupName.isExcluded() || SCIOSlotTypes.hasGroupName.isFrozen())
+			return candidateListToFilter;
+
+		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
+
+		filteredList = candidateListToFilter.parallelStream()
+				.filter(candidate -> !violatesConstraint(currentState, candidate)).collect(Collectors.toList());
+
+		return filteredList;
 	}
 
 }

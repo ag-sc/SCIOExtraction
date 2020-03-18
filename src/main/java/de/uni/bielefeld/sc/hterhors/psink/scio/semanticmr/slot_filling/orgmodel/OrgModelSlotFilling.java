@@ -137,7 +137,7 @@ public class OrgModelSlotFilling {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			String modelName = "OrganismModel" + 1234;new Random().nextInt();
+			String modelName = "OrganismModel" +new Random().nextInt();
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);

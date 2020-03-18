@@ -30,7 +30,6 @@ import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.hterhors.semanticmr.tools.specifications.DataStructureWriter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.nerla.DeliveryMethodPattern;
@@ -38,6 +37,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.ne
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.investigation_method.nerla.InvestigationMethodPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.nerla.OrganismModelPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.nerla.TreatmentPattern;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.trend.nerla.TrendPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.nerla.VertebralAreaPattern;
 
 /**
@@ -82,7 +82,7 @@ public class BuildCorpusFromRawData {
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 
 //		buildCorpusForResult();
-		buildCorpusForDefinedExperimentalGroup();
+//		buildCorpusForDefinedExperimentalGroup();
 //		buildCorpusForObservation();
 //		buildCorpusForOrganismModel();
 //		buildCorpusForInjuryModel();
@@ -90,7 +90,7 @@ public class BuildCorpusFromRawData {
 //		buildCorpusForVertebralArea();
 //		buildCorpusForDeliveryMethod();
 //		buildCorpusForInvestigationMethod();
-//		buildCorpusForTrend();
+		buildCorpusForTrend();
 		System.exit(1);
 	}
 
@@ -100,6 +100,7 @@ public class BuildCorpusFromRawData {
 				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.trend, true, true,
 				true);
+		annotateWithRegularExpressions(new TrendPattern(SCIOEntityTypes.trend));
 	}
 
 	private static void buildCorpusForResult() throws Exception {
@@ -137,8 +138,8 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.definedExperimentalGroup);
 		Set<String> annotatedDocuments = new HashSet<>(
 				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
-		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.definedExperimentalGroup, true,
-				true, true);
+		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(),
+				SCIOEntityTypes.definedExperimentalGroup, true, true, true);
 
 	}
 

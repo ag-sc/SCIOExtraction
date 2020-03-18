@@ -452,7 +452,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			model = new Model(getFeatureTemplates(), getModelBaseDir(), modelName);
 		}
 
-		model.setParameter(getFeatureTemplateParameters());
+		model.setfeatureTemplateParameter(getFeatureTemplateParameters());
 
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.

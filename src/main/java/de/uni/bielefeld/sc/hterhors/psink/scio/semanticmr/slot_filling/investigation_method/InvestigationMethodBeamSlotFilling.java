@@ -422,7 +422,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setParameter(parameter);
+		model.setfeatureTemplateParameter(parameter);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */

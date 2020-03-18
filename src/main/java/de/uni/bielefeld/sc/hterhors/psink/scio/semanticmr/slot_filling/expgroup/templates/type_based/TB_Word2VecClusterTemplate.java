@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TB_BOWExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TB_TypedBOW;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TypedBOW;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_Word2VecClusterTemplate.W2VScope;
 
@@ -140,11 +141,11 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 
 		public final Set<String> expGroupBOW;
 
-		public final Set<TypedBOW> propertyBOW;
+		public final Set<TB_TypedBOW> propertyBOW;
 		public final SlotType slotTypeContext;
 
 		public W2VScope(AbstractFeatureTemplate<?> template, SlotType slotType, Set<String> expGroupBOW,
-				Set<TypedBOW> popertyBOW) {
+				Set<TB_TypedBOW> popertyBOW) {
 			super(template);
 			this.expGroupBOW = expGroupBOW;
 			this.propertyBOW = popertyBOW;
@@ -235,7 +236,7 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 
 			final EntityTemplate property = slotFillerAnnotation.asInstanceOfEntityTemplate();
 
-			final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(state.getInstance(), property);
+			final Set<TB_TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(state.getInstance(), property);
 
 			factors.add(new W2VScope(this, slotType, expGroupBOW, propertyBOW));
 		}
@@ -254,7 +255,7 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 
 		final EntityTemplate property = sfs.getSlotFiller().asInstanceOfEntityTemplate();
 
-		final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(state.getInstance(), property);
+		final Set<TB_TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(state.getInstance(), property);
 
 		factors.add(new W2VScope(this, slotType, expGroupBOW, propertyBOW));
 	}
@@ -272,7 +273,7 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 			if (clustersI.isEmpty())
 				continue;
 
-			for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
+			for (TB_TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
 				for (String typedBOWTerm : typedBOW.bow) {
 
 					if (ALL_STOPWORDS.contains(normalize(typedBOWTerm)))
@@ -341,7 +342,7 @@ public class TB_Word2VecClusterTemplate extends AbstractFeatureTemplate<W2VScope
 		return s.toLowerCase();
 	}
 
-	private String getOrigin(Factor<W2VScope> factor, TypedBOW typedBOW) {
+	private String getOrigin(Factor<W2VScope> factor, TB_TypedBOW typedBOW) {
 		return typedBOW.slotType != null ? typedBOW.slotType.name : factor.getFactorScope().slotTypeContext.name;
 	}
 

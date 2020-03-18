@@ -22,6 +22,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TB_BOWExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TB_TypedBOW;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.helper.bow.TypedBOW;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_ExGrBOWTemplate.BOWScope;
 
@@ -59,25 +60,15 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 		public final SlotType slotTypeContext;
 		public final Set<String> expGroupBOW;
+		public final Set<TB_TypedBOW> propertyBOW;
 
 		public BOWScope(AbstractFeatureTemplate<?> template, String context, SlotType slotTypeContext,
-				Set<String> expGroupBOW, Set<TypedBOW> propertyBOW) {
+				Set<String> expGroupBOW, Set<TB_TypedBOW> propertyBOW) {
 			super(template);
 			this.context = context;
 			this.slotTypeContext = slotTypeContext;
 			this.expGroupBOW = expGroupBOW;
 			this.propertyBOW = propertyBOW;
-		}
-
-		public final Set<TypedBOW> propertyBOW;
-
-		public BOWScope(AbstractFeatureTemplate<?> template, String context, Set<String> expGroupBOW,
-				Set<TypedBOW> propertyBOW, SlotType slotTypeContext) {
-			super(template);
-			this.context = context;
-			this.expGroupBOW = expGroupBOW;
-			this.propertyBOW = propertyBOW;
-			this.slotTypeContext = slotTypeContext;
 		}
 
 		@Override
@@ -185,7 +176,7 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 			final EntityTemplate property = slotFillerAnnotation.asInstanceOfEntityTemplate();
 
-			final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(instance, property);
+			final Set<TB_TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(instance, property);
 
 			factors.add(new BOWScope(this, context, slotType, expGroupBOW, propertyBOW));
 
@@ -204,7 +195,7 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 
 		final EntityTemplate property = sfs.getSlotFiller().asInstanceOfEntityTemplate();
 
-		final Set<TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(instance, property);
+		final Set<TB_TypedBOW> propertyBOW = TB_BOWExtractor.extractTypedBOW(instance, property);
 
 		factors.add(new BOWScope(this, context, slotType, expGroupBOW, propertyBOW));
 	}
@@ -225,7 +216,7 @@ public class TB_ExGrBOWTemplate extends AbstractFeatureTemplate<BOWScope> {
 				continue;
 
 			List<String> nGrams1 = getNGrams(expBOWTerm);
-			for (TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
+			for (TB_TypedBOW typedBOW : factor.getFactorScope().propertyBOW) {
 				for (String typedBOWTerm : typedBOW.bow) {
 
 					typedBOWTerm = normalize(typedBOWTerm);

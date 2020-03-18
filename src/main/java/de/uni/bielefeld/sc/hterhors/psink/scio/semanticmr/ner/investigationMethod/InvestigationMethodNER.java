@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -30,7 +30,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
  *         [context=Test, getTotalDuration()=302525] modelName:
  *         GroupName_895041394
  */
-public class TrendNER {
+public class InvestigationMethodNER {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	/**
@@ -40,31 +40,33 @@ public class TrendNER {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) {
-		new TrendNER();
+		new InvestigationMethodNER();
 	}
 
-	public TrendNER() {
+	public InvestigationMethodNER() {
 		SystemScope scope = SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
+				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
 				/**
 				 * Finally, we build the systems scope.
 				 */
 				.build();
 //		String modelName = "NERLA1387292063";
-		String modelName = "Trend_" + new Random().nextInt();
+		String modelName = "InvestigationMethod" + new Random().nextInt();
 		log.info("modelName: " + modelName);
 
-		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
-				.setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor originalCorpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
+				.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+//		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
+//				.setCorpusSizeFraction(1F).build();
 
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.maxNumberOfAnnotations = 300;
 
 		InstanceProvider instanceProvider = new InstanceProvider(
-				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.trend),
+				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
 				originalCorpusDistributor);
 
 		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
@@ -76,30 +78,33 @@ public class TrendNER {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		TrendNERLPredictor predictor = new TrendNERLPredictor(modelName, scope, trainingInstanceNames,
-				developInstanceNames, testInstanceNames);
+		InvestigationMethodNERLPredictor predictor = new InvestigationMethodNERLPredictor(modelName, scope,
+				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-		predictor.trainOrLoadModel();
+//		if (false) {
 
-		Map<Instance, State> results = predictor.crf.predict(
-				predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
-				predictor.noModelChangeCrit);
+			predictor.trainOrLoadModel();
 
-		log.info(
-				"Final Score: " + AbstractSemReadProject.evaluate(log, results, predictor.evaluationObjectiveFunction));
+			Map<Instance, State> results = predictor.crf.predict(
+					predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
+					predictor.noModelChangeCrit);
 
-		log.info(predictor.crf.getTrainingStatistics());
-		log.info(predictor.crf.getTestStatistics());
+			log.info("Final Score: "
+					+ AbstractSemReadProject.evaluate(log, results, predictor.evaluationObjectiveFunction));
+
+			log.info(predictor.crf.getTrainingStatistics());
+			log.info(predictor.crf.getTestStatistics());
+//		}
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(true);
-		log.info("Coverage Training: " + trainCoverage);
+//		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//		log.info("Coverage Training: " + trainCoverage);
 
-		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-		log.info("Coverage Development: " + devCoverage);
+//		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(true);
+//		log.info("Coverage Development: " + devCoverage);
 
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the

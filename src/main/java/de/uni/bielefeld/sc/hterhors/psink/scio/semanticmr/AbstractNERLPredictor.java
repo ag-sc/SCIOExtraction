@@ -19,7 +19,6 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
-import de.hterhors.semanticmr.crf.exploration.EntityRecLinkExplorer;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.Model;
@@ -39,7 +38,9 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.SectionizedEntityRecLinkExplorer;
 
 public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
@@ -113,7 +114,23 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 		}
 
+		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations = new HashMap<>();
+
+		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(
+				new File("data/slot_filling/investigation_method/regex_nerla"));
+
 		for (Instance instance : instanceProvider.getInstances()) {
+
+			groupNameAnnotations.put(instance, new HashSet<>(nerlaJSONReader.getForInstance(instance)));
+		}
+
+		for (Instance instance : instanceProvider.getInstances()) {
+
+			for (AbstractAnnotation annotation : groupNameAnnotations.get(instance)) {
+				instance.addCandidate(annotation.getEntityType(),
+						annotation.asInstanceOfLiteralAnnotation().getSurfaceForm());
+			}
+
 			for (Entry<EntityType, Set<String>> wm : words.entrySet()) {
 				instance.addCandidate(wm.getKey(), wm.getValue());
 			}
@@ -127,7 +144,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * added to perform changes during the exploration. This explorer is especially
 		 * designed for NERLA and is parameterized with a candidate retrieval.
 		 */
-		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer();
+		SectionizedEntityRecLinkExplorer explorer = new SectionizedEntityRecLinkExplorer();
 		explorer.MAX_WINDOW_SIZE = 8;
 
 		explorerList = Arrays.asList(explorer);

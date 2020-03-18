@@ -45,7 +45,6 @@ public class ResultSentenceDetection {
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
 
-
 		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
@@ -91,17 +90,18 @@ public class ResultSentenceDetection {
 
 	public void printRec(AutomatedSectionifcation sectionification, AbstractAnnotation et) {
 		if (et.isInstanceOfDocumentLinkedAnnotation()) {
-			System.out
-					.println(sectionification.getSection(et.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()));
+			System.out.print(et.getEntityType().name + "\t");
+			System.out.print(
+					sectionification.getSection(et.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()) + "\t");
 			System.out.println(et.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex());
 			return;
 		}
-
-		for (Entry<SlotType, SingleFillerSlot> instance2 : et.asInstanceOfEntityTemplate().getSingleFillerSlots()
-				.entrySet()) {
-			printRec(sectionification,instance2.getValue().getSlotFiller());
-
-		}
+//		if (et.isInstanceOfEntityTemplate())
+//			for (Entry<SlotType, SingleFillerSlot> instance2 : et.asInstanceOfEntityTemplate().getSingleFillerSlots()
+//					.entrySet()) {
+//				printRec(sectionification, instance2.getValue().getSlotFiller());
+//
+//			}
 	}
 
 }
