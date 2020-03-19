@@ -138,7 +138,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		if (args.length == 0) {
 
-			ExperimentalGroupSlotFilling a = new ExperimentalGroupSlotFilling(4, 100);
+			ExperimentalGroupSlotFilling a = new ExperimentalGroupSlotFilling(8, 100);
 			a.maxCacheSize = 800_000;
 			a.minCacheSize = 400_000;
 		} else
@@ -287,6 +287,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
 			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL;
+
 		} else if (id == 7) {
 			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
 			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
@@ -1643,8 +1644,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private Map<Instance, Set<AbstractAnnotation>> predictGroupName(List<Instance> instances, int k) {
 		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations;
 
-		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
-//		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
+//		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
+		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
 		if (!groupNamesCacheDir.exists() || groupNamesCacheDir.list().length == 0) {
 			groupNamesCacheDir.mkdirs();
 

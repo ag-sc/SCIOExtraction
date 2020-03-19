@@ -30,6 +30,7 @@ import de.hterhors.semanticmr.nerla.annotation.RegularExpressionNerlAnnotator;
 import de.hterhors.semanticmr.santo.converter.Santo2JsonConverter;
 import de.hterhors.semanticmr.tools.specifications.DataStructureWriter;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling.helper.ResolvePairwiseComparedGroups;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.nerla.DeliveryMethodPattern;

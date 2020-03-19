@@ -61,13 +61,13 @@ public class BuildNERCorpusFromSlotFillingData {
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
-//		buildForOrganismModel();
-//		buildForInjuryModel();
-//		buildForTreatment();
-//		buildForVertebralArea();
-//		buildForDeliveryMethod();
+		buildForOrganismModel();
+		buildForInjuryModel();
+		buildForTreatment();
+		buildForVertebralArea();
+		buildForDeliveryMethod();
 		buildForInvestigationMethod();
-//		buildForGroupName();
+		buildForGroupName();
 		buildForTrend();
 
 	}
@@ -87,7 +87,7 @@ public class BuildNERCorpusFromSlotFillingData {
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasGroupName.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.groupName);
-		buildInstances(SCIOEntityTypes.experimentalGroup, SCIOEntityTypes.groupName);
+		buildInstances(SCIOEntityTypes.definedExperimentalGroup, SCIOEntityTypes.groupName);
 		SlotType.restoreExcludance();
 	}
 
@@ -210,6 +210,7 @@ public class BuildNERCorpusFromSlotFillingData {
 				shuffleCorpusDistributor);
 
 		for (Instance instance : instanceProvider.getInstances()) {
+			
 			List<Instance> newInstances = new ArrayList<>();
 			Set<DocumentLinkedAnnotation> annotations = new HashSet<>();
 
@@ -227,6 +228,7 @@ public class BuildNERCorpusFromSlotFillingData {
 
 				annotations = unifyET;
 			}
+			
 //			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),

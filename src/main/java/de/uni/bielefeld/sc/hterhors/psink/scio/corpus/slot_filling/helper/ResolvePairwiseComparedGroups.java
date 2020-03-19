@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling;
+package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling.helper;
 
 import java.io.File;
 import java.io.IOException;

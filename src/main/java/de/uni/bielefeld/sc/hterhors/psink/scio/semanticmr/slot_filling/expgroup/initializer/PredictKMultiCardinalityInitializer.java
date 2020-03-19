@@ -87,8 +87,8 @@ public class PredictKMultiCardinalityInitializer implements IStateInitializer {
 	}
 
 	private void wekaBasedKmeans(List<Instance> instances, List<Instance> trainingInstances) {
-		try {
 
+		try {
 			WEKAClustering gnc = new WEKAClustering();
 
 			gnc.trainOrLoad(trainingInstances);
@@ -110,8 +110,13 @@ public class PredictKMultiCardinalityInitializer implements IStateInitializer {
 					clusters = gnc.cluster(datapoints, instance.getGoldAnnotations().getAnnotations().size());
 				} else if (cardinalityMode == ECardinalityMode.RSS_PREDICTED
 						|| cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
-
-					clusters = gnc.clusterRSS(datapoints, min, max);
+					try {
+						if (!datapoints.isEmpty())
+							clusters = gnc.clusterRSS(datapoints, min, max);
+					} catch (Exception e2) {
+						log.info("catched Exception: ");
+						e2.printStackTrace();
+					}
 				}
 				preComputedClusters.put(instance, clusters);
 			}
