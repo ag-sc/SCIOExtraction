@@ -12,6 +12,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.templates.VertebralAreaConditionTemplate.VertebralLocationScope;
 
 /**
@@ -88,10 +89,13 @@ public class VertebralAreaConditionTemplate extends AbstractFeatureTemplate<Vert
 	public List<VertebralLocationScope> generateFactorScopes(State state) {
 		List<VertebralLocationScope> factors = new ArrayList<>();
 
-		for (EntityTemplate annotation : super.<EntityTemplate>getPredictedAnnotations(state)) {
+		for (EntityTemplate vertebralArea : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			SingleFillerSlot lower = annotation.getSingleFillerSlot(SlotType.get("hasLowerVertebrae"));
-			SingleFillerSlot upper = annotation.getSingleFillerSlot(SlotType.get("hasUpperVertebrae"));
+			if (SCIOSlotTypes.hasLowerVertebrae.isExcluded() || SCIOSlotTypes.hasUpperVertebrae.isExcluded())
+				continue;
+			
+			SingleFillerSlot lower = vertebralArea.getSingleFillerSlot(SCIOSlotTypes.hasLowerVertebrae);
+			SingleFillerSlot upper = vertebralArea.getSingleFillerSlot(SCIOSlotTypes.hasUpperVertebrae);
 
 			if (!(lower.containsSlotFiller() && upper.containsSlotFiller()))
 				continue;

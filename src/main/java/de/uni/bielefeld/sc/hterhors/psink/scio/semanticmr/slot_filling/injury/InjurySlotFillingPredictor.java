@@ -90,7 +90,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 				map.get(instance)
 						.addAll(instance
 								.getGoldAnnotations().getAnnotations().stream().map(a -> a.asInstanceOfEntityTemplate()
-										.getSingleFillerSlot(SCIOSlotTypes.hasLocation).getSlotFiller())
+										.getSingleFillerSlot(SCIOSlotTypes.hasInjuryLocation).getSlotFiller())
 								.filter(a -> a != null).collect(Collectors.toSet()));
 
 			}

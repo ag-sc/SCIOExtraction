@@ -34,7 +34,7 @@ public class InjuryRestrictionProvider {
 		return null;
 
 	}
-	
+
 	public static void applySlotTypeRestrictions(EInjuryModifications modelModifications) {
 
 		SlotType.excludeAll();
@@ -43,7 +43,7 @@ public class InjuryRestrictionProvider {
 		case ROOT:
 			return;
 		case ROOT_LOCATION:
-			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasInjuryLocation.include();
 			SCIOSlotTypes.hasUpperVertebrae.include();
 			SCIOSlotTypes.hasLowerVertebrae.include();
 			return;
@@ -52,13 +52,13 @@ public class InjuryRestrictionProvider {
 			return;
 		case ROOT_LOCATION_DEVICE:
 			SCIOSlotTypes.hasInjuryDevice.include();
-			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasInjuryLocation.include();
 			SCIOSlotTypes.hasUpperVertebrae.include();
 			SCIOSlotTypes.hasLowerVertebrae.include();
 			return;
 		case ROOT_DEVICE_LOCATION_ANAESTHESIA:
 			SCIOSlotTypes.hasInjuryDevice.include();
-			SCIOSlotTypes.hasLocation.include();
+			SCIOSlotTypes.hasInjuryLocation.include();
 			SCIOSlotTypes.hasUpperVertebrae.include();
 			SCIOSlotTypes.hasLowerVertebrae.include();
 			SCIOSlotTypes.hasAnaesthesia.include();
@@ -99,8 +99,8 @@ public class InjuryRestrictionProvider {
 
 				EntityTemplate newGold = new EntityTemplate(
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
-				newGold.setSingleSlotFiller(SCIOSlotTypes.hasLocation, goldAnnotation.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(SCIOSlotTypes.hasLocation).getSlotFiller());
+				newGold.setSingleSlotFiller(SCIOSlotTypes.hasInjuryLocation, goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryLocation).getSlotFiller());
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
@@ -153,8 +153,8 @@ public class InjuryRestrictionProvider {
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
 				newGold.setSingleSlotFiller(SCIOSlotTypes.hasInjuryDevice, goldAnnotation.asInstanceOfEntityTemplate()
 						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryDevice).getSlotFiller());
-				newGold.setSingleSlotFiller(SCIOSlotTypes.hasLocation, goldAnnotation.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(SCIOSlotTypes.hasLocation).getSlotFiller());
+				newGold.setSingleSlotFiller(SCIOSlotTypes.hasInjuryLocation, goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryLocation).getSlotFiller());
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
@@ -181,8 +181,8 @@ public class InjuryRestrictionProvider {
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
 				newGold.setSingleSlotFiller(SCIOSlotTypes.hasInjuryDevice, goldAnnotation.asInstanceOfEntityTemplate()
 						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryDevice).getSlotFiller());
-				newGold.setSingleSlotFiller(SCIOSlotTypes.hasLocation, goldAnnotation.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(SCIOSlotTypes.hasLocation).getSlotFiller());
+				newGold.setSingleSlotFiller(SCIOSlotTypes.hasInjuryLocation, goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(SCIOSlotTypes.hasInjuryLocation).getSlotFiller());
 
 				for (AbstractAnnotation sf : goldAnnotation.asInstanceOfEntityTemplate()
 						.getMultiFillerSlot(SCIOSlotTypes.hasAnaesthesia).getSlotFiller()) {

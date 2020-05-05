@@ -12,6 +12,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.templates.VertebralAreaRootMatchTemplate.VertebralAreaRMScope;
 
 /**
@@ -92,16 +93,19 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 	@Override
 	public List<VertebralAreaRMScope> generateFactorScopes(State state) {
 		List<VertebralAreaRMScope> factors = new ArrayList<>();
-		for (EntityTemplate annotation : super.<EntityTemplate>getPredictedAnnotations(state)) {
+		for (EntityTemplate vertebralArea : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (annotation.getEntityType() != EntityType.get("VertebralArea"))
+			if (vertebralArea.getEntityType() != EntityType.get("VertebralArea"))
 				continue;
 
-			if (!annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+			if (!vertebralArea.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 				continue;
 
-			SingleFillerSlot lower = annotation.getSingleFillerSlot(SlotType.get("hasLowerVertebrae"));
-			SingleFillerSlot upper = annotation.getSingleFillerSlot(SlotType.get("hasUpperVertebrae"));
+			if (SCIOSlotTypes.hasLowerVertebrae.isExcluded() || SCIOSlotTypes.hasUpperVertebrae.isExcluded())
+				continue;
+
+			SingleFillerSlot lower = vertebralArea.getSingleFillerSlot(SCIOSlotTypes.hasLowerVertebrae);
+			SingleFillerSlot upper = vertebralArea.getSingleFillerSlot(SCIOSlotTypes.hasUpperVertebrae);
 
 			if (!(lower.containsSlotFiller() && upper.containsSlotFiller()))
 				continue;
@@ -112,7 +116,8 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 			String lowerVertebraeID = lower.getSlotFiller().getEntityType().name.replaceAll("\\d+", "");
 			String upperVertebraeID = upper.getSlotFiller().getEntityType().name.replaceAll("\\d+", "");
 
-			String surfaceForm = annotation.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation().getSurfaceForm();
+			String surfaceForm = vertebralArea.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation()
+					.getSurfaceForm();
 
 			int lowerIndex = surfaceForm.indexOf(lowerVertebraeNum);
 			int upperIndex = surfaceForm.indexOf(upperVertebraeNum);
