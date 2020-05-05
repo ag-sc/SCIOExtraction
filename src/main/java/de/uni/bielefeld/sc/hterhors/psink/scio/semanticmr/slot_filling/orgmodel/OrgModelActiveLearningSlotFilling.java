@@ -49,7 +49,10 @@ public class OrgModelActiveLearningSlotFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new OrgModelActiveLearningSlotFilling();
+		if (args == null || args.length == 0)
+			new OrgModelActiveLearningSlotFilling(5, 5);
+		else
+			new OrgModelActiveLearningSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -62,7 +65,8 @@ public class OrgModelActiveLearningSlotFilling {
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
-	public OrgModelActiveLearningSlotFilling() throws IOException {
+	public OrgModelActiveLearningSlotFilling(final int numberOfInstanceToBegin, final int numberOfInstancePerStep)
+			throws IOException {
 		/**
 		 * Initialize the system.
 		 * 
@@ -83,15 +87,14 @@ public class OrgModelActiveLearningSlotFilling {
 				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentRandomRanker,
-				EActiveLearningStrategies.DocumentModelScoreRanker,
-				EActiveLearningStrategies.DocumentMarginBasedRanker,
-				EActiveLearningStrategies.DocumentEntropyRanker
+				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
+				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker,
+
 		};
 
 		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 		PrintStream resultOut = new PrintStream("results/activeLearning/OrganismModel_full_plusfive.csv");
-		for (EActiveLearningStrategies strategy : activeLearningStrategies) {
+		for (EActiveLearningStrategies strategy : EActiveLearningStrategies.values()) {
 			log.info(strategy);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
@@ -108,9 +111,9 @@ public class OrgModelActiveLearningSlotFilling {
 
 			final List<String> trainingInstancesNames = new ArrayList<>();
 
-			int numberOfInstanceToBegin = 5;
-			long numberOfInstancePerStep = 5;
-			int numOfMaxSteps = 10;
+//			int numberOfInstanceToBegin = 5;
+//			long numberOfInstancePerStep = 5;
+			int numOfMaxSteps = 100;
 
 			trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, numberOfInstanceToBegin));
 			testInstanceNames.addAll(allTrainingInstanceNames);
