@@ -23,7 +23,9 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
@@ -56,11 +58,11 @@ public class OrgModelActiveLearningSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/organism_model/corpus/instances/");
+	private final File instanceDirectory;
+
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public OrgModelActiveLearningSlotFilling() throws IOException {
-
 		/**
 		 * Initialize the system.
 		 * 
@@ -70,15 +72,22 @@ public class OrgModelActiveLearningSlotFilling {
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
 
-//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+		instanceDirectory = SlotFillingCorpusBuilderBib
+				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+
+		// AbstractCorpusDistributor corpusDistributor = new
+		// OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		EActiveLearningStrategies[] activeLearningStrategies = new EActiveLearningStrategies[] {
-				EActiveLearningStrategies.DocumentRandomRanker, EActiveLearningStrategies.DocumentModelScoreRanker,
-				EActiveLearningStrategies.DocumentMarginBasedRanker, EActiveLearningStrategies.DocumentEntropyRanker };
+				EActiveLearningStrategies.DocumentRandomRanker,
+				EActiveLearningStrategies.DocumentModelScoreRanker,
+				EActiveLearningStrategies.DocumentMarginBasedRanker,
+				EActiveLearningStrategies.DocumentEntropyRanker
+		};
 
 		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 		PrintStream resultOut = new PrintStream("results/activeLearning/OrganismModel_full_plusfive.csv");
@@ -114,6 +123,7 @@ public class OrgModelActiveLearningSlotFilling {
 			int i = 0;
 
 			while (i++ != numOfMaxSteps && (newTrainingDataInstances == null || !newTrainingDataInstances.isEmpty())) {
+
 				String modelName = "OrganismModel_" + rand + "_" + strategy.name() + "_" + i;
 				log.info("model name: " + modelName);
 				log.info("#Training instances: " + trainingInstancesNames.size());
@@ -124,9 +134,6 @@ public class OrgModelActiveLearningSlotFilling {
 
 				predictor.trainOrLoadModel();
 
-				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
-						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
-
 				Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 				Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
@@ -135,6 +142,9 @@ public class OrgModelActiveLearningSlotFilling {
 
 				final IActiveLearningDocumentRanker ranker = ActiveLearningProvider.getActiveLearningInstance(strategy,
 						predictor);
+
+				List<Instance> remainingInstances = predictor.getTestInstances().stream()
+						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
 				List<Instance> rankedInstances = ranker.rank(remainingInstances);
 

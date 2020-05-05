@@ -10,11 +10,11 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
 
-public class DistinctCompleteExpGroupConstraint extends AbstractHardConstraint {
+public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
 
 	final public AbstractEvaluator evaluator;
 
-	public DistinctCompleteExpGroupConstraint(AbstractEvaluator evaluator) {
+	public DistinctEntityTemplateConstraint(AbstractEvaluator evaluator) {
 		this.evaluator = evaluator;
 	}
 

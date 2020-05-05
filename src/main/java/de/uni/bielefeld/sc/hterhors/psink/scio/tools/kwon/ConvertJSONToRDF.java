@@ -10,10 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import org.apache.commons.collections.set.SynchronizedSet;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
@@ -29,7 +28,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling.BuildCorpusFr
 import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
-import weka.gui.ETable;
 
 public class ConvertJSONToRDF {
 
@@ -63,7 +61,8 @@ public class ConvertJSONToRDF {
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		List<EntityTemplate> dataPoints = new ArrayList<>();
-
+		String header = "Document\tInvestigationMethod\tSignificance\tPvalue\tTrend\tJudgement\tTargetTreatments\tReferenceTreatments\tBoth contain OEC\tAny contains OEC\tSwitch was applied\tAutomated Judgment\tPositiveFunctional\tPositiveNonFunctional";
+		System.out.println(header);
 		instanceProvider.getInstances().stream()
 				.forEach(a -> dataPoints.add(toPublication(a.getName(), a.getGoldAnnotations().getAnnotations())));
 
@@ -156,101 +155,297 @@ public class ConvertJSONToRDF {
 
 	private static EntityTemplate toPublication(String docName, List<AbstractAnnotation> results) {
 		EntityTemplate publication = new EntityTemplate(EntityType.get("Publication"));
+
+//		if (!docName.startsWith("N075"))
+//			return publication;
+
 		publication.setSingleSlotFiller(SlotType.get("hasPubmedID"), getPubmedID(docName));
 		EntityTemplate experiment = new EntityTemplate(EntityType.get("Experiment"));
 
 		publication.addMultiSlotFiller(SlotType.get("describes"), experiment);
+
 		for (AbstractAnnotation result : results) {
-			System.out.print(docName + "\t");
-			setJudgement(result);
-			System.out.println();
+			setJudgement(docName, result);
 			experiment.addMultiSlotFiller(SlotType.get("hasResult"), result);
 		}
 
 		return publication;
 	}
 
-	private static void setJudgement(AbstractAnnotation result) {
+	private static void setJudgement(String docName, AbstractAnnotation result) {
 
 		try {
-			DefinedExperimentalGroup ref = new DefinedExperimentalGroup(
+			DefinedExperimentalGroup def1 = new DefinedExperimentalGroup(
 					result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasReferenceGroup"))
 							.getSlotFiller().asInstanceOfEntityTemplate());
-			DefinedExperimentalGroup target = new DefinedExperimentalGroup(result.asInstanceOfEntityTemplate()
+			DefinedExperimentalGroup def2 = new DefinedExperimentalGroup(result.asInstanceOfEntityTemplate()
 					.getSingleFillerSlot(SlotType.get("hasTargetGroup")).getSlotFiller().asInstanceOfEntityTemplate());
+
+			DefinedExperimentalGroup ref = null;
+			DefinedExperimentalGroup target = null;
+
+			boolean change = false;
+			if (doNotSwitchPos(def1, def2)) {
+				ref = def1;
+				target = def2;
+			} else {
+				change = true;
+				ref = def2;
+				target = def1;
+			}
+
+			Set<EntityType> t = target.getRelevantTreatments().stream().map(e -> e.getEntityType())
+					.collect(Collectors.toSet());
+
+			Set<EntityType> r = ref.getRelevantTreatments().stream().map(e -> e.getEntityType())
+					.collect(Collectors.toSet());
+			boolean bothOEC = containsOEC(t) && containsOEC(r);
+			boolean containsOEC = containsOEC(t) || containsOEC(r);
+
+			if (t.equals(r))
+				return;
 
 			AbstractAnnotation invest = result.asInstanceOfEntityTemplate()
 					.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller();
 
+			System.out.print(docName + "\t");
 			try {
 				System.out.print(invest.getEntityType().name);
 			} catch (Exception e) {
 				System.out.print("-");
 			}
 
-			System.out.print("\t");
 			AbstractAnnotation trend = null;
+			AbstractAnnotation sig = null;
 			try {
 				trend = result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTrend"))
 						.getSlotFiller();
 
-				trend = trend.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasDifference"))
+				System.out.print("\t");
+				sig = trend.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasSignificance"))
 						.getSlotFiller();
 
-				System.out.print(trend.getEntityType().name);
+				if (sig.getEntityType() == EntityType.get("Significance"))
+					System.out.print("-");
+				else
+					System.out.print(sig.getEntityType().name);
 			} catch (Exception e) {
 				System.out.print("-");
 			}
+
+			System.out.print("\t");
+			AbstractAnnotation pvalue = null;
+			try {
+				pvalue = sig.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasPValue"))
+						.getSlotFiller();
+				System.out.print(pvalue.asInstanceOfLiteralAnnotation().getSurfaceForm());
+			} catch (Exception e) {
+				System.out.print("-");
+			}
+
+			System.out.print("\t");
+			EntityType difference = null;
+			try {
+				trend = trend.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasDifference"))
+						.getSlotFiller();
+
+				difference = trend.getEntityType();
+				if (change) {
+
+					if (difference == EntityType.get("Higher"))
+						difference = EntityType.get("Lower");
+					else if (difference == EntityType.get("Lower"))
+						difference = EntityType.get("Higher");
+					else if (difference == EntityType.get("FasterIncrease"))
+						difference = EntityType.get("SlowerIncrease");
+					else if (difference == EntityType.get("SlowerIncrease"))
+						difference = EntityType.get("FasterIncrease");
+
+				}
+
+				if (difference == EntityType.get("ObservedDifference"))
+					System.out.print("-");
+				else
+					System.out.print(difference.name);
+
+			} catch (Exception e) {
+				System.out.print("-");
+			}
+
+			System.out.print("\t");
+			AbstractAnnotation annJudgement = null;
+			try {
+				annJudgement = result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasJudgement"))
+						.getSlotFiller();
+
+				System.out.print(annJudgement.getEntityType().name);
+			} catch (Exception e) {
+				System.out.print("-");
+			}
+
+			String targetT = target.getRelevantTreatments().stream()
+					.map(e -> e.getEntityType().name + " '"
+							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
+					.reduce("", String::concat);
+			String refT = ref.getRelevantTreatments().stream()
+					.map(e -> e.getEntityType().name + " '"
+							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
+					.reduce("", String::concat);
+
+			System.out.print("\t\"");
+			if (targetT.trim().isEmpty()) {
+				System.out.print("-");
+			} else {
+				System.out.print(targetT.trim().replaceAll("\n", ","));
+			}
+			System.out.print("\"\t\"");
+			if (refT.trim().isEmpty()) {
+				System.out.print("-");
+			} else {
+				System.out.print(refT.trim().replaceAll("\n", ","));
+			}
+			System.out.print("\"");
+			System.out.print("\t");
+			System.out.print(bothOEC);
+			System.out.print("\t");
+			System.out.print(containsOEC);
+			System.out.print("\t");
+			System.out.print(change);
+
 			EntityType _judgement = null;
 			System.out.print("\t");
 			try {
-				_judgement = judgement.get(invest.getEntityType()).get(trend.getEntityType());
+				_judgement = judgement.get(invest.getEntityType()).get(difference);
 
 				System.out.print(_judgement.name);
 			} catch (Exception e) {
 				System.out.print("-");
 			}
 
+			boolean positiveFunctional = (sig != null && sig.getEntityType() == EntityType.get("PositiveSignificance")
+					|| (sig != null && sig.getEntityType() == EntityType.get("Significance")
+							&& pvalueToSignificance(pvalue)))
+					&&
+					//
+					(_judgement != null && _judgement.equals(EntityType.get("Positive"))
+							|| annJudgement != null && annJudgement.getEntityType().equals(EntityType.get("Positive")))
+					//
+					&& EntityType.get("FunctionalTest").isSuperEntityOf(invest.getEntityType());
+
+			boolean positiveNonFunctional = (sig != null
+					&& sig.getEntityType() == EntityType.get("PositiveSignificance")
+					|| (sig != null && sig.getEntityType() == EntityType.get("Significance")
+							&& pvalueToSignificance(pvalue)))
+					&& (_judgement != null && _judgement.equals(EntityType.get("Positive"))
+							|| annJudgement != null && annJudgement.getEntityType().equals(EntityType.get("Positive")))
+					//
+					&& EntityType.get("NonFunctionalTest").isSuperEntityOf(invest.getEntityType());
+
 			System.out.print("\t");
-			try {
-				AbstractAnnotation annJudgement = result.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(SlotType.get("hasJudgement")).getSlotFiller();
+			System.out.print(positiveFunctional);
+			System.out.print("\t");
+			System.out.print(positiveNonFunctional);
+			/**
+			 * TODO: change data accordingly.
+			 */
+//			if (annJudgement == null && _judgement != null)
+//				result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
+//						AnnotationBuilder.toAnnotation(_judgement));
 
-				if (annJudgement == null && _judgement != null)
-					result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
-							AnnotationBuilder.toAnnotation(_judgement));
-				else {
-					System.out.print(annJudgement.getEntityType().name);
-				}
-			} catch (Exception e) {
-				System.out.print("-");
-			}
-
-			String refT = ref.getRelevantTreatments().stream()
-					.map(e -> e.getEntityType().name + " '"
-							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
-					.reduce("", String::concat);
-			String targetT = target.getRelevantTreatments().stream()
-					.map(e -> e.getEntityType().name + " '"
-							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
-					.reduce("", String::concat);
-
-			System.out.print("\t\"");
-			if (refT.trim().isEmpty()) {
-				System.out.print("-");
-			} else {
-				System.out.print(refT.trim());
-			}
-			System.out.print("\"\t\"");
-			if (targetT.trim().isEmpty()) {
-				System.out.print("-");
-			} else {
-				System.out.print(targetT.trim());
-			}
-			System.out.print("\"");
-		} catch (Exception e) {
+			System.out.println();
+		} catch (IllegalArgumentException e) {
 		}
 
+	}
+
+	final static Pattern pValuePattern = Pattern.compile(".*(0\\.\\d+)");
+
+	private static boolean pvalueToSignificance(AbstractAnnotation pvalue2) {
+		if (pvalue2 == null)
+			return false;
+
+		Matcher m = pValuePattern.matcher(pvalue2.asInstanceOfLiteralAnnotation().getSurfaceForm());
+		if (!m.find()) {
+			return false;
+		}
+
+		double pValue = Double.parseDouble(m.group(1));
+
+		return (pvalue2.asInstanceOfLiteralAnnotation().getSurfaceForm().contains("<")
+				|| pvalue2.asInstanceOfLiteralAnnotation().getSurfaceForm().contains("≤")) && pValue <= 0.05;
+	}
+
+	/**
+	 * ToCheck is reference group, if it contains a vehicle and the other group
+	 * contains OEC or no treatment
+	 * 
+	 * @param toCheck
+	 * @param basedOn
+	 * @return
+	 */
+	private static boolean doNotSwitchPos(DefinedExperimentalGroup toCheck, DefinedExperimentalGroup basedOn) {
+
+		Set<EntityType> referenceTreats = toCheck.getRelevantTreatments().stream().map(e -> e.getEntityType())
+				.collect(Collectors.toSet());
+
+		Set<EntityType> targetTreats = basedOn.getRelevantTreatments().stream().map(e -> e.getEntityType())
+				.collect(Collectors.toSet());
+
+		boolean referenceContainsVehicle = containsVehicle(referenceTreats);
+		boolean targetContainsVehicle = containsVehicle(targetTreats);
+
+		boolean referenceContainsOEC = containsOEC(referenceTreats);
+		boolean targetContainsOEC = containsOEC(targetTreats);
+
+		if (targetTreats.containsAll(referenceTreats))
+			return true;
+
+		if (referenceContainsOEC && targetContainsOEC)
+			return false;
+
+		if (referenceTreats.isEmpty() && !targetTreats.isEmpty())
+			return true;
+
+		if (!referenceTreats.isEmpty() && targetTreats.isEmpty())
+			return false;
+
+		if (referenceContainsOEC && !targetContainsOEC) {
+			return false;
+		}
+
+		if (!referenceContainsOEC && targetContainsOEC) {
+			return true;
+		}
+
+		if (referenceContainsVehicle && !targetContainsVehicle) {
+			return true;
+		}
+		if (!referenceContainsVehicle && targetContainsVehicle) {
+			return false;
+		}
+
+		if (!referenceContainsVehicle && !referenceContainsOEC && targetContainsOEC) {
+			return true;
+		}
+
+		if (!referenceContainsOEC && !targetContainsOEC)
+			return true;
+
+		throw new IllegalStateException();
+	}
+
+	private static boolean containsVehicle(Set<EntityType> toCheckTreats) {
+		boolean toCheckContainsVehicle = false;
+		for (EntityType entityType : EntityType.get("Vehicle").getRelatedEntityTypes()) {
+			toCheckContainsVehicle |= toCheckTreats.contains(entityType);
+			if (toCheckContainsVehicle)
+				break;
+		}
+		return toCheckContainsVehicle;
+	}
+
+	private static boolean containsOEC(Set<EntityType> r) {
+		return r.contains(EntityType.get("OlfactoryEnsheathingGliaCell"));
 	}
 
 	private static AbstractAnnotation getPubmedID(String docName) {

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -61,6 +62,11 @@ public class ResultSentenceClassificationWEKA {
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
+
+		System.out.println(EntityType.get("AnimalSpecies").getTransitiveClosureSubEntityTypes().size());
+		System.out.println(EntityType.get("Injury").getTransitiveClosureSubEntityTypes().size());
+		System.out.println(EntityType.get("Treatment").getTransitiveClosureSubEntityTypes().size());
+		System.out.println(EntityType.get("Compound").getTransitiveClosureSubEntityTypes().size());
 
 		InstanceProvider.maxNumberOfAnnotations = 1000;
 
@@ -195,17 +201,16 @@ public class ResultSentenceClassificationWEKA {
 
 			boolean relevant = prediction.equals(CLASSIFICATION_LABEL_RELEVANT);
 
-			Classification classification = new Classification(
-					(Integer) featureDataPoint.parameter.get("sentenceIndex"), relevant, probs[1]);
-
 			int tp = groundTruth.equals(CLASSIFICATION_LABEL_RELEVANT) && groundTruth.equals(prediction) ? 1 : 0;
 			int tn = groundTruth.equals(CLASSIFICATION_LABEL_NOT_RELEVANT) && groundTruth.equals(prediction) ? 1 : 0;
 			int fp = groundTruth.equals(CLASSIFICATION_LABEL_NOT_RELEVANT)
 					&& prediction.equals(CLASSIFICATION_LABEL_RELEVANT) ? 1 : 0;
 			int fn = groundTruth.equals(CLASSIFICATION_LABEL_RELEVANT)
 					&& prediction.equals(CLASSIFICATION_LABEL_NOT_RELEVANT) ? 1 : 0;
-
-			score.add(new Score(tp, fp, fn, tn));
+			Score s = new Score(tp, fp, fn, tn);
+			score.add(s);
+			Classification classification = new Classification(
+					(Integer) featureDataPoint.parameter.get("sentenceIndex"), relevant, probs[1], s);
 
 			if (prediction.equals(CLASSIFICATION_LABEL_NOT_RELEVANT)
 					&& groundTruth.equals(CLASSIFICATION_LABEL_NOT_RELEVANT))
@@ -241,7 +246,7 @@ public class ResultSentenceClassificationWEKA {
 
 			Classification classification = new Classification(
 					(Integer) featureDataPoint.parameter.get("sentenceIndex"),
-					classAttribute.value((int) pred).equals(CLASSIFICATION_LABEL_RELEVANT), probs[1]);
+					classAttribute.value((int) pred).equals(CLASSIFICATION_LABEL_RELEVANT), probs[1], null);
 
 			return classification;
 		} catch (Exception e) {

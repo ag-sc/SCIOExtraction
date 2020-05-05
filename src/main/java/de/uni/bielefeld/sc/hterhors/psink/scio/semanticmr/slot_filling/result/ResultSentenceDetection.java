@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.results;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result;
 
 import java.io.File;
 import java.util.List;

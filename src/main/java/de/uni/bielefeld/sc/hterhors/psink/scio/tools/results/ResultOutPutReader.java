@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.tools;
+package de.uni.bielefeld.sc.hterhors.psink.scio.tools.results;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -135,17 +135,26 @@ public class ResultOutPutReader {
 
 	}
 
-	static String folder = "new_cardinality";
+	enum EValue {
+
+		PRECISION, RECALL, F1;
+
+	}
+
+	static public EValue value = EValue.RECALL
+			;
+
+	static String folder = "iswc_baseline/results/";
 
 	public static void main(String[] args) throws Exception {
 
-		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/" + folder + "/merge_cardinality.csv"));
+		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/" + folder
+				+ "/merged_cardinality_" + value.toString().toLowerCase() + ".csv"));
 		Map<String, Map<String, List<Score>>> dataMap = new HashMap<>();
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 100; run < 101; run++) {
+		for (int run = 100; run < 111; run++) {
 
 			File dir = new File("results/experimentalgroupextratcion/" + folder + "/" + run + "/");
 
@@ -178,12 +187,8 @@ public class ResultOutPutReader {
 					modeValueNames.add(modePair.mode);
 				}
 				for (int i = 8; i < readAllLines.size(); i++) {
-//					if (i == 15 || i == 16)
-//						continue;
-//					if (i == 23 || i == 24)
-//						continue;
 					DataPair dataPair = getDataPattern(readAllLines.get(i));
-			
+
 					if (dataPair == null)
 						continue;
 
@@ -224,8 +229,16 @@ public class ResultOutPutReader {
 						s = score;
 					s.add(score);
 				}
-				buffer.append(s.getF1(Score.SCORE_FORMAT));
+				if (value == EValue.PRECISION)
+					buffer.append(s.getPrecision(Score.SCORE_FORMAT));
+
+				else if (value == EValue.F1)
+					buffer.append(s.getF1(Score.SCORE_FORMAT));
+				else
+					buffer.append(s.getRecall(Score.SCORE_FORMAT));
+
 				buffer.append("\t");
+
 			}
 
 			ps.println(buffer.toString().trim());
@@ -284,8 +297,8 @@ public class ResultOutPutReader {
 			}
 		});
 
-		PrintStream ps = new PrintStream(
-				new File("results/experimentalgroupextratcion/" + folder + "/" + run + "/merge_cardinality.csv"));
+		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/" + folder + "/" + run
+				+ "/single_run_results_" + run + "_" + value.toString().toLowerCase() + ".csv"));
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);
@@ -330,7 +343,14 @@ public class ResultOutPutReader {
 			StringBuffer buffer = new StringBuffer(dataName);
 			buffer.append("\t");
 			for (String modeName : modeNames) {
-				buffer.append(dataMap.get(dataName).get(modeName).getF1(Score.SCORE_FORMAT));
+
+				if (value == EValue.PRECISION)
+					buffer.append(dataMap.get(dataName).get(modeName).getPrecision(Score.SCORE_FORMAT));
+
+				else if (value == EValue.F1)
+					buffer.append(dataMap.get(dataName).get(modeName).getF1(Score.SCORE_FORMAT));
+				else
+					buffer.append(dataMap.get(dataName).get(modeName).getRecall(Score.SCORE_FORMAT));
 				buffer.append("\t");
 			}
 

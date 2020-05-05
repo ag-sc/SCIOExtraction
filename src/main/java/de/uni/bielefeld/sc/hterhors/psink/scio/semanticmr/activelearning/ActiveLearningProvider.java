@@ -3,7 +3,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning;
 import java.util.Objects;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
-import de.hterhors.semanticmr.activelearning.ranker.DocumentRandomRanker;
 import de.hterhors.semanticmr.activelearning.ranker.EActiveLearningStrategies;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 
@@ -29,7 +28,7 @@ public class ActiveLearningProvider {
 		case DocumentObjectiveScoreRanker:
 			return new DocumentObjectiveScoreRanker(predictor);
 		case DocumentRandomRanker:
-			return new DocumentRandomRanker();
+			return new DocumentRandomRanker(predictor);
 		case DocumentVarianceRanker:
 			return new DocumentVarianceRanker(predictor);
 		default:

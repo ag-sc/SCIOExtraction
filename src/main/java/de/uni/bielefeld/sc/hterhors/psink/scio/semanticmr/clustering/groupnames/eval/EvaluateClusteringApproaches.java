@@ -58,10 +58,10 @@ public class EvaluateClusteringApproaches {
 
 		int k = 4;
 
-//		evaluator.word2VecBasedMeans(trainInstances, testInstances, k);
+		evaluator.word2VecBasedMeans(trainInstances, testInstances, k);
 //		System.out.println();
 //		System.out.println();
-		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
+//		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
 //		System.out.println();
 //		System.out.println();
 //		evaluator.wordBasedKMeans(trainInstances, testInstances, k);
@@ -123,13 +123,13 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
-//			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints,
-//					instance.getGoldAnnotations().getAnnotations().size());
+			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints,
+					instance.getGoldAnnotations().getAnnotations().size());
 //			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, 1);
 //			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints,
 //					instance.getGoldAnnotations().getAnnotations().size(),
 //					instance.getGoldAnnotations().getAnnotations().size());
-			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints, k - 1, k + 1);
+//			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints, k - 1, k + 1);
 
 			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
 
@@ -160,7 +160,7 @@ public class EvaluateClusteringApproaches {
 				.println("Word2VecBasedKMeans CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
 	}
 
-	public void wekaBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) throws Exception {
+	public Score wekaBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) throws Exception {
 		WEKAClustering gnc = new WEKAClustering();
 
 		gnc.trainOrLoad(trainInstances);
@@ -171,7 +171,7 @@ public class EvaluateClusteringApproaches {
 
 		Score overallPostClusteringBinaryClassificationScore = new Score();
 		Score overallClusteringScore = new Score();
-		Score overallCardinalityScore = new Score();
+		Score overallCardinalityScore = new Score(EScoreType.MACRO);
 
 		double cardinalityRMSE = 0;
 
@@ -186,6 +186,8 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
+//			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints,
+//					instance.getGoldAnnotations().getAnnotations().size());
 //			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, k);
 			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints, 1, 8);
 
@@ -193,7 +195,7 @@ public class EvaluateClusteringApproaches {
 			computeIntervallCardinality(intervallCardinality, instance, clusters);
 
 			Score clusteringScore = computeClusteringScore(instance, clusters);
-			Score cardinalityScore = computeCardinalityScore(instance, clusters);
+			Score cardinalityScore = computeCardinalityScore(instance, clusters).toMacro();
 			overallCardinalityScore.add(cardinalityScore);
 
 			overallClusteringScore.add(clusteringScore);
@@ -212,6 +214,8 @@ public class EvaluateClusteringApproaches {
 		System.out.println("GroupNameClusteringWEKA INTERVALL CARDINALITY = " + cardString.toString().trim());
 		System.out.println(
 				"GroupNameClusteringWEKA CARDINALITY RMSE = " + Math.sqrt(cardinalityRMSE / testInstances.size()));
+
+		return overallCardinalityScore;
 	}
 
 	public Score wordBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) {
@@ -236,10 +240,10 @@ public class EvaluateClusteringApproaches {
 			if (datapoints.size() == 0)
 				continue;
 
-//			List<List<DocumentLinkedAnnotation>> clusters = kMeans.cluster(datapoints,k);
+			List<List<DocumentLinkedAnnotation>> clusters = kMeans.cluster(datapoints, k);
 //			List<List<DocumentLinkedAnnotation>> clusters = kMeans.cluster(datapoints,
 //					instance.getGoldAnnotations().getAnnotations().size());
-			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, k - 1, k + 1);
+//			List<List<DocumentLinkedAnnotation>> clusters = kMeans.clusterRSS(datapoints, k - 1, k + 1);
 
 			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
 

@@ -3,6 +3,9 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup
 import java.util.ArrayList;
 import java.util.List;
 
+import com.apple.eawt.event.RotationEvent;
+
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -18,9 +21,11 @@ public class SampleCardinalityInitializer implements IStateInitializer {
 	 * The number to begin with
 	 */
 	private final int beginWith;
+	private final EntityType rootEntityType;
 
-	public SampleCardinalityInitializer(int beginWith) {
+	public SampleCardinalityInitializer(EntityType rootEntityType, int beginWith) {
 		this.beginWith = beginWith;
+		this.rootEntityType = rootEntityType;
 	}
 
 	@Override
@@ -29,8 +34,7 @@ public class SampleCardinalityInitializer implements IStateInitializer {
 
 		for (int i = 0; i < beginWith; i++) {
 
-			EntityTemplate init = new EntityTemplate(
-					AnnotationBuilder.toAnnotation(SCIOEntityTypes.definedExperimentalGroup));
+			EntityTemplate init = new EntityTemplate(AnnotationBuilder.toAnnotation(rootEntityType));
 
 			as.add(init);
 		}

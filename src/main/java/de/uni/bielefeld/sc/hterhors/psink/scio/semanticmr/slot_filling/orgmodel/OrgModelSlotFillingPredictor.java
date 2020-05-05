@@ -113,7 +113,7 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 10;
+		return 100;
 	}
 
 	@Override
@@ -153,5 +153,9 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
 		return OrganismModelRestrictionProvider.getByRule((EOrgModelModifications) rule);
 	}
+
+
+
+	
 
 }

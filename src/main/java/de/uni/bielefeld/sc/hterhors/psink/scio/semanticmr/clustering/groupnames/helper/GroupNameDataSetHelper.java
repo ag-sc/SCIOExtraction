@@ -8,10 +8,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 
 public class GroupNameDataSetHelper {
 
@@ -50,15 +54,36 @@ public class GroupNameDataSetHelper {
 
 		List<List<DocumentLinkedAnnotation>> clusteredGroupNames = new ArrayList<>();
 
-		for (AbstractAnnotation experimentalgroup : instance.getGoldAnnotations().getAnnotations()) {
-			List<DocumentLinkedAnnotation> cluster = new ArrayList<>();
-			clusteredGroupNames.add(cluster);
-			for (AbstractAnnotation groupName : experimentalgroup.asInstanceOfEntityTemplate()
-					.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+		for (AbstractAnnotation annotation : instance.getGoldAnnotations().getAnnotations()) {
 
-				if (!groupName.isInstanceOfDocumentLinkedAnnotation())
-					continue;
-				cluster.add(groupName.asInstanceOfDocumentLinkedAnnotation());
+			if (annotation.getEntityType() == EntityType.get("DefinedExperimentalGroup")) {
+
+				List<DocumentLinkedAnnotation> cluster = new ArrayList<>();
+				clusteredGroupNames.add(cluster);
+				for (AbstractAnnotation groupName : annotation.asInstanceOfEntityTemplate()
+						.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+
+					if (!groupName.isInstanceOfDocumentLinkedAnnotation())
+						continue;
+					cluster.add(groupName.asInstanceOfDocumentLinkedAnnotation());
+				}
+			}
+			if (annotation.getEntityType() == SCIOEntityTypes.result) {
+
+				Result result = new Result(annotation);
+
+				for (DefinedExperimentalGroup expGroup : result.getDefinedExperimentalGroups()) {
+
+					List<DocumentLinkedAnnotation> cluster = new ArrayList<>();
+					clusteredGroupNames.add(cluster);
+					for (AbstractAnnotation groupName : expGroup.get().asInstanceOfEntityTemplate()
+							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getSlotFiller()) {
+
+						if (!groupName.isInstanceOfDocumentLinkedAnnotation())
+							continue;
+						cluster.add(groupName.asInstanceOfDocumentLinkedAnnotation());
+					}
+				}
 			}
 		}
 		return clusteredGroupNames;

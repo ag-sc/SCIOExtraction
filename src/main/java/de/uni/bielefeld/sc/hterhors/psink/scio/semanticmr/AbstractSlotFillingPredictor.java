@@ -104,6 +104,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return Collections.unmodifiableList(trainingInstances);
 	}
 
+	public List<Instance> getDevelopmentInstances() {
+		return Collections.unmodifiableList(developmentInstances);
+	}
+
+	public List<Instance> getTestInstances() {
+		return Collections.unmodifiableList(testInstances);
+	}
+
 	public AbstractSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule modificationRule) {
 		super(scope);

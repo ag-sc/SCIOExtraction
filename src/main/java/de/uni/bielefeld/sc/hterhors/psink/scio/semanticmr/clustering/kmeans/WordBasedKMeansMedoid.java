@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.annotations.LiteralAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.container.TextualContent;
+import de.hterhors.semanticmr.crf.templates.helper.LevenShteinSimilarities;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.FeatureFactory;
-import uk.ac.shef.wit.simmetrics.similaritymetrics.AbstractStringMetric;
 
 public class WordBasedKMeansMedoid<E extends LiteralAnnotation> {
 	public static void main(String[] args) {
@@ -596,16 +595,17 @@ public class WordBasedKMeansMedoid<E extends LiteralAnnotation> {
 		if (word1 == null)
 			return 0;
 
-		double val = 0;
-		for (AbstractStringMetric iterable_element : FeatureFactory.metrics) {
-			val += iterable_element.getSimilarity(word1, word2);
-		}
-
-		val /= FeatureFactory.metrics.size();
-		return 1 - val;
+//		double val = 0;
+//		for (AbstractStringMetric iterable_element : FeatureFactory.metrics) {
+//			val += iterable_element.getSimilarity(word1, word2);
+//		}
+//
+//		val /= FeatureFactory.metrics.size();
+//		return 1 - val;
+		
 //		return 1 - ((smithWaterman.getSimilarity(word1, word2)
 //				+ LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100)) / 2);
-//		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
+		return 1 - LevenShteinSimilarities.levenshteinSimilarity(word1, word2, 100);
 	}
 
 }

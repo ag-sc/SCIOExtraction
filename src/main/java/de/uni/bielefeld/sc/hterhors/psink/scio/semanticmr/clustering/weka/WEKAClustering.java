@@ -311,7 +311,7 @@ public class WEKAClustering {
 
 		parameter.put("docID", groupNamePair.groupName1.asInstanceOfDocumentLinkedAnnotation().document.documentID);
 
-		DataPoint fdp = new DataPoint(parameter, trainingDataCollector, getFeatures(groupNamePair), 0, false);
+		DataPoint fdp = new DataPoint(parameter, trainingDataCollector, getFeatures(groupNamePair), -1, false);
 
 		return classifyForInstance(rf, convertToWekaInstances("TEST", fdp));
 	}
@@ -319,9 +319,8 @@ public class WEKAClustering {
 	private double classifyForInstance(Classifier rf, weka.core.Instance instance) {
 
 		try {
-			double prob = rf.classifyInstance(instance);
-
-			return prob;
+			double[] pred = rf.distributionForInstance(instance);
+			return pred[1];
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

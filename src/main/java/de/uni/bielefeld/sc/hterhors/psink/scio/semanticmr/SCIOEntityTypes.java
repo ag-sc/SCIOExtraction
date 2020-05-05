@@ -16,10 +16,13 @@ public class SCIOEntityTypes {
 	public static final EntityType groupName = getLazy("GroupName");
 	public static final EntityType vertebralArea = getLazy("VertebralArea");
 	public static final EntityType deliveryMethod = getLazy("DeliveryMethod");
-	public static final EntityType investigationMethod =  getLazy("InvestigationMethod");
-	public static final EntityType observation =  getLazy("Observation");
-	public static final EntityType result =  getLazy("Result");
+	public static final EntityType investigationMethod = getLazy("InvestigationMethod");
+	public static final EntityType observation = getLazy("Observation");
+	public static final EntityType result = getLazy("Result");
 	public static final EntityType trend = getLazy("Trend");
+	public static final EntityType significance = getLazy("Significance");
+	public static final EntityType pValue = getLazy("PValue");
+	public static final EntityType observedDifference = getLazy("ObservedDifference");
 
 	private static EntityType getLazy(String name) {
 		try {

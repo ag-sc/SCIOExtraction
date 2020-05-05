@@ -169,7 +169,10 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 			clusteringBased(instance, list);
 		} else if (groupNameMode == EExtractGroupNamesMode.EMPTY) {
 			empty(instance, list);
+		} else if (groupNamesPreProcessingMode == EGroupNamesClusteringMode.NONE) {
+			empty(instance, list);
 		}
+
 		return list;
 	}
 

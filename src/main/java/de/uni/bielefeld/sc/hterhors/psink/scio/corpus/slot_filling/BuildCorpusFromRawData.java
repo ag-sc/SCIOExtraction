@@ -37,6 +37,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverym
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.nerla.InjuryPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.investigation_method.nerla.InvestigationMethodPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.nerla.OrganismModelPattern;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.nerla.ResultPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.nerla.TreatmentPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.trend.nerla.TrendPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.nerla.VertebralAreaPattern;
@@ -81,8 +82,9 @@ public class BuildCorpusFromRawData {
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
+		InstanceProvider.maxNumberOfAnnotations = Integer.MAX_VALUE;
 
-//		buildCorpusForResult();
+		buildCorpusForResult();
 //		buildCorpusForDefinedExperimentalGroup();
 //		buildCorpusForObservation();
 //		buildCorpusForOrganismModel();
@@ -90,7 +92,7 @@ public class BuildCorpusFromRawData {
 //		buildCorpusForTreatmentType();
 //		buildCorpusForVertebralArea();
 //		buildCorpusForDeliveryMethod();
-//		buildCorpusForInvestigationMethod();
+		buildCorpusForInvestigationMethod();
 		buildCorpusForTrend();
 		System.exit(1);
 	}
@@ -123,6 +125,7 @@ public class BuildCorpusFromRawData {
 
 		convertFromSanto2JsonCorpus(tmpUnrolledRawDataDir, annotatedDocuments, Collections.emptySet(),
 				SCIOEntityTypes.result, true, true, true);
+		annotateWithRegularExpressions(new ResultPattern(SCIOEntityTypes.result));
 
 	}
 
@@ -258,6 +261,7 @@ public class BuildCorpusFromRawData {
 		JsonNerlaIO io = new JsonNerlaIO(true);
 		for (Instance instance : instanceProvider.getInstances()) {
 
+			log.info("Annotate doc: " + instance.getName());
 			try {
 
 				Map<EntityType, Set<DocumentLinkedAnnotation>> annotations = annotator.annotate(instance.getDocument());

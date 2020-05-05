@@ -28,8 +28,9 @@ public class DocumentModelScoreRanker implements IActiveLearningDocumentRanker {
 		List<SmallestFirst> predictions = new ArrayList<>(results.entrySet().stream()
 				.map(e -> new SmallestFirst(e.getKey(), e.getValue().getModelScore())).collect(Collectors.toList()));
 
+		
 		Collections.sort(predictions);
-
+		
 		return predictions.stream().map(p -> p.instance).collect(Collectors.toList());
 	}
 

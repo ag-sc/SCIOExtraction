@@ -113,25 +113,25 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 
 			if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 				continue;
-		
-			if(SCIOSlotTypes.hasTreatmentType.isExcluded())
-				continue;
-			
-			int cardinality = experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).size();
+
+//			if(SCIOSlotTypes.hasTreatmentType.isExcluded())
+//				continue;
+
+//			int cardinality = experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).size();
 
 			if (experimentalGroup.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfLiteralAnnotation())
-				factors.add(
-						new IntraTokenScope(
-								this, experimentalGroup.getEntityType(), experimentalGroup.asInstanceOfEntityTemplate()
-										.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm(),
-								cardinality));
+				factors.add(new IntraTokenScope(this, experimentalGroup.getEntityType(),
+						experimentalGroup.asInstanceOfEntityTemplate().getRootAnnotation()
+								.asInstanceOfLiteralAnnotation().getSurfaceForm(),
+						super.<EntityTemplate>getPredictedAnnotations(state).size()));
 			if (SCIOSlotTypes.hasGroupName.isIncluded()) {
 
 				for (AbstractAnnotation groupName : experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
 						.getSlotFiller()) {
 
 					factors.add(new IntraTokenScope(this, experimentalGroup.getEntityType(),
-							groupName.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(), cardinality));
+							groupName.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm(),
+							super.<EntityTemplate>getPredictedAnnotations(state).size()));
 
 				}
 			}
@@ -160,8 +160,10 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 
 		final int maxNgramSize = tokens.length;
 
-		featureVector.set(PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + cM + ", cardinality " + cardinality,
-				true);
+		for (int i = 0; i < cardinality; i++) {
+			featureVector.set(PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + cM + ", cardinality " + i, true);
+		}
+		featureVector.set(PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + cM, true);
 
 		for (int ngram = 1; ngram < maxNgramSize; ngram++) {
 			for (int i = 0; i < maxNgramSize - 1; i++) {
@@ -199,8 +201,12 @@ public class IntraTokenCardinalityTemplate extends AbstractFeatureTemplate<Intra
 				if (featureName.isEmpty())
 					continue;
 
-				featureVector.set(PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + featureName + ", cardinality "
-						+ cardinality, true);
+				for (int card = 0; i < cardinality; i++) {
+					featureVector.set(
+							PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + featureName + ", cardinality " + card,
+							true);
+				}
+				featureVector.set(PREFIX + LEFT + name + RIGHT + TOKEN_SPLITTER_SPACE + featureName, true);
 
 			}
 		}

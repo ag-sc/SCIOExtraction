@@ -43,6 +43,11 @@ public class SCIOSlotTypes {
 	public static final SlotType hasAlphaSignificanceNiveau = getLazy("hasAlphaSignificanceNiveau");
 	public static final SlotType hasPValue = getLazy("hasPValue");
 
+	public static final SlotType hasInvestigationMethod = getLazy("hasInvestigationMethod");
+	public static final SlotType hasTargetGroup = getLazy("hasTargetGroup");
+	public static final SlotType hasReferenceGroup = getLazy("hasReferenceGroup");
+	public static final SlotType belongsTo = getLazy("belongsTo");
+
 	private static SlotType getLazy(String name) {
 		try {
 			return SlotType.get(name);

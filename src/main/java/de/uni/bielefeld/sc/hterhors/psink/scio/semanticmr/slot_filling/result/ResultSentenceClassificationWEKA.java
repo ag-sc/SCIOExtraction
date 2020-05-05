@@ -1,6 +1,7 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.weka;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,23 +18,33 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.SparseInstance;
+import weka.core.converters.ArffSaver;
 
 /**
  * Playground to Classify sentences into important or not important. Maybe multi
@@ -42,53 +53,61 @@ import weka.core.SparseInstance;
  * @author hterhors
  *
  */
-public class SentenceClassificationWEKA {
+public class ResultSentenceClassificationWEKA {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-//	private static final File instanceDirectory = new File(
-//			"src/main/resources/slotfilling/experimental_group/corpus/instances/");
 	private static File instanceDirectory;
 
 	private static final String CLASSIFICATION_LABEL_RELEVANT = "Y";
 
 	private static final String CLASSIFICATION_LABEL_NOT_RELEVANT = "N";
-//	private static  final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
-				.build();
-//				SystemScope.Builder.getScopeHandler().addScopeSpecification(OrgModelSpecs.systemsScopeReader).build();
-//				SystemScope.Builder.getScopeHandler().addScopeSpecification(InjurySpecs.systemsScope).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
-		instanceDirectory = SlotFillingCorpusBuilderBib
-				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
-				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
+		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 200;
+
+		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 200;
+
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setTestProportion(20).setSeed(1000L).build();
+
+		InstanceProvider.maxNumberOfAnnotations = 80;
+		InstanceProvider.removeEmptyInstances = true;
+		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		SentenceClassificationWEKA sentenceClassification = new SentenceClassificationWEKA(
+		ResultSentenceClassificationWEKA sentenceClassification = new ResultSentenceClassificationWEKA(
 				instanceProvider.getRedistributedTrainingInstances());
 
 		Score score = new Score();
 		for (Instance testInstance : instanceProvider.getRedistributedTestInstances()) {
 			System.out.println(testInstance.getName());
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(testInstance);
 			Map<Integer, Classification> x = sentenceClassification.test(testInstance, score);
 
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
 					.getNumberOfSentences(); sentenceIndex++) {
+
+				if (sectionification.getSection(sentenceIndex) != ESection.RESULTS)
+					continue;
+
 				Classification classification = x.get(sentenceIndex);
 				System.out.println(classification.sentenceIndex + "\t" + classification.isRelevant + "\t"
-						+ classification.probability);
+						+ classification.probability + "\t"
+						+ (classification.s.getTp() == 1 || classification.s.getTn() == 1 ? "TRUE" : "FALSE"));
 			}
 
 		}
 
 		System.out.println(score);
 		System.out.println(score.getAccuracy());
+		System.out.println(score.microToString());
 	}
 
 	static class P {
@@ -117,7 +136,7 @@ public class SentenceClassificationWEKA {
 
 	private final RandomForest rf;
 
-	public SentenceClassificationWEKA(List<Instance> trainingInstances) {
+	public ResultSentenceClassificationWEKA(List<Instance> trainingInstances) {
 
 		threshold = 0.5;
 		rf = new RandomForest();
@@ -128,6 +147,7 @@ public class SentenceClassificationWEKA {
 		trainingDataPoints.forEach(fdp -> trainingData.addFeatureDataPoint(fdp));
 
 		Instances wekaTRAINInstance = convertToWekaInstances("TRAIN", trainingData.getDataPoints());
+		saveArff(new File("result_train.arff"), wekaTRAINInstance);
 
 		rf.setNumIterations(200);
 
@@ -156,33 +176,51 @@ public class SentenceClassificationWEKA {
 		return classifications;
 	}
 
-	public Map<Integer, Classification> classifyDocument(Document document) {
-		log.info("Classify document: " + document.documentID);
-		Map<Integer, Classification> classifications = new HashMap<>();
-
-		final List<DataPoint> fdps = new ArrayList<>();
-
-		for (int i = 0; i < document.getNumberOfSentences(); i++) {
-
-			String sentence = document.getContentOfSentence(i);
-
-			Map<String, Double> features = getFeaturesForSentence(document, i);
-			Map<String, Object> parameter = new HashMap<>();
-			parameter.put("docID", document.documentID);
-			parameter.put("sentenceIndex", i);
-			parameter.put("sentence", sentence);
-			fdps.add(new DataPoint(parameter, trainingData, features, 0, true));
-		}
-
-		for (DataPoint fdp : fdps) {
-
-			weka.core.Instance instance = convertToWekaInstances("TEST", fdp);
-
-			classifications.put((Integer) fdp.parameter.get("sentenceIndex"), classifyForInstance(fdp, rf, instance));
-		}
-
-		return classifications;
-	}
+//	public Map<Integer, Classification> classifyDocument(AutomatedSectionifcation sec, Instance inst,
+//			Document document) {
+//		log.info("Classify document: " + document.documentID);
+//		Map<Integer, Classification> classifications = new HashMap<>();
+//
+//		final List<DataPoint> fdps = new ArrayList<>();
+//
+//		File groupNamesCacheDir = new File("data/annotations/result/");
+//
+//		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(groupNamesCacheDir);
+//
+//		Map<Integer, List<EntityType>> entitiesPerSentence = new HashMap<>();
+//
+//		for (DocumentLinkedAnnotation eta : new HashSet<>(nerlaJSONReader.getForInstance(inst))) {
+//
+//			entitiesPerSentence.putIfAbsent(eta.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex(),
+//					new ArrayList<>());
+//			entitiesPerSentence.get(eta.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
+//					.add(eta.getEntityType());
+//
+//		}
+//
+//		for (
+//
+//				int i = 0; i < document.getNumberOfSentences(); i++) {
+//
+//			String sentence = document.getContentOfSentence(i);
+//
+//			Map<String, Double> features = getFeaturesForSentence(entitiesPerSentence, inst, i);
+//			Map<String, Object> parameter = new HashMap<>();
+//			parameter.put("docID", document.documentID);
+//			parameter.put("sentenceIndex", i);
+//			parameter.put("sentence", sentence);
+//			fdps.add(new DataPoint(parameter, trainingData, features, 0, true));
+//		}
+//
+//		for (DataPoint fdp : fdps) {
+//
+//			weka.core.Instance instance = convertToWekaInstances("TEST", fdp);
+//
+//			classifications.put((Integer) fdp.parameter.get("sentenceIndex"), classifyForInstance(fdp, rf, instance));
+//		}
+//
+//		return classifications;
+//	}
 
 	private Classification testForInstance(DataPoint featureDataPoint, RandomForest rf, Score score,
 			weka.core.Instance instance) {
@@ -206,10 +244,10 @@ public class SentenceClassificationWEKA {
 			int fn = groundTruth.equals(CLASSIFICATION_LABEL_RELEVANT)
 					&& prediction.equals(CLASSIFICATION_LABEL_NOT_RELEVANT) ? 1 : 0;
 			Score s = new Score(tp, fp, fn, tn);
-			Classification classification = new Classification(
-					(Integer) featureDataPoint.parameter.get("sentenceIndex"), relevant, probs[1], s);
 			score.add(s);
 
+			Classification classification = new Classification(
+					(Integer) featureDataPoint.parameter.get("sentenceIndex"), relevant, probs[1], s);
 			if (prediction.equals(CLASSIFICATION_LABEL_NOT_RELEVANT)
 					&& groundTruth.equals(CLASSIFICATION_LABEL_NOT_RELEVANT))
 				return classification;
@@ -233,45 +271,72 @@ public class SentenceClassificationWEKA {
 		return null;
 	}
 
-	private Classification classifyForInstance(DataPoint featureDataPoint, RandomForest rf,
-			weka.core.Instance instance) {
+//	private Classification classifyForInstance(DataPoint featureDataPoint, RandomForest rf,
+//			weka.core.Instance instance) {
+//
+//		try {
+//			double[] probs;
+//			probs = rf.distributionForInstance(instance);
+//
+//			double pred = probs[1] > threshold ? 1 : 0;
+//
+//			Classification classification = new Classification(
+//					(Integer) featureDataPoint.parameter.get("sentenceIndex"),
+//					classAttribute.value((int) pred).equals(CLASSIFICATION_LABEL_RELEVANT), probs[1], null);
+//
+//			return classification;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return null;
+//	}
 
-		try {
-			double[] probs;
-			probs = rf.distributionForInstance(instance);
+	/*
+	 * Only Annotations:
+	 */
+//	Score [getAccuracy()=0.955, getF1()=0.844, getPrecision()=0.738, getRecall()=0.986, tp=141, fp=50, fn=2, tn=969]
 
-			double pred = probs[1] > threshold ? 1 : 0;
+	/*
+	 * Only Words:
+	 */
+//	Score [getAccuracy()=0.862, getF1()=0.602, getPrecision()=0.467, getRecall()=0.846, tp=121, fp=138, fn=22, tn=881]
 
-			Classification classification = new Classification(
-					(Integer) featureDataPoint.parameter.get("sentenceIndex"),
-					classAttribute.value((int) pred).equals(CLASSIFICATION_LABEL_RELEVANT), probs[1], null);
+	/*
+	 * Words and Annotations:
+	 */
+//	Score [getAccuracy()=0.949, getF1()=0.822, getPrecision()=0.723, getRecall()=0.951, tp=136, fp=52, fn=7, tn=967]
 
-			return classification;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-	private Map<String, Double> getFeaturesForSentence(Document doc, Integer sentenceIndex) {
+	private Map<String, Double> getFeaturesForSentence(Map<Integer, List<EntityType>> entitiesPerSentence,
+			Instance instance, Integer sentenceIndex) {
 
 		Map<String, Double> features = new HashMap<>();
 
-		int numOfSentence = doc.getNumberOfSentences();
+		if (entitiesPerSentence.containsKey(sentenceIndex))
+			for (EntityType et : entitiesPerSentence.get(sentenceIndex)) {
+				features.put(et.name, 1d);
+			}
 
-		final int quarter = (int) ((double) numOfSentence / 4) + 1;
-
-		for (int i = 0; i < 4; i++) {
-			features.put(i + "_Q", (sentenceIndex > quarter * i && sentenceIndex < quarter * (i + 1) ? 1D : 0D));
-		}
-
-		for (DocumentToken documentToken : doc.getSentenceByIndex(sentenceIndex)) {
-			if (documentToken.getText().matches("[\\w\\w\\.\\s-_/]+"))
-				features.put(documentToken.getText(), 1D);
-		}
+//		for (DocumentToken documentToken : instance.getDocument().getSentenceByIndex(sentenceIndex)) {
+//			if (documentToken.getText().matches("[\\w\\w\\.\\s-_/]+"))
+//				features.put(documentToken.getText(), 1D);
+//		}
 		return features;
 	}
+	/*
+	 * nur anno auf allen sätzen
+	 */
+//	Score [getAccuracy()=0.966, getF1()=0.867, getPrecision()=0.828, getRecall()=0.909, tp=130, fp=27, fn=13, tn=992]
+
+	/*
+	 * beides auf allen sätzen
+	 */
+//	Score [getAccuracy()=0.929, getF1()=0.602, getPrecision()=0.984, getRecall()=0.434, tp=62, fp=1, fn=81, tn=1018]
+
+	/*
+	 * nur words
+	 */
+//	Score [getAccuracy()=0.878, getF1()=0.014, getPrecision()=1.000, getRecall()=0.007, tp=1, fp=0, fn=142, tn=1019]
 
 	private List<DataPoint> convertInstanceToDataPoints(Instance instance, boolean training) {
 		return convertInstancesToDataPoints(Arrays.asList(instance), training);
@@ -282,6 +347,23 @@ public class SentenceClassificationWEKA {
 		final List<DataPoint> dataPoints = new ArrayList<>();
 
 		for (Instance instance : instances) {
+
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+			
+			File groupNamesCacheDir = new File("data/annotations/result/");
+
+			JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(groupNamesCacheDir);
+
+			Map<Integer, List<EntityType>> entitiesPerSentence = new HashMap<>();
+
+			for (DocumentLinkedAnnotation eta : new HashSet<>(nerlaJSONReader.getForInstance(instance))) {
+
+				entitiesPerSentence.putIfAbsent(eta.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex(),
+						new ArrayList<>());
+				entitiesPerSentence.get(eta.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
+						.add(eta.getEntityType());
+
+			}
 			Set<Integer> sentencesWithInfo = new HashSet<>();
 			for (AbstractAnnotation goldAnnotation : instance.getGoldAnnotations().getAnnotations()) {
 				sentencesWithInfo.addAll(extractRelevantSentences(goldAnnotation));
@@ -293,7 +375,10 @@ public class SentenceClassificationWEKA {
 
 				String sentence = instance.getDocument().getContentOfSentence(i);
 
-				Map<String, Double> features = getFeaturesForSentence(instance.getDocument(), i);
+				if (sectionification.getSection(i) != ESection.RESULTS)
+					continue;
+
+				Map<String, Double> features = getFeaturesForSentence(entitiesPerSentence, instance, i);
 				{
 					Map<String, Object> parameter = new HashMap<>();
 
@@ -316,7 +401,7 @@ public class SentenceClassificationWEKA {
 			if (training) {
 
 				Collections.shuffle(negExamples);
-				for (int i = 0; i < count; i++) {
+				for (int i = 0; i < negExamples.size(); i++) {
 					Map<String, Object> parameter = new HashMap<>();
 					parameter.put("docID", negExamples.get(i).docID);
 					parameter.put("sentenceIndex", negExamples.get(i).sentenceIndex);
@@ -329,26 +414,66 @@ public class SentenceClassificationWEKA {
 		return dataPoints;
 	}
 
+	private EntityType containsRelatedClassOf(List<EntityType> annotations, EntityType entityType) {
+
+		for (EntityType et : entityType.getRelatedEntityTypes()) {
+			if (annotations.contains(et))
+				return et;
+
+		}
+		return null;
+	}
+
+	private EntityType containsSubClassOf(List<EntityType> annotations, EntityType entityType) {
+
+		for (EntityType et : entityType.getTransitiveClosureSubEntityTypes()) {
+			if (annotations.contains(et))
+				return et;
+
+		}
+		return null;
+	}
+
 	private Set<Integer> extractRelevantSentences(AbstractAnnotation goldAnnotation) {
 		Set<Integer> sentencesWithInfo = new HashSet<>();
 
 		AbstractAnnotation rootAnnotation = goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation();
 
-		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
-
-			DocumentLinkedAnnotation linkedAnn = rootAnnotation.asInstanceOfDocumentLinkedAnnotation();
-
-			int sentenceIndex = linkedAnn.getSentenceIndex();
-			sentencesWithInfo.add(sentenceIndex);
-		}
+//		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
+//
+//			DocumentLinkedAnnotation linkedAnn = rootAnnotation.asInstanceOfDocumentLinkedAnnotation();
+//
+//			int sentenceIndex = linkedAnn.getSentenceIndex();
+//			sentencesWithInfo.add(sentenceIndex);
+//		}
 
 		goldAnnotation.asInstanceOfEntityTemplate().filter().docLinkedAnnoation().multiSlots().singleSlots().merge()
-				.nonEmpty().build().getMergedAnnotations().values().stream().flatMap(a -> a.stream()).forEach(a -> {
+				.nonEmpty().build().getMergedAnnotations().values().stream().flatMap(a -> a.stream()).filter(a -> {
+
+					if (containsRelatedClassOf(Arrays.asList(a.getEntityType()), EntityType.get("Trend")) == null) {
+						return false;
+					}
+
+					EntityType invM = containsSubClassOf(Arrays.asList(a.getEntityType()),
+							EntityType.get("InvestigationMethod"));
+//					EntityType groupName = null;
+//					containsRelatedClassOf(Arrays.asList(a.getEntityType()), EntityType.get("GroupName"));
+//					EntityType treatment = null;
+//					containsRelatedClassOf(Arrays.asList(a.getEntityType()), EntityType.get("Treatment"));
+
+					if (invM == null) {
+//							&& groupName == null && treatment == null) {
+						return false;
+					}
+
+					return true;
+				}).forEach(a -> {
 					if (a.isInstanceOfDocumentLinkedAnnotation()) {
 
 						DocumentLinkedAnnotation linkedAnn = a.asInstanceOfDocumentLinkedAnnotation();
 
 						int sentenceIndex = linkedAnn.getSentenceIndex();
+
 						sentencesWithInfo.add(sentenceIndex);
 					}
 
@@ -394,4 +519,14 @@ public class SentenceClassificationWEKA {
 		return instances;
 	}
 
+	private void saveArff(final File arffOutputFile, Instances dataSet) {
+		try {
+			ArffSaver saver = new ArffSaver();
+			saver.setInstances(dataSet);
+			saver.setFile(arffOutputFile);
+			saver.writeBatch();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

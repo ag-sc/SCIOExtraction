@@ -24,6 +24,10 @@ public class DefinedExperimentalGroup {
 
 	final private EntityTemplate experimentalGroup;
 
+	public EntityTemplate get() {
+		return experimentalGroup;
+	}
+
 	public DefinedExperimentalGroup(EntityTemplate experimentalGroup) {
 		if (experimentalGroup.getEntityType() != SCIOEntityTypes.definedExperimentalGroup)
 			throw new IllegalArgumentException(
@@ -33,14 +37,29 @@ public class DefinedExperimentalGroup {
 	}
 
 	/**
-	 * Returns the group name annotation of the organism model of that experimental
-	 * group if any, else null.
+	 * Returns the group name annotations of that experimental group if hasGroupName
+	 * slot is not frozen or excluded.
 	 * 
 	 * @return the annotation of the species or null
 	 */
-	public Set<DocumentLinkedAnnotation> getUnFrozenGroupNames() {
+	public Set<DocumentLinkedAnnotation> getGroupNamesIfNotFrozen() {
 
 		if (SCIOSlotTypes.hasGroupName.isIncluded() && !SCIOSlotTypes.hasGroupName.isFrozen())
+			return Collections.emptySet();
+
+		return experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getAutoCastSlotFiller();
+
+	}
+
+	/**
+	 * /** Returns the group name annotations of that experimental group if
+	 * hasGroupName slot is not excluded.
+	 * 
+	 * @return the annotation of the species or null
+	 */
+	public Set<DocumentLinkedAnnotation> getGroupNames() {
+
+		if (SCIOSlotTypes.hasGroupName.isExcluded())
 			return Collections.emptySet();
 
 		return experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).getAutoCastSlotFiller();

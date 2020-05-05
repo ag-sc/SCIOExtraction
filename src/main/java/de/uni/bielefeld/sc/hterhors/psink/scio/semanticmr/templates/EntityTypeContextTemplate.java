@@ -25,6 +25,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeCo
  */
 public class EntityTypeContextTemplate extends AbstractFeatureTemplate<EntityTypeContextScope> {
 
+	public EntityTypeContextTemplate() {
+//		super(false);
+	}
+
 	static class EntityTypeContextScope extends AbstractFactorScope {
 
 		public final List<EntityType> leftContext;
@@ -155,10 +159,9 @@ public class EntityTypeContextTemplate extends AbstractFeatureTemplate<EntityTyp
 				.flatMap(e -> e.getDirectSuperEntityTypes().stream()).sorted().collect(Collectors.toList());
 
 		factor.getFeatureVector()
-				.set(PREFIX + superLeftContext.stream().map(e -> " " + e.name).reduce("", String::concat).trim()
-						+ "<->" + factor.getFactorScope().slotTypeContext.name + "<->"
-						+ superRightContext.stream().map(e -> " " + e.name).reduce("", String::concat).trim(),
-						true);
+				.set(PREFIX + superLeftContext.stream().map(e -> " " + e.name).reduce("", String::concat).trim() + "<->"
+						+ factor.getFactorScope().slotTypeContext.name + "<->"
+						+ superRightContext.stream().map(e -> " " + e.name).reduce("", String::concat).trim(), true);
 
 //		factor.getFeatureVector()
 //				.set(factor.getFactorScope().leftContext.stream().map(e -> " " + e.entityName)
