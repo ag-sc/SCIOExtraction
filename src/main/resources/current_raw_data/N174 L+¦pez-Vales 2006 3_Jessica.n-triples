@@ -57,6 +57,8 @@
 <http://scio/data/HReflexTest_81438> <http://www.w3.org/2000/01/rdf-schema#label> "HReflexTest (H/M ratio)" .
 <http://scio/data/HReflexTest_81440> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HReflexTest> .
 <http://scio/data/HReflexTest_81440> <http://www.w3.org/2000/01/rdf-schema#label> "HReflexTest (H/M ratio)" .
+<http://scio/data/Direction_84858> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/ElectrophysiologyParameter_84859> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyParameter> .
 <http://scio/data/HReflexTest_81442> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HReflexTest> .
 <http://scio/data/HReflexTest_81442> <http://www.w3.org/2000/01/rdf-schema#label> "HReflexTest (H/M ratio)" .
 <http://scio/data/AxonalRegenerationTest_81654> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
@@ -650,6 +652,7 @@
 <http://scio/data/DefinedExperimentalGroup_18334> <http://psink.de/scio/hasGroupName> "group OECac" .
 <http://scio/data/DefinedExperimentalGroup_18334> <http://psink.de/scio/hasGroupName> "rats receiving acute" .
 <http://scio/data/DefinedExperimentalGroup_18334> <http://psink.de/scio/hasGroupName> "acute OEC transplant" .
+<http://scio/data/ShamOperation_84853> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_18342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_18342> <http://www.w3.org/2000/01/rdf-schema#label> "OECdl E2" .
 <http://scio/data/DefinedExperimentalGroup_18342> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1208> .
@@ -662,6 +665,7 @@
 <http://scio/data/DefinedExperimentalGroup_18342> <http://psink.de/scio/hasGroupName> "delayed OEC transplants" .
 <http://scio/data/DefinedExperimentalGroup_18342> <http://psink.de/scio/hasGroupName> "1 week delayed transplant" .
 <http://scio/data/DefinedExperimentalGroup_18342> <http://psink.de/scio/hasGroupName> "delayed OEC transplantation" .
+<http://scio/data/ShamOperation_84854> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_18350> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_18350> <http://www.w3.org/2000/01/rdf-schema#label> "DMac E3" .
 <http://scio/data/DefinedExperimentalGroup_18350> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1208> .

@@ -21,6 +21,8 @@
 <http://scio/data/NeuroprotectionTest_76617> <http://www.w3.org/2000/01/rdf-schema#label> "NeuroprotectionTest (survival rate)" .
 <http://scio/data/NeuroprotectionTest_76619> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuroprotectionTest> .
 <http://scio/data/NeuroprotectionTest_76619> <http://www.w3.org/2000/01/rdf-schema#label> "NeuroprotectionTest (rubrospinal neurons)" .
+<http://scio/data/Direction_84729> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84731> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/NeuronalCellLossTest_76621> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalCellLossTest> .
 <http://scio/data/NeuronalCellLossTest_76621> <http://www.w3.org/2000/01/rdf-schema#label> "NeuronalCellLossTest (cell death)" .
 <http://scio/data/AxonalChangesTest_76623> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
@@ -235,6 +237,7 @@
 <http://scio/data/DefinedExperimentalGroup_20658> <http://psink.de/scio/hasInjuryModel> <http://scio/data/LateralHemisection_10174> .
 <http://scio/data/DefinedExperimentalGroup_20658> <http://psink.de/scio/hasNNumber> "14" .
 <http://scio/data/DefinedExperimentalGroup_20658> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_20577> .
+<http://scio/data/ShamOperation_84743> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_20666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_20666> <http://www.w3.org/2000/01/rdf-schema#label> "a-OEC LT E3" .
 <http://scio/data/DefinedExperimentalGroup_20666> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1274> .
@@ -242,6 +245,7 @@
 <http://scio/data/DefinedExperimentalGroup_20666> <http://psink.de/scio/hasInjuryModel> <http://scio/data/LateralHemisection_10174> .
 <http://scio/data/DefinedExperimentalGroup_20666> <http://psink.de/scio/hasNNumber> "17" .
 <http://scio/data/DefinedExperimentalGroup_20666> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_20625> .
+<http://scio/data/ShamOperation_84742> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_20674> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_20674> <http://www.w3.org/2000/01/rdf-schema#label> "b-OEC ST E4" .
 <http://scio/data/DefinedExperimentalGroup_20674> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1274> .

@@ -89,10 +89,14 @@
 <http://scio/data/NeuroprotectionTest_75392> <http://www.w3.org/2000/01/rdf-schema#label> "NeuroprotectionTest (the extent of neuronal survival)" .
 <http://scio/data/AxonalChangesTest_75394> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_75394> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (total number of 5-HT axons that aligned with astrocytes and crossed the scar border)" .
+<http://scio/data/Direction_84915> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84917> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_75396> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_75396> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (total number of 5-HTaxons)" .
 <http://scio/data/AxonalChangesTest_75398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_75398> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (axons also crossed the rostral border)" .
+<http://scio/data/Direction_84739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84741> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_75400> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_75400> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (5-HTpositive axons)" .
 <http://scio/data/AxonalChangesTest_75402> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .

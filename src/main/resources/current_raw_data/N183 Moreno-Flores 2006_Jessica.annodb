@@ -101,7 +101,7 @@
 80431, PValue, 21865, 21874, "P < 0.005", "", "<http://scio/data/Significance_34218> <http://psink.de/scio/hasPValue> \"P < 0.005\"."
 80432, GroupName, 21885, 21902, "TEG3-transplanted", "", "<http://scio/data/DefinedExperimentalGroup_27037> <http://psink.de/scio/hasGroupName> \"TEG3-transplanted\"."
 80433, GroupName, 21906, 21931, "mock-transplanted animals", "", 
-80434, ANOVA, 21933, 21938, "ANOVA", "", "<http://scio/data/Result_34209> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+80434, ANOVA, 21933, 21938, "ANOVA", "", "<http://scio/data/Result_34209> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>."
 80435, StatisticalTest, 21943, 21962, "Tukey post hoc test", "", 
 80409, OlfactoryEnsheathingGliaCell, 21993, 21997, "TEG3", "", 
 80408, Positive, 22010, 22016, "repair", "", "<http://scio/data/Result_34209> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
@@ -114,7 +114,7 @@
 80446, GroupName, 22946, 22967, "mocktransplanted rats", "", "<http://scio/data/DefinedExperimentalGroup_27045> <http://psink.de/scio/hasGroupName> \"mocktransplanted rats\"."
 80332, Lower, 22981, 22989, "impaired", "", "<http://scio/data/RepeatedMeasureTrend_34288> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_34304> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
 80333, PValue, 22991, 23000, "P < 0.001", "", "<http://scio/data/Significance_34289> <http://psink.de/scio/hasPValue> \"P < 0.001\". <http://scio/data/Significance_34305> <http://psink.de/scio/hasPValue> \"P < 0.001\"."
-80334, StatisticalTest, 23017, 23046, "ANOVA and post hoc Tukey test", "", "<http://scio/data/Result_34278> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_34294> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+103607, ANOVA, 23017, 23046, "ANOVA and post hoc Tukey test", "", 
 80436, Duration, 23049, 23070, "At 8 weeks postlesion", "", 
 80338, Higher, 23107, 23116, "increased", "", 
 80438, MeanValue, 23122, 23123, "3", "", 
@@ -131,7 +131,7 @@
 99502, GroupName, 23319, 23342, "mock-transplanted group", "", "<http://scio/data/DefinedExperimentalGroup_27045> <http://psink.de/scio/hasGroupName> \"mock-transplanted group\"."
 80485, PValue, 23392, 23401, "P = 0.005", "", "<http://scio/data/Significance_34237> <http://psink.de/scio/hasPValue> \"P = 0.005\"."
 80486, PValue, 23406, 23414, "P = 0.09", "", "<http://scio/data/Significance_34254> <http://psink.de/scio/hasPValue> \"P = 0.09\"."
-80487, ANOVA, 23430, 23435, "ANOVA", "", "<http://scio/data/Result_34224> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_34243> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+80487, ANOVA, 23430, 23435, "ANOVA", "", "<http://scio/data/Result_34224> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_34243> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_34278> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>. <http://scio/data/Result_34294> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA>."
 80488, StatisticalTest, 23440, 23459, "post hoc Tukey test", "", 
 80497, GroupName, 23529, 23552, "unlesioned control rats", "", 
 80498, PValue, 23554, 23562, "P < 0.05", "", "<http://scio/data/Significance_34320> <http://psink.de/scio/hasPValue> \"P < 0.05\". <http://scio/data/Significance_34340> <http://psink.de/scio/hasPValue> \"P < 0.05\"."

@@ -249,6 +249,7 @@
 <http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> "co-transplantation group" .
 <http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> "inco-transplantation rats" .
 <http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> "transplantation of NSCs with OECs" .
+<http://scio/data/ShamOperation_84689> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_18727> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_18727> <http://www.w3.org/2000/01/rdf-schema#label> "OECs E2" .
 <http://scio/data/DefinedExperimentalGroup_18727> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1226> .
@@ -273,6 +274,7 @@
 <http://scio/data/Injury_18755> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Injury> .
 <http://scio/data/Treatment_18757> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
 <http://scio/data/DefinedExperimentalGroup_18751> <http://psink.de/scio/hasGroupName> "sham group.The" .
+<http://scio/data/ShamOperation_84690> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_48139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_48139> <http://www.w3.org/2000/01/rdf-schema#label> "NSC E3" .
 <http://scio/data/DefinedExperimentalGroup_48139> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1226> .

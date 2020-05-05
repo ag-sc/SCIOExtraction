@@ -159,7 +159,7 @@
 <http://scio/data/Result_39706> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_39713> .
 <http://scio/data/PositiveSignificance_39715> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/RepeatedMeasureTrend_39713> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_39715> .
-<http://scio/data/PositiveSignificance_39715> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_39715> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/RepeatedMeasureTrend_39713> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39714> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39706> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -174,7 +174,7 @@
 <http://scio/data/Result_39719> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_39726> .
 <http://scio/data/PositiveSignificance_39727> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/RepeatedMeasureTrend_39726> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_39727> .
-<http://scio/data/PositiveSignificance_39727> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_39727> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/RepeatedMeasureTrend_39726> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39731> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39719> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -189,7 +189,7 @@
 <http://scio/data/Result_39732> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_39739> .
 <http://scio/data/PositiveSignificance_39740> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/RepeatedMeasureTrend_39739> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_39740> .
-<http://scio/data/PositiveSignificance_39740> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_39740> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/RepeatedMeasureTrend_39739> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39732> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -318,7 +318,7 @@
 <http://scio/data/Result_39856> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39863> .
 <http://scio/data/Significance_39865> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39863> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_39865> .
-<http://scio/data/Significance_39865> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_39865> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39863> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39864> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39856> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -333,7 +333,7 @@
 <http://scio/data/Result_39871> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39880> .
 <http://scio/data/Significance_39881> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39880> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_39881> .
-<http://scio/data/Significance_39881> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_39881> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39880> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39885> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39871> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -348,7 +348,7 @@
 <http://scio/data/Result_39886> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39895> .
 <http://scio/data/Significance_39896> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39895> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_39896> .
-<http://scio/data/Significance_39896> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_39896> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39895> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39900> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39886> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -363,7 +363,7 @@
 <http://scio/data/Result_39901> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39910> .
 <http://scio/data/Significance_39911> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39910> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_39911> .
-<http://scio/data/Significance_39911> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_39911> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39910> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39915> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39901> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -378,7 +378,7 @@
 <http://scio/data/Result_39916> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39923> .
 <http://scio/data/PositiveSignificance_39927> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_39923> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_39927> .
-<http://scio/data/PositiveSignificance_39927> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_39927> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39923> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_39924> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39916> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -393,7 +393,7 @@
 <http://scio/data/Result_39931> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39940> .
 <http://scio/data/PositiveSignificance_39941> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_39940> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_39941> .
-<http://scio/data/PositiveSignificance_39941> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_39941> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39940> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_39945> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39931> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -408,7 +408,7 @@
 <http://scio/data/Result_39946> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39955> .
 <http://scio/data/PositiveSignificance_39956> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_39955> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_39956> .
-<http://scio/data/PositiveSignificance_39956> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_39956> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39955> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_39960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39946> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -423,7 +423,7 @@
 <http://scio/data/Result_39961> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39968> .
 <http://scio/data/Significance_39972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39968> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_39972> .
-<http://scio/data/Significance_39972> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_39972> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39968> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_39969> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39961> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -438,7 +438,7 @@
 <http://scio/data/Result_39976> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39985> .
 <http://scio/data/Significance_39986> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39985> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_39986> .
-<http://scio/data/Significance_39986> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_39986> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39985> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_39990> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39976> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -453,7 +453,7 @@
 <http://scio/data/Result_39991> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_39998> .
 <http://scio/data/Significance_40002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_39998> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_40002> .
-<http://scio/data/Significance_40002> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_40002> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_39998> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_39999> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_39991> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -468,7 +468,7 @@
 <http://scio/data/Result_40006> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40015> .
 <http://scio/data/Significance_40016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_40015> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_40016> .
-<http://scio/data/Significance_40016> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_40016> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40015> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_40020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40006> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -483,7 +483,7 @@
 <http://scio/data/Result_40021> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40030> .
 <http://scio/data/Significance_40031> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_40030> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_40031> .
-<http://scio/data/Significance_40031> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_40031> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40030> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_40035> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40021> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -498,7 +498,7 @@
 <http://scio/data/Result_40036> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40045> .
 <http://scio/data/Significance_40046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_40045> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_40046> .
-<http://scio/data/Significance_40046> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_40046> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40045> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_40050> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40036> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -513,7 +513,7 @@
 <http://scio/data/Result_40051> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40058> .
 <http://scio/data/PositiveSignificance_40060> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_40058> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40060> .
-<http://scio/data/PositiveSignificance_40060> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40060> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40058> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_40059> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40051> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -528,7 +528,7 @@
 <http://scio/data/Result_40066> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40075> .
 <http://scio/data/PositiveSignificance_40076> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_40075> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40076> .
-<http://scio/data/PositiveSignificance_40076> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40076> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40075> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_40080> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40066> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -543,7 +543,7 @@
 <http://scio/data/Result_40081> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40090> .
 <http://scio/data/PositiveSignificance_40091> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_40090> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40091> .
-<http://scio/data/PositiveSignificance_40091> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40091> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40090> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_40095> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40081> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -558,7 +558,7 @@
 <http://scio/data/Result_40096> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40105> .
 <http://scio/data/PositiveSignificance_40106> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/Trend_40105> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40106> .
-<http://scio/data/PositiveSignificance_40106> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40106> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_40105> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_40110> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40096> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -573,7 +573,7 @@
 <http://scio/data/Result_40111> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40118> .
 <http://scio/data/ZeroSignificance_40120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance> .
 <http://scio/data/Trend_40118> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_40120> .
-<http://scio/data/ZeroSignificance_40120> <http://psink.de/scio/hasPValue> " > 0.05" .
+<http://scio/data/ZeroSignificance_40120> <http://psink.de/scio/hasPValue> "   > 0.05" .
 <http://scio/data/Trend_40118> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_40119> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40111> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -588,7 +588,7 @@
 <http://scio/data/Result_40124> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_40131> .
 <http://scio/data/ZeroSignificance_40132> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance> .
 <http://scio/data/Trend_40131> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_40132> .
-<http://scio/data/ZeroSignificance_40132> <http://psink.de/scio/hasPValue> " > 0.05" .
+<http://scio/data/ZeroSignificance_40132> <http://psink.de/scio/hasPValue> "   > 0.05" .
 <http://scio/data/Trend_40131> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_40136> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40124> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -620,7 +620,7 @@
 <http://scio/data/Result_40163> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_40170> .
 <http://scio/data/PositiveSignificance_40172> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/RepeatedMeasureTrend_40170> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40172> .
-<http://scio/data/PositiveSignificance_40172> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40172> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/RepeatedMeasureTrend_40170> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_40171> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40163> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -636,7 +636,7 @@
 <http://scio/data/Result_40176> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_40183> .
 <http://scio/data/PositiveSignificance_40184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/RepeatedMeasureTrend_40183> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40184> .
-<http://scio/data/PositiveSignificance_40184> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40184> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/RepeatedMeasureTrend_40183> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_40188> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40176> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -652,7 +652,7 @@
 <http://scio/data/Result_40189> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_40196> .
 <http://scio/data/PositiveSignificance_40197> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
 <http://scio/data/RepeatedMeasureTrend_40196> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_40197> .
-<http://scio/data/PositiveSignificance_40197> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/PositiveSignificance_40197> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/RepeatedMeasureTrend_40196> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_40201> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_40189> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -982,7 +982,7 @@
 <http://scio/data/Result_42019> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_42026> .
 <http://scio/data/Significance_42028> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_42026> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_42028> .
-<http://scio/data/Significance_42028> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_42028> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_42026> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_42027> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_42019> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -997,7 +997,7 @@
 <http://scio/data/Result_42032> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_42039> .
 <http://scio/data/Significance_42040> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_42039> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_42040> .
-<http://scio/data/Significance_42040> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_42040> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_42039> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_42044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_42032> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
@@ -1012,7 +1012,7 @@
 <http://scio/data/Result_42045> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_42052> .
 <http://scio/data/Significance_42053> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
 <http://scio/data/Trend_42052> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_42053> .
-<http://scio/data/Significance_42053> <http://psink.de/scio/hasPValue> " < 0.05" .
+<http://scio/data/Significance_42053> <http://psink.de/scio/hasPValue> "   < 0.05" .
 <http://scio/data/Trend_42052> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
 <http://scio/data/ExperimentalGroup_42057> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_42045> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .

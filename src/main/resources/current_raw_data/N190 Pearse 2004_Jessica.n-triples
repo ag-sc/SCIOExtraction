@@ -952,6 +952,7 @@
 <http://scio/data/DefinedExperimentalGroup_21117> <http://psink.de/scio/hasGroupName> "injury only controls" .
 <http://scio/data/DefinedExperimentalGroup_21117> <http://psink.de/scio/hasGroupName> "Injuredonly controls" .
 <http://scio/data/DefinedExperimentalGroup_21117> <http://psink.de/scio/hasGroupName> "injured-only con- trols" .
+<http://scio/data/ShamOperation_84691> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_21125> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_21125> <http://www.w3.org/2000/01/rdf-schema#label> "MP / IL-10 E2" .
 <http://scio/data/DefinedExperimentalGroup_21125> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1280> .
@@ -966,6 +967,7 @@
 <http://scio/data/DefinedExperimentalGroup_21125> <http://psink.de/scio/hasGroupName> "MP/IL-10" .
 <http://scio/data/DefinedExperimentalGroup_21125> <http://psink.de/scio/hasGroupName> "MP/IL-10 administration alone" .
 <http://scio/data/DefinedExperimentalGroup_21125> <http://psink.de/scio/hasGroupName> "acute administration of MP/IL-10 by itself" .
+<http://scio/data/ShamOperation_84692> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_21133> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_21133> <http://www.w3.org/2000/01/rdf-schema#label> "SC grafted E3" .
 <http://scio/data/DefinedExperimentalGroup_21133> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1280> .

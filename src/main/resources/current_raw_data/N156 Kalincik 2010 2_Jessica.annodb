@@ -365,7 +365,6 @@
 41699, PValue, 35395, 35400, "p≥0.1", "", "<http://scio/data/Significance_34898> <http://psink.de/scio/hasPValue> \"p≥0.1\". <http://scio/data/Significance_34913> <http://psink.de/scio/hasPValue> \"p≥0.1\"."
 41700, StatisticalTest, 35416, 35450, "t-tests with Bonferroni correction", "", "<http://scio/data/Result_34888> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_34903> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
 98702, GroupName, 35767, 35782, "OEC transplants", "", "<http://scio/data/DefinedExperimentalGroup_28134> <http://psink.de/scio/hasGroupName> \"OEC transplants\"."
-80892, Positive, 35783, 35804, "significantly reduced", "", "<http://scio/data/Result_34796> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_34812> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
 98712, AutonomicDysreflexiaTest, 35821, 35874, "autonomic dysreflexia following colorectal distension", "", 
 98703, None, 35894, 35903, "no effect", "", 
 99672, AutonomicDysreflexiaTest, 35907, 35940, "resting cardiovascular parameters", "", 

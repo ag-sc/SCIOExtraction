@@ -3,8 +3,11 @@
 <http://scio/data/BBBTest_63391> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/HistologicalInvestigationTest_75237> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
 <http://scio/data/HistologicalInvestigationTest_75237> <http://www.w3.org/2000/01/rdf-schema#label> "HistologicalInvestigationTest (NGFR)" .
+<http://scio/data/Direction_84803> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84805> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/BBBTest_75248> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/BBBTest_75248> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB)" .
+<http://scio/data/NeurologicScaleParameter_84799> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
 # RDF export of group: Results
 <http://scio/data/Result_35187> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
 <http://scio/data/Result_35187> <http://www.w3.org/2000/01/rdf-schema#label> "BBB, R1" .

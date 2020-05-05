@@ -8,7 +8,6 @@
 88133, OlfactoryEnsheathingGliaCell, 800, 804, "OECs", "", 
 87893, Positive, 824, 834, "beneficial", "", 
 88134, DeliveryMethod, 853, 868, "transplantation", "", 
-88136, AnimalModel, 869, 885, "in animal models", "", 
 88135, Injury, 889, 892, "SCI", "", 
 88137, MesenchymalStemCell, 1114, 1117, "MSC", "", 
 88138, OlfactoryEnsheathingGliaCell, 1122, 1125, "OEC", "", 

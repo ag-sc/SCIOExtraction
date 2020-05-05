@@ -43,7 +43,7 @@
 51369, MeanValue, 7185, 7189, "4.41", "", 
 51370, StandardDeviation, 7190, 7198, "± 2.38 s", "", 
 51371, PositiveSignificance, 7204, 7217, "significantly", "", "<http://scio/data/PositiveSignificance_12321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_12320> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_12321>. <http://scio/data/PositiveSignificance_12333> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_12332> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_12333>."
-51372, Lower, 7218, 7223, "lower", "R1,R2", "<http://scio/data/Trend_12320> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterDecrease>. <http://scio/data/Trend_12332> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterDecrease>."
+51372, Lower, 7218, 7223, "lower", "R1,R2", "<http://scio/data/Trend_12320> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_12332> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
 51373, DefinedExperimentalGroup, 7238, 7248, "hSCI group", "E1", 
 51374, MeanValue, 7250, 7254, "7.42", "", 
 51375, StandardDeviation, 7255, 7262, "± 4.20s", "", 

@@ -58,7 +58,6 @@
 <http://scio/data/DefinedExperimentalGroup_17916> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Injury_9700> .
 <http://scio/data/DefinedExperimentalGroup_17916> <http://psink.de/scio/hasNNumber> "12" .
 <http://scio/data/DefinedExperimentalGroup_17916> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_17873> .
-<http://scio/data/DefinedExperimentalGroup_17916> <http://psink.de/scio/hasGroupName> "transplanted OECs" .
 <http://scio/data/ShamOperation_74117> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_17924> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_17924> <http://www.w3.org/2000/01/rdf-schema#label> "OEC-CM E2" .

@@ -212,6 +212,7 @@
 <http://scio/data/DefinedExperimentalGroup_14087> <http://psink.de/scio/hasGroupName> "controls" .
 <http://scio/data/DefinedExperimentalGroup_14087> <http://psink.de/scio/hasGroupName> "DMEM animals" .
 <http://scio/data/DefinedExperimentalGroup_14087> <http://psink.de/scio/hasGroupName> "control group" .
+<http://scio/data/ShamOperation_84669> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_31269> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_31269> <http://www.w3.org/2000/01/rdf-schema#label> "OEC group, E1" .
 <http://scio/data/DefinedExperimentalGroup_31269> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1159> .
@@ -222,6 +223,7 @@
 <http://scio/data/DefinedExperimentalGroup_31269> <http://psink.de/scio/hasGroupName> "OECs-group" .
 <http://scio/data/DefinedExperimentalGroup_31269> <http://psink.de/scio/hasGroupName> "animals receiving OECs" .
 <http://scio/data/DefinedExperimentalGroup_31269> <http://psink.de/scio/hasGroupName> "OECs-injected animals" .
+<http://scio/data/ShamOperation_84670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_1159> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
 <http://scio/data/OrganismModel_1159> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .

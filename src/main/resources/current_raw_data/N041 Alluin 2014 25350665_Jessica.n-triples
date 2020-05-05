@@ -99,12 +99,15 @@
 <http://scio/data/InfusionDelivery_83945> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83957> .
 <http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
 <http://scio/data/Direction_83950> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_83951> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_83951> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_83951> .
 <http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasDosage> "5 U/ml" .
 <http://scio/data/ChondroitinaseABC_83953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
 <http://scio/data/CompoundTreatment_83943> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_83953> .
+<http://scio/data/ChondroitinaseABC_83953> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku> .
+<http://scio/data/AnatomicalLocation_84378> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/CompoundTreatment_83958> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
-<http://scio/data/CompoundTreatment_83958> <http://www.w3.org/2000/01/rdf-schema#label> "BSA" .
+<http://scio/data/CompoundTreatment_83958> <http://www.w3.org/2000/01/rdf-schema#label> "Saline + BSA" .
 <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDuration> "for seven days" .
 <http://scio/data/InfusionDelivery_83960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfusionDelivery> .
 <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InfusionDelivery_83960> .
@@ -116,10 +119,11 @@
 <http://scio/data/InfusionDelivery_83960> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83964> .
 <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
 <http://scio/data/Direction_83969> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_83970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_83970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_83970> .
 <http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasDosage> "0.1%" .
-<http://scio/data/Albumin_83972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
-<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasCompound> <http://scio/data/Albumin_83972> .
+<http://scio/data/Saline_83972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline> .
+<http://scio/data/CompoundTreatment_83958> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_83972> .
 <http://scio/data/CompoundTreatment_83973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83973> <http://www.w3.org/2000/01/rdf-schema#label> "PDGFAA" .
 <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDuration> "for seven days" .
@@ -133,10 +137,11 @@
 <http://scio/data/InfusionDelivery_83975> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83979> .
 <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
 <http://scio/data/Direction_83984> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_83985> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_83985> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_83985> .
 <http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasDosage> "1 mg/100 ml" .
-<http://scio/data/Substance_83987> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83987> .
+<http://scio/data/Protein_84379> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_83973> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_84379> .
 <http://scio/data/CompoundTreatment_83988> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83988> <http://www.w3.org/2000/01/rdf-schema#label> "bFGF" .
 <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDuration> "for seven days" .
@@ -150,10 +155,11 @@
 <http://scio/data/InfusionDelivery_83990> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_83994> .
 <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
 <http://scio/data/Direction_83999> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_84000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_84000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_84000> .
 <http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasDosage> "3 mg/100 ml" .
-<http://scio/data/Substance_84002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_84002> .
+<http://scio/data/Protein_84380> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_83988> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_84380> .
 <http://scio/data/CompoundTreatment_84003> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_84003> <http://www.w3.org/2000/01/rdf-schema#label> "EGF" .
 <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDuration> "for seven days" .
@@ -167,10 +173,11 @@
 <http://scio/data/InfusionDelivery_84005> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84009> .
 <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Catheter> .
 <http://scio/data/Direction_84014> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
-<http://scio/data/Compound_84015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Albumin_84015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin> .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_84015> .
 <http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasDosage> "3 mg/100 ml" .
-<http://scio/data/Substance_84017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_84017> .
+<http://scio/data/Protein_84381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_84003> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_84381> .
 <http://scio/data/RehabilitativeTraining_84044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RehabilitativeTraining> .
 <http://scio/data/RehabilitativeTraining_84044> <http://www.w3.org/2000/01/rdf-schema#label> "Reha" .
 <http://scio/data/DeliveryMethod_84046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .

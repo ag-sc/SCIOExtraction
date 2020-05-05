@@ -81,6 +81,8 @@
 <http://scio/data/HistologicalInvestigationParameter_77693> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_77069> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_77069> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (numbers of Fluorogold labeled neurons)" .
+<http://scio/data/Direction_84780> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/AxonalChangesTest_77072> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .
 <http://scio/data/AxonalChangesTest_77072> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalChangesTest (Fluorogold numbers)" .
 <http://scio/data/AxonalChangesTest_77074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest> .

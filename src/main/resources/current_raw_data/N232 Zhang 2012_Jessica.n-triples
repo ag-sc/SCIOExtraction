@@ -35,6 +35,7 @@
 <http://scio/data/BBBTest_80622> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
 <http://scio/data/WalkingAnalysisTest_80624> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/WalkingAnalysisTest> .
 <http://scio/data/WalkingAnalysisTest_80624> <http://www.w3.org/2000/01/rdf-schema#label> "WalkingAnalysisTest (kinematic analysis)" .
+<http://scio/data/WalkingAnalysisParameter_84710> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/WalkingAnalysisParameter> .
 <http://scio/data/MyelinationTest_80626> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_80626> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (counts of P0-positive myelin sheaths)" .
 <http://scio/data/NeuronalChangesTest_80628> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuronalChangesTest> .

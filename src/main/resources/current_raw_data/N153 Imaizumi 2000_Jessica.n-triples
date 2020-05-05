@@ -137,7 +137,7 @@
 <http://scio/data/Trend_12113> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
 <http://scio/data/Result_12106> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_12113> .
 <http://scio/data/Significance_12114> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
-<http://scio/data/Trend_12113> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterDecrease> .
+<http://scio/data/Trend_12113> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_22291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_12106> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
 <http://scio/data/Result_12106> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/ElectrophysiologyTest_80240> .
@@ -149,7 +149,7 @@
 <http://scio/data/Trend_12127> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
 <http://scio/data/Result_12120> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_12127> .
 <http://scio/data/Significance_12128> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
-<http://scio/data/Trend_12127> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterDecrease> .
+<http://scio/data/Trend_12127> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower> .
 <http://scio/data/ExperimentalGroup_22292> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_12120> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
 <http://scio/data/Result_12120> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/ElectrophysiologyTest_80242> .
@@ -290,6 +290,7 @@
 <http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> "intact control" .
 <http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> "intact controls" .
 <http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> "controls" .
+<http://scio/data/ShamOperation_84795> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_11994> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_11994> <http://www.w3.org/2000/01/rdf-schema#label> "OEC transplantation E2" .
 <http://scio/data/DefinedExperimentalGroup_11994> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1086> .
@@ -309,6 +310,7 @@
 <http://scio/data/DefinedExperimentalGroup_22275> <http://psink.de/scio/hasGroupName> "control" .
 <http://scio/data/DefinedExperimentalGroup_22275> <http://psink.de/scio/hasInjuryModel> <http://scio/data/DorsalHemisection_9495> .
 <http://scio/data/DefinedExperimentalGroup_22275> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_11934> .
+<http://scio/data/ShamOperation_84840> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_1086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
 <http://scio/data/OrganismModel_1086> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .

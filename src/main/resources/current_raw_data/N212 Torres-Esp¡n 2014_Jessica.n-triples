@@ -1432,6 +1432,7 @@
 <http://scio/data/DefinedExperimentalGroup_24655> <http://psink.de/scio/hasGroupName> "MSC group" .
 <http://scio/data/DefinedExperimentalGroup_24655> <http://psink.de/scio/hasGroupName> "MSC" .
 <http://scio/data/DefinedExperimentalGroup_24655> <http://psink.de/scio/hasGroupName> "acute MSC transplanted rats" .
+<http://scio/data/ShamOperation_84371> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_24663> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_24663> <http://www.w3.org/2000/01/rdf-schema#label> "OEC - 0 dpo E3" .
 <http://scio/data/DefinedExperimentalGroup_24663> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1411> .
@@ -1458,6 +1459,7 @@
 <http://scio/data/DefinedExperimentalGroup_24679> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Contusion_10504> .
 <http://scio/data/DefinedExperimentalGroup_24679> <http://psink.de/scio/hasNNumber> "7" .
 <http://scio/data/DefinedExperimentalGroup_24679> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_24604> .
+<http://scio/data/ShamOperation_84372> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_24687> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_24687> <http://www.w3.org/2000/01/rdf-schema#label> "OEC - 7 dpo E6" .
 <http://scio/data/DefinedExperimentalGroup_24687> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1411> .

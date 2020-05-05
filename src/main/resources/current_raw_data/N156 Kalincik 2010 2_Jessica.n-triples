@@ -182,7 +182,6 @@
 <http://scio/data/Result_34796> <http://www.w3.org/2000/01/rdf-schema#label> "T50MAP R8" .
 <http://scio/data/Observation_34797> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Result_34796> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_28134> .
-<http://scio/data/Result_34796> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
 <http://scio/data/Result_34796> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
 <http://scio/data/Result_34796> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_28142> .
 <http://scio/data/Trend_34803> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
@@ -198,7 +197,6 @@
 <http://scio/data/Result_34812> <http://www.w3.org/2000/01/rdf-schema#label> "T50MAP R9" .
 <http://scio/data/Observation_34813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Result_34812> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_28134> .
-<http://scio/data/Result_34812> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
 <http://scio/data/Result_34812> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
 <http://scio/data/Result_34812> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_28142> .
 <http://scio/data/Trend_34819> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .

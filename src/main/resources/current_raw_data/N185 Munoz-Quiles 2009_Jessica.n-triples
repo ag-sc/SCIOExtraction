@@ -617,6 +617,7 @@
 <http://scio/data/DefinedExperimentalGroup_20082> <http://psink.de/scio/hasTreatmentType> <http://scio/data/SurgeryTreatment_20123> .
 <http://scio/data/DefinedExperimentalGroup_20082> <http://psink.de/scio/hasGroupName> "SA" .
 <http://scio/data/DefinedExperimentalGroup_20082> <http://psink.de/scio/hasGroupName> "SA group" .
+<http://scio/data/ShamOperation_84880> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_20093> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_20093> <http://www.w3.org/2000/01/rdf-schema#label> "Chr E2" .
 <http://scio/data/DefinedExperimentalGroup_20093> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1262> .
@@ -647,6 +648,7 @@
 <http://scio/data/DefinedExperimentalGroup_20104> <http://psink.de/scio/hasGroupName> "Non-T animals" .
 <http://scio/data/DefinedExperimentalGroup_20104> <http://psink.de/scio/hasGroupName> "Non-T group" .
 <http://scio/data/DefinedExperimentalGroup_20104> <http://psink.de/scio/hasGroupName> "Non-T rats" .
+<http://scio/data/ShamOperation_84881> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_20115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_20115> <http://www.w3.org/2000/01/rdf-schema#label> "Sham E5, E6" .
 <http://scio/data/OrganismModel_20116> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .

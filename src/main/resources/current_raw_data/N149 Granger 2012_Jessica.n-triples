@@ -9,10 +9,15 @@
 <http://scio/data/GaitTest_74786> <http://www.w3.org/2000/01/rdf-schema#label> "GaitTest (hindlimb lateral stability)" .
 <http://scio/data/SomatosensoryEvokedPotentialsTest_74788> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SomatosensoryEvokedPotentialsTest> .
 <http://scio/data/SomatosensoryEvokedPotentialsTest_74788> <http://www.w3.org/2000/01/rdf-schema#label> "SomatosensoryEvokedPotentialsTest (somatosensory-evoked potentials)" .
+<http://scio/data/Direction_84641> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/ElectrophysiologyParameter_84642> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyParameter> .
 <http://scio/data/MotorEvokedPotentialsTest_74790> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest> .
 <http://scio/data/MotorEvokedPotentialsTest_74790> <http://www.w3.org/2000/01/rdf-schema#label> "MotorEvokedPotentialsTest (transcranial magnetic motor-evoked potentials)" .
+<http://scio/data/Direction_84647> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/ElectrophysiologyParameter_84648> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyParameter> .
 <http://scio/data/BladderFunctionTest_74792> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionTest> .
 <http://scio/data/BladderFunctionTest_74792> <http://www.w3.org/2000/01/rdf-schema#label> "BladderFunctionTest (Urinary bladder compliance)" .
+<http://scio/data/BladderFunctionParameter_84653> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionParameter> .
 # RDF export of group: Results
 <http://scio/data/Result_11054> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
 <http://scio/data/Result_11054> <http://www.w3.org/2000/01/rdf-schema#label> "Gait test R1" .
@@ -87,7 +92,7 @@
 <http://scio/data/Trend_11125> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None> .
 <http://scio/data/ExperimentalGroup_22182> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
-<http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BladderFunctionTest_74792> .
+<http://scio/data/Result_11118> <http://psink.de/scio/hasInvestigationMethod> <http://psink.de/scio/InvestigationMethod> .
 # RDF export of group: Observations
 <http://scio/data/Observation_22162> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Observation_22162> <http://www.w3.org/2000/01/rdf-schema#label> "TP OEC transplantation" .

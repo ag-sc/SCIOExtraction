@@ -73,6 +73,7 @@
 <http://scio/data/Compound_83459> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/Saline_83461> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline> .
 <http://scio/data/CompoundTreatment_83451> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_83461> .
+<http://scio/data/AnatomicalLocation_84458> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
 <http://scio/data/CompoundTreatment_83464> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83464> <http://www.w3.org/2000/01/rdf-schema#label> "GDNF" .
 <http://scio/data/InjectionDelivery_83466> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
@@ -83,28 +84,27 @@
 <http://scio/data/Direction_83473> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/Compound_83474> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasDosage> "0.4 µg in 50-µL" .
-<http://scio/data/Substance_83476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83476> .
+<http://scio/data/Protein_84459> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_83464> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_84459> .
 <http://scio/data/CompoundTreatment_83477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83477> <http://www.w3.org/2000/01/rdf-schema#label> "GDNF Microspheres" .
 <http://scio/data/InjectionDelivery_83479> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
 <http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83479> .
 <http://scio/data/SpinalCord_83481> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
 <http://scio/data/InjectionDelivery_83479> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83481> .
-<http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe> .
+<http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes> .
 <http://scio/data/Direction_83486> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/Compound_83487> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasDosage> "0.4 µg in 50-µL" .
-<http://scio/data/Substance_83489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
-<http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_83489> .
-<http://scio/data/AnatomicalLocation_83491> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/Protein_84460> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_83477> <http://psink.de/scio/hasCompound> <http://scio/data/Protein_84460> .
 <http://scio/data/CompoundTreatment_83494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
 <http://scio/data/CompoundTreatment_83494> <http://www.w3.org/2000/01/rdf-schema#label> "AntiNOGO Microspheres" .
 <http://scio/data/InjectionDelivery_83496> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
 <http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83496> .
 <http://scio/data/SpinalCord_83498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
 <http://scio/data/InjectionDelivery_83496> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83498> .
-<http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe> .
+<http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes> .
 <http://scio/data/Direction_83503> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/Compound_83504> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_83494> <http://psink.de/scio/hasDosage> "50 Kg in 50-KL" .
@@ -117,7 +117,7 @@
 <http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_83513> .
 <http://scio/data/SpinalCord_83515> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
 <http://scio/data/InjectionDelivery_83513> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_83515> .
-<http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe> .
+<http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes> .
 <http://scio/data/Direction_83520> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
 <http://scio/data/Compound_83521> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
 <http://scio/data/CompoundTreatment_83511> <http://psink.de/scio/hasDosage> "0.25 U in 50-µL" .

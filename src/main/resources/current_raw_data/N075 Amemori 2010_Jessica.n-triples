@@ -52,10 +52,13 @@
 <http://scio/data/HistologicalInvestigationParameter_82236> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/BBBTest_80062> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/BBBTest_80062> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
+<http://scio/data/NeurologicScaleParameter_84657> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
 <http://scio/data/BBBTest_80064> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/BBBTest_80064> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
+<http://scio/data/NeurologicScaleParameter_84662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
 <http://scio/data/BBBTest_80066> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/BBBTest_80066> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
+<http://scio/data/NeurologicScaleParameter_84667> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
 <http://scio/data/BBBTest_80068> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
 <http://scio/data/BBBTest_80068> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
 <http://scio/data/NeurologicScaleParameter_82354> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .

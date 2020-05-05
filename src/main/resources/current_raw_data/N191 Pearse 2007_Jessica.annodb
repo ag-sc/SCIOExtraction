@@ -95,7 +95,7 @@
 90531, Vehicle, 8805, 8821, "DMEM/F12/10% FBS", "", 
 74770, Purification, 8829, 8841, "purification", "", 
 74769, Purification, 8849, 8863, "immuno-panning", "", 
-74773, Labeling, 10008, 10118, "Lentiviral vector transduction of glia to express GFP Virus concentrated in PBS was used to infect SCs and OEG", "", "<http://scio/data/SchwannCell_20889> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_20957> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_21010> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_21030> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+74773, Labeling, 10008, 10067, "Lentiviral vector transduction of glia to express GFP Virus", "", "<http://scio/data/SchwannCell_20889> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_20957> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_21010> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_21030> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
 90536, Lentivirus, 10008, 10018, "Lentiviral", "", 
 90539, GlialCell, 10042, 10046, "glia", "", 
 90534, Virus, 10058, 10067, "GFP Virus", "", 

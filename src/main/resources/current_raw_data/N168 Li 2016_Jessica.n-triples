@@ -1,13 +1,5 @@
 # RDF export of group: InvestigationMethod
 # RDF export of group: Results
-<http://scio/data/Result_33735> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
-<http://scio/data/Result_33735> <http://www.w3.org/2000/01/rdf-schema#label> "Astrogliosis R1" .
-<http://scio/data/Observation_33736> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
-<http://scio/data/Result_33735> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_18103> .
-<http://scio/data/Result_33735> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_18086> .
-<http://scio/data/Trend_33742> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
-<http://scio/data/Significance_33744> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
-<http://scio/data/ExperimentalGroup_33743> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 # RDF export of group: Observations
 <http://scio/data/Observation_18112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Observation_18112> <http://www.w3.org/2000/01/rdf-schema#label> "TP Cyclosporine OEC group4" .

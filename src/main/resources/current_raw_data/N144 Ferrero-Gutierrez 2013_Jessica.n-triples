@@ -160,6 +160,7 @@
 <http://scio/data/DefinedExperimentalGroup_8665> <http://psink.de/scio/hasGroupName> "control injured, untreated animals" .
 <http://scio/data/DefinedExperimentalGroup_8665> <http://psink.de/scio/hasGroupName> "SCIonly rats" .
 <http://scio/data/DefinedExperimentalGroup_8665> <http://psink.de/scio/hasGroupName> "control group" .
+<http://scio/data/ShamOperation_84788> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_8673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_8673> <http://www.w3.org/2000/01/rdf-schema#label> "E2 SCI + matrix" .
 <http://scio/data/DefinedExperimentalGroup_8673> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1026> .
@@ -168,6 +169,7 @@
 <http://scio/data/DefinedExperimentalGroup_8673> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_8629> .
 <http://scio/data/DefinedExperimentalGroup_8673> <http://psink.de/scio/hasGroupNumber> "2" .
 <http://scio/data/DefinedExperimentalGroup_8673> <http://psink.de/scio/hasGroupName> "scaffold alone" .
+<http://scio/data/ShamOperation_84790> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 <http://scio/data/DefinedExperimentalGroup_8681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
 <http://scio/data/DefinedExperimentalGroup_8681> <http://www.w3.org/2000/01/rdf-schema#label> "E3 SCI + conduit" .
 <http://scio/data/DefinedExperimentalGroup_8681> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1026> .
@@ -179,6 +181,7 @@
 <http://scio/data/DefinedExperimentalGroup_8681> <http://psink.de/scio/hasGroupName> "SCI with cell seeded scaffold rats" .
 <http://scio/data/DefinedExperimentalGroup_8681> <http://psink.de/scio/hasGroupName> "rats in group SCI with cell seeded scaffold" .
 <http://scio/data/DefinedExperimentalGroup_8681> <http://psink.de/scio/hasGroupName> "scaffold plus cells" .
+<http://scio/data/ShamOperation_84789> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
 # RDF export of group: Organism models
 <http://scio/data/OrganismModel_1026> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
 <http://scio/data/OrganismModel_1026> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .

@@ -26,7 +26,7 @@
 <http://scio/data/Observation_34210> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Result_34209> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_27037> .
 <http://scio/data/Result_34209> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
-<http://scio/data/Result_34209> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_34209> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA> .
 <http://scio/data/Result_34209> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_27045> .
 <http://scio/data/Trend_34216> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
 <http://scio/data/Result_34209> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_34216> .
@@ -88,7 +88,6 @@
 <http://scio/data/Result_34278> <http://www.w3.org/2000/01/rdf-schema#label> "AdhesiveRemovalTest R5" .
 <http://scio/data/Observation_34279> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Result_34278> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_27045> .
-<http://scio/data/Result_34278> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
 <http://scio/data/Result_34278> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_27028> .
 <http://scio/data/RepeatedMeasureTrend_34288> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend> .
 <http://scio/data/Result_34278> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_34288> .
@@ -99,11 +98,11 @@
 <http://scio/data/ExperimentalGroup_34293> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_34278> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
 <http://scio/data/Result_34278> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/AdhesiveRemovalTest_80420> .
+<http://scio/data/Result_34278> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA> .
 <http://scio/data/Result_34294> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
 <http://scio/data/Result_34294> <http://www.w3.org/2000/01/rdf-schema#label> "AdhesiveRemovalTest R6" .
 <http://scio/data/Observation_34295> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
 <http://scio/data/Result_34294> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_27045> .
-<http://scio/data/Result_34294> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
 <http://scio/data/Result_34294> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_27028> .
 <http://scio/data/RepeatedMeasureTrend_34304> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend> .
 <http://scio/data/Result_34294> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_34304> .
@@ -114,6 +113,7 @@
 <http://scio/data/ExperimentalGroup_34309> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_34294> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
 <http://scio/data/Result_34294> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/AdhesiveRemovalTest_80422> .
+<http://scio/data/Result_34294> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/ANOVA> .
 <http://scio/data/Result_34311> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
 <http://scio/data/Result_34311> <http://www.w3.org/2000/01/rdf-schema#label> "AdhesiveRemovalTest R7" .
 <http://scio/data/Observation_34312> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .

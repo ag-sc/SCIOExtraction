@@ -22,10 +22,14 @@
 <http://scio/data/HReflexTest_74673> <http://www.w3.org/2000/01/rdf-schema#label> "HReflexTest (H reflex amplitude)" .
 <http://scio/data/MyelinationTest_74675> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_74675> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber area, the myelinated fiber diameter and the myelin sheath thickness)" .
+<http://scio/data/Direction_84822> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84824> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_74679> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_74679> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (axon diameter)" .
 <http://scio/data/MyelinationTest_74681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_74681> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber density)" .
+<http://scio/data/Direction_84827> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84829> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_74685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_74685> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber density)" .
 <http://scio/data/HReflexTest_80172> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HReflexTest> .
@@ -36,12 +40,20 @@
 <http://scio/data/MyelinationTest_80176> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber area, the myelinated fiber diameter and the myelin sheath thickness)" .
 <http://scio/data/MyelinationTest_80178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_80178> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber density)" .
+<http://scio/data/Direction_84813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84815> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_80180> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_80180> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber density)" .
+<http://scio/data/Direction_84832> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_80182> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_80182> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber density)" .
+<http://scio/data/Direction_84808> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84810> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 <http://scio/data/MyelinationTest_80184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest> .
 <http://scio/data/MyelinationTest_80184> <http://www.w3.org/2000/01/rdf-schema#label> "MyelinationTest (myelinated fiber density)" .
+<http://scio/data/Direction_84837> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/HistologicalInvestigationParameter_84839> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
 # RDF export of group: Results
 <http://scio/data/Result_6543> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
 <http://scio/data/Result_6543> <http://www.w3.org/2000/01/rdf-schema#label> "sensorytest R1" .

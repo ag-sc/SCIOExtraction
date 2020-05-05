@@ -568,7 +568,7 @@
 <http://scio/data/ZeroSignificance_5913> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance> .
 <http://scio/data/Trend_5912> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_5913> .
 <http://scio/data/ZeroSignificance_5913> <http://psink.de/scio/hasPValue> "P > 0.95" .
-<http://scio/data/Trend_5912> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/Trend_5912> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None> .
 <http://scio/data/ExperimentalGroup_19438> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_5905> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
 <http://scio/data/Result_5905> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/SinglePelletReachingTest_80084> .
@@ -583,7 +583,7 @@
 <http://scio/data/ZeroSignificance_5925> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance> .
 <http://scio/data/Trend_5924> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_5925> .
 <http://scio/data/ZeroSignificance_5925> <http://psink.de/scio/hasPValue> "P = 0.3)" .
-<http://scio/data/Trend_5924> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/Trend_5924> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None> .
 <http://scio/data/ExperimentalGroup_19439> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
 <http://scio/data/Result_5917> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
 <http://scio/data/Result_5917> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/SinglePelletReachingTest_80086> .

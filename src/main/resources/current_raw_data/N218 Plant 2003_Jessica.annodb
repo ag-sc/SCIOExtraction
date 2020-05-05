@@ -426,7 +426,7 @@
 87326, StandardError, 32315, 32320, "± 0.4", "", 
 87188, NNumber, 32326, 32327, "6", "", 
 87189, Duration, 32329, 32339, "at 8 weeks", "", 
-87190, BBBTest, 32392, 32401, "BBB score", "", 
+87190, BBBTest, 32392, 32401, "BBB score", "", "<http://scio/data/BBBTest_80858> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80858> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB\". <http://scio/data/BBBTest_80860> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80860> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB\". <http://scio/data/BBBTest_80862> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80862> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB\". <http://scio/data/BBBTest_80864> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80864> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB\". <http://scio/data/BBBTest_80866> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80866> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB\". <http://scio/data/BBBTest_80868> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80868> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB\"."
 87333, GroupName, 32409, 32429, "7 d/OEG-medium group", "E6", 
 87191, MeanValue, 32434, 32438, "13.9", "", 
 87327, StandardError, 32439, 32444, "± 0.7", "", 

@@ -8,6 +8,7 @@
 <http://scio/data/HistologicalInvestigationTest_67498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
 <http://scio/data/BladderFunctionTest_76960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionTest> .
 <http://scio/data/BladderFunctionTest_76960> <http://www.w3.org/2000/01/rdf-schema#label> "BladderFunctionTest (spontaneous voiding)" .
+<http://scio/data/BladderFunctionParameter_84875> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionParameter> .
 <http://scio/data/NonFunctionalTest_76962> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NonFunctionalTest> .
 <http://scio/data/NonFunctionalTest_76962> <http://www.w3.org/2000/01/rdf-schema#label> "NonFunctionalTest (bladder size)" .
 <http://scio/data/HistologicalInvestigationTest_76964> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .

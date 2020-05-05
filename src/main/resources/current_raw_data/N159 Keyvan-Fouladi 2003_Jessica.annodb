@@ -128,11 +128,3 @@
 17235, Duration, 14210, 14233, "8 weeks after injection", "", 
 17236, Injury, 14299, 14306, "lesions", "", 
 17237, CorticospinalTract, 14336, 14339, "CST", "", 
-17238, AxonalRegenerationTest, 15138, 15165, "BD anterograde tracing data", "", 
-17239, NNumber, 15169, 15173, "four", "", 
-98754, RatSpecies, 15174, 15178, "rats", "", 
-78272, GroupName, 15184, 15201, "transplanted OECs", "", "<http://scio/data/DefinedExperimentalGroup_17916> <http://psink.de/scio/hasGroupName> \"transplanted OECs\"."
-17242, RepeatedMeasureTrend, 15227, 15233, "return", "", 
-17244, AxonalRegenerationTest, 15248, 15308, "BD-labeled CST axons entering and traversing the transplants", "", 
-17245, CorticospinalTract, 15259, 15262, "CST", "", 
-17246, OlfactoryEnsheathingGliaCell, 15297, 15308, "transplants", "", 
