@@ -31,6 +31,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelActiveLearningSlotFilling;
 
 /**
  * Slot filling for organism models.
@@ -49,8 +50,12 @@ public class InjuryActiveLearningSlotFilling {
 	 * @param args
 	 * @throws IOException
 	 */
+
 	public static void main(String[] args) throws IOException {
-		new InjuryActiveLearningSlotFilling();
+		if (args == null || args.length == 0)
+			new InjuryActiveLearningSlotFilling(5, 5);
+		else
+			new InjuryActiveLearningSlotFilling(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -62,7 +67,8 @@ public class InjuryActiveLearningSlotFilling {
 	private final File instanceDirectory;
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
-	public InjuryActiveLearningSlotFilling() throws IOException {
+	public InjuryActiveLearningSlotFilling(int numberOfInstanceToBegin, int numberOfInstancePerStep)
+			throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -75,7 +81,7 @@ public class InjuryActiveLearningSlotFilling {
 				.registerNormalizationFunction(new DurationNormalization()).build();
 
 		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.injury);
-		
+
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
@@ -89,8 +95,8 @@ public class InjuryActiveLearningSlotFilling {
 		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 		PrintStream resultOut = new PrintStream("results/activeLearning/InjuryModel_full_plusfive.csv");
-
-		for (EActiveLearningStrategies strategy : activeLearningStrategies) {// EActiveLearningStrategies.values()) {
+//		 activeLearningStrategies) {//
+		for (EActiveLearningStrategies strategy : EActiveLearningStrategies.values()) {
 			log.info(strategy);
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
@@ -107,8 +113,8 @@ public class InjuryActiveLearningSlotFilling {
 
 			final List<String> trainingInstancesNames = new ArrayList<>();
 
-			int numberOfInstanceToBegin = 5;
-			long numberOfInstancePerStep = 5;
+//			int  numberOfInstanceToBegin = 5;
+//			long  numberOfInstancePerStep= 5;
 			int numOfMaxSteps = 10;
 
 			trainingInstancesNames.addAll(allTrainingInstanceNames.subList(0, numberOfInstanceToBegin));

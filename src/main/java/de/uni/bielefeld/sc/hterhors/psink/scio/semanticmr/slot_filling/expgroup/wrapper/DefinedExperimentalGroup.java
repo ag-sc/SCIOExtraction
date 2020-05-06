@@ -190,4 +190,19 @@ public class DefinedExperimentalGroup {
 		return treatments;
 	}
 
+	/**
+	 * Returns the DocumentLinkedAnnotation of the root annotation if any, else
+	 * null.
+	 * 
+	 * @return
+	 */
+	public DocumentLinkedAnnotation getGroupRootName() {
+
+		AbstractAnnotation rootAnnotation = get().getRootAnnotation();
+		if (rootAnnotation.isInstanceOfDocumentLinkedAnnotation())
+			return rootAnnotation.asInstanceOfDocumentLinkedAnnotation();
+
+		return null;
+	}
+
 }

@@ -7,6 +7,7 @@ public class SCIOEntityTypes {
 	public static final EntityType experimentalGroup = getLazy("ExperimentalGroup");
 	public static final EntityType compoundTreatment = getLazy("CompoundTreatment");
 	public static final EntityType definedExperimentalGroup = getLazy("DefinedExperimentalGroup");
+	public static final EntityType analizedExperimentalGroup = getLazy("AnalyzedExperimentalGroup");
 	public static final EntityType compound = getLazy("Compound");
 	public static final EntityType treatment = getLazy("Treatment");
 	public static final EntityType species = getLazy("OrganismSpecies");
