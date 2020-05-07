@@ -2,6 +2,8 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.h
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import afu.org.checkerframework.checker.units.qual.s;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -21,13 +24,15 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNamePair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.WEKAClustering;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
+import uk.ac.shef.wit.simmetrics.similaritymetrics.JaccardSimilarity;
+import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3;
 
 public class Heuristic {
 
+	private static final double jaccardThreshold = 0.2D;
 	final Map<Instance, Set<DocumentLinkedAnnotation>> annotations;
 	private final WEKAClustering gnc;
 
@@ -84,8 +89,11 @@ public class Heuristic {
 
 		Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup = extractGroupNameMapping(instance);
 		System.out.println(instance.getName());
-		int numberOfGroups = new HashSet<>(namePerGroup.values()).size();
 
+		if (instance.getName().startsWith("N163"))
+//		int numberOfGroups = new HashSet<>(namePerGroup.values()).size();
+			System.out.println("GroupNames: "
+					+ namePerGroup.keySet().stream().map(d -> d.getSurfaceForm() + ", ").reduce("", String::concat));
 //		System.out.println("Number of groups: " + numberOfGroups);
 //		System.out.println("Number of results: " + trendInvResultData.size());
 		List<ResultData> newResultData = new ArrayList<>();
@@ -104,7 +112,7 @@ public class Heuristic {
 			Set<EntityTemplate> defExpGroups1 = new HashSet<>();
 			Set<EntityTemplate> defExpGroups2 = new HashSet<>();
 
-			Set<String> usedDefExpGroupsNames = new HashSet<>();
+//			Set<String> usedDefExpGroupsNames = new HashSet<>();
 //			System.out.println("Trend  Sentence index" + trendSentenceIndex);
 			for (int sentenceIndex = trendSentenceIndex; sentenceIndex >= trendSentenceIndex - range; sentenceIndex--) {
 
@@ -155,88 +163,48 @@ public class Heuristic {
 
 					Set<EntityTemplate> defExpGroups = defExpGroups1.isEmpty() ? defExpGroups1 : defExpGroups2;
 
-//					if (groupNameAnnotation.getEntityType() == SCIOEntityTypes.analizedExperimentalGroup) {
-////
-//					} else {
-//					 System.out.println(groupNameAnnotation.getSurfaceForm());
-					if (!addDirectMatch(namePerGroup, defExpGroups, groupNameAnnotation, usedDefExpGroupsNames)) {
-//						System.out.println("Direct Match");
-//					else {
-//						DocumentLinkedAnnotation bestClusterMatch = addClusterMatch(namePerGroup, defExpGroups,
-//								groupNameAnnotation, usedDefExpGroupsNames);
-
-//						System.out.println(
-//								"Cluster: " + (bestClusterMatch == null ? "null" : bestClusterMatch.getSurfaceForm()));
-//						bestClusterMatch =null;
-//						if (bestClusterMatch == null) {
-						DocumentLinkedAnnotation bestFuzzyMatch = addLevenshteinFuzzyMatch(namePerGroup, defExpGroups,
-								groupNameAnnotation, usedDefExpGroupsNames);
-//							System.out.println(
-//									"Fuzzy: " + (bestFuzzyMatch == null ? "null" : bestFuzzyMatch.getSurfaceForm()));
-////
-						if (bestFuzzyMatch == null) {
-							/**
-							 * This is most prob. an AnalyzedExperimental group name. such as all other
-							 * groups...
-							 */
-
-							if (groupNameAnnotation.getSurfaceForm().contains("groups")) {
-
-								System.out.println("NEED FURTHER : " + groupNameAnnotation.toPrettyString());
-							
-								if (groupNameAnnotation.getSurfaceForm().contains("all")) {
-									defExpGroups.addAll(namePerGroup.values());
-								} else {
-
-									DocumentLinkedAnnotation bfm = null;
-									/**
-									 * TODO: ADJUST TRESHOLD
-									 */
-									double sim = 0.8;
-
-									for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
-
-										double s = LevenShteinSimilarities.levenshteinSimilarity(
-												groupNameAnnotation.getSurfaceForm(), name.getSurfaceForm(), 100);
-
-										if (s >= sim) {
-											sim = s;
-											bfm = name;
-											defExpGroups.add(namePerGroup.get(bfm));
-											usedDefExpGroupsNames.add(bfm.getSurfaceForm());
-										}
-									}
-								}
-
-							} else {
-								DocumentLinkedAnnotation bestClusterMatch = addClusterMatch(namePerGroup, defExpGroups,
-										groupNameAnnotation, usedDefExpGroupsNames);
-
-								if (bestClusterMatch == null) {
-
-									System.out.println("COULD NOT MAP2: " + groupNameAnnotation.toPrettyString());
-								}
-							}
-
-//							}
-						}
-
+					if (referesToAExactTreatment(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(" classified as EXACT!");
+						defExpGroups.addAll(
+								getExactTreatment(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+					} else if (refersToMultipleGroups(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as MULTIPLE!");
+						defExpGroups.addAll(getMultipleTreatmentGroups(defExpGroups, defExpGroups1, namePerGroup,
+								groupNameAnnotation));
+					} else if (refersToAllControls(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as CONTROLS!");
+						defExpGroups.addAll(
+								getAllControlGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+					} else if (refersToAllTreatmentsGroups(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as TREATMENTS!");
+						defExpGroups.addAll(
+								getAllTreatmentGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+					} else if (refersToAllGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as ALL!");
+						defExpGroups.addAll(namePerGroup.values());
+					} else {
+						Collection<? extends EntityTemplate> simpleOverlap = getSimpleOverlapGroups(defExpGroups,
+								defExpGroups1, namePerGroup, groupNameAnnotation);
 						/**
-						 * RESOLVE Unmappable names such as "all other three groups"
+						 * Jaccard Simialrity
 						 */
 
-//
-//						System.out.println();
-//						}
+						defExpGroups.addAll(simpleOverlap);
+//						if (simpleOverlap.isEmpty())
+//							System.out.println(groupNameAnnotation.getSurfaceForm() + " can NOT be assiged");
+//						else
+//							System.out.println(groupNameAnnotation.getSurfaceForm() + " classified by OVERLAP");
+
 					}
 
-//					}
+//				
 					/**
 					 * Do not compare same groups in one result:
 					 */
 
 					defExpGroups2.removeAll(defExpGroups1);
 				}
+
 //				System.out.println("-------------------");
 				/**
 				 * Only one is requested
@@ -311,89 +279,433 @@ public class Heuristic {
 ////				System.out.println("More than 2!");
 		}
 		return newResultData;
+
 	}
 
-//	Final Score:Score[getF1()=0.451, getPrecision()=0.891, getRecall()=0.302, tp=5889, fp=724, fn=13614, tn=0]
-//			Final Score: Score [getF1()=0.448, getPrecision()=0.894, getRecall()=0.299, tp=5837, fp=689, fn=13666, tn=0]
-//	Final Score: Score [getF1()=0.448, getPrecision()=0.894, getRecall()=0.299, tp=5837, fp=689, fn=13666, tn=0]
+	private final JaccardSimilarity jaccard = new JaccardSimilarity(new TokeniserQGram3());
 
-	private boolean addDirectMatch(Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
-			Set<EntityTemplate> defExpGroups, DocumentLinkedAnnotation groupNameAnnotation,
-			Set<String> usedDefExpGroupsNames) {
-		EntityTemplate g = null;
-		for (DocumentLinkedAnnotation ndl : namePerGroup.keySet()) {
-			if (ndl.getSurfaceForm().equals(groupNameAnnotation.getSurfaceForm())) {
-				g = namePerGroup.get(ndl);
-				usedDefExpGroupsNames.add(ndl.getSurfaceForm());
-				break;
+	private Collection<? extends EntityTemplate> getSimpleOverlapGroups(Set<EntityTemplate> defExpGroups,
+			Set<EntityTemplate> defExpGroups1, Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			DocumentLinkedAnnotation groupNameAnnotation) {
+
+		List<EntityTemplate> overlapMatches = new ArrayList<>();
+
+		String[] groupNameTokens = groupNameAnnotation.getSurfaceForm().split("\\W|\\s");
+
+		for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+
+			String[] nameTokens = name.getSurfaceForm().split("\\W|\\s");
+			int counter = 0;
+			for (String gnt : groupNameTokens) {
+				for (String nt : nameTokens) {
+
+					/**
+					 * TODO: remove stop words
+					 */
+
+					if (gnt.equals(nt)) {
+						counter++;
+					}
+				}
+			}
+			if (counter >= 1)
+				overlapMatches.add(namePerGroup.get(name));
+
+//			double s = jaccard.getSimilarity(groupNameAnnotation.getSurfaceForm(), name.getSurfaceForm());
+//			if (s >= jaccardThreshold) {
+//				jaccardMatches.add(namePerGroup.get(name));
+//			}
+		}
+		return overlapMatches;
+	}
+
+	private boolean refersToMultipleGroups(Set<EntityTemplate> defExpGroups,
+			Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup, DocumentLinkedAnnotation groupNameAnnotation) {
+
+		final String surfaceForm = groupNameAnnotation.getSurfaceForm();
+
+		boolean multi = false;
+
+		multi |= surfaceForm.contains(",");
+		multi |= surfaceForm.contains("other");
+		multi |= surfaceForm.contains("with");
+		multi |= surfaceForm.contains("receiv");
+		multi |= surfaceForm.contains("two");
+		multi |= surfaceForm.contains("three");
+		multi |= surfaceForm.contains("four");
+		multi |= surfaceForm.contains("both");
+		multi |= surfaceForm.contains("animals");
+		multi |= surfaceForm.contains("rats");
+		multi |= surfaceForm.contains("mice");
+		multi |= surfaceForm.contains("individual");
+		multi |= surfaceForm.contains("single");
+		multi |= surfaceForm.contains("between");
+		multi |= surfaceForm.matches(".*(and|or).*");
+		multi |= surfaceForm.matches(".+(ed|ing)( |$).*"); // attempt to model modifier
+
+		return multi;
+	}
+
+	private Collection<? extends EntityTemplate> getMultipleTreatmentGroups(Set<EntityTemplate> defExpGroups,
+			Set<EntityTemplate> defExpGroups1, Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			DocumentLinkedAnnotation groupNameAnnotation) {
+		final String surfaceForm = groupNameAnnotation.getSurfaceForm();
+		Set<EntityTemplate> groups = new HashSet<>();
+		if (surfaceForm.matches(".*(,|((and|or|with)( |$))).*")) {
+			/**
+			 * Split and add each separately by Exact/Fuzzy Match
+			 */
+
+			final String[] references = surfaceForm.split(",|((and|or|with)( |$))");
+			for (String reference : references) {
+
+				reference = reference.trim();
+
+				for (DocumentLinkedAnnotation ndl : namePerGroup.keySet()) {
+					if (ndl.getSurfaceForm().equals(reference)) {
+						groups.add(namePerGroup.get(ndl));
+					}
+				}
+
+				/**
+				 * TODO: Remove stopwords
+				 */
+				reference = reference.replaceAll("groups?", "");
+				reference = reference.replaceAll("treatments?", "");
+				reference = reference.replaceAll("animals?", "");
+
+				DocumentLinkedAnnotation bestFuzzyMatch = null;
+				double sim = levenshteinThreshold;
+				for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+
+					double s = LevenShteinSimilarities.levenshteinSimilarity(reference, name.getSurfaceForm(), 100);
+					if (s >= sim) {
+						sim = s;
+						bestFuzzyMatch = name;
+					}
+				}
+				if (bestFuzzyMatch != null)
+					groups.add(namePerGroup.get(bestFuzzyMatch));
+
+			}
+		}
+//
+		else if (surfaceForm.contains("other") && surfaceForm.contains("all")) {
+			/**
+			 * Add all other groups. All groups which are not in the first set of groups.
+			 */
+			for (EntityTemplate group : namePerGroup.values()) {
+				if (!defExpGroups1.contains(group))
+					groups.add(group);
+			}
+
+		} else if (surfaceForm.contains("receiv") || surfaceForm.matches(".+(ed|ing)( |$).*")) {
+
+			String treatment = surfaceForm;
+			if (surfaceForm.contains("receiv"))
+				treatment = surfaceForm.substring(surfaceForm.indexOf("receiv"));// attempt to extract
+			// treatment(s)
+			int threshold = (surfaceForm.contains("two") || surfaceForm.contains("both")
+					|| surfaceForm.contains("combina")) ? 2 : 1;
+
+			String[] groupNameTokens = treatment.split("\\W|\\s");
+
+			for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+
+				String[] nameTokens = name.getSurfaceForm().split("\\W|\\s");
+				boolean first = true;
+				int counter = 0;
+				for (String gnt : groupNameTokens) {
+					/*
+					 * Skip first token (receiv(ed|ing))
+					 */
+					if (first) {
+						first = false;
+						continue;
+					}
+
+					for (String nt : nameTokens) {
+
+						/**
+						 * TODO: remove stop words
+						 */
+
+						if (gnt.equals(nt)) {
+							counter++;
+						}
+					}
+				}
+				if (counter != threshold)
+					groups.add(namePerGroup.get(name));
+				else
+					break;
+			}
+
+		}
+
+		else if (surfaceForm.contains("two") || surfaceForm.contains("both") || surfaceForm.contains("three")
+				|| surfaceForm.contains("four")) {
+			int threshold = surfaceForm.contains("two") || surfaceForm.contains("both") ? 2
+					: (surfaceForm.contains("three") ? 3 : (surfaceForm.contains("four") ? 4 : 100));
+			for (EntityTemplate group : namePerGroup.values()) {
+				if (!defExpGroups1.contains(group)) {
+					groups.add(group);
+				}
+				if (threshold == groups.size())
+					break;
+			}
+
+		} else if (surfaceForm.contains("animals") || surfaceForm.contains("rats") || surfaceForm.contains("mice")) {
+
+			String treatment = null;
+			if (surfaceForm.contains("animals")) {
+
+				treatment = groupNameAnnotation.getSurfaceForm().substring(0,
+						groupNameAnnotation.getSurfaceForm().indexOf("animals"));// attempt to extract
+			} else if (surfaceForm.contains("rats")) {
+
+				treatment = groupNameAnnotation.getSurfaceForm().substring(0,
+						groupNameAnnotation.getSurfaceForm().indexOf("rats"));// attempt to extract
+			} else if (surfaceForm.contains("mice")) {
+
+				treatment = groupNameAnnotation.getSurfaceForm().substring(0,
+						groupNameAnnotation.getSurfaceForm().indexOf("mice"));// attempt to extract
+			}
+			/**
+			 * TODO: remove stop words
+			 */
+			treatment = treatment.replaceAll("groups?", "");
+			treatment = treatment.replaceAll("treatments?", "");
+			treatment = treatment.replaceAll("animals?", "");
+
+			// treatment(s)
+			String[] groupNameTokens = treatment.split("\\W|\\s");
+
+			for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+
+				String[] nameTokens = name.getSurfaceForm().split("\\W|\\s");
+				int counter = 0;
+				for (String gnt : groupNameTokens) {
+
+					for (String nt : nameTokens) {
+
+						if (gnt.equals(nt)) {
+							counter++;
+						}
+					}
+				}
+				if (counter >= 1)
+					groups.add(namePerGroup.get(name));
+			}
+//
+		} else if (surfaceForm.contains("individual") || surfaceForm.contains("single")) {
+
+			for (EntityTemplate group : namePerGroup.values()) {
+
+				DefinedExperimentalGroup g = new DefinedExperimentalGroup(group);
+
+				Set<EntityType> relTreatmentTypes = g.getRelevantTreatments().stream().map(a -> a.getEntityType())
+						.collect(Collectors.toSet());
+
+				/**
+				 * TODO: Remove all treatment types which are no direct treatment. Usually
+				 * vehicles etc.
+				 * 
+				 * IDEA: Remove all treatments types which are found in all treatments e.g.
+				 * CyclosporineA
+				 * 
+				 */
+				relTreatmentTypes.remove(SCIOEntityTypes.vehicle);
+				relTreatmentTypes.removeAll(SCIOEntityTypes.vehicle.getTransitiveClosureSubEntityTypes());
+
+				if (relTreatmentTypes.size() == 1) {
+					defExpGroups.add(group);
+				}
+			}
+
+//		} else if (surfaceForm.contains("between")) {
+//
+
+		}
+		return groups;
+	}
+
+	private Collection<? extends EntityTemplate> getAllControlGroups(Set<EntityTemplate> defExpGroups,
+			Set<EntityTemplate> defExpGroups1, Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			DocumentLinkedAnnotation groupNameAnnotation) {
+
+		Set<EntityTemplate> controls = new HashSet<>();
+
+		for (DocumentLinkedAnnotation groupName : namePerGroup.keySet()) {
+			if (groupName.getSurfaceForm().contains("control")) {
+				controls.add(namePerGroup.get(groupName));
+			}
+			if (groupName.getSurfaceForm().contains("sham")) {
+				controls.add(namePerGroup.get(groupName));
+			}
+			if (groupName.getSurfaceForm().contains("untrained")) {
+				controls.add(namePerGroup.get(groupName));
+			}
+			if (groupName.getSurfaceForm().contains("media")) {
+				controls.add(namePerGroup.get(groupName));
+			}
+			if (groupName.getSurfaceForm().contains("vehicle")) {
+				controls.add(namePerGroup.get(groupName));
 			}
 		}
 
-		if (g != null) {
-			defExpGroups.add(g);
-			return true;
-		}
-		return false;
+		return controls;
 	}
 
-	private DocumentLinkedAnnotation addLevenshteinFuzzyMatch(
-			Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup, Set<EntityTemplate> defExpGroups,
-			DocumentLinkedAnnotation groupNameAnnotation, Set<String> usedDefExpGroupsNames) {
+	private Collection<? extends EntityTemplate> getAllTreatmentGroups(Set<EntityTemplate> defExpGroups,
+			Set<EntityTemplate> defExpGroups1, Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			DocumentLinkedAnnotation groupNameAnnotation) {
+
+		Set<EntityTemplate> allTreatments = new HashSet<>();
+
+		for (DocumentLinkedAnnotation groupName : namePerGroup.keySet()) {
+			if (!groupName.getSurfaceForm().contains("control") && !groupName.getSurfaceForm().contains("sham")
+					&& !groupName.getSurfaceForm().contains("media")) {
+				allTreatments.add(namePerGroup.get(groupName));
+			}
+		}
+
+		return allTreatments;
+
+	}
+
+	private Collection<EntityTemplate> getExactTreatment(Set<EntityTemplate> defExpGroups,
+			Set<EntityTemplate> defExpGroups1, Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			DocumentLinkedAnnotation groupNameAnnotation) {
+
+		/**
+		 * Search for direct match treatment.
+		 */
+		for (DocumentLinkedAnnotation ndl : namePerGroup.keySet()) {
+			if (ndl.getSurfaceForm().equals(groupNameAnnotation.getSurfaceForm())) {
+				return Arrays.asList(namePerGroup.get(ndl));
+			}
+		}
 
 		DocumentLinkedAnnotation bestFuzzyMatch = null;
-		/**
-		 * TODO: ADJUST TRESHOLD
-		 */
-		double sim = 0.5;
-
+		double sim = levenshteinThreshold;
 		for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
 
 			double s = LevenShteinSimilarities.levenshteinSimilarity(groupNameAnnotation.getSurfaceForm(),
 					name.getSurfaceForm(), 100);
-
 			if (s >= sim) {
 				sim = s;
 				bestFuzzyMatch = name;
 			}
 		}
-		if (bestFuzzyMatch != null) {
-//			System.out.println(sim);
-//			System.out.println("Match: " + bestFuzzyMatch + "\t" + groupNameAnnotation.getSurfaceForm());
-			defExpGroups.add(namePerGroup.get(bestFuzzyMatch));
-			usedDefExpGroupsNames.add(bestFuzzyMatch.getSurfaceForm());
-		}
+		if (bestFuzzyMatch != null)
+			return Arrays.asList(namePerGroup.get(bestFuzzyMatch));
 
-		return bestFuzzyMatch;
+		return Collections.emptyList();
 	}
 
-	private DocumentLinkedAnnotation addClusterMatch(Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
-			Set<EntityTemplate> defExpGroups, DocumentLinkedAnnotation groupNameAnnotation,
-			Set<String> usedDefExpGroupsNames) {
+	private boolean refersToAllGroups(Set<EntityTemplate> defExpGroups, Set<EntityTemplate> defExpGroups1,
+			Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup, DocumentLinkedAnnotation groupNameAnnotation) {
 
-		DocumentLinkedAnnotation bestFuzzyMatch = null;
-		double sim = 0.5;
+		final String surfaceForm = groupNameAnnotation.getSurfaceForm();
 
-		for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+		boolean allGroups = false;
 
-			GroupNamePair gnp = new GroupNamePair(groupNameAnnotation, name, false, 0);
-			double s = gnc.classifyDocument(gnp);
+		allGroups |= surfaceForm.contains("all");
 
-			if (s >= sim) {
-				sim = s;
-				bestFuzzyMatch = name;
-//				System.out.println(
-//						sim + "\tMatch: " + bestFuzzyMatch.getSurfaceForm() + "\t" + groupNameAnnotation.getSurfaceForm());
+		return allGroups;
+	}
+
+	private boolean refersToAllTreatmentsGroups(Set<EntityTemplate> defExpGroups,
+			Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup, DocumentLinkedAnnotation groupNameAnnotation) {
+
+		final String surfaceForm = groupNameAnnotation.getSurfaceForm();
+
+		boolean allTreatments = false;
+
+		allTreatments |= surfaceForm.contains("treatments");
+		allTreatments |= surfaceForm.matches(".*all.*groups.*");
+
+		return allTreatments;
+
+	}
+
+	private boolean refersToAllControls(Set<EntityTemplate> defExpGroups,
+			Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup, DocumentLinkedAnnotation groupNameAnnotation) {
+		final String surfaceForm = groupNameAnnotation.getSurfaceForm();
+
+		boolean allControls = false;
+
+		allControls |= surfaceForm.contains("untreated");
+		allControls |= surfaceForm.contains("shams");
+		allControls |= surfaceForm.contains("controls");
+
+		return allControls;
+
+	}
+
+	public static final double levenshteinThreshold = 0.5;
+
+	private boolean referesToAExactTreatment(Set<EntityTemplate> defExpGroups,
+			Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup, DocumentLinkedAnnotation groupNameAnnotation) {
+
+		/**
+		 * Check for direct match first. If a direct match exists, it probably refers to
+		 * this group only.
+		 */
+		for (DocumentLinkedAnnotation ndl : namePerGroup.keySet())
+			if (ndl.getSurfaceForm().equals(groupNameAnnotation.getSurfaceForm()))
+				return true;
+
+		/**
+		 * If there is no direct match, check for Levenshtein distance with fix
+		 * threshold.
+		 */
+
+		boolean enableLevenshtein = true;
+		if (enableLevenshtein) {
+
+			for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+
+				double s = LevenShteinSimilarities.levenshteinSimilarity(groupNameAnnotation.getSurfaceForm(),
+						name.getSurfaceForm(), 100);
+
+				if (s >= levenshteinThreshold) {
+					return true;
+				}
 			}
 		}
 
-		if (bestFuzzyMatch != null) {
-//			System.out.println(
-//					sim + "\tMatch: " + bestFuzzyMatch.getSurfaceForm() + "\t" + groupNameAnnotation.getSurfaceForm());
-			defExpGroups.add(namePerGroup.get(bestFuzzyMatch));
-			usedDefExpGroupsNames.add(bestFuzzyMatch.getSurfaceForm());
-		}
-		return bestFuzzyMatch;
+		return false;
 	}
+
+//
+//	private DocumentLinkedAnnotation addClusterMatch(Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+//			Set<EntityTemplate> defExpGroups, DocumentLinkedAnnotation groupNameAnnotation) {
+//
+//		DocumentLinkedAnnotation bestFuzzyMatch = null;
+//		double sim = 0.5;
+//
+//		for (DocumentLinkedAnnotation name : namePerGroup.keySet()) {
+//
+//			GroupNamePair gnp = new GroupNamePair(groupNameAnnotation, name, false, 0);
+//			double s = gnc.classifyDocument(gnp);
+//
+//			if (s >= sim) {
+//				sim = s;
+//				bestFuzzyMatch = name;
+////				System.out.println(
+////						sim + "\tMatch: " + bestFuzzyMatch.getSurfaceForm() + "\t" + groupNameAnnotation.getSurfaceForm());
+//			}
+//		}
+//
+//		if (bestFuzzyMatch != null) {
+////			System.out.println(
+////					sim + "\tMatch: " + bestFuzzyMatch.getSurfaceForm() + "\t" + groupNameAnnotation.getSurfaceForm());
+//			defExpGroups.add(namePerGroup.get(bestFuzzyMatch));
+//		}
+//		return bestFuzzyMatch;
+//	}
 
 	/**
 	 * Returns the sentence index of the trend or -1 if there is no trend at all.
