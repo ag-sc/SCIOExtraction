@@ -28,7 +28,7 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
 
-public class AutomatedSectionifcation {
+public class SCIOAutomatedSectionifcation {
 
 	private static final File instanceDirectory = new File("src/main/resources/slotfilling/injury/corpus/instances/");
 
@@ -43,7 +43,7 @@ public class AutomatedSectionifcation {
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			System.out.println(instance.getName());
-			AutomatedSectionifcation sectionify = new AutomatedSectionifcation(instance);
+			SCIOAutomatedSectionifcation sectionify = new SCIOAutomatedSectionifcation(instance);
 
 			for (int i = 0; i < instance.getDocument().getNumberOfSentences(); i++) {
 				log.info(i + " = " + sectionify.getSection(i));
@@ -110,7 +110,7 @@ public class AutomatedSectionifcation {
 
 	private final List<Section> sections;
 
-	private AutomatedSectionifcation(Instance instance) {
+	private SCIOAutomatedSectionifcation(Instance instance) {
 		this.instance = instance;
 		sections = sectionify(this.instance);
 		Collections.sort(sections, new Comparator<Section>() {
@@ -147,13 +147,13 @@ public class AutomatedSectionifcation {
 	}
 //	188, 184 193 N243
 
-	private final static Map<Instance, AutomatedSectionifcation> factory = new ConcurrentHashMap<>();
+	private final static Map<Instance, SCIOAutomatedSectionifcation> factory = new ConcurrentHashMap<>();
 
-	public static AutomatedSectionifcation getInstance(Instance instance) {
-		AutomatedSectionifcation sec;
+	public static SCIOAutomatedSectionifcation getInstance(Instance instance) {
+		SCIOAutomatedSectionifcation sec;
 		if ((sec = factory.get(instance)) == null)
 			synchronized (factory) {
-				factory.put(instance, sec = new AutomatedSectionifcation(instance));
+				factory.put(instance, sec = new SCIOAutomatedSectionifcation(instance));
 			}
 
 		return sec;

@@ -33,8 +33,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling.helper.ResolvePairwiseComparedGroups;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.nerla.DeliveryMethodPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.nerla.InjuryPattern;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDevicePattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.investigation_method.nerla.InvestigationMethodPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.nerla.OrganismModelPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.nerla.ResultPattern;
@@ -84,16 +86,18 @@ public class BuildCorpusFromRawData {
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 		InstanceProvider.maxNumberOfAnnotations = Integer.MAX_VALUE;
 
-		buildCorpusForResult();
+//		buildCorpusForResult();
 //		buildCorpusForDefinedExperimentalGroup();
 //		buildCorpusForObservation();
 //		buildCorpusForOrganismModel();
-//		buildCorpusForInjuryModel();
+		buildCorpusForInjuryModel();
 //		buildCorpusForTreatmentType();
 //		buildCorpusForVertebralArea();
+//		buildCorpusForAnaesthesia();
 //		buildCorpusForDeliveryMethod();
-		buildCorpusForInvestigationMethod();
-		buildCorpusForTrend();
+//		buildCorpusForInjuryDevice();
+//		buildCorpusForInvestigationMethod();
+//		buildCorpusForTrend();
 		System.exit(1);
 	}
 
@@ -154,6 +158,20 @@ public class BuildCorpusFromRawData {
 		annotateWithRegularExpressions(new VertebralAreaPattern(SCIOEntityTypes.vertebralArea));
 	}
 
+	private static void buildCorpusForAnaesthesia() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.anaesthetic);
+		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.anaesthetic, true,
+				true, false);
+		annotateWithRegularExpressions(new AnaestheticPattern(SCIOEntityTypes.anaesthetic));
+	}
+
+	private static void buildCorpusForInjuryDevice() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.injuryDevice);
+		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.injuryDevice, true,
+				true, false);
+		annotateWithRegularExpressions(new InjuryDevicePattern(SCIOEntityTypes.injuryDevice));
+	}
+
 	private static void buildCorpusForDeliveryMethod() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 
@@ -189,7 +207,7 @@ public class BuildCorpusFromRawData {
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDirection);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasLocation);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDosage);
-		convertFromSanto2JsonCorpus(annotatedDocuments, treatmentSlotTypes, SCIOEntityTypes.treatment, true, true,
+		convertFromSanto2JsonCorpus(Collections.emptySet(), treatmentSlotTypes, SCIOEntityTypes.treatment, true, true,
 				false);
 		annotateWithRegularExpressions(new TreatmentPattern(SCIOEntityTypes.treatment));
 
@@ -208,11 +226,13 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.injury);
 		Set<SlotType> injurySlotTypes = new HashSet<>();
 		injurySlotTypes.add(SCIOSlotTypes.hasInjuryDevice);
-		injurySlotTypes.add(SCIOSlotTypes.hasInjuryLocation);
 		injurySlotTypes.add(SCIOSlotTypes.hasInjuryAnaesthesia);
+		injurySlotTypes.add(SCIOSlotTypes.hasDosage);
+		injurySlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
+		injurySlotTypes.add(SCIOSlotTypes.hasInjuryLocation);
 		injurySlotTypes.add(SCIOSlotTypes.hasLowerVertebrae);
 		injurySlotTypes.add(SCIOSlotTypes.hasUpperVertebrae);
-		convertFromSanto2JsonCorpus(Collections.emptySet(), injurySlotTypes, SCIOEntityTypes.injury, true, true, false);
+		convertFromSanto2JsonCorpus(Collections.emptySet(), injurySlotTypes, SCIOEntityTypes.injury, true, true, true);
 		annotateWithRegularExpressions(new InjuryPattern(SCIOEntityTypes.injury));
 
 	}

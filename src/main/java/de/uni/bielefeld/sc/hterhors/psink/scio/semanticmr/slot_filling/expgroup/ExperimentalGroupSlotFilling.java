@@ -449,55 +449,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		applyModesAndRestrictions();
 
 		getData(dataRandomSeed);
-
-		double i = 0;
-		for (Instance instance : instanceProvider.getInstances()) {
-			i += instance.getDocument().getNumberOfSentences();
-		}
-		System.out.println(i / instanceProvider.getInstances().size());
-
-		double a = 0;
-		for (Instance instance : instanceProvider.getInstances()) {
-			a += instance.getGoldAnnotations().getAnnotations().size();
-		}
-		System.out.println(a / instanceProvider.getInstances().size());
-
-		double b = 0;
-		for (Instance instance : instanceProvider.getInstances()) {
-			b += instance.getGoldAnnotations().getAnnotations().size();
-		}
-		System.out.println(b);
-
-		double c = 0;
-		int min = 100;
-		int max = 0;
-
-		for (Instance instance : instanceProvider.getInstances()) {
-			int x = instance.getGoldAnnotations().getAnnotations().size();
-			c += x;
-
-			min = Math.min(min, x);
-			max = Math.max(max, x);
-
-		}
-		System.out.println(min);
-		System.out.println(max);
-		System.out.println(c);
-
-		final double mean = c / instanceProvider.getInstances().size();
-
-		double variance = 0;
-		for (Instance instance : instanceProvider.getInstances()) {
-			variance += Math.pow(mean - instance.getGoldAnnotations().getAnnotations().size(), 2);
-
-		}
-		System.out.println(computeMean(instanceProvider.getInstances()));
-		System.out.println(
-				computeStdDeviation(instanceProvider.getInstances(), computeMean(instanceProvider.getInstances())));
-
-		System.out.println(Math.sqrt(variance));
-
-//		System.exit(1);
 		addGroupNameCandidates();
 
 		addTreatmentCandidates();
@@ -525,25 +476,6 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		run(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates, parameter);
 
-	}
-
-	private double computeStdDeviation(List<Instance> trainingInstances, double e) {
-		double stdDev = 0;
-		for (Instance instance : trainingInstances) {
-			stdDev += Math.pow(e - instance.getGoldAnnotations().getAbstractAnnotations().size(), 2)
-					/ trainingInstances.size();
-		}
-		stdDev = Math.sqrt(stdDev);
-		return stdDev;
-	}
-
-	private double computeMean(List<Instance> trainingInstances) {
-		double e = 0;
-		for (Instance instance : trainingInstances) {
-			e += instance.getGoldAnnotations().getAbstractAnnotations().size();
-		}
-		e /= trainingInstances.size();
-		return e;
 	}
 
 	private void run(List<IExplorationStrategy> explorerList, ISampler sampler, IStateInitializer initializer,
@@ -628,18 +560,18 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * state based on the trained model) that contains annotations.
 		 */
 
-		Map<Instance, State> results = crf.predict(testInstances, maxStepCrit);
+		Map<Instance, State> resultsTest = crf.predict(testInstances, maxStepCrit);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
 		log.info("modelName: " + modelName);
 
 		if (assignmentMode == EAssignmentMode.TREATMENT) {
-			postPredictOrganismModel(results);
-			postPredictInjuryModel(results);
+			postPredictOrganismModel(resultsTest);
+			postPredictInjuryModel(resultsTest);
 		}
 
-		eval(results);
+		eval(resultsTest);
 
 		log.info(crf.getTrainingStatistics());
 		log.info(crf.getTestStatistics());
@@ -762,38 +694,38 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 */
 
 		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
-			SlotType.storeExcludance();
+			Map<SlotType, Boolean> x = SlotType.storeExcludance();
 			SlotType.excludeAll();
 			SCIOSlotTypes.hasCompound.include();
 			SCIOSlotTypes.hasTreatmentType.include();
 			TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(nerlaEvaluator);
 			treatmentEvaluation.evaluate(ps, results, EScoreType.MICRO);
 			treatmentEvaluation.evaluate(ps, results, EScoreType.MACRO);
-			SlotType.restoreExcludance();
+			SlotType.restoreExcludance(x);
 		}
 		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
-			SlotType.storeExcludance();
+			Map<SlotType, Boolean> x = SlotType.storeExcludance();
 			SlotType.excludeAll();
 			SCIOSlotTypes.hasOrganismModel.include();
 			SCIOSlotTypes.hasOrganismSpecies.include();
 			OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(nerlaEvaluator);
 			organismModelEvaluation.evaluate(ps, results, EScoreType.MICRO);
 			organismModelEvaluation.evaluate(ps, results, EScoreType.MACRO);
-			SlotType.restoreExcludance();
+			SlotType.restoreExcludance(x);
 		}
 
 		if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
-			SlotType.storeExcludance();
+			Map<SlotType, Boolean> x = SlotType.storeExcludance();
 			SlotType.excludeAll();
 			SCIOSlotTypes.hasInjuryModel.include();
 			InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(nerlaEvaluator);
 			injuryModelEvaluation.evaluate(ps, results, EScoreType.MICRO);
 			injuryModelEvaluation.evaluate(ps, results, EScoreType.MACRO);
-			SlotType.restoreExcludance();
+			SlotType.restoreExcludance(x);
 		}
 
 		Map<SlotType, Boolean> stored = SlotType.storeExcludance();
-		SlotType.excludeAll();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		if (!stored.get(SCIOSlotTypes.hasTreatmentType)) {
 			SCIOSlotTypes.hasTreatmentType.include();
 			SCIOSlotTypes.hasCompound.include();
@@ -809,7 +741,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		expGroupEval.evaluate(ps, results, EScoreType.MICRO);
 		expGroupEval.evaluate(ps, results, EScoreType.MACRO);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 
 		ps.flush();
 		ps.close();
@@ -1735,7 +1667,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		if (!groupNamesCacheDir.exists() || groupNamesCacheDir.list().length == 0) {
 			groupNamesCacheDir.mkdirs();
 
-			SlotType.storeExcludance();
+			Map<SlotType, Boolean> x = SlotType.storeExcludance();
 			SlotType.excludeAll();
 
 			List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
@@ -1753,7 +1685,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 			groupNameAnnotations = predictor.predictBatchHighRecallInstances(instances, k);
 
-			SlotType.restoreExcludance();
+			SlotType.restoreExcludance(x);
 
 			/*
 			 * Write cache...
@@ -1801,7 +1733,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		/**
 		 * Predict OrganismModels
 		 */
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
 		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
@@ -1818,7 +1750,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
 
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 		return organismModelAnnotations;
 	}
 
@@ -1828,7 +1760,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * Predict Injury Model
 		 */
 		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE;
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		InjuryRestrictionProvider.applySlotTypeRestrictions(rule);
 
 		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
@@ -1844,7 +1776,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = predictor.predictInstances(instances, k);
 
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 		return injuryModelAnnotations;
 	}
 

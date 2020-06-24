@@ -38,8 +38,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPoin
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -88,7 +88,7 @@ public class ResultSentenceClassificationWEKA {
 		Score score = new Score();
 		for (Instance testInstance : instanceProvider.getRedistributedTestInstances()) {
 			System.out.println(testInstance.getName());
-			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(testInstance);
+			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(testInstance);
 			Map<Integer, Classification> x = sentenceClassification.test(testInstance, score);
 
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
@@ -348,7 +348,7 @@ public class ResultSentenceClassificationWEKA {
 
 		for (Instance instance : instances) {
 
-			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 			
 			File groupNamesCacheDir = new File("data/annotations/result/");
 

@@ -22,7 +22,7 @@ public class NPChunker {
 
 	public static int maxLength = 25;
 
-	private final File npChunkerDir = new File("npchunker/");
+	private final File npChunkerDir = new File("npchunker");
 
 	private StanfordCoreNLP pipeline;
 	private final static String SPLITTER = "\t";
@@ -49,7 +49,7 @@ public class NPChunker {
 	public static void main(String[] args) throws IOException {
 
 		NPChunker chunker = new NPChunker(new Document("test2",
-				"Intrathecal spinal progenitor cell transplantation for the treatment of neurotrophic pain."));
+				"Groups receiving ECs, both alone (71.84 ± 5.20%) and in combination with MP (78.26 ± 0668%), performed the DFR task significantly better than all other lesioned animals; however, these two groups were not significantly different from each other."));
 
 		chunker.getNPs().forEach(System.out::println);
 	}
@@ -67,7 +67,7 @@ public class NPChunker {
 					.collect(Collectors.toList());
 		else {
 			Properties props = new Properties();
-			props.setProperty("parse.nthreads", "8");
+			props.setProperty("parse.nthreads", "4");
 			props.setProperty("annotators", "tokenize,ssplit,pos, parse");
 			pipeline = new StanfordCoreNLP(props);
 			nps = extractNPs(document.documentContent);

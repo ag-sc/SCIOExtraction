@@ -41,19 +41,6 @@ public class GroupNameNER {
 	public static void main(String[] args) {
 		new GroupNameNER();
 	}
-//	Without Speed up!
-//	Final Score: Score [getF1()=0.176, getPrecision()=0.115, getRecall()=0.380, tp=82, fp=633, fn=134, tn=0]
-//			CRFStatistics [context=Train, getTotalDuration()=2617000]
-//			CRFStatistics [context=Test, getTotalDuration()=341705]
-//			modelName: GroupName_123888444
-
-//	Mit SPeed up ... 
-//	Final Score: Score [getF1()=0.104, getPrecision()=0.066, getRecall()=0.241, tp=52, fp=732, fn=164, tn=0]
-//			CRFStatistics [context=Train, getTotalDuration()=2453041]
-//			CRFStatistics [context=Test, getTotalDuration()=298542]
-//			modelName: GroupName_343400040
-
-	//	Mit speed up and cache
 	
 	
 	public GroupNameNER() {

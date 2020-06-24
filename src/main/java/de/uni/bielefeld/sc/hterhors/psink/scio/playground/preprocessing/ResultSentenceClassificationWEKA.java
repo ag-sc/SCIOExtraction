@@ -28,9 +28,11 @@ import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -45,10 +47,9 @@ import weka.core.converters.ArffSaver;
  *
  */
 public class ResultSentenceClassificationWEKA {
+//	Score [getAccuracy()=0.905, getF1()=0.480, getPrecision()=0.335, getRecall()=0.844, tp=248, fp=492, fn=46, tn=4863]
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
-
-	private static final File instanceDirectory = new File("src/main/resources/slotfilling/result/corpus/instances/");
 
 	private static final String CLASSIFICATION_LABEL_RELEVANT = "Y";
 
@@ -63,14 +64,11 @@ public class ResultSentenceClassificationWEKA {
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
 				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
 
-		System.out.println(EntityType.get("AnimalSpecies").getTransitiveClosureSubEntityTypes().size());
-		System.out.println(EntityType.get("Injury").getTransitiveClosureSubEntityTypes().size());
-		System.out.println(EntityType.get("Treatment").getTransitiveClosureSubEntityTypes().size());
-		System.out.println(EntityType.get("Compound").getTransitiveClosureSubEntityTypes().size());
-
 		InstanceProvider.maxNumberOfAnnotations = 1000;
 
-		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
+		InstanceProvider instanceProvider = new InstanceProvider(
+				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				corpusDistributor);
 
 		ResultSentenceClassificationWEKA sentenceClassification = new ResultSentenceClassificationWEKA(
 				instanceProvider.getRedistributedTrainingInstances());
@@ -119,8 +117,16 @@ public class ResultSentenceClassificationWEKA {
 	private final RandomForest rf;
 
 	public ResultSentenceClassificationWEKA(List<Instance> trainingInstances) throws IOException {
+//		0.3
+//		Score [getAccuracy()=0.908, getF1()=0.386, getPrecision()=0.249, getRecall()=0.858, tp=163, fp=492, fn=27, tn=4967]
 
-		threshold = 0.3;
+//0.2		
+//		Score [getAccuracy()=0.794, getF1()=0.235, getPrecision()=0.134, getRecall()=0.942, tp=179, fp=1153, fn=11, tn=4306]
+
+		// 0.1
+//		Score [getAccuracy()=0.543, getF1()=0.127, getPrecision()=0.068, getRecall()=0.984, tp=187, fp=2578, fn=3, tn=2881]
+
+		threshold = 0.2;
 		rf = new RandomForest();
 		log.info("Train sentence classifier...");
 
@@ -319,7 +325,6 @@ public class ResultSentenceClassificationWEKA {
 					parameter.put("docID", instance.getDocument().documentID);
 					parameter.put("sentenceIndex", i);
 					parameter.put("sentence", sentence);
-
 					if (sentencesWithInfo.contains(i)) {
 						count++;
 						dataPoints.add(new DataPoint(parameter, trainingData, features, 1, training));
@@ -351,7 +356,7 @@ public class ResultSentenceClassificationWEKA {
 	private Set<Integer> extractRelevantSentences(AbstractAnnotation goldAnnotation) {
 		Set<Integer> sentencesWithInfo = new HashSet<>();
 
-		if (goldAnnotation.isInstanceOfLiteralAnnotation()) {
+		if (goldAnnotation.isInstanceOfDocumentLinkedAnnotation()) {
 			int sentenceIndex = goldAnnotation.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex();
 			sentencesWithInfo.add(sentenceIndex);
 			return sentencesWithInfo;
@@ -371,21 +376,21 @@ public class ResultSentenceClassificationWEKA {
 			sentencesWithInfo.add(sentenceIndex);
 		}
 
-		goldAnnotation.asInstanceOfEntityTemplate().filter().docLinkedAnnoation().multiSlots().singleSlots().merge()
-				.nonEmpty().build().getMergedAnnotations().values().stream().flatMap(a -> a.stream()).forEach(a -> {
-					if (a.isInstanceOfDocumentLinkedAnnotation()) {
-
-						DocumentLinkedAnnotation linkedAnn = a.asInstanceOfDocumentLinkedAnnotation();
-
-						int sentenceIndex = linkedAnn.getSentenceIndex();
-						sentencesWithInfo.add(sentenceIndex);
-					}
-
-				});
-
-		goldAnnotation.asInstanceOfEntityTemplate().filter().entityTemplateAnnoation().multiSlots().singleSlots()
-				.merge().nonEmpty().build().getMergedAnnotations().values().stream().flatMap(a -> a.stream())
-				.forEach(a -> sentencesWithInfo.addAll(extractRelevantSentences(a.asInstanceOfEntityTemplate())));
+//		goldAnnotation.asInstanceOfEntityTemplate().filter().docLinkedAnnoation().multiSlots().singleSlots().merge()
+//				.nonEmpty().build().getMergedAnnotations().values().stream().flatMap(a -> a.stream()).forEach(a -> {
+//					if (a.isInstanceOfDocumentLinkedAnnotation()) {
+//
+//						DocumentLinkedAnnotation linkedAnn = a.asInstanceOfDocumentLinkedAnnotation();
+//
+//						int sentenceIndex = linkedAnn.getSentenceIndex();
+//						sentencesWithInfo.add(sentenceIndex);
+//					}
+//
+//				});
+//
+//		goldAnnotation.asInstanceOfEntityTemplate().filter().entityTemplateAnnoation().multiSlots().singleSlots()
+//				.merge().nonEmpty().build().getMergedAnnotations().values().stream().flatMap(a -> a.stream())
+//				.forEach(a -> sentencesWithInfo.addAll(extractRelevantSentences(a.asInstanceOfEntityTemplate())));
 
 		return sentencesWithInfo;
 	}

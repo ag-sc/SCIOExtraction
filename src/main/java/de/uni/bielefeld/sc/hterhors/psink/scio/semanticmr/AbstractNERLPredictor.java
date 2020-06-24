@@ -18,9 +18,11 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
+import de.hterhors.semanticmr.crf.NERSemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
+import de.hterhors.semanticmr.crf.model.FactorPoolCache;
 import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.NerlaObjectiveFunction;
@@ -31,14 +33,12 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.SectionizedEntityRecLinkExplorer;
 
@@ -46,7 +46,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public SemanticParsingCRF crf;
+	public NERSemanticParsingCRF crf;
 
 	private final List<Instance> trainingInstances;
 	private final List<Instance> developmentInstances;
@@ -100,43 +100,43 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
-		Map<EntityType, Set<String>> words = new HashMap<>();
-		for (Instance trainingInstance : trainingInstances) {
-
-			for (DocumentLinkedAnnotation documentLinkedAnnotation : trainingInstance.getGoldAnnotations()
-					.<DocumentLinkedAnnotation>getAnnotations()) {
-				words.putIfAbsent(documentLinkedAnnotation.getEntityType(), new HashSet<>());
-				words.get(documentLinkedAnnotation.getEntityType()).addAll(documentLinkedAnnotation.relatedTokens
-						.stream().map(t -> t.getText()).collect(Collectors.toSet()));
-				words.get(documentLinkedAnnotation.getEntityType())
-						.add(documentLinkedAnnotation.textualContent.surfaceForm);
-			}
-
-		}
-
-		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations = new HashMap<>();
-
-		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(
-				new File("data/slot_filling/investigation_method/regex_nerla"));
-
+//		Map<EntityType, Set<String>> words = new HashMap<>();
+//		for (Instance trainingInstance : trainingInstances) {
+//
+//			for (DocumentLinkedAnnotation documentLinkedAnnotation : trainingInstance.getGoldAnnotations()
+//					.<DocumentLinkedAnnotation>getAnnotations()) {
+//				words.putIfAbsent(documentLinkedAnnotation.getEntityType(), new HashSet<>());
+//				words.get(documentLinkedAnnotation.getEntityType()).addAll(documentLinkedAnnotation.relatedTokens
+//						.stream().map(t -> t.getText()).collect(Collectors.toSet()));
+//				words.get(documentLinkedAnnotation.getEntityType())
+//						.add(documentLinkedAnnotation.textualContent.surfaceForm);
+//			}
+//
+//		}
+//
+//		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations = new HashMap<>();
+//
+//		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(
+//				new File("data/slot_filling/investigation_method/regex_nerla"));
+//
+//		for (Instance instance : instanceProvider.getInstances()) {
+//
+//			groupNameAnnotations.put(instance, new HashSet<>(nerlaJSONReader.getForInstance(instance)));
+//		}
+//
 		for (Instance instance : instanceProvider.getInstances()) {
-
-			groupNameAnnotations.put(instance, new HashSet<>(nerlaJSONReader.getForInstance(instance)));
-		}
-
-		for (Instance instance : instanceProvider.getInstances()) {
-
-			for (AbstractAnnotation annotation : groupNameAnnotations.get(instance)) {
-				instance.addCandidate(annotation.getEntityType(),
-						annotation.asInstanceOfLiteralAnnotation().getSurfaceForm());
-			}
-
-			for (Entry<EntityType, Set<String>> wm : words.entrySet()) {
-				instance.addCandidate(wm.getKey(), wm.getValue());
-			}
+//
+//			for (AbstractAnnotation annotation : groupNameAnnotations.get(instance)) {
+//				instance.addCandidate(annotation.getEntityType(),
+//						annotation.asInstanceOfLiteralAnnotation().getSurfaceForm());
+//			}
+//
+//			for (Entry<EntityType, Set<String>> wm : words.entrySet()) {
+//				instance.addCandidate(wm.getKey(), wm.getValue());
+//			}
 			instance.addCandidates(getAdditionalCandidates());
-			if (getDictionaryFile() != null)
-				instance.addCandidates(getDictionaryFile());
+//			if (getDictionaryFile() != null)
+//				instance.addCandidates(getDictionaryFile());
 		}
 
 		/**
@@ -144,8 +144,11 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * added to perform changes during the exploration. This explorer is especially
 		 * designed for NERLA and is parameterized with a candidate retrieval.
 		 */
+//		EntityRecLinkExplorerIterator explorer = new EntityRecLinkExplorerIterator();
+//		explorer.MAX_WINDOW_SIZE = 3;
+//		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer();
+//		explorer.MAX_WINDOW_SIZE = 3;
 		SectionizedEntityRecLinkExplorer explorer = new SectionizedEntityRecLinkExplorer();
-		explorer.MAX_WINDOW_SIZE = 8;
 
 		explorerList = Arrays.asList(explorer);
 
@@ -163,19 +166,19 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 	abstract protected AdvancedLearner getLearner();
 
 	public Score computeCoverageOnTrainingInstances(boolean detailedLog) {
-		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
+		return new NERSemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
 				getSampler(), getStateInitializer(), objectiveFunction).computeCoverage(detailedLog, objectiveFunction,
 						trainingInstances);
 	}
 
 	public Score computeCoverageOnDevelopmentInstances(boolean detailedLog) {
-		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
+		return new NERSemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
 				getSampler(), getStateInitializer(), objectiveFunction).computeCoverage(detailedLog, objectiveFunction,
 						developmentInstances);
 	}
 
 	public Score computeCoverageOnTestInstances(boolean detailedLog) {
-		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
+		return new NERSemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
 				getSampler(), getStateInitializer(), objectiveFunction).computeCoverage(detailedLog, objectiveFunction,
 						testInstances);
 	}
@@ -194,11 +197,11 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 			 */
 			model = new Model(getFeatureTemplates(), getModelBaseDir(), modelName);
 		}
-
+		model.setCache(new FactorPoolCache(model, 32_000, 16_000));
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		crf = new SemanticParsingCRF(model, explorerList, getSampler(), getStateInitializer(), objectiveFunction);
+		crf = new NERSemanticParsingCRF(model, explorerList, getSampler(), getStateInitializer(), objectiveFunction);
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
 		 */

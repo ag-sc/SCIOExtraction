@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -61,67 +62,67 @@ public class BuildNERCorpusFromSlotFillingData {
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
-		buildForOrganismModel();
+//		buildForOrganismModel();
 		buildForInjuryModel();
-		buildForTreatment();
-		buildForVertebralArea();
-		buildForDeliveryMethod();
-		buildForInvestigationMethod();
-		buildForGroupName();
-		buildForTrend();
+//		buildForTreatment();
+//		buildForVertebralArea();
+//		buildForDeliveryMethod();
+//		buildForInvestigationMethod();
+//		buildForGroupName();
+//		buildForTrend();
 
 	}
 
 	private static void buildForTrend() throws Exception {
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasTrend.includeRec();
 		buildSubDataStructureFiles(SCIOEntityTypes.trend);
 		buildInstances(SCIOEntityTypes.trend);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 	}
 
 	private static void buildForGroupName() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasGroupName.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.groupName);
 		buildInstances(SCIOEntityTypes.definedExperimentalGroup, SCIOEntityTypes.groupName);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 	}
 
 	private static void buildForInvestigationMethod() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 //		SCIOSlotTypes.hasLocation.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.investigationMethod);
 		buildInstances(SCIOEntityTypes.investigationMethod);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 
 	}
 
 	private static void buildForVertebralArea() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasLowerVertebrae.include();
 		SCIOSlotTypes.hasUpperVertebrae.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.vertebralArea);
 		buildInstances(SCIOEntityTypes.vertebralArea);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 	}
 
 	private static void buildForDeliveryMethod() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasDirection.include();
 		SCIOSlotTypes.hasLocation.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 		buildInstances(SCIOEntityTypes.deliveryMethod);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 
@@ -129,7 +130,7 @@ public class BuildNERCorpusFromSlotFillingData {
 
 	private static void buildForTreatment() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasDeliveryMethod.include();
 		SCIOSlotTypes.hasCompound.include();
@@ -138,26 +139,35 @@ public class BuildNERCorpusFromSlotFillingData {
 		SCIOSlotTypes.hasDosage.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.treatment);
 		buildInstances(SCIOEntityTypes.treatment);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 	}
 
 	private static void buildForInjuryModel() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasInjuryDevice.include();
 		SCIOSlotTypes.hasInjuryLocation.include();
 		SCIOSlotTypes.hasInjuryAnaesthesia.include();
 		SCIOSlotTypes.hasLowerVertebrae.include();
 		SCIOSlotTypes.hasUpperVertebrae.include();
+		
+//		injurySlotTypes.add(SCIOSlotTypes.hasInjuryDevice);
+//		injurySlotTypes.add(SCIOSlotTypes.hasInjuryAnaesthesia);
+//		injurySlotTypes.add(SCIOSlotTypes.hasDosage);
+//		injurySlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
+//		injurySlotTypes.add(SCIOSlotTypes.hasInjuryLocation);
+//		injurySlotTypes.add(SCIOSlotTypes.hasLowerVertebrae);
+//		injurySlotTypes.add(SCIOSlotTypes.hasUpperVertebrae);
+		
 		buildSubDataStructureFiles(SCIOEntityTypes.injury);
 		buildInstances(SCIOEntityTypes.injury);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 	}
 
 	private static void buildForOrganismModel() throws Exception {
 
-		SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasAge.include();
 		SCIOSlotTypes.hasGender.include();
@@ -166,7 +176,7 @@ public class BuildNERCorpusFromSlotFillingData {
 		SCIOSlotTypes.hasWeight.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.organismModel);
 		buildInstances(SCIOEntityTypes.organismModel);
-		SlotType.restoreExcludance();
+		SlotType.restoreExcludance(x);
 	}
 
 	private static void buildSubDataStructureFiles(EntityType rootEntityType) throws Exception {
@@ -210,7 +220,7 @@ public class BuildNERCorpusFromSlotFillingData {
 				shuffleCorpusDistributor);
 
 		for (Instance instance : instanceProvider.getInstances()) {
-			
+
 			List<Instance> newInstances = new ArrayList<>();
 			Set<DocumentLinkedAnnotation> annotations = new HashSet<>();
 
@@ -228,7 +238,7 @@ public class BuildNERCorpusFromSlotFillingData {
 
 				annotations = unifyET;
 			}
-			
+
 //			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),

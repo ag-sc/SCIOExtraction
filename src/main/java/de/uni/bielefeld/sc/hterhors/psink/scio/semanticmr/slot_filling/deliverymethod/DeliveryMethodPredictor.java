@@ -18,6 +18,7 @@ import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -30,6 +31,7 @@ import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
+import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -37,6 +39,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.GenericMultiCardinalityInitializer;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.MultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
 /**
@@ -76,9 +80,11 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-		return (instance -> {
-			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
-		});
+		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.deliveryMethod, -1, -1);
+
+//		return (instance -> {
+//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
+//		});
 //		return (instance -> {
 //
 //			List<AbstractAnnotation> as = new ArrayList<>();
@@ -128,7 +134,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	public List<IExplorationStrategy> getAdditionalExplorer() {
-		return Arrays.asList(new RootTemplateCardinalityExplorer( trainingObjectiveFunction.getEvaluator(),
+		return Arrays.asList(new RootTemplateCardinalityExplorer(trainingObjectiveFunction.getEvaluator(),
 				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
 	}
 

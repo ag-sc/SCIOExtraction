@@ -51,8 +51,8 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProject {
 	public interface IModificationRule {
@@ -289,13 +289,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //			}
 //
 //		};
+
 		IFilter sectionFilter = new IFilter() {
 
-			Map<Document, AutomatedSectionifcation> cache = new HashMap<>();
+			Map<Document, SCIOAutomatedSectionifcation> cache = new HashMap<>();
 			{
 
 				for (Instance instance : instanceProvider.getInstances()) {
-					cache.put(instance.getDocument(), AutomatedSectionifcation.getInstance(instance));
+					cache.put(instance.getDocument(), SCIOAutomatedSectionifcation.getInstance(instance));
 				}
 
 			}
@@ -308,7 +309,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 				Document doc = candidate.asInstanceOfDocumentLinkedAnnotation().document;
 
-				AutomatedSectionifcation sectionification = cache.get(doc);
+				SCIOAutomatedSectionifcation sectionification = cache.get(doc);
 
 				if (candidate.isInstanceOfEntityTemplate()) {
 
@@ -337,8 +338,9 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				return false;
 			}
 
-			private boolean isRelevant(AutomatedSectionifcation sectionification, DocumentLinkedAnnotation a) {
+			private boolean isRelevant(SCIOAutomatedSectionifcation sectionification, DocumentLinkedAnnotation a) {
 				ESection sec = sectionification.getSection(a.asInstanceOfDocumentLinkedAnnotation());
+//				return sec == ESection.METHODS;
 				return sec != ESection.REFERENCES;
 			}
 
@@ -348,6 +350,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //			instance.removeCandidateAnnotation(predictFilter);
 //			instance.removeCandidateAnnotation(goldFilter);
 			instance.removeCandidateAnnotation(sectionFilter);
+			instance.removeCandidateAnnotation(new IFilter() {
+
+				@Override
+				public boolean remove(AbstractAnnotation candidate) {
+					return !trainDictionary.keySet().contains(candidate.getEntityType());
+				}
+
+			});
 		}
 
 		HardConstraintsProvider prov = getHardConstraints();
@@ -436,13 +446,13 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public Score computeCoverageOnDevelopmentInstances(boolean detailedLog) {
 		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
 				getSampler(), getStateInitializer(), trainingObjectiveFunction).computeCoverage(detailedLog,
-						predictionObjectiveFunction, developmentInstances);
+						trainingObjectiveFunction, developmentInstances);
 	}
 
 	public Score computeCoverageOnTestInstances(boolean detailedLog) {
 		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
 				getSampler(), getStateInitializer(), trainingObjectiveFunction).computeCoverage(detailedLog,
-						predictionObjectiveFunction, testInstances);
+						trainingObjectiveFunction, testInstances);
 	}
 
 	public void trainOrLoadModel() {
@@ -547,6 +557,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 					.filter(i -> i.getName().equals(name)).collect(Collectors.toList()), n, maxStepCrit,
 					noModelChangeCrit);
 		}
+
 		for (Entry<Instance, State> result : results.entrySet()) {
 
 			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {

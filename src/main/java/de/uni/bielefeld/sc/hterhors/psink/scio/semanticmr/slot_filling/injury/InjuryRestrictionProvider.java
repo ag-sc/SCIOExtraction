@@ -62,6 +62,8 @@ public class InjuryRestrictionProvider {
 			SCIOSlotTypes.hasUpperVertebrae.include();
 			SCIOSlotTypes.hasLowerVertebrae.include();
 			SCIOSlotTypes.hasAnaesthesia.include();
+			SCIOSlotTypes.hasDosage.include();
+			SCIOSlotTypes.hasDeliveryMethod.include();
 			return;
 		}
 

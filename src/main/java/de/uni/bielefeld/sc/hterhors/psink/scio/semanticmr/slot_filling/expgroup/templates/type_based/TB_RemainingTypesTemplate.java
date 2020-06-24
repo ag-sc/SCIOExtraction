@@ -25,8 +25,8 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_RemainingTypesTemplate.RemainingTypesScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * @author hterhors
@@ -204,7 +204,7 @@ public class TB_RemainingTypesTemplate extends AbstractFeatureTemplate<Remaining
 		Set<DocumentLinkedAnnotation> remainingTypeAnnotations = getRemainingAnnotations(instance, assignedTypes);
 		Set<DocumentLinkedAnnotation> usedTypeAnnotations = getUsedAnnotations(instance, assignedTypes);
 
-		AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+		SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 
 		Map<EntityType, Set<ESection>> sectionsPerType = new HashMap<>();
 		for (DocumentLinkedAnnotation documentLinkedAnnotation : remainingTypeAnnotations) {

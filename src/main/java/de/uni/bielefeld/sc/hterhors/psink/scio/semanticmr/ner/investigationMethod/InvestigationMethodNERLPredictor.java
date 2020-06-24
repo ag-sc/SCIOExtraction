@@ -16,9 +16,7 @@ import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
-import de.hterhors.semanticmr.crf.templates.dla.MorphologicalNerlaTemplate;
-import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
-import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.SurfaceFormTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -74,9 +72,13 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 //		featureTemplates.add(new ContextBetweenAnnotationsTemplate());
 //		featureTemplates.add(new LevenshteinTemplate());
 
-		featureTemplates.add(new MorphologicalNerlaTemplate());
-		featureTemplates.add(new NGramTokenContextTemplate());
-		featureTemplates.add(new IntraTokenTemplate());
+//		featureTemplates.add(new MorphologicalNerlaTemplate());
+		
+//		featureTemplates.add(new NGramTokenContextTemplate());
+		
+//		featureTemplates.add(new SingleTokenContextTemplate());
+		featureTemplates.add(new SurfaceFormTemplate());
+//		featureTemplates.add(new IntraTokenTemplate());
 
 		/**
 		 * 
@@ -96,7 +98,7 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 
 	@Override
 	protected int getNumberOfEpochs() {
-		return 10;
+		return 1;
 	}
 
 	@Override
@@ -117,7 +119,7 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 
 	@Override
 	protected File getModelBaseDir() {
-		return new File("models/ner/trend/");
+		return new File("models/ner/investigation_method/");
 	}
 
 //	@Override
@@ -128,7 +130,7 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 	@Override
 	protected Set<EntityType> getAdditionalCandidates() {
 		Set<EntityType> set = new HashSet<>();
-//		set.addAll(SCIOEntityTypes.investigationMethod.getTransitiveClosureSubEntityTypes());
+		set.addAll(SCIOEntityTypes.investigationMethod.getTransitiveClosureSubEntityTypes());
 		return set;
 	}
 

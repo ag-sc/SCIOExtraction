@@ -18,8 +18,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.investigation.CollectExpGroupNames.PatternIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.EExtractGroupNamesMode;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.NPChunker.TermIndexPair;
 
@@ -56,7 +56,7 @@ public class GroupNameExtraction {
 	}
 
 	public static List<DocumentLinkedAnnotation> filter(Instance instance, List<DocumentLinkedAnnotation> groupNames) {
-		AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+		SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 
 		for (Iterator<DocumentLinkedAnnotation> iterator = groupNames.iterator(); iterator.hasNext();) {
 			DocumentLinkedAnnotation groupName = iterator.next();

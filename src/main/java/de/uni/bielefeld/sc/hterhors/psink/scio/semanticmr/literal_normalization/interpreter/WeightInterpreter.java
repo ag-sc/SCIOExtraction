@@ -26,11 +26,11 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 	public static void main(String[] args) {
 
 		System.out.println(WeightInterpreter.PATTERN);
-		WeightInterpreter wi = new WeightInterpreter("200 g");
+		WeightInterpreter wi = new WeightInterpreter("100-200 kg");
 		WeightInterpreter wi2 = new WeightInterpreter("~200 g");
 
-		System.out.println(wi.normalize().surfaceForm);
-		System.out.println(wi2.normalize().surfaceForm);
+		System.out.println(wi.normalize().asSimpleString());
+		System.out.println(wi2.normalize().asSimpleString());
 
 	}
 

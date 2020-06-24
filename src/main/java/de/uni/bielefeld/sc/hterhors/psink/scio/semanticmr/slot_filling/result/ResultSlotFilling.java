@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,8 +63,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentInGroupCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentPriorInverseTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.templates.type_based.TB_TreatmentPriorTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 public class ResultSlotFilling extends AbstractSemReadProject {
 
@@ -319,7 +322,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 //				.setTestProportion(20).setSeed(1000L).build();
 
-		InstanceProvider.maxNumberOfAnnotations = 2;
+		InstanceProvider.maxNumberOfAnnotations = 100;
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
@@ -349,7 +352,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 			instance.addCandidateAnnotation(
 					new EntityTemplate(AnnotationBuilder.toAnnotation(EntityType.get("Trend"))));
 
-			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 
 			for (DocumentLinkedAnnotation eta : new HashSet<>(nerlaJSONReader.getForInstance(instance))) {
 

@@ -18,8 +18,8 @@ import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * @author hterhors
@@ -45,8 +45,8 @@ public class SectionizedEntityRecLinkExplorer implements IExplorationStrategy {
 	 */
 	private int averageNumberOfNewProposalStates = 16;
 
-	public int MAX_WINDOW_SIZE = 10;
-	public int MIN_WINDOW_SIZE = 1;
+	public static int MAX_WINDOW_SIZE = 10;
+	public static int MIN_WINDOW_SIZE = 1;
 
 	@Override
 	public List<State> explore(State currentState) {
@@ -71,10 +71,16 @@ public class SectionizedEntityRecLinkExplorer implements IExplorationStrategy {
 
 	}
 
-	private void addNewAnnotation(final List<State> proposalStates, State currentState) {
-		final List<DocumentToken> tokens = currentState.getInstance().getDocument().tokenList;
+	private int sentenceIndex = -1;
 
-		AutomatedSectionifcation sectionifcation = AutomatedSectionifcation.getInstance(currentState.getInstance());
+	private void addNewAnnotation(final List<State> proposalStates, State currentState) {
+
+//		AutomatedSectionifcation sectionifcation = AutomatedSectionifcation.getInstance(currentState.getInstance());
+//		if (sectionifcation.getSection(sentenceIndex) != ESection.RESULTS)
+//			return;
+
+		final List<DocumentToken> tokens = currentState.getInstance().getDocument().getSentenceByIndex(sentenceIndex);
+
 		for (int windowSize = MIN_WINDOW_SIZE; windowSize <= MAX_WINDOW_SIZE; windowSize++) {
 
 			for (int runIndex = 0; runIndex < tokens.size() - windowSize; runIndex++) {
@@ -82,8 +88,8 @@ public class SectionizedEntityRecLinkExplorer implements IExplorationStrategy {
 				final DocumentToken fromToken = tokens.get(runIndex); // including
 				final DocumentToken toToken = tokens.get(runIndex + windowSize - 1); // including
 
-				if (sectionifcation.getSection(fromToken.getSentenceIndex()) != ESection.RESULTS)
-					continue;
+//				if (sectionifcation.getSection(fromToken.getSentenceIndex()) != ESection.RESULTS)
+//					continue;
 
 				/*
 				 * Check some basic constraints.
@@ -111,36 +117,36 @@ public class SectionizedEntityRecLinkExplorer implements IExplorationStrategy {
 					continue;
 				else if (currentState.containsAnnotationOnTokens(fromToken, toToken))
 					continue;
+//
+				final CacheKey key = new CacheKey(currentState.getInstance(), fromToken.getDocTokenIndex(),
+						toToken.getDocTokenIndex());
+				Set<AbstractAnnotation> annotations;
+				if ((annotations = cache.get(key)) == null) {
+					annotations = new HashSet<>();
+					final String text = currentState.getInstance().getDocument().getContent(fromToken, toToken);
 
-//				final CacheKey key = new CacheKey(currentState.getInstance(), fromToken.getDocTokenIndex(),
-//						toToken.getDocTokenIndex());
-//				Set<AbstractAnnotation> annotations;
-//				if ((annotations = cache.get(key)) == null) {
-//					annotations = new HashSet<>();
-				final String text = currentState.getInstance().getDocument().getContent(fromToken, toToken);
+					if (text.length() == 1)
+						continue;
 
-				if (text.length() == 1)
-					continue;
+					for (EntityType entityType : currentState.getInstance().getEntityTypeCandidates(text)) {
 
-				for (EntityType entityType : currentState.getInstance().getEntityTypeCandidates(text)) {
+						try {
+							AbstractAnnotation newCurrentPrediction = AnnotationBuilder.toAnnotation(
+									currentState.getInstance().getDocument(), entityType, text,
+									fromToken.getDocCharOffset());
+							annotations.add(newCurrentPrediction);
+							proposalStates.add(currentState.deepAddCopy(newCurrentPrediction));
+						} catch (RuntimeException e) {
+							e.printStackTrace();
+						}
 
-					try {
-						AbstractAnnotation newCurrentPrediction = AnnotationBuilder.toAnnotation(
-								currentState.getInstance().getDocument(), entityType, text,
-								fromToken.getDocCharOffset());
-//							annotations.add(newCurrentPrediction);
-						proposalStates.add(currentState.deepAddCopy(newCurrentPrediction));
-					} catch (RuntimeException e) {
-						e.printStackTrace();
 					}
-
+					cache.put(key, annotations);
+				} else {
+					for (AbstractAnnotation newCurrentPrediction : annotations) {
+						proposalStates.add(currentState.deepAddCopy(newCurrentPrediction));
+					}
 				}
-//					cache.put(key, annotations);
-//				} else {
-//					for (AbstractAnnotation newCurrentPrediction : annotations) {
-//						proposalStates.add(currentState.deepAddCopy(newCurrentPrediction));
-//					}
-//				}
 			}
 		}
 	}
@@ -192,6 +198,23 @@ public class SectionizedEntityRecLinkExplorer implements IExplorationStrategy {
 	private void updateAverage(final List<State> proposalStates) {
 		averageNumberOfNewProposalStates += proposalStates.size();
 		averageNumberOfNewProposalStates /= 2;
+	}
+
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public State next() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void set(int sentenceIndex) {
+		this.sentenceIndex = sentenceIndex;
 	}
 
 }

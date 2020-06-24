@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import afu.org.checkerframework.checker.units.qual.s;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -26,47 +26,54 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.weka.WEKAClustering;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.wrapper.DefinedExperimentalGroup;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.group_names.GroupNameMapping;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaccardSimilarity;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3;
+import weka.gui.ETable;
 
 public class Heuristic {
 
 	private static final double jaccardThreshold = 0.2D;
 	final Map<Instance, Set<DocumentLinkedAnnotation>> annotations;
 	private final WEKAClustering gnc;
+	private Map<Instance, Set<EntityTemplate>> groupAnnotations;
+//	private GroupNameMapping groupNameMapping;
 
-	public Heuristic(Map<Instance, Set<DocumentLinkedAnnotation>> annotations, List<Instance> trainingInstances) {
+	public Heuristic(Map<Instance, Set<DocumentLinkedAnnotation>> annotations,
+			Map<Instance, Set<EntityTemplate>> groupAnnotations, List<Instance> trainingInstances) throws IOException {
 		this.annotations = annotations;
-
+		this.groupAnnotations = groupAnnotations;
 		gnc = new WEKAClustering();
-
+//		this.groupNameMapping = new GroupNameMapping(100);
 		try {
 			gnc.trainOrLoad(trainingInstances);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
-	public Map<Instance, State> predictByHeuristic(List<Instance> instances) {
+	public Map<Instance, State> predictInstancesByHeuristic(List<Instance> instances) {
 
 		Map<Instance, State> results = new HashMap<>();
 
 		for (Instance instance : instances) {
-
+			System.out.println(instance.getName());
 			Set<DocumentLinkedAnnotation> documentAnnotations = this.annotations.get(instance);
 
 			Map<Integer, Set<DocumentLinkedAnnotation>> entitiesPerSentence = toSentencebasedAnnotations(
 					documentAnnotations);
 
 			List<ResultData> trendInvResultData = extractTrendInvMethodResultData(entitiesPerSentence);
+			System.out.println(trendInvResultData.size());
 
-			System.out.println("From:" + trendInvResultData.size());
+			if (SCIOSlotTypes.hasTargetGroup.isIncluded()) {
+				Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup = getGroupMapping(instance);
+				trendInvResultData = addExperimentalGroupData(namePerGroup, trendInvResultData, instance,
+						entitiesPerSentence);
+			}
+			System.out.println(trendInvResultData.size());
 
-			if (SCIOSlotTypes.hasTargetGroup.isIncluded())
-				trendInvResultData = addGroupData(trendInvResultData, instance, entitiesPerSentence);
-
-			System.out.println("To: " + trendInvResultData.size());
 			List<AbstractAnnotation> predictions = new ArrayList<>();
 
 			for (ResultData resultData : trendInvResultData) {
@@ -77,6 +84,7 @@ public class Heuristic {
 					predictions.add(result);
 
 			}
+
 			results.put(instance, new State(instance, new Annotations(predictions)));
 		}
 
@@ -84,149 +92,164 @@ public class Heuristic {
 
 	}
 
-	private List<ResultData> addGroupData(List<ResultData> trendInvResultData, Instance instance,
+	private List<ResultData> addExperimentalGroupData(Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			List<ResultData> trendInvResultData, Instance instance,
 			Map<Integer, Set<DocumentLinkedAnnotation>> entitiesPerSentence) {
 
-		Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup = extractGroupNameMapping(instance);
-		System.out.println(instance.getName());
+//		System.out.println(instance.getName());
 
-		if (instance.getName().startsWith("N163"))
-//		int numberOfGroups = new HashSet<>(namePerGroup.values()).size();
-			System.out.println("GroupNames: "
-					+ namePerGroup.keySet().stream().map(d -> d.getSurfaceForm() + ", ").reduce("", String::concat));
-//		System.out.println("Number of groups: " + numberOfGroups);
-//		System.out.println("Number of results: " + trendInvResultData.size());
+//		Map<Set<String>, Map<Set<String>, Boolean>> mappingData = groupNameMapping.getDataSet(instance);
+
+//		System.out.println("---Local Group Names---");
+//		for (Set<String> localGN : mappingData.keySet()) {
+//			System.out.println(localGN);
+//		}
+//		System.out.println("------");
 		List<ResultData> newResultData = new ArrayList<>();
-		final int range = 10;
 		for (ResultData resultData : trendInvResultData) {
+			final int range = 10;
 
 			int trendSentenceIndex = getSentenceIndexOfTrend(resultData);
 
 			/**
 			 * Look behind trend:
 			 * 
-			 * For the last range number of sentences look for group names / experimental
+			 * For the last "range"-number of sentences look for group names / experimental
 			 * groups.
 			 */
 
 			Set<EntityTemplate> defExpGroups1 = new HashSet<>();
 			Set<EntityTemplate> defExpGroups2 = new HashSet<>();
 
+			if (new HashSet<>(namePerGroup.values()).size() == 2) {
+				List<EntityTemplate> groups = new ArrayList<>(new HashSet<>(namePerGroup.values()));
+				defExpGroups1.add(groups.get(0));
+				defExpGroups2.add(groups.get(1));
+			} else {
 //			Set<String> usedDefExpGroupsNames = new HashSet<>();
 //			System.out.println("Trend  Sentence index" + trendSentenceIndex);
-			for (int sentenceIndex = trendSentenceIndex; sentenceIndex >= trendSentenceIndex - range; sentenceIndex--) {
+				Set<DocumentLinkedAnnotation> names = new HashSet<>();
+				for (int sentenceIndex = trendSentenceIndex; sentenceIndex >= trendSentenceIndex
+						- range; sentenceIndex--) {
 
-				Set<DocumentLinkedAnnotation> annotationsInSentence = entitiesPerSentence.get(sentenceIndex);
+					Set<DocumentLinkedAnnotation> annotationsInSentence = entitiesPerSentence.get(sentenceIndex);
 
-				if (annotationsInSentence == null)
-					continue;
-
-				/**
-				 * Heuristic stop look behind if there is another trend mentioned.
-				 */
+					if (annotationsInSentence == null)
+						continue;
+					/**
+					 * Heuristic stop look behind if there is another trend mentioned.
+					 */
 //				if (trendSentenceIndex != sentenceIndex && defExpGroups.size() > 1
 //						&& getRelatedClassesOf(annotationsInSentence, EntityType.get("Trend")).isEmpty()) {
 //					break;
 //
 //				}
-				Set<DocumentLinkedAnnotation> names = new HashSet<>();
 
-				List<DocumentLinkedAnnotation> groupNames = getRelatedClassesOf(annotationsInSentence,
-						EntityType.get("GroupName"));
+					names.addAll(getRelatedClassesOf(annotationsInSentence, SCIOEntityTypes.groupName));
+					names.addAll(getSubClassOf(annotationsInSentence, SCIOEntityTypes.experimentalGroup));
 
-				List<DocumentLinkedAnnotation> groups = getSubClassOf(annotationsInSentence,
-						EntityType.get("ExperimentalGroup"));
+					List<DocumentLinkedAnnotation> sortedLocalNames = new ArrayList<>(names);
+					System.out.println("### NUmber of Local Names = " + sortedLocalNames.size());
+					/**
+					 * Sort to compare first mention against all following ones if there are
+					 * mentioned multiple. Sorting gains 4 points in macro F
+					 */
+					Collections.sort(sortedLocalNames, new Comparator<DocumentLinkedAnnotation>() {
 
-				names.addAll(groupNames);
-				names.addAll(groups);
+						@Override
+						public int compare(DocumentLinkedAnnotation o1, DocumentLinkedAnnotation o2) {
 
-				List<DocumentLinkedAnnotation> sortedNames = new ArrayList<>(names);
-
-				/**
-				 * Sort to compare first mention against all following ones if there are
-				 * mentioned multiple. Sorting gains 4 points in macro F
-				 */
-				Collections.sort(sortedNames, new Comparator<DocumentLinkedAnnotation>() {
-
-					@Override
-					public int compare(DocumentLinkedAnnotation o1, DocumentLinkedAnnotation o2) {
-						return Integer.compare(o1.getStartDocCharOffset(), o2.getStartDocCharOffset());
-					}
-				});
+							/*
+							 * TODO: HEURISTIC Sort by sentence index, sentences that appear later are
+							 * chosen first.
+							 */
+							if (o1.getSentenceIndex() != o2.getSentenceIndex())
+								return -Integer.compare(o1.getSentenceIndex(), o2.getSentenceIndex());
+							/*
+							 * If the sentence index is equal sort by char offset. names that appear in the
+							 * sentence first are chosen first.
+							 */
+							return Integer.compare(o1.getStartDocCharOffset(), o2.getStartDocCharOffset());
+						}
+					});
 
 //				System.out.println("namePerGroup: " + namePerGroup.keySet().stream()
 //						.map(d -> d.getSurfaceForm() + " " + d.getEndDocCharOffset()).collect(Collectors.toSet()));
-//				System.out.println("sortedNames: " + sortedNames.stream()
-//						.map(d -> d.getSurfaceForm() + " " + d.getEndDocCharOffset()).collect(Collectors.toSet()));
 
-				for (DocumentLinkedAnnotation groupNameAnnotation : sortedNames) {
+//					Set<String> localNames = sortedLocalNames.stream().map(s -> s.getSurfaceForm())
+//							.collect(Collectors.toSet());
+//					System.out.println("localNames: " + localNames);
 
-					Set<EntityTemplate> defExpGroups = defExpGroups1.isEmpty() ? defExpGroups1 : defExpGroups2;
+//					if (mappingData.get(localNames) != null) {
+//
+//						Map<DocumentLinkedAnnotation, EntityTemplate> filterNamePerGroup = new HashMap<>();
+//
+//						/*
+//						 * If the collected local group names have any match
+//						 */
+//						for (Entry<Set<String>, Boolean> mappings : mappingData.get(localNames).entrySet()) {
+//
+//							if (!mappings.getValue())
+//								continue;
+//
+//							System.out.println("mappings: " + mappings);
+//
+//							/*
+//							 * If the match was positive.
+//							 */
+//							for (String localGroupName : mappings.getKey()) {
+//
+//								for (DocumentLinkedAnnotation groupName : namePerGroup.keySet()) {
+//
+//									if (localGroupName.equals(groupName.getSurfaceForm())) {
+//										filterNamePerGroup.put(groupName, namePerGroup.get(groupName));
+//									}
+//
+//								}
+//
+//							}
+//
+//						}
+//					}
+					for (DocumentLinkedAnnotation groupNameAnnotation : sortedLocalNames) {
 
-					if (referesToAExactTreatment(defExpGroups, namePerGroup, groupNameAnnotation)) {
-//						System.out.println(" classified as EXACT!");
-						defExpGroups.addAll(
-								getExactTreatment(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
-					} else if (refersToMultipleGroups(defExpGroups, namePerGroup, groupNameAnnotation)) {
-//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as MULTIPLE!");
-						defExpGroups.addAll(getMultipleTreatmentGroups(defExpGroups, defExpGroups1, namePerGroup,
-								groupNameAnnotation));
-					} else if (refersToAllControls(defExpGroups, namePerGroup, groupNameAnnotation)) {
-//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as CONTROLS!");
-						defExpGroups.addAll(
-								getAllControlGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
-					} else if (refersToAllTreatmentsGroups(defExpGroups, namePerGroup, groupNameAnnotation)) {
-//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as TREATMENTS!");
-						defExpGroups.addAll(
-								getAllTreatmentGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
-					} else if (refersToAllGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation)) {
-//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as ALL!");
-						defExpGroups.addAll(namePerGroup.values());
-					} else {
-						Collection<? extends EntityTemplate> simpleOverlap = getSimpleOverlapGroups(defExpGroups,
-								defExpGroups1, namePerGroup, groupNameAnnotation);
+						Set<EntityTemplate> defExpGroups = defExpGroups1.isEmpty() ? defExpGroups1 : defExpGroups2;
+
+						mapGroupNamesToGroups(namePerGroup, defExpGroups1, groupNameAnnotation, defExpGroups);
 						/**
-						 * Jaccard Simialrity
+						 * Do not compare same groups in one result:
 						 */
-
-						defExpGroups.addAll(simpleOverlap);
-//						if (simpleOverlap.isEmpty())
-//							System.out.println(groupNameAnnotation.getSurfaceForm() + " can NOT be assiged");
-//						else
-//							System.out.println(groupNameAnnotation.getSurfaceForm() + " classified by OVERLAP");
-
+						defExpGroups2.removeAll(defExpGroups1);
 					}
 
-//				
-					/**
-					 * Do not compare same groups in one result:
-					 */
-
-					defExpGroups2.removeAll(defExpGroups1);
-				}
-
 //				System.out.println("-------------------");
-				/**
-				 * Only one is requested
-				 */
-				// if (defExpGroups.size()!=0)
+					/**
+					 * Only one is requested
+					 */
+					// if (defExpGroups.size()!=0)
 //					break;
-				/**
-				 * Heuristic. at least 2 are requested
-				 */
+					/**
+					 * Heuristic. at least 2 are requested
+					 */
 //				System.out.println("Sentence Index look behind: " + sentenceIndex);
 //				System.out.println(defExpGroups.size());
+//					System.out.println(defExpGroups1.size());
+//					System.out.println(defExpGroups2.size());
 
-				if (defExpGroups1.size() >= 2) {
-					break;
-				}
+					if (defExpGroups1.size() >= 2) {
+						break;
+					}
 
-				if (defExpGroups1.size() >= 1 && defExpGroups2.size() >= 1) {
-					break;
-				}
+					if (defExpGroups1.size() >= 1 && defExpGroups2.size() >= 1) {
+						break;
+					}
+
+//					defExpGroups1.clear();
+//					defExpGroups2.clear();
 
 //				System.out.println(namePerGroup.keySet());
 //				System.out.println(names.stream().map(d -> d.getSurfaceForm()).collect(Collectors.toSet()));
+				}
 			}
 
 //			if (defExpGroups1.size() > 2) {
@@ -280,6 +303,41 @@ public class Heuristic {
 		}
 		return newResultData;
 
+	}
+
+	private void mapGroupNamesToGroups(Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup,
+			Set<EntityTemplate> defExpGroups1, DocumentLinkedAnnotation groupNameAnnotation,
+			Set<EntityTemplate> defExpGroups) {
+		if (referesToAExactTreatment(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(" classified as EXACT!");
+			defExpGroups.addAll(getExactTreatment(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+		} else if (refersToMultipleGroups(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//			System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as MULTIPLE!");
+			defExpGroups
+					.addAll(getMultipleTreatmentGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+		} else if (refersToAllControls(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as CONTROLS!");
+			defExpGroups.addAll(getAllControlGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+		} else if (refersToAllTreatmentsGroups(defExpGroups, namePerGroup, groupNameAnnotation)) {
+//						System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as TREATMENTS!");
+			defExpGroups.addAll(getAllTreatmentGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation));
+		} else if (refersToAllGroups(defExpGroups, defExpGroups1, namePerGroup, groupNameAnnotation)) {
+//			System.out.println(groupNameAnnotation.getSurfaceForm() + " classified as ALL!");
+			defExpGroups.addAll(namePerGroup.values());
+		} else {
+			Collection<? extends EntityTemplate> simpleOverlap = getSimpleOverlapGroups(defExpGroups, defExpGroups1,
+					namePerGroup, groupNameAnnotation);
+			/**
+			 * Jaccard Simialrity
+			 */
+
+			defExpGroups.addAll(simpleOverlap);
+//						if (simpleOverlap.isEmpty())
+//							System.out.println(groupNameAnnotation.getSurfaceForm() + " can NOT be assiged");
+//						else
+//							System.out.println(groupNameAnnotation.getSurfaceForm() + " classified by OVERLAP");
+
+		}
 	}
 
 	private final JaccardSimilarity jaccard = new JaccardSimilarity(new TokeniserQGram3());
@@ -519,7 +577,7 @@ public class Heuristic {
 				relTreatmentTypes.removeAll(SCIOEntityTypes.vehicle.getTransitiveClosureSubEntityTypes());
 
 				if (relTreatmentTypes.size() == 1) {
-					defExpGroups.add(group);
+					groups.add(group);
 				}
 			}
 
@@ -727,23 +785,20 @@ public class Heuristic {
 		return trendSentenceIndex;
 	}
 
-	private Map<DocumentLinkedAnnotation, EntityTemplate> extractGroupNameMapping(Instance instance) {
+	private Map<DocumentLinkedAnnotation, EntityTemplate> getGroupMapping(Instance instance) {
+
 		Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup = new HashMap<>();
+		for (EntityTemplate resultAnnotation : this.groupAnnotations.getOrDefault(instance, Collections.emptySet())) {
 
-		for (AbstractAnnotation resultAnnotation : instance.getGoldAnnotations().getAnnotations()) {
-			Result result = new Result(resultAnnotation);
+			DefinedExperimentalGroup group = new DefinedExperimentalGroup(resultAnnotation);
 
-			List<DefinedExperimentalGroup> groups = result.getDefinedExperimentalGroups();
-
-			for (DefinedExperimentalGroup group : groups) {
-
-				DocumentLinkedAnnotation rootName = group.getGroupRootName();
-
+			DocumentLinkedAnnotation rootName = group.getGroupRootName();
+			if (rootName != null)
 				namePerGroup.put(rootName, group.get());
 
-				for (DocumentLinkedAnnotation groupName : group.getGroupNames()) {
+			for (DocumentLinkedAnnotation groupName : group.getGroupNames()) {
+				if (groupName != null)
 					namePerGroup.put(groupName, group.get());
-				}
 			}
 		}
 		return namePerGroup;
@@ -778,9 +833,8 @@ public class Heuristic {
 
 			if (SCIOSlotTypes.hasTargetGroup.isIncluded() && group1 == null && group2 == null)
 				return null;
-
 			EntityTemplate result = new EntityTemplate(SCIOEntityTypes.result)
-					.setSingleSlotFiller(SCIOSlotTypes.hasInvestigationMethod, invMethod);
+					.setSingleSlotFiller(SCIOSlotTypes.hasInvestigationMethod, new EntityTemplate(invMethod));
 
 			EntityTemplate tr = null;
 
@@ -843,12 +897,13 @@ public class Heuristic {
 	private List<ResultData> extractTrendInvMethodResultData(
 			Map<Integer, Set<DocumentLinkedAnnotation>> annotationsPerSentence) {
 
-		boolean add = false;
 		int range = 5;
 
 		List<ResultData> results = new ArrayList<>();
 
 		for (Integer sentenceID : annotationsPerSentence.keySet()) {
+
+			boolean add = false;
 
 			Set<DocumentLinkedAnnotation> annotations = annotationsPerSentence.get(sentenceID);
 
@@ -866,13 +921,8 @@ public class Heuristic {
 					continue;
 
 				invMRelated.addAll(getSubClassOf(annotations, EntityType.get("InvestigationMethod")));
-//				EntityType groupName = null;
-//				containsRelatedClassOf(annotations, EntityType.get("GroupName"));
-//				EntityType treatment = null;
-//				containsRelatedClassOf(annotations, EntityType.get("Treatment"));
 
 				if (!invMRelated.isEmpty()) {
-//					&& groupName == null && treatment == null
 					add = true;
 					break;
 				}
@@ -927,13 +977,13 @@ public class Heuristic {
 	private Map<Integer, Set<DocumentLinkedAnnotation>> toSentencebasedAnnotations(
 			Set<DocumentLinkedAnnotation> documentAnnotations) {
 		Map<Integer, Set<DocumentLinkedAnnotation>> entitiesPerSentence = new HashMap<>();
+		if (documentAnnotations != null)
+			for (DocumentLinkedAnnotation ann : documentAnnotations) {
 
-		for (DocumentLinkedAnnotation ann : documentAnnotations) {
-
-			entitiesPerSentence.putIfAbsent(ann.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex(),
-					new HashSet<>());
-			entitiesPerSentence.get(ann.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).add(ann);
-		}
+				entitiesPerSentence.putIfAbsent(ann.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex(),
+						new HashSet<>());
+				entitiesPerSentence.get(ann.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()).add(ann);
+			}
 		return entitiesPerSentence;
 	}
 

@@ -33,21 +33,11 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
  * 
  * @author hterhors
  * 
- *         Mean Score: Score [getF1()=0.880, getPrecision()=0.928,
- *         getRecall()=0.836, tp=168, fp=13, fn=33, tn=0]
- * 
- *         CRFStatistics [context=Train, getTotalDuration()=125115]
- * 
- *         CRFStatistics [context=Test, getTotalDuration()=3992]
- * 
- *         Compute coverage... Coverage Training: Score [getF1()=0.901,
- *         getPrecision()=1.000, getRecall()=0.820, tp=643, fp=0, fn=141, tn=0]
- * 
- *         Compute coverage... Coverage Development: Score [getF1()=0.931,
- *         getPrecision()=1.000, getRecall()=0.871, tp=175, fp=0, fn=26, tn=0]
- * 
- * 
- *         modelName: OrganismModel930148736
+Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE	0.94	0.97	0.91
+modelName: OrganismModel-522582779
+CRFStatistics [context=Train, getTotalDuration()=16064]
+CRFStatistics [context=Test, getTotalDuration()=617]
+
  *
  */
 public class OrgModelSlotFilling {
@@ -123,7 +113,7 @@ public class OrgModelSlotFilling {
 
 			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
@@ -140,6 +130,7 @@ public class OrgModelSlotFilling {
 
 			String modelName = "OrganismModel" + new Random().nextInt();
 
+			
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
@@ -151,7 +142,6 @@ public class OrgModelSlotFilling {
 
 			resultsOut.println(toResults(rule, score));
 
-			System.out.println(SlotFillingExplorer.averageNumberOfNewProposalStates);
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
@@ -171,6 +161,9 @@ public class OrgModelSlotFilling {
 			 */
 			log.info("Score: " + toResults(rule, score));
 			log.info("modelName: " + predictor.modelName);
+
+			log.info(predictor.crf.getTrainingStatistics());
+			log.info(predictor.crf.getTestStatistics());
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.

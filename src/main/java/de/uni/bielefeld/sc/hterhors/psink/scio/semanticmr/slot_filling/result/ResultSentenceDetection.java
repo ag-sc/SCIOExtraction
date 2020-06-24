@@ -19,7 +19,7 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
 
 public class ResultSentenceDetection {
 
@@ -65,7 +65,7 @@ public class ResultSentenceDetection {
 		testInstances = instanceProvider.getRedistributedTestInstances();
 
 		for (Instance instance : trainingInstances) {
-			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 			for (AbstractAnnotation result : instance.getGoldAnnotations().getAnnotations()) {
 				if (!result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTrend"))
 						.containsSlotFiller())
@@ -88,7 +88,7 @@ public class ResultSentenceDetection {
 
 	}
 
-	public void printRec(AutomatedSectionifcation sectionification, AbstractAnnotation et) {
+	public void printRec(SCIOAutomatedSectionifcation sectionification, AbstractAnnotation et) {
 		if (et.isInstanceOfDocumentLinkedAnnotation()) {
 			System.out.print(et.getEntityType().name + "\t");
 			System.out.print(

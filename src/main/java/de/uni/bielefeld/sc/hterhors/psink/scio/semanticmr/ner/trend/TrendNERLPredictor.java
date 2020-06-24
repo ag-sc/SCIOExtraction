@@ -75,8 +75,8 @@ public class TrendNERLPredictor extends AbstractNERLPredictor {
 //		featureTemplates.add(new LevenshteinTemplate());
 
 
-		featureTemplates.add(new MorphologicalNerlaTemplate());
-		featureTemplates.add(new NGramTokenContextTemplate());
+//		featureTemplates.add(new MorphologicalNerlaTemplate());
+//		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
 
 		/**

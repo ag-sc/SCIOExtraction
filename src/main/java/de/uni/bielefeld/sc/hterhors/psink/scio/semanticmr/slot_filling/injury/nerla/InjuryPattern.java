@@ -35,21 +35,19 @@ public class InjuryPattern extends BasicRegExPattern {
 			.compile(PRE_BOUNDS + "new.york(.university)?(.impactor)?" + POST_BOUNDS, PATTERN_BITMASK);
 
 	private static final Set<Pattern> NYU_IMPACTOR_REG_EXP = new HashSet<>(Arrays.asList(NYUIMPACTOR_PATTERN_1));
+	private static final Pattern UTSIMPACTOR_PATTERN_1 = Pattern.compile(PRE_BOUNDS + "UTS(.?impactor)?" + POST_BOUNDS,
+			PATTERN_BITMASK);
+
+	private static final Pattern UTSIMPACTOR_PATTERN_2 = Pattern
+			.compile(PRE_BOUNDS + "university.of.trieste?(.impactor)?" + POST_BOUNDS, PATTERN_BITMASK);
+	private static final Set<Pattern> UTS_IMPACTOR_REG_EXP = new HashSet<>(
+			Arrays.asList(UTSIMPACTOR_PATTERN_1, UTSIMPACTOR_PATTERN_2));
 
 	private static final Pattern BLADDER_EXPRESSION_PATTERN_1 = Pattern.compile(PRE_BOUNDS + "bladders" + POST_BOUNDS,
 			PATTERN_BITMASK);
 
 	private static final Set<Pattern> BLADDER_EXPRESSION_REG_EXP = new HashSet<>(
 			Arrays.asList(BLADDER_EXPRESSION_PATTERN_1));
-
-	private static final Pattern UTSIMPACTOR_PATTERN_1 = Pattern.compile(PRE_BOUNDS + "UTS(.?impactor)?" + POST_BOUNDS,
-			PATTERN_BITMASK);
-
-	private static final Pattern UTSIMPACTOR_PATTERN_2 = Pattern
-			.compile(PRE_BOUNDS + "university.of.trieste?(.impactor)?" + POST_BOUNDS, PATTERN_BITMASK);
-
-	private static final Set<Pattern> UTS_IMPACTOR_REG_EXP = new HashSet<>(
-			Arrays.asList(UTSIMPACTOR_PATTERN_1, UTSIMPACTOR_PATTERN_2));
 
 	public InjuryPattern(EntityType rootEntityType) {
 		super(rootEntityType);

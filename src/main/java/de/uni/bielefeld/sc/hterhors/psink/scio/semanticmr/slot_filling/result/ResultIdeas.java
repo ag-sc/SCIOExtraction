@@ -32,8 +32,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.investigation.CollectExpGroupNames;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * Collection of some ideas to tackle results:
@@ -219,7 +219,7 @@ public class ResultIdeas {
 		}
 
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
-			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 
 			collectAnnotations.putIfAbsent(instance, new HashMap<>());
 			/**
@@ -314,7 +314,7 @@ public class ResultIdeas {
 		Map<Instance, List<Map<Integer, List<EntityType>>>> results = new HashMap<>();
 		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
 
-			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
 
 			results.putIfAbsent(instance, new ArrayList<>());
 			for (AbstractAnnotation result : instance.getGoldAnnotations().getAnnotations()) {
@@ -410,7 +410,7 @@ public class ResultIdeas {
 	 * 
 	 */
 
-	public void collectAnnotationForResult(AutomatedSectionifcation sectionification,
+	public void collectAnnotationForResult(SCIOAutomatedSectionifcation sectionification,
 			Map<Integer, List<EntityType>> entitiesPerSentence, AbstractAnnotation et) {
 
 		if (et.isInstanceOfDocumentLinkedAnnotation() && sectionification

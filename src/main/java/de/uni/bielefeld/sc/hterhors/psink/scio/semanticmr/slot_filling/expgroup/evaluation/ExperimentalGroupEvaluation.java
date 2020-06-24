@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +21,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
-import de.hterhors.semanticmr.eval.CartesianEvaluator;
+import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.modes.Modes.ESimpleEvaluationMode;
@@ -110,7 +109,7 @@ public class ExperimentalGroupEvaluation {
 //			System.out.println();
 			experimentalCardinality.add(sC);
 
-			List<Integer> bestAssignment = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
+			List<Integer> bestAssignment =  predictionObjectiveFunction.getEvaluator()
 					.getBestAssignment(goldAnnotations, predictedAnnotations, scoreType);
 			if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
 
@@ -145,8 +144,8 @@ public class ExperimentalGroupEvaluation {
 //					+ macroRecall / i);
 //			log.info("EXP GROUP INTERMEDIATE MICRO: " + bothS);
 //			log.info("");
-			Score overall = ((CartesianEvaluator) predictionObjectiveFunction.getEvaluator())
-					.scoreMultiValues(goldAnnotations, predictedAnnotations, scoreType);
+			Score overall = predictionObjectiveFunction.getEvaluator().scoreMultiValues(goldAnnotations,
+					predictedAnnotations, scoreType);
 			experimentalGroupOverallScore.add(overall);
 		}
 		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {

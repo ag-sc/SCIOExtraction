@@ -45,7 +45,7 @@ public class KwonSPARQLExtraction {
 //		model.read(new FileInputStream("OEC.n-triples"), null, "N-TRIPLES");
 //		dataPrinter = new PrintStream(new File("oec_data.csv"));
 //
-		String pubmedIds = getPubmedIDsOfEffacyPublications();
+//		String pubmedIds = getPubmedIDsOfEffacyPublications();
 ////
 //		getAnimalScore(EScoreTypes.PRIMATE, pubmedIds, getPrimateSpecies());
 //		getAnimalScore(EScoreTypes.LARGER_ANIMAL, pubmedIds, getLargerAnimalSpecies());
@@ -56,14 +56,14 @@ public class KwonSPARQLExtraction {
 //		getClipCompressionScore(pubmedIds);
 //		getPartialTransectionSharpScore(pubmedIds);
 ////
-		timeWindowScore(pubmedIds);
+//		timeWindowScore(pubmedIds);
 ////
 //		clinicallyMeaningFullBBB();
 //		clinicallyMeaningFullOtherMotor();
 //		clinicallyMeaningFullCervicalMotor();
 //		clinicallyMeaningFullCervicalNonMotor();
 //		clinicallyMeaningFullDosageResponseResult();
-//		publicationReproduceability();
+		publicationReproduceability();
 	}
 
 	private int hourToMin(int hour) {
@@ -617,7 +617,7 @@ public class KwonSPARQLExtraction {
 
 	private void publicationReproduceability() {
 		final String queryString = "SELECT DISTINCT "
-				+ "?pubmedID ?judgement (GROUP_CONCAT (DISTINCT ?compoundTypes) as ?compoundType)" 
+				+ "?pubmedID ?judgement ?investigationMethod (GROUP_CONCAT (DISTINCT ?compoundTypes) as ?compoundType)" 
 				+ "WHERE{"
 				+ "?publication <http://psink.de/scio/hasPubmedID> ?pubmedID ."
 				+ " ?publication a <http://psink.de/scio/Publication> ."
@@ -625,6 +625,8 @@ public class KwonSPARQLExtraction {
 				+ " ?experiment <http://psink.de/scio/hasResult> ?result ."
 
 				+ " ?result <http://psink.de/scio/hasTargetGroup> ?treatmentGroup ."
+				+ " ?result <http://psink.de/scio/hasInvestigationMethod> ?invM."
+				+ " ?invM a ?investigationMethod"
 
 				+ " {?treatmentGroup <http://psink.de/scio/hasTreatmentType> ?treat ." + " ?treat a ?compoundTypes. "
 				+ " VALUES ?compoundTypes { " + getNonCompoundTreatments() + "}. " + "}" + " UNION{"
@@ -633,7 +635,7 @@ public class KwonSPARQLExtraction {
 
 				+ " ?result <http://psink.de/scio/hasJudgement> ?judgementNode ." 
 				+ " ?judgementNode a ?judgement ." // shouldn't this point to the type judgement instead?
-				+ " } GROUP BY ?pubmedID ?judgement ?treatmentGroup";
+				+ " } GROUP BY ?pubmedID ?judgement ?treatmentGroup ?investigationMethod";
 		
 //		final String queryString = "SELECT DISTINCT "
 //				+ "?pubmedID ?judgement (GROUP_CONCAT (DISTINCT ?compoundType) as ?compoundTypes)" + "WHERE{"
@@ -661,7 +663,8 @@ public class KwonSPARQLExtraction {
 				String pubmedID = querySolution.getLiteral("pubmedID").getString();
 				String judgement = querySolution.getResource("judgement").toString();
 				String treatmens = querySolution.getLiteral("compoundType").getString();
-				System.out.println(pubmedID + "\t" + judgement + "\t" + treatmens);
+				String investigationMethod = querySolution.getResource("investigationMethod").toString();
+				System.out.println(pubmedID + "\t"+investigationMethod +"\t" + judgement + "\t" + treatmens);
 			}
 		}
 

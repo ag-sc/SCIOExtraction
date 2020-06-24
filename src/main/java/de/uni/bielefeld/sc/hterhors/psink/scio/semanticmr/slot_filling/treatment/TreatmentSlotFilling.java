@@ -20,7 +20,9 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 
 /**
@@ -50,7 +52,7 @@ public class TreatmentSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/treatment/corpus/instances/");
+	private final File instanceDirectory;
 
 	private ETreatmentModifications rule;
 
@@ -59,9 +61,10 @@ public class TreatmentSlotFilling {
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public TreatmentSlotFilling() throws IOException {
-		SystemScope scope = SystemScope.Builder.getScopeHandler().addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment"))
-				.build();
+		SystemScope scope = SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment")).build();
 
+		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 		PrintStream resultsOut = new PrintStream(new File("results/treatmentResults.csv"));
 
 		resultsOut.println(header);
