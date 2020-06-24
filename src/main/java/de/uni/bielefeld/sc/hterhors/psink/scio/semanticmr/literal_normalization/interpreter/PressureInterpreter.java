@@ -15,7 +15,7 @@ public class PressureInterpreter extends AbstractNumericInterpreter {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	static public enum EPressureUnits implements IDoubleUnit {
+	public enum EPressureUnits implements de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.struct.IDoubleUnit {
 
 		undef(0, 0, EType.ELSE),
 		//

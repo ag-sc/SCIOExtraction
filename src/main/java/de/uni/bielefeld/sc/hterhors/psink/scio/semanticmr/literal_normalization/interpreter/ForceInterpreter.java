@@ -28,7 +28,8 @@ public class ForceInterpreter extends AbstractNumericInterpreter {
 
 	}
 
-	static public enum EForceUnits implements IDoubleUnit {
+	public enum EForceUnits implements
+			de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.struct.IDoubleUnit {
 
 		undef(0, 0, EType.ELSE),
 		//

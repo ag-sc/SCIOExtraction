@@ -225,13 +225,13 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForInjuryModel() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.injury);
 		Set<SlotType> injurySlotTypes = new HashSet<>();
-		injurySlotTypes.add(SCIOSlotTypes.hasInjuryDevice);
-		injurySlotTypes.add(SCIOSlotTypes.hasInjuryAnaesthesia);
-		injurySlotTypes.add(SCIOSlotTypes.hasDosage);
-		injurySlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
-		injurySlotTypes.add(SCIOSlotTypes.hasInjuryLocation);
-		injurySlotTypes.add(SCIOSlotTypes.hasLowerVertebrae);
-		injurySlotTypes.add(SCIOSlotTypes.hasUpperVertebrae);
+//		injurySlotTypes.add(SCIOSlotTypes.hasInjuryDevice);
+//		injurySlotTypes.add(SCIOSlotTypes.hasInjuryAnaesthesia);
+//		injurySlotTypes.add(SCIOSlotTypes.hasDosage);
+//		injurySlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
+//		injurySlotTypes.add(SCIOSlotTypes.hasInjuryLocation);
+//		injurySlotTypes.add(SCIOSlotTypes.hasLowerVertebrae);
+//		injurySlotTypes.add(SCIOSlotTypes.hasUpperVertebrae);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), injurySlotTypes, SCIOEntityTypes.injury, true, true, true);
 		annotateWithRegularExpressions(new InjuryPattern(SCIOEntityTypes.injury));
 
