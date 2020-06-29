@@ -19,6 +19,7 @@ import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.helper.log.LogUtils;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
@@ -40,6 +41,12 @@ public class InjuryDeviceFilling {
 
 	/**
 	 * Start the slot filling procedure.
+	 * 
+	 * 
+	 * results: NO_MODIFICATION 0.75 0.74 0.75 results scoreRoot: Score
+	 * [getF1()=0.836, getPrecision()=0.848, getRecall()=0.824, tp=28, fp=5, fn=6,
+	 * tn=0]
+	 * 
 	 * 
 	 * @param args
 	 * @throws IOException
@@ -139,8 +146,16 @@ public class InjuryDeviceFilling {
 
 			resultsOut.println(toResults(rule, score));
 
-			log.info("results: " + toResults(rule, score));
+			SlotType.excludeAll();
+			Score scoreRoot = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+			SlotType.includeAll();
 
+			/**
+			 * Finally, we evaluate the produced states and print some statistics.
+			 */
+
+			log.info("results: " + toResults(rule, score));
+			log.info("results scoreRoot: " + scoreRoot);
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */

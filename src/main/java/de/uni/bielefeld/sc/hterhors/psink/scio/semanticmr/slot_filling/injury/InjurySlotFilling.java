@@ -152,25 +152,25 @@ public class InjurySlotFilling {
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, 
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
-//			predictor.trainOrLoadModel();
-//
-//			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
-//
-//			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-//
-//			Map<SlotType, Boolean> x = SlotType.storeExcludance();
-//			SlotType.excludeAll();
-//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-//			SlotType.restoreExcludance(x);
-//
-//			log.info("standard: " + standard);
-//			log.info("only root: " + score);
-//
-//			log.info(predictor.crf.getTrainingStatistics());
-//			log.info(predictor.crf.getTestStatistics());
-//
-//			resultsOut.println(toResults(rule, standard, "standard"));
-//			resultsOut.println(toResults(rule, score, "onyl root"));
+			predictor.trainOrLoadModel();
+
+			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
+
+			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+
+			Map<SlotType, Boolean> x = SlotType.storeExcludance();
+			SlotType.excludeAll();
+			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+			SlotType.restoreExcludance(x);
+
+			log.info("standard: " + standard);
+			log.info("only root: " + score);
+
+			log.info(predictor.crf.getTrainingStatistics());
+			log.info(predictor.crf.getTestStatistics());
+
+			resultsOut.println(toResults(rule, standard, "standard"));
+			resultsOut.println(toResults(rule, score, "onyl root"));
 
 			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
 			log.info("Coverage Training: " + trainCoverage);
@@ -179,15 +179,9 @@ public class InjurySlotFilling {
 			log.info("Coverage Development: " + devCoverage);
 			resultsOut.println(toResults(rule, devCoverage, "coverage on dev"));
 //			Gold Anaest + Location
-//			Coverage Training: Score [getF1()=0.936, getPrecision()=1.000, getRecall()=0.881, tp=1128, fp=0, fn=153, tn=0]
-//					Compute coverage...
-//					Coverage Development: Score [getF1()=0.899, getPrecision()=0.959, getRecall()=0.847, tp=255, fp=11, fn=46, tn=0]
-//					modelName: Injury5179
-//			Compute coverage...
-//			Coverage Training: Score [getF1()=0.930, getPrecision()=1.000, getRecall()=0.868, tp=1128, fp=0, fn=171, tn=0]
-//			Compute coverage...
-//			Coverage Development: Score [getF1()=0.882, getPrecision()=0.959, getRecall()=0.817, tp=255, fp=11, fn=57, tn=0]
-//			modelName: Injury8714
+//			Coverage Training: Score [getF1()=0.943, getPrecision()=1.000, getRecall()=0.892, tp=1128, fp=0, fn=137, tn=0]
+//			Coverage Development: Score [getF1()=0.924, getPrecision()=0.981, getRecall()=0.874, tp=263, fp=5, fn=38, tn=0]
+
 
 //			Predicted Anaest + Location
 //			Compute coverage...
@@ -218,7 +212,54 @@ public class InjurySlotFilling {
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall()) + "\t"
 				+ context;
 	}
-//	standard: Score [getF1()=0.302, getPrecision()=0.592, getRecall()=0.203, tp=61, fp=42, fn=240, tn=0]
-//			only root: Score [getF1()=0.548, getPrecision()=0.575, getRecall()=0.523, tp=23, fp=17, fn=21, tn=0]
-//			CRFStatistics [context=Train, getTotalDuration()=114450]
 }
+
+//train & predict = false
+
+//standard: Score [getF1()=0.444, getPrecision()=0.623, getRecall()=0.346, tp=104, fp=63, fn=197, tn=0]
+//only root: Score [getF1()=0.476, getPrecision()=0.500, getRecall()=0.455, tp=20, fp=20, fn=24, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=108748]
+//CRFStatistics [context=Test, getTotalDuration()=423]
+//Compute coverage...
+//Coverage Training: Score [getF1()=0.763, getPrecision()=0.990, getRecall()=0.621, tp=786, fp=8, fn=479, tn=0]
+//Compute coverage...
+//
+//Coverage Development: Score [getF1()=0.747, getPrecision()=0.944, getRecall()=0.618, tp=186, fp=11, fn=115, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=108748]
+//CRFStatistics [context=Test, getTotalDuration()=423]
+//modelName: Injury5350
+
+
+//train = true &  predict = false
+
+//standard: Score [getF1()=0.449, getPrecision()=0.629, getRecall()=0.349, tp=105, fp=62, fn=196, tn=0]
+//only root: Score [getF1()=0.476, getPrecision()=0.500, getRecall()=0.455, tp=20, fp=20, fn=24, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=125053]
+//CRFStatistics [context=Test, getTotalDuration()=370]
+//Compute coverage...
+//Coverage Training: Score [getF1()=0.943, getPrecision()=1.000, getRecall()=0.892, tp=1128, fp=0, fn=137, tn=0]
+//Compute coverage...
+//
+//Coverage Development: Score [getF1()=0.747, getPrecision()=0.944, getRecall()=0.618, tp=186, fp=11, fn=115, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=125053]
+//CRFStatistics [context=Test, getTotalDuration()=370]
+//modelName: Injury8537
+
+
+//train & predict = true
+
+//standard: Score [getF1()=0.520, getPrecision()=0.715, getRecall()=0.409, tp=123, fp=49, fn=178, tn=0]
+//only root: Score [getF1()=0.500, getPrecision()=0.525, getRecall()=0.477, tp=21, fp=19, fn=23, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=95241]
+//CRFStatistics [context=Test, getTotalDuration()=413]
+//Compute coverage...
+//Coverage Training: Score [getF1()=0.943, getPrecision()=1.000, getRecall()=0.892, tp=1128, fp=0, fn=137, tn=0]
+//Compute coverage...
+//
+//Coverage Development: Score [getF1()=0.924, getPrecision()=0.981, getRecall()=0.874, tp=263, fp=5, fn=38, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=95241]
+//CRFStatistics [context=Test, getTotalDuration()=413]
+//modelName: Injury3062
+
+
+

@@ -191,8 +191,8 @@ public class DeliveryMethodSlotFilling {
 			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 			testInstances = instanceProvider.getRedistributedTestInstances();
 
-			Map<Instance, Set<AbstractAnnotation>> organismModel = predictOrganismModel(
-					instanceProvider.getInstances());
+//			Map<Instance, Set<AbstractAnnotation>> organismModel = predictOrganismModel(
+//					instanceProvider.getInstances());
 
 			DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName,
 					trainingInstances.stream().map(t -> t.getName())
@@ -206,7 +206,7 @@ public class DeliveryMethodSlotFilling {
 							.collect(Collectors.toList()),
 					rule);
 
-			predictor.setOrganismModel(organismModel);
+//			predictor.setOrganismModel(organismModel);
 
 			predictor.trainOrLoadModel();
 
@@ -291,14 +291,15 @@ public class DeliveryMethodSlotFilling {
 	}
 
 }
-//	results: ROOT_LOCATION_DURATION	0.57	0.52	0.62
-//	results scoreRoot: ROOT_LOCATION_DURATION	0.76	0.72	0.81
-//	Compute coverage...
+//results: ROOT_LOCATION_DURATION	0.56	0.52	0.61
+//results scoreRoot: ROOT_LOCATION_DURATION	0.74	0.69	0.78
+//Compute coverage...
 //
-//	Coverage Training: Score [getF1()=0.839, getPrecision()=0.866, getRecall()=0.814, tp=240, fp=37, fn=55, tn=0]
-//	Compute coverage...
-//	Coverage Development: Score [getF1()=0.821, getPrecision()=0.873, getRecall()=0.775, tp=55, fp=8, fn=16, tn=0]
-//	results: ROOT_LOCATION_DURATION	0.57	0.52	0.62
-//	CRFStatistics [context=Train, getTotalDuration()=49965]
-//	CRFStatistics [context=Test, getTotalDuration()=1328]
-//	modelName: DeliveryMethod-2092416198}
+//Coverage Training: Score [getF1()=0.839, getPrecision()=0.866, getRecall()=0.814, tp=240, fp=37, fn=55, tn=0]
+//Compute coverage...
+//Coverage Development: Score [getF1()=0.821, getPrecision()=0.873, getRecall()=0.775, tp=55, fp=8, fn=16, tn=0]
+//results: ROOT_LOCATION_DURATION	0.56	0.52	0.61
+//CRFStatistics [context=Train, getTotalDuration()=48490]
+//CRFStatistics [context=Test, getTotalDuration()=1324]
+//modelName: DeliveryMethod1519022817
+

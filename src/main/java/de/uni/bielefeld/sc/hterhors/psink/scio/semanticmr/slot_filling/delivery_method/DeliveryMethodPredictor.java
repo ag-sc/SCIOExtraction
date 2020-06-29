@@ -45,7 +45,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.hardconstraints.DistinctEntityTemplateConstraint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.SCIOWrapper;
@@ -224,15 +224,33 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	}
 
-//	Mit
-//	results: ROOT_LOCATION_DURATION	0.36	0.49	0.28
-//	CRFStatistics [context=Train, getTotalDuration()=147913]
-//	CRFStatistics [context=Test, getTotalDuration()=1783]
-//	modelName: DeliveryMethod1139232667
+	// Mit organism model constraint
+	// results: ROOT_LOCATION_DURATION 0.49 0.44 0.55
+	// results scoreRoot: ROOT_LOCATION_DURATION 0.65 0.58 0.74
+	// Compute coverage...
+	//
+	// Coverage Training: Score [getF1()=0.763, getPrecision()=0.794,
+	// getRecall()=0.735, tp=355, fp=92, fn=128, tn=0]
+	// Compute coverage...
+	// Coverage Development: Score [getF1()=0.815, getPrecision()=0.830,
+	// getRecall()=0.800, tp=88, fp=18, fn=22, tn=0]
+	// results: ROOT_LOCATION_DURATION 0.49 0.44 0.55
+	// CRFStatistics [context=Train, getTotalDuration()=90413]
+	// CRFStatistics [context=Test, getTotalDuration()=1107]
+	// modelName: DeliveryMethod-670648592
 
-//	Ohne
-//	results: ROOT_LOCATION_DURATION	0.35	0.46	0.28
-//	CRFStatistics [context=Train, getTotalDuration()=149219]
-//	CRFStatistics [context=Test, getTotalDuration()=2376]
-//	modelName: DeliveryMethod832798103
+	// Ohne organism model constraint
+	// results: ROOT_LOCATION_DURATION 0.5 0.44 0.58
+	// results scoreRoot: ROOT_LOCATION_DURATION 0.6 0.53 0.68
+	// Compute coverage...
+	//
+	// Coverage Training: Score [getF1()=0.844, getPrecision()=0.843,
+	// getRecall()=0.845, tp=408, fp=76, fn=75, tn=0]
+	// Compute coverage...
+	// Coverage Development: Score [getF1()=0.826, getPrecision()=0.833,
+	// getRecall()=0.818, tp=90, fp=18, fn=20, tn=0]
+	// results: ROOT_LOCATION_DURATION 0.5 0.44 0.58
+	// CRFStatistics [context=Train, getTotalDuration()=171058]
+	// CRFStatistics [context=Test, getTotalDuration()=2966]
+	// modelName: DeliveryMethod1883270709
 }

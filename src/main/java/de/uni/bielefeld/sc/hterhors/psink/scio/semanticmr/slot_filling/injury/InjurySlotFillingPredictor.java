@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -22,6 +23,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
+import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
@@ -30,7 +32,6 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -61,13 +62,13 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	final public boolean useGoldLocationsForTraining = true;
-	final public boolean useGoldLocationsForPrediction = true;
+	final public boolean useGoldLocationsForPrediction = false;
 
 	@Override
 	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule _rule) {
 
 		EInjuryModifications rule = (EInjuryModifications) _rule;
-
+//
 		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
 
 		if (rule == EInjuryModifications.ROOT || rule == EInjuryModifications.ROOT_DEVICE)
@@ -85,6 +86,28 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 			addPredictions(map, instanceProvider.getRedistributedDevelopmentInstances());
 			addPredictions(map, instanceProvider.getRedistributedTestInstances());
 		}
+
+		for (Instance instance : instanceProvider.getInstances()) {
+
+			if (!map.get(instance).isEmpty())
+				continue;
+
+			instance.removeCandidateAnnotation(new IFilter() {
+
+				@Override
+				public boolean remove(AbstractAnnotation candidate) {
+					return SCIOSlotTypes.hasInjuryLocation.getSlotFillerEntityTypes()
+							.contains(candidate.getEntityType())
+							|| SCIOSlotTypes.hasAnaesthesia.getSlotFillerEntityTypes()
+									.contains(candidate.getEntityType())
+							|| SCIOSlotTypes.hasInjuryDevice.getSlotFillerEntityTypes()
+									.contains(candidate.getEntityType());
+				}
+
+			});
+
+		}
+
 		return map;
 	}
 
@@ -235,7 +258,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 //		featureTemplates.add(new DocumentPartTemplate());
 //		featureTemplates.add(new LocalityTemplate());
-//		featureTemplates.add(new SlotIsFilledTemplate());
+		featureTemplates.add(new SlotIsFilledTemplate());
 //
 //		featureTemplates.add(new InjuryDeviceTemplate());
 //		featureTemplates.add(new DocumentSectionTemplate());

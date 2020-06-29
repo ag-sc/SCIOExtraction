@@ -28,6 +28,7 @@ import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRFMultiState;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
@@ -60,7 +61,7 @@ import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.weka.SentenceClassificationWEKA;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.GenericMultiCardinalityInitializer;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.initializer.GenericMultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
@@ -183,17 +184,16 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		for (Instance instance : instanceProvider.getInstances()) {
 			instance.addCandidateAnnotations(nerlaJSONReader.getForInstance(instance));
 		}
-
-		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
-				.entrySet()) {
-			ap.getKey().addCandidateAnnotations(ap.getValue());
-		}
-
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			instance.addCandidateAnnotations(
 					DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
+		}
+
+		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
+				.entrySet()) {
+			ap.getKey().addCandidateAnnotations(ap.getValue());
 		}
 
 //		IFilter goldFilter = new IFilter() {

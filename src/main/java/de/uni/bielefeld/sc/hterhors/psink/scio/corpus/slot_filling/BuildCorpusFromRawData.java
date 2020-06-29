@@ -90,12 +90,12 @@ public class BuildCorpusFromRawData {
 //		buildCorpusForDefinedExperimentalGroup();
 //		buildCorpusForObservation();
 //		buildCorpusForOrganismModel();
-		buildCorpusForInjuryModel();
+//		buildCorpusForInjuryModel();
 //		buildCorpusForTreatmentType();
 //		buildCorpusForVertebralArea();
 //		buildCorpusForAnaesthesia();
-//		buildCorpusForDeliveryMethod();
-//		buildCorpusForInjuryDevice();
+		buildCorpusForDeliveryMethod();
+		buildCorpusForInjuryDevice();
 //		buildCorpusForInvestigationMethod();
 //		buildCorpusForTrend();
 		System.exit(1);
@@ -161,24 +161,24 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForAnaesthesia() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.anaesthetic);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.anaesthetic, true,
-				true, false);
+				true, true);
 		annotateWithRegularExpressions(new AnaestheticPattern(SCIOEntityTypes.anaesthetic));
 	}
 
 	private static void buildCorpusForInjuryDevice() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.injuryDevice);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.injuryDevice, true,
-				true, false);
+				true, true);
 		annotateWithRegularExpressions(new InjuryDevicePattern(SCIOEntityTypes.injuryDevice));
 	}
 
 	private static void buildCorpusForDeliveryMethod() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
-
-		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
-		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.deliveryMethod, true,
-				true, false);
+//
+//		Set<String> annotatedDocuments = new HashSet<>(
+//				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.deliveryMethod,
+				true, true, false);
 		annotateWithRegularExpressions(new DeliveryMethodPattern(SCIOEntityTypes.deliveryMethod));
 	}
 
