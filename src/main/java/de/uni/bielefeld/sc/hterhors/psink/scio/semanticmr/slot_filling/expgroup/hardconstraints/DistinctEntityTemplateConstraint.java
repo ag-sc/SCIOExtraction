@@ -21,6 +21,7 @@ public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
 	@Override
 	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
 		boolean violates = false;
+
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
 			if (currentPrediction.evaluateEquals(evaluator, entityTemplate)) {
 				violates = true;
@@ -29,6 +30,7 @@ public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
 		}
 
 		return violates;
+
 	}
 
 	@Override

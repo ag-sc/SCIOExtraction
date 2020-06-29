@@ -13,8 +13,8 @@ public class SCIOWrapper {
 
 	public final EntityTemplate et;
 
-	public SCIOWrapper(EntityTemplate organismModel) {
-		this.et = organismModel;
+	public SCIOWrapper(EntityTemplate et) {
+		this.et = et;
 	}
 
 	protected DocumentLinkedAnnotation getDocumentLinkedAnnotation(SlotType slotType) {
@@ -30,7 +30,7 @@ public class SCIOWrapper {
 		collectDLA(annotations, et);
 	}
 
-	protected void collectDLA(List<DocumentLinkedAnnotation> annotations, EntityTemplate et) {
+	public static void collectDLA(List<DocumentLinkedAnnotation> annotations, EntityTemplate et) {
 
 		if (et.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()) {
 			annotations.add(et.getRootAnnotation().asInstanceOfDocumentLinkedAnnotation());

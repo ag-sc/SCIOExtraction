@@ -41,10 +41,9 @@ public class GroupNameNER {
 	public static void main(String[] args) {
 		new GroupNameNER();
 	}
-	
-	
+
 	public GroupNameNER() {
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -78,7 +77,7 @@ public class GroupNameNER {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor(modelName, scope, trainingInstanceNames,
+		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor(modelName, trainingInstanceNames,
 				developInstanceNames, testInstanceNames);
 
 		predictor.trainOrLoadModel();

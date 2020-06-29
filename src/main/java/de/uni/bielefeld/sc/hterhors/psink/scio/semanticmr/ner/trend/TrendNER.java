@@ -44,7 +44,7 @@ public class TrendNER {
 	}
 
 	public TrendNER() {
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -76,8 +76,8 @@ public class TrendNER {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		TrendNERLPredictor predictor = new TrendNERLPredictor(modelName, scope, trainingInstanceNames,
-				developInstanceNames, testInstanceNames);
+		TrendNERLPredictor predictor = new TrendNERLPredictor(modelName, trainingInstanceNames, developInstanceNames,
+				testInstanceNames);
 
 		predictor.trainOrLoadModel();
 

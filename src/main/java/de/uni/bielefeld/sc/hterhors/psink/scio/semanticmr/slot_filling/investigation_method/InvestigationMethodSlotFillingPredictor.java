@@ -41,9 +41,9 @@ public class InvestigationMethodSlotFillingPredictor extends AbstractSlotFilling
 
 	private static Logger log = LogManager.getFormatterLogger(InvestigationMethodSlotFillingPredictor.class);
 
-	public InvestigationMethodSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstances,
+	public InvestigationMethodSlotFillingPredictor(String modelName, List<String> trainingInstances,
 			List<String> developmentInstances, List<String> testInstances, IModificationRule rule) {
-		super(modelName, scope, trainingInstances, developmentInstances, testInstances, rule);
+		super(modelName, trainingInstances, developmentInstances, testInstances, rule);
 	}
 
 	@Override

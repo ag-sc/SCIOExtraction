@@ -21,7 +21,7 @@ public class JessicaData {
 
 	private final File instanceDirectory;
 	public JessicaData() {
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment")).build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
+import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
@@ -34,7 +35,8 @@ public class DocumentEntropyRanker implements IActiveLearningDocumentRanker {
 //		List<RankedInstance> objectiveInstances = new ArrayList<>();
 
 		log.info("Compute variations for entropy...");
-		Map<Instance, List<State>> results = runner.crf.collectNBestStates(remainingInstances, N, runner.maxStepCrit);
+		Map<Instance, List<State>> results = ((SemanticParsingCRF) runner.crf).collectNBestStates(remainingInstances, N,
+				runner.maxStepCrit);
 
 		log.info("Compute entropy...");
 		for (Entry<Instance, List<State>> predictedInstance : results.entrySet()) {

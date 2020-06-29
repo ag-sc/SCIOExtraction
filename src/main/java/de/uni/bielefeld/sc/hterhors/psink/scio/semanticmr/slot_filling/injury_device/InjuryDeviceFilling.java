@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,9 +16,12 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.helper.log.LogUtils;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
@@ -63,7 +68,7 @@ public class InjuryDeviceFilling {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -88,7 +93,7 @@ public class InjuryDeviceFilling {
 				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(20).build();
+				.setSeed(100L).setTrainingProportion(80).setDevelopmentProportion(20).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
@@ -114,7 +119,7 @@ public class InjuryDeviceFilling {
 
 			String modelName = "InjuryDevice" + new Random().nextInt();
 
-			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName, scope,
+			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
@@ -135,12 +140,13 @@ public class InjuryDeviceFilling {
 			resultsOut.println(toResults(rule, score));
 
 			log.info("results: " + toResults(rule, score));
+
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-			log.info("Coverage Training: " + trainCoverage);
+//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//			log.info("Coverage Training: " + trainCoverage);
 
 			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
 			log.info("Coverage Development: " + devCoverage);
@@ -150,6 +156,8 @@ public class InjuryDeviceFilling {
 //			Coverage Development: Score [getF1()=0.697, getPrecision()=0.821, getRecall()=0.605, tp=23, fp=5, fn=15, tn=0]
 //			modelName: InjuryDevice1094075021
 
+			log.info(predictor.crf.getTrainingStatistics());
+			log.info(predictor.crf.getTestStatistics());
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
@@ -174,3 +182,39 @@ public class InjuryDeviceFilling {
 	}
 
 }
+
+/*
+ * Coverage is recall is lower because through errors we can reach higher recall
+ * if e.g. the properties appear for different classes
+ */
+
+//results: NO_MODIFICATION	0.68	0.64	0.74
+//Compute coverage...
+//No states were generated in explorer SlotFillingExplorer for instance: N007 Ishikawa 2015
+//No states were generated in explorer SlotFillingExplorer for instance: N200 Sasaki 2004
+//
+//No states were generated in explorer SlotFillingExplorer for instance: N120 Xia, Huang et al. 2017
+//No states were generated in explorer SlotFillingExplorer for instance: N238 Janzedeh
+//No states were generated in explorer SlotFillingExplorer for instance: N171 L+¦pez Vales 2007
+//Coverage Development: Score [getF1()=0.787, getPrecision()=0.889, getRecall()=0.706, tp=24, fp=3, fn=10, tn=0]
+//CRFStatistics [context=Train, getTotalDuration()=11541]
+//CRFStatistics [context=Test, getTotalDuration()=397]
+//modelName: InjuryDevice-684221447
+
+//Nice for error analysis
+
+//***********************************************************
+//|======Final Evaluation======_____________N008 Jin 2016 26852702_____________|
+//Final State  Model[1.31668] Objective[0.40000] {
+//GOLD [1]:
+//NYUImpactor	"NYU impactor"	120	13905
+//	hasForce	Force	"10 g, 25 mm"	120	13919
+//}
+//PREDICT [1]:
+//NYUImpactor	"NYU impactor"	120	13905
+//	hasWeight	Weight	"10 g"	120	13919
+//	hasDistance	Distance	"25 mm"	("2.5 cm")	120	13925
+//}
+//Score [getF1()=0.400, getPrecision()=0.333, getRecall()=0.500, tp=1, fp=2, fn=1, tn=0]
+//Score [macroF1=0.400, macroPrecision=0.333, macroRecall=0.500]
+//***********************************************************

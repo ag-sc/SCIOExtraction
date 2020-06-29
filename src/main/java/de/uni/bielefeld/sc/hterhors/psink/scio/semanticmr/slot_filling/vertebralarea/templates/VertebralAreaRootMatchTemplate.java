@@ -24,6 +24,7 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 
 	static class VertebralAreaRMScope extends AbstractFactorScope {
 
+		public final boolean equalsNumber;
 		public final boolean containsLowerNum;
 		public final boolean containsUpperNum;
 
@@ -31,10 +32,11 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 		public final boolean containsLowerID;
 		public final boolean containsUpperID;
 
-		public VertebralAreaRMScope(AbstractFeatureTemplate<?> template, boolean containsLowerNum,
+		public VertebralAreaRMScope(AbstractFeatureTemplate<?> template, boolean equalsNumber, boolean containsLowerNum,
 				boolean containsUpperNum, boolean lowerIndexLessUpperIndex, boolean containsLowerID,
 				boolean containsUpperID) {
 			super(template);
+			this.equalsNumber = equalsNumber;
 			this.containsLowerNum = containsLowerNum;
 			this.containsUpperNum = containsUpperNum;
 			this.lowerIndexLessUpperIndex = lowerIndexLessUpperIndex;
@@ -128,8 +130,9 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 			boolean containsLowerID = surfaceForm.contains(lowerVertebraeID);
 			boolean containsUpperID = surfaceForm.contains(upperVertebraeID);
 
-			factors.add(new VertebralAreaRMScope(this, containsLowerNum, containsUpperNum, lowerIndex > upperIndex,
-					containsLowerID, containsUpperID));
+			factors.add(new VertebralAreaRMScope(this,
+					lower.getSlotFiller().getEntityType() == upper.getSlotFiller().getEntityType(), containsLowerNum,
+					containsUpperNum, lowerIndex > upperIndex, containsLowerID, containsUpperID));
 		}
 		return factors;
 
@@ -140,6 +143,7 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 
 		DoubleVector featureVector = factor.getFeatureVector();
 
+		featureVector.set(PREFIX + "equalsNumber", factor.getFactorScope().equalsNumber);
 		featureVector.set(PREFIX + "containsLowerNum", factor.getFactorScope().containsLowerNum);
 		featureVector.set(PREFIX + "containsUpperNum", factor.getFactorScope().containsUpperNum);
 		featureVector.set(PREFIX + "containsUpperID", factor.getFactorScope().containsUpperID);

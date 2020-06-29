@@ -35,8 +35,8 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -66,9 +66,9 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public TreatmentSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public TreatmentSlotFillingPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developmentInstanceNames, List<String> testInstanceNames, ETreatmentModifications rule) {
-		super(modelName, scope, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule);
+		super(modelName, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule);
 	}
 
 	@Override
@@ -81,8 +81,8 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 			String deliveryMethodModelName = "DeliveryMethod" + modelName;
 
-			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT);
+			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);

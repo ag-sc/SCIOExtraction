@@ -11,7 +11,7 @@ abstract public class AbstractSCIONormalization extends AbstractNormalizationFun
 	}
 
 	@Override
-	public String interprete(String annotation) {
+	public String normalize(String annotation) {
 
 		final ILiteralInterpreter wi = getInterpreter(annotation);
 

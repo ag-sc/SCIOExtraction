@@ -42,7 +42,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.DuplicationRule;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
@@ -96,8 +96,8 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 	private String modelName;
 
 	public ResultSlotFilling(long dataRandomSeed) throws Exception {
-		super(SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build());
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
@@ -187,7 +187,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setfeatureTemplateParameter(parameter);
+		model.setFeatureTemplateParameter(parameter);
 
 		model.setCache(new FactorPoolCache(model, maxCacheSize, minCacheSize));
 		/**
@@ -327,7 +327,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
 		Collection<GoldModificationRule> goldModificationRules = getGoldModificationRules();
-		DuplicationRule deduplicationRule = (a1, a2) -> {
+		DeduplicationRule deduplicationRule = (a1, a2) -> {
 			return a1.evaluateEquals(predictionObjectiveFunction.getEvaluator(), a2);
 		};
 

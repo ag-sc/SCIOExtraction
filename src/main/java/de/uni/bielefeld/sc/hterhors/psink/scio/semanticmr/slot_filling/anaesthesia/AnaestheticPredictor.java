@@ -53,9 +53,9 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public AnaestheticPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+	public AnaestheticPredictor(String modelName, List<String> trainingInstanceNames, List<String> developInstanceNames,
+			List<String> testInstanceNames, IModificationRule rule) {
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 	}
 
 	@Override

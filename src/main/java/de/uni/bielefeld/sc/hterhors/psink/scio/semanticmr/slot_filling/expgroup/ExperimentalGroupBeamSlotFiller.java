@@ -94,10 +94,10 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 	private InstanceProvider instanceProvider;
 
 	public ExperimentalGroupBeamSlotFiller() throws IOException {
-		super(SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.apply().registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization()).build());
+				.registerNormalizationFunction(new AgeNormalization()).build();
 
 		List<String> docs = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
@@ -273,7 +273,7 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setfeatureTemplateParameter(parameter);
+		model.setFeatureTemplateParameter(parameter);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */

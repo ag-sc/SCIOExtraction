@@ -56,7 +56,7 @@ public class InvestigationMethodSlotFilling {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -103,8 +103,7 @@ public class InvestigationMethodSlotFilling {
 		String modelName = "InvestigationMethod" + new Random().nextInt();
 
 		InvestigationMethodSlotFillingPredictor predictor = new InvestigationMethodSlotFillingPredictor(modelName,
-				scope, trainingInstanceNames, developInstanceNames, testInstanceNames,
-				EInvestigationMethodModifications.ROOT);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, EInvestigationMethodModifications.ROOT);
 
 //		predictor.trainOrLoadModel();
 //

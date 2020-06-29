@@ -42,6 +42,10 @@ public class BinaryInjuryModelExtraction extends BinaryExtraction {
 	public BinaryInjuryModelExtraction() throws Exception {
 		super("Injury");
 	}
+//	with all properties
+//	Score [getF1()=0.143, getPrecision()=1.000, getRecall()=0.077, tp=1, fp=0, fn=12, tn=0]
+//			macroScore = Score [macroF1=0.091, macroPrecision=0.372, macroRecall=0.052]
+//			binaryScore = Score [getAccuracy()=0.999, getF1()=0.000, getPrecision()=0.000, getRecall()=0.000, tp=0, fp=665, fn=0, tn=604390]
 
 	@Override
 	protected File getExternalNerlaFile() {

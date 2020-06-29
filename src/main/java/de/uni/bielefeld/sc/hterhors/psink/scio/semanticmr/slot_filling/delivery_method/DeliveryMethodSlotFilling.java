@@ -1,11 +1,13 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,12 +17,19 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 
 /**
  * GREEDY EVAL! Slot filling for delivery method.
@@ -110,6 +119,11 @@ public class DeliveryMethodSlotFilling {
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
+	String dataRandomSeed;
+
+	List<Instance> trainingInstances;
+	List<Instance> devInstances;
+	List<Instance> testInstances;
 
 	public DeliveryMethodSlotFilling() throws IOException {
 
@@ -119,21 +133,22 @@ public class DeliveryMethodSlotFilling {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("DeliveryMethod"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
 				 */
-				.apply()
+				.apply().registerNormalizationFunction(new DurationNormalization())
 				/**
 				 * Finally, we build the systems scope.
 				 */
 				.build();
 
+		SlotType.excludeAll();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(20).build();
 
@@ -144,10 +159,18 @@ public class DeliveryMethodSlotFilling {
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
 
 		resultsOut.println(header);
-
 		for (EDeliveryMethodModifications rule : EDeliveryMethodModifications.values()) {
 //			DeliveryMethodFilling.rule =rule;
 			rule = EDeliveryMethodModifications.ROOT_LOCATION_DURATION;
+			SCIOSlotTypes.hasDuration.include();
+			SCIOSlotTypes.hasLocations.include();
+
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasAgeCategory.include();
+			SCIOSlotTypes.hasAge.include();
+
 			/**
 			 * The instance provider reads all json files in the given directory. We can set
 			 * the distributor in the constructor. If not all instances should be read from
@@ -159,19 +182,31 @@ public class DeliveryMethodSlotFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					DeliveryMethodRestrictionProvider.getByRule(rule));
 
-			String modelName = "DeliveryMethod" + new Random().nextInt();
+//			dataRandomSeed = "123";// + new Random().nextInt();
+			dataRandomSeed = "" + new Random().nextInt();
+			// String modelName = "DeliveryMethod1104810543";
+			String modelName = "DeliveryMethod" + dataRandomSeed;
 
-			DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName, scope,
-					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
+			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
+			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
+			testInstances = instanceProvider.getRedistributedTestInstances();
+
+			Map<Instance, Set<AbstractAnnotation>> organismModel = predictOrganismModel(
+					instanceProvider.getInstances());
+
+			DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName,
+					trainingInstances.stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
+					devInstances.stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+					testInstances.stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
 					rule);
+
+			predictor.setOrganismModel(organismModel);
 
 			predictor.trainOrLoadModel();
 
@@ -181,10 +216,16 @@ public class DeliveryMethodSlotFilling {
 
 			resultsOut.println(toResults(rule, score));
 
+			SlotType.excludeAll();
+			Score scoreRoot = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+			SlotType.includeAll();
+
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
+			log.info("results: " + toResults(rule, score));
+			log.info("results scoreRoot: " + toResults(rule, scoreRoot));
 			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
 			log.info("Coverage Training: " + trainCoverage);
 
@@ -198,7 +239,10 @@ public class DeliveryMethodSlotFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
+
 			log.info("results: " + toResults(rule, score));
+			log.info(predictor.crf.getTrainingStatistics());
+			log.info(predictor.crf.getTestStatistics());
 			log.info("modelName: " + predictor.modelName);
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement
@@ -215,4 +259,46 @@ public class DeliveryMethodSlotFilling {
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}
 
+	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
+
+		/**
+		 * TODO: FULL MODEL EXTRACTION CAUSE THIS IS BEST TO PREDICT SPECIES
+		 */
+		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+
+		/**
+		 * Predict OrganismModels
+		 */
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
+
+		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+//	+ modelName
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
+				"OrganismModel_DeliveryMethod_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
+				testInstanceNames, rule);
+		predictor.trainOrLoadModel();
+
+		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1);
+
+		SlotType.restoreExcludance(x);
+		return organismModelAnnotations;
+	}
+
 }
+//	results: ROOT_LOCATION_DURATION	0.57	0.52	0.62
+//	results scoreRoot: ROOT_LOCATION_DURATION	0.76	0.72	0.81
+//	Compute coverage...
+//
+//	Coverage Training: Score [getF1()=0.839, getPrecision()=0.866, getRecall()=0.814, tp=240, fp=37, fn=55, tn=0]
+//	Compute coverage...
+//	Coverage Development: Score [getF1()=0.821, getPrecision()=0.873, getRecall()=0.775, tp=55, fp=8, fn=16, tn=0]
+//	results: ROOT_LOCATION_DURATION	0.57	0.52	0.62
+//	CRFStatistics [context=Train, getTotalDuration()=49965]
+//	CRFStatistics [context=Test, getTotalDuration()=1328]
+//	modelName: DeliveryMethod-2092416198}

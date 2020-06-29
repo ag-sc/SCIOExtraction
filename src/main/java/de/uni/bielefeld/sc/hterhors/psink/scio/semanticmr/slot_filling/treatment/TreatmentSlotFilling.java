@@ -61,7 +61,7 @@ public class TreatmentSlotFilling {
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public TreatmentSlotFilling() throws IOException {
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment")).build();
 
 		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
@@ -93,7 +93,7 @@ public class TreatmentSlotFilling {
 //			String modelName = "Treatment819785968";
 			String modelName = "Treatment" + new Random().nextInt();
 
-			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName, scope,
+			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
 			predictor.trainOrLoadModel();

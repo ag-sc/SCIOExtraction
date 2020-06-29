@@ -36,7 +36,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.DuplicationRule;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
@@ -87,13 +87,12 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	private List<Instance> devInstances;
 	private List<Instance> testInstances;
 	private String modelName;
-	private static SystemScope scope;
 	public boolean includeGroups = true;
 
 	public ResultSlotFillingHeuristic(int dataRandomSeed) throws Exception {
 
-		super(scope = SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build());
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
@@ -277,8 +276,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			SlotType.includeAll();
 			ExperimentalGroupSlotFillingPredictor.maxCacheSize = 800_000;
 			ExperimentalGroupSlotFillingPredictor.minCacheSize = 400_000;
-			ExperimentalGroupSlotFillingPredictor a = new ExperimentalGroupSlotFillingPredictor(scope, 7,
-					dataRandomSeed, trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+			ExperimentalGroupSlotFillingPredictor a = new ExperimentalGroupSlotFillingPredictor(7, dataRandomSeed,
+					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
 			root.mkdirs();
@@ -797,7 +796,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		} else {
 			goldModificationRules = Arrays.asList();
 		}
-		DuplicationRule deduplicationRule = (a1, a2) -> {
+		DeduplicationRule deduplicationRule = (a1, a2) -> {
 			return a1.evaluateEquals(objectiveFunction.getEvaluator(), a2);
 		};
 

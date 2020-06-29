@@ -103,7 +103,7 @@ public class InjurySlotFilling {
 
 	public InjurySlotFilling() throws IOException {
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Injury")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new DosageNormalization())
@@ -149,40 +149,45 @@ public class InjurySlotFilling {
 
 			String modelName = "Injury" + new Random().nextInt(10000);
 
-			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
+			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, 
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
-			predictor.trainOrLoadModel();
+//			predictor.trainOrLoadModel();
+//
+//			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
+//
+//			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//
+//			Map<SlotType, Boolean> x = SlotType.storeExcludance();
+//			SlotType.excludeAll();
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//			SlotType.restoreExcludance(x);
+//
+//			log.info("standard: " + standard);
+//			log.info("only root: " + score);
+//
+//			log.info(predictor.crf.getTrainingStatistics());
+//			log.info(predictor.crf.getTestStatistics());
+//
+//			resultsOut.println(toResults(rule, standard, "standard"));
+//			resultsOut.println(toResults(rule, score, "onyl root"));
 
-			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
-
-			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-
-			Map<SlotType, Boolean> x = SlotType.storeExcludance();
-			SlotType.excludeAll();
-			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-			SlotType.restoreExcludance(x);
-
-			log.info("standard: " + standard);
-			log.info("only root: " + score);
-
-			log.info(predictor.crf.getTrainingStatistics());
-			log.info(predictor.crf.getTestStatistics());
-
-			resultsOut.println(toResults(rule, standard, "standard"));
-			resultsOut.println(toResults(rule, score, "onyl root"));
-
-//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-//			log.info("Coverage Training: " + trainCoverage);
-//			resultsOut.println(toResults(rule, trainCoverage, "coverage on train"));
-//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-//			log.info("Coverage Development: " + devCoverage);
-//			resultsOut.println(toResults(rule, devCoverage, "coverage on dev"));
+			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+			log.info("Coverage Training: " + trainCoverage);
+			resultsOut.println(toResults(rule, trainCoverage, "coverage on train"));
+			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+			log.info("Coverage Development: " + devCoverage);
+			resultsOut.println(toResults(rule, devCoverage, "coverage on dev"));
 //			Gold Anaest + Location
 //			Coverage Training: Score [getF1()=0.936, getPrecision()=1.000, getRecall()=0.881, tp=1128, fp=0, fn=153, tn=0]
 //					Compute coverage...
 //					Coverage Development: Score [getF1()=0.899, getPrecision()=0.959, getRecall()=0.847, tp=255, fp=11, fn=46, tn=0]
 //					modelName: Injury5179
+//			Compute coverage...
+//			Coverage Training: Score [getF1()=0.930, getPrecision()=1.000, getRecall()=0.868, tp=1128, fp=0, fn=171, tn=0]
+//			Compute coverage...
+//			Coverage Development: Score [getF1()=0.882, getPrecision()=0.959, getRecall()=0.817, tp=255, fp=11, fn=57, tn=0]
+//			modelName: Injury8714
 
 //			Predicted Anaest + Location
 //			Compute coverage...
@@ -190,6 +195,9 @@ public class InjurySlotFilling {
 //					Compute coverage...
 //					Coverage Development: Score [getF1()=0.648, getPrecision()=0.895, getRecall()=0.508, tp=153, fp=18, fn=148, tn=0]
 //					modelName: Injury7788
+
+			log.info(predictor.crf.getTrainingStatistics());
+			log.info(predictor.crf.getTestStatistics());
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function

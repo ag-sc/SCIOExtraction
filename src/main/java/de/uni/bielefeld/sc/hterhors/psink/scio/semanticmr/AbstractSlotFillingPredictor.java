@@ -23,15 +23,20 @@ import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieva
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
+import de.hterhors.semanticmr.crf.ISemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
+import de.hterhors.semanticmr.crf.SemanticParsingCRFMultiState;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
+import de.hterhors.semanticmr.crf.sampling.AbstractBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
+import de.hterhors.semanticmr.crf.sampling.impl.beam.EpochSwitchBeamSampler;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
@@ -40,10 +45,12 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -51,6 +58,9 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.weka.SentenceClassificationWEKA;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.initializer.GenericMultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
@@ -61,7 +71,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public SemanticParsingCRF crf;
+	public ISemanticParsingCRF crf;
 
 	protected final List<Instance> trainingInstances;
 	protected final List<Instance> developmentInstances;
@@ -86,7 +96,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 
 	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE));
+			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
 
@@ -112,9 +122,8 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		return Collections.unmodifiableList(testInstances);
 	}
 
-	public AbstractSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public AbstractSlotFillingPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule modificationRule) {
-		super(scope);
 		this.modelName = modelName;
 		this.trainingInstanceNames = trainingInstanceNames;
 		this.developInstanceNames = developInstanceNames;
@@ -127,7 +136,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Remove empty instances from corpus
 		 */
-//		InstanceProvider.removeEmptyInstances = true;
+		InstanceProvider.removeEmptyInstances = true;
 
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
@@ -141,6 +150,9 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 */
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
+		DeduplicationRule deduplicationRule = (a1, a2) -> {
+			return a1.evaluateEquals(predictionObjectiveFunction.getEvaluator(), a2);
+		};
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
 		 * the distributor in the constructor. If not all instances should be read from
@@ -149,8 +161,18 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 * ShuffleCorpusDistributor, we initially set a limit to the number of files
 		 * that should be read.
 		 */
-		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor,
+
+		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>(
 				getGoldModificationRules(modificationRule));
+		goldModificationRules.add(a -> {
+			if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+					&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty())
+				return null;
+			return a;
+		});
+
+		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor, goldModificationRules,
+				deduplicationRule);
 
 		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
@@ -340,8 +362,9 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 			private boolean isRelevant(SCIOAutomatedSectionifcation sectionification, DocumentLinkedAnnotation a) {
 				ESection sec = sectionification.getSection(a.asInstanceOfDocumentLinkedAnnotation());
-//				return sec == ESection.METHODS;
-				return sec != ESection.REFERENCES;
+				return sec == ESection.METHODS || sec == ESection.UNKNOWN;
+//				return sec != ESection.REFERENCES;
+//				return true;
 			}
 
 		};
@@ -349,7 +372,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		for (Instance instance : instanceProvider.getInstances()) {
 //			instance.removeCandidateAnnotation(predictFilter);
 //			instance.removeCandidateAnnotation(goldFilter);
-			instance.removeCandidateAnnotation(sectionFilter);
+//			instance.removeCandidateAnnotation(sectionFilter);
 			instance.removeCandidateAnnotation(new IFilter() {
 
 				@Override
@@ -445,14 +468,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	public Score computeCoverageOnDevelopmentInstances(boolean detailedLog) {
 		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), trainingObjectiveFunction).computeCoverage(detailedLog,
-						trainingObjectiveFunction, developmentInstances);
+				getSampler(), getStateInitializer(), predictionObjectiveFunction).computeCoverage(detailedLog,
+						predictionObjectiveFunction, developmentInstances);
 	}
 
 	public Score computeCoverageOnTestInstances(boolean detailedLog) {
 		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), trainingObjectiveFunction).computeCoverage(detailedLog,
-						trainingObjectiveFunction, testInstances);
+				getSampler(), getStateInitializer(), predictionObjectiveFunction).computeCoverage(detailedLog,
+						predictionObjectiveFunction, testInstances);
 	}
 
 	public void trainOrLoadModel() {
@@ -470,13 +493,29 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			model = new Model(getFeatureTemplates(), getModelBaseDir(), modelName);
 		}
 
-		model.setfeatureTemplateParameter(getFeatureTemplateParameters());
+		model.setFeatureTemplateParameter(getFeatureTemplateParameters());
 
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		crf = new SemanticParsingCRF(model, explorerList, getSampler(), getStateInitializer(),
-				trainingObjectiveFunction);
+
+		IStateInitializer initializer = getStateInitializer();
+		if (initializer instanceof GenericMultiCardinalityInitializer) {
+			crf = new SemanticParsingCRFMultiState(model, explorerList, getBeamSampler(), trainingObjectiveFunction);
+			((SemanticParsingCRFMultiState) crf).parallelModelUpdate = true;
+
+			crf.setInitializer(initializer);
+		} else {
+			crf = new SemanticParsingCRF(model, explorerList, getSampler(), initializer, trainingObjectiveFunction);
+			crf.setInitializer(initializer);
+
+//			log.info("Training instances coverage: "
+//					+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, trainingInstances));
+//
+//			log.info("Test instances coverage: "
+//					+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, testInstances));
+		}
+
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
 		 */
@@ -512,6 +551,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	protected abstract AbstractSampler getSampler();
 
+	protected AbstractBeamSampler getBeamSampler() {
+		return new EpochSwitchBeamSampler(epoch -> epoch % 2 == 0);
+	}
+
 	protected abstract File getModelBaseDir();
 
 	final public Map<String, Set<AbstractAnnotation>> predictBatchHighRecallInstanceByNames(Set<String> names, int n) {
@@ -519,9 +562,9 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		List<String> remainingNames = names.stream().filter(name -> !annotations.containsKey(name))
 				.collect(Collectors.toList());
 
-		Map<Instance, State> results = crf.predictHighRecall(instanceProvider.getInstances().stream()
-				.filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), n, maxStepCrit,
-				noModelChangeCrit);
+		Map<Instance, State> results = ((SemanticParsingCRF) crf).predictHighRecall(instanceProvider.getInstances()
+				.stream().filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), n,
+				maxStepCrit, noModelChangeCrit);
 
 		for (Entry<Instance, State> result : results.entrySet()) {
 
@@ -553,7 +596,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			results = crf.predict(instanceProvider.getInstances().stream().filter(i -> i.getName().equals(name))
 					.collect(Collectors.toList()), maxStepCrit, noModelChangeCrit);
 		} else {
-			results = crf.predictHighRecall(instanceProvider.getInstances().stream()
+			results = ((SemanticParsingCRF) crf).predictHighRecall(instanceProvider.getInstances().stream()
 					.filter(i -> i.getName().equals(name)).collect(Collectors.toList()), n, maxStepCrit,
 					noModelChangeCrit);
 		}

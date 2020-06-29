@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.nerla;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.nerla;
 
 import java.util.Arrays;
 import java.util.HashMap;

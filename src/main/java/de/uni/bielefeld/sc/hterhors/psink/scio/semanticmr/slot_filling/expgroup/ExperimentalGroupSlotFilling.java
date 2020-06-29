@@ -60,7 +60,7 @@ import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.DuplicationRule;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -79,8 +79,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.GroupNameNERLPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.evaluation.ExperimentalGroupEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.evaluation.InjuryEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.expgroup.evaluation.OrganismModelEvaluation;
@@ -401,11 +401,11 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private int minCacheSize = 40_000_000;
 
 	public ExperimentalGroupSlotFilling(int parameterID, int dataRandomSeed) throws Exception {
-		super(SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(
 						DataStructureLoader.loadSlotFillingDataStructureReader("DefinedExperimentalGroup"))
 				.apply().registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization()).build());
+				.registerNormalizationFunction(new AgeNormalization()).build();
 
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.definedExperimentalGroup);
@@ -503,7 +503,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setfeatureTemplateParameter(parameter);
+		model.setFeatureTemplateParameter(parameter);
 
 		model.setCache(new FactorPoolCache(model, maxCacheSize, minCacheSize));
 		/**
@@ -890,7 +890,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			final int kVertebrea = 2;
 
 			String vertebralAreaModelName = "VertebralArea_" + dataRandomSeed;
-			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
+			VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName,
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
@@ -991,7 +991,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			String deliveryMethodModelName = "DeliveryMethod" + dataRandomSeed;
 
 			DeliveryMethodPredictor deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName,
-					scope, trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					EDeliveryMethodModifications.ROOT);
@@ -1076,7 +1076,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
 		Collection<GoldModificationRule> goldModificationRules = getGoldModificationRules();
-		DuplicationRule deduplicationRule = (a, b) -> false;
+		DeduplicationRule deduplicationRule = (a, b) -> false;
 		if (assignmentMode != EAssignmentMode.GROUP_NAME) {
 
 			deduplicationRule = (a1, a2) -> {
@@ -1679,7 +1679,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
 			GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("GroupName_EXP_GROUP_" + dataRandomSeed,
-					scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
+					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
 			predictor.trainOrLoadModel();
 
@@ -1744,7 +1744,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
-				"OrganismModel_EXP_GROUP_" + dataRandomSeed, scope, trainingInstanceNames, developInstanceNames,
+				"OrganismModel_EXP_GROUP_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
 				testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
@@ -1771,7 +1771,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_EXP_GROUP_" + dataRandomSeed,
-				scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = predictor.predictInstances(instances, k);

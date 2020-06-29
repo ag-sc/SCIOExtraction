@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveL
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 
 /**
  * Slot filling for organism models.
@@ -59,7 +59,7 @@ public class DeliveryMethodActiveLearningSlotFilling {
 		 * Initialize the system.
 		 * 
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("DeliveryMethod")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new DosageNormalization())
@@ -113,8 +113,8 @@ public class DeliveryMethodActiveLearningSlotFilling {
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
 
-				DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName, scope,
-						trainingInstancesNames, developInstanceNames, testInstanceNames, rule);
+				DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName, trainingInstancesNames,
+						developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();
 

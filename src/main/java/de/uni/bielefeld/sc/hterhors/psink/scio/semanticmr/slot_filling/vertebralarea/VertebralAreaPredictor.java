@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -56,7 +57,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger("VertebralAreaPrediction");
 
-	public VertebralAreaPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public VertebralAreaPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
 
 		/**
@@ -65,7 +66,7 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 
 	}
 
@@ -168,4 +169,19 @@ public class VertebralAreaPredictor extends AbstractSlotFillingPredictor {
 		});
 		return goldModificationRules;
 	}
+
+	@Override
+	public HardConstraintsProvider getHardConstraints() {
+		HardConstraintsProvider prov = new HardConstraintsProvider();
+		prov.addHardConstraints(new DistinctVertebreaTemplateConstraint());
+		return prov;
+	}
+
+//Compute coverage...
+//Coverage Training: Score [getF1()=0.967, getPrecision()=1.000, getRecall()=0.936, tp=146, fp=0, fn=10, tn=0]
+//Compute coverage...
+//Coverage Development: Score [getF1()=0.966, getPrecision()=1.000, getRecall()=0.933, tp=42, fp=0, fn=3, tn=0]
+//results: NO_MODIFICATION	0.76	0.77	0.76
+//modelName: VertebralArea667
+
 }

@@ -74,7 +74,7 @@ public class InjuryActiveLearningSlotFilling {
 		 * Initialize the system.
 		 * 
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Injury")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new DosageNormalization())
@@ -133,7 +133,7 @@ public class InjuryActiveLearningSlotFilling {
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
 
-				InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, scope,
+				InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, 
 						trainingInstancesNames, developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();

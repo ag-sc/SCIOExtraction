@@ -92,13 +92,13 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("InvestigationMethod"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
 				 */
-				.build());
+				.build();
 
 		/**
 		 * Read and distribute the corpus.
@@ -422,7 +422,7 @@ public class InvestigationMethodBeamSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setfeatureTemplateParameter(parameter);
+		model.setFeatureTemplateParameter(parameter);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */

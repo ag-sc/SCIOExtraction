@@ -37,7 +37,7 @@ public class Heuristics {
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
 
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
+import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -45,14 +46,14 @@ public class DocumentAtomicChangeEntropyRanker implements IActiveLearningDocumen
 			/*
 			 * Create possible changes using explorers.
 			 */
-			for (IExplorationStrategy explorer : predictor.crf.explorerList) {
+			for (IExplorationStrategy explorer : ((SemanticParsingCRF)predictor.crf).explorerList) {
 				nextStates.addAll(explorer.explore(initialState));
 			}
 
 			/*
 			 * Score with model
 			 */
-			predictor.crf.scoreWithModel(nextStates);
+			 ((SemanticParsingCRF)predictor.crf).scoreWithModel(nextStates);
 
 //			runner.scoreWithObjectiveFunction(predictedInstance.getState());
 

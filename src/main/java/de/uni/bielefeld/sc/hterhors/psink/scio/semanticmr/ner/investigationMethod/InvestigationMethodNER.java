@@ -54,7 +54,7 @@ public class InvestigationMethodNER {
 	}
 
 	public InvestigationMethodNER() {
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -89,7 +89,7 @@ public class InvestigationMethodNER {
 		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		InvestigationMethodNERLPredictor predictor = new InvestigationMethodNERLPredictor(modelName, scope,
+		InvestigationMethodNERLPredictor predictor = new InvestigationMethodNERLPredictor(modelName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
 		if (true) {
@@ -144,7 +144,7 @@ public class InvestigationMethodNER {
 					.getAbstractAnnotations().stream().map(a -> a.asInstanceOfDocumentLinkedAnnotation())
 					.map(d -> AnnotationBuilder.toAnnotation(d.getEntityType().name, "" + d.getSentenceIndex()))
 					.distinct().sorted().collect(Collectors.toList());
-			
+
 			System.out.println("----GOLD----");
 			for (LiteralAnnotation literalAnnotation : goldData) {
 				System.out.println(literalAnnotation.toPrettyString());

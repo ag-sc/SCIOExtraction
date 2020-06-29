@@ -52,9 +52,9 @@ public class GroupNameNERLPredictor extends AbstractNERLPredictor {
 	 * stored in its own json-file.
 	 */
 
-	public GroupNameNERLPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public GroupNameNERLPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames);
 	}
 
 	@Override

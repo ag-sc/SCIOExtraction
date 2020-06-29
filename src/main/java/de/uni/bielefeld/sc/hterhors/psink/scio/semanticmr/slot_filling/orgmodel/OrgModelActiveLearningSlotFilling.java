@@ -71,7 +71,7 @@ public class OrgModelActiveLearningSlotFilling {
 		 * Initialize the system.
 		 * 
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("OrganismModel")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();
@@ -132,7 +132,7 @@ public class OrgModelActiveLearningSlotFilling {
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
 
-				OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
+				OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName,
 						trainingInstancesNames, developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();

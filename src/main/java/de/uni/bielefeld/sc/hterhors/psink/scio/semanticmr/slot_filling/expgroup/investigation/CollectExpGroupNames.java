@@ -265,7 +265,7 @@ public class CollectExpGroupNames {
 	public CollectExpGroupNames(File file) throws Exception {
 
 		SystemScope.verbose = false;
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization()).build();

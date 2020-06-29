@@ -123,7 +123,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		super(SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -147,7 +147,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 				/**
 				 * Finally, we build the systems scope.
 				 */
-				.build());
+				.build();
 
 		/**
 		 * Read and distribute the corpus.
@@ -454,7 +454,7 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 			model = new Model(featureTemplates, modelBaseDir, modelName);
 		}
 
-		model.setfeatureTemplateParameter(parameter);
+		model.setFeatureTemplateParameter(parameter);
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
+import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
@@ -36,7 +37,7 @@ public class DocumentMarginBasedRanker implements IActiveLearningDocumentRanker 
 		List<SmallestFirst> marginInstances = new ArrayList<>();
 
 		log.info("Compute variations for margin...");
-		Map<Instance, List<State>> results = runner.crf.collectNBestStates(remainingInstances, 2, runner.maxStepCrit);
+		Map<Instance, List<State>> results =  ((SemanticParsingCRF)runner.crf).collectNBestStates(remainingInstances, 2, runner.maxStepCrit);
 
 		log.info("Compute margin...");
 		for (Entry<Instance, List<State>> predictedInstance : results.entrySet()) {

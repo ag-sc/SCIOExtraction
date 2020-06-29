@@ -72,7 +72,7 @@ public class AnaestheticSlotFilling {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -114,7 +114,7 @@ public class AnaestheticSlotFilling {
 
 			String modelName = "Anaesthetic" + new Random().nextInt();
 
-			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName, scope,
+			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),

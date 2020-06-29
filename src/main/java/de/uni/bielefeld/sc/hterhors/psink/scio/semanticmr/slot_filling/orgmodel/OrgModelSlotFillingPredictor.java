@@ -47,9 +47,9 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	private static Logger log = LogManager.getFormatterLogger(OrgModelSlotFillingPredictor.class);
 	private EOrgModelModifications rule;
 
-	public OrgModelSlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstances,
+	public OrgModelSlotFillingPredictor(String modelName, List<String> trainingInstances,
 			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule) {
-		super(modelName, scope, trainingInstances, developmentInstances, testInstances, rule);
+		super(modelName, trainingInstances, developmentInstances, testInstances, rule);
 	}
 
 	@Override
@@ -152,9 +152,5 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {
 		return OrganismModelRestrictionProvider.getByRule((EOrgModelModifications) rule);
 	}
-
-
-
-	
 
 }

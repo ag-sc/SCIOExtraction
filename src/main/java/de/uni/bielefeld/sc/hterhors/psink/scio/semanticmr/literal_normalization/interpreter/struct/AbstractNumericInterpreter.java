@@ -54,6 +54,10 @@ public abstract class AbstractNumericInterpreter extends AbstractInterpreter imp
 
 	private static String map(String unitVariation) {
 		switch (unitVariation.toLowerCase()) {
+		case "ll": // different symbols!!
+			return "l";
+		case "μl": // different symbols!!
+			return "µl";
 		case "per day":
 			return "daily";
 		case "a day":

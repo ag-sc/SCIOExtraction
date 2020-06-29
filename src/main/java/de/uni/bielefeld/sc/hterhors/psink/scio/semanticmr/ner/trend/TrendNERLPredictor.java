@@ -52,9 +52,9 @@ public class TrendNERLPredictor extends AbstractNERLPredictor {
 	 * stored in its own json-file.
 	 */
 
-	public TrendNERLPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames) {
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
+	public TrendNERLPredictor(String modelName, List<String> trainingInstanceNames, List<String> developInstanceNames,
+			List<String> testInstanceNames) {
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames);
 	}
 
 	@Override
@@ -73,7 +73,6 @@ public class TrendNERLPredictor extends AbstractNERLPredictor {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new ContextBetweenAnnotationsTemplate());
 //		featureTemplates.add(new LevenshteinTemplate());
-
 
 //		featureTemplates.add(new MorphologicalNerlaTemplate());
 //		featureTemplates.add(new NGramTokenContextTemplate());

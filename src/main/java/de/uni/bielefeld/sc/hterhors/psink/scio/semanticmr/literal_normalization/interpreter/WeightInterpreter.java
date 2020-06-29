@@ -28,9 +28,11 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 		System.out.println(WeightInterpreter.PATTERN);
 		WeightInterpreter wi = new WeightInterpreter("100-200 kg");
 		WeightInterpreter wi2 = new WeightInterpreter("~200 g");
+		WeightInterpreter wi3 = new WeightInterpreter("25 g");
 
 		System.out.println(wi.normalize().asSimpleString());
 		System.out.println(wi2.normalize().asSimpleString());
+		System.out.println(wi3);
 
 	}
 
@@ -88,7 +90,7 @@ public class WeightInterpreter extends AbstractNumericInterpreter {
 
 	public final static Pattern PATTERN = Pattern.compile("(?<" + aboutGroupName + ">" + about_ + ")((?<"
 			+ pattern1GrouName + ">" + pattern1_ + ")|(?<" + pattern2GrouName + ">" + pattern2_ + ")|(?<"
-			+ pattern3GrouName + ">" + pattern3_ + "))" + POST_BOUNDS, PATTERN_BITMASK);
+			+ pattern3GrouName + ">" + pattern3_ + "))("+freeSpaceQuestionMark_+"weight)?" + POST_BOUNDS, PATTERN_BITMASK);
 
 	static public enum EWeightUnits implements ISingleUnit {
 

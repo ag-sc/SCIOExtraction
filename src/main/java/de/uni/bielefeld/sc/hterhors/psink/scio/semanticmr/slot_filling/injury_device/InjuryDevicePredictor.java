@@ -52,9 +52,9 @@ public class InjuryDevicePredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public InjuryDevicePredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public InjuryDevicePredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 	}
 
 	@Override
@@ -107,6 +107,7 @@ public class InjuryDevicePredictor extends AbstractSlotFillingPredictor {
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
 //		featureTemplates.add(new LevenshteinTemplate());
+
 		featureTemplates.add(new IntraTokenTemplate());
 		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new SingleTokenContextTemplate());

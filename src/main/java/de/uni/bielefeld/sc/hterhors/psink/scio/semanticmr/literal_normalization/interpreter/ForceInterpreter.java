@@ -20,9 +20,9 @@ public class ForceInterpreter extends AbstractNumericInterpreter {
 	public static void main(String[] args) {
 
 		System.out.println(ForceInterpreter.PATTERN);
-		ForceInterpreter wi = new ForceInterpreter("100 dyn");
+		ForceInterpreter wi = new ForceInterpreter("100 dyn force");
 		ForceInterpreter wi2 = new ForceInterpreter("1 kdyn");
-
+System.out.println(wi);
 		System.out.println(wi.normalize().asSimpleString());
 		System.out.println(wi2.normalize().asSimpleString());
 
@@ -140,7 +140,7 @@ public class ForceInterpreter extends AbstractNumericInterpreter {
 			+ freeSpaceQuestionMark_ + "(?<" + p3Unit1 + ">" + p1Unit2 + "))";
 
 	public static final Pattern PATTERN = Pattern.compile(PRE_BOUNDS + "(" + PATTERN_1 + "|" + PATTERN_3 + "|"
-			+ PATTERN_4 + "|" + PATTERN_5 + "|" + PATTERN_2 + ")" + POST_BOUNDS, PATTERN_BITMASK);
+			+ PATTERN_4 + "|" + PATTERN_5 + "|" + PATTERN_2 + ")("+freeSpaceQuestionMark_+"force)?" + POST_BOUNDS, PATTERN_BITMASK);
 
 	public ForceInterpreter(String surfaceForm, EForceUnits unit, double meanValue, boolean unsure, double fromValue,
 			double toValue) {

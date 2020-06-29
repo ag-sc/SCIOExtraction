@@ -61,7 +61,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 		 * Initialize the system.
 		 * 
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("VertebralArea")).build();
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
@@ -112,7 +112,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 				log.info("#Training instances: " + trainingInstancesNames.size());
 				log.info("Strategy: " + strategy);
 
-				VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName, scope, trainingInstancesNames,
+				VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName, trainingInstancesNames,
 						developInstanceNames, testInstanceNames, rule);
 
 				predictor.trainOrLoadModel();

@@ -33,12 +33,12 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
  * 
  * @author hterhors
  * 
-Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE	0.94	0.97	0.91
-modelName: OrganismModel-522582779
-CRFStatistics [context=Train, getTotalDuration()=16064]
-CRFStatistics [context=Test, getTotalDuration()=617]
-
+ *         Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE 0.94 0.97 0.91
+ *         modelName: OrganismModel-522582779 CRFStatistics [context=Train,
+ *         getTotalDuration()=16064] CRFStatistics [context=Test,
+ *         getTotalDuration()=617]
  *
+ * 
  */
 public class OrgModelSlotFilling {
 
@@ -74,7 +74,7 @@ public class OrgModelSlotFilling {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -130,9 +130,8 @@ public class OrgModelSlotFilling {
 
 			String modelName = "OrganismModel" + new Random().nextInt();
 
-			
-			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, scope,
-					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, rule);
 
 			predictor.trainOrLoadModel();
 

@@ -12,6 +12,22 @@ public class VolumeInterpreter extends AbstractNumericInterpreter {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static void main(String[] args) {
+		/**
+		 * Different µ symbols...
+		 */
+		String x = "20 μl";
+		String y = "15 µl";
+
+		VolumeInterpreter i = new VolumeInterpreter(x);
+		VolumeInterpreter i2 = new VolumeInterpreter(y);
+
+		System.out.println(i.interpretable);
+		System.out.println(i);
+		System.out.println(i2.interpretable);
+		System.out.println(i2);
+	}
+	
 	static public enum EVolumeUnits implements ISingleUnit {
 
 		undef(0), µl(0.001d), cm3(1), ml(1d), l(1000d);
@@ -57,7 +73,7 @@ public class VolumeInterpreter extends AbstractNumericInterpreter {
 	final static String numbers_ = "((\\d+\\.\\d+)|\\d+)";
 	final static String freeSpace_ = "[^\\d\\w\\.,]";
 	final static String freeSpaceQuestionMark_ = freeSpace_ + "?";
-	final static String unit_ = "(µl|cm\\W?3|l)";
+	final static String unit_ = "(μl|µl|cm\\W?3|ll?)";
 	final static String about_ = "(~|" + PRE_BOUNDS + "about" + freeSpace_ + ")?";
 	final static String connection_ = "(" + freeSpace_ + "(to|and)" + freeSpace_ + "|" + freeSpaceQuestionMark_
 			+ "((\\+?-)|\\+(/|\\\\)-|±|" + freeSpace_ + ")" + freeSpaceQuestionMark_ + ")";

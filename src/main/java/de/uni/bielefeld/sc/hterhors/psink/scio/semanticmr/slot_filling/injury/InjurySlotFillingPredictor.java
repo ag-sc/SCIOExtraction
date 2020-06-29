@@ -54,10 +54,10 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	private static Logger log = LogManager.getFormatterLogger(InjurySlotFillingPredictor.class);
 
-	public InjurySlotFillingPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public InjurySlotFillingPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
 
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 	}
 
 	final public boolean useGoldLocationsForTraining = true;
@@ -115,7 +115,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 		SlotType.includeAll();
 		String injuryDeviceName = "InjuryDevice_" + modelName;
-		InjuryDevicePredictor injuryDevicePrediction = new InjuryDevicePredictor(injuryDeviceName, scope,
+		InjuryDevicePredictor injuryDevicePrediction = new InjuryDevicePredictor(injuryDeviceName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames,
 				EInjuryDeviceModifications.NO_MODIFICATION);
 
@@ -133,9 +133,8 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		SlotType.includeAll();
 
 		String anaestheticName = "Anaesthetic_" + modelName;
-		AnaestheticPredictor anaestheticPrediction = new AnaestheticPredictor(anaestheticName, scope,
-				trainingInstanceNames, developInstanceNames, testInstanceNames,
-				EAnaestheticModifications.NO_MODIFICATION);
+		AnaestheticPredictor anaestheticPrediction = new AnaestheticPredictor(anaestheticName, trainingInstanceNames,
+				developInstanceNames, testInstanceNames, EAnaestheticModifications.NO_MODIFICATION);
 
 		anaestheticPrediction.trainOrLoadModel();
 		anaestheticPrediction.predictAllInstances(1);
@@ -151,7 +150,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		SlotType.includeAll();
 //		String vertebralAreaModelName = "VertebralArea_STD";
 		String vertebralAreaModelName = "VertebralArea_" + modelName;
-		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, scope,
+		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames,
 				EVertebralAreaModifications.NO_MODIFICATION);
 

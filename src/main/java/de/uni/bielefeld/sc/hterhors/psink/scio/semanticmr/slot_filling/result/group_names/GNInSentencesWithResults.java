@@ -31,7 +31,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.DuplicationRule;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
@@ -333,7 +333,7 @@ public class GNInSentencesWithResults {
 		} else {
 			goldModificationRules = Arrays.asList();
 		}
-		DuplicationRule deduplicationRule = (a1, a2) -> {
+		DeduplicationRule deduplicationRule = (a1, a2) -> {
 			return a1.evaluateEquals(objectiveFunction.getEvaluator(), a2);
 		};
 

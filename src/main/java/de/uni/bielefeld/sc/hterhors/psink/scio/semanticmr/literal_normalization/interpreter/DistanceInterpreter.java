@@ -12,6 +12,16 @@ public class DistanceInterpreter extends AbstractNumericInterpreter {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static void main(String[] args) {
+
+		String x = "distance of 25 mm";
+
+		DistanceInterpreter i = new DistanceInterpreter(x);
+
+		System.out.println(i.interpretable);
+		System.out.println(i);
+	}
+
 	static public enum EDistanceUnits implements ISingleUnit {
 
 		undef(0), µm(0.001d), mm(1 / 10d), cm(1d);
@@ -76,12 +86,12 @@ public class DistanceInterpreter extends AbstractNumericInterpreter {
 	/**
 	 * 100g +- 300
 	 */
-	final static String pattern3_ = "(?<" + p3Numbers1 + ">" + numbers_ + ")" + freeSpaceQuestionMark_ + "(?<" + p3Unit1
+	final static String pattern3_ ="(?<" + p3Numbers1 + ">" + numbers_ + ")" + freeSpaceQuestionMark_ + "(?<" + p3Unit1
 			+ ">" + unit_ + ")";
 
-	public final static Pattern PATTERN = Pattern.compile("(?<" + aboutGroupName + ">" + about_ + ")((?<"
+	public final static Pattern PATTERN = Pattern.compile(PRE_BOUNDS+"((height|distance) of )?(?<" + aboutGroupName + ">" + about_ + ")((?<"
 			+ pattern1GrouName + ">" + pattern1_ + ")|(?<" + pattern2GrouName + ">" + pattern2_ + ")|(?<"
-			+ pattern3GrouName + ">" + pattern3_ + "))" + POST_BOUNDS, PATTERN_BITMASK);
+			+ pattern3GrouName + ">" + pattern3_ + "))("+freeSpaceQuestionMark_+"(height|distance))?" + POST_BOUNDS, PATTERN_BITMASK);
 
 	public DistanceInterpreter convertTo(EDistanceUnits toWeightUnit) {
 		return new DistanceInterpreter(surfaceForm, toWeightUnit, convertValue(meanValue, toWeightUnit), about,

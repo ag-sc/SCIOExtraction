@@ -50,9 +50,9 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 	 * stored in its own json-file.
 	 */
 
-	public InvestigationMethodNERLPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public InvestigationMethodNERLPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
-		super(modelName, scope, trainingInstanceNames, developInstanceNames, testInstanceNames);
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames);
 	}
 
 	@Override
@@ -73,9 +73,9 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 //		featureTemplates.add(new LevenshteinTemplate());
 
 //		featureTemplates.add(new MorphologicalNerlaTemplate());
-		
+
 //		featureTemplates.add(new NGramTokenContextTemplate());
-		
+
 //		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new SurfaceFormTemplate());
 //		featureTemplates.add(new IntraTokenTemplate());

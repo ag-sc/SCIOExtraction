@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.deliverymethod;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -47,7 +47,7 @@ public class VertebralAreaSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File("src/main/resources/slotfilling/vertebral_area/corpus/instances/");
+	private final File instanceDirectory = new File("data/slot_filling/vertebral_area/instances/");
 
 	public VertebralAreaSlotFilling() throws IOException {
 		InstanceProvider.removeEmptyInstances = false;
@@ -58,7 +58,7 @@ public class VertebralAreaSlotFilling {
 		 * The scope represents the specifications of the 4 defined specification files.
 		 * The scope mainly affects the exploration.
 		 */
-		SystemScope scope = SystemScope.Builder.getScopeHandler()
+		SystemScope.Builder.getScopeHandler()
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
@@ -79,8 +79,7 @@ public class VertebralAreaSlotFilling {
 		EVertebralAreaModifications rule = EVertebralAreaModifications.NO_MODIFICATION;
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-				.setTrainingProportion(80).setDevelopmentProportion(20).setTestProportion(0).setCorpusSizeFraction(1F)
-				.build();
+				.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
 		PrintStream resultsOut = new PrintStream(new File("results/vertebralAreaResults.csv"));
 
@@ -101,7 +100,7 @@ public class VertebralAreaSlotFilling {
 
 		String modelName = "VertebralArea" + new Random().nextInt(10000);
 
-		VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName, scope,
+		VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName,
 				instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
 				instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())

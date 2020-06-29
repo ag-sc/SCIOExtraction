@@ -69,10 +69,9 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 	private final List<IExplorationStrategy> explorerList;
 
-	public AbstractNERLPredictor(String modelName, SystemScope scope, List<String> trainingInstanceNames,
+	public AbstractNERLPredictor(String modelName, List<String> trainingInstanceNames,
 			List<String> developInstanceNames, List<String> testInstanceNames) {
 
-		super(scope);
 		this.modelName = modelName;
 
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()

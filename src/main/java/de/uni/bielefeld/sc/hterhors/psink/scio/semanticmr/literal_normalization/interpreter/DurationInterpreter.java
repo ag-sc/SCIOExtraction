@@ -12,6 +12,13 @@ public class DurationInterpreter extends AbstractNumericInterpreter {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+	public static void main(String[] args) {
+		
+		System.out.println(new DurationInterpreter("30 min"));
+		
+	}
+	
 	static public enum EDurationUnits implements ISingleUnit {
 
 		undef(0), s(1 / 60d), min(1d), h(60d), day(60 * 24d), week(60 * 24 * 7d), month(60 * 24 * (365d / 12d)),
@@ -56,7 +63,7 @@ public class DurationInterpreter extends AbstractNumericInterpreter {
 	final private static String p3Unit1 = "p3Unit1";
 
 	final static String numbers_ = "((\\d+\\.\\d+)|\\d+)";
-	final static String unit_ = "(s(econds?)?|m(ins?)?|minutes?|h((ours?)|r?)?|d(ays?)?|w(eeks?)?|months?|y(ears?)?)";
+	final static String unit_ = "(s(econds?)?|m(ins?)?|minutes?|h((ours?)|r)?|d(ays?)?|w(eeks?)?|months?|y(ears?)?)";
 	final static String about_ = "(~|" + PRE_BOUNDS + "about" + freeSpace_ + ")?";
 	final static String connection_ = "(" + freeSpace_ + "(to|and)" + freeSpace_ + "|" + freeSpaceQuestionMark_
 			+ "((\\+?-)|\\+(/|\\\\)-|±|" + freeSpace_ + ")" + freeSpaceQuestionMark_ + ")";
