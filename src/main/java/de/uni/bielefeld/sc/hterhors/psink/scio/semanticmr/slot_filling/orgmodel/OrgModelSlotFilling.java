@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,17 +17,27 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.SemanticParsingCRF;
+import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.eval.AbstractEvaluator;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
+import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 
 /**
@@ -65,6 +77,7 @@ public class OrgModelSlotFilling {
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
+	Map<Instance, State> coverageStates;
 
 	public OrgModelSlotFilling() throws IOException {
 
@@ -140,6 +153,36 @@ public class OrgModelSlotFilling {
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
 			resultsOut.println(toResults(rule, score));
+
+			Set<SlotType> slotTypesToConsider = new HashSet<>();
+			slotTypesToConsider.add(SCIOSlotTypes.hasAge);
+			slotTypesToConsider.add(SCIOSlotTypes.hasAgeCategory);
+			slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
+			slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
+			slotTypesToConsider.add(SCIOSlotTypes.hasGender);
+
+			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
+					EEvaluationDetail.LITERAL);
+
+			coverageStates = predictor.coverageOnDevelopmentInstances(false);
+
+			System.out.println("---------------------------------------");
+
+			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator);
+
+			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
+					evaluator);
+
+			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates);
+
+			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator);
+
+			PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider,
+					evaluator);
+
+			PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates);
+
+			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator);
 
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.

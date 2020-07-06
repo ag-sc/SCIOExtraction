@@ -1935,3 +1935,47 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		return featureTemplates;
 	}
 }
+
+
+//explorationMode: TYPE_BASED
+//assignmentMode: TREATMENT_ORGANISM_MODEL_INJURY
+//cardinalityMode: PARALLEL_MODEL_UPDATE
+//groupNameClusteringMode: WEKA_CLUSTERING
+//groupNameProviderMode: PREDICTED
+//mainClassProviderMode: PRE_PREDICTED
+//distinctGroupNamesMode: NOT_DISTINCT
+//complexityMode: ROOT
+//TREATMENTS MICRO: BOTH = Score [getF1()=0.600, getPrecision()=0.571, getRecall()=0.632, tp=36, fp=27, fn=21, tn=0]
+//TREATMENTS MICRO: Vehicle = Score [getF1()=0.710, getPrecision()=0.688, getRecall()=0.733, tp=11, fp=5, fn=4, tn=0]
+//TREATMENTS MICRO: Non Vehicle = Score [getF1()=0.556, getPrecision()=0.521, getRecall()=0.595, tp=25, fp=23, fn=17, tn=0]
+//TREATMENTS MACRO: BOTH = Score [macroF1=0.720, macroPrecision=0.749, macroRecall=0.694]
+//TREATMENTS MACRO: Vehicle = Score [macroF1=0.616, macroPrecision=0.588, macroRecall=0.647]
+//TREATMENTS MACRO: Non Vehicle = Score [macroF1=0.701, macroPrecision=0.709, macroRecall=0.693]
+//ORGANISM MODEL MICRO: SCORE = Score [getF1()=0.947, getPrecision()=0.947, getRecall()=0.947, tp=18, fp=1, fn=1, tn=0]
+//ORGANISM MODEL MACRO: SCORE = Score [macroF1=0.947, macroPrecision=0.947, macroRecall=0.947]
+//INJURY MODEL MICRO: SCORE = Score [getF1()=0.722, getPrecision()=0.812, getRecall()=0.650, tp=13, fp=3, fn=7, tn=0]
+//INJURY MODEL MACRO: SCORE = Score [macroF1=0.693, macroPrecision=0.722, macroRecall=0.667]
+//EXP GROUP MICRO  CARDINALITY = Score [getF1()=0.847, getPrecision()=0.818, getRecall()=0.878, tp=72, fp=16, fn=10, tn=0]
+//EXP GROUP MICRO  INTERVALL CARDINALITY = 0:0.21052631578947367	1:0.47368421052631576	2:0.9473684210526315	3:1.0
+//EXP GROUP MICRO  CARDINALITY RMSE = 1.6222142113076254
+//EXP GROUP MICRO  OVERALL SCORE = Score [getF1()=0.593, getPrecision()=0.578, getRecall()=0.608, tp=264, fp=193, fn=170, tn=0]
+//EXP GROUP MICRO  COMPONENTS SCORE = Score [getF1()=0.484, getPrecision()=0.498, getRecall()=0.471, tp=112, fp=113, fn=126, tn=0]
+//EXP GROUP MICRO: TREATMENT BOTH = Score [getF1()=0.538, getPrecision()=0.508, getRecall()=0.573, tp=67, fp=65, fn=50, tn=0]
+//EXP GROUP MICRO: TREATMENT Vehicle = Score [getF1()=0.688, getPrecision()=0.688, getRecall()=0.688, tp=11, fp=5, fn=5, tn=0]
+//EXP GROUP MICRO: TREATMENT Non Vehicle = Score [getF1()=0.516, getPrecision()=0.483, getRecall()=0.554, tp=56, fp=60, fn=45, tn=0]
+//EXP GROUP MICRO: ORG MODEL = Score [getF1()=0.642, getPrecision()=0.761, getRecall()=0.556, tp=35, fp=11, fn=28, tn=0]
+//EXP GROUP MICRO: INJURY MODEL = Score [getF1()=0.190, getPrecision()=0.213, getRecall()=0.172, tp=10, fp=37, fn=48, tn=0]
+//EXP GROUP MACRO  CARDINALITY = Score [macroF1=0.867, macroPrecision=0.829, macroRecall=0.910]
+//EXP GROUP MACRO  INTERVALL CARDINALITY = 0:0.21052631578947367	1:0.47368421052631576	2:0.9473684210526315	3:1.0
+//EXP GROUP MACRO  CARDINALITY RMSE = 1.6222142113076254
+//EXP GROUP MACRO  OVERALL SCORE = Score [macroF1=0.579, macroPrecision=0.594, macroRecall=0.564]
+//EXP GROUP MACRO  COMPONENTS SCORE = Score [macroF1=0.368, macroPrecision=0.378, macroRecall=0.358]
+//EXP GROUP MACRO: TREATMENT BOTH = Score [macroF1=0.516, macroPrecision=0.542, macroRecall=0.491]
+//EXP GROUP MACRO: TREATMENT Vehicle = Score [macroF1=0.348, macroPrecision=0.348, macroRecall=0.348]
+//EXP GROUP MACRO: TREATMENT Non Vehicle = Score [macroF1=0.487, macroPrecision=0.502, macroRecall=0.474]
+//EXP GROUP MACRO: ORG MODEL = Score [macroF1=0.432, macroPrecision=0.432, macroRecall=0.432]
+//EXP GROUP MACRO: INJURY MODEL = Score [macroF1=0.117, macroPrecision=0.117, macroRecall=0.117]
+//CRFStatistics [context=Train, getTotalDuration()=3877318]
+//CRFStatistics [context=Test, getTotalDuration()=865325]
+//modelName: ExperimentalGroup256
+//States generated in total: 10514433

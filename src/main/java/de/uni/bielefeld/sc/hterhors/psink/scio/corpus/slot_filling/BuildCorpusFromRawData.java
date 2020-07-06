@@ -91,11 +91,11 @@ public class BuildCorpusFromRawData {
 //		buildCorpusForObservation();
 //		buildCorpusForOrganismModel();
 //		buildCorpusForInjuryModel();
-//		buildCorpusForTreatmentType();
+		buildCorpusForTreatmentType();
 //		buildCorpusForVertebralArea();
 //		buildCorpusForAnaesthesia();
-		buildCorpusForDeliveryMethod();
-		buildCorpusForInjuryDevice();
+//		buildCorpusForDeliveryMethod();
+//		buildCorpusForInjuryDevice();
 //		buildCorpusForInvestigationMethod();
 //		buildCorpusForTrend();
 		System.exit(1);
@@ -206,9 +206,13 @@ public class BuildCorpusFromRawData {
 		treatmentSlotTypes.add(SCIOSlotTypes.hasCompound);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDirection);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasLocation);
+		treatmentSlotTypes.add(SCIOSlotTypes.hasApplicationInstrument);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDosage);
+		treatmentSlotTypes.add(SCIOSlotTypes.hasVoltage);
+		treatmentSlotTypes.add(SCIOSlotTypes.hasRehabMedication);
+		treatmentSlotTypes.add(SCIOSlotTypes.hasElectricFieldStrength);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), treatmentSlotTypes, SCIOEntityTypes.treatment, true, true,
-				false);
+				true);
 		annotateWithRegularExpressions(new TreatmentPattern(SCIOEntityTypes.treatment));
 
 	}

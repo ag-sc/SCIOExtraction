@@ -40,6 +40,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.KeyTermExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.SectionizedEntityRecLinkExplorer;
 
 public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
@@ -166,20 +167,23 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 	public Score computeCoverageOnTrainingInstances(boolean detailedLog) {
 		return new NERSemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), objectiveFunction).computeCoverage(detailedLog, objectiveFunction,
-						trainingInstances);
+				getSampler(), getStateInitializer(), objectiveFunction)
+						.setKeyTerms(KeyTermExtractor.getKeyTerms(trainingInstances))
+						.computeCoverage(detailedLog, objectiveFunction, trainingInstances);
 	}
 
 	public Score computeCoverageOnDevelopmentInstances(boolean detailedLog) {
 		return new NERSemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), objectiveFunction).computeCoverage(detailedLog, objectiveFunction,
-						developmentInstances);
+				getSampler(), getStateInitializer(), objectiveFunction)
+						.setKeyTerms(KeyTermExtractor.getKeyTerms(trainingInstances))
+						.computeCoverage(detailedLog, objectiveFunction, developmentInstances);
 	}
 
 	public Score computeCoverageOnTestInstances(boolean detailedLog) {
 		return new NERSemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), objectiveFunction).computeCoverage(detailedLog, objectiveFunction,
-						testInstances);
+				getSampler(), getStateInitializer(), objectiveFunction)
+						.setKeyTerms(KeyTermExtractor.getKeyTerms(trainingInstances))
+						.computeCoverage(detailedLog, objectiveFunction, testInstances);
 	}
 
 	public void trainOrLoadModel() {
@@ -200,7 +204,8 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
-		crf = new NERSemanticParsingCRF(model, explorerList, getSampler(), getStateInitializer(), objectiveFunction);
+		crf = new NERSemanticParsingCRF(model, explorerList, getSampler(), getStateInitializer(), objectiveFunction)
+				.setKeyTerms(KeyTermExtractor.getKeyTerms(trainingInstances));
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
 		 */

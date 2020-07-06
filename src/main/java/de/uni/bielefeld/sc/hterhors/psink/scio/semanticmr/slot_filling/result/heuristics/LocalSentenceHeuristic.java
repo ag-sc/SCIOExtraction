@@ -31,7 +31,7 @@ import uk.ac.shef.wit.simmetrics.similaritymetrics.JaccardSimilarity;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3;
 import weka.gui.ETable;
 
-public class Heuristic {
+public class LocalSentenceHeuristic {
 
 	private static final double jaccardThreshold = 0.2D;
 	final Map<Instance, Set<DocumentLinkedAnnotation>> annotations;
@@ -39,7 +39,7 @@ public class Heuristic {
 	private Map<Instance, Set<EntityTemplate>> groupAnnotations;
 //	private GroupNameMapping groupNameMapping;
 
-	public Heuristic(Map<Instance, Set<DocumentLinkedAnnotation>> annotations,
+	public LocalSentenceHeuristic(Map<Instance, Set<DocumentLinkedAnnotation>> annotations,
 			Map<Instance, Set<EntityTemplate>> groupAnnotations, List<Instance> trainingInstances) throws IOException {
 		this.annotations = annotations;
 		this.groupAnnotations = groupAnnotations;
@@ -52,6 +52,12 @@ public class Heuristic {
 		}
 
 	}
+
+	/*
+	 * Best values investigationMethodRange = 5 && groupNameRange = 0-10
+	 */
+	final private int investigationMethodRange = 5;
+	final int groupNameRange = 1;
 
 	public Map<Instance, State> predictInstancesByHeuristic(List<Instance> instances) {
 
@@ -107,7 +113,6 @@ public class Heuristic {
 //		System.out.println("------");
 		List<ResultData> newResultData = new ArrayList<>();
 		for (ResultData resultData : trendInvResultData) {
-			final int range = 10;
 
 			int trendSentenceIndex = getSentenceIndexOfTrend(resultData);
 
@@ -130,7 +135,7 @@ public class Heuristic {
 //			System.out.println("Trend  Sentence index" + trendSentenceIndex);
 				Set<DocumentLinkedAnnotation> names = new HashSet<>();
 				for (int sentenceIndex = trendSentenceIndex; sentenceIndex >= trendSentenceIndex
-						- range; sentenceIndex--) {
+						- groupNameRange; sentenceIndex--) {
 
 					Set<DocumentLinkedAnnotation> annotationsInSentence = entitiesPerSentence.get(sentenceIndex);
 
@@ -149,7 +154,6 @@ public class Heuristic {
 					names.addAll(getSubClassOf(annotationsInSentence, SCIOEntityTypes.experimentalGroup));
 
 					List<DocumentLinkedAnnotation> sortedLocalNames = new ArrayList<>(names);
-					System.out.println("### NUmber of Local Names = " + sortedLocalNames.size());
 					/**
 					 * Sort to compare first mention against all following ones if there are
 					 * mentioned multiple. Sorting gains 4 points in macro F
@@ -172,6 +176,8 @@ public class Heuristic {
 							return Integer.compare(o1.getStartDocCharOffset(), o2.getStartDocCharOffset());
 						}
 					});
+					System.out.println((trendSentenceIndex - sentenceIndex) + " --> ### NUmber of Local Names = "
+							+ sortedLocalNames.size());
 
 //				System.out.println("namePerGroup: " + namePerGroup.keySet().stream()
 //						.map(d -> d.getSurfaceForm() + " " + d.getEndDocCharOffset()).collect(Collectors.toSet()));
@@ -897,8 +903,6 @@ public class Heuristic {
 	private List<ResultData> extractTrendInvMethodResultData(
 			Map<Integer, Set<DocumentLinkedAnnotation>> annotationsPerSentence) {
 
-		int range = 5;
-
 		List<ResultData> results = new ArrayList<>();
 
 		for (Integer sentenceID : annotationsPerSentence.keySet()) {
@@ -914,20 +918,26 @@ public class Heuristic {
 				continue;
 			}
 
-			for (int i = 0; i >= -range; i--) {
+//			System.out.println("Trend sentence = " + sentenceID);
 
+			for (int i = 0; i >= -investigationMethodRange; i--) {
+//				System.out.println("look for investigationemthod: " + (sentenceID + i));
 				annotations = annotationsPerSentence.get(sentenceID + i);
 				if (annotations == null)
 					continue;
 
 				invMRelated.addAll(getSubClassOf(annotations, EntityType.get("InvestigationMethod")));
 
+//				System.out.println(invMRelated);
+//				System.out.println();
 				if (!invMRelated.isEmpty()) {
 					add = true;
 					break;
 				}
 
 			}
+
+//			System.out.println("add = " + add);
 			if (add) {
 
 				ResultData resultData = new ResultData();
@@ -969,7 +979,7 @@ public class Heuristic {
 				results.add(resultData);
 			}
 		}
-
+		System.out.println("results.size() = " + results.size());
 		return results;
 
 	}

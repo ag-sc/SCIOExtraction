@@ -109,8 +109,8 @@ public class ExperimentalGroupEvaluation {
 //			System.out.println();
 			experimentalCardinality.add(sC);
 
-			List<Integer> bestAssignment =  predictionObjectiveFunction.getEvaluator()
-					.getBestAssignment(goldAnnotations, predictedAnnotations, scoreType);
+			List<Integer> bestAssignment = predictionObjectiveFunction.getEvaluator().getBestAssignment(goldAnnotations,
+					predictedAnnotations, scoreType);
 			if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
 
 				Score both = treatmentsInExpGroupEvaluate(false, bestAssignment, goldAnnotations, predictedAnnotations,

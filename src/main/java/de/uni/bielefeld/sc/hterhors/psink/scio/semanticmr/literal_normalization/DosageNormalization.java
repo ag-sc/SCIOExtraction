@@ -7,7 +7,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 public class DosageNormalization extends AbstractSCIONormalization {
 
 	public DosageNormalization() {
-		super(EntityType.get("Dosage"));
+		super(EntityType.get("DosageExtracorporal"));
 	}
 
 	@Override

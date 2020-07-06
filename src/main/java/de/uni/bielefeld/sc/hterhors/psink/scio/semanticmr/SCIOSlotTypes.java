@@ -15,8 +15,16 @@ public class SCIOSlotTypes {
 	public static final SlotType hasGroupName = getLazy("hasGroupName");
 	public static final SlotType hasTreatmentType = getLazy("hasTreatmentType");
 
+	public static final SlotType hasApplicationInstrument = getLazy("hasApplicationInstrument");
 	public static final SlotType hasDeliveryMethod = getLazy("hasDeliveryMethod");
 	public static final SlotType hasDuration = getLazy("hasDuration");
+
+	public static final SlotType hasElectricFieldStrength = getLazy("hasElectricFieldStrength");
+	public static final SlotType hasVoltage = getLazy("hasVoltage");
+	public static final SlotType hasRehabMedication = getLazy("hasRehabMedication");
+	public static final SlotType hasDirection = getLazy("hasDirection");
+	public static final SlotType hasDosage = getLazy("hasDosage");
+	public static final SlotType hasTemperature = getLazy("hasTemperature");
 
 	public static final SlotType hasInjuryModel = getLazy("hasInjuryModel");
 	public static final SlotType hasInjuryDevice = getLazy("hasInjuryDevice");
@@ -25,15 +33,14 @@ public class SCIOSlotTypes {
 	public static final SlotType hasLocation = getLazy("hasLocation");
 	public static final SlotType hasUpperVertebrae = getLazy("hasUpperVertebrae");
 	public static final SlotType hasLowerVertebrae = getLazy("hasLowerVertebrae");
-
 	public static final SlotType hasAnaesthesia = getLazy("hasInjuryAnaesthesia");
+
 	public static final SlotType hasNNumber = getLazy("hasNNumber");
 	public static final SlotType hasTotalPopulationSize = getLazy("hasTotalPopulationSize");
 	public static final SlotType hasGroupNumber = getLazy("hasGroupNumber");
 	public static final SlotType hasEventBefore = getLazy("hasEventBefore");
 	public static final SlotType hasEventAfter = getLazy("hasEventAfter");
-	public static final SlotType hasDirection = getLazy("hasDirection");
-	public static final SlotType hasDosage = getLazy("hasDosage");
+
 	public static final SlotType hasInjuryLocation = getLazy("hasInjuryLocation");;
 	public static final SlotType hasInjuryAnaesthesia = getLazy("hasInjuryAnaesthesia");
 	public static final SlotType hasTrend = getLazy("hasTrend");

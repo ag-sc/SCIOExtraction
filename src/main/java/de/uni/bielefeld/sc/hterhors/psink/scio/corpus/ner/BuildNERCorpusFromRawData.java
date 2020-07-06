@@ -93,7 +93,8 @@ public class BuildNERCorpusFromRawData {
 //		buildForVertebralArea();
 //		buildForDeliveryMethod();
 //		buildForInvestigationMethod();
-		buildForGroupName();
+//		buildForGroupName();
+		buildForCompound();
 //		buildForTrend();
 
 	}
@@ -103,7 +104,7 @@ public class BuildNERCorpusFromRawData {
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasTrend.includeRec();
 		buildSubDataStructureFiles(SCIOEntityTypes.trend);
-		buildInstances(SCIOEntityTypes.trend);
+		buildInstances(SCIOEntityTypes.trend, SCIOEntityTypes.result);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -113,7 +114,15 @@ public class BuildNERCorpusFromRawData {
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasGroupName.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.groupName);
-		buildInstances(SCIOEntityTypes.groupName);
+		buildInstances(SCIOEntityTypes.groupName, SCIOEntityTypes.experimentalGroup);
+		SlotType.restoreExcludance(x);
+	}
+
+	private static void buildForCompound() throws Exception {
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		SlotType.excludeAll();
+		buildSubDataStructureFiles(SCIOEntityTypes.compound);
+		buildInstances(SCIOEntityTypes.compound, SCIOEntityTypes.treatment);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -123,7 +132,7 @@ public class BuildNERCorpusFromRawData {
 		SlotType.excludeAll();
 //		SCIOSlotTypes.hasLocation.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.investigationMethod);
-		buildInstances(SCIOEntityTypes.investigationMethod);
+		buildInstances(SCIOEntityTypes.investigationMethod, SCIOEntityTypes.result);
 		SlotType.restoreExcludance(x);
 
 	}
@@ -135,7 +144,7 @@ public class BuildNERCorpusFromRawData {
 		SCIOSlotTypes.hasLowerVertebrae.include();
 		SCIOSlotTypes.hasUpperVertebrae.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.vertebralArea);
-		buildInstances(SCIOEntityTypes.vertebralArea);
+		buildInstances(SCIOEntityTypes.vertebralArea, SCIOEntityTypes.injury);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -146,7 +155,7 @@ public class BuildNERCorpusFromRawData {
 		SCIOSlotTypes.hasDirection.include();
 		SCIOSlotTypes.hasLocation.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
-		buildInstances(SCIOEntityTypes.deliveryMethod);
+		buildInstances(SCIOEntityTypes.deliveryMethod, SCIOEntityTypes.experimentalGroup);
 		SlotType.restoreExcludance(x);
 
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
@@ -163,7 +172,7 @@ public class BuildNERCorpusFromRawData {
 		SCIOSlotTypes.hasLocation.include();
 		SCIOSlotTypes.hasDosage.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.treatment);
-		buildInstances(SCIOEntityTypes.treatment);
+		buildInstances(SCIOEntityTypes.treatment, SCIOEntityTypes.treatment);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -177,7 +186,7 @@ public class BuildNERCorpusFromRawData {
 		SCIOSlotTypes.hasLowerVertebrae.include();
 		SCIOSlotTypes.hasUpperVertebrae.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.injury);
-		buildInstances(SCIOEntityTypes.injury);
+		buildInstances(SCIOEntityTypes.injury, SCIOEntityTypes.injury);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -191,7 +200,7 @@ public class BuildNERCorpusFromRawData {
 		SCIOSlotTypes.hasOrganismSpecies.include();
 		SCIOSlotTypes.hasWeight.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.organismModel);
-		buildInstances(SCIOEntityTypes.organismModel);
+		buildInstances(SCIOEntityTypes.organismModel, SCIOEntityTypes.organismModel);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -214,7 +223,7 @@ public class BuildNERCorpusFromRawData {
 
 	}
 
-	private static void buildInstances(EntityType rootEntityType) throws Exception {
+	private static void buildInstances(EntityType rootEntityType, EntityType mainEntity) throws Exception {
 
 		NERCorpusBuilderBib.NER_DIR.mkdir();
 
@@ -223,8 +232,7 @@ public class BuildNERCorpusFromRawData {
 
 		InstanceProvider.maxNumberOfAnnotations = 120;
 		InstanceProvider instanceProvider = new InstanceProvider(
-				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(EntityType.get("ExperimentalGroup")),
-				shuffleCorpusDistributor);
+				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(mainEntity), shuffleCorpusDistributor);
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
@@ -297,12 +305,17 @@ public class BuildNERCorpusFromRawData {
 						line[CLASS_TYPE_INDEX].trim(), line[TEXT_MENTION_INDEX].trim(),
 						Integer.parseInt(line[ONSET_INDEX].trim()));
 
-				if (EntityType.get("ExperimentalGroup").getTransitiveClosureSubEntityTypes()
-						.contains(annotation.getEntityType())
-						|| rootEntityType.getRelatedEntityTypes().contains(annotation.getEntityType()))
-//				if (rootEntityType.getHierarchicalEntityTypes().contains(annotation.getEntityType()))
-					annotations.add(AnnotationBuilder.toAnnotation(annotation.document, rootEntityType,
-							annotation.getSurfaceForm(), annotation.getStartDocCharOffset()));
+				if (rootEntityType.getHierarchicalEntityTypes().contains(annotation.getEntityType()))
+					annotations.add(annotation);
+
+				/**
+				 * For group names
+				 */
+				// if (EntityType.get("ExperimentalGroup").getTransitiveClosureSubEntityTypes()
+//						.contains(annotation.getEntityType())
+//						|| rootEntityType.getRelatedEntityTypes().contains(annotation.getEntityType()))
+//					annotations.add(AnnotationBuilder.toAnnotation(annotation.document, rootEntityType,
+//							annotation.getSurfaceForm(), annotation.getStartDocCharOffset()));
 
 			} catch (Exception e) {
 				System.err.println(e.getMessage());

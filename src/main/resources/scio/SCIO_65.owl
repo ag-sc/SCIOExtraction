@@ -2180,7 +2180,7 @@ DOI: 10.1089/neu.2006.23.635</rdfs:introduced>
     
 
 
-    <!-- http://psink.de/scio/BoneMarrowStemCell -->
+    <!-- http://psink.de/scio/HematopoieticStemCell -->
 
     <owl:Class rdf:about="http://psink.de/scio/HematopoieticStemCell">
         <rdfs:subClassOf rdf:resource="http://psink.de/scio/StemCell"/>

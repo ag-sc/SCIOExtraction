@@ -45,7 +45,7 @@ public class KwonSPARQLExtraction {
 //		model.read(new FileInputStream("OEC.n-triples"), null, "N-TRIPLES");
 //		dataPrinter = new PrintStream(new File("oec_data.csv"));
 //
-//		String pubmedIds = getPubmedIDsOfEffacyPublications();
+		String pubmedIds = getPubmedIDsOfEffacyPublications();
 ////
 //		getAnimalScore(EScoreTypes.PRIMATE, pubmedIds, getPrimateSpecies());
 //		getAnimalScore(EScoreTypes.LARGER_ANIMAL, pubmedIds, getLargerAnimalSpecies());
@@ -56,14 +56,14 @@ public class KwonSPARQLExtraction {
 //		getClipCompressionScore(pubmedIds);
 //		getPartialTransectionSharpScore(pubmedIds);
 ////
-//		timeWindowScore(pubmedIds);
+		timeWindowScore(pubmedIds);
 ////
 //		clinicallyMeaningFullBBB();
 //		clinicallyMeaningFullOtherMotor();
 //		clinicallyMeaningFullCervicalMotor();
 //		clinicallyMeaningFullCervicalNonMotor();
 //		clinicallyMeaningFullDosageResponseResult();
-		publicationReproduceability();
+//		publicationReproduceability();
 	}
 
 	private int hourToMin(int hour) {

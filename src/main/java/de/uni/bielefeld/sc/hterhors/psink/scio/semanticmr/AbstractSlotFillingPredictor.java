@@ -28,8 +28,6 @@ import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRFMultiState;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
-import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.Model;
@@ -46,7 +44,6 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
@@ -54,13 +51,10 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.eval.CartesianEvaluator;
+import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.weka.SentenceClassificationWEKA;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.initializer.GenericMultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
@@ -81,23 +75,23 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final String modelName;
 	public final Map<String, Set<AbstractAnnotation>> annotations = new HashMap<>();
 
-//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
+//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 //			new GreedySearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
 //
-//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
+//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 //			new GreedySearchEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
-//	private final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED,3));
-//	
-//	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(
-//			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 3));
-
 	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED, 10));
 
 	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE));
+			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
+
+//	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
+//			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+//
+//	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
+//			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
 
@@ -163,14 +157,16 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		 * that should be read.
 		 */
 
-		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>(
-				getGoldModificationRules(modificationRule));
+		Collection<GoldModificationRule> goldModificationRules = new ArrayList<>();
+
 		goldModificationRules.add(a -> {
 			if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
 					&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty())
 				return null;
 			return a;
 		});
+
+		goldModificationRules.addAll(getGoldModificationRules(modificationRule));
 
 		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor, goldModificationRules,
 				deduplicationRule);
@@ -461,21 +457,66 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	abstract protected AdvancedLearner getLearner();
 
 	public Score computeCoverageOnTrainingInstances(boolean detailedLog) {
-		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), trainingObjectiveFunction).computeCoverage(detailedLog,
-						trainingObjectiveFunction, trainingInstances);
+
+		Score meanTrainOFScore = new Score();
+		for (Entry<Instance, State> finalState : new SemanticParsingCRF(
+				new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList, getSampler(),
+				getStateInitializer(), trainingObjectiveFunction)
+						.computeCoverage(detailedLog, trainingObjectiveFunction, trainingInstances).entrySet()) {
+			trainingObjectiveFunction.score(finalState.getValue());
+			if (detailedLog)
+				log.info(
+						finalState.getKey().getName().substring(0, Math.min(finalState.getKey().getName().length(), 10))
+								+ "... \t"
+								+ SemanticParsingCRF.SCORE_FORMAT.format(finalState.getValue().getObjectiveScore()));
+			meanTrainOFScore.add(finalState.getValue().getMicroScore());
+		}
+
+		return meanTrainOFScore;
+
 	}
 
 	public Score computeCoverageOnDevelopmentInstances(boolean detailedLog) {
+		Score meanTrainOFScore = new Score();
+		for (Entry<Instance, State> finalState : new SemanticParsingCRF(
+				new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList, getSampler(),
+				getStateInitializer(), predictionObjectiveFunction)
+						.computeCoverage(detailedLog, predictionObjectiveFunction, developmentInstances).entrySet()) {
+			predictionObjectiveFunction.score(finalState.getValue());
+			if (detailedLog)
+				log.info(
+						finalState.getKey().getName().substring(0, Math.min(finalState.getKey().getName().length(), 10))
+								+ "... \t"
+								+ SemanticParsingCRF.SCORE_FORMAT.format(finalState.getValue().getObjectiveScore()));
+			meanTrainOFScore.add(finalState.getValue().getMicroScore());
+		}
+
+		return meanTrainOFScore;
+
+	}
+
+	public Map<Instance, State> coverageOnDevelopmentInstances(boolean detailedLog) {
 		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
 				getSampler(), getStateInitializer(), predictionObjectiveFunction).computeCoverage(detailedLog,
 						predictionObjectiveFunction, developmentInstances);
 	}
 
 	public Score computeCoverageOnTestInstances(boolean detailedLog) {
-		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), predictionObjectiveFunction).computeCoverage(detailedLog,
-						predictionObjectiveFunction, testInstances);
+		Score meanTrainOFScore = new Score();
+		for (Entry<Instance, State> finalState : new SemanticParsingCRF(
+				new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList, getSampler(),
+				getStateInitializer(), predictionObjectiveFunction)
+						.computeCoverage(detailedLog, predictionObjectiveFunction, testInstances).entrySet()) {
+			predictionObjectiveFunction.score(finalState.getValue());
+			if (detailedLog)
+				log.info(
+						finalState.getKey().getName().substring(0, Math.min(finalState.getKey().getName().length(), 10))
+								+ "... \t"
+								+ SemanticParsingCRF.SCORE_FORMAT.format(finalState.getValue().getObjectiveScore()));
+			meanTrainOFScore.add(finalState.getValue().getMicroScore());
+		}
+
+		return meanTrainOFScore;
 	}
 
 	public void trainOrLoadModel() {

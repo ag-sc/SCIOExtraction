@@ -158,8 +158,8 @@ DorsalColumn	false
 DorsalHemisection	false
 DorsalInjuryArea	false
 DorsolateralInjuryArea	false
-DosageExtracorporal	false
-DosageIntracorporal	false
+DosageExtracorporal	true
+DosageIntracorporal	true
 Dosage	true
 DoubleBlindStudy	false
 DragonPharmaceuticals	false

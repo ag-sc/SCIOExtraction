@@ -17,9 +17,6 @@ import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.ClassWithOutDataTypeProperties;
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.visualization.templates.DataTypeClass;
@@ -55,18 +52,19 @@ public class OWL2GraphmlConverter {
 
 	}
 
-	public static void main(String[] args) throws Exception {
+//	public static void main(String[] args) throws Exception {
+//
+//		SystemScope.Builder.getScopeHandler()
+//				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
+//
+//		new OWL2GraphmlConverter(new File("graphml/scio_v_" + 65 + ".graphml"));
+//
+//	}
 
-		new OWL2GraphmlConverter();
-
-	}
-
-	public OWL2GraphmlConverter() throws IOException, Exception {
+	public OWL2GraphmlConverter(File vizOutputFile, File hierarchiesFile, File structuresFile)
+			throws IOException, Exception {
 
 		List<IGraphMLContent> listOfUnGroupedContent = new ArrayList<>();
-
-		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).build();
 
 		/*
 		 * vis_group,ClassNames
@@ -107,11 +105,9 @@ public class OWL2GraphmlConverter {
 
 		Set<Triple> objectTypeProperties = new HashSet<>();
 
-		List<String[]> structures = SlotFillingCorpusBuilderBib.buildStructuresFile("Result") == null
-				? Collections.emptyList()
-				: Files.readAllLines(SlotFillingCorpusBuilderBib.buildStructuresFile("Result").toPath()).stream()
-						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
-						.collect(Collectors.toList());
+		List<String[]> structures = structuresFile == null ? Collections.emptyList()
+				: Files.readAllLines(structuresFile.toPath()).stream().filter(l -> !l.startsWith("#"))
+						.filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t")).collect(Collectors.toList());
 
 		for (String[] d : structures) {
 
@@ -169,11 +165,9 @@ public class OWL2GraphmlConverter {
 
 		}
 
-		List<String[]> hierarchies = SlotFillingCorpusBuilderBib.buildHierarchiesFile("Result") == null
-				? Collections.emptyList()
-				: Files.readAllLines(SlotFillingCorpusBuilderBib.buildHierarchiesFile("Result").toPath()).stream()
-						.filter(l -> !l.startsWith("#")).filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t"))
-						.collect(Collectors.toList());
+		List<String[]> hierarchies = hierarchiesFile == null ? Collections.emptyList()
+				: Files.readAllLines(hierarchiesFile.toPath()).stream().filter(l -> !l.startsWith("#"))
+						.filter(l -> !l.trim().isEmpty()).map(l -> l.split("\t")).collect(Collectors.toList());
 
 		for (String[] d : hierarchies) {
 			subClassRelations.add(new Tuple(d[0], d[1]));
@@ -262,8 +256,9 @@ public class OWL2GraphmlConverter {
 
 		listOfUnGroupedContent.forEach(System.out::println);
 		GraphML graph = new GraphML(listOfUnGroupedContent);
-		PrintStream ps = new PrintStream(new File("graphml/scio_v_" + 65 + ".graphml"));
+		PrintStream ps = new PrintStream(vizOutputFile);
 		ps.println(graph);
+		ps.flush();
 		ps.close();
 	}
 

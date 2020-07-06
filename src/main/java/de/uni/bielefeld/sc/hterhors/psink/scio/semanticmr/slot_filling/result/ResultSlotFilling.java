@@ -198,11 +198,11 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 
 		crf.setInitializer(initializer);
 
-		log.info("Training instances coverage: "
-				+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, trainingInstances));
-
-		log.info("Test instances coverage: "
-				+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, testInstances));
+//		log.info("Training instances coverage: "
+//				+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, trainingInstances));
+//
+//		log.info("Test instances coverage: "
+//				+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, testInstances));
 
 		System.exit(1);
 

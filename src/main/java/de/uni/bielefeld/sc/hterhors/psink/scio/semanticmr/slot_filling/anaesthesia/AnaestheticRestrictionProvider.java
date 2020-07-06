@@ -14,7 +14,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 public class AnaestheticRestrictionProvider {
 
 	public enum EAnaestheticModifications implements IModificationRule {
-		ROOT, ROOT_DELIVERY_METHOD, ROOT_DELIVERY_METHOD_DOSAGE, NO_MODIFICATION;
+		ROOT,ROOT_DOSAGE, ROOT_DELIVERY_METHOD, ROOT_DELIVERY_METHOD_DOSAGE, NO_MODIFICATION;
 
 	}
 
@@ -32,6 +32,8 @@ public class AnaestheticRestrictionProvider {
 			return getDeliveryMethod();
 		case ROOT_DELIVERY_METHOD_DOSAGE:
 			return getDosage();
+		case ROOT_DOSAGE:
+			return getOnlyDosage();
 		}
 		return null;
 
@@ -69,9 +71,8 @@ public class AnaestheticRestrictionProvider {
 				EntityTemplate newGold = new EntityTemplate(
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
 
-				newGold.setSingleSlotFiller(deliveryMethod,
-						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(deliveryMethod).getSlotFiller());
-
+				newGold.setSingleSlotFiller(deliveryMethod, goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(deliveryMethod).getSlotFiller());
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
@@ -98,9 +99,8 @@ public class AnaestheticRestrictionProvider {
 						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
 				newGold.setSingleSlotFiller(dosageSlot,
 						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(dosageSlot).getSlotFiller());
-				newGold.setSingleSlotFiller(deliveryMethod,
-						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(deliveryMethod).getSlotFiller());
-
+				newGold.setSingleSlotFiller(deliveryMethod, goldAnnotation.asInstanceOfEntityTemplate()
+						.getSingleFillerSlot(deliveryMethod).getSlotFiller());
 
 				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
 					return null;
@@ -113,6 +113,32 @@ public class AnaestheticRestrictionProvider {
 		});
 		return rules;
 
+	}
+	public static List<GoldModificationRule> getOnlyDosage() {
+		List<GoldModificationRule> rules = new ArrayList<>();
+		
+		rules.add(new GoldModificationRule() {
+			
+			@Override
+			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
+				
+				EntityTemplate newGold = new EntityTemplate(
+						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
+				
+				newGold.setSingleSlotFiller(dosageSlot,
+						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(dosageSlot).getSlotFiller());
+				
+				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
+					return null;
+				
+				if (newGold.asInstanceOfEntityTemplate().isEmpty())
+					return null;
+				
+				return newGold;
+			}
+		});
+		return rules;
+		
 	}
 
 }

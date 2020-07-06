@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,18 +6,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
 
-public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
+public class DistinctEntityTypeConstraint extends AbstractHardConstraint {
 
 	final public AbstractEvaluator evaluator;
 
-	public DistinctEntityTemplateConstraint(AbstractEvaluator evaluator) {
+	public DistinctEntityTypeConstraint(AbstractEvaluator evaluator) {
 		this.evaluator = evaluator;
 	}
 
@@ -27,10 +26,13 @@ public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
 
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
 
+			Map<SlotType, Boolean> z = SlotType.storeExcludance();
+			SlotType.excludeAll();
 			if (currentPrediction.evaluateEquals(evaluator, entityTemplate)) {
 				violates = true;
 				break;
 			}
+			SlotType.restoreExcludance(z);
 		}
 
 		return violates;

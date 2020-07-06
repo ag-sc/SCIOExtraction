@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatmen
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
@@ -37,6 +40,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.initializer.GenericMultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -77,26 +82,30 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
 
 		DeliveryMethodPredictor deliveryMethodPrediction = null;
-		if (rule != ETreatmentModifications.ROOT) {
+		if (rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD
+				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT
+				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION) {
 
 			String deliveryMethodModelName = "DeliveryMethod" + modelName;
 
 			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT);
+					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);
 
-		}
-		for (Instance instance : instanceProvider.getInstances()) {
-			annotations.put(instance, new ArrayList<>());
-			if (rule != ETreatmentModifications.ROOT) {
+			for (Instance instance : instanceProvider.getInstances()) {
+				annotations.putIfAbsent(instance, new ArrayList<>());
 				annotations.get(instance)
 						.addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-			}
-			annotations.get(instance).add(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
 
+			}
 		}
+
+//		for (Instance instance : instanceProvider.getInstances()) {
+//			annotations.putIfAbsent(instance, new ArrayList<>());
+//			annotations.get(instance).add(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
+//		}
 		return annotations;
 	}
 
@@ -138,16 +147,40 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-		return (instance -> {
+//		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment, 2, 6);
+		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment,
+				instanceProvider.getRedistributedTrainingInstances());
+//		return (instance -> {
+//		return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.compoundTreatment)));
+//	});
+//		return (instance -> {
+//
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//
+//			for (int i = 0; i < 4; i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment)));
+//			}
+//			return new State(instance, new Annotations(as));
+//			//
+//		});
 
-			List<AbstractAnnotation> as = new ArrayList<>();
+//		return (instance -> {
+//			
+//			List<AbstractAnnotation> as = new ArrayList<>();
+//			
+//			for (int i = 0; i <instance.getGoldAnnotations().getAnnotations().size(); i++) {
+//				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment)));
+//			}
+//			return new State(instance, new Annotations(as));
+//			//
+//		});
+	}
 
-			for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
-				as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("Treatment")));
-			}
-			return new State(instance, new Annotations(as));
-			//
-		});
+	@Override
+	public List<IExplorationStrategy> getAdditionalExplorer() {
+		return Collections.emptyList();
+//		return Arrays.asList(new RootTemplateCardinalityExplorer(trainingObjectiveFunction.getEvaluator(),
+//				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
 	}
 
 	@Override
@@ -170,4 +203,54 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		return TreatmentRestrictionProvider.getByRule((ETreatmentModifications) rule);
 	}
 
+	@Override
+	public HardConstraintsProvider getHardConstraints() {
+		HardConstraintsProvider p = new HardConstraintsProvider();
+		p.addHardConstraints(new DistinctEntityTemplateConstraint(predictionObjectiveFunction.getEvaluator()));
+//		p.addHardConstraints(new AbstractHardConstraint() {
+//
+//			@Override
+//			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+//
+//				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance());
+//				Set<Integer> sentences = new HashSet<>();
+//
+//				for (AbstractAnnotation orgModel : orgModels) {
+//
+//					OrganismModelWrapper w = new OrganismModelWrapper(orgModel.asInstanceOfEntityTemplate());
+//
+//					sentences.addAll(
+//							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
+//
+//				}
+//				int max = 0;
+//
+//				for (Integer integer : sentences) {
+//					max = Math.max(max, integer);
+//				}
+//
+//				List<DocumentLinkedAnnotation> as = new ArrayList<>();
+//				Set<Integer> sentences2 = new HashSet<>();
+//
+//				SCIOWrapper.collectDLA(as, entityTemplate.asInstanceOfEntityTemplate());
+//
+////				for (AbstractAnnotation ab : currentState.getGoldAnnotations().getAnnotations()) {
+//
+////				SCIOWrapper.collectDLA(as, ab.asInstanceOfEntityTemplate());
+//				sentences2.addAll(as.stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
+////				}
+//
+//				for (Integer integer : sentences2) {
+//
+//					if (Math.abs(max - integer) > 30)
+//						return true;
+//				}
+////				System.out.println(Math.abs(max - min));
+//
+//				return false;
+//			}
+//		});
+		return p;
+
+	}
 }

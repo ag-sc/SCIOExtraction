@@ -2,7 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthe
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,17 +14,13 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
-import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
-import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -41,22 +36,14 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDevicePredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDeviceRestrictionProvider.EInjuryDeviceModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DistinctEntityTypeConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
 /**
@@ -107,16 +94,16 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 	}
 
 	final public boolean useGoldLocationsForTraining = true;
-	final public boolean useGoldLocationsForPrediction = true;
+	final public boolean useGoldLocationsForPrediction = false;
 
 	@Override
 	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule _rule) {
 
 		EAnaestheticModifications rule = (EAnaestheticModifications) _rule;
-//
+
 		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
 
-		if (rule == EAnaestheticModifications.ROOT)
+		if (rule == EAnaestheticModifications.ROOT || rule == EAnaestheticModifications.ROOT_DOSAGE)
 			return map;
 
 		if (useGoldLocationsForTraining) {
@@ -208,14 +195,15 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
+//		return (instance -> {
+//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+//		});
+
 		return (instance -> {
-			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
+					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
 		});
 
-//		return (instance -> {
-//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
-//					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
-//		});
 //		return (instance -> {
 //
 //			List<AbstractAnnotation> as = new ArrayList<>();
@@ -266,16 +254,71 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 	@Override
 	public HardConstraintsProvider getHardConstraints() {
 		HardConstraintsProvider p = new HardConstraintsProvider();
-		p.addHardConstraints(new DistinctEntityTemplateConstraint(predictionObjectiveFunction.getEvaluator()));
-
+		p.addHardConstraints(new DistinctEntityTypeConstraint(predictionObjectiveFunction.getEvaluator()));
 		return p;
 	}
 
+//			MICRO	Root = 0.735	0.694	0.782	0.878	0.878	0.878
+//			MICRO	hasDosage = 0.500	0.694	0.391	0.878	0.878	0.878
+//			MICRO	Cardinality = 0.906	0.855	0.964	1.000	1.000	1.000
+//			MACRO	Root = 0.739	0.694	0.790	0.879	0.878	0.880
+//			MACRO	hasDosage = 0.503	0.694	0.395	0.879	0.878	0.880
+//			MACRO	Cardinality = 0.912	0.855	0.978	1.000	1.000	1.000
+//			MACRO	Overall = 0.739	0.694	0.790	0.879	0.878	0.880
+//			modelName: Anaesthetic497593622
+//			CRFStatistics [context=Train, getTotalDuration()=10390]
+//			CRFStatistics [context=Test, getTotalDuration()=42]
+
+//			MICRO	Root = 0.513	0.484	0.545	0.612	0.612	0.612
+//			MICRO	hasDosage = 0.419	0.395	0.445	0.483	0.450	0.521
+//			MICRO	Cardinality = 0.906	0.855	0.964	1.000	1.000	1.000
+//			MACRO	Root = 0.521	0.484	0.565	0.620	0.612	0.629
+//			MACRO	hasDosage = 0.433	0.395	0.478	0.497	0.455	0.548
+//			MACRO	Cardinality = 0.912	0.855	0.978	1.000	1.000	1.000
+//			MACRO	Overall = 0.433	0.395	0.478	0.497	0.455	0.548
+//			modelName: Anaesthetic-214726547
+//			CRFStatistics [context=Train, getTotalDuration()=70283]
+//			CRFStatistics [context=Test, getTotalDuration()=1023]
 	@Override
 	public List<IExplorationStrategy> getAdditionalExplorer() {
 		return Collections.emptyList();
 //		return Arrays.asList(new RootTemplateCardinalityExplorer(trainingObjectiveFunction.getEvaluator(),
 //				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(EntityType.get("Anaesthetic"))));
 	}
-
 }
+
+//mit 3
+//MICRO	Root = 0.631	0.490	0.887	0.922	0.922	0.922
+//MICRO	hasDosage = 0.468	0.490	0.448	0.922	0.922	0.922
+//MICRO	Cardinality = 0.711	0.552	1.000	1.000	1.000	1.000
+//MACRO	Root = 0.620	0.490	0.844	0.903	0.922	0.871
+//MACRO	hasDosage = 0.455	0.490	0.425	0.895	0.922	0.872
+//MACRO	Cardinality = 0.711	0.552	1.000	1.000	1.000	1.000
+//MACRO	Overall = 0.620	0.490	0.844	0.903	0.922	0.871
+//modelName: Anaesthetic-1915420003
+//CRFStatistics [context=Train, getTotalDuration()=15417]
+//CRFStatistics [context=Test, getTotalDuration()=42]
+
+//mit 1
+//MICRO	Root = 0.635	0.844	0.509	0.844	0.844	0.844
+//MICRO	hasDosage = 0.394	0.844	0.257	0.844	0.844	0.844
+//MICRO	Cardinality = 0.753	1.000	0.604	1.000	1.000	1.000
+//MACRO	Root = 0.693	0.844	0.589	0.833	0.844	0.825
+//MACRO	hasDosage = 0.438	0.844	0.295	0.830	0.844	0.825
+//MACRO	Cardinality = 0.833	1.000	0.714	1.000	1.000	1.000
+//MACRO	Overall = 0.693	0.844	0.589	0.833	0.844	0.825
+//modelName: Anaesthetic-75682253
+//CRFStatistics [context=Train, getTotalDuration()=6865]
+//CRFStatistics [context=Test, getTotalDuration()=20]
+
+// mit 2
+//MICRO	Root = 0.752	0.688	0.830	0.936	0.936	0.936
+//MICRO	hasDosage = 0.521	0.688	0.419	0.936	0.936	0.936
+//MICRO	Cardinality = 0.838	0.766	0.925	1.000	1.000	1.000
+//MACRO	Root = 0.774	0.688	0.885	0.944	0.936	0.955
+//MACRO	hasDosage = 0.540	0.688	0.445	0.948	0.936	0.955
+//MACRO	Cardinality = 0.851	0.766	0.958	1.000	1.000	1.000
+//MACRO	Overall = 0.774	0.688	0.885	0.944	0.936	0.955
+//modelName: Anaesthetic1773861614
+//CRFStatistics [context=Train, getTotalDuration()=10734]
+//CRFStatistics [context=Test, getTotalDuration()=31]

@@ -63,12 +63,13 @@ public class BuildNERCorpusFromSlotFillingData {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
 //		buildForOrganismModel();
-		buildForInjuryModel();
+//		buildForInjuryModel();
 //		buildForTreatment();
 //		buildForVertebralArea();
 //		buildForDeliveryMethod();
 //		buildForInvestigationMethod();
 //		buildForGroupName();
+		buildForCompound();
 //		buildForTrend();
 
 	}
@@ -89,6 +90,16 @@ public class BuildNERCorpusFromSlotFillingData {
 		SCIOSlotTypes.hasGroupName.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.groupName);
 		buildInstances(SCIOEntityTypes.definedExperimentalGroup, SCIOEntityTypes.groupName);
+		SlotType.restoreExcludance(x);
+	}
+
+	private static void buildForCompound() throws Exception {
+
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		SlotType.excludeAll();
+		SCIOSlotTypes.hasCompound.include();
+		buildSubDataStructureFiles(SCIOEntityTypes.compound);
+		buildInstances(SCIOEntityTypes.treatment, SCIOEntityTypes.compound);
 		SlotType.restoreExcludance(x);
 	}
 
@@ -154,7 +165,7 @@ public class BuildNERCorpusFromSlotFillingData {
 //		
 //		SCIOSlotTypes.hasDosage.include();
 //		SCIOSlotTypes.hasDeliveryMethod.include();
-		
+
 		buildSubDataStructureFiles(SCIOEntityTypes.injury);
 		buildInstances(SCIOEntityTypes.injury);
 //		SlotType.restoreExcludance(x);

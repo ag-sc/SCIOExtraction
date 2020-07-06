@@ -370,6 +370,28 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
 			groupNameClusteringMode = EGroupNamesClusteringMode.NONE;
 			cardinalityMode = ECardinalityMode.SAMPLE;
+		} else if (id == 16) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT;
+			complexityMode = EComplexityMode.FULL;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			groupNameProviderMode = EExtractGroupNamesMode.MANUAL_PATTERN_NP_CHUNKS;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
+		} else if (id == 17) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT;
+			complexityMode = EComplexityMode.FULL;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			groupNameProviderMode = EExtractGroupNamesMode.PREDICTED;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
 		}
 		log.info("explorationMode: " + explorationMode);
 		log.info("assignmentMode: " + assignmentMode);
@@ -417,18 +439,19 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 
 		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed);
 
+//		trainingObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
+//				new BeamSearchEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
+//						: EEvaluationDetail.DOCUMENT_LINKED, 25));
+//
+//		predictionObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
+//				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 25));
+
 		trainingObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
-				new BeamSearchEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
-						: EEvaluationDetail.DOCUMENT_LINKED, 25));
+				new CartesianEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
+						: EEvaluationDetail.DOCUMENT_LINKED, EEvaluationDetail.DOCUMENT_LINKED));
 
 		predictionObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
-				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 25));
-//		trainingObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
-//				new CartesianEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
-//						: EEvaluationDetail.DOCUMENT_LINKED, EEvaluationDetail.DOCUMENT_LINKED));
-//		
-//		predictionObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
-//				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.DOCUMENT_LINKED));
+				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.DOCUMENT_LINKED));
 
 		/**
 		 * Exclude some slots that are not needed for now
@@ -576,10 +599,10 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		log.info(crf.getTestStatistics());
 		log.info("modelName: " + modelName);
 
-//		if (assignmentMode == EAssignmentMode.TREATMENT) {
-//			postPredictOrganismModel(resultsTest);
-//			postPredictInjuryModel(resultsTest);
-//		}
+		if (assignmentMode == EAssignmentMode.TREATMENT) {
+			postPredictOrganismModel(resultsTest);
+			postPredictInjuryModel(resultsTest);
+		}
 //
 //		eval(resultsTest);
 //
@@ -1255,7 +1278,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 			addGroupNameTrainingPattern();
 			break;
 		case PREDICTED:
-			int k = 1;
+			int k = 50;
 			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(instanceProvider.getInstances(),
 					k).entrySet()) {
 				prediction.getKey().addCandidateAnnotations(prediction.getValue());
@@ -1680,7 +1703,8 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 	private Map<Instance, Set<AbstractAnnotation>> predictGroupName(List<Instance> instances, int k) {
 		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations;
 
-		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
+//		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
+		File groupNamesCacheDir = new File("data/annotations/groupNames/" + dataRandomSeed + "_recall_at_" + k + "/");
 //		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
 		if (!groupNamesCacheDir.exists() || groupNamesCacheDir.list().length == 0) {
 			groupNamesCacheDir.mkdirs();
@@ -1711,6 +1735,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 			JsonNerlaIO io = new JsonNerlaIO(true);
 			for (Instance instance : groupNameAnnotations.keySet()) {
 
+				System.out.println(instance.getName() + "\t" + groupNameAnnotations.get(instance).size());
 				try {
 
 					List<JsonEntityAnnotationWrapper> wrappedAnnotation = groupNameAnnotations.get(instance).stream()
@@ -1777,7 +1802,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Predict Injury Model
 		 */
-		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE;
+		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		InjuryRestrictionProvider.applySlotTypeRestrictions(rule);
 

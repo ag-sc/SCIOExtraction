@@ -23,6 +23,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 
 /**
@@ -54,23 +55,33 @@ public class TreatmentSlotFilling {
 	 */
 	private final File instanceDirectory;
 
-	private ETreatmentModifications rule;
-
 	public final String header = "Mode\tF1\tPrecision\tRecall";
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 
 	public TreatmentSlotFilling() throws IOException {
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment")).build();
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Treatment")).apply()
+				.registerNormalizationFunction(new DosageNormalization()).build();
 
 		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 		PrintStream resultsOut = new PrintStream(new File("results/treatmentResults.csv"));
 
 		resultsOut.println(header);
 
+		/**
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * TODO: REMOVE QUICK FIX IN EntityTemplate Line 359
+		 * 
+		 */
+		
 		for (ETreatmentModifications rule : ETreatmentModifications.values()) {
-			this.rule = rule;
+//			this.rule = rule;
+			rule = ETreatmentModifications.ROOT;
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
@@ -90,12 +101,12 @@ public class TreatmentSlotFilling {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-//			String modelName = "Treatment819785968";
+//			String modelName = "Treatment-1842612192";
 			String modelName = "Treatment" + new Random().nextInt();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
-
+//
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
@@ -103,16 +114,18 @@ public class TreatmentSlotFilling {
 			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
 			resultsOut.println(toResults(rule, score));
+			log.info("results: " + toResults(rule, score));
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-//			log.info("Coverage Training: " + trainCoverage);
-//
-//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-//			log.info("Coverage Development: " + devCoverage);
+			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+			log.info("Coverage Training: " + trainCoverage);
 
+			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+			log.info("Coverage Development: " + devCoverage);
+
+			log.info("results: " + toResults(rule, score));
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
@@ -132,6 +145,23 @@ public class TreatmentSlotFilling {
 		resultsOut.close();
 
 	}
+	
+//	 multi state 2-6 compound as init + BEAM SEARCH
+//	results: ROOT	0.56	0.42	0.83
+
+	
+//	 multi state mean+-std dev (=2-4) compound as init
+//	results: ROOT	0.65	0.57	0.76
+
+	
+//	 always 4 compound as init
+//	results: ROOT	0.65	0.57	0.76
+//	Compute coverage...
+//	Coverage Training: Score [getF1()=0.877, getPrecision()=0.799, getRecall()=0.971, tp=534, fp=134, fn=16, tn=0]
+//	Compute coverage...
+//	Coverage Development: Score [getF1()=0.860, getPrecision()=0.808, getRecall()=0.918, tp=135, fp=32, fn=12, tn=0]
+//	results: ROOT	0.65	0.57	0.76
+//	modelName: Treatment1807447630
 
 	private String toResults(ETreatmentModifications rule, Score score) {
 		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
