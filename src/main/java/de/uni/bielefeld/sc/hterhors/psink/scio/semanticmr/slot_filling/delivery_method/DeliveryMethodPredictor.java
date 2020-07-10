@@ -177,49 +177,49 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	public HardConstraintsProvider getHardConstraints() {
 		HardConstraintsProvider p = new HardConstraintsProvider();
 		p.addHardConstraints(new DistinctEntityTemplateConstraint(predictionObjectiveFunction.getEvaluator()));
-//		p.addHardConstraints(new AbstractHardConstraint() {
-//
-//			@Override
-//			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
-//
-//				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance());
-//				Set<Integer> sentences = new HashSet<>();
-//
-//				for (AbstractAnnotation orgModel : orgModels) {
-//
-//					OrganismModelWrapper w = new OrganismModelWrapper(orgModel.asInstanceOfEntityTemplate());
-//
-//					sentences.addAll(
-//							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
-//
+		p.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+
+				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance());
+				Set<Integer> sentences = new HashSet<>();
+
+				for (AbstractAnnotation orgModel : orgModels) {
+
+					OrganismModelWrapper w = new OrganismModelWrapper(orgModel.asInstanceOfEntityTemplate());
+
+					sentences.addAll(
+							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
+
+				}
+				int max = 0;
+
+				for (Integer integer : sentences) {
+					max = Math.max(max, integer);
+				}
+
+				List<DocumentLinkedAnnotation> as = new ArrayList<>();
+				Set<Integer> sentences2 = new HashSet<>();
+
+				SCIOWrapper.collectDLA(as, entityTemplate.asInstanceOfEntityTemplate());
+
+//				for (AbstractAnnotation ab : currentState.getGoldAnnotations().getAnnotations()) {
+
+//				SCIOWrapper.collectDLA(as, ab.asInstanceOfEntityTemplate());
+				sentences2.addAll(as.stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
 //				}
-//				int max = 0;
-//
-//				for (Integer integer : sentences) {
-//					max = Math.max(max, integer);
-//				}
-//
-//				List<DocumentLinkedAnnotation> as = new ArrayList<>();
-//				Set<Integer> sentences2 = new HashSet<>();
-//
-//				SCIOWrapper.collectDLA(as, entityTemplate.asInstanceOfEntityTemplate());
-//
-////				for (AbstractAnnotation ab : currentState.getGoldAnnotations().getAnnotations()) {
-//
-////				SCIOWrapper.collectDLA(as, ab.asInstanceOfEntityTemplate());
-//				sentences2.addAll(as.stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
-////				}
-//
-//				for (Integer integer : sentences2) {
-//
-//					if (Math.abs(max - integer) > 30)
-//						return true;
-//				}
-////				System.out.println(Math.abs(max - min));
-//
-//				return false;
-//			}
-//		});
+
+				for (Integer integer : sentences2) {
+
+					if (Math.abs(max - integer) > 30)
+						return true;
+				}
+//				System.out.println(Math.abs(max - min));
+
+				return false;
+			}
+		});
 		return p;
 
 	}

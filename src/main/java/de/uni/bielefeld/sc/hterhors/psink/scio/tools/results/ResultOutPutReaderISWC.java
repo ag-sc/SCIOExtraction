@@ -88,7 +88,7 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
  * @author hterhors
  *
  */
-public class ResultOutPutReader {
+public class ResultOutPutReaderISWC {
 
 	final private static Pattern modePattern = Pattern.compile("(.*): (.*)");
 
@@ -96,7 +96,7 @@ public class ResultOutPutReader {
 			"(.*) = Score \\[getF1\\(\\)=(.+?), getPrecision\\(\\)=(.+?), getRecall\\(\\)=(.+?), tp=(.+?), fp=(.+?), fn=(.+?), tn=(.+?)\\]");
 
 	final private static Pattern macroDataPattern = Pattern
-			.compile("(.*) = Score \\[macroF1=(.+?), macroPrecision=(.+?), macroRecall=(.+?), macroAddCounter=.*?\\]");
+			.compile("(.*) = Score \\[macroF1=(.+?), macroPrecision=(.+?), macroRecall=(.+?)\\]");
 
 	final private static Pattern intervalCardinalityPattern = Pattern
 			.compile("EXP GROUP MICRO  INTERVALL CARDINALITY = (.*?)	(.*?)	(.*?)	(.*?)");
@@ -141,7 +141,7 @@ public class ResultOutPutReader {
 
 	}
 
-	static public EValue value = EValue.F1;
+	static public EValue value = EValue.RECALL;
 
 	/*
 	 * FOR ISWC
@@ -157,14 +157,14 @@ public class ResultOutPutReader {
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 1; run < 10; run++) {
+		for (int run = 1; run < 2; run++) {
 
-			File dir = new File(folder+"/"+run);
+			File dir = new File(folder + "/res" + run + "/");
 
 			int modeCounter = 0;
 
 			List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream()
-					.filter(n -> n.matches("\\d_res_\\d")).collect(Collectors.toList());
+					.filter(n -> n.matches(".*Results.*")).collect(Collectors.toList());
 
 			Collections.sort(files, new Comparator<String>() {
 
@@ -178,8 +178,8 @@ public class ResultOutPutReader {
 				File file = new File(dir, fileName);
 				System.out.println(file);
 
-//				if (!file.getName().contains("Results"))
-//					continue;
+				if (!file.getName().contains("Results"))
+					continue;
 
 				final String modeName = "Mode_" + modeCounter;
 				modePairsMap.put(modeName, new HashMap<>());
@@ -278,7 +278,7 @@ public class ResultOutPutReader {
 	}
 
 	public static void singleFolder(int run) throws FileNotFoundException, IOException {
-		File dir = new File(folder+"/"+run);
+		File dir = new File("results/experimentalgroupextratcion/" + folder + "/" + run + "/");
 
 		int modeCounter = 0;
 
@@ -289,7 +289,7 @@ public class ResultOutPutReader {
 		Map<String, Map<String, Score>> dataMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream().filter(n -> n.matches("\\d_res_\\d"))
+		List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream().filter(n -> n.matches(".*Results.*"))
 				.collect(Collectors.toList());
 
 		Collections.sort(files, new Comparator<String>() {
@@ -300,14 +300,13 @@ public class ResultOutPutReader {
 			}
 		});
 
-		PrintStream ps = new PrintStream(new File(folder+"/"+run
-				+ "/single_run_results_" + value.toString().toLowerCase() + ".csv"));
-		
+		PrintStream ps = new PrintStream(new File("results/experimentalgroupextratcion/" + folder + "/" + run
+				+ "/single_run_results_" + run + "_" + value.toString().toLowerCase() + ".csv"));
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);
 
-			if (!file.getName().contains("res"))
+			if (!file.getName().contains("Results"))
 				continue;
 
 			final String modeName = "Mode_" + modeCounter;

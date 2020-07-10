@@ -2,11 +2,10 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthe
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,14 +25,13 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 
-public class AnaestheticSlotFilling {
+public class AnaestheticSlotFillingFinalEvaluation {
 
 	/**
 	 * Compute coverage...
@@ -60,7 +58,7 @@ public class AnaestheticSlotFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new AnaestheticSlotFilling();
+		new AnaestheticSlotFillingFinalEvaluation(1000L);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -71,11 +69,7 @@ public class AnaestheticSlotFilling {
 	 */
 	private final File instanceDirectory = new File("data/slot_filling/anaesthetic/instances/");
 
-	public final String header = "Mode\tF1\tPrecision\tRecall";
-
-	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
-
-	public AnaestheticSlotFilling() throws IOException {
+	public AnaestheticSlotFillingFinalEvaluation(long randomSeed) throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -98,33 +92,24 @@ public class AnaestheticSlotFilling {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(20).build();
-
-//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-//				.build();
-
-		PrintStream resultsOut = new PrintStream(new File("results/anaestheticResults.csv"));
-//		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-
-		resultsOut.println(header);
 		Map<String, Score> scoreMap = new HashMap<>();
 
-		for (EAnaestheticModifications rule : EAnaestheticModifications.values()) {
-//			DeliveryMethodFilling.rule =rule;
-			rule = EAnaestheticModifications.ROOT_DELIVERY_METHOD_DOSAGE;
-			/**
-			 * The instance provider reads all json files in the given directory. We can set
-			 * the distributor in the constructor. If not all instances should be read from
-			 * the file system, we can add an additional parameter that specifies how many
-			 * instances should be read. NOTE: in contrast to the corpusSizeFraction in the
-			 * ShuffleCorpusDistributor, we initially set a limit to the number of files
-			 * that should be read.
-			 */
+		EAnaestheticModifications rule = EAnaestheticModifications.ROOT_DELIVERY_METHOD_DOSAGE;
+
+		Random random = new Random(randomSeed);
+
+		for (int i = 0; i < 10; i++) {
+			log.info("RUN ID:" + i);
+
+			long seed = random.nextLong();
+			log.info("RUN SEED:" + seed);
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
+					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
+
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					AnaestheticRestrictionProvider.getByRule(rule));
 
-			String modelName = "Anaesthetic" + new Random().nextInt();
+			String modelName = "Anaesthetic_Final_Seed_" + seed;
 
 			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
@@ -142,14 +127,13 @@ public class AnaestheticSlotFilling {
 //
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 ////
-
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
 			slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
-//
+
 			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
 
 			System.out.println("---------------------------------------");
@@ -167,12 +151,6 @@ public class AnaestheticSlotFilling {
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(true);
-			log.info("Coverage Training: " + trainCoverage);
-
-			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(true);
-			log.info("Coverage Development: " + devCoverage);
-
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
@@ -180,7 +158,6 @@ public class AnaestheticSlotFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
-//			log.info("results: " + toResults(rule, score));
 			log.info("modelName: " + predictor.modelName);
 			log.info(predictor.crf.getTrainingStatistics());
 			log.info(predictor.crf.getTestStatistics());
@@ -189,26 +166,16 @@ public class AnaestheticSlotFilling {
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
 			 */
-			break;
 		}
-		resultsOut.flush();
-		resultsOut.close();
-	}
 
-	private String toResults(EAnaestheticModifications rule, Score score) {
-		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
-				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
+		log.info("\n\n\n*************************");
+
+		for (Entry<String, Score> sm : scoreMap.entrySet()) {
+			log.info(sm.getKey() + "\t" + sm.getValue().toTSVString());
+		}
+
+		log.info("	*************************");
+
 	}
 
 }
-
-//MICRO	Root = 0.752	0.688	0.830	0.936	0.936	0.936
-//MICRO	hasDosage = 0.521	0.688	0.419	0.936	0.936	0.936
-//MICRO	Cardinality = 0.838	0.766	0.925	1.000	1.000	1.000
-//MACRO	Root = 0.774	0.688	0.885	0.944	0.936	0.955
-//MACRO	hasDosage = 0.540	0.688	0.445	0.948	0.936	0.955
-//MACRO	Cardinality = 0.851	0.766	0.958	1.000	1.000	1.000
-//MACRO	Overall = 0.774	0.688	0.885	0.944	0.936	0.955
-//modelName: Anaesthetic1773861614
-//CRFStatistics [context=Train, getTotalDuration()=10734]
-//CRFStatistics [context=Test, getTotalDuration()=31]

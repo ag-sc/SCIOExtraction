@@ -7,10 +7,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
@@ -21,6 +23,7 @@ import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ClusterTemplate;
 import de.hterhors.semanticmr.crf.templates.et.ContextBetweenSlotFillerTemplate;
@@ -38,6 +41,9 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
@@ -76,38 +82,122 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		super(modelName, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule);
 	}
 
+//	@Override
+//	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule rule) {
+//
+//		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
+//
+//		DeliveryMethodPredictor deliveryMethodPrediction = null;
+//		if (rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD
+//				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT
+//				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION) {
+//
+//			String deliveryMethodModelName = "DeliveryMethod" + modelName;
+//
+//			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
+//					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION);
+//
+//			deliveryMethodPrediction.trainOrLoadModel();
+//			deliveryMethodPrediction.predictAllInstances(2);
+//
+//			for (Instance instance : instanceProvider.getInstances()) {
+//				annotations.putIfAbsent(instance, new ArrayList<>());
+//				annotations.get(instance)
+//						.addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
+//
+//			}
+//		}
+//
+//		return annotations;
+//	}
+	
+	
+	final public boolean useGoldLocationsForTraining = true;
+	final public boolean useGoldLocationsForPrediction = false;
+
 	@Override
-	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule rule) {
+	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule _rule) {
 
-		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
+		ETreatmentModifications rule = (ETreatmentModifications) _rule;
 
-		DeliveryMethodPredictor deliveryMethodPrediction = null;
-		if (rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD
-				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT
-				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION) {
+		Map<Instance, Collection<AbstractAnnotation>> map = new HashMap<>();
 
-			String deliveryMethodModelName = "DeliveryMethod" + modelName;
+		if (rule == ETreatmentModifications.ROOT)
+			return map;
+
+		if (useGoldLocationsForTraining) {
+			addGold(map, instanceProvider.getRedistributedTrainingInstances());
+		} else {
+			addPredictions(map, instanceProvider.getRedistributedTrainingInstances());
+		}
+		if (useGoldLocationsForPrediction) {
+			addGold(map, instanceProvider.getRedistributedDevelopmentInstances());
+			addGold(map, instanceProvider.getRedistributedTestInstances());
+		} else {
+			addPredictions(map, instanceProvider.getRedistributedDevelopmentInstances());
+			addPredictions(map, instanceProvider.getRedistributedTestInstances());
+		}
+
+		for (Instance instance : instanceProvider.getInstances()) {
+
+			if (map.get(instance).isEmpty())
+				continue;
+
+			instance.removeCandidateAnnotation(new IFilter() {
+
+				@Override
+				public boolean remove(AbstractAnnotation candidate) {
+					return SCIOSlotTypes.hasDeliveryMethod.getSlotFillerEntityTypes()
+							.contains(candidate.getEntityType());
+				}
+
+			});
+		}
+		
+		for (Instance instance : instanceProvider.getInstances()) {
+			map.putIfAbsent(instance, new ArrayList<>());
+			map.get(instance).add(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
+		}
+		return map;
+	}
+
+	private void addGold(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
+		for (Instance instance : instances) {
+			map.putIfAbsent(instance, new ArrayList<>());
+
+			map.get(instance)
+					.addAll(instance.getGoldAnnotations().getAnnotations().stream()
+							.map(a -> a.asInstanceOfEntityTemplate()
+									.getSingleFillerSlot(SCIOSlotTypes.hasDeliveryMethod).getSlotFiller())
+							.filter(a -> a != null).collect(Collectors.toSet()));
+
+		}
+	}
+
+	DeliveryMethodPredictor deliveryMethodPrediction = null;
+
+	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
+		Map<SlotType, Boolean> z = SlotType.storeExcludance();
+
+		String deliveryMethodModelName = "DeliveryMethod" + modelName;
+
+		if (deliveryMethodPrediction == null) {
 
 			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);
-
-			for (Instance instance : instanceProvider.getInstances()) {
-				annotations.putIfAbsent(instance, new ArrayList<>());
-				annotations.get(instance)
-						.addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-
-			}
 		}
 
-//		for (Instance instance : instanceProvider.getInstances()) {
-//			annotations.putIfAbsent(instance, new ArrayList<>());
-//			annotations.get(instance).add(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
-//		}
-		return annotations;
+		for (Instance instance : instances) {
+			map.putIfAbsent(instance, new ArrayList<>());
+			map.get(instance).addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 1));
+		}
+		SlotType.restoreExcludance(z);
+
 	}
+	
 
 	@Override
 	protected File getExternalNerlaFile() {

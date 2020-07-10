@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,14 +19,10 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.SemanticParsingCRF;
-import de.hterhors.semanticmr.crf.model.Model;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -53,7 +50,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
  *
  * 
  */
-public class OrgModelSlotFilling {
+public class OrgModelSlotFillingFinalEvaluation {
 
 	/**
 	 * Start the slot filling procedure.
@@ -62,7 +59,7 @@ public class OrgModelSlotFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new OrgModelSlotFilling();
+		new OrgModelSlotFillingFinalEvaluation(1000L);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -80,7 +77,7 @@ public class OrgModelSlotFilling {
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
 	Map<Instance, State> coverageStates;
 
-	public OrgModelSlotFilling() throws IOException {
+	public OrgModelSlotFillingFinalEvaluation(long randomSeed) throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -117,19 +114,19 @@ public class OrgModelSlotFilling {
 		instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
 
-		PrintStream resultsOut = new PrintStream(new File("results/organismModelResults.csv"));
-
-		resultsOut.println(header);
 		Map<String, Score> scoreMap = new HashMap<>();
 
-		for (EOrgModelModifications rule : EOrgModelModifications.values()) {
+		Random random = new Random(randomSeed);
 
-			rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+		for (int i = 0; i < 10; i++) {
+			log.info("RUN ID:" + i);
+			EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 
 			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+			long seed = random.nextLong();
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
+					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getByRule(rule));
@@ -143,7 +140,7 @@ public class OrgModelSlotFilling {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			String modelName = "OrganismModel" + new Random().nextInt();
+			String modelName = "OrganismModel_Final_Seed_" + seed;
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule);
@@ -151,10 +148,6 @@ public class OrgModelSlotFilling {
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
-
-			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-
-			resultsOut.println(toResults(rule, score));
 
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasAge);
@@ -170,12 +163,12 @@ public class OrgModelSlotFilling {
 
 			System.out.println("---------------------------------------");
 
-			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator, scoreMap);
-
-			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
-					evaluator, scoreMap);
-
-			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates, scoreMap);
+//			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator,scores);
+//
+//			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
+//					evaluator,scores);
+//
+//			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates,scores);
 
 			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
@@ -190,12 +183,6 @@ public class OrgModelSlotFilling {
 			 * Finally, we evaluate the produced states and print some statistics.
 			 */
 
-//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-//			log.info("Coverage Training: " + trainCoverage);
-//
-//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-//			log.info("Coverage Development: " + devCoverage);
-
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
@@ -203,7 +190,6 @@ public class OrgModelSlotFilling {
 			 * The upper bound depends only on the exploration strategy, e.g. the provided
 			 * NER-annotations during slot-filling.
 			 */
-			log.info("Score: " + toResults(rule, score));
 			log.info("modelName: " + predictor.modelName);
 
 			log.info(predictor.crf.getTrainingStatistics());
@@ -212,49 +198,39 @@ public class OrgModelSlotFilling {
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
 			 */
-			break;
 		}
 
-		resultsOut.flush();
-		resultsOut.close();
+		log.info("\n\n\n*************************");
 
-//		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor
-//				.predictInstances(new HashSet<>(testInstanceNames), 1);
-//		int docID = 0;
-//		for (Entry<String, Set<AbstractAnnotation>> annotations : organismModelAnnotations.entrySet()) {
-//
-//			SantoAnnotations collectRDF = new SantoAnnotations(new HashSet<>(), new HashMap<>());
-//			for (AbstractAnnotation annotation : annotations.getValue()) {
-//
-//				AnnotationsToSantoAnnotations.collectRDF(annotation, collectRDF, "http://scio/data/",
-//						"http://psink.de/scio/");
-//
-//			}
-//			PrintStream psRDF = new PrintStream(
-//					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.n-triples");
-//			PrintStream psAnnotation = new PrintStream(
-//					"autoextraction/organismmodel/" + annotations.getKey() + "_AUTO.annodb");
-////			PrintStream psDocument = new PrintStream("unroll/organismmodel/" + annotations.getKey() + "_export.csv");
-//
-//			List<String> c = new ArrayList<>(collectRDF.getRdf().stream().collect(Collectors.toList()));
-//			List<String> c2 = new ArrayList<>(collectRDF.getAnnodb().stream().collect(Collectors.toList()));
-//			Collections.sort(c);
-//			Collections.sort(c2);
-//			c.forEach(psRDF::println);
-//			c2.forEach(psAnnotation::println);
-//			psAnnotation.close();
-//			psRDF.close();
-//
-////			psDocument.print(toCSV(docID, instance.getDocument().tokenList));
-////			psDocument.close();
-//			docID++;
-//		}
+		for (Entry<String, Score> sm : scoreMap.entrySet()) {
+			log.info(sm.getKey() + "\t" + sm.getValue().toTSVString());
+		}
 
+		log.info("	*************************");
 	}
-
-	private String toResults(EOrgModelModifications rule, Score score) {
-		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
-				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
-	}
-
 }
+//Cardinality-Coverage	0.990	1.000	0.980
+//hasAge-Relative	0.726	0.731	0.721
+//hasGender-Relative	0.977	0.977	0.977
+//Cardinality-Absolute	0.990	1.000	0.980
+//hasWeight-Coverage	0.948	0.955	0.942
+//Root-Coverage	0.000	0.000	0.000
+//hasAgeCategory-Coverage	0.995	1.000	0.990
+//hasGender-Absolute	0.962	0.972	0.952
+//hasOrganismSpecies-Coverage	0.892	0.900	0.885
+//Root-Absolute	0.000	0.000	0.000
+//hasOrganismSpecies-Absolute	0.864	0.870	0.858
+//hasAgeCategory-Absolute	0.890	0.895	0.886
+//Overall-Relative	0.951	0.949	0.952
+//hasWeight-Absolute	0.885	0.891	0.878
+//hasWeight-Relative	0.931	0.931	0.930
+//Root-Relative	�	�	�
+//hasAgeCategory-Relative	0.894	0.895	0.894
+//hasGender-Coverage	0.984	0.994	0.974
+//Overall-Coverage	0.962	0.995	0.930
+//Cardinality-Relative	1.000	1.000	1.000
+//hasAge-Coverage	0.917	0.957	0.880
+//hasAge-Absolute	0.662	0.692	0.635
+//hasOrganismSpecies-Relative	0.965	0.964	0.967
+//Overall-Absolute	0.914	0.944	0.886
+//

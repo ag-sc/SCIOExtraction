@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,24 +19,26 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.eval.AbstractEvaluator;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
+import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 
 /**
  * 
- * @author hterhors // Time: 152876 // ############ // # Epoch: 2 # //
- *         ############
- * 
- * 
- * 
- *         Time: 221844 ############ # Epoch: 2 # ############
+ * @author hterhors 
  */
 public class TreatmentSlotFilling {
 
@@ -78,10 +83,11 @@ public class TreatmentSlotFilling {
 		 * TODO: REMOVE QUICK FIX IN EntityTemplate Line 359
 		 * 
 		 */
-		
+		Map<String, Score> scoreMap = new HashMap<>();
+
 		for (ETreatmentModifications rule : ETreatmentModifications.values()) {
 //			this.rule = rule;
-			rule = ETreatmentModifications.ROOT;
+			rule = ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION;
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
@@ -107,25 +113,65 @@ public class TreatmentSlotFilling {
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 //
+//			predictor.trainOrLoadModel();
+//
+//			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
+//
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//
+//			resultsOut.println(toResults(rule, score));
+//			log.info("results: " + toResults(rule, score));
+//			/**
+//			 * Finally, we evaluate the produced states and print some statistics.
+//			 */
+//
+//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//			log.info("Coverage Training: " + trainCoverage);
+//
+//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+//			log.info("Coverage Development: " + devCoverage);
+//
+//			log.info("results: " + toResults(rule, score));
+
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			resultsOut.println(toResults(rule, score));
-			log.info("results: " + toResults(rule, score));
-			/**
-			 * Finally, we evaluate the produced states and print some statistics.
-			 */
+			Set<SlotType> slotTypesToConsider = new HashSet<>();
+			slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
+			slotTypesToConsider.add(SCIOSlotTypes.hasDirection);
+			slotTypesToConsider.add(SCIOSlotTypes.hasApplicationInstrument);
+			slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
+			slotTypesToConsider.add(SCIOSlotTypes.hasCompound);
+			slotTypesToConsider.add(SCIOSlotTypes.hasVoltage);
+			slotTypesToConsider.add(SCIOSlotTypes.hasRehabMedication);
+			slotTypesToConsider.add(SCIOSlotTypes.hasElectricFieldStrength);
 
-			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-			log.info("Coverage Training: " + trainCoverage);
+			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
+					EEvaluationDetail.LITERAL);
 
-			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-			log.info("Coverage Development: " + devCoverage);
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
 
-			log.info("results: " + toResults(rule, score));
+			log.info("---------------------------------------");
+
+//			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator);
+//
+//			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
+//					evaluator);
+//
+//			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates);
+
+			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
+
+			PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider,
+					evaluator, scoreMap);
+
+			PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates, scoreMap);
+
+			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
+
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
@@ -145,15 +191,13 @@ public class TreatmentSlotFilling {
 		resultsOut.close();
 
 	}
-	
+
 //	 multi state 2-6 compound as init + BEAM SEARCH
 //	results: ROOT	0.56	0.42	0.83
 
-	
 //	 multi state mean+-std dev (=2-4) compound as init
 //	results: ROOT	0.65	0.57	0.76
 
-	
 //	 always 4 compound as init
 //	results: ROOT	0.65	0.57	0.76
 //	Compute coverage...

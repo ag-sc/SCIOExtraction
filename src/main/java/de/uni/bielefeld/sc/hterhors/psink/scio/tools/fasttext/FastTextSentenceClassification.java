@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -93,9 +94,9 @@ public class FastTextSentenceClassification {
 
 	public static void main(String[] args) throws IOException {
 		SystemScope.Builder.getScopeHandler()
-		/**
-		 * We add a scope reader that reads and interprets the 4 specification files.
-		 */
+				/**
+				 * We add a scope reader that reads and interprets the 4 specification files.
+				 */
 				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
 //				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
 				/**
@@ -129,8 +130,41 @@ public class FastTextSentenceClassification {
 //		new FastTextSentenceClassification(type, instanceProvider.getRedistributedTrainingInstances(),
 //				instanceProvider.getRedistributedTestInstances());
 //		
-		leaveOneOutEval(type, instanceProvider.getInstances());
+//		leaveOneOutEval(type, instanceProvider.getInstances());
+		Score mScore = tenRandom8020Split(type, new ArrayList<>(instanceProvider.getInstances()), 1000L);
 
+		System.out.println(mScore);
+	}
+
+	private static Score tenRandom8020Split(EntityType type, List<Instance> instances, long randomSeed)
+			throws IOException {
+//		Score [macroF1=0.645, macroPrecision=0.500, macroRecall=0.909] for investigationmethods 50 200 binary
+//		Score [macroF1=0.261, macroPrecision=0.250, macroRecall=0.273]  for investigationmethods 50 200 multi class
+//		Score [macroF1=0.817, macroPrecision=0.690, macroRecall=1.000] for trend 50 200 binary 
+//		Score [macroF1=0.393, macroPrecision=0.407, macroRecall=0.379] for trend 50 200 multi class
+
+		Score mScore = new Score(EScoreType.MACRO);
+
+		Random rand = new Random(randomSeed);
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println("PROGRESS: " + i);
+
+			Collections.shuffle(instances, rand);
+
+			final int x = (int) (((double) instances.size() / 100D) * 90D);
+
+			List<Instance> trainingInstances = instances.subList(0, x);
+			List<Instance> testInstances = instances.subList(x, instances.size());
+
+			FastTextSentenceClassification t = new FastTextSentenceClassification(type, trainingInstances);
+
+			Score s = t.score(testInstances).toMacro();
+			System.out.println(s);
+			mScore.add(s);
+		}
+
+		return mScore;
 	}
 
 	private static Score leaveOneOutEval(EntityType type, List<Instance> instances) throws IOException {
@@ -174,19 +208,27 @@ public class FastTextSentenceClassification {
 
 		List<FastTextInstance> trainData = buildTrainingData(trainingInstances, trainingDataFileName);
 
-		System.out.println(trainData.size());
+		for (Iterator<FastTextInstance> iterator = trainData.iterator(); iterator.hasNext();) {
+			FastTextInstance fastTextInstance = (FastTextInstance) iterator.next();
+
+			if (fastTextInstance.section != ESection.RESULTS)
+				iterator.remove();
+
+		}
+
+		System.out.println("trainData.size(): " + trainData.size());
 		this.keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
 
 		jft = new JFastText();
 		String modelName =
-//				"pretrained_"+
+				"pretrained_"+
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 						+ "_supervised.model";
 		String preTrainedvec = "wordvector/w2v.vec";
 		jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 				"fasttext/resources/models/" + modelName, "-epoch", numberOfEpochs + "",
 
-//				"-pretrainedVectors", preTrainedvec,
+				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 				"-dim", numberOfDimensions + "" });
@@ -271,8 +313,6 @@ public class FastTextSentenceClassification {
 
 		List<FastTextInstance> trainData = getLabledDocuments(instances, numOfTrainingDuplicates);
 
-//		Collections.shuffle(trainData);
-		System.out.println("trainData = " + trainData.size());
 		trainData.stream().map(i -> i.toSimpleString()).forEach(ps::println);
 		ps.flush();
 		ps.close();
@@ -410,7 +450,7 @@ public class FastTextSentenceClassification {
 
 	public final static String BAD_CHAR = "[^\\x20-\\x7E]+";
 
-	static public  class FastTextInstance {
+	static public class FastTextInstance {
 
 		final public String text;
 		final public String goldLabel;

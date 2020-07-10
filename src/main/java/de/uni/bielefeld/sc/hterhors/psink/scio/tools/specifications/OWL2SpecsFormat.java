@@ -3,8 +3,10 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.tools.specifications;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import de.uni.bielefeld.sc.hterhors.psink.scio.tools.owl.OWLToSANTOConverter;
@@ -14,10 +16,10 @@ public class OWL2SpecsFormat {
 
 	final public static int version = 65;
 
-	public static void main(String[] args) throws IOException {
-		new OWL2SpecsFormat(new File("test/specs_format"),
-				new File("src/main/resources/scio/SCIO_" + version + ".owl"));
-	}
+//	public static void main(String[] args) throws IOException {
+//		new OWL2SpecsFormat(new File("test/specs_format"),
+//				new File("src/main/resources/scio/SCIO_" + version + ".owl"));
+//	}
 
 	File parentCSVDirectory;
 
@@ -43,24 +45,50 @@ public class OWL2SpecsFormat {
 
 		List<String> slots = x.toRelationsFile();
 
-		converToEntitiesSpecsFile(entities);
-		converToHierachiesSpecsFile(hierachies);
-		converToStructuresSpecsFile(slots);
-		converToSlotsSpecsFile(slots);
+		convertToEntitiesSpecsFile(entities, slots, hierachies);
+		convertToHierachiesSpecsFile(hierachies);
+		convertToStructuresSpecsFile(slots);
+		convertToSlotsSpecsFile(slots);
 
 	}
 
-	private void converToEntitiesSpecsFile(List<String> entities) throws IOException {
+	private void convertToEntitiesSpecsFile(List<String> entities, List<String> slots, List<String> hierachies)
+			throws IOException {
+
+		Map<String, String> qudtMap = new HashMap<>();
+
+		for (String line : hierachies) {
+			if (line.startsWith("#"))
+				continue;
+
+			String[] data = line.split("\t");
+			qudtMap.put(data[1], data[0]);
+		}
+
+		Map<String, Boolean> map = new HashMap<>();
+
+		for (String line : slots) {
+			if (line.startsWith("#"))
+				continue;
+			String[] data = line.split("\t");
+
+			map.put(data[2], (qudtMap.containsKey(data[2]) && qudtMap.get(data[2]).equals("qudt#Quantity"))
+					|| new Boolean(data[5]));
+		}
 
 		PrintStream ps = new PrintStream(entitiesFile);
 
 		ps.println("#Class\tIsLiteral");
 
 		for (String line : entities) {
+			if (line.startsWith("#"))
+				continue;
 
 			String[] data = line.split("\t");
 
-			String d = data[0] + "\t" + data[1];
+			boolean isLiteral = map.containsKey(data[0]) && map.get(data[0]);
+
+			String d = data[0] + "\t" + isLiteral;
 
 			ps.println(d);
 
@@ -70,12 +98,14 @@ public class OWL2SpecsFormat {
 
 	}
 
-	private void converToHierachiesSpecsFile(List<String> hierachies) throws IOException {
+	private void convertToHierachiesSpecsFile(List<String> hierachies) throws IOException {
 
 		PrintStream ps = new PrintStream(hierarchiesFile);
 		ps.println("#SuperClass	SubClass");
 
 		for (String line : hierachies) {
+			if (line.startsWith("#"))
+				continue;
 
 			ps.println(line);
 
@@ -85,13 +115,15 @@ public class OWL2SpecsFormat {
 
 	}
 
-	private void converToStructuresSpecsFile(List<String> slots) throws IOException {
+	private void convertToStructuresSpecsFile(List<String> slots) throws IOException {
 
 		PrintStream ps = new PrintStream(structuresFile);
 		ps.println("#Class\tSlot\\tSlotSuperClassType");
 		Set<String> ds = new HashSet<>();
 
 		for (String line : slots) {
+			if (line.startsWith("#"))
+				continue;
 
 			String[] data = line.split("\t");
 
@@ -104,13 +136,15 @@ public class OWL2SpecsFormat {
 
 	}
 
-	private void converToSlotsSpecsFile(List<String> slots) throws IOException {
+	private void convertToSlotsSpecsFile(List<String> slots) throws IOException {
 
 		PrintStream ps = new PrintStream(slotsFile);
 		ps.println("#Slot\tMaxCardinality");
 
 		Set<String> ds = new HashSet<>();
 		for (String line : slots) {
+			if (line.startsWith("#"))
+				continue;
 
 			String[] data = line.split("\t");
 

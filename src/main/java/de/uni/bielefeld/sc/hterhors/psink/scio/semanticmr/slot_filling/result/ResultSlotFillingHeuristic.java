@@ -64,6 +64,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.evaulation.CoarseGrainedResultEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.goldmodrules.OnlyDefinedExpGroupResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.heuristics.LocalSentenceHeuristic;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
@@ -123,7 +124,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.DOCUMENT_LINKED));
 
 		this.objectiveFunction = new SlotFillingObjectiveFunction(scoreType,
-				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 100));
+				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
 
 		this.dataRandomSeed = dataRandomSeed;
 
@@ -155,13 +156,13 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
 
-//		Map<Instance, Set<DocumentLinkedAnnotation>> goldAnnotations = readAnnotations(
-//				new File("data/annotations/result/"));
+		Map<Instance, Set<DocumentLinkedAnnotation>> goldAnnotations = readAnnotations(
+				new File("data/annotations/result/"));
 //
-//		for (Instance instance : goldAnnotations.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(goldAnnotations.get(instance));
-//		}
+		for (Instance instance : goldAnnotations.keySet()) {
+			annotations.putIfAbsent(instance, new HashSet<>());
+			annotations.get(instance).addAll(goldAnnotations.get(instance));
+		}
 
 //		annotations.values().stream().forEach(a -> {
 //			for (Iterator<DocumentLinkedAnnotation> iterator = a.iterator(); iterator.hasNext();) {
@@ -177,12 +178,12 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //			annotations.get(instance).addAll(getGroupNameCandidates(instance));
 //		}
 
-		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
-				new File("data/slot_filling/result/regex_nerla"));
-		for (Instance instance : regexp.keySet()) {
-			annotations.putIfAbsent(instance, new HashSet<>());
-			annotations.get(instance).addAll(regexp.get(instance));
-		}
+//		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
+//				new File("data/slot_filling/result/regex_nerla"));
+//		for (Instance instance : regexp.keySet()) {
+//			annotations.putIfAbsent(instance, new HashSet<>());
+//			annotations.get(instance).addAll(regexp.get(instance));
+//		}
 
 //		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = readAnnotations(
 //				new File("data/annotations/fasttext/InvestigationMethod"));
@@ -223,6 +224,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		log.info("Unsorted Score: " + score);
 
 		scoreDetailed(results);
+
+		CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
 
 	}
 
@@ -284,7 +287,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			SlotType.includeAll();
 			ExperimentalGroupSlotFillingPredictor.maxCacheSize = 800_000;
 			ExperimentalGroupSlotFillingPredictor.minCacheSize = 400_000;
-			
+
 			ExperimentalGroupSlotFillingPredictor a = new ExperimentalGroupSlotFillingPredictor(17, dataRandomSeed,
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
@@ -500,7 +503,17 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			microFullScore.add(scoreFullPart);
 			macroFullScore.add(scoreFullPart.toMacro());
 
-			List<EntityTemplate> goldAnnotations = finalState.getInstance().getGoldAnnotations().getAnnotations();
+			
+			/**
+			 * TODO:
+			 * 
+			 * 
+			 * MAYOR ERROR?
+			 */
+			
+//			List<EntityTemplate> goldAnnotations = finalState.getInstance().getGoldAnnotations().getAnnotations();
+			List<EntityTemplate> goldAnnotations = goldResults.get(finalState.getInstance());
+			
 			List<EntityTemplate> predictedAnnotations = predictedResults.get(finalState.getInstance());
 
 			List<Integer> bestAssignment = ((BeamSearchEvaluator) objectiveFunction.getEvaluator())

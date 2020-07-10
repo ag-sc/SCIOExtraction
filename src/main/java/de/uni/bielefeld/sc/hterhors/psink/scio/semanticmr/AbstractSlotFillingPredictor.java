@@ -51,7 +51,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
@@ -81,17 +81,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 //	private final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 //			new GreedySearchEvaluator(EEvaluationDetail.ENTITY_TYPE));
 
-	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED, 10));
-
-	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
-
 //	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-//			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+//			new BeamSearchEvaluator(EEvaluationDetail.DOCUMENT_LINKED, 10));
 //
 //	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
-//			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE));
+//			new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
+
+	public final IObjectiveFunction trainingObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
+			new CartesianEvaluator(EEvaluationDetail.DOCUMENT_LINKED));
+
+	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
+			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE));
 
 	protected final InstanceProvider instanceProvider;
 

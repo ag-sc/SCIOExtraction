@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,15 +19,20 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.eval.AbstractEvaluator;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
+import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DistanceNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
@@ -33,6 +41,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.PressureNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.ThicknessNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
 
 /**
@@ -123,6 +132,9 @@ public class InjurySlotFilling {
 
 		resultsOut.println(header);
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
+		
+		Map<String, Score> scoreMap = new HashMap<>();
+
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
 			rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 //			rule = rule;
@@ -147,51 +159,84 @@ public class InjurySlotFilling {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			String modelName = "Injury" + new Random().nextInt(10000);
+			String modelName = "Injury" + new Random().nextInt();
 
-			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, 
-					trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, rule);
 
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			Map<SlotType, Boolean> x = SlotType.storeExcludance();
-			SlotType.excludeAll();
-			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-			SlotType.restoreExcludance(x);
+			Set<SlotType> slotTypesToConsider = new HashSet<>();
 
-			log.info("standard: " + standard);
-			log.info("only root: " + score);
+			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryDevice);
+			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryLocation);
+			slotTypesToConsider.add(SCIOSlotTypes.hasAnaesthesia);
 
-			log.info(predictor.crf.getTrainingStatistics());
-			log.info(predictor.crf.getTestStatistics());
+			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
+					EEvaluationDetail.LITERAL);
 
-			resultsOut.println(toResults(rule, standard, "standard"));
-			resultsOut.println(toResults(rule, score, "onyl root"));
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
 
-			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-			log.info("Coverage Training: " + trainCoverage);
-			resultsOut.println(toResults(rule, trainCoverage, "coverage on train"));
-			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-			log.info("Coverage Development: " + devCoverage);
-			resultsOut.println(toResults(rule, devCoverage, "coverage on dev"));
-//			Gold Anaest + Location
-//			Coverage Training: Score [getF1()=0.943, getPrecision()=1.000, getRecall()=0.892, tp=1128, fp=0, fn=137, tn=0]
-//			Coverage Development: Score [getF1()=0.924, getPrecision()=0.981, getRecall()=0.874, tp=263, fp=5, fn=38, tn=0]
+			System.out.println("---------------------------------------");
 
+//			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator);
+			//
+//			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
+//					evaluator);
+			//
+//			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates);
 
-//			Predicted Anaest + Location
-//			Compute coverage...
-//			Coverage Training: Score [getF1()=0.767, getPrecision()=0.959, getRecall()=0.639, tp=819, fp=35, fn=462, tn=0]
-//					Compute coverage...
-//					Coverage Development: Score [getF1()=0.648, getPrecision()=0.895, getRecall()=0.508, tp=153, fp=18, fn=148, tn=0]
-//					modelName: Injury7788
+			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
-			log.info(predictor.crf.getTrainingStatistics());
-			log.info(predictor.crf.getTestStatistics());
+			PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider,
+					evaluator, scoreMap);
+
+			PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates, scoreMap);
+
+			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
+
+//			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
+//
+//			Score standard = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//
+//			Map<SlotType, Boolean> x = SlotType.storeExcludance();
+//			SlotType.excludeAll();
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//			SlotType.restoreExcludance(x);
+//
+//			log.info("standard: " + standard);
+//			log.info("only root: " + score);
+//
+//			log.info(predictor.crf.getTrainingStatistics());
+//			log.info(predictor.crf.getTestStatistics());
+//
+//			resultsOut.println(toResults(rule, standard, "standard"));
+//			resultsOut.println(toResults(rule, score, "onyl root"));
+//
+//			final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//			log.info("Coverage Training: " + trainCoverage);
+//			resultsOut.println(toResults(rule, trainCoverage, "coverage on train"));
+//			final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+//			log.info("Coverage Development: " + devCoverage);
+//			resultsOut.println(toResults(rule, devCoverage, "coverage on dev"));
+////			Gold Anaest + Location
+////			Coverage Training: Score [getF1()=0.943, getPrecision()=1.000, getRecall()=0.892, tp=1128, fp=0, fn=137, tn=0]
+////			Coverage Development: Score [getF1()=0.924, getPrecision()=0.981, getRecall()=0.874, tp=263, fp=5, fn=38, tn=0]
+//
+//
+////			Predicted Anaest + Location
+////			Compute coverage...
+////			Coverage Training: Score [getF1()=0.767, getPrecision()=0.959, getRecall()=0.639, tp=819, fp=35, fn=462, tn=0]
+////					Compute coverage...
+////					Coverage Development: Score [getF1()=0.648, getPrecision()=0.895, getRecall()=0.508, tp=153, fp=18, fn=148, tn=0]
+////					modelName: Injury7788
+//
+//			log.info(predictor.crf.getTrainingStatistics());
+//			log.info(predictor.crf.getTestStatistics());
 			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
@@ -229,7 +274,6 @@ public class InjurySlotFilling {
 //CRFStatistics [context=Test, getTotalDuration()=423]
 //modelName: Injury5350
 
-
 //train = true &  predict = false
 
 //standard: Score [getF1()=0.449, getPrecision()=0.629, getRecall()=0.349, tp=105, fp=62, fn=196, tn=0]
@@ -245,7 +289,6 @@ public class InjurySlotFilling {
 //CRFStatistics [context=Test, getTotalDuration()=370]
 //modelName: Injury8537
 
-
 //train & predict = true
 
 //standard: Score [getF1()=0.520, getPrecision()=0.715, getRecall()=0.409, tp=123, fp=49, fn=178, tn=0]
@@ -260,6 +303,3 @@ public class InjurySlotFilling {
 //CRFStatistics [context=Train, getTotalDuration()=95241]
 //CRFStatistics [context=Test, getTotalDuration()=413]
 //modelName: Injury3062
-
-
-

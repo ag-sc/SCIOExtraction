@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +25,7 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
@@ -155,14 +159,16 @@ public class DeliveryMethodSlotFilling {
 				.build();
 
 		SlotType.excludeAll();
+
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(20).build();
+				.setSeed(1000L).setTrainingProportion(90).setDevelopmentProportion(10).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
 		PrintStream resultsOut = new PrintStream(new File("results/deliveryResults.csv"));
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
+		Map<String, Score> scoreMap = new HashMap<>();
 
 		resultsOut.println(header);
 		for (EDeliveryMethodModifications rule : EDeliveryMethodModifications.values()) {
@@ -170,7 +176,11 @@ public class DeliveryMethodSlotFilling {
 			rule = EDeliveryMethodModifications.ROOT_LOCATION_DURATION;
 			SCIOSlotTypes.hasDuration.include();
 			SCIOSlotTypes.hasLocations.include();
-
+			SCIOSlotTypes.hasOrganismSpecies.include();
+			SCIOSlotTypes.hasGender.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasAgeCategory.include();
+			SCIOSlotTypes.hasAge.include();
 			/**
 			 * The instance provider reads all json files in the given directory. We can set
 			 * the distributor in the constructor. If not all instances should be read from
@@ -191,9 +201,6 @@ public class DeliveryMethodSlotFilling {
 			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 			testInstances = instanceProvider.getRedistributedTestInstances();
 
-//			Map<Instance, Set<AbstractAnnotation>> organismModel = predictOrganismModel(
-//					instanceProvider.getInstances());
-
 			DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName,
 					trainingInstances.stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
@@ -206,7 +213,7 @@ public class DeliveryMethodSlotFilling {
 							.collect(Collectors.toList()),
 					rule);
 
-//			predictor.setOrganismModel(organismModel);
+			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 
 			predictor.trainOrLoadModel();
 
@@ -220,28 +227,52 @@ public class DeliveryMethodSlotFilling {
 			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
 			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
 
+			for (Entry<Instance, State> res : finalStates.entrySet()) {
+
+				for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+						.iterator(); iterator.hasNext();) {
+					AbstractAnnotation a = iterator.next();
+					if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+							&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
+						iterator.remove();
+					}
+				}
+			}
+
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
 			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
 
+			for (Entry<Instance, State> res : coverageStates.entrySet()) {
+
+				for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+						.iterator(); iterator.hasNext();) {
+					AbstractAnnotation a = iterator.next();
+					if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+							&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
+						iterator.remove();
+					}
+				}
+			}
+
 			System.out.println("---------------------------------------");
 
-			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator);
+//			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator);
+//
+//			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
+//					evaluator);
+//
+//			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates);
 
-			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
-					evaluator);
-
-			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates);
-
-			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator);
+			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
 			PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider,
-					evaluator);
+					evaluator, scoreMap);
 
-			PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates);
+			PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates, scoreMap);
 
-			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator);
+			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
 			/**
 			 * Finally, we evaluate the produced states and print some statistics.
@@ -311,28 +342,30 @@ public class DeliveryMethodSlotFilling {
 		SlotType.restoreExcludance(x);
 		return organismModelAnnotations;
 	}
-//			MICRO	Root = 0.702	0.647	0.767	0.997	1.002	0.990
-//			MICRO	hasDuration = 0.673	0.623	0.733	0.978	0.964	0.994
-//			MICRO	hasLocations = 0.511	0.469	0.561	0.747	0.655	0.858
-//			MICRO	Cardinality = 0.783	0.734	0.839	1.000	1.000	1.000
-//			MACRO	Root = 0.605	0.581	0.631	0.855	0.937	0.767
-//			MACRO	hasDuration = 0.594	0.565	0.626	0.852	0.911	0.786
-//			MACRO	hasLocations = 0.541	0.453	0.671	0.757	0.653	0.912
-//			MACRO	Cardinality = 0.818	0.734	0.924	1.000	1.000	1.000
-//			MACRO	Overall = 0.537	0.449	0.669	0.759	0.647	0.926
-//			results: ROOT_LOCATION_DURATION	0.55	0.51	0.61
-//			CRFStatistics [context=Train, getTotalDuration()=193516]
-//			CRFStatistics [context=Test, getTotalDuration()=3255]
-//			modelName: DeliveryMethod1538226669
 }
-//results: ROOT_LOCATION_DURATION	0.56	0.52	0.61
-//results scoreRoot: ROOT_LOCATION_DURATION	0.74	0.69	0.78
-//Compute coverage...
-//
-//Coverage Training: Score [getF1()=0.839, getPrecision()=0.866, getRecall()=0.814, tp=240, fp=37, fn=55, tn=0]
-//Compute coverage...
-//Coverage Development: Score [getF1()=0.821, getPrecision()=0.873, getRecall()=0.775, tp=55, fp=8, fn=16, tn=0]
-//results: ROOT_LOCATION_DURATION	0.56	0.52	0.61
-//CRFStatistics [context=Train, getTotalDuration()=48490]
-//CRFStatistics [context=Test, getTotalDuration()=1324]
-//modelName: DeliveryMethod1519022817
+
+
+
+
+//OHNE
+//MACRO	Root = 0.637	0.594	0.687	0.661	0.594	0.739	0.964	1.000	0.931
+//MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//MACRO	hasLocations = 0.384	0.344	0.434	0.669	0.569	0.796	0.574	0.604	0.546
+//MACRO	Cardinality = 0.818	0.719	0.948	0.840	0.719	1.000	0.973	1.000	0.948
+//MACRO	Overall = 0.510	0.415	0.661	0.713	0.544	0.981	0.716	0.764	0.674
+//results: ROOT_LOCATION_DURATION	0.55	0.47	0.65
+//CRFStatistics [context=Train, getTotalDuration()=182993]
+//CRFStatistics [context=Test, getTotalDuration()=1625]
+//modelName: DeliveryMethod-367973152
+
+//MIT
+
+//MACRO	Root = 0.352	0.318	0.394	0.365	0.318	0.423	0.964	1.000	0.931
+//MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//MACRO	hasLocations = 0.225	0.172	0.325	0.386	0.275	0.595	0.583	0.625	0.546
+//MACRO	Cardinality = 0.857	0.781	0.948	0.880	0.781	1.000	0.973	1.000	0.948
+//MACRO	Overall = 0.283	0.212	0.424	0.392	0.274	0.629	0.721	0.776	0.674
+//results: ROOT_LOCATION_DURATION	0.38	0.32	0.48
+//CRFStatistics [context=Train, getTotalDuration()=82555]
+//CRFStatistics [context=Test, getTotalDuration()=775]
+//modelName: DeliveryMethod-1287335861

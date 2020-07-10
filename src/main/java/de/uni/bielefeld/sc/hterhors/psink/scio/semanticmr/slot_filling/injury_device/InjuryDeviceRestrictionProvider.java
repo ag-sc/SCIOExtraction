@@ -14,7 +14,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 public class InjuryDeviceRestrictionProvider {
 
 	public enum EInjuryDeviceModifications implements IModificationRule {
-		ROOT, ROOT_DELIVERY_METHOD, ROOT_DELIVERY_METHOD_DOSAGE, NO_MODIFICATION;
+		ROOT,  NO_MODIFICATION;
 
 	}
 
@@ -28,10 +28,6 @@ public class InjuryDeviceRestrictionProvider {
 			return Collections.emptyList();
 		case ROOT:
 			return getRoot();
-		case ROOT_DELIVERY_METHOD:
-			return getDeliveryMethod();
-		case ROOT_DELIVERY_METHOD_DOSAGE:
-			return getDosage();
 		}
 		return null;
 
@@ -58,59 +54,5 @@ public class InjuryDeviceRestrictionProvider {
 
 	}
 
-	public static List<GoldModificationRule> getDeliveryMethod() {
-		List<GoldModificationRule> rules = new ArrayList<>();
-
-		rules.add(new GoldModificationRule() {
-
-			@Override
-			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
-
-				EntityTemplate newGold = new EntityTemplate(
-						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
-
-				newGold.setSingleSlotFiller(deliveryMethod, goldAnnotation.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(deliveryMethod).getSlotFiller());
-
-				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
-					return null;
-
-				if (newGold.asInstanceOfEntityTemplate().isEmpty())
-					return null;
-
-				return newGold;
-			}
-		});
-		return rules;
-
-	}
-
-	public static List<GoldModificationRule> getDosage() {
-		List<GoldModificationRule> rules = new ArrayList<>();
-
-		rules.add(new GoldModificationRule() {
-
-			@Override
-			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
-
-				EntityTemplate newGold = new EntityTemplate(
-						goldAnnotation.asInstanceOfEntityTemplate().getRootAnnotation().deepCopy());
-				newGold.setSingleSlotFiller(dosageSlot,
-						goldAnnotation.asInstanceOfEntityTemplate().getSingleFillerSlot(dosageSlot).getSlotFiller());
-				newGold.setSingleSlotFiller(deliveryMethod, goldAnnotation.asInstanceOfEntityTemplate()
-						.getSingleFillerSlot(deliveryMethod).getSlotFiller());
-
-				if (!newGold.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())
-					return null;
-
-				if (newGold.asInstanceOfEntityTemplate().isEmpty())
-					return null;
-
-				return newGold;
-			}
-		});
-		return rules;
-
-	}
 
 }

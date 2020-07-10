@@ -46,7 +46,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthes
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDeviceRestrictionProvider.EInjuryDeviceModifications;
 
-public class InjuryDeviceFilling {
+public class InjuryDeviceFillingFinalEvaluation {
 
 	/**
 	 * Start the slot filling procedure.
@@ -61,7 +61,7 @@ public class InjuryDeviceFilling {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new InjuryDeviceFilling();
+		new InjuryDeviceFillingFinalEvaluation(1000L);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -72,11 +72,7 @@ public class InjuryDeviceFilling {
 	 */
 	private final File instanceDirectory = new File("data/slot_filling/injury_device/instances/");
 
-	public final String header = "Mode\tF1\tPrecision\tRecall";
-
-	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
-
-	public InjuryDeviceFilling() throws IOException {
+	public InjuryDeviceFillingFinalEvaluation(long randomSeed) throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -108,21 +104,18 @@ public class InjuryDeviceFilling {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(100L).setTrainingProportion(80).setDevelopmentProportion(20).build();
-
-//		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-//				.build();
-
-		PrintStream resultsOut = new PrintStream(new File("results/injuryDeviceResults.csv"));
-//		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-
-		resultsOut.println(header);
 		Map<String, Score> scoreMap = new HashMap<>();
 
-		for (EInjuryDeviceModifications rule : EInjuryDeviceModifications.values()) {
-//			DeliveryMethodFilling.rule =rule;
-			rule = EInjuryDeviceModifications.NO_MODIFICATION;
+		Random random = new Random(randomSeed);
+
+		for (int i = 0; i < 10; i++) {
+			log.info("RUN ID:" + i);
+
+			long seed = random.nextLong();
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
+					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
+
+			EInjuryDeviceModifications rule = EInjuryDeviceModifications.NO_MODIFICATION;
 			/**
 			 * The instance provider reads all json files in the given directory. We can set
 			 * the distributor in the constructor. If not all instances should be read from
@@ -134,7 +127,7 @@ public class InjuryDeviceFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryDeviceRestrictionProvider.getByRule(rule));
 
-			String modelName = "InjuryDevice" + new Random().nextInt();
+			String modelName = "InjuryDevice_Final_Seed_" + seed;
 
 			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
@@ -152,10 +145,6 @@ public class InjuryDeviceFilling {
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-
-			
-			
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
 			slotTypesToConsider.add(SCIOSlotTypes.hasForce);
@@ -186,9 +175,6 @@ public class InjuryDeviceFilling {
 
 			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
-			
-			
-			
 //			resultsOut.println(toResults(rule, score));
 //
 //			SlotType.excludeAll();
@@ -230,51 +216,44 @@ public class InjuryDeviceFilling {
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
 			 */
-			break;
 		}
-		resultsOut.flush();
-		resultsOut.close();
-	}
 
-	private String toResults(EInjuryDeviceModifications rule, Score score) {
-		return rule.name() + "\t" + resultFormatter.format(score.getF1()) + "\t"
-				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
+		log.info("\n\n\n*************************");
+
+		for (Entry<String, Score> sm : scoreMap.entrySet()) {
+			log.info(sm.getKey() + "\t" + sm.getValue().toTSVString());
+		}
+
+		log.info("	*************************");
+
 	}
 
 }
 
-/*
- * Coverage is recall is lower because through errors we can reach higher recall
- * if e.g. the properties appear for different classes
- */
 
-//results: NO_MODIFICATION	0.68	0.64	0.74
-//Compute coverage...
-//No states were generated in explorer SlotFillingExplorer for instance: N007 Ishikawa 2015
-//No states were generated in explorer SlotFillingExplorer for instance: N200 Sasaki 2004
-//
-//No states were generated in explorer SlotFillingExplorer for instance: N120 Xia, Huang et al. 2017
-//No states were generated in explorer SlotFillingExplorer for instance: N238 Janzedeh
-//No states were generated in explorer SlotFillingExplorer for instance: N171 L+¦pez Vales 2007
-//Coverage Development: Score [getF1()=0.787, getPrecision()=0.889, getRecall()=0.706, tp=24, fp=3, fn=10, tn=0]
-//CRFStatistics [context=Train, getTotalDuration()=11541]
-//CRFStatistics [context=Test, getTotalDuration()=397]
-//modelName: InjuryDevice-684221447
-
-//Nice for error analysis
-
-//***********************************************************
-//|======Final Evaluation======_____________N008 Jin 2016 26852702_____________|
-//Final State  Model[1.31668] Objective[0.40000] {
-//GOLD [1]:
-//NYUImpactor	"NYU impactor"	120	13905
-//	hasForce	Force	"10 g, 25 mm"	120	13919
-//}
-//PREDICT [1]:
-//NYUImpactor	"NYU impactor"	120	13905
-//	hasWeight	Weight	"10 g"	120	13919
-//	hasDistance	Distance	"25 mm"	("2.5 cm")	120	13925
-//}
-//Score [getF1()=0.400, getPrecision()=0.333, getRecall()=0.500, tp=1, fp=2, fn=1, tn=0]
-//Score [macroF1=0.400, macroPrecision=0.333, macroRecall=0.500]
-//***********************************************************
+//*************************
+//hasForce-Relative	�	�	�
+//Cardinality-Coverage	0.991	1.000	0.982
+//hasVolume-Coverage	0.500	0.500	0.500
+//hasDuration-Absolute	0.143	0.143	0.143
+//hasDuration-Relative	�	�	�
+//hasForce-Absolute	0.714	0.714	0.714
+//Cardinality-Absolute	0.991	1.000	0.982
+//hasWeight-Coverage	0.600	0.600	0.600
+//Root-Coverage	0.990	1.000	0.979
+//hasVolume-Absolute	0.250	0.250	0.250
+//hasVolume-Relative	�	�	�
+//hasDistance-Coverage	0.735	0.735	0.735
+//Root-Absolute	0.734	0.738	0.731
+//Overall-Relative	0.801	0.746	0.863
+//hasWeight-Absolute	0.446	0.446	0.446
+//hasWeight-Relative	0.754	0.754	0.754
+//Root-Relative	0.741	0.737	0.745
+//hasDistance-Absolute	0.436	0.436	0.436
+//hasForce-Coverage	0.778	0.778	0.778
+//Overall-Coverage	0.908	0.936	0.882
+//hasDuration-Coverage	0.000	0.000	0.000
+//Cardinality-Relative	1.000	1.000	1.000
+//hasDistance-Relative	0.695	0.695	0.695
+//Overall-Absolute	0.729	0.700	0.761
+//	*************************

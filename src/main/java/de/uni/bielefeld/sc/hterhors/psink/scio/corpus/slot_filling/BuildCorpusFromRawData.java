@@ -199,8 +199,8 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForTreatmentType() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.treatment);
 
-		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+//		Set<String> annotatedDocuments = new HashSet<>(
+//				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 		Set<SlotType> treatmentSlotTypes = new HashSet<>();
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasCompound);
@@ -211,6 +211,7 @@ public class BuildCorpusFromRawData {
 		treatmentSlotTypes.add(SCIOSlotTypes.hasVoltage);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasRehabMedication);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasElectricFieldStrength);
+		treatmentSlotTypes.add(SCIOSlotTypes.hasDosage);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), treatmentSlotTypes, SCIOEntityTypes.treatment, true, true,
 				true);
 		annotateWithRegularExpressions(new TreatmentPattern(SCIOEntityTypes.treatment));

@@ -89,7 +89,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
-			if (!map.get(instance).isEmpty())
+			if (map.get(instance).isEmpty())
 				continue;
 
 			instance.removeCandidateAnnotation(new IFilter() {
@@ -134,17 +134,23 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		}
 	}
 
+	InjuryDevicePredictor injuryDevicePrediction = null;
+	AnaestheticPredictor anaestheticPrediction = null;
+	VertebralAreaPredictor vertebralAreaPrediction = null;
+
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 		SlotType.includeAll();
 		String injuryDeviceName = "InjuryDevice_" + modelName;
-		InjuryDevicePredictor injuryDevicePrediction = new InjuryDevicePredictor(injuryDeviceName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames,
-				EInjuryDeviceModifications.NO_MODIFICATION);
 
-		injuryDevicePrediction.trainOrLoadModel();
+		if (injuryDevicePrediction == null) {
+			injuryDevicePrediction = new InjuryDevicePredictor(injuryDeviceName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, EInjuryDeviceModifications.NO_MODIFICATION);
 
-		injuryDevicePrediction.predictAllInstances(1);
+			injuryDevicePrediction.trainOrLoadModel();
+
+			injuryDevicePrediction.predictAllInstances(1);
+		}
 
 		for (Instance instance : instances) {
 			map.putIfAbsent(instance, new ArrayList<>());
@@ -156,12 +162,15 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		SlotType.includeAll();
 
 		String anaestheticName = "Anaesthetic_" + modelName;
-		AnaestheticPredictor anaestheticPrediction = new AnaestheticPredictor(anaestheticName, trainingInstanceNames,
-				developInstanceNames, testInstanceNames, EAnaestheticModifications.NO_MODIFICATION);
+		if (anaestheticPrediction == null) {
 
-		anaestheticPrediction.trainOrLoadModel();
-		anaestheticPrediction.predictAllInstances(1);
+			anaestheticPrediction = new AnaestheticPredictor(anaestheticName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, EAnaestheticModifications.NO_MODIFICATION);
 
+			anaestheticPrediction.trainOrLoadModel();
+			anaestheticPrediction.predictAllInstances(1);
+
+		}
 		for (Instance instance : instances) {
 			map.putIfAbsent(instance, new ArrayList<>());
 			map.get(instance).addAll(anaestheticPrediction.predictHighRecallInstanceByName(instance.getName(), 1));
@@ -171,15 +180,17 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 		Map<SlotType, Boolean> y = SlotType.storeExcludance();
 		SlotType.includeAll();
-//		String vertebralAreaModelName = "VertebralArea_STD";
 		String vertebralAreaModelName = "VertebralArea_" + modelName;
-		VertebralAreaPredictor vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames,
-				EVertebralAreaModifications.NO_MODIFICATION);
 
-		vertebralAreaPrediction.trainOrLoadModel();
+		if (vertebralAreaPrediction == null) {
 
-		vertebralAreaPrediction.predictAllInstances(1);
+			vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, EVertebralAreaModifications.NO_MODIFICATION);
+
+			vertebralAreaPrediction.trainOrLoadModel();
+
+			vertebralAreaPrediction.predictAllInstances(1);
+		}
 
 		for (Instance instance : instances) {
 			map.putIfAbsent(instance, new ArrayList<>());

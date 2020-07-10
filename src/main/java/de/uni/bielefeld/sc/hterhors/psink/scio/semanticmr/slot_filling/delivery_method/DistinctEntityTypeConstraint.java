@@ -26,13 +26,12 @@ public class DistinctEntityTypeConstraint extends AbstractHardConstraint {
 
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
 
-			Map<SlotType, Boolean> z = SlotType.storeExcludance();
-			SlotType.excludeAll();
-			if (currentPrediction.evaluateEquals(evaluator, entityTemplate)) {
+			boolean equals = currentPrediction.evaluateEquals(evaluator, entityTemplate);
+
+			if (equals) {
 				violates = true;
 				break;
 			}
-			SlotType.restoreExcludance(z);
 		}
 
 		return violates;
@@ -42,11 +41,17 @@ public class DistinctEntityTypeConstraint extends AbstractHardConstraint {
 	@Override
 	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
 
+		if (currentState.getCurrentPredictions().getAbstractAnnotations().size() < 2)
+			return candidateListToFilter;
+
 		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
 
+		Map<SlotType, Boolean> z = SlotType.storeExcludance();
+		SlotType.excludeAll();
 		filteredList = candidateListToFilter.parallelStream()
 				.filter(candidate -> !violatesConstraint(currentState, candidate)).collect(Collectors.toList());
 
+		SlotType.restoreExcludance(z);
 		return filteredList;
 	}
 

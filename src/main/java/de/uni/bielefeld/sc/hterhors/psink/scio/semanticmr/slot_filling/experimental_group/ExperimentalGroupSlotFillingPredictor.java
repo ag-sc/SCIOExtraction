@@ -1183,12 +1183,12 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 					+ groupNameClusteringMode + " with cardinalityMode = " + cardinalityMode);
 		}
 
-		SCIOSlotTypes.hasGender.include();
-		SCIOSlotTypes.hasWeight.include();
-		SCIOSlotTypes.hasAgeCategory.include();
-		SCIOSlotTypes.hasAge.include();
-
-		SCIOSlotTypes.hasLocation.include();
+//		SCIOSlotTypes.hasGender.include();
+//		SCIOSlotTypes.hasWeight.include();
+//		SCIOSlotTypes.hasAgeCategory.include();
+//		SCIOSlotTypes.hasAge.include();
+//
+//		SCIOSlotTypes.hasLocation.include();
 
 		if (groupNameProviderMode == EExtractGroupNamesMode.EMPTY) {
 			/*
@@ -1279,16 +1279,19 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 			break;
 		case PREDICTED:
 			int k = 50;
-			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(instanceProvider.getInstances(),
-					k).entrySet()) {
+//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(instanceProvider.getInstances(),
+//					k).entrySet()) {
+//				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+//			}
+			for (Instance instance : trainingInstances) {
+				instance.addCandidateAnnotations(GroupNameExtraction.extractGroupNamesFromGold(instance));
+			}
+			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(devInstances, k).entrySet()) {
 				prediction.getKey().addCandidateAnnotations(prediction.getValue());
 			}
-//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(devInstances, k).entrySet()) {
-//				prediction.getKey().addCandidateAnnotations(prediction.getValue());
-//			}
-//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(testInstances, k).entrySet()) {
-//				prediction.getKey().addCandidateAnnotations(prediction.getValue());
-//			}
+			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictGroupName(testInstances, k).entrySet()) {
+				prediction.getKey().addCandidateAnnotations(prediction.getValue());
+			}
 			break;
 		}
 
@@ -1408,13 +1411,8 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		Map<SlotType, Boolean> f = SlotType.storeExcludance();
 		SCIOSlotTypes.hasOrganismModel.include();
 		SCIOSlotTypes.hasInjuryModel.include();
-
-		System.out.println(SCIOSlotTypes.hasGender);
-		System.out.println(SCIOSlotTypes.hasWeight);
-		System.out.println(SCIOSlotTypes.hasAgeCategory);
-		System.out.println(SCIOSlotTypes.hasAge);
-
 		SCIOSlotTypes.hasLocation.include();
+		
 		goldModificationRules.add(a -> {
 
 			if (SCIOSlotTypes.hasGroupName.isIncluded())
@@ -1704,7 +1702,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations;
 
 //		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
-		File groupNamesCacheDir = new File("data/annotations/groupNames/" + dataRandomSeed + "_recall_at_" + k + "/");
+		File groupNamesCacheDir = new File("data/annotations/groupNames/" + "GroupName_" + modelName+ "_recall_at_" + k + "/");
 //		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
 		if (!groupNamesCacheDir.exists() || groupNamesCacheDir.list().length == 0) {
 			groupNamesCacheDir.mkdirs();
@@ -1720,7 +1718,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 
 			List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
-			GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("GroupName_EXP_GROUP_" + dataRandomSeed,
+			GroupNameNERLPredictor predictor = new GroupNameNERLPredictor("GroupName_" + modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames);
 
 			predictor.trainOrLoadModel();
@@ -1735,7 +1733,6 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 			JsonNerlaIO io = new JsonNerlaIO(true);
 			for (Instance instance : groupNameAnnotations.keySet()) {
 
-				System.out.println(instance.getName() + "\t" + groupNameAnnotations.get(instance).size());
 				try {
 
 					List<JsonEntityAnnotationWrapper> wrappedAnnotation = groupNameAnnotations.get(instance).stream()
@@ -1787,7 +1784,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
-				"OrganismModel_EXP_GROUP_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
+				"OrganismModel_" + modelName, trainingInstanceNames, developInstanceNames,
 				testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
@@ -1813,7 +1810,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
-		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_EXP_GROUP_" + dataRandomSeed,
+		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_" + modelName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
 		predictor.trainOrLoadModel();
 
