@@ -32,7 +32,9 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DistanceNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
@@ -61,7 +63,7 @@ public class InjuryDeviceFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new InjuryDeviceFillingFinalEvaluation(1000L);
+		new InjuryDeviceFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -72,7 +74,9 @@ public class InjuryDeviceFillingFinalEvaluation {
 	 */
 	private final File instanceDirectory = new File("data/slot_filling/injury_device/instances/");
 
-	public InjuryDeviceFillingFinalEvaluation(long randomSeed) throws IOException {
+	ENERModus modus;
+
+	public InjuryDeviceFillingFinalEvaluation(long randomSeed, String modusName) throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -105,7 +109,7 @@ public class InjuryDeviceFillingFinalEvaluation {
 				.build();
 
 		Map<String, Score> scoreMap = new HashMap<>();
-
+		modus = ENERModus.valueOf(modusName);
 		Random random = new Random(randomSeed);
 
 		for (int i = 0; i < 10; i++) {
@@ -139,7 +143,7 @@ public class InjuryDeviceFillingFinalEvaluation {
 					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					rule);
+					rule, modus);
 
 			predictor.trainOrLoadModel();
 
@@ -155,7 +159,8 @@ public class InjuryDeviceFillingFinalEvaluation {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.injuryDevice,
+					false);
 
 			System.out.println("---------------------------------------");
 
@@ -229,7 +234,6 @@ public class InjuryDeviceFillingFinalEvaluation {
 	}
 
 }
-
 
 //*************************
 //hasForce-Relative	�	�	�

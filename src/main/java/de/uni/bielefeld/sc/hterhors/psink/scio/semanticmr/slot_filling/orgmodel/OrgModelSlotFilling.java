@@ -33,6 +33,7 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -146,7 +147,7 @@ public class OrgModelSlotFilling {
 			String modelName = "OrganismModel" + new Random().nextInt();
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule);
+					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
 			predictor.trainOrLoadModel();
 
@@ -166,16 +167,16 @@ public class OrgModelSlotFilling {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.organismModel, false);
 
 			System.out.println("---------------------------------------");
 
-			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator, scoreMap);
-
-			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
-					evaluator, scoreMap);
-
-			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates, scoreMap);
+//			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator, scoreMap);
+//
+//			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
+//					evaluator, scoreMap);
+//
+//			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates, scoreMap);
 
 			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 

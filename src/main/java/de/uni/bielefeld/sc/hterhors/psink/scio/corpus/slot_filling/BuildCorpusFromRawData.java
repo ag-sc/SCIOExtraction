@@ -211,7 +211,6 @@ public class BuildCorpusFromRawData {
 		treatmentSlotTypes.add(SCIOSlotTypes.hasVoltage);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasRehabMedication);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasElectricFieldStrength);
-		treatmentSlotTypes.add(SCIOSlotTypes.hasDosage);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), treatmentSlotTypes, SCIOEntityTypes.treatment, true, true,
 				true);
 		annotateWithRegularExpressions(new TreatmentPattern(SCIOEntityTypes.treatment));

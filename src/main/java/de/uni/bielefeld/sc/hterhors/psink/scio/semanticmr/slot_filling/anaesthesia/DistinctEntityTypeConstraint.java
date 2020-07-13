@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,37 +21,38 @@ public class DistinctEntityTypeConstraint extends AbstractHardConstraint {
 	}
 
 	@Override
-	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
-		boolean violates = false;
+	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
 
+		int c = 0;
+		int index = 0;
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
 
-			boolean equals = currentPrediction.evaluateEquals(evaluator, entityTemplate);
+			boolean equals = index != annotationIndex
+					&& currentPrediction.getEntityType() == entityTemplate.getEntityType();
 
 			if (equals) {
-				violates = true;
-				break;
+				c++;
 			}
+			index++;
 		}
 
-		return violates;
+		return c >= 1;
 
 	}
 
 	@Override
-	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
+	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter,
+			int annotationIndex) {
 
 		if (currentState.getCurrentPredictions().getAbstractAnnotations().size() < 2)
 			return candidateListToFilter;
 
 		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
 
-		Map<SlotType, Boolean> z = SlotType.storeExcludance();
-		SlotType.excludeAll();
 		filteredList = candidateListToFilter.parallelStream()
-				.filter(candidate -> !violatesConstraint(currentState, candidate)).collect(Collectors.toList());
+				.filter(candidate -> !violatesConstraint(currentState, candidate, annotationIndex))
+				.collect(Collectors.toList());
 
-		SlotType.restoreExcludance(z);
 		return filteredList;
 	}
 

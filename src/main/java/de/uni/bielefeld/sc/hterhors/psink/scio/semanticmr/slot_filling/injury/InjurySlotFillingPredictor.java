@@ -32,10 +32,12 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
@@ -56,9 +58,10 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	private static Logger log = LogManager.getFormatterLogger(InjurySlotFillingPredictor.class);
 
 	public InjurySlotFillingPredictor(String modelName, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule,
+			ENERModus modus) {
 
-		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 	}
 
 	final public boolean useGoldLocationsForTraining = true;
@@ -79,7 +82,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		} else {
 			addPredictions(map, instanceProvider.getRedistributedTrainingInstances());
 		}
-		if (useGoldLocationsForPrediction) {
+		if (useGoldLocationsForPrediction || modus == ENERModus.GOLD) {
 			addGold(map, instanceProvider.getRedistributedDevelopmentInstances());
 			addGold(map, instanceProvider.getRedistributedTestInstances());
 		} else {
@@ -145,7 +148,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 		if (injuryDevicePrediction == null) {
 			injuryDevicePrediction = new InjuryDevicePredictor(injuryDeviceName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, EInjuryDeviceModifications.NO_MODIFICATION);
+					developInstanceNames, testInstanceNames, EInjuryDeviceModifications.NO_MODIFICATION, modus);
 
 			injuryDevicePrediction.trainOrLoadModel();
 
@@ -165,7 +168,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		if (anaestheticPrediction == null) {
 
 			anaestheticPrediction = new AnaestheticPredictor(anaestheticName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, EAnaestheticModifications.NO_MODIFICATION);
+					developInstanceNames, testInstanceNames, EAnaestheticModifications.NO_MODIFICATION, modus);
 
 			anaestheticPrediction.trainOrLoadModel();
 			anaestheticPrediction.predictAllInstances(1);
@@ -185,7 +188,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		if (vertebralAreaPrediction == null) {
 
 			vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, EVertebralAreaModifications.NO_MODIFICATION);
+					developInstanceNames, testInstanceNames, EVertebralAreaModifications.NO_MODIFICATION, modus);
 
 			vertebralAreaPrediction.trainOrLoadModel();
 
@@ -220,7 +223,13 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 //				CRFStatistics [context=Train, getTotalDuration()=78526]
 //				CRFStatistics [context=Test, getTotalDuration()=244]
 //				Compute coverage...
-		return new File("data/additional_nerla/injury/DOCUMENT_LINKED");
+//		return new File("data/additional_nerla/injury/DOCUMENT_LINKED");
+		if (modus == ENERModus.GOLD)
+			return new File(AnnotationsCorpusBuilderBib.ANNOTATIONS_DIR,
+					AnnotationsCorpusBuilderBib.toDirName(SCIOEntityTypes.injury));
+		else
+			return new File(AnnotationsCorpusBuilderBib.ANNOTATIONS_DIR,
+					AnnotationsCorpusBuilderBib.toDirName(SCIOEntityTypes.injury));
 	}
 
 	@Override

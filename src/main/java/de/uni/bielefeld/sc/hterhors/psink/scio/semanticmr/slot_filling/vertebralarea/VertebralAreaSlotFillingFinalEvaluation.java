@@ -28,7 +28,9 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
@@ -47,7 +49,7 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new VertebralAreaSlotFillingFinalEvaluation(1000L);
+		new VertebralAreaSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
@@ -60,7 +62,9 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 	 */
 	private final File instanceDirectory = new File("data/slot_filling/vertebral_area/instances/");
 
-	public VertebralAreaSlotFillingFinalEvaluation(long randomSeed) throws IOException {
+	ENERModus modus;
+
+	public VertebralAreaSlotFillingFinalEvaluation(long randomSeed, final String modusName) throws IOException {
 		InstanceProvider.removeEmptyInstances = false;
 
 		/**
@@ -86,6 +90,7 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 
 		Random random = new Random(randomSeed);
 		Map<String, Score> scoreMap = new HashMap<>();
+		modus = ENERModus.valueOf(modusName);
 
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
@@ -123,7 +128,7 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 							.collect(Collectors.toList()),
 					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 							.collect(Collectors.toList()),
-					rule);
+					rule, modus);
 
 			predictor.trainOrLoadModel();
 
@@ -136,7 +141,8 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			Map<Instance, State> coverageStates = predictor
+					.coverageOnDevelopmentInstances(SCIOEntityTypes.vertebralArea, false);
 
 			System.out.println("---------------------------------------");
 
@@ -193,3 +199,20 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 //Overall-Absolute	0.716	0.742	0.692
 //	*************************
 
+//*************************
+//hasLowerVertebrae-Absolute	0.485	0.485	0.485
+//Cardinality-Coverage	1.000	1.000	1.000
+//Cardinality-Absolute	1.000	1.000	1.000
+//Root-Coverage	1.000	1.000	1.000
+//hasLowerVertebrae-Relative	0.663	0.663	0.663
+//Root-Absolute	1.000	1.000	1.000
+//Overall-Relative	0.796	0.760	0.836
+//Root-Relative	1.000	1.000	1.000
+//hasUpperVertebrae-Relative	0.800	0.800	0.800
+//hasUpperVertebrae-Coverage	0.939	0.939	0.939
+//Overall-Coverage	0.944	1.000	0.894
+//Cardinality-Relative	1.000	1.000	1.000
+//hasUpperVertebrae-Absolute	0.758	0.758	0.758
+//hasLowerVertebrae-Coverage	0.742	0.742	0.742
+//Overall-Absolute	0.752	0.758	0.747
+//	*************************

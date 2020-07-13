@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -48,15 +49,33 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	private EOrgModelModifications rule;
 
 	public OrgModelSlotFillingPredictor(String modelName, List<String> trainingInstances,
-			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule) {
-		super(modelName, trainingInstances, developmentInstances, testInstances, rule);
+			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule, ENERModus modus) {
+		super(modelName, trainingInstances, developmentInstances, testInstances, rule, modus);
 	}
+
+	// MIT GOLD ANNOATIONEN
+//	MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasAge = 0.820	0.857	0.786	0.820	0.857	0.786	1.000	1.000	1.000
+//			MACRO	hasWeight = 0.900	0.900	0.900	0.900	0.900	0.900	1.000	1.000	1.000
+//			MACRO	hasOrganismSpecies = 0.919	0.925	0.912	0.993	1.000	0.986	0.925	0.925	0.925
+//			MACRO	hasAgeCategory = 0.965	0.972	0.958	0.965	0.972	0.958	1.000	1.000	1.000
+//			MACRO	hasGender = 0.993	1.000	0.986	0.993	1.000	0.986	1.000	1.000	1.000
+//			MACRO	Cardinality = 0.987	1.000	0.975	0.987	1.000	0.975	1.000	1.000	1.000
+//			MACRO	Overall = 0.953	0.972	0.934	0.966	0.972	0.960	0.986	1.000	0.973
+//			Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE	0.94	0.97	0.91
+//			modelName: OrganismModel-1616477023
+//			CRFStatistics [context=Train, getTotalDuration()=14004]
+//			CRFStatistics [context=Test, getTotalDuration()=388]
 
 	@Override
 	protected File getExternalNerlaFile() {
 		// Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE 0.95 0.96 0.94
 		// modelName: OrganismModel-1205615375
-		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.organismModel);
+		if (modus == ENERModus.GOLD)
+			return new File(AnnotationsCorpusBuilderBib.ANNOTATIONS_DIR,
+					AnnotationsCorpusBuilderBib.toDirName(SCIOEntityTypes.organismModel));
+		else
+			return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.organismModel);
 
 		// Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE 0.85 0.88 0.83
 		// modelName: OrganismModel-673015650

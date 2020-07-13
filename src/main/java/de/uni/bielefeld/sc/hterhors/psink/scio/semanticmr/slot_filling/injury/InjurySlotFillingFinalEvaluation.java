@@ -31,6 +31,7 @@ import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -50,7 +51,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.In
  */
 public class InjurySlotFillingFinalEvaluation {
 	public static void main(String[] args) throws IOException {
-		new InjurySlotFillingFinalEvaluation(1000L);
+		new InjurySlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -58,8 +59,9 @@ public class InjurySlotFillingFinalEvaluation {
 	private File instanceDirectory;
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
+	ENERModus modus;
 
-	public InjurySlotFillingFinalEvaluation(long randomSeed) throws IOException {
+	public InjurySlotFillingFinalEvaluation(long randomSeed, String modusName) throws IOException {
 
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Injury")).apply()
@@ -84,7 +86,7 @@ public class InjurySlotFillingFinalEvaluation {
 		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
 		Random random = new Random(randomSeed);
-
+		modus = ENERModus.valueOf(modusName);
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
 
@@ -112,7 +114,7 @@ public class InjurySlotFillingFinalEvaluation {
 			String modelName = "Injury_Final_Seed_" + seed;
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule);
+					developInstanceNames, testInstanceNames, rule, modus);
 
 			predictor.trainOrLoadModel();
 
@@ -129,7 +131,8 @@ public class InjurySlotFillingFinalEvaluation {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.injury,
+					false);
 
 			System.out.println("---------------------------------------");
 

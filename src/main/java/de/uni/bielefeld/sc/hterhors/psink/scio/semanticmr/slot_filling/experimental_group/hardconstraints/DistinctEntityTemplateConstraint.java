@@ -19,7 +19,7 @@ public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
 	}
 
 	@Override
-	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
 		boolean violates = false;
 
 		for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
@@ -34,12 +34,12 @@ public class DistinctEntityTemplateConstraint extends AbstractHardConstraint {
 	}
 
 	@Override
-	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
+	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter, int annotationIndex) {
 
 		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
 
 		filteredList = candidateListToFilter.parallelStream()
-				.filter(candidate -> !violatesConstraint(currentState, candidate)).collect(Collectors.toList());
+				.filter(candidate -> !violatesConstraint(currentState, candidate,annotationIndex)).collect(Collectors.toList());
 
 		return filteredList;
 	}

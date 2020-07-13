@@ -72,6 +72,7 @@ import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -123,8 +124,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaPredictor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
@@ -410,6 +409,8 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 	private File cacheDir = new File("data/cache/");
 	private int maxCacheSize = 80_000_000;
 	private int minCacheSize = 40_000_000;
+
+	private ENERModus modus = ENERModus.GOLD;
 
 	public ExperimentalGroupSlotFilling(int parameterID, long dataRandomSeed) throws Exception {
 		SystemScope.Builder.getScopeHandler()
@@ -1005,7 +1006,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					EDeliveryMethodModifications.ROOT);
+					EDeliveryMethodModifications.ROOT, modus);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);
@@ -1757,7 +1758,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_" + modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
@@ -1783,7 +1784,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_" + modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = predictor.predictInstances(instances, k);

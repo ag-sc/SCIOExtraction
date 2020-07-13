@@ -72,15 +72,17 @@ public class BuildAnnotationsJSONFromRawData {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
-		buildForOrganismModel();
-		buildForInjuryModel();
-		buildForTreatment();
-		buildForVertebralArea();
-		buildForDeliveryMethod();
-		buildForInvestigationMethod();
-		buildForGroupName();
-		buildForTrend();
-		buildForResult();
+//		buildForOrganismModel();
+//		buildForInjuryModel();
+//		buildForAnaesthetic();
+//		buildForTreatment();
+//		buildForVertebralArea();
+//		buildForDeliveryMethod();
+		buildForInjuryDevice();
+//		buildForInvestigationMethod();
+//		buildForGroupName();
+//		buildForTrend();
+//		buildForResult();
 
 	}
 
@@ -111,6 +113,11 @@ public class BuildAnnotationsJSONFromRawData {
 
 	}
 
+	private static void buildForInjuryDevice() throws Exception {
+		convertAnnotations(SCIOEntityTypes.injuryDevice);
+
+	}
+
 	private static void buildForTreatment() throws Exception {
 
 		convertAnnotations(SCIOEntityTypes.treatment);
@@ -119,6 +126,11 @@ public class BuildAnnotationsJSONFromRawData {
 	private static void buildForInjuryModel() throws Exception {
 
 		convertAnnotations(SCIOEntityTypes.injury);
+	}
+
+	private static void buildForAnaesthetic() throws Exception {
+
+		convertAnnotations(SCIOEntityTypes.anaesthetic);
 	}
 
 	private static void buildForOrganismModel() throws Exception {

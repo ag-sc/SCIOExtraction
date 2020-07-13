@@ -148,8 +148,8 @@ public class VertebralAreaRootMatchTemplate extends AbstractFeatureTemplate<Vert
 		featureVector.set(PREFIX + "containsUpperNum", factor.getFactorScope().containsUpperNum);
 		featureVector.set(PREFIX + "containsUpperID", factor.getFactorScope().containsUpperID);
 		featureVector.set(PREFIX + "containsLowerID", factor.getFactorScope().containsLowerID);
-		featureVector.set(PREFIX + "lowerIndexLessUpperIndex", factor.getFactorScope().lowerIndexLessUpperIndex);
 		featureVector.set(PREFIX + "!lowerIndexLessUpperIndex", !factor.getFactorScope().lowerIndexLessUpperIndex);
+		featureVector.set(PREFIX + "lowerIndexLessUpperIndex", factor.getFactorScope().lowerIndexLessUpperIndex);
 
 	}
 

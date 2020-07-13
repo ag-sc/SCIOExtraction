@@ -32,7 +32,9 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DistanceNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
@@ -146,7 +148,7 @@ public class InjuryDeviceFilling {
 					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					rule);
+					rule, ENERModus.GOLD);
 
 			predictor.trainOrLoadModel();
 
@@ -154,8 +156,6 @@ public class InjuryDeviceFilling {
 
 //			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			
-			
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
 			slotTypesToConsider.add(SCIOSlotTypes.hasForce);
@@ -166,7 +166,8 @@ public class InjuryDeviceFilling {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.injuryDevice,
+					false);
 
 			System.out.println("---------------------------------------");
 
@@ -186,9 +187,6 @@ public class InjuryDeviceFilling {
 
 			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
-			
-			
-			
 //			resultsOut.println(toResults(rule, score));
 //
 //			SlotType.excludeAll();

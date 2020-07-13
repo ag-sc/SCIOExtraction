@@ -73,6 +73,7 @@ import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNameExtraction;
@@ -411,6 +412,8 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 	public static int minCacheSize = 40_000_000;
 
 	public Map<Instance, Set<EntityTemplate>> extraction = new HashMap<>();
+
+	private ENERModus modus = ENERModus.GOLD;
 
 	public ExperimentalGroupSlotFillingPredictor(int parameterID, int dataRandomSeed,
 			List<String> trainingInstanceNames, List<String> devInstanceNames, List<String> testInstanceNames)
@@ -927,7 +930,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					EVertebralAreaModifications.NO_MODIFICATION);
+					EVertebralAreaModifications.NO_MODIFICATION, modus);
 
 			vertebralAreaPrediction.trainOrLoadModel();
 			vertebralAreaPrediction.predictAllInstances(2);
@@ -1027,7 +1030,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					EDeliveryMethodModifications.ROOT);
+					EDeliveryMethodModifications.ROOT, modus);
 
 			deliveryMethodPrediction.trainOrLoadModel();
 			deliveryMethodPrediction.predictAllInstances(2);
@@ -1412,7 +1415,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		SCIOSlotTypes.hasOrganismModel.include();
 		SCIOSlotTypes.hasInjuryModel.include();
 		SCIOSlotTypes.hasLocation.include();
-		
+
 		goldModificationRules.add(a -> {
 
 			if (SCIOSlotTypes.hasGroupName.isIncluded())
@@ -1702,7 +1705,8 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		Map<Instance, Set<AbstractAnnotation>> groupNameAnnotations;
 
 //		File groupNamesCacheDir = new File("data/NERLA/groupNames/recall_at_50/");
-		File groupNamesCacheDir = new File("data/annotations/groupNames/" + "GroupName_" + modelName+ "_recall_at_" + k + "/");
+		File groupNamesCacheDir = new File(
+				"data/annotations/groupNames/" + "GroupName_" + modelName + "_recall_at_" + k + "/");
 //		File groupNamesCacheDir = new File(cacheDir, "/" + "GroupName_EXP_GROUP_" + dataRandomSeed + "/");
 		if (!groupNamesCacheDir.exists() || groupNamesCacheDir.list().length == 0) {
 			groupNamesCacheDir.mkdirs();
@@ -1783,9 +1787,8 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
-		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
-				"OrganismModel_" + modelName, trainingInstanceNames, developInstanceNames,
-				testInstanceNames, rule);
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor("OrganismModel_" + modelName,
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, k);
@@ -1811,7 +1814,7 @@ public class ExperimentalGroupSlotFillingPredictor extends AbstractSemReadProjec
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //		+ modelName
 		InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor("InjuryModel_" + modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = predictor.predictInstances(instances, k);

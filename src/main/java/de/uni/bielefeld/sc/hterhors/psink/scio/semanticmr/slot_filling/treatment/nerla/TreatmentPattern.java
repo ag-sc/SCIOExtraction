@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.DosageInterpreter;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.TemperatureInterpreter;
 
 public class TreatmentPattern extends BasicRegExPattern {
 
@@ -23,6 +25,8 @@ public class TreatmentPattern extends BasicRegExPattern {
 
 	public TreatmentPattern(EntityType rootEntityType) {
 		super(rootEntityType);
+		pattern.put(EntityType.get("DosageExtracorporal"), new HashSet<>(Arrays.asList(DosageInterpreter.PATTERN)));
+		pattern.put(EntityType.get("Temperature"), new HashSet<>(Arrays.asList(TemperatureInterpreter.PATTERN)));
 
 	}
 

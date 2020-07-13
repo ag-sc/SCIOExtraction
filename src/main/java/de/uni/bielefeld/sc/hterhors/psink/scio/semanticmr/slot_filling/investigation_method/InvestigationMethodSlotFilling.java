@@ -19,6 +19,7 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.investigation_method.InvestigationMethodRestrictionProvider.EInvestigationMethodModifications;
 
@@ -103,7 +104,8 @@ public class InvestigationMethodSlotFilling {
 		String modelName = "InvestigationMethod" + new Random().nextInt();
 
 		InvestigationMethodSlotFillingPredictor predictor = new InvestigationMethodSlotFillingPredictor(modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, EInvestigationMethodModifications.ROOT);
+				trainingInstanceNames, developInstanceNames, testInstanceNames, EInvestigationMethodModifications.ROOT,
+				ENERModus.GOLD);
 
 //		predictor.trainOrLoadModel();
 //

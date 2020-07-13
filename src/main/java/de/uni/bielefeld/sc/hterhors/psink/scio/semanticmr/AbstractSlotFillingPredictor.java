@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,7 +28,9 @@ import de.hterhors.semanticmr.crf.ISemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.SemanticParsingCRFMultiState;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.RootTemplateCardinalityExplorer;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
+import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer.EExplorationMode;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.Model;
@@ -43,8 +46,11 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
+import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -63,6 +69,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public interface IModificationRule {
 
 	}
+
+	public static enum ENERModus {
+
+		GOLD, PREDICT;
+
+	}
+
+	public ENERModus modus;
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
@@ -118,8 +132,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	}
 
 	public AbstractSlotFillingPredictor(String modelName, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule modificationRule) {
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule modificationRule,
+			ENERModus modus) {
 		this.modelName = modelName;
+		this.modus = modus;
 		this.trainingInstanceNames = trainingInstanceNames;
 		this.developInstanceNames = developInstanceNames;
 		this.testInstanceNames = testInstanceNames;
@@ -495,10 +511,38 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	}
 
-	public Map<Instance, State> coverageOnDevelopmentInstances(boolean detailedLog) {
-		return new SemanticParsingCRF(new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorerList,
-				getSampler(), getStateInitializer(), predictionObjectiveFunction).computeCoverage(detailedLog,
+	public Map<Instance, State> coverageOnDevelopmentInstances(EntityType type, boolean detailedLog) {
+		List<IExplorationStrategy> explorer = new ArrayList<>(explorerList);
+		explorer.addAll(getCoverageAdditionalExplorer(type));
+
+		Map<Instance, State> coverage = new SemanticParsingCRF(
+				new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorer, getSampler(),
+				getCoverageStateInitializer(type), predictionObjectiveFunction).computeCoverage(detailedLog,
 						predictionObjectiveFunction, developmentInstances);
+
+		for (Entry<Instance, State> res : coverage.entrySet()) {
+
+			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+					.iterator(); iterator.hasNext();) {
+				AbstractAnnotation a = iterator.next();
+				if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+						&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
+					iterator.remove();
+				}
+			}
+		}
+		return coverage;
+	}
+
+	private IStateInitializer getCoverageStateInitializer(EntityType type) {
+		return (instance -> {
+			return new State(instance, new Annotations(new EntityTemplate(type)));
+		});
+	}
+
+	private List<IExplorationStrategy> getCoverageAdditionalExplorer(EntityType type) {
+		return Arrays.asList(new RootTemplateCardinalityExplorer(predictionObjectiveFunction.getEvaluator(),
+				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(type)));
 	}
 
 	public Score computeCoverageOnTestInstances(boolean detailedLog) {
@@ -606,7 +650,16 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		Map<Instance, State> results = ((SemanticParsingCRF) crf).predictHighRecall(instanceProvider.getInstances()
 				.stream().filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), n,
 				maxStepCrit, noModelChangeCrit);
-
+		for (Entry<Instance, State> res : results.entrySet()) {
+			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+					.iterator(); iterator.hasNext();) {
+				AbstractAnnotation a = iterator.next();
+				if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+						&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
+					iterator.remove();
+				}
+			}
+		}
 		for (Entry<Instance, State> result : results.entrySet()) {
 
 			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {
@@ -641,7 +694,16 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 					.filter(i -> i.getName().equals(name)).collect(Collectors.toList()), n, maxStepCrit,
 					noModelChangeCrit);
 		}
-
+		for (Entry<Instance, State> res : results.entrySet()) {
+			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+					.iterator(); iterator.hasNext();) {
+				AbstractAnnotation a = iterator.next();
+				if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+						&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
+					iterator.remove();
+				}
+			}
+		}
 		for (Entry<Instance, State> result : results.entrySet()) {
 
 			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {
@@ -661,6 +723,17 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				noModelChangeCrit);
 
 		log.info(crf.getTestStatistics());
+		for (Entry<Instance, State> res : results.entrySet()) {
+
+			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+					.iterator(); iterator.hasNext();) {
+				AbstractAnnotation a = iterator.next();
+				if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
+						&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
+					iterator.remove();
+				}
+			}
+		}
 
 		return results;
 

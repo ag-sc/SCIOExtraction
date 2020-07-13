@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -19,6 +20,7 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -27,9 +29,15 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EMainClassMode;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 
 /**
@@ -58,6 +66,10 @@ public class VertebralAreaSlotFilling {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File("data/slot_filling/vertebral_area/instances/");
+	String dataRandomSeed;
+	List<Instance> trainingInstances;
+	List<Instance> devInstances;
+	List<Instance> testInstances;
 
 	public VertebralAreaSlotFilling() throws IOException {
 		InstanceProvider.removeEmptyInstances = false;
@@ -72,7 +84,7 @@ public class VertebralAreaSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("VertebralArea"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result"))
 				/**
 				 * We apply the scope, so that we can add normalization functions for various
 				 * literal entity types, if necessary.
@@ -85,9 +97,16 @@ public class VertebralAreaSlotFilling {
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
+		SlotType.excludeAll();
 
 		EVertebralAreaModifications rule = EVertebralAreaModifications.NO_MODIFICATION;
-
+		SCIOSlotTypes.hasUpperVertebrae.include();
+		SCIOSlotTypes.hasLowerVertebrae.include();
+		SCIOSlotTypes.hasOrganismSpecies.include();
+		SCIOSlotTypes.hasGender.include();
+		SCIOSlotTypes.hasWeight.include();
+		SCIOSlotTypes.hasAgeCategory.include();
+		SCIOSlotTypes.hasAge.include();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
 				.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 
@@ -108,8 +127,13 @@ public class VertebralAreaSlotFilling {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				VertebralAreaRestrictionProvider.getByRule(rule));
 
-		String modelName = "VertebralArea" + new Random().nextInt(10000);
+		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
+		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
+		testInstances = instanceProvider.getRedistributedTestInstances();
 
+		dataRandomSeed = "" + new Random().nextInt();
+
+		String modelName = "VertebralArea" + dataRandomSeed;
 		VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName,
 				instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
@@ -117,26 +141,26 @@ public class VertebralAreaSlotFilling {
 						.collect(Collectors.toList()),
 				instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
-				rule);
+				rule, ENERModus.PREDICT);
 
-		
+//		predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+
 		predictor.trainOrLoadModel();
 
 		Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 //		Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-		
 		Map<String, Score> scoreMap = new HashMap<>();
 
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
 		slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
 		slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
 
-		AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
-				EEvaluationDetail.LITERAL);
+		AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.LITERAL);
 
-		Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+		Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.vertebralArea,
+				false);
 
 		System.out.println("---------------------------------------");
 
@@ -149,18 +173,13 @@ public class VertebralAreaSlotFilling {
 
 		PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
-		PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider,
-				evaluator, scoreMap);
+		PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider, evaluator,
+				scoreMap);
 
 		PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates, scoreMap);
 
 		PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
-		
-		
-		
-		
-		
 //		predictor.trainOrLoadModel();
 //
 //		Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
@@ -201,4 +220,35 @@ public class VertebralAreaSlotFilling {
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}
 
+	private Map<String, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
+
+		/**
+		 * TODO: FULL MODEL EXTRACTION CAUSE THIS IS BEST TO PREDICT SPECIES
+		 */
+		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+
+		/**
+		 * Predict OrganismModels
+		 */
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
+
+		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+//	+ modelName
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
+				"OrganismModel_VertebralArea_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
+				testInstanceNames, rule, ENERModus.GOLD);
+		predictor.trainOrLoadModel();
+
+		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1)
+				.entrySet().stream().collect(Collectors.toMap(a -> a.getKey().getName(), a -> a.getValue()));
+
+		SlotType.restoreExcludance(x);
+		return organismModelAnnotations;
+	}
 }

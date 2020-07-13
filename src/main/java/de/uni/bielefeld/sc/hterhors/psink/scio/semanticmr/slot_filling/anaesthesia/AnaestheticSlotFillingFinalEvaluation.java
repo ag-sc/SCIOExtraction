@@ -25,7 +25,9 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
@@ -58,7 +60,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new AnaestheticSlotFillingFinalEvaluation(1000L);
+		new AnaestheticSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -68,8 +70,9 @@ public class AnaestheticSlotFillingFinalEvaluation {
 	 * stored in its own json-file.
 	 */
 	private final File instanceDirectory = new File("data/slot_filling/anaesthetic/instances/");
+	ENERModus modus;
 
-	public AnaestheticSlotFillingFinalEvaluation(long randomSeed) throws IOException {
+	public AnaestheticSlotFillingFinalEvaluation(long randomSeed, String modusName) throws IOException {
 
 		/**
 		 * Initialize the system.
@@ -97,7 +100,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 		EAnaestheticModifications rule = EAnaestheticModifications.ROOT_DELIVERY_METHOD_DOSAGE;
 
 		Random random = new Random(randomSeed);
-
+		modus = ENERModus.valueOf(modusName);
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
 
@@ -121,7 +124,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					rule);
+					rule, modus);
 
 			predictor.trainOrLoadModel();
 //
@@ -134,7 +137,8 @@ public class AnaestheticSlotFillingFinalEvaluation {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.anaesthetic,
+					false);
 
 			System.out.println("---------------------------------------");
 

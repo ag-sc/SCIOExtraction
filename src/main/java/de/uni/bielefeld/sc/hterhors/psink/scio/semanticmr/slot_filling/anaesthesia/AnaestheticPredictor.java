@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
@@ -21,6 +24,7 @@ import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -36,6 +40,7 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -43,8 +48,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DistinctEntityTypeConstraint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.SCIOWrapper;
 
 /**
  * Slot filling for organism models.
@@ -89,13 +96,52 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	public AnaestheticPredictor(String modelName, List<String> trainingInstanceNames, List<String> developInstanceNames,
-			List<String> testInstanceNames, IModificationRule rule) {
-		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+			List<String> testInstanceNames, IModificationRule rule, ENERModus modus) {
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+	}
+
+	private Map<String, Set<AbstractAnnotation>> organismModel;
+
+	public void setOrganismModel(Map<String, Set<AbstractAnnotation>> organismModel) {
+		this.organismModel = organismModel;
 	}
 
 	final public boolean useGoldLocationsForTraining = true;
 	final public boolean useGoldLocationsForPrediction = false;
 
+	private DeliveryMethodPredictor deliveryMethodPrediction = null;
+
+//	GOLD
+//	MACRO	Root = 0.615	0.750	0.521	0.615	0.750	0.521	1.000	1.000	1.000
+//			MACRO	hasDeliveryMethod = 0.507	0.600	0.439	0.507	0.600	0.439	1.000	1.000	1.000
+//			MACRO	hasDosage = 0.854	1.000	0.745	0.854	1.000	0.745	1.000	1.000	1.000
+//			MACRO	Cardinality = 0.850	1.000	0.740	0.850	1.000	0.740	1.000	1.000	1.000
+//			MACRO	Overall = 0.713	0.828	0.626	0.713	0.828	0.626	1.000	1.000	1.000
+//			modelName: Anaesthetic298091341
+//			CRFStatistics [context=Train, getTotalDuration()=22813]
+//			CRFStatistics [context=Test, getTotalDuration()=123]
+
+//	PREDICT mit GOLD
+
+//	MACRO	Root = 0.615	0.750	0.521	0.615	0.750	0.521	1.000	1.000	1.000
+//			MACRO	hasDeliveryMethod = 0.430	0.517	0.368	0.479	0.577	0.410	0.897	0.897	0.897
+//			MACRO	hasDosage = 0.854	1.000	0.745	0.854	1.000	0.745	1.000	1.000	1.000
+//			MACRO	Cardinality = 0.850	1.000	0.740	0.850	1.000	0.740	1.000	1.000	1.000
+//			MACRO	Overall = 0.683	0.792	0.600	0.705	0.817	0.619	0.969	0.969	0.969
+//			modelName: Anaesthetic525840951
+//			CRFStatistics [context=Train, getTotalDuration()=17172]
+//			CRFStatistics [context=Test, getTotalDuration()=126]
+	
+//	PREDICt
+//	MACRO	Root = 0.582	0.719	0.490	0.592	0.719	0.505	0.984	1.000	0.969
+//			MACRO	hasDeliveryMethod = 0.430	0.517	0.368	0.479	0.577	0.410	0.897	0.897	0.897
+//			MACRO	hasDosage = 0.854	1.000	0.745	0.868	1.000	0.769	0.984	1.000	0.969
+//			MACRO	Cardinality = 0.850	1.000	0.740	0.864	1.000	0.763	0.984	1.000	0.969
+//			MACRO	Overall = 0.668	0.771	0.589	0.701	0.796	0.629	0.953	0.969	0.937
+//			modelName: Anaesthetic525060698
+//			CRFStatistics [context=Train, getTotalDuration()=15552]
+//			CRFStatistics [context=Test, getTotalDuration()=118]
+	
 	@Override
 	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule _rule) {
 
@@ -111,7 +157,7 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 		} else {
 			addPredictions(map, instanceProvider.getRedistributedTrainingInstances());
 		}
-		if (useGoldLocationsForPrediction) {
+		if (useGoldLocationsForPrediction|| modus == ENERModus.GOLD) {
 			addGold(map, instanceProvider.getRedistributedDevelopmentInstances());
 			addGold(map, instanceProvider.getRedistributedTestInstances());
 		} else {
@@ -150,25 +196,26 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 		}
 	}
 
-	DeliveryMethodPredictor deliveryMethodPrediction = null;
-
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 
+//		String deliveryMethodModelName = "DeliveryMethodFIX";
 		String deliveryMethodModelName = "DeliveryMethod" + modelName;
 
 		if (deliveryMethodPrediction == null) {
 
 			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION);
+					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION,
+					modus);
 
 			deliveryMethodPrediction.trainOrLoadModel();
-			deliveryMethodPrediction.predictAllInstances(2);
+			deliveryMethodPrediction.predictAllInstances(1);
 		}
 
 		for (Instance instance : instances) {
 			map.putIfAbsent(instance, new ArrayList<>());
 			map.get(instance).addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 1));
+
 		}
 		SlotType.restoreExcludance(z);
 
@@ -191,7 +238,11 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.anaesthetic);
+		if (modus == ENERModus.GOLD)
+			return new File(AnnotationsCorpusBuilderBib.ANNOTATIONS_DIR,
+					AnnotationsCorpusBuilderBib.toDirName(SCIOEntityTypes.anaesthetic));
+		else
+			return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.anaesthetic);
 	}
 
 	@Override
@@ -202,7 +253,7 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 
 //		return (instance -> {
 //			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
-//					new EntityTemplate(SCIOEntityTypes.anaesthetic),new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+//					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
 //		});
 
 //		return (instance -> {
@@ -256,9 +307,99 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 	public HardConstraintsProvider getHardConstraints() {
 		HardConstraintsProvider p = new HardConstraintsProvider();
 //		p.addHardConstraints(new DistinctEntityTypeConstraint(predictionObjectiveFunction.getEvaluator()));
+//		p.addHardConstraints(new DistinctEntityTemplateConstraint(predictionObjectiveFunction.getEvaluator()));
+//		p.addHardConstraints(new AbstractHardConstraint() {
+//
+//			@Override
+//			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int index) {
+//
+//				if (organismModel == null)
+//					return false;
+//
+//				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance().getName());
+//				Set<Integer> sentences = new HashSet<>();
+//
+//				for (AbstractAnnotation orgModel : orgModels) {
+//
+//					OrganismModelWrapper w = new OrganismModelWrapper(orgModel.asInstanceOfEntityTemplate());
+//
+//					sentences.addAll(
+//							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
+//
+//				}
+//				int maxOrganismIndex = 0;
+//
+//				for (Integer integer : sentences) {
+//					maxOrganismIndex = Math.max(maxOrganismIndex, integer);
+//				}
+//
+//				List<DocumentLinkedAnnotation> as = new ArrayList<>();
+//				Set<Integer> sentences2 = new HashSet<>();
+//
+//				SCIOWrapper.collectDLA(as, entityTemplate.asInstanceOfEntityTemplate());
+//
+////				for (AbstractAnnotation ab : currentState.getGoldAnnotations().getAnnotations()) {
+//
+////				SCIOWrapper.collectDLA(as, ab.asInstanceOfEntityTemplate());
+//				sentences2.addAll(as.stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
+////				}
+//
+//				for (Integer integer : sentences2) {
+//
+//					if (maxOrganismIndex < integer && Math.abs(maxOrganismIndex - integer) > 30)
+//						return true;
+//				}
+////				System.out.println(Math.abs(max - min));
+//
+//				return false;
+//			}
+//		});
 		return p;
 	}
 
+//  distinct et +  only2  root 
+
+//	MACRO	Root = 0.511	0.438	0.615	0.519	0.438	0.634	0.984	1.000	0.969
+//			MACRO	hasDeliveryMethod = 0.143	0.117	0.182	0.159	0.131	0.203	0.897	0.897	0.897
+//			MACRO	hasDosage = 0.778	0.719	0.849	0.791	0.719	0.876	0.984	1.000	0.969
+//			MACRO	Cardinality = 0.849	0.750	0.979	0.863	0.750	1.011	0.984	1.000	0.969
+//			MACRO	Overall = 0.561	0.558	0.565	0.589	0.576	0.602	0.953	0.969	0.937
+//			modelName: Anaesthetic-857770937
+//			CRFStatistics [context=Train, getTotalDuration()=30222]
+//			CRFStatistics [context=Test, getTotalDuration()=338]
+
+//	all constraints except organismModel
+
+//	MACRO	Root = 0.593	0.719	0.505	0.603	0.719	0.522	0.984	1.000	0.969
+//			MACRO	hasDeliveryMethod = 0.398	0.483	0.339	0.444	0.539	0.378	0.897	0.897	0.897
+//			MACRO	hasDosage = 0.854	1.000	0.745	0.868	1.000	0.769	0.984	1.000	0.969
+//			MACRO	Cardinality = 0.850	1.000	0.740	0.864	1.000	0.763	0.984	1.000	0.969
+//			MACRO	Overall = 0.667	0.779	0.583	0.700	0.804	0.622	0.953	0.969	0.937
+//			modelName: Anaesthetic-1477856144
+//			CRFStatistics [context=Train, getTotalDuration()=16369]
+//			CRFStatistics [context=Test, getTotalDuration()=143]
+
+//	WITH ALL CONSTRAINTS
+//	MACRO	Root = 0.636	0.781	0.536	0.668	0.806	0.572	0.953	0.969	0.938
+//	MACRO	hasDeliveryMethod = 0.325	0.380	0.283	0.511	0.598	0.446	0.635	0.635	0.635
+//	MACRO	hasDosage = 0.854	1.000	0.745	0.875	1.000	0.781	0.976	1.000	0.953
+//	MACRO	Cardinality = 0.850	1.000	0.740	0.864	1.000	0.763	0.984	1.000	0.969
+//	MACRO	Overall = 0.671	0.836	0.561	0.749	0.858	0.675	0.896	0.974	0.830
+//	modelName: Anaesthetic165264315
+//	CRFStatistics [context=Train, getTotalDuration()=14403]
+//	CRFStatistics [context=Test, getTotalDuration()=82]
+
+//	Wihtout constrints  only 1 root 
+//	---------------------------------------
+	// MACRO Root = 0.582 0.719 0.490 0.592 0.719 0.505 0.984 1.000 0.969
+	// MACRO hasDeliveryMethod = 0.430 0.517 0.368 0.479 0.577 0.410 0.897 0.897
+	// 0.897
+	// MACRO hasDosage = 0.854 1.000 0.745 0.868 1.000 0.769 0.984 1.000 0.969
+	// MACRO Cardinality = 0.850 1.000 0.740 0.864 1.000 0.763 0.984 1.000 0.969
+	// MACRO Overall = 0.668 0.771 0.589 0.701 0.796 0.629 0.953 0.969 0.937
+	// modelName: Anaesthetic1113428331
+	// CRFStatistics [context=Train, getTotalDuration()=20215]
+	// CRFStatistics [context=Test, getTotalDuration()=109]
 	@Override
 	public List<IExplorationStrategy> getAdditionalExplorer() {
 		return Collections.emptyList();

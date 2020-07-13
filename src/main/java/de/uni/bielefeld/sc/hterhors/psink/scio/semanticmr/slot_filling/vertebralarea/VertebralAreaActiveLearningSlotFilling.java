@@ -21,6 +21,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
@@ -113,7 +114,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 				log.info("Strategy: " + strategy);
 
 				VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName, trainingInstancesNames,
-						developInstanceNames, testInstanceNames, rule);
+						developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
 				predictor.trainOrLoadModel();
 

@@ -12,7 +12,7 @@ public class DistinctVertebreaTemplateConstraint extends AbstractHardConstraint 
 	}
 
 	@Override
-	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
 
 		AbstractAnnotation upper = entityTemplate.asInstanceOfEntityTemplate()
 				.getSingleFillerSlot(SCIOSlotTypes.hasUpperVertebrae).getSlotFiller();

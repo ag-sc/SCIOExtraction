@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.swing.plaf.basic.BasicToolBarUI.DockingListener;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,12 +36,13 @@ import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
-import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
@@ -61,13 +60,14 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	public DeliveryMethodPredictor(String modelName, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule) {
-		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule);
+			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule,
+			ENERModus modus) {
+		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 	}
 
-	private Map<Instance, Set<AbstractAnnotation>> organismModel;
+	private Map<String, Set<AbstractAnnotation>> organismModel;
 
-	public void setOrganismModel(Map<Instance, Set<AbstractAnnotation>> organismModel) {
+	public void setOrganismModel(Map<String, Set<AbstractAnnotation>> organismModel) {
 		this.organismModel = organismModel;
 	}
 
@@ -86,9 +86,34 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 		return new AdvancedLearner(new SGD(0.00001, 0), new L2(0.00));
 	}
 
+	// GOLD
+//	MACRO	Root = 0.561	0.688	0.474	0.599	0.733	0.506	0.938	0.938	0.938
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	1.000	1.000	1.000
+//			MACRO	hasLocations = 0.405	0.500	0.341	0.651	0.762	0.575	0.623	0.656	0.593
+//			MACRO	Cardinality = 0.861	1.000	0.755	0.918	1.067	0.806	0.938	0.938	0.938
+//			MACRO	Overall = 0.475	0.594	0.396	0.612	0.745	0.523	0.777	0.797	0.758
+//			CRFStatistics [context=Train, getTotalDuration()=78416]
+//			CRFStatistics [context=Test, getTotalDuration()=324]
+//			modelName: DeliveryMethod-1029832602
+
+//	MIT REG EX
+//	MACRO	Root = 0.604	0.750	0.505	0.644	0.800	0.539	0.938	0.938	0.938
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.437	0.500	0.388	0.761	0.828	0.710	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.861	1.000	0.755	0.918	1.067	0.806	0.938	0.938	0.938
+//			MACRO	Overall = 0.510	0.625	0.431	0.685	0.800	0.605	0.745	0.781	0.712
+//			CRFStatistics [context=Train, getTotalDuration()=84268]
+//			CRFStatistics [context=Test, getTotalDuration()=372]
+//			modelName: DeliveryMethod492293592
+
 	@Override
 	protected File getExternalNerlaFile() {
-		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.deliveryMethod);
+
+		if (modus == ENERModus.GOLD)
+			return new File(AnnotationsCorpusBuilderBib.ANNOTATIONS_DIR,
+					AnnotationsCorpusBuilderBib.toDirName(SCIOEntityTypes.deliveryMethod));
+		else
+			return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.deliveryMethod);
 	}
 
 	@Override
@@ -104,10 +129,13 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 //		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.deliveryMethod, 2, 2);
 
 //		results: ROOT_LOCATION_DURATION	0.57	0.52	0.62
+		
 		return (instance -> {
 			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod),
 					new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
 		});
+		
+		
 //		results: ROOT_LOCATION_DURATION	0.43	0.67	0.32
 //		return (instance -> {
 //			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
@@ -130,6 +158,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	protected AbstractSampler getSampler() {
 //		return SamplerCollection.greedyModelStrategy();
 //		return SamplerCollection.greedyObjectiveStrategy();
+//		return new EpochSwitchSampler(epoch -> epoch <5);
 		return new EpochSwitchSampler(epoch -> epoch % 2 == 0);
 //		return new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
 //		return new EpochSwitchSampler(e -> new Random(e).nextBoolean());
@@ -177,12 +206,37 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 	public HardConstraintsProvider getHardConstraints() {
 		HardConstraintsProvider p = new HardConstraintsProvider();
 		p.addHardConstraints(new DistinctEntityTemplateConstraint(predictionObjectiveFunction.getEvaluator()));
+
 		p.addHardConstraints(new AbstractHardConstraint() {
 
 			@Override
-			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
 
-				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance());
+				return entityTemplate.getEntityType().equals(SCIOEntityTypes.deliveryMethod);
+			}
+		});
+
+		p.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
+
+				if (entityTemplate.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasLocations)
+						.containsSlotFiller())
+					return entityTemplate.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasLocations)
+							.size() > 1;
+				return false;
+			}
+		});
+		p.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
+
+				if (organismModel == null)
+					return false;
+
+				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance().getName());
 				Set<Integer> sentences = new HashSet<>();
 
 				for (AbstractAnnotation orgModel : orgModels) {
@@ -193,10 +247,10 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
 
 				}
-				int max = 0;
+				int maxOrganismIndex = 0;
 
 				for (Integer integer : sentences) {
-					max = Math.max(max, integer);
+					maxOrganismIndex = Math.max(maxOrganismIndex, integer);
 				}
 
 				List<DocumentLinkedAnnotation> as = new ArrayList<>();
@@ -212,7 +266,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 				for (Integer integer : sentences2) {
 
-					if (Math.abs(max - integer) > 30)
+					if (maxOrganismIndex < integer && Math.abs(maxOrganismIndex - integer) > 30)
 						return true;
 				}
 //				System.out.println(Math.abs(max - min));
@@ -224,33 +278,115 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 
 	}
 
-	// Mit organism model constraint
-	// results: ROOT_LOCATION_DURATION 0.49 0.44 0.55
-	// results scoreRoot: ROOT_LOCATION_DURATION 0.65 0.58 0.74
-	// Compute coverage...
-	//
-	// Coverage Training: Score [getF1()=0.763, getPrecision()=0.794,
-	// getRecall()=0.735, tp=355, fp=92, fn=128, tn=0]
-	// Compute coverage...
-	// Coverage Development: Score [getF1()=0.815, getPrecision()=0.830,
-	// getRecall()=0.800, tp=88, fp=18, fn=22, tn=0]
-	// results: ROOT_LOCATION_DURATION 0.49 0.44 0.55
-	// CRFStatistics [context=Train, getTotalDuration()=90413]
-	// CRFStatistics [context=Test, getTotalDuration()=1107]
-	// modelName: DeliveryMethod-670648592
+//	Only 1 root entity
+//	MACRO	Root = 0.797	0.938	0.693	0.850	1.000	0.739	0.938	0.938	0.938
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.329	0.375	0.294	0.574	0.621	0.538	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.861	1.000	0.755	0.918	1.067	0.806	0.938	0.938	0.938
+//			MACRO	Overall = 0.553	0.656	0.478	0.742	0.840	0.671	0.745	0.781	0.712
+//			CRFStatistics [context=Train, getTotalDuration()=31176]
+//			CRFStatistics [context=Test, getTotalDuration()=267]
+//			modelName: DeliveryMethod271072862
+//	genericMultiValueSampling
+//	MACRO	Root = 0.774	0.688	0.885	0.826	0.733	0.944	0.938	0.938	0.938
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.346	0.281	0.450	0.604	0.466	0.824	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.818	0.719	0.948	0.872	0.767	1.011	0.938	0.938	0.938
+//			MACRO	Overall = 0.550	0.484	0.637	0.738	0.620	0.894	0.745	0.781	0.712
+//			CRFStatistics [context=Train, getTotalDuration()=145438]
+//			CRFStatistics [context=Test, getTotalDuration()=629]
+//			modelName: DeliveryMethod895188161
 
-	// Ohne organism model constraint
-	// results: ROOT_LOCATION_DURATION 0.5 0.44 0.58
-	// results scoreRoot: ROOT_LOCATION_DURATION 0.6 0.53 0.68
-	// Compute coverage...
-	//
-	// Coverage Training: Score [getF1()=0.844, getPrecision()=0.843,
-	// getRecall()=0.845, tp=408, fp=76, fn=75, tn=0]
-	// Compute coverage...
-	// Coverage Development: Score [getF1()=0.826, getPrecision()=0.833,
-	// getRecall()=0.818, tp=90, fp=18, fn=20, tn=0]
-	// results: ROOT_LOCATION_DURATION 0.5 0.44 0.58
-	// CRFStatistics [context=Train, getTotalDuration()=171058]
-	// CRFStatistics [context=Test, getTotalDuration()=2966]
-	// modelName: DeliveryMethod1883270709
+//	
+//	MACRO	Root = 0.604	0.750	0.505	0.644	0.800	0.539	0.938	0.938	0.938
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.470	0.562	0.403	0.819	0.931	0.739	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.861	1.000	0.755	0.918	1.067	0.806	0.938	0.938	0.938
+//			MACRO	Overall = 0.527	0.656	0.440	0.707	0.840	0.618	0.745	0.781	0.712
+//			CRFStatistics [context=Train, getTotalDuration()=59421]
+//			CRFStatistics [context=Test, getTotalDuration()=263]
+//			modelName: DeliveryMethod-1123276396
+
+//	----------------------------------
+
+//	locations
+//	MACRO	Root = 0.659	0.594	0.740	0.659	0.594	0.740	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.256	0.219	0.309	0.447	0.362	0.567	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.818	0.719	0.948	0.818	0.719	0.948	1.000	1.000	1.000
+//			MACRO	Overall = 0.451	0.406	0.506	0.698	0.595	0.826	0.646	0.682	0.613
+//			CRFStatistics [context=Train, getTotalDuration()=97070]
+//			CRFStatistics [context=Test, getTotalDuration()=715]
+//			modelName: DeliveryMethod1920323739
+
+//	distinct et + location
+//	MACRO	Root = 0.539	0.688	0.443	0.539	0.688	0.443	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.470	0.562	0.403	0.819	0.931	0.739	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.797	0.938	0.693	0.797	0.938	0.693	1.000	1.000	1.000
+//			MACRO	Overall = 0.494	0.625	0.409	0.663	0.800	0.574	0.745	0.781	0.712
+//			CRFStatistics [context=Train, getTotalDuration()=64076]
+//			CRFStatistics [context=Test, getTotalDuration()=282]
+//			modelName: DeliveryMethod-827265531
+
+//	mit distinct  et + 
+//	MACRO	Root = 0.784	0.781	0.786	0.784	0.781	0.786	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.436	0.396	0.486	0.747	0.650	0.866	0.584	0.609	0.561
+//			MACRO	Cardinality = 0.893	0.875	0.911	0.893	0.875	0.911	1.000	1.000	1.000
+//			MACRO	Overall = 0.583	0.550	0.621	0.777	0.703	0.861	0.751	0.783	0.721
+//			CRFStatistics [context=Train, getTotalDuration()=108335]
+//			CRFStatistics [context=Test, getTotalDuration()=926]
+//			modelName: DeliveryMethod1647710236
+
+//	Mit distinct et + orgmodel
+//	MACRO	Root = 0.726	0.643	0.833	0.726	0.643	0.833	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.322	0.281	0.377	0.569	0.450	0.728	0.566	0.625	0.518
+//			MACRO	Cardinality = 0.850	0.781	0.932	0.850	0.781	0.932	1.000	1.000	1.000
+//			MACRO	Overall = 0.503	0.448	0.574	0.784	0.647	0.960	0.642	0.693	0.598
+//			CRFStatistics [context=Train, getTotalDuration()=64304]
+//			CRFStatistics [context=Test, getTotalDuration()=716]
+//			modelName: DeliveryMethod-42372606
+
+//	Mit distinct et + locations
+
+//	MACRO	Root = 0.722	0.656	0.802	0.722	0.656	0.802	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.341	0.281	0.434	0.595	0.466	0.796	0.574	0.604	0.546
+//			MACRO	Cardinality = 0.818	0.719	0.948	0.818	0.719	0.948	1.000	1.000	1.000
+//			MACRO	Overall = 0.500	0.422	0.615	0.774	0.618	1.000	0.646	0.682	0.615
+//			CRFStatistics [context=Train, getTotalDuration()=92375]
+//			CRFStatistics [context=Test, getTotalDuration()=737]
+//			modelName: DeliveryMethod-838974458
+
+//	Mit distinct et
+//	MACRO	Root = 0.686	0.625	0.760	0.686	0.625	0.760	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.420	0.349	0.528	0.719	0.573	0.941	0.584	0.609	0.561
+//			MACRO	Cardinality = 0.818	0.719	0.948	0.818	0.719	0.948	1.000	1.000	1.000
+//			MACRO	Overall = 0.548	0.440	0.729	0.844	0.644	1.000	0.650	0.682	0.729
+//			CRFStatistics [context=Train, getTotalDuration()=128621]
+//			CRFStatistics [context=Test, getTotalDuration()=1294]
+//			modelName: DeliveryMethod-1933699436
+
+//	Ohne constraints
+//	MACRO	Root = 0.591	0.531	0.667	0.591	0.531	0.667	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.261	0.219	0.325	0.447	0.359	0.579	0.584	0.609	0.561
+//			MACRO	Cardinality = 0.818	0.719	0.948	0.818	0.719	0.948	1.000	1.000	1.000
+//			MACRO	Overall = 0.436	0.380	0.510	0.670	0.557	0.822	0.650	0.682	0.621
+//			CRFStatistics [context=Train, getTotalDuration()=129489]
+//			CRFStatistics [context=Test, getTotalDuration()=1303]
+//			modelName: DeliveryMethod1222760859
+
+//	Mit org model und location = 1  und distinct
+//	MACRO	Root = 0.794	0.733	0.867	0.794	0.733	0.867	1.000	1.000	1.000
+//			MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasLocations = 0.277	0.250	0.309	0.488	0.400	0.598	0.566	0.625	0.518
+//			MACRO	Cardinality = 0.857	0.781	0.948	0.857	0.781	0.948	1.000	1.000	1.000
+//			MACRO	Overall = 0.500	0.453	0.558	0.780	0.654	0.934	0.642	0.693	0.598
+//			CRFStatistics [context=Train, getTotalDuration()=52415]
+//			CRFStatistics [context=Test, getTotalDuration()=452]
+//			modelName: DeliveryMethod954161288
 }

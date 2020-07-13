@@ -92,10 +92,10 @@ public class PerSlotEvaluator {
 												/ Math.max(cardinality.getF1(), coverageCardinality.getF1())),
 								coverageCardinality.getPrecision() == 0D ? 0
 										: (cardinality.getPrecision()
-												/ Math.max(cardinality.getF1(), coverageCardinality.getF1())),
+												/ Math.max(cardinality.getPrecision(), coverageCardinality.getPrecision())),
 								coverageCardinality.getRecall() == 0D ? 0
 										: (cardinality.getRecall()
-												/ Math.max(cardinality.getF1(), coverageCardinality.getF1()))));
+												/ Math.max(cardinality.getRecall(), coverageCardinality.getRecall()))));
 		scoreMap.get("Cardinality-Coverage").add(coverageCardinality);
 	}
 

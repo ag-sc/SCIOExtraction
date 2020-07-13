@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
+import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
@@ -22,6 +25,7 @@ import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
+import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -32,25 +36,25 @@ import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
-import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.AnnotationsCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthesia.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.initializer.GenericMultiCardinalityInitializer;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.templates.TreatmentPriorTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentPartTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.SCIOWrapper;
 
 /**
  * Slot filling for organism models.
@@ -78,40 +82,17 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	public TreatmentSlotFillingPredictor(String modelName, List<String> trainingInstanceNames,
-			List<String> developmentInstanceNames, List<String> testInstanceNames, ETreatmentModifications rule) {
-		super(modelName, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule);
+			List<String> developmentInstanceNames, List<String> testInstanceNames, ETreatmentModifications rule,
+			ENERModus modus) {
+		super(modelName, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule, modus);
 	}
 
-//	@Override
-//	protected Map<Instance, Collection<AbstractAnnotation>> getAdditionalCandidateProvider(IModificationRule rule) {
-//
-//		Map<Instance, Collection<AbstractAnnotation>> annotations = new HashMap<>();
-//
-//		DeliveryMethodPredictor deliveryMethodPrediction = null;
-//		if (rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD
-//				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT
-//				|| rule == ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION) {
-//
-//			String deliveryMethodModelName = "DeliveryMethod" + modelName;
-//
-//			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
-//					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION);
-//
-//			deliveryMethodPrediction.trainOrLoadModel();
-//			deliveryMethodPrediction.predictAllInstances(2);
-//
-//			for (Instance instance : instanceProvider.getInstances()) {
-//				annotations.putIfAbsent(instance, new ArrayList<>());
-//				annotations.get(instance)
-//						.addAll(deliveryMethodPrediction.predictHighRecallInstanceByName(instance.getName(), 2));
-//
-//			}
-//		}
-//
-//		return annotations;
-//	}
-	
-	
+	private Map<String, Set<AbstractAnnotation>> organismModel;
+
+	public void setOrganismModel(Map<String, Set<AbstractAnnotation>> organismModel) {
+		this.organismModel = organismModel;
+	}
+
 	final public boolean useGoldLocationsForTraining = true;
 	final public boolean useGoldLocationsForPrediction = false;
 
@@ -130,7 +111,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		} else {
 			addPredictions(map, instanceProvider.getRedistributedTrainingInstances());
 		}
-		if (useGoldLocationsForPrediction) {
+		if (useGoldLocationsForPrediction || modus == ENERModus.GOLD) {
 			addGold(map, instanceProvider.getRedistributedDevelopmentInstances());
 			addGold(map, instanceProvider.getRedistributedTestInstances());
 		} else {
@@ -153,7 +134,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 			});
 		}
-		
+
 		for (Instance instance : instanceProvider.getInstances()) {
 			map.putIfAbsent(instance, new ArrayList<>());
 			map.get(instance).add(AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment));
@@ -163,8 +144,8 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 	private void addGold(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		for (Instance instance : instances) {
-			map.putIfAbsent(instance, new ArrayList<>());
 
+			map.putIfAbsent(instance, new ArrayList<>());
 			map.get(instance)
 					.addAll(instance.getGoldAnnotations().getAnnotations().stream()
 							.map(a -> a.asInstanceOfEntityTemplate()
@@ -184,10 +165,11 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		if (deliveryMethodPrediction == null) {
 
 			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION);
+					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION,
+					modus);
 
 			deliveryMethodPrediction.trainOrLoadModel();
-			deliveryMethodPrediction.predictAllInstances(2);
+			deliveryMethodPrediction.predictAllInstances(1);
 		}
 
 		for (Instance instance : instances) {
@@ -197,11 +179,14 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		SlotType.restoreExcludance(z);
 
 	}
-	
 
 	@Override
 	protected File getExternalNerlaFile() {
-		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.treatment);
+		if (modus == ENERModus.GOLD)
+			return new File(AnnotationsCorpusBuilderBib.ANNOTATIONS_DIR,
+					AnnotationsCorpusBuilderBib.toDirName(SCIOEntityTypes.treatment));
+		else
+			return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.treatment);
 	}
 
 	@Override
@@ -227,11 +212,14 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 		featureTemplates.add(new DocumentPartTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
+
+		featureTemplates.add(new TreatmentPriorTemplate());
+
 		return featureTemplates;
 	}
 
 	@Override
-	protected int getNumberOfEpochs() {
+	public int getNumberOfEpochs() {
 		return 10;
 	}
 
@@ -270,7 +258,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	public List<IExplorationStrategy> getAdditionalExplorer() {
 		return Collections.emptyList();
 //		return Arrays.asList(new RootTemplateCardinalityExplorer(trainingObjectiveFunction.getEvaluator(),
-//				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(EntityType.get("DeliveryMethod"))));
+//				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(SCIOEntityTypes.compoundTreatment)));
 	}
 
 	@Override
@@ -296,50 +284,106 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	@Override
 	public HardConstraintsProvider getHardConstraints() {
 		HardConstraintsProvider p = new HardConstraintsProvider();
+		p.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
+				return !entityTemplate.asInstanceOfEntityTemplate().getSingleFillerSlot(SCIOSlotTypes.hasCompound)
+						.containsSlotFiller();
+
+			}
+
+		});
+		p.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
+				int c = 0;
+				int index = 0;
+				for (AbstractAnnotation currentPrediction : currentState.getCurrentPredictions().getAnnotations()) {
+
+					if (index != annotationIndex && currentPrediction
+							.evaluateEquals(predictionObjectiveFunction.getEvaluator(), entityTemplate)) {
+						c++;
+					}
+					index++;
+				}
+
+				return c >= 1;
+
+			}
+
+			@Override
+			public List<EntityTemplate> violatesConstraint(State currentState,
+					List<EntityTemplate> candidateListToFilter, int annotationIndex) {
+
+				if (currentState.getCurrentPredictions().getAbstractAnnotations().size() < 2)
+					return candidateListToFilter;
+
+				List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
+				Map<SlotType, Boolean> x = SlotType.storeExcludance();
+				SlotType.excludeAll();
+				SCIOSlotTypes.hasCompound.include();
+				filteredList = candidateListToFilter.parallelStream()
+						.filter(candidate -> !violatesConstraint(currentState, candidate, annotationIndex))
+						.collect(Collectors.toList());
+
+				SlotType.restoreExcludance(x);
+
+				return filteredList;
+			}
+
+		});
+
 		p.addHardConstraints(new DistinctEntityTemplateConstraint(predictionObjectiveFunction.getEvaluator()));
-//		p.addHardConstraints(new AbstractHardConstraint() {
-//
-//			@Override
-//			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
-//
-//				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance());
-//				Set<Integer> sentences = new HashSet<>();
-//
-//				for (AbstractAnnotation orgModel : orgModels) {
-//
-//					OrganismModelWrapper w = new OrganismModelWrapper(orgModel.asInstanceOfEntityTemplate());
-//
-//					sentences.addAll(
-//							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
-//
+
+		p.addHardConstraints(new AbstractHardConstraint() {
+
+			@Override
+			public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
+
+				if (organismModel == null)
+					return false;
+
+				Set<AbstractAnnotation> orgModels = organismModel.get(currentState.getInstance().getName());
+				Set<Integer> sentences = new HashSet<>();
+
+				for (AbstractAnnotation orgModel : orgModels) {
+
+					OrganismModelWrapper w = new OrganismModelWrapper(orgModel.asInstanceOfEntityTemplate());
+
+					sentences.addAll(
+							w.getAnnotations().stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
+
+				}
+				int max = 0;
+
+				for (Integer integer : sentences) {
+					max = Math.max(max, integer);
+				}
+
+				List<DocumentLinkedAnnotation> as = new ArrayList<>();
+				Set<Integer> sentences2 = new HashSet<>();
+
+				SCIOWrapper.collectDLA(as, entityTemplate.asInstanceOfEntityTemplate());
+
+//				for (AbstractAnnotation ab : currentState.getGoldAnnotations().getAnnotations()) {
+
+//				SCIOWrapper.collectDLA(as, ab.asInstanceOfEntityTemplate());
+				sentences2.addAll(as.stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
 //				}
-//				int max = 0;
-//
-//				for (Integer integer : sentences) {
-//					max = Math.max(max, integer);
-//				}
-//
-//				List<DocumentLinkedAnnotation> as = new ArrayList<>();
-//				Set<Integer> sentences2 = new HashSet<>();
-//
-//				SCIOWrapper.collectDLA(as, entityTemplate.asInstanceOfEntityTemplate());
-//
-////				for (AbstractAnnotation ab : currentState.getGoldAnnotations().getAnnotations()) {
-//
-////				SCIOWrapper.collectDLA(as, ab.asInstanceOfEntityTemplate());
-//				sentences2.addAll(as.stream().map(a -> a.getSentenceIndex()).collect(Collectors.toSet()));
-////				}
-//
-//				for (Integer integer : sentences2) {
-//
-//					if (Math.abs(max - integer) > 30)
-//						return true;
-//				}
-////				System.out.println(Math.abs(max - min));
-//
-//				return false;
-//			}
-//		});
+
+				for (Integer integer : sentences2) {
+
+					if (max < integer && Math.abs(max - integer) > 50)
+						return true;
+				}
+//				System.out.println(Math.abs(max - min));
+
+				return false;
+			}
+		});
+
 		return p;
 
 	}

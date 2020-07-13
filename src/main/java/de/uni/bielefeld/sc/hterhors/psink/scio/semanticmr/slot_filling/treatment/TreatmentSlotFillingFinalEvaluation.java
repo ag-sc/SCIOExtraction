@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +21,7 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -34,24 +35,18 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 
 /**
- * Slot filling for organism models.
  * 
  * @author hterhors
- * 
- *         Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE 0.94 0.97 0.91
- *         modelName: OrganismModel-522582779 CRFStatistics [context=Train,
- *         getTotalDuration()=16064] CRFStatistics [context=Test,
- *         getTotalDuration()=617]
- *
- * 
  */
-public class OrgModelSlotFillingFinalEvaluation {
+public class TreatmentSlotFillingFinalEvaluation {
 
 	/**
 	 * Start the slot filling procedure.
@@ -60,7 +55,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
+		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -71,61 +66,47 @@ public class OrgModelSlotFillingFinalEvaluation {
 	 */
 	private final File instanceDirectory;
 
+	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");
+	String dataRandomSeed;
+
+	List<Instance> trainingInstances;
+	List<Instance> devInstances;
+	List<Instance> testInstances;
 	Map<Instance, State> coverageStates;
 
-	public OrgModelSlotFillingFinalEvaluation(long randomSeed, String modusName) throws IOException {
+	private ENERModus modus;
+
+	public TreatmentSlotFillingFinalEvaluation(long randomSeed, String modusName) throws IOException {
+		SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).apply()
+				.registerNormalizationFunction(new DosageNormalization()).build();
+
+		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 
 		/**
-		 * Initialize the system.
 		 * 
-		 * The scope represents the specifications of the 4 defined specification files.
-		 * The scope mainly affects the exploration.
+		 * 
+		 * 
+		 * 
+		 * 
+		 * TODO: REMOVE QUICK FIX IN EntityTemplate Line 359
+		 * 
 		 */
-		SystemScope.Builder.getScopeHandler()
-				/**
-				 * We add a scope reader that reads and interprets the 4 specification files.
-				 */
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("OrganismModel"))
-				/**
-				 * We apply the scope, so that we can add normalization functions for various
-				 * literal entity types, if necessary.
-				 */
-				.apply()
-				/**
-				 * Now normalization functions can be added. A normalization function is
-				 * especially used for literal-based annotations. In case a normalization
-				 * function is provided for a specific entity type, the normalized value is
-				 * compared during evaluation instead of the actual surface form. A
-				 * normalization function normalizes different surface forms so that e.g. the
-				 * weights "500 g", "0.5kg", "500g" are all equal. Each normalization function
-				 * is bound to exactly one entity type.
-				 */
-				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization())
-				/**
-				 * Finally, we build the systems scope.
-				 */
-				.build();
-
-		instanceDirectory = SlotFillingCorpusBuilderBib
-				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
-
 		Map<String, Score> scoreMap = new HashMap<>();
+
 		Random random = new Random(randomSeed);
-		ENERModus modus = ENERModus.valueOf(modusName);
-
+		modus = ENERModus.valueOf(modusName);
 		for (int i = 0; i < 10; i++) {
-			log.info(modus + " RUN ID:" + i);
-			EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
-
-			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
+			log.info("RUN ID:" + i);
+			ETreatmentModifications rule = ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION;
 
 			long seed = random.nextLong();
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
 					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
-					OrganismModelRestrictionProvider.getByRule(rule));
+					TreatmentRestrictionProvider.getByRule(rule));
+			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 
 			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -135,36 +116,40 @@ public class OrgModelSlotFillingFinalEvaluation {
 
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
+			dataRandomSeed = "" + seed;
+			String modelName = "Treatment_Final_Seed_" + seed;
 
-			String modelName = "OrganismModel_Final_Seed_" + seed;
+			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
+			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
+			testInstances = instanceProvider.getRedistributedTestInstances();
 
-			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, modus);
+			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+
+			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+
+			coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.compoundTreatment, true);
 
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasAge);
-			slotTypesToConsider.add(SCIOSlotTypes.hasAgeCategory);
-			slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
-			slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
-			slotTypesToConsider.add(SCIOSlotTypes.hasGender);
+			slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
+			slotTypesToConsider.add(SCIOSlotTypes.hasDirection);
+			slotTypesToConsider.add(SCIOSlotTypes.hasApplicationInstrument);
+			slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
+			slotTypesToConsider.add(SCIOSlotTypes.hasCompound);
+			slotTypesToConsider.add(SCIOSlotTypes.hasVoltage);
+			slotTypesToConsider.add(SCIOSlotTypes.hasRehabMedication);
+			slotTypesToConsider.add(SCIOSlotTypes.hasElectricFieldStrength);
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.organismModel, false);
-
-			System.out.println("---------------------------------------");
-
-//			PerSlotEvaluator.evalRoot(EScoreType.MICRO, finalStates, coverageStates, evaluator,scores);
-//
-//			PerSlotEvaluator.evalProperties(EScoreType.MICRO, finalStates, coverageStates, slotTypesToConsider,
-//					evaluator,scores);
-//
-//			PerSlotEvaluator.evalCardinality(EScoreType.MICRO, finalStates, coverageStates,scores);
+			log.info("---------------------------------------");
 
 			PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
@@ -176,10 +161,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 			PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, evaluator, scoreMap);
 
 			/**
-			 * Finally, we evaluate the produced states and print some statistics.
-			 */
-
-			/**
 			 * Computes the coverage of the given instances. The coverage is defined by the
 			 * objective mean score that can be reached relying on greedy objective function
 			 * sampling strategy. The coverage can be seen as the upper bound of the system.
@@ -187,9 +168,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 			 * NER-annotations during slot-filling.
 			 */
 			log.info("modelName: " + predictor.modelName);
-
-			log.info(predictor.crf.getTrainingStatistics());
-			log.info(predictor.crf.getTestStatistics());
 			/**
 			 * TODO: Compare results with results when changing some parameter. Implement
 			 * more sophisticated feature-templates.
@@ -204,29 +182,33 @@ public class OrgModelSlotFillingFinalEvaluation {
 
 		log.info("	*************************");
 	}
+
+	private Map<String, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
+
+		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
+
+		/**
+		 * Predict OrganismModels
+		 */
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
+
+		List<String> trainingInstanceNames = trainingInstances.stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+
+		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
+//	+ modelName
+		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
+				"OrganismModel_Treatment_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
+				testInstanceNames, rule, modus);
+		predictor.trainOrLoadModel();
+
+		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1)
+				.entrySet().stream().collect(Collectors.toMap(a -> a.getKey().getName(), a -> a.getValue()));
+
+		SlotType.restoreExcludance(x);
+		return organismModelAnnotations;
+	}
 }
-//Cardinality-Coverage	0.990	1.000	0.980
-//hasAge-Relative	0.726	0.731	0.721
-//hasGender-Relative	0.977	0.977	0.977
-//Cardinality-Absolute	0.990	1.000	0.980
-//hasWeight-Coverage	0.948	0.955	0.942
-//Root-Coverage	0.000	0.000	0.000
-//hasAgeCategory-Coverage	0.995	1.000	0.990
-//hasGender-Absolute	0.962	0.972	0.952
-//hasOrganismSpecies-Coverage	0.892	0.900	0.885
-//Root-Absolute	0.000	0.000	0.000
-//hasOrganismSpecies-Absolute	0.864	0.870	0.858
-//hasAgeCategory-Absolute	0.890	0.895	0.886
-//Overall-Relative	0.951	0.949	0.952
-//hasWeight-Absolute	0.885	0.891	0.878
-//hasWeight-Relative	0.931	0.931	0.930
-//Root-Relative	�	�	�
-//hasAgeCategory-Relative	0.894	0.895	0.894
-//hasGender-Coverage	0.984	0.994	0.974
-//Overall-Coverage	0.962	0.995	0.930
-//Cardinality-Relative	1.000	1.000	1.000
-//hasAge-Coverage	0.917	0.957	0.880
-//hasAge-Absolute	0.662	0.692	0.635
-//hasOrganismSpecies-Relative	0.965	0.964	0.967
-//Overall-Absolute	0.914	0.944	0.886
-//

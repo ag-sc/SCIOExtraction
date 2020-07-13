@@ -20,7 +20,7 @@ public class DistinctExpGroupComponentsConstraint extends AbstractHardConstraint
 	}
 
 	@Override
-	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
 		boolean violates = false;
 		boolean inclTmp = SCIOSlotTypes.hasGroupName.isIncluded();
 		SCIOSlotTypes.hasGroupName.exclude();
@@ -45,7 +45,8 @@ public class DistinctExpGroupComponentsConstraint extends AbstractHardConstraint
 	}
 
 	@Override
-	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
+	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter,
+			int annotationIndex) {
 
 		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
 

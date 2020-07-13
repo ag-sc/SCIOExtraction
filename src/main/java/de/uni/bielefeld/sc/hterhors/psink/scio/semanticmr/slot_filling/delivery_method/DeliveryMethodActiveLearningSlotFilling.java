@@ -18,6 +18,7 @@ import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
@@ -114,7 +115,7 @@ public class DeliveryMethodActiveLearningSlotFilling {
 				log.info("Strategy: " + strategy);
 
 				DeliveryMethodPredictor predictor = new DeliveryMethodPredictor(modelName, trainingInstancesNames,
-						developInstanceNames, testInstanceNames, rule);
+						developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
 				predictor.trainOrLoadModel();
 

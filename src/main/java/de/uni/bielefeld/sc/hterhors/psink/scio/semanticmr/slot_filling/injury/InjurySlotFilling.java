@@ -33,6 +33,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DistanceNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
@@ -132,7 +133,7 @@ public class InjurySlotFilling {
 
 		resultsOut.println(header);
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
-		
+
 		Map<String, Score> scoreMap = new HashMap<>();
 
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
@@ -162,7 +163,7 @@ public class InjurySlotFilling {
 			String modelName = "Injury" + new Random().nextInt();
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule);
+					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
 			predictor.trainOrLoadModel();
 
@@ -179,7 +180,8 @@ public class InjurySlotFilling {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
+			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.injury,
+					false);
 
 			System.out.println("---------------------------------------");
 

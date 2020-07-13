@@ -21,7 +21,7 @@ public class DistinctExperimentalGroupNameConstraint extends AbstractHardConstra
 	}
 
 	@Override
-	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate) {
+	public boolean violatesConstraint(State currentState, EntityTemplate entityTemplate, int annotationIndex) {
 
 		if (SCIOSlotTypes.hasGroupName.isExcluded() || SCIOSlotTypes.hasGroupName.isFrozen())
 			return false;
@@ -55,7 +55,7 @@ public class DistinctExperimentalGroupNameConstraint extends AbstractHardConstra
 	}
 
 	@Override
-	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter) {
+	public List<EntityTemplate> violatesConstraint(State currentState, List<EntityTemplate> candidateListToFilter, int annotationIndex) {
 
 		if (SCIOSlotTypes.hasGroupName.isExcluded() || SCIOSlotTypes.hasGroupName.isFrozen())
 			return candidateListToFilter;
@@ -63,7 +63,7 @@ public class DistinctExperimentalGroupNameConstraint extends AbstractHardConstra
 		List<EntityTemplate> filteredList = new ArrayList<>(candidateListToFilter.size());
 
 		filteredList = candidateListToFilter.parallelStream()
-				.filter(candidate -> !violatesConstraint(currentState, candidate)).collect(Collectors.toList());
+				.filter(candidate -> !violatesConstraint(currentState, candidate,annotationIndex)).collect(Collectors.toList());
 
 		return filteredList;
 	}

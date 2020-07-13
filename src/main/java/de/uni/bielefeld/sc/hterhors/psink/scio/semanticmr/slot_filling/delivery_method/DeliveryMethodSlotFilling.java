@@ -32,82 +32,26 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EMainClassMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
+import java_cup.action_part;
 
 /**
- * GREEDY EVAL! Slot filling for delivery method.
- * 
- * ROOT Time: 8867 mean score: Score [getF1()=0.760, getPrecision()=0.760,
- * getRecall()=0.760, tp=38, fp=12, fn=12, tn=0] CRFStatistics [context=Train,
- * getTotalDuration()=95621] CRFStatistics [context=Test,
- * getTotalDuration()=8867] Compute coverage... Coverage Training: Score
- * [getF1()=1.000, getPrecision()=1.000, getRecall()=1.000, tp=143, fp=0, fn=0,
- * tn=0] Compute coverage... Coverage Development: Score [getF1()=0.920,
- * getPrecision()=0.920, getRecall()=0.920, tp=46, fp=4, fn=4, tn=0] modelName:
- * DeliveryMethod708621930
- * 
- * 
- * ROOT LOCATION Time: 13968 mean score: Score [getF1()=0.478,
- * getPrecision()=0.512, getRecall()=0.449, tp=44, fp=42, fn=54, tn=0]
- * CRFStatistics [context=Train, getTotalDuration()=325204] CRFStatistics
- * [context=Test, getTotalDuration()=13969] Compute coverage... Coverage
- * Training: Score [getF1()=0.994, getPrecision()=1.000, getRecall()=0.988,
- * tp=257, fp=0, fn=3, tn=0] Compute coverage... Coverage Development: Score
- * [getF1()=0.805, getPrecision()=0.958, getRecall()=0.694, tp=68, fp=3, fn=30,
- * tn=0] modelName: DeliveryMethod-1603701560
- * 
- * 
- * ROOT LOCATION DURATION
- * 
- * Time: 18560 mean score: Score [getF1()=0.480, getPrecision()=0.522,
- * getRecall()=0.443, tp=47, fp=43, fn=59, tn=0] CRFStatistics [context=Train,
- * getTotalDuration()=355932] CRFStatistics [context=Test,
- * getTotalDuration()=18560] Compute coverage... Coverage Training: Score
- * [getF1()=0.994, getPrecision()=1.000, getRecall()=0.989, tp=271, fp=0, fn=3,
- * tn=0] Compute coverage... Coverage Development: Score [getF1()=0.782,
- * getPrecision()=0.959, getRecall()=0.660, tp=70, fp=3, fn=36, tn=0] modelName:
- * DeliveryMethod1911796546
  * 
  * @author hterhors
  *
- *
- *         mean score: Score [getF1()=0.778, getPrecision()=0.778,
- *         getRecall()=0.778, tp=7, fp=2, fn=2, tn=0] CRFStatistics
- *         [context=Train, getTotalDuration()=173393] CRFStatistics
- *         [context=Test, getTotalDuration()=504] Compute coverage...
- * 
- * 
- * 
- *         Time: 1284 mean score: Score [getF1()=0.500, getPrecision()=0.500,
- *         getRecall()=0.500, tp=10, fp=10, fn=10, tn=0] CRFStatistics
- *         [context=Train, getTotalDuration()=584119] CRFStatistics
- *         [context=Test, getTotalDuration()=1284] Compute coverage...
- * 
- *         Time: 7664 mean score: Score [getF1()=0.554, getPrecision()=0.605,
- *         getRecall()=0.511, tp=23, fp=15, fn=22, tn=0] CRFStatistics
- *         [context=Train, getTotalDuration()=769097] CRFStatistics
- *         [context=Test, getTotalDuration()=7664] Compute coverage... Coverage
- *         Training: Score [getF1()=0.991, getPrecision()=1.000,
- *         getRecall()=0.983, tp=399, fp=0, fn=7, tn=0] Compute coverage...
- *         Coverage Development: Score [getF1()=0.816, getPrecision()=1.000,
- *         getRecall()=0.689, tp=31, fp=0, fn=14, tn=0] modelName:
- *         DeliveryMethod-668144621
  * 
  */
 public class DeliveryMethodSlotFilling {
-//	Compute coverage...
-//	Coverage Training: Score [getF1()=0.981, getPrecision()=1.000, getRecall()=0.964, tp=371, fp=0, fn=14, tn=0]
-//	Compute coverage...
-//	Coverage Development: Score [getF1()=0.835, getPrecision()=1.000, getRecall()=0.716, tp=58, fp=0, fn=23, tn=0]
-//	results: ROOT_LOCATION_DURATION	0.35	0.46	0.28
-//	modelName: DeliveryMethod-1583580014
 	/**
 	 * Start the slot filling procedure.
 	 * 
@@ -211,50 +155,26 @@ public class DeliveryMethodSlotFilling {
 					testInstances.stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					rule);
+					rule, ENERModus.GOLD);
 
-			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+//			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
+//			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			resultsOut.println(toResults(rule, score));
+//			resultsOut.println(toResults(rule, score));
 
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
 			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
-
-			for (Entry<Instance, State> res : finalStates.entrySet()) {
-
-				for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
-						.iterator(); iterator.hasNext();) {
-					AbstractAnnotation a = iterator.next();
-					if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
-							&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
-						iterator.remove();
-					}
-				}
-			}
-
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(false);
-
-			for (Entry<Instance, State> res : coverageStates.entrySet()) {
-
-				for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
-						.iterator(); iterator.hasNext();) {
-					AbstractAnnotation a = iterator.next();
-					if (a.isInstanceOfEntityTemplate() && a.asInstanceOfEntityTemplate().isEmpty()
-							&& a.getEntityType().getTransitiveClosureSuperEntityTypes().isEmpty()) {
-						iterator.remove();
-					}
-				}
-			}
+			Map<Instance, State> coverageStates = predictor
+					.coverageOnDevelopmentInstances(SCIOEntityTypes.deliveryMethod, false);
 
 			System.out.println("---------------------------------------");
 
@@ -293,7 +213,7 @@ public class DeliveryMethodSlotFilling {
 			 * NER-annotations during slot-filling.
 			 */
 
-			log.info("results: " + toResults(rule, score));
+//			log.info("results: " + toResults(rule, score));
 			log.info(predictor.crf.getTrainingStatistics());
 			log.info(predictor.crf.getTestStatistics());
 			log.info("modelName: " + predictor.modelName);
@@ -312,11 +232,8 @@ public class DeliveryMethodSlotFilling {
 				+ resultFormatter.format(score.getPrecision()) + "\t" + resultFormatter.format(score.getRecall());
 	}
 
-	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
+	private Map<String, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
 
-		/**
-		 * TODO: FULL MODEL EXTRACTION CAUSE THIS IS BEST TO PREDICT SPECIES
-		 */
 		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 
 		/**
@@ -334,38 +251,21 @@ public class DeliveryMethodSlotFilling {
 //	+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
 				"OrganismModel_DeliveryMethod_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
-				testInstanceNames, rule);
+				testInstanceNames, rule, ENERModus.GOLD);
 		predictor.trainOrLoadModel();
 
-		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1);
+		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1)
+				.entrySet().stream().collect(Collectors.toMap(a -> a.getKey().getName(), a -> a.getValue()));
 
 		SlotType.restoreExcludance(x);
 		return organismModelAnnotations;
 	}
 }
-
-
-
-
-//OHNE
-//MACRO	Root = 0.637	0.594	0.687	0.661	0.594	0.739	0.964	1.000	0.931
+//MACRO	Root = 0.604	0.750	0.505	0.604	0.750	0.505	1.000	1.000	1.000
 //MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//MACRO	hasLocations = 0.384	0.344	0.434	0.669	0.569	0.796	0.574	0.604	0.546
-//MACRO	Cardinality = 0.818	0.719	0.948	0.840	0.719	1.000	0.973	1.000	0.948
-//MACRO	Overall = 0.510	0.415	0.661	0.713	0.544	0.981	0.716	0.764	0.674
-//results: ROOT_LOCATION_DURATION	0.55	0.47	0.65
-//CRFStatistics [context=Train, getTotalDuration()=182993]
-//CRFStatistics [context=Test, getTotalDuration()=1625]
-//modelName: DeliveryMethod-367973152
-
-//MIT
-
-//MACRO	Root = 0.352	0.318	0.394	0.365	0.318	0.423	0.964	1.000	0.931
-//MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//MACRO	hasLocations = 0.225	0.172	0.325	0.386	0.275	0.595	0.583	0.625	0.546
-//MACRO	Cardinality = 0.857	0.781	0.948	0.880	0.781	1.000	0.973	1.000	0.948
-//MACRO	Overall = 0.283	0.212	0.424	0.392	0.274	0.629	0.721	0.776	0.674
-//results: ROOT_LOCATION_DURATION	0.38	0.32	0.48
-//CRFStatistics [context=Train, getTotalDuration()=82555]
-//CRFStatistics [context=Test, getTotalDuration()=775]
-//modelName: DeliveryMethod-1287335861
+//MACRO	hasLocations = 0.470	0.562	0.403	0.819	0.931	0.739	0.574	0.604	0.546
+//MACRO	Cardinality = 0.861	1.000	0.755	0.861	1.000	0.755	1.000	1.000	1.000
+//MACRO	Overall = 0.527	0.656	0.440	0.707	0.840	0.618	0.745	0.781	0.712
+//CRFStatistics [context=Train, getTotalDuration()=57283]
+//CRFStatistics [context=Test, getTotalDuration()=268]
+//modelName: DeliveryMethod-1421717905
