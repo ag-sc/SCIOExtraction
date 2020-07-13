@@ -40,9 +40,9 @@ import de.hterhors.semanticmr.tools.KeyTermExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification.FastTextPrediction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext.FastTextSentenceClassification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext.FastTextSentenceClassification.FastTextPrediction;
 
 /**
  * NOT SO SMART...

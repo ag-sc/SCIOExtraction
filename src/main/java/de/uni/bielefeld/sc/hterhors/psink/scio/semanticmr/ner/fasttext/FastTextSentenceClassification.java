@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -131,12 +131,12 @@ public class FastTextSentenceClassification {
 //				instanceProvider.getRedistributedTestInstances());
 //		
 //		leaveOneOutEval(type, instanceProvider.getInstances());
-		Score mScore = tenRandom8020Split(type, new ArrayList<>(instanceProvider.getInstances()), 1000L);
+		Score mScore = tenRandom9010Split(type, new ArrayList<>(instanceProvider.getInstances()), 1000L);
 
 		System.out.println(mScore);
 	}
 
-	private static Score tenRandom8020Split(EntityType type, List<Instance> instances, long randomSeed)
+	private static Score tenRandom9010Split(EntityType type, List<Instance> instances, long randomSeed)
 			throws IOException {
 //		Score [macroF1=0.645, macroPrecision=0.500, macroRecall=0.909] for investigationmethods 50 200 binary
 //		Score [macroF1=0.261, macroPrecision=0.250, macroRecall=0.273]  for investigationmethods 50 200 multi class
@@ -221,14 +221,14 @@ public class FastTextSentenceClassification {
 
 		jft = new JFastText();
 		String modelName =
-				"pretrained_"+
+//				"pretrained_"+
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 						+ "_supervised.model";
 		String preTrainedvec = "wordvector/w2v.vec";
 		jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 				"fasttext/resources/models/" + modelName, "-epoch", numberOfEpochs + "",
 
-				"-pretrainedVectors", preTrainedvec,
+//				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 				"-dim", numberOfDimensions + "" });

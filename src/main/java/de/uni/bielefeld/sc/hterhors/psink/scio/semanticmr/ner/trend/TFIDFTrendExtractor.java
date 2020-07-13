@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,13 +38,38 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification.FastTextPrediction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TrendChunker.TermIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Trend;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext.FastTextSentenceClassification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext.FastTextSentenceClassification.FastTextPrediction;
 
 public class TFIDFTrendExtractor {
+//	Ohne Fast Text
+//			Score [macroF1=0.204, macroPrecision=0.120, macroRecall=0.700, macroAddCounter=1]
+//			Score [macroF1=0.182, macroPrecision=0.105, macroRecall=0.685, macroAddCounter=1]
+//			Score [macroF1=0.215, macroPrecision=0.125, macroRecall=0.754, macroAddCounter=1]
+//			Score [macroF1=0.173, macroPrecision=0.098, macroRecall=0.703, macroAddCounter=1]
+//			Score [macroF1=0.186, macroPrecision=0.107, macroRecall=0.707, macroAddCounter=1]
+//			Score [macroF1=0.171, macroPrecision=0.097, macroRecall=0.719, macroAddCounter=1]
+//			Score [macroF1=0.219, macroPrecision=0.130, macroRecall=0.705, macroAddCounter=1]
+//			Score [macroF1=0.143, macroPrecision=0.080, macroRecall=0.670, macroAddCounter=1]
+//			Score [macroF1=0.226, macroPrecision=0.134, macroRecall=0.712, macroAddCounter=1]
+//			Score [macroF1=0.190, macroPrecision=0.110, macroRecall=0.693, macroAddCounter=1]
+//			90/10 one out: Score [macroF1=0.191, macroPrecision=0.111, macroRecall=0.705, macroAddCounter=10]
+
+//	MIt Fast Text
+//	Score [macroF1=0.284, macroPrecision=0.177, macroRecall=0.706, macroAddCounter=1]
+//	Score [macroF1=0.273, macroPrecision=0.170, macroRecall=0.694, macroAddCounter=1]
+//	Score [macroF1=0.327, macroPrecision=0.208, macroRecall=0.761, macroAddCounter=1]
+//	Score [macroF1=0.266, macroPrecision=0.164, macroRecall=0.703, macroAddCounter=1]
+//	Score [macroF1=0.259, macroPrecision=0.158, macroRecall=0.707, macroAddCounter=1]
+//	Score [macroF1=0.263, macroPrecision=0.161, macroRecall=0.721, macroAddCounter=1]
+//	Score [macroF1=0.291, macroPrecision=0.183, macroRecall=0.706, macroAddCounter=1]
+//	Score [macroF1=0.210, macroPrecision=0.124, macroRecall=0.669, macroAddCounter=1]
+//	Score [macroF1=0.297, macroPrecision=0.186, macroRecall=0.733, macroAddCounter=1]
+//	Score [macroF1=0.266, macroPrecision=0.164, macroRecall=0.691, macroAddCounter=1]
+//	90/10 one out: Score [macroF1=0.274, macroPrecision=0.170, macroRecall=0.709, macroAddCounter=10]
 
 	public static void main(String[] args) throws IOException {
 
@@ -64,7 +90,7 @@ public class TFIDFTrendExtractor {
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.trend), corpusDistributor);
-		
+
 //		without fast text as sentence prediciton
 //		Score [getF1()=0.282, getPrecision()=0.174, getRecall()=0.736, tp=331, fp=1566, fn=119, tn=0]
 //		Without fast text and without keyterms
@@ -73,12 +99,41 @@ public class TFIDFTrendExtractor {
 //		With fast text as sentence prediciton
 //		Score [getF1()=0.325, getPrecision()=0.208, getRecall()=0.742, tp=310, fp=1179, fn=108, tn=0]
 
-		TFIDFTrendExtractor t = new TFIDFTrendExtractor(instanceProvider.getRedistributedTrainingInstances());
-		Score sAll = t.evaluate(instanceProvider.getRedistributedDevelopmentInstances());
-		System.out.println(sAll);
-		// Score s =
-		// TFIDFTrendExtractor.leaveOneOutEval(instanceProvider.getInstances());
+//		TFIDFTrendExtractor t = new TFIDFTrendExtractor(instanceProvider.getRedistributedTrainingInstances());
+//		Score sAll = t.evaluate(instanceProvider.getRedistributedDevelopmentInstances());
+//		System.out.println(sAll);
+//		 Score s =
+//		 TFIDFTrendExtractor.leaveOneOutEval(instanceProvider.getInstances());
 //		System.out.println("leave one out: " + s);
+		Score s = TFIDFTrendExtractor.tenRandom9010Split(instanceProvider.getInstances(), 1000L);
+		System.out.println("90/10 one out: " + s);
+//		90/10 one out: Score [macroF1=0.199, macroPrecision=0.116, macroRecall=0.680, macroAddCounter=10]
+
+	}
+
+	private static Score tenRandom9010Split(List<Instance> instances, long randomSeed) throws IOException {
+
+		Score mScore = new Score(EScoreType.MACRO);
+
+		Random rand = new Random(randomSeed);
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println("PROGRESS: " + i);
+
+			Collections.shuffle(instances, rand);
+
+			final int x = (int) (((double) instances.size() / 100D) * 90D);
+
+			List<Instance> trainingInstances = instances.subList(0, x);
+			List<Instance> testInstances = instances.subList(x, instances.size());
+
+			TFIDFTrendExtractor t = new TFIDFTrendExtractor(trainingInstances);
+			Score s = t.evaluate(testInstances).toMacro();
+			System.out.println(s);
+			mScore.add(s);
+		}
+
+		return mScore;
 	}
 
 	private static Score leaveOneOutEval(List<Instance> instances) throws IOException {
@@ -245,7 +300,7 @@ public class TFIDFTrendExtractor {
 					.filter(a -> a.fastTextInstance.instance.getName().equals(testInstance.getName()))
 					.filter(a -> a.label.equals(FastTextSentenceClassification.NO_LABEL))
 					.map(a -> a.fastTextInstance.sentenceIndex).collect(Collectors.toSet());
-			
+
 //			System.out.println("Name " + testInstance.getName());
 //			Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
 //					.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
@@ -255,8 +310,8 @@ public class TFIDFTrendExtractor {
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
 					.getNumberOfSentences(); sentenceIndex++) {
 
-//				if (skipSentences.contains(new Integer(sentenceIndex)))
-//					continue;
+				if (skipSentences.contains(new Integer(sentenceIndex)))
+					continue;
 
 				if (sec.getSection(sentenceIndex) != ESection.RESULTS)
 					continue;

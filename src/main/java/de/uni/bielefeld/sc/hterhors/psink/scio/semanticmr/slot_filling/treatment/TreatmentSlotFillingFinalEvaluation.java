@@ -106,7 +106,6 @@ public class TreatmentSlotFillingFinalEvaluation {
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
-			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 
 			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
@@ -125,6 +124,7 @@ public class TreatmentSlotFillingFinalEvaluation {
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 

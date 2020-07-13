@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,10 +38,9 @@ import de.hterhors.semanticmr.tools.TFIDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification.FastTextPrediction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext.FastTextSentenceClassification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.fasttext.FastTextSentenceClassification.FastTextPrediction;
-import edu.stanford.nlp.ling.CoreAnnotations.IsNewlineAnnotation;
 
 public class TFIDFInvestigationMethodExtractor {
 
@@ -66,8 +66,8 @@ public class TFIDFInvestigationMethodExtractor {
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
 				corpusDistributor);
 
-		TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(
-				instanceProvider.getRedistributedTrainingInstances());
+//		TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(
+//				instanceProvider.getRedistributedTrainingInstances());
 
 //		with fast text as sentence classification
 //		Score [macroF1=0.250, macroPrecision=0.150, macroRecall=0.750]
@@ -80,9 +80,36 @@ public class TFIDFInvestigationMethodExtractor {
 //		t.evaluateMultiSectionAppearance(instanceProvider.getRedistributedDevelopmentInstances());
 //		System.out.println(s.toMacro());
 
-		Score score = TFIDFInvestigationMethodExtractor.leaveOneOutEval(instanceProvider.getInstances());
-		System.out.println("leave one out score = " + score);
+//		Score score = TFIDFInvestigationMethodExtractor.leaveOneOutEval(instanceProvider.getInstances());
+//		System.out.println("leave one out score = " + score);
+		Score score = TFIDFInvestigationMethodExtractor.tenRandom9010Split(instanceProvider.getInstances(), 1000L);
+		System.out.println("90/10 score = " + score);
 
+	}
+
+	private static Score tenRandom9010Split(List<Instance> instances, long randomSeed) throws IOException {
+
+		Score mScore = new Score(EScoreType.MICRO);
+
+		Random rand = new Random(randomSeed);
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println("PROGRESS: " + i);
+
+			Collections.shuffle(instances, rand);
+
+			final int x = (int) (((double) instances.size() / 100D) * 90D);
+
+			List<Instance> trainingInstances = instances.subList(0, x);
+			List<Instance> testInstances = instances.subList(x, instances.size());
+
+			TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(trainingInstances);
+			Score s = t.evaluate(testInstances);
+			System.out.println(s);
+			mScore.add(s);
+		}
+
+		return mScore;
 	}
 
 	private static Score leaveOneOutEval(List<Instance> instances) throws IOException {
@@ -222,7 +249,8 @@ public class TFIDFInvestigationMethodExtractor {
 		for (Instance testInstance : instances) {
 			Set<Integer> skipSentences = new HashSet<>();
 			if (includeFastText)
-				skipSentences = testData.stream().filter(a -> a.fastTextInstance.instance.getName().equals(testInstance.getName()))
+				skipSentences = testData.stream()
+						.filter(a -> a.fastTextInstance.instance.getName().equals(testInstance.getName()))
 						.filter(a -> a.label.equals(FastTextSentenceClassification.NO_LABEL))
 						.map(a -> a.fastTextInstance.sentenceIndex).collect(Collectors.toSet());
 			System.out.println("Name " + testInstance.getName());
