@@ -136,7 +136,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			String modelName = "OrganismModel_Final_Seed_" + seed;
+			String modelName = modusName + "_OrganismModel_Final_" + seed;
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);

@@ -117,7 +117,7 @@ public class TreatmentSlotFillingFinalEvaluation {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 			dataRandomSeed = "" + seed;
-			String modelName = "Treatment_Final_Seed_" + seed;
+			String modelName = modusName + "_Treatment_Final_" + seed;
 
 			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 			devInstances = instanceProvider.getRedistributedDevelopmentInstances();

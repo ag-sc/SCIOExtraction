@@ -131,7 +131,7 @@ public class InjuryDeviceFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryDeviceRestrictionProvider.getByRule(rule));
 
-			String modelName = "InjuryDevice_Final_Seed_" + seed;
+			String modelName = modusName + "_InjuryDevice_Final_" + seed;
 
 			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())

@@ -111,7 +111,7 @@ public class InjurySlotFillingFinalEvaluation {
 			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			String modelName = "Injury_Final_Seed_" + seed;
+			String modelName = modusName + "_Injury_Final_" + seed;
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);

@@ -141,7 +141,7 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					DeliveryMethodRestrictionProvider.getByRule(rule));
 
-			String modelName = "DeliveryMethod_Final_Seed_" + seed;
+			String modelName = modusName + "_DeliveryMethod_Final_" + seed;
 
 			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 			devInstances = instanceProvider.getRedistributedDevelopmentInstances();

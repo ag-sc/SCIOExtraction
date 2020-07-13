@@ -112,7 +112,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					AnaestheticRestrictionProvider.getByRule(rule));
 
-			String modelName = "Anaesthetic_Final_Seed_" + seed;
+			String modelName = modusName + "_Anaesthetic_Final_" + seed;
 
 			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())

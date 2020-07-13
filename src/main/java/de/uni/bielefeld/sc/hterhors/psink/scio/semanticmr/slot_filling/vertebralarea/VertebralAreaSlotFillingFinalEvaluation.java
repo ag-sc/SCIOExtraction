@@ -119,7 +119,7 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 			instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					VertebralAreaRestrictionProvider.getByRule(rule));
 
-			String modelName = "VertebralArea_Final_Seed_" + seed;
+			String modelName = modusName + "_VertebralArea_Final_" + seed;
 
 			VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName,
 					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
