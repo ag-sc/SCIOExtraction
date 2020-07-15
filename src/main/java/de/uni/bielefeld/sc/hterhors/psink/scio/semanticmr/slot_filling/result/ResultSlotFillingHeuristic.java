@@ -67,7 +67,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod.TFIDFInvestigationMethodExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TFIDFTrendExtractor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingFinalEvaluationPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPredictorFinalEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.evaulation.CoarseGrainedResultEvaluation;
@@ -141,12 +141,12 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
-		
+
 		modelName = modus + "_Result" + rand;
 		log.info("Model name = " + modelName);
 
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
-		
+
 		Map<Instance, Set<DocumentLinkedAnnotation>> goldAnnotations = readAnnotations(
 				new File("data/annotations/result/"));
 
@@ -197,7 +197,6 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				annotations.get(instance).addAll(annotationsInvFT.get(instance));
 			}
 
-			
 			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
 					SCIOEntityTypes.trend, trainingInstances);
 			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
@@ -229,13 +228,12 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 			addDictionaryBasedAnnotations(annotations);
 		}
-		
+
 		if (modus == ENERModus.GOLD)
 			expGroups = getGoldGroups();
 		else {
 			expGroups = getPredictedGroups();
 		}
-
 
 		LocalSentenceHeuristic heuristic = new LocalSentenceHeuristic(annotations, expGroups, trainingInstances);
 
@@ -313,11 +311,11 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		} else {
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
 			SlotType.includeAll();
-			ExperimentalGroupSlotFillingFinalEvaluationPredictor.maxCacheSize = 800_000;
-			ExperimentalGroupSlotFillingFinalEvaluationPredictor.minCacheSize = 400_000;
+			ExperimentalGroupSlotFillingPredictorFinalEvaluation.maxCacheSize = 800_000;
+			ExperimentalGroupSlotFillingPredictorFinalEvaluation.minCacheSize = 400_000;
 
 			int modusIndex = modus == ENERModus.GOLD ? 17 : 18; // here only PREDICT
-			ExperimentalGroupSlotFillingFinalEvaluationPredictor a = new ExperimentalGroupSlotFillingFinalEvaluationPredictor(
+			ExperimentalGroupSlotFillingPredictorFinalEvaluation a = new ExperimentalGroupSlotFillingPredictorFinalEvaluation(
 					modusIndex, dataRandomSeed,
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
@@ -818,6 +816,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			SCIOSlotTypes.hasInjuryDevice.includeRec();
 			SCIOSlotTypes.hasInjuryLocation.includeRec();
 			SCIOSlotTypes.hasInjuryAnaesthesia.includeRec();
+			SCIOSlotTypes.hasDeliveryMethod.includeRec();
 
 			SCIOSlotTypes.hasTreatmentType.include();
 			SCIOSlotTypes.hasCompound.include();

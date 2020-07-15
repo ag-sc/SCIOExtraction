@@ -135,7 +135,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentSlotFillingPredictor;
 
-public class ExperimentalGroupSlotFillingFinalEvaluationPredictor extends AbstractSemReadProject {
+public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends AbstractSemReadProject {
 
 	private Map<Instance, State> resultsTest;
 
@@ -160,10 +160,27 @@ public class ExperimentalGroupSlotFillingFinalEvaluationPredictor extends Abstra
 
 				.build();
 
+		int modusIndex;
+		long dataRandomSeed;
+
+		if (args.length == 0) {
+			modusIndex = 17; // GOLD
+//			modusIndex = 18; // PREDICTED
+			dataRandomSeed = 1000L;
+		} else {
+			modusIndex = Integer.parseInt(args[0]);
+			dataRandomSeed = Integer.parseInt(args[1]);
+		}
+
+		run(modusIndex, dataRandomSeed);
+
+	}
+
+	private static void run(int modusIndex, long dataRandomSeed) throws Exception {
 		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
 		Collections.sort(docs);
 
-		Collections.shuffle(docs, new Random(1000L));
+		Collections.shuffle(docs, new Random(dataRandomSeed));
 
 		final int x = (int) (((double) docs.size() / 100D) * 80D);
 		List<String> trainingInstanceNames = docs.subList(0, x);
@@ -185,21 +202,12 @@ public class ExperimentalGroupSlotFillingFinalEvaluationPredictor extends Abstra
 		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
 		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
 		testInstances = instanceProvider.getRedistributedTestInstances();
-		ExperimentalGroupSlotFillingFinalEvaluationPredictor a;
-		if (args.length == 0) {
-			ExperimentalGroupSlotFillingFinalEvaluationPredictor.maxCacheSize = 800_000;
-			ExperimentalGroupSlotFillingFinalEvaluationPredictor.minCacheSize = 400_000;
-			a = new ExperimentalGroupSlotFillingFinalEvaluationPredictor(17, 1000L,
-					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
-		} else {
-			a = new ExperimentalGroupSlotFillingFinalEvaluationPredictor(Integer.parseInt(args[0]),
-					Integer.parseInt(args[1]),
-					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
-					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
-		}
+
+		ExperimentalGroupSlotFillingPredictorFinalEvaluation a = new ExperimentalGroupSlotFillingPredictorFinalEvaluation(
+				modusIndex, dataRandomSeed,
+				trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+				devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
+				testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
 
 		a.eval(a.resultsTest);
 
@@ -490,7 +498,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluationPredictor extends Abstra
 	private ENERModus modus;
 	public Map<Instance, Set<EntityTemplate>> extraction = new HashMap<>();
 
-	public ExperimentalGroupSlotFillingFinalEvaluationPredictor(int parameterID, long dataRandomSeed,
+	public ExperimentalGroupSlotFillingPredictorFinalEvaluation(int parameterID, long dataRandomSeed,
 			List<String> trainingInstanceNames, List<String> devInstanceNames, List<String> testInstanceNames)
 			throws Exception {
 		instanceDirectory = SlotFillingCorpusBuilderBib
@@ -533,7 +541,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluationPredictor extends Abstra
 		 */
 		applyModesAndRestrictions();
 
-		getData(dataRandomSeed, trainingInstanceNames, devInstanceNames, testInstanceNames);
+		getData(trainingInstanceNames, devInstanceNames, testInstanceNames);
 
 		SCIOSlotTypes.hasTreatmentType.slotMaxCapacity = 3;
 
@@ -1206,7 +1214,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluationPredictor extends Abstra
 		return injuries;
 	}
 
-	public void getData(long dataRandomSeed, List<String> trainingInstanceNames, List<String> devInstanceNames,
+	public void getData(List<String> trainingInstanceNames, List<String> devInstanceNames,
 			List<String> testInstanceNames) throws IOException {
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setDevelopInstanceNames(devInstanceNames)
