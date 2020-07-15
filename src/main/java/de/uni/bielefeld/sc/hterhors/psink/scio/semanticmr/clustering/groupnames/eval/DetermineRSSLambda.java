@@ -76,7 +76,7 @@ public class DetermineRSSLambda {
 //		}
 
 //		Word2VecBasedKMeans<DocumentLinkedAnnotation> w2vkMeans = new Word2VecBasedKMeans<>(words);
-		WEKAClustering wekakMeans = new WEKAClustering();
+		WEKAClustering wekakMeans = new WEKAClustering("TEST");
 		wekakMeans.trainOrLoad(trainInstances);
 
 		for (double i = 0; i < 20; i += 0.1) {

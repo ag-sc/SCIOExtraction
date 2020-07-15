@@ -44,11 +44,12 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	 * k, cluster per instance
 	 */
 	private Map<Integer, Map<Instance, List<List<DocumentLinkedAnnotation>>>> preComputedClusters = new HashMap<>();
+	final private String modelName;
 
-	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameMode,
+	public MultiCardinalityInitializer(String modelName, EExtractGroupNamesMode groupNameMode,
 			EGroupNamesClusteringMode groupNamesPreProcessingMode, List<Instance> instances, int min, int max,
 			List<Instance> trainingInstances) {
-
+		this.modelName = modelName;
 		if (max <= 0 || min <= 0) {
 			double e = computeMean(trainingInstances);
 			double stdDev = computeStdDeviation(trainingInstances, e);
@@ -75,17 +76,17 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 		}
 	}
 
-	public MultiCardinalityInitializer(EExtractGroupNamesMode groupNameProviderMode,
+	public MultiCardinalityInitializer(String modelName, EExtractGroupNamesMode groupNameProviderMode,
 			EGroupNamesClusteringMode groupNameProcessingMode, List<Instance> instances,
 			List<Instance> trainingInstances) {
-		this(groupNameProviderMode, groupNameProcessingMode, instances, -1, -1, trainingInstances);
+		this(modelName, groupNameProviderMode, groupNameProcessingMode, instances, -1, -1, trainingInstances);
 
 	}
 
 	private void wekaBasedKmeans(List<Instance> instances, List<Instance> trainingInstances) {
 		try {
 
-			WEKAClustering gnc = new WEKAClustering();
+			WEKAClustering gnc = new WEKAClustering(modelName);
 
 			gnc.trainOrLoad(trainingInstances);
 			for (int clusterSize = min; clusterSize <= max; clusterSize++) {

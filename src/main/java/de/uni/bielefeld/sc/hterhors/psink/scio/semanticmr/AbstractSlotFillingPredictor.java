@@ -647,9 +647,12 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		List<String> remainingNames = names.stream().filter(name -> !annotations.containsKey(name))
 				.collect(Collectors.toList());
 
-		Map<Instance, State> results = ((SemanticParsingCRF) crf).predictHighRecall(instanceProvider.getInstances()
-				.stream().filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), n,
-				maxStepCrit, noModelChangeCrit);
+		Map<Instance, State> results = crf.predictHighRecall(instanceProvider.getInstances().stream()
+				.filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), n, maxStepCrit,
+				noModelChangeCrit);
+
+		
+		
 		for (Entry<Instance, State> res : results.entrySet()) {
 			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
 					.iterator(); iterator.hasNext();) {
@@ -660,6 +663,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				}
 			}
 		}
+		
 		for (Entry<Instance, State> result : results.entrySet()) {
 
 			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {

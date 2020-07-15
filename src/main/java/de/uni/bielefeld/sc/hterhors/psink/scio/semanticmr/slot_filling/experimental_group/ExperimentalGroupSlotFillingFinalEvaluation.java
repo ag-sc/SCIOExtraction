@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -48,6 +49,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.ISamplingStoppingCriterion;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
@@ -66,7 +68,6 @@ import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
@@ -81,6 +82,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.groupname.GroupNameNERLPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.evaluation.CoarseGrainedExpGroupEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.evaluation.ExperimentalGroupEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.evaluation.InjuryEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.evaluation.OrganismModelEvaluation;
@@ -398,6 +400,17 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			complexityMode = EComplexityMode.FULL;
 			explorationMode = EExplorationMode.TYPE_BASED;
 
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
+		} else if (id == 18) {
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT;
+			complexityMode = EComplexityMode.FULL;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
 			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
 
 			groupNameProviderMode = EExtractGroupNamesMode.MANUAL_PATTERN_NP_CHUNKS;
@@ -421,14 +434,14 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 	private int maxCacheSize = 80_000_000;
 	private int minCacheSize = 40_000_000;
 
-	private ENERModus modus = ENERModus.PREDICT;
+	private ENERModus modus;
 
 	public ExperimentalGroupSlotFillingFinalEvaluation(int parameterID, long dataRandomSeed) throws Exception {
 		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(
-						DataStructureLoader.loadSlotFillingDataStructureReader("DefinedExperimentalGroup"))
-				.apply().registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization()).build();
+		.addScopeSpecification(
+				DataStructureLoader.loadSlotFillingDataStructureReader("DefinedExperimentalGroup"))
+		.apply().registerNormalizationFunction(new WeightNormalization())
+		.registerNormalizationFunction(new AgeNormalization()).build();
 
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.definedExperimentalGroup);
@@ -441,13 +454,14 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 
 		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 20;
 
-		rand = String.valueOf(new Random(dataRandomSeed + parameterID).nextLong());
+		rand = String.valueOf(new Random(dataRandomSeed).nextInt() + new Random(parameterID).nextInt());
+
+		setParameterByID(parameterID);
+		modus = mainClassProviderMode == EMainClassMode.GOLD ? ENERModus.GOLD : ENERModus.PREDICT;
 
 		modelName = modus + "_ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
-		setParameterByID(parameterID);
-		modus = mainClassProviderMode == EMainClassMode.GOLD ? ENERModus.GOLD : ENERModus.PREDICT;
 		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed);
 
 		trainingObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
@@ -470,6 +484,9 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		applyModesAndRestrictions();
 
 		getData(dataRandomSeed);
+
+		SCIOSlotTypes.hasTreatmentType.slotMaxCapacity = 3;
+
 		addGroupNameCandidates();
 
 		addTreatmentCandidates();
@@ -608,14 +625,59 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		/**
 		 * Evaluate with objective function
 		 */
-		evaluate(log, results, predictionObjectiveFunction);
+
+		for (Entry<Instance, State> res : results.entrySet()) {
+
+			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
+					.iterator(); iterator.hasNext();) {
+				AbstractAnnotation a = iterator.next();
+				if (new DefinedExperimentalGroup(a.asInstanceOfEntityTemplate()).isEmpty())
+					iterator.remove();
+			}
+		}
+		PrintStream ps = new PrintStream(outputFile);
 
 		/**
 		 * Evaluate assuming TT,OM,IM are one unit. Evaluate assuming TT,OM,IM are one
 		 * unit, distinguish vehicle-treatments and main-treatments.
 		 */
+		evaluateDetailed(ps, results);
 
-		evaluateDetailed(results);
+		Map<SlotType, Boolean> stored = SlotType.storeExcludance();
+		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		if (!stored.get(SCIOSlotTypes.hasTreatmentType)) {
+			SCIOSlotTypes.hasTreatmentType.include();
+			SCIOSlotTypes.hasCompound.include();
+			SCIOSlotTypes.hasDosage.include();
+			SCIOSlotTypes.hasDirection.include();
+			SCIOSlotTypes.hasDeliveryMethod.include();
+			SCIOSlotTypes.hasLocations.include();
+		}
+		if (!stored.get(SCIOSlotTypes.hasInjuryModel)) {
+			SCIOSlotTypes.hasInjuryModel.include();
+			SCIOSlotTypes.hasInjuryDevice.includeRec();
+			SCIOSlotTypes.hasInjuryLocation.includeRec();
+			SCIOSlotTypes.hasInjuryAnaesthesia.includeRec();
+		}
+		if (!stored.get(SCIOSlotTypes.hasOrganismModel)) {
+			SCIOSlotTypes.hasOrganismModel.includeRec();
+		}
+//		NerlaEvaluator nerlaEvaluator = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
+
+		ExperimentalGroupEvaluation expGroupEval = new ExperimentalGroupEvaluation(predictionObjectiveFunction,
+				predictionObjectiveFunction.getEvaluator());
+
+		evaluate(log, results, predictionObjectiveFunction);
+
+		Score score = CoarseGrainedExpGroupEvaluation.evaluateCoarsGrained(ps,predictionObjectiveFunction, results);
+
+		log.info("CoarseGrainedEvaluaiton: " + score);
+
+		expGroupEval.evaluate(ps, results, EScoreType.MICRO);
+		expGroupEval.evaluate(ps, results, EScoreType.MACRO);
+
+		SlotType.restoreExcludance(x);
+
 	}
 
 	public void postPredictOrganismModel(Map<Instance, State> results) {
@@ -673,37 +735,6 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 
 		}
 
-//		if (assignmentMode == EAssignmentMode.TREATMENT) {
-//
-//			int k = 1;
-//
-//			SCIOSlotTypes.hasOrganismModel.include();
-//
-//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictOrganismModel(devInstances, k)
-//					.entrySet()) {
-//				for (AbstractAnnotation predictedExpGroup : results.get(prediction.getKey()).getCurrentPredictions()
-//						.getAnnotations()) {
-//
-//					if (prediction.getValue().isEmpty())
-//						continue;
-//					predictedExpGroup.asInstanceOfEntityTemplate().setSingleSlotFiller(SCIOSlotTypes.hasOrganismModel,
-//							prediction.getValue().iterator().next());
-//
-//				}
-//			}
-//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictOrganismModel(testInstances, k)
-//					.entrySet()) {
-//				for (AbstractAnnotation predictedExpGroup : results.get(prediction.getKey()).getCurrentPredictions()
-//						.getAnnotations()) {
-//
-//					if (prediction.getValue().isEmpty())
-//						continue;
-//					predictedExpGroup.asInstanceOfEntityTemplate().setSingleSlotFiller(SCIOSlotTypes.hasOrganismModel,
-//							prediction.getValue().iterator().next());
-//
-//				}
-//			}
-//		}
 	}
 
 	public void postPredictInjuryModel(Map<Instance, State> results) {
@@ -761,39 +792,9 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			}
 		}
 
-//		if (assignmentMode == EAssignmentMode.TREATMENT) {
-//
-//			int k = 1;
-//
-//			SCIOSlotTypes.hasInjuryModel.include();
-//			SCIOSlotTypes.hasInjuryDevice.exclude();
-//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictInjuryModel(devInstances, k).entrySet()) {
-//				for (AbstractAnnotation predictedExpGroup : results.get(prediction.getKey()).getCurrentPredictions()
-//						.getAnnotations()) {
-//
-//					if (prediction.getValue().isEmpty())
-//						continue;
-//					predictedExpGroup.asInstanceOfEntityTemplate().setSingleSlotFiller(SCIOSlotTypes.hasInjuryModel,
-//							prediction.getValue().iterator().next());
-//
-//				}
-//			}
-//			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictInjuryModel(testInstances, k)
-//					.entrySet()) {
-//				for (AbstractAnnotation predictedExpGroup : results.get(prediction.getKey()).getCurrentPredictions()
-//						.getAnnotations()) {
-//
-//					if (prediction.getValue().isEmpty())
-//						continue;
-//					predictedExpGroup.asInstanceOfEntityTemplate().setSingleSlotFiller(SCIOSlotTypes.hasInjuryModel,
-//							prediction.getValue().iterator().next());
-//
-//				}
-//			}
-//		}
 	}
 
-	private void evaluateDetailed(Map<Instance, State> results) throws Exception {
+	private void evaluateDetailed(PrintStream ps, Map<Instance, State> results) throws Exception {
 
 		log.info("explorationMode: " + explorationMode);
 		log.info("assignmentMode: " + assignmentMode);
@@ -804,8 +805,6 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		log.info("distinctGroupNamesMode: " + distinctGroupNamesMode);
 		log.info("complexityMode: " + complexityMode);
 
-		PrintStream ps = new PrintStream(outputFile);
-
 		ps.println("explorationMode: " + explorationMode);
 		ps.println("assignmentMode: " + assignmentMode);
 		ps.println("cardinalityMode: " + cardinalityMode);
@@ -815,7 +814,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		ps.println("distinctGroupNamesMode: " + distinctGroupNamesMode);
 		ps.println("complexityMode: " + complexityMode);
 
-		NerlaEvaluator nerlaEvaluator = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
+//		NerlaEvaluator nerlaEvaluator = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
 
 		/**
 		 * TODO: If not only the root stuff should be evaluated we need to add here the
@@ -827,7 +826,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			SlotType.excludeAll();
 			SCIOSlotTypes.hasCompound.include();
 			SCIOSlotTypes.hasTreatmentType.include();
-			TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(nerlaEvaluator);
+			TreatmentEvaluation treatmentEvaluation = new TreatmentEvaluation(predictionObjectiveFunction.getEvaluator());
 			treatmentEvaluation.evaluate(ps, results, EScoreType.MICRO);
 			treatmentEvaluation.evaluate(ps, results, EScoreType.MACRO);
 			SlotType.restoreExcludance(x);
@@ -835,9 +834,8 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
 			Map<SlotType, Boolean> x = SlotType.storeExcludance();
 			SlotType.excludeAll();
-			SCIOSlotTypes.hasOrganismModel.include();
-			SCIOSlotTypes.hasOrganismSpecies.include();
-			OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(nerlaEvaluator);
+			SCIOSlotTypes.hasOrganismModel.includeRec();
+			OrganismModelEvaluation organismModelEvaluation = new OrganismModelEvaluation(predictionObjectiveFunction.getEvaluator());
 			organismModelEvaluation.evaluate(ps, results, EScoreType.MICRO);
 			organismModelEvaluation.evaluate(ps, results, EScoreType.MACRO);
 			SlotType.restoreExcludance(x);
@@ -846,34 +844,13 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
 			Map<SlotType, Boolean> x = SlotType.storeExcludance();
 			SlotType.excludeAll();
-			SCIOSlotTypes.hasInjuryModel.include();
-			InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(nerlaEvaluator);
+			SCIOSlotTypes.hasInjuryModel.includeRec();
+			InjuryEvaluation injuryModelEvaluation = new InjuryEvaluation(predictionObjectiveFunction.getEvaluator());
 			injuryModelEvaluation.evaluate(ps, results, EScoreType.MICRO);
 			injuryModelEvaluation.evaluate(ps, results, EScoreType.MACRO);
 			SlotType.restoreExcludance(x);
 		}
 
-		Map<SlotType, Boolean> stored = SlotType.storeExcludance();
-		Map<SlotType, Boolean> x = SlotType.storeExcludance();
-		if (!stored.get(SCIOSlotTypes.hasTreatmentType)) {
-			SCIOSlotTypes.hasTreatmentType.include();
-			SCIOSlotTypes.hasCompound.include();
-		}
-		if (!stored.get(SCIOSlotTypes.hasInjuryModel))
-			SCIOSlotTypes.hasInjuryModel.include();
-		if (!stored.get(SCIOSlotTypes.hasOrganismModel)) {
-			SCIOSlotTypes.hasOrganismModel.include();
-			SCIOSlotTypes.hasOrganismSpecies.include();
-		}
-		ExperimentalGroupEvaluation expGroupEval = new ExperimentalGroupEvaluation(predictionObjectiveFunction,
-				nerlaEvaluator);
-
-		expGroupEval.evaluate(ps, results, EScoreType.MICRO);
-		expGroupEval.evaluate(ps, results, EScoreType.MACRO);
-		SlotType.restoreExcludance(x);
-
-		ps.flush();
-		ps.close();
 	}
 
 	private ISampler getSampler() {
@@ -1044,7 +1021,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			return;
 		}
 
-		if (mainClassProviderMode == EMainClassMode.SAMPLE || mainClassProviderMode == EMainClassMode.PRE_PREDICTED) {
+		if (mainClassProviderMode == EMainClassMode.SAMPLE) {
 			addTreatmentCandidatesFromNERLA();
 
 			Map<Instance, Set<AbstractAnnotation>> annotations = getDictionaryBasedCandidates();
@@ -1073,17 +1050,8 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			}
 		}
 
-		/**
-		 * TODO: implement treatment prediction.
-		 */
-
 		if (mainClassProviderMode == EMainClassMode.PRE_PREDICTED) {
 			int k = 1;
-
-//				for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictTreatmentModel(trainingInstances,k)
-//						.entrySet()) {
-//					prediction.getKey().addCandidateAnnotations(prediction.getValue());
-//				}
 
 			for (Entry<Instance, Set<AbstractAnnotation>> prediction : predictTreatment(devInstances, k).entrySet()) {
 				prediction.getKey().addCandidateAnnotations(prediction.getValue());
@@ -1310,7 +1278,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			orgModelModificationsRule = EOrgModelModifications.SPECIES;
 			injuryModificationRule = EInjuryModifications.ROOT;
 		} else if (complexityMode == EComplexityMode.FULL) {
-			treatmentModificationsRule = ETreatmentModifications.ROOT;
+			treatmentModificationsRule = ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION;
 			orgModelModificationsRule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 			injuryModificationRule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 		}
@@ -1700,9 +1668,9 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			return new GoldCardinalityInitializer(groupNameProviderMode, groupNameClusteringMode);
 
 		if (cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
-			PredictKMultiCardinalityInitializer init = new PredictKMultiCardinalityInitializer(cardinalityMode,
-					groupNameProviderMode, groupNameClusteringMode, instanceProvider.getInstances(), 1, 8,
-					trainingInstances);
+			PredictKMultiCardinalityInitializer init = new PredictKMultiCardinalityInitializer(modelName,
+					cardinalityMode, groupNameProviderMode, groupNameClusteringMode, instanceProvider.getInstances(), 1,
+					8, trainingInstances);
 			RootTemplateCardinalityExplorer.MAX_NUMBER_OF_ANNOTATIONS = init.max;
 			RootTemplateCardinalityExplorer.MIN_NUMBER_OF_ANNOTATIONS = init.min;
 
@@ -1710,7 +1678,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 
 		}
 		if (cardinalityMode == ECardinalityMode.GOLD || cardinalityMode == ECardinalityMode.RSS_PREDICTED) {
-			return new PredictKMultiCardinalityInitializer(cardinalityMode, groupNameProviderMode,
+			return new PredictKMultiCardinalityInitializer(modelName, cardinalityMode, groupNameProviderMode,
 					groupNameClusteringMode, instanceProvider.getInstances(), 1, 8, trainingInstances);
 
 		}
@@ -1719,7 +1687,7 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 			return new SampleCardinalityInitializer(SCIOEntityTypes.definedExperimentalGroup, 1);
 
 		if (cardinalityMode == ECardinalityMode.PARALLEL || cardinalityMode == ECardinalityMode.PARALLEL_MODEL_UPDATE)
-			return new MultiCardinalityInitializer(groupNameProviderMode, groupNameClusteringMode,
+			return new MultiCardinalityInitializer(modelName, groupNameProviderMode, groupNameClusteringMode,
 					instanceProvider.getInstances(), trainingInstances);
 
 		return null;
@@ -1887,10 +1855,11 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
-		if (orgModelPredictor == null)
+		if (orgModelPredictor == null) {
 			orgModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel_" + modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);
-		orgModelPredictor.trainOrLoadModel();
+			orgModelPredictor.trainOrLoadModel();
+		}
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = orgModelPredictor.predictInstances(instances,
 				k);
@@ -1913,10 +1882,11 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
-		if (treatmentPredictor == null)
+		if (treatmentPredictor == null) {
 			treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment_" + modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);
-		treatmentPredictor.trainOrLoadModel();
+			treatmentPredictor.trainOrLoadModel();
+		}
 
 		Map<Instance, Set<AbstractAnnotation>> treatmentModelAnnotations = treatmentPredictor
 				.predictInstances(instances, k);
@@ -1940,11 +1910,11 @@ public class ExperimentalGroupSlotFillingFinalEvaluation extends AbstractSemRead
 		List<String> developInstanceNames = devInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
-		if (injuryPredictor == null)
+		if (injuryPredictor == null) {
 			injuryPredictor = new InjurySlotFillingPredictor("InjuryModel_" + modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);
-		injuryPredictor.trainOrLoadModel();
-
+			injuryPredictor.trainOrLoadModel();
+		}
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = injuryPredictor.predictInstances(instances, k);
 
 		SlotType.restoreExcludance(x);

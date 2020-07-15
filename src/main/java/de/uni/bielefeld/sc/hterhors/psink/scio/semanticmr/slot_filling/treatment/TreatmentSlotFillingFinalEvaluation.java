@@ -101,6 +101,7 @@ public class TreatmentSlotFillingFinalEvaluation {
 			ETreatmentModifications rule = ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION;
 
 			long seed = random.nextLong();
+			SCIOSlotTypes.hasDirection.slotMaxCapacity = Integer.MAX_VALUE;
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
 					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
 
@@ -124,6 +125,7 @@ public class TreatmentSlotFillingFinalEvaluation {
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+		
 			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));

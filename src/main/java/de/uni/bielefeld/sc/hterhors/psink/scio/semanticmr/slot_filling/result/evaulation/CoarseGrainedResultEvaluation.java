@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
@@ -36,12 +39,17 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wr
  *
  */
 public class CoarseGrainedResultEvaluation {
+	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
-	public static void evaluateCoarsGrained(IObjectiveFunction objectiveFunction, Map<Instance, State> results) {
+	public static Score evaluateCoarsGrained(IObjectiveFunction objectiveFunction, Map<Instance, State> results) {
 
 		Map<Instance, List<EntityTemplate>> goldResults = new HashMap<>();
 		Map<Instance, List<EntityTemplate>> predictedResults = new HashMap<>();
 		Score overall = new Score(EScoreType.MACRO);
+		Score overallTrend = new Score(EScoreType.MACRO);
+		Score overallInvest = new Score(EScoreType.MACRO);
+		Score overallGroups = new Score(EScoreType.MACRO);
+
 		for (State finalState : results.values()) {
 			goldResults.put(finalState.getInstance(), new ArrayList<>());
 			predictedResults.put(finalState.getInstance(), new ArrayList<>());
@@ -64,20 +72,27 @@ public class CoarseGrainedResultEvaluation {
 
 			Map<EntityTemplate, String> mapPredictedGroupToID = new HashMap<>();
 
-			getBestMappings(objectiveFunction, goldAnnotations, predictedAnnotations, mapGoldGroupToID,
+			getBestGroupMappings(objectiveFunction, goldAnnotations, predictedAnnotations, mapGoldGroupToID,
 					mapPredictedGroupToID);
-
-			Score adder = scoreCoarsGrainedProperty(objectiveFunction, goldAnnotations, predictedAnnotations,
+			getBestTrendMappings(objectiveFunction, goldAnnotations, predictedAnnotations, mapGoldGroupToID,
+					mapPredictedGroupToID);
+			getBestInvestigationMethodMappings(objectiveFunction, goldAnnotations, predictedAnnotations,
 					mapGoldGroupToID, mapPredictedGroupToID);
 
-			overall.add(adder);
+			scoreCoarsGrainedProperty(overall, overallTrend, overallInvest, overallGroups, objectiveFunction,
+					goldAnnotations, predictedAnnotations, mapGoldGroupToID, mapPredictedGroupToID);
 
-			 break;
 		}
-System.out.println(overall);
+		
+		log.info("MACRO CoarseGrained overallTrend: " + overallTrend);
+		log.info("MACRO CoarseGrained overallInvest: " + overallInvest);
+		log.info("MACRO CoarseGrained overallGroups: " + overallGroups);
+		log.info("MACRO CoarseGrained overallResult: " + overall);
+		
+		return overall;
 	}
 
-	private static void getBestMappings(IObjectiveFunction objectiveFunction, List<EntityTemplate> goldAnnotations,
+	private static void getBestGroupMappings(IObjectiveFunction objectiveFunction, List<EntityTemplate> goldAnnotations,
 			List<EntityTemplate> predictedAnnotations, Map<EntityTemplate, String> mapGoldGroupToID,
 			Map<EntityTemplate, String> mapPredictedGroupToID) {
 
@@ -118,17 +133,106 @@ System.out.println(overall);
 					mapPredictedGroupToID.put(predictedGroup, mapGoldGroupToID.get(goldGroup));
 				}
 			}
-			System.out.println(maxScore);
 		}
 	}
 
-	private static Score scoreCoarsGrainedProperty(IObjectiveFunction objectiveFunction,
+	private static void getBestTrendMappings(IObjectiveFunction objectiveFunction, List<EntityTemplate> goldAnnotations,
+			List<EntityTemplate> predictedAnnotations, Map<EntityTemplate, String> mapGoldGroupToID,
+			Map<EntityTemplate, String> mapPredictedGroupToID) {
+
+		/*
+		 * Get experimental groups and their assignments to get IDs
+		 */
+		List<EntityTemplate> goldExperimentalGroups = new ArrayList<>(
+				goldAnnotations.stream().map(g -> new Result(g).getTrend()).distinct().collect(Collectors.toSet()));
+		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(
+				predictedAnnotations.stream().map(g -> new Result(g).getTrend()).collect(Collectors.toSet()));
+
+		x: for (EntityTemplate goldGroup : goldExperimentalGroups) {
+
+			for (EntityTemplate entityTemplate : mapGoldGroupToID.keySet()) {
+				if (entityTemplate.evaluateEquals(objectiveFunction.getEvaluator(), goldGroup))
+					continue x;
+			}
+
+			mapGoldGroupToID.put(goldGroup, "Trend_" + mapGoldGroupToID.size());
+		}
+
+		for (EntityTemplate predictedGroup : predictedExperimentalGroups) {
+//			System.out.println("Predict: ");
+//			System.out.println(predictedGroup.toPrettyString());
+			Score maxScore = new Score();
+
+			for (EntityTemplate goldGroup : goldExperimentalGroups) {
+
+//				System.out.println("Gold: ");
+//				System.out.println(goldGroup.toPrettyString());
+				Score score = objectiveFunction.getEvaluator().scoreSingle(goldGroup, predictedGroup);
+//				System.out.println(score);
+
+				if (score.getF1() > maxScore.getF1()) {
+					maxScore = score;
+					mapPredictedGroupToID.put(predictedGroup, mapGoldGroupToID.get(goldGroup));
+				}
+			}
+		}
+	}
+
+	private static void getBestInvestigationMethodMappings(IObjectiveFunction objectiveFunction,
 			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations,
 			Map<EntityTemplate, String> mapGoldGroupToID, Map<EntityTemplate, String> mapPredictedGroupToID) {
 
+		/*
+		 * Get experimental groups and their assignments to get IDs
+		 */
+		List<EntityTemplate> goldExperimentalGroups = new ArrayList<>(
+				goldAnnotations.stream().map(g -> new Result(g).getInvestigationMethod()).distinct()
+						.filter(a -> a != null).collect(Collectors.toSet()));
+		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(predictedAnnotations.stream()
+				.map(g -> new Result(g).getInvestigationMethod()).filter(a -> a != null).collect(Collectors.toSet()));
+
+		x: for (EntityTemplate goldGroup : goldExperimentalGroups) {
+
+			for (EntityTemplate entityTemplate : mapGoldGroupToID.keySet()) {
+				if (entityTemplate.evaluateEquals(objectiveFunction.getEvaluator(), goldGroup))
+					continue x;
+			}
+
+			mapGoldGroupToID.put(goldGroup, "InvestigationMethod_" + mapGoldGroupToID.size());
+		}
+
+		for (EntityTemplate predictedGroup : predictedExperimentalGroups) {
+//			System.out.println("Predict: ");
+//			System.out.println(predictedGroup.toPrettyString());
+			Score maxScore = new Score();
+
+			for (EntityTemplate goldGroup : goldExperimentalGroups) {
+
+//				System.out.println("Gold: ");
+//				System.out.println(goldGroup.toPrettyString());
+				Score score = objectiveFunction.getEvaluator().scoreSingle(goldGroup, predictedGroup);
+//				System.out.println(score);
+
+				if (score.getF1() > maxScore.getF1()) {
+					maxScore = score;
+					mapPredictedGroupToID.put(predictedGroup, mapGoldGroupToID.get(goldGroup));
+				}
+			}
+		}
+	}
+
+	private static void scoreCoarsGrainedProperty(Score overallAll, Score overallTrendAll, Score overallInvestAll,
+			Score overallGroupsAll, IObjectiveFunction objectiveFunction, List<EntityTemplate> goldAnnotations,
+			List<EntityTemplate> predictedAnnotations, Map<EntityTemplate, String> mapGoldGroupToID,
+			Map<EntityTemplate, String> mapPredictedGroupToID) {
+
 		List<Integer> bestAssignment = (objectiveFunction.getEvaluator()).getBestAssignment(goldAnnotations,
 				predictedAnnotations, EScoreType.MACRO);
-		Score score = new Score(EScoreType.MACRO);
+
+		Score overall = new Score(EScoreType.MICRO);
+		Score overallTrend = new Score(EScoreType.MICRO);
+		Score overallInvestigationMethod = new Score(EScoreType.MICRO);
+		Score overallGroups = new Score(EScoreType.MICRO);
 
 		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
 			final int predictionIndex = bestAssignment.get(goldIndex);
@@ -137,7 +241,7 @@ System.out.println(overall);
 
 //			System.out.println("GOLD:" + goldAnnotation.toPrettyString());
 
-			CoarseGrainedTuple goldTuple = convertToTuple(mapGoldGroupToID, goldAnnotation);
+			CoarseGrainedResultTuple goldTuple = convertToTuple(mapGoldGroupToID, goldAnnotation);
 
 			EntityTemplate predictedAnnotation = predictedAnnotations.size() > predictionIndex
 					? predictedAnnotations.get(predictionIndex)
@@ -146,7 +250,7 @@ System.out.println(overall);
 //			if (predictedAnnotation != null)
 //				System.out.println("PREDICT:" + predictedAnnotation.toPrettyString());
 
-			CoarseGrainedTuple predictedTuple = convertToTuple(mapPredictedGroupToID, predictedAnnotation);
+			CoarseGrainedResultTuple predictedTuple = convertToTuple(mapPredictedGroupToID, predictedAnnotation);
 
 //			System.out.println("Compare GOLD: ");
 //			System.out.println(goldTuple);
@@ -154,20 +258,53 @@ System.out.println(overall);
 //			System.out.println(predictedTuple);
 //			System.out.println(goldTuple.equals(predictedTuple));
 
-			Score adder = new Score();
+			Score trendS = new Score();
+			Score invMS = new Score();
+			Score groupsS = new Score();
 
-			if (goldTuple.equals(predictedTuple))
-				adder.increaseTruePositive();
+			if (goldTuple.trend == predictedTuple.trend)
+				trendS.increaseTruePositive();
+			else if (goldTuple.trend == null)
+				trendS.increaseFalsePositive();
 			else
-				adder.increaseFalseNegative();
+				trendS.increaseFalseNegative();
 
-			score.add(adder.toMacro());
+			if (goldTuple.investigationMethod == predictedTuple.investigationMethod)
+				invMS.increaseTruePositive();
+			else if (goldTuple.investigationMethod == null)
+				invMS.increaseFalsePositive();
+			else
+				invMS.increaseFalseNegative();
+
+			if (goldTuple.referenceGroupID == predictedTuple.referenceGroupID)
+				groupsS.increaseTruePositive();
+			else if (goldTuple.referenceGroupID == null)
+				groupsS.increaseFalsePositive();
+			else
+				groupsS.increaseFalseNegative();
+
+			if (goldTuple.targetGroupID == predictedTuple.targetGroupID)
+				groupsS.increaseTruePositive();
+			else if (goldTuple.targetGroupID == null)
+				groupsS.increaseFalsePositive();
+			else
+				groupsS.increaseFalseNegative();
+
+			overallTrend.add(trendS);
+			overallInvestigationMethod.add(invMS);
+			overallGroups.add(groupsS);
+
+			overall.add(trendS);
+			overall.add(invMS);
+			overall.add(groupsS);
 		}
-
-		return score.toMacro();
+		overallAll.add(overall.toMacro());
+		overallTrendAll.add(overallTrend.toMacro());
+		overallInvestAll.add(overallInvestigationMethod.toMacro());
+		overallGroupsAll.add(overallGroups.toMacro());
 	}
 
-	private static CoarseGrainedTuple convertToTuple(Map<EntityTemplate, String> mapPredictedGroupToID,
+	private static CoarseGrainedResultTuple convertToTuple(Map<EntityTemplate, String> mapPredictedGroupToID,
 			EntityTemplate predictedAnnotation) {
 
 		AbstractAnnotation predictedReferenceGroup = null;
@@ -184,10 +321,10 @@ System.out.println(overall);
 					.getSlotFiller();
 		}
 		if (predictedAnnotation != null) {
-			predictedTrend = predictedAnnotation.getSingleFillerSlot(SCIOSlotTypes.hasReferenceGroup).getSlotFiller();
+			predictedTrend = predictedAnnotation.getSingleFillerSlot(SCIOSlotTypes.hasTrend).getSlotFiller();
 		}
 		if (predictedAnnotation != null) {
-			predictedInvestigationMethod = predictedAnnotation.getSingleFillerSlot(SCIOSlotTypes.hasReferenceGroup)
+			predictedInvestigationMethod = predictedAnnotation.getSingleFillerSlot(SCIOSlotTypes.hasInvestigationMethod)
 					.getSlotFiller();
 		}
 
@@ -203,23 +340,14 @@ System.out.println(overall);
 			targetGroupID = mapPredictedGroupToID.get(predictedTargetGroup);
 		}
 		if (predictedTrend != null) {
-			trend = getTrend(predictedTrend);
+			trend = mapPredictedGroupToID.get(predictedTrend);
 		}
 		if (predictedTrend != null) {
-			investigationMethod = getInvestigationMethod(predictedInvestigationMethod);
+			investigationMethod = mapPredictedGroupToID.get(predictedInvestigationMethod);
 		}
 
-		return new CoarseGrainedTuple(referenceGroupID, targetGroupID, investigationMethod, trend);
-	}
+		return new CoarseGrainedResultTuple(referenceGroupID, targetGroupID, investigationMethod, trend);
 
-	private static String getInvestigationMethod(AbstractAnnotation predictedInvestigationMethod) {
-
-		return null;
-	}
-
-	private static String getTrend(AbstractAnnotation predictedTrend) {
-
-		return null;
 	}
 
 	private static EntityTemplate sortResult(AbstractAnnotation result) {
@@ -356,14 +484,14 @@ System.out.println(overall);
 		return r.contains(EntityType.get("OlfactoryEnsheathingGliaCell"));
 	}
 
-	static class CoarseGrainedTuple {
+	static class CoarseGrainedResultTuple {
 
 		public final String referenceGroupID;
 		public final String targetGroupID;
 		public final String investigationMethod;
 		public final String trend;
 
-		public CoarseGrainedTuple(String referenceGroupID, String targetGroupID, String investigationMethod,
+		public CoarseGrainedResultTuple(String referenceGroupID, String targetGroupID, String investigationMethod,
 				String trend) {
 			super();
 			this.referenceGroupID = referenceGroupID;
@@ -397,7 +525,7 @@ System.out.println(overall);
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			CoarseGrainedTuple other = (CoarseGrainedTuple) obj;
+			CoarseGrainedResultTuple other = (CoarseGrainedResultTuple) obj;
 			if (investigationMethod == null) {
 				if (other.investigationMethod != null)
 					return false;

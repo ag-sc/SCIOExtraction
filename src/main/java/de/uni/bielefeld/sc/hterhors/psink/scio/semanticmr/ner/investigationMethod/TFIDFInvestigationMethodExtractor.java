@@ -43,6 +43,22 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextS
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 
 public class TFIDFInvestigationMethodExtractor {
+//NUR FAST TEXT (andere Klasse)	
+//	Score [macroF1=0.207, macroPrecision=0.167, macroRecall=0.272, macroAddCounter=10]
+
+//	Ohen fasttext ohne key terms
+//	90/10 score = Score [macroF1=0.049, macroPrecision=0.026, macroRecall=0.523, macroAddCounter=10]
+
+	// Mit key Terms
+//	90/10 score = Score [macroF1=0.072, macroPrecision=0.039, macroRecall=0.520, macroAddCounter=10]
+
+//	Mit Keyterms + fast text () without pre trained)
+//	90/10 score = Score [macroF1=0.088, macroPrecision=0.048, macroRecall=0.538, macroAddCounter=10]
+//	90/10 score = Score [getF1()=0.088, getPrecision()=0.048, getRecall()=0.525, tp=475, fp=9471, fn=430, tn=0]
+//	90/10 score = Score [getF1()=0.088, getPrecision()=0.048, getRecall()=0.531, tp=476, fp=9421, fn=420, tn=0]
+
+//	Ohne Keyterms + fast text () without pre trained)
+//	90/10 score=Score[macroF1=0.074,macroPrecision=0.040,macroRecall=0.535, macroAddCounter=10]
 
 	public static void main(String[] args) throws IOException {
 
@@ -56,8 +72,8 @@ public class TFIDFInvestigationMethodExtractor {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(99)
-				.setSeed(1000L).setDevelopmentProportion(1).setCorpusSizeFraction(1F).build();
+		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
+				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
@@ -80,14 +96,18 @@ public class TFIDFInvestigationMethodExtractor {
 //		t.evaluateMultiSectionAppearance(instanceProvider.getRedistributedDevelopmentInstances());
 //		System.out.println(s.toMacro());
 
-//		Score score = TFIDFInvestigationMethodExtractor.leaveOneOutEval(instanceProvider.getInstances());
+		boolean binary = false;
+		// Score score =
+		// TFIDFInvestigationMethodExtractor.leaveOneOutEval(instanceProvider.getInstances());
 //		System.out.println("leave one out score = " + score);
-		Score score = TFIDFInvestigationMethodExtractor.tenRandom9010Split(instanceProvider.getInstances(), 1000L);
+		Score score = TFIDFInvestigationMethodExtractor.tenRandom9010Split(binary, instanceProvider.getInstances(),
+				1000L);
 		System.out.println("90/10 score = " + score);
 
 	}
 
-	private static Score tenRandom9010Split(List<Instance> instances, long randomSeed) throws IOException {
+	private static Score tenRandom9010Split(boolean binary, List<Instance> instances, long randomSeed)
+			throws IOException {
 
 		Score mScore = new Score(EScoreType.MICRO);
 
@@ -103,7 +123,7 @@ public class TFIDFInvestigationMethodExtractor {
 			List<Instance> trainingInstances = instances.subList(0, x);
 			List<Instance> testInstances = instances.subList(x, instances.size());
 
-			TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(trainingInstances);
+			TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(binary, trainingInstances);
 			Score s = t.evaluate(testInstances);
 			System.out.println(s);
 			mScore.add(s);
@@ -112,11 +132,7 @@ public class TFIDFInvestigationMethodExtractor {
 		return mScore;
 	}
 
-	private static Score leaveOneOutEval(List<Instance> instances) throws IOException {
-//		wihtout fast text as sentence classification
-//		leave one out score = Score [macroF1=0.061, macroPrecision=0.033, macroRecall=0.510]
-//		with fast text 
-//		leave one out score = Score [macroF1=0.097, macroPrecision=0.054, macroRecall=0.502]
+	private static Score leaveOneOutEval(List<Instance> instances, boolean binary) throws IOException {
 
 		Score mScore = new Score(EScoreType.MACRO);
 
@@ -132,7 +148,7 @@ public class TFIDFInvestigationMethodExtractor {
 				else
 					trainingInstances.add(instances.get(j));
 			}
-			TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(trainingInstances);
+			TFIDFInvestigationMethodExtractor t = new TFIDFInvestigationMethodExtractor(binary, trainingInstances);
 			Score s = t.evaluate(testInstances).toMacro();
 			System.out.println(s);
 			mScore.add(s);
@@ -145,9 +161,10 @@ public class TFIDFInvestigationMethodExtractor {
 
 	boolean includeFastText = false;
 
-	public TFIDFInvestigationMethodExtractor(List<Instance> trainingInstances) throws IOException {
+	public TFIDFInvestigationMethodExtractor(boolean binary, List<Instance> trainingInstances) throws IOException {
 		if (includeFastText)
-			t = new FastTextSentenceClassification(SCIOEntityTypes.investigationMethod, trainingInstances);
+			t = new FastTextSentenceClassification("TFIDFInvExtractor", binary, SCIOEntityTypes.investigationMethod,
+					trainingInstances);
 
 		Map<String, List<String>> documents = new HashMap<>();
 		Set<String> additionalStopWords = new HashSet<>(
@@ -191,7 +208,8 @@ public class TFIDFInvestigationMethodExtractor {
 			}
 
 		}
-		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
+//		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
+		keyTerms = new HashSet<>();
 //System.out.println(keyTerms);
 
 		tfidfs = TFIDF.getTFIDFs(documents, false);
@@ -253,7 +271,7 @@ public class TFIDFInvestigationMethodExtractor {
 						.filter(a -> a.fastTextInstance.instance.getName().equals(testInstance.getName()))
 						.filter(a -> a.label.equals(FastTextSentenceClassification.NO_LABEL))
 						.map(a -> a.fastTextInstance.sentenceIndex).collect(Collectors.toSet());
-			System.out.println("Name " + testInstance.getName());
+//			System.out.println("Name " + testInstance.getName());
 //			Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
 //					.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
 //			Set<EntityTypeAnnotation> predicted = new HashSet<>();
@@ -262,38 +280,64 @@ public class TFIDFInvestigationMethodExtractor {
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
 					.getNumberOfSentences(); sentenceIndex++) {
 
+				final int sentenceIndexF = sentenceIndex;
+				Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
+						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
+						.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
+
+				boolean ignore = false;
+
 				if (includeFastText && skipSentences.contains(new Integer(sentenceIndex)))
-					continue;
-//				
+					ignore = true;
+
 				if (sec.getSection(sentenceIndex) != ESection.RESULTS)
 					continue;
 
 				boolean containsKeyterm = false;
 				String sentence = testInstance.getDocument().getContentOfSentence(sentenceIndex);
 
-				if (!keyTerms.isEmpty()) {
-					for (String keyTerm : keyTerms) {
+				for (String keyTerm : keyTerms) {
 
-						if (sentence.contains(keyTerm)) {
-							containsKeyterm = true;
-							break;
-						}
+					if (sentence.contains(keyTerm)) {
+						containsKeyterm = true;
+						break;
 					}
-
-//					if (!containsKeyterm)
-//						continue;
 				}
 
-				final int sentenceIndexF = sentenceIndex;
+//				if (!containsKeyterm)
+//					ignore = true;
 
-				Set<EntityTypeAnnotation> predicted = getInvestigationMethods(testInstance.getDocument(),
-						testInstance.getDocument().getSentenceByIndex(sentenceIndex)).stream()
-								.map(s -> AnnotationBuilder.toAnnotation(s.getEntityType()))
-								.collect(Collectors.toSet());
+				Set<EntityTypeAnnotation> predicted = new HashSet<>();
+				if (!ignore)
 
-				Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
-						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
-						.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
+//				if (includeFastText && skipSentences.contains(new Integer(sentenceIndex)))
+//					continue;
+////				
+//				if (sec.getSection(sentenceIndex) != ESection.RESULTS)
+//					continue;
+//
+//				boolean containsKeyterm = false;
+//				String sentence = testInstance.getDocument().getContentOfSentence(sentenceIndex);
+//
+//				if (!keyTerms.isEmpty()) {
+//					for (String keyTerm : keyTerms) {
+//
+//						if (sentence.contains(keyTerm)) {
+//							containsKeyterm = true;
+//							break;
+//						}
+//					}
+//
+//					if (!containsKeyterm)
+//						continue;
+//				}
+//
+
+//				Set<EntityTypeAnnotation>
+					predicted = getInvestigationMethods(testInstance.getDocument(),
+							testInstance.getDocument().getSentenceByIndex(sentenceIndex)).stream()
+									.map(s -> AnnotationBuilder.toAnnotation(s.getEntityType()))
+									.collect(Collectors.toSet());
 
 //				System.out.println("----------------");
 //				for (EntityTypeAnnotation eta : gold) {

@@ -47,11 +47,12 @@ public class PredictKMultiCardinalityInitializer implements IStateInitializer {
 	 * k, cluster per instance
 	 */
 	private Map<Instance, List<List<DocumentLinkedAnnotation>>> preComputedClusters = new HashMap<>();
+	private final String modelName;
 
-	public PredictKMultiCardinalityInitializer(ECardinalityMode cardinalityMode, EExtractGroupNamesMode groupNameMode,
-			EGroupNamesClusteringMode groupNamesPreProcessingMode, List<Instance> instances, int min, int max,
-			List<Instance> trainingInstances) {
-
+	public PredictKMultiCardinalityInitializer(String modelName, ECardinalityMode cardinalityMode,
+			EExtractGroupNamesMode groupNameMode, EGroupNamesClusteringMode groupNamesPreProcessingMode,
+			List<Instance> instances, int min, int max, List<Instance> trainingInstances) {
+		this.modelName = modelName;
 		if (max <= 0 || min <= 0) {
 			double e = computeMean(trainingInstances);
 			double stdDev = computeStdDeviation(trainingInstances, e);
@@ -79,17 +80,17 @@ public class PredictKMultiCardinalityInitializer implements IStateInitializer {
 //		}
 	}
 
-	public PredictKMultiCardinalityInitializer(ECardinalityMode cardinalityMode,
+	public PredictKMultiCardinalityInitializer(String modelName, ECardinalityMode cardinalityMode,
 			EExtractGroupNamesMode groupNameProviderMode, EGroupNamesClusteringMode groupNameProcessingMode,
 			List<Instance> instances, List<Instance> trainingInstances) {
-		this(cardinalityMode, groupNameProviderMode, groupNameProcessingMode, instances, -1, -1, trainingInstances);
-
+		this(modelName, cardinalityMode, groupNameProviderMode, groupNameProcessingMode, instances, -1, -1,
+				trainingInstances);
 	}
 
 	private void wekaBasedKmeans(List<Instance> instances, List<Instance> trainingInstances) {
 
 		try {
-			WEKAClustering gnc = new WEKAClustering();
+			WEKAClustering gnc = new WEKAClustering(modelName);
 
 			gnc.trainOrLoad(trainingInstances);
 

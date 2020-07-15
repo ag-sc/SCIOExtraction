@@ -15,6 +15,8 @@ import org.apache.jena.ext.com.google.common.collect.Streams;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.hterhors.semanticmr.candidateretrieval.helper.DictionaryFromInstanceHelper;
+import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
@@ -138,7 +140,21 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 //			if (getDictionaryFile() != null)
 //				instance.addCandidates(getDictionaryFile());
 		}
+		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
+		for (Instance instance : instanceProvider.getInstances()) {
+//			instance.removeCandidateAnnotation(predictFilter);
+//			instance.removeCandidateAnnotation(goldFilter);
+//			instance.removeCandidateAnnotation(sectionFilter);
+			instance.removeCandidateAnnotation(new IFilter() {
+
+				@Override
+				public boolean remove(AbstractAnnotation candidate) {
+					return !trainDictionary.keySet().contains(candidate.getEntityType());
+				}
+
+			});
+		}
 		/**
 		 * For the entity recognition and linking problem, the EntityRecLinkExplorer is
 		 * added to perform changes during the exploration. This explorer is especially

@@ -1,9 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,16 +8,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.print.Doc;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -65,21 +62,55 @@ public class DictionaryInvestigationMethodExtractor {
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
 				corpusDistributor);
+		Score score = DictionaryInvestigationMethodExtractor.tenRandom9010Split(false, instanceProvider.getInstances(),
+				1000L);
+//		DictionaryInvestigationMethodExtractor t = new DictionaryInvestigationMethodExtractor(
+//				instanceProvider.getRedistributedTrainingInstances());
+//
+//		t.evaluate(instanceProvider.getRedistributedDevelopmentInstances());
 
-		DictionaryInvestigationMethodExtractor t = new DictionaryInvestigationMethodExtractor(
-				instanceProvider.getRedistributedTrainingInstances());
+		System.out.println("90/10: "+score);
+//With annotation projection in text
+		//		90/10: Score [getF1()=0.244, getPrecision()=0.184, getRecall()=0.360, tp=709, fp=3144, fn=1259, tn=0]
+//		Score [getF1()=0.157, getPrecision()=0.100, getRecall()=0.360, tp=355, fp=3181, fn=630, tn=0]
 
-		t.evaluate(instanceProvider.getRedistributedDevelopmentInstances());
+	}
+
+	private static Score tenRandom9010Split(boolean binary, List<Instance> instances, long randomSeed)
+			throws IOException {
+
+		Score mScore = new Score(EScoreType.MICRO);
+
+		Random rand = new Random(randomSeed);
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println("PROGRESS: " + i);
+
+			Collections.shuffle(instances, rand);
+
+			final int x = (int) (((double) instances.size() / 100D) * 90D);
+
+			List<Instance> trainingInstances = instances.subList(0, x);
+			List<Instance> testInstances = instances.subList(x, instances.size());
+
+			DictionaryInvestigationMethodExtractor t = new DictionaryInvestigationMethodExtractor(binary,
+					trainingInstances);
+			Score s = t.evaluate(testInstances);
+			System.out.println(s);
+			mScore.add(s);
+		}
+
+		return mScore;
 	}
 
 	FastTextSentenceClassification t;
-	boolean includeFastText = true;
-//	Score [getF1()=0.092, getPrecision()=0.050, getRecall()=0.576, tp=118, fp=2244, fn=87, tn=0]
+	boolean includeFastText = false;
+//	Score [getF1()=0.094, getPrecision()=0.051, getRecall()=0.603, tp=117, fp=2177, fn=77, tn=0]
 
-	public DictionaryInvestigationMethodExtractor(List<Instance> trainingInstances) throws IOException {
+	public DictionaryInvestigationMethodExtractor(boolean binary, List<Instance> trainingInstances) throws IOException {
 
 		if (includeFastText)
-			t = new FastTextSentenceClassification(SCIOEntityTypes.investigationMethod, trainingInstances);
+			t = new FastTextSentenceClassification("TFIDFInvExtractor",binary, SCIOEntityTypes.investigationMethod, trainingInstances);
 
 		for (Instance trainInstance : trainingInstances) {
 
@@ -119,7 +150,7 @@ public class DictionaryInvestigationMethodExtractor {
 
 	}
 
-	public void evaluate(List<Instance> instances) {
+	public Score evaluate(List<Instance> instances) {
 //		List<Instance> instances = instanceProvider.getRedistributedTrainingInstances();
 
 		Set<String> keyTerms = KeyTermExtractor.getKeyTerms(instances);
@@ -144,8 +175,16 @@ public class DictionaryInvestigationMethodExtractor {
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
 					.getNumberOfSentences(); sentenceIndex++) {
 
+				final int sentenceIndexF = sentenceIndex;
+
+				Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
+						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
+						.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
+
+				boolean ignore = false;
+
 				if (includeFastText && skipSentences.contains(new Integer(sentenceIndex)))
-					continue;
+					ignore = true;
 
 				if (sec.getSection(sentenceIndex) != ESection.RESULTS)
 					continue;
@@ -161,30 +200,26 @@ public class DictionaryInvestigationMethodExtractor {
 					}
 				}
 
-//				if (!containsKeyterm)
-//					continue;
+				if (!containsKeyterm)
+					ignore = true;
 
-				final int sentenceIndexF = sentenceIndex;
-
+				Set<EntityTypeAnnotation> predicted = new HashSet<>();
+				if (!ignore)
+					predicted = labelInvestigationMethods(testInstance.getDocument(), sentenceIndex).stream()
+							.map(s -> AnnotationBuilder.toAnnotation(s.getEntityType())).collect(Collectors.toSet());
 //				Set<DocumentLinkedAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
 //						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
-//						.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
+//						.map(a -> a.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toSet());
 //				Set<DocumentLinkedAnnotation> predicted = labelInvestigationMethods(testInstance.getDocument(),
-//						sentenceIndex).stream().map(s -> AnnotationBuilder.toAnnotation(s.getEntityType()))
-//						.collect(Collectors.toSet());
-				Set<DocumentLinkedAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
-						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
-						.map(a -> a.asInstanceOfDocumentLinkedAnnotation()).collect(Collectors.toSet());
-				Set<DocumentLinkedAnnotation> predicted = labelInvestigationMethods(testInstance.getDocument(),
-						sentenceIndex).stream().map(s -> s.asInstanceOfDocumentLinkedAnnotation())
-								.collect(Collectors.toSet());
+//						sentenceIndex).stream().map(s -> s.asInstanceOfDocumentLinkedAnnotation())
+//								.collect(Collectors.toSet());
 
 				System.out.println("------GOLD----------");
-				for (DocumentLinkedAnnotation eta : gold) {
+				for (AbstractAnnotation eta : gold) {
 					System.out.println(eta.toPrettyString());
 				}
 				System.out.println("--------PRED --------");
-				for (DocumentLinkedAnnotation eta : predicted) {
+				for (AbstractAnnotation eta : predicted) {
 					System.out.println(eta.toPrettyString());
 				}
 				System.out.println(sentence);
@@ -205,10 +240,12 @@ public class DictionaryInvestigationMethodExtractor {
 //				System.out.println(e.getKey() + "\t" + e2.getKey() + "\t" + e2.getValue());
 //			}
 //		}
+		return score;
 	}
+
 	Set<String> additionalStopWords = new HashSet<>(
-			Arrays.asList("either", "number", "group", "groups", "numbers","injury","spinal","cord"));
-	
+			Arrays.asList("either", "number", "group", "groups", "numbers", "injury", "spinal", "cord"));
+
 	private Set<DocumentLinkedAnnotation> labelInvestigationMethods(Document doc, int sentenceIndex) {
 
 		Set<DocumentLinkedAnnotation> predicted = new HashSet<>();
@@ -217,29 +254,29 @@ public class DictionaryInvestigationMethodExtractor {
 
 			for (DocumentLinkedAnnotation pattern : dictionary.get(etn)) {
 
-				if (doc.getContentOfSentence(sentenceIndex).contains( pattern.getSurfaceForm()))
+				if (doc.getContentOfSentence(sentenceIndex).contains(pattern.getSurfaceForm()))
 
-				for (DocumentToken dt : doc.getSentenceByIndex(sentenceIndex)) {
+					for (DocumentToken dt : doc.getSentenceByIndex(sentenceIndex)) {
 
-					if (dt.isPunctuation() || dt.isStopWord() || dt.isNumber()
-							|| additionalStopWords.contains(dt.getText()))
-						continue;
-
-					for (DocumentToken pt : pattern.relatedTokens) {
-
-						if (pt.isPunctuation() || pt.isStopWord() || pt.isNumber()
-								|| additionalStopWords.contains(pt.getText()))
+						if (dt.isPunctuation() || dt.isStopWord() || dt.isNumber()
+								|| additionalStopWords.contains(dt.getText()))
 							continue;
 
-						if (dt.getText().equals(pt.getText())) {
+						for (DocumentToken pt : pattern.relatedTokens) {
 
-							predicted.add(AnnotationBuilder.toAnnotation(doc, EntityType.get(etn), dt.getText(),
-									dt.getDocCharOffset()));
-							continue x;
+							if (pt.isPunctuation() || pt.isStopWord() || pt.isNumber()
+									|| additionalStopWords.contains(pt.getText()))
+								continue;
+
+							if (dt.getText().equals(pt.getText())) {
+
+								predicted.add(AnnotationBuilder.toAnnotation(doc, EntityType.get(etn), dt.getText(),
+										dt.getDocCharOffset()));
+								continue x;
+							}
 						}
-					}
 
-				}
+					}
 			}
 
 		}

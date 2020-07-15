@@ -66,7 +66,7 @@ public class GenericMultiCardinalityInitializer implements IStateInitializer {
 
 	@Override
 	public State getInitState(Instance instance) {
-		return null;
+		return getInitMultiStates(instance).get(0);
 	}
 
 	@Override

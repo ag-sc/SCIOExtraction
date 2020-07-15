@@ -16,11 +16,14 @@ import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
+import de.hterhors.semanticmr.crf.templates.dla.MorphologicalNerlaTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.IntraTokenTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.NGramTokenContextTemplate;
+import de.hterhors.semanticmr.crf.templates.shared.SingleTokenContextTemplate;
 import de.hterhors.semanticmr.crf.templates.shared.SurfaceFormTemplate;
 import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractNERLPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -72,13 +75,13 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 //		featureTemplates.add(new ContextBetweenAnnotationsTemplate());
 //		featureTemplates.add(new LevenshteinTemplate());
 
-//		featureTemplates.add(new MorphologicalNerlaTemplate());
+		featureTemplates.add(new MorphologicalNerlaTemplate());
 
-//		featureTemplates.add(new NGramTokenContextTemplate());
+		featureTemplates.add(new NGramTokenContextTemplate());
 
-//		featureTemplates.add(new SingleTokenContextTemplate());
+		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new SurfaceFormTemplate());
-//		featureTemplates.add(new IntraTokenTemplate());
+		featureTemplates.add(new IntraTokenTemplate());
 
 		/**
 		 * 

@@ -88,7 +88,7 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
  * @author hterhors
  *
  */
-public class ResultOutPutReader {
+public class ResultOutPutReaderFinalEval {
 
 	final private static Pattern modePattern = Pattern.compile("(.*): (.*)");
 
@@ -157,14 +157,14 @@ public class ResultOutPutReader {
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 1; run < 10; run++) {
+		for (int run = 1; run < 11; run++) {
 
 			File dir = new File(folder+"/"+run);
 
 			int modeCounter = 0;
 
 			List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream()
-					.filter(n -> n.matches("\\d_res_\\d")).collect(Collectors.toList());
+					.filter(n -> n.matches(".*Results.*")).collect(Collectors.toList());
 
 			Collections.sort(files, new Comparator<String>() {
 
@@ -177,9 +177,6 @@ public class ResultOutPutReader {
 			for (String fileName : files) {
 				File file = new File(dir, fileName);
 				System.out.println(file);
-
-//				if (!file.getName().contains("Results"))
-//					continue;
 
 				final String modeName = "Mode_" + modeCounter;
 				modePairsMap.put(modeName, new HashMap<>());
@@ -289,7 +286,7 @@ public class ResultOutPutReader {
 		Map<String, Map<String, Score>> dataMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream().filter(n -> n.matches("\\d_res_\\d"))
+		List<String> files = new ArrayList<>(Arrays.asList(dir.list())).stream().filter(n -> n.matches(".*Results.*"))
 				.collect(Collectors.toList());
 
 		Collections.sort(files, new Comparator<String>() {
@@ -306,9 +303,6 @@ public class ResultOutPutReader {
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
 			System.out.println(file);
-
-			if (!file.getName().contains("res"))
-				continue;
 
 			final String modeName = "Mode_" + modeCounter;
 			modePairsMap.put(modeName, new HashMap<>());

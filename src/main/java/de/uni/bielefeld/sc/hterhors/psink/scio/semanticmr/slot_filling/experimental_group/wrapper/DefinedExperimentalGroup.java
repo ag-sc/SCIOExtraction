@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experime
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -11,6 +12,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.evaluation.TreatmentEvaluation;
 
 /**
  * Wrapper class for EntityTemplates that are ExperimentalGroups.
@@ -91,6 +93,21 @@ public class DefinedExperimentalGroup {
 	 * 
 	 * @return the annotation of the species or null
 	 */
+	public EntityTemplate getOrganisModel() {
+
+		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
+			return (EntityTemplate) experimentalGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
+					.getSlotFiller();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the injury annotation of that experimental group if any, else null.
+	 * 
+	 * @return the annotation of the species or null
+	 */
 	public EntityTemplate getInjury() {
 
 		if (SCIOSlotTypes.hasInjuryModel.isIncluded()) {
@@ -98,6 +115,21 @@ public class DefinedExperimentalGroup {
 		}
 
 		return null;
+	}
+
+	public Set<EntityTemplate> getTreatments() {
+
+		if (SCIOSlotTypes.hasTreatmentType.isIncluded()) {
+			return experimentalGroup.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).getSlotFiller().stream()
+					.map(a -> a.asInstanceOfEntityTemplate()).collect(Collectors.toSet());
+		}
+
+		return null;
+	}
+
+	public boolean isEmpty() {
+		return getOrganisModel() == null
+				|| getInjury() == null && (getTreatments() == null || getTreatments().isEmpty());
 	}
 
 	/**
@@ -230,5 +262,4 @@ public class DefinedExperimentalGroup {
 		return true;
 	}
 
-	
 }

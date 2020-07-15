@@ -71,10 +71,9 @@ public class InvestigationMethodNER {
 				.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(0.1F).build();
 //		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
 //				.setCorpusSizeFraction(1F).build();
-		SectionizedEntityRecLinkExplorer.MAX_WINDOW_SIZE = 8;
-
-		InstanceProvider.removeEmptyInstances = true;
-		InstanceProvider.maxNumberOfAnnotations = 300;
+		SectionizedEntityRecLinkExplorer.MAX_WINDOW_SIZE = 4;
+		
+		InstanceProvider.maxNumberOfAnnotations = 50;
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
@@ -92,32 +91,31 @@ public class InvestigationMethodNER {
 		InvestigationMethodNERLPredictor predictor = new InvestigationMethodNERLPredictor(modelName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames);
 
-		if (true) {
+		predictor.trainOrLoadModel();
 
-			predictor.trainOrLoadModel();
+		Map<Instance, State> results = predictor.crf.predict(
+				predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
+				predictor.noModelChangeCrit);
 
-			Map<Instance, State> results = predictor.crf.predict(
-					predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
-					predictor.noModelChangeCrit);
+		log.info(
+				"Final Score: " + AbstractSemReadProject.evaluate(log, results, predictor.evaluationObjectiveFunction));
 
-			log.info("Final Score: "
-					+ AbstractSemReadProject.evaluate(log, results, predictor.evaluationObjectiveFunction));
+		perSentenceEvaluation(results);
 
-			persentenceEvaluation(results);
-
-			log.info(predictor.crf.getTrainingStatistics());
-			log.info(predictor.crf.getTestStatistics());
-		}
+		log.info(predictor.crf.getTrainingStatistics());
+		log.info(predictor.crf.getTestStatistics());
 
 		/**
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(true);
+		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
 		log.info("Coverage Training: " + trainCoverage);
 
-		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(true);
+		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
 		log.info("Coverage Development: " + devCoverage);
+
+//		Score [getF1()=0.192, getPrecision()=0.385, getRecall()=0.128, tp=5, fp=8, fn=34, tn=0]
 
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the
@@ -129,13 +127,13 @@ public class InvestigationMethodNER {
 		log.info("modelName: " + modelName);
 	}
 
-	private void persentenceEvaluation(Map<Instance, State> results) {
-		System.out.println("Per sentence evaluation...");
+	private void perSentenceEvaluation(Map<Instance, State> results) {
+		log.info("Per sentence evaluation...");
 		NerlaEvaluator evaluator = new NerlaEvaluator(EEvaluationDetail.LITERAL);
 
 		Score s = new Score();
 		for (Instance instance : results.keySet()) {
-			System.out.println(instance.getName());
+			log.info(instance.getName());
 			List<LiteralAnnotation> goldData = instance.getGoldAnnotations().getAbstractAnnotations().stream()
 					.map(a -> a.asInstanceOfDocumentLinkedAnnotation())
 					.map(d -> AnnotationBuilder.toAnnotation(d.getEntityType().name, "" + d.getSentenceIndex()))
@@ -145,22 +143,22 @@ public class InvestigationMethodNER {
 					.map(d -> AnnotationBuilder.toAnnotation(d.getEntityType().name, "" + d.getSentenceIndex()))
 					.distinct().sorted().collect(Collectors.toList());
 
-			System.out.println("----GOLD----");
+			log.info("----GOLD----");
 			for (LiteralAnnotation literalAnnotation : goldData) {
-				System.out.println(literalAnnotation.toPrettyString());
+				log.info(literalAnnotation.toPrettyString());
 			}
-			System.out.println("----PREDICT----");
+			log.info("----PREDICT----");
 			for (LiteralAnnotation literalAnnotation : predictedData) {
-				System.out.println(literalAnnotation.toPrettyString());
+				log.info(literalAnnotation.toPrettyString());
 			}
 
 			Score score = evaluator.scoreMultiValues(goldData, predictedData, EScoreType.MICRO);
-			System.out.println(instance.getName() + ": " + score);
+			log.info(instance.getName() + ": " + score);
 			s.add(score);
-			System.out.println("-------------------");
+			log.info("-------------------");
 
 		}
-		System.out.println(s);
+		log.info(s);
 	}
 
 }

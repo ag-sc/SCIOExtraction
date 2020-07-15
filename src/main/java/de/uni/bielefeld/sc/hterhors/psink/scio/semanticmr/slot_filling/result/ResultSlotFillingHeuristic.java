@@ -34,6 +34,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Annotations;
+import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
@@ -45,8 +46,10 @@ import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.json.JsonInstanceIO;
 import de.hterhors.semanticmr.json.JsonInstanceReader;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
+import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -61,7 +64,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.ThicknessNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod.TFIDFInvestigationMethodExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TFIDFTrendExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingFinalEvaluationPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.evaulation.CoarseGrainedResultEvaluation;
@@ -76,7 +82,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 	public static void main(String[] args) throws Exception {
 
-		new ResultSlotFillingHeuristic(1);
+		new ResultSlotFillingHeuristic(1000L, "PREDICT");
+//		new ResultSlotFillingHeuristic(1000L, "GOLD");
 
 	}
 
@@ -85,7 +92,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	private final File instanceDirectory;
 	private final IObjectiveFunction objectiveFunction;
 
-	private final int dataRandomSeed;
+	private final long dataRandomSeed;
 	private final EScoreType scoreType;
 
 	private InstanceProvider instanceProvider;
@@ -95,15 +102,15 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	private List<Instance> testInstances;
 	private String modelName;
 	public boolean includeGroups = true;
+	ENERModus modus;
 
-	public ResultSlotFillingHeuristic(int dataRandomSeed) throws Exception {
+	public ResultSlotFillingHeuristic(long dataRandomSeed, String modusName) throws Exception {
 
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).apply()
 				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization())
 				//
-				.registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new DosageNormalization())
 				.registerNormalizationFunction(new DurationNormalization())
 				.registerNormalizationFunction(new VolumeNormalization())
@@ -127,41 +134,30 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
 
 		this.dataRandomSeed = dataRandomSeed;
-
+		modus = ENERModus.valueOf(modusName);
 		readData();
 
-//		getTFIDFAnnotations();
+//		buildTFIDFAnnotations();
 
-//		Map<Instance, Set<EntityTemplate>> expGroups = getGoldGroups();
-		Map<Instance, Set<EntityTemplate>> expGroups = getPredictedGroups();
-//		SCIOSlotTypes.hasOrganismModel.excludeRec();
-//		SCIOSlotTypes.hasInjuryModel.excludeRec();
-
-		SCIOSlotTypes.hasInjuryModel.excludeRec();
-		SCIOSlotTypes.hasTreatmentType.excludeRec();
-
-		SCIOSlotTypes.hasInjuryModel.include();
-		SCIOSlotTypes.hasOrganismModel.includeRec();
-		SCIOSlotTypes.hasInjuryDevice.includeRec();
-		SCIOSlotTypes.hasInjuryLocation.includeRec();
-		SCIOSlotTypes.hasInjuryAnaesthesia.includeRec();
-
-		SCIOSlotTypes.hasTreatmentType.include();
-		SCIOSlotTypes.hasCompound.include();
-
-		String rand = String.valueOf(new Random().nextInt(100000));
-
-		modelName = "Result" + rand;
+		Map<Instance, Set<EntityTemplate>> expGroups;
+		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
+		
+		modelName = modus + "_Result" + rand;
 		log.info("Model name = " + modelName);
 
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
-
+		
 		Map<Instance, Set<DocumentLinkedAnnotation>> goldAnnotations = readAnnotations(
 				new File("data/annotations/result/"));
+
 //
-		for (Instance instance : goldAnnotations.keySet()) {
-			annotations.putIfAbsent(instance, new HashSet<>());
-			annotations.get(instance).addAll(goldAnnotations.get(instance));
+
+		if (modus == ENERModus.GOLD) {
+
+			for (Instance instance : goldAnnotations.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(goldAnnotations.get(instance));
+			}
 		}
 
 //		annotations.values().stream().forEach(a -> {
@@ -173,17 +169,18 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //			}
 //		});
 
-//		for (Instance instance : goldAnnotations.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(getGroupNameCandidates(instance));
-//		}
+		if (modus == ENERModus.PREDICT) {
+			for (Instance instance : goldAnnotations.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(getGroupNameCandidates(instance));
+			}
 
-//		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
-//				new File("data/slot_filling/result/regex_nerla"));
-//		for (Instance instance : regexp.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(regexp.get(instance));
-//		}
+			Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
+					new File("data/slot_filling/result/regex_nerla"));
+			for (Instance instance : regexp.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(regexp.get(instance));
+			}
 
 //		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = readAnnotations(
 //				new File("data/annotations/fasttext/InvestigationMethod"));
@@ -191,6 +188,24 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //			annotations.putIfAbsent(instance, new HashSet<>());
 //			annotations.get(instance).addAll(annotationsInvFT.get(instance));
 //		}
+
+			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
+					SCIOEntityTypes.investigationMethod, trainingInstances);
+			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(testInstances);
+			for (Instance instance : annotationsInvFT.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(annotationsInvFT.get(instance));
+			}
+
+			
+			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
+					SCIOEntityTypes.trend, trainingInstances);
+			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
+			for (Instance instance : annotationsTredFT.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(annotationsTredFT.get(instance));
+			}
+
 //		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTrendFT = readAnnotations(
 //				new File("data/annotations/fasttext/Trend"));
 //		for (Instance instance : annotationsTrendFT.keySet()) {
@@ -204,7 +219,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //			annotations.putIfAbsent(instance, new HashSet<>());
 //			annotations.get(instance).addAll(annotationsInv.get(instance));
 //		}
-//
+
 //		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTrend = readAnnotations(
 //				new File("data/annotations/trendTFIDF/"));
 //		for (Instance instance : annotationsTrend.keySet()) {
@@ -212,7 +227,15 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //			annotations.get(instance).addAll(annotationsTrend.get(instance));
 //		}
 
-		addDictionaryBasedAnnotations(annotations);
+			addDictionaryBasedAnnotations(annotations);
+		}
+		
+		if (modus == ENERModus.GOLD)
+			expGroups = getGoldGroups();
+		else {
+			expGroups = getPredictedGroups();
+		}
+
 
 		LocalSentenceHeuristic heuristic = new LocalSentenceHeuristic(annotations, expGroups, trainingInstances);
 
@@ -225,7 +248,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		scoreDetailed(results);
 
-		CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
+		Score coarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
+		log.info("CoarseGrainedResultEvaluation Score: " + coarseGrained);
 
 	}
 
@@ -235,36 +259,40 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	 * @return
 	 * @throws IOException
 	 */
-//	private Map<Instance, Set<DocumentLinkedAnnotation>> buildTFIDFAnnotations() throws IOException {
-//		TFIDFTrendExtractor trendExtractor = new TFIDFTrendExtractor(trainingInstances);
-//		TFIDFInvestigationMethodExtractor invMExtractor = new TFIDFInvestigationMethodExtractor(trainingInstances);
-//		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
-//		for (Instance instance : testInstances) {
-//			System.out.println("NAME = " + instance.getName());
+//	Map<Instance, Set<DocumentLinkedAnnotation>>
+	private void buildTFIDFAnnotations() throws IOException {
+		TFIDFTrendExtractor trendExtractor = new TFIDFTrendExtractor(false, trainingInstances);
+		TFIDFInvestigationMethodExtractor invMExtractor = new TFIDFInvestigationMethodExtractor(false,
+				trainingInstances);
+
+		new File("data/annotations/invMTFIDF/").mkdirs();
+		new File("data/annotations/trendTFIDF/").mkdirs();
+
+		for (Instance instance : testInstances) {
+			System.out.println("NAME = " + instance.getName());
 //			annotations.putIfAbsent(instance, new HashSet<>());
-//			Set<DocumentLinkedAnnotation> invAnns = new HashSet<>();
-//			for (List<DocumentToken> sentence : instance.getDocument().getSentences()) {
-//
-//				invAnns.addAll(invMExtractor.getInvestigationMethodForSentence(instance.getDocument(), sentence));
-//			}
+			Set<DocumentLinkedAnnotation> invAnns = new HashSet<>();
+			for (List<DocumentToken> sentence : instance.getDocument().getSentences()) {
+				invAnns.addAll(invMExtractor.getInvestigationMethodForSentence(instance.getDocument(), sentence));
+			}
 //			annotations.get(instance).addAll(invAnns);
-//			new JsonNerlaIO(true).writeNerlas(new File("data/annotations/invMTFIDF/" + instance.getName()), invAnns);
-//			Set<DocumentLinkedAnnotation> trendAnns = new HashSet<>();
-//			for (List<DocumentToken> sentence : instance.getDocument().getSentences()) {
-//				trendAnns.addAll(trendExtractor.getTrendsForSentence(instance.getDocument(), sentence));
-//			}
+			new JsonNerlaIO(true).writeNerlas(new File("data/annotations/invMTFIDF/" + instance.getName()), invAnns);
+			Set<DocumentLinkedAnnotation> trendAnns = new HashSet<>();
+			for (List<DocumentToken> sentence : instance.getDocument().getSentences()) {
+				trendAnns.addAll(trendExtractor.getTrendsForSentence(instance.getDocument(), sentence));
+			}
 //			annotations.get(instance).addAll(trendAnns);
-//			new JsonNerlaIO(true).writeNerlas(new File("data/annotations/trendTFIDF/" + instance.getName()), trendAnns);
+			new JsonNerlaIO(true).writeNerlas(new File("data/annotations/trendTFIDF/" + instance.getName()), trendAnns);
 //			System.out.println("SIZE = " + annotations.get(instance).size());
-//		}
-//
+		}
+
 //		return annotations;
-//
-//	}
+
+	}
 
 	private Map<Instance, Set<EntityTemplate>> getPredictedGroups() throws Exception {
 
-		File root = new File("data/annotations/slot_filling/experimental_group_Full/");
+		File root = new File("data/annotations/slot_filling/experimental_group_Full" + modelName + "/");
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		if (root.exists() && root.list().length != 0) {
 			// Cache
@@ -285,10 +313,12 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		} else {
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
 			SlotType.includeAll();
-			ExperimentalGroupSlotFillingPredictor.maxCacheSize = 800_000;
-			ExperimentalGroupSlotFillingPredictor.minCacheSize = 400_000;
+			ExperimentalGroupSlotFillingFinalEvaluationPredictor.maxCacheSize = 800_000;
+			ExperimentalGroupSlotFillingFinalEvaluationPredictor.minCacheSize = 400_000;
 
-			ExperimentalGroupSlotFillingPredictor a = new ExperimentalGroupSlotFillingPredictor(17, dataRandomSeed,
+			int modusIndex = modus == ENERModus.GOLD ? 17 : 18; // here only PREDICT
+			ExperimentalGroupSlotFillingFinalEvaluationPredictor a = new ExperimentalGroupSlotFillingFinalEvaluationPredictor(
+					modusIndex, dataRandomSeed,
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
@@ -503,17 +533,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			microFullScore.add(scoreFullPart);
 			macroFullScore.add(scoreFullPart.toMacro());
 
-			
-			/**
-			 * TODO:
-			 * 
-			 * 
-			 * MAYOR ERROR?
-			 */
-			
-//			List<EntityTemplate> goldAnnotations = finalState.getInstance().getGoldAnnotations().getAnnotations();
-			List<EntityTemplate> goldAnnotations = goldResults.get(finalState.getInstance());
-			
+			List<EntityTemplate> goldAnnotations = finalState.getInstance().getGoldAnnotations().getAnnotations();
+
 			List<EntityTemplate> predictedAnnotations = predictedResults.get(finalState.getInstance());
 
 			List<Integer> bestAssignment = ((BeamSearchEvaluator) objectiveFunction.getEvaluator())
@@ -785,6 +806,21 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			SCIOSlotTypes.hasCompound.include();
 
 			SCIOSlotTypes.hasGroupName.include();
+//			SCIOSlotTypes.hasOrganismModel.excludeRec();
+//			SCIOSlotTypes.hasInjuryModel.excludeRec();
+
+			SCIOSlotTypes.hasInjuryModel.excludeRec();
+			SCIOSlotTypes.hasTreatmentType.excludeRec();
+
+			SCIOSlotTypes.hasOrganismModel.include();
+			SCIOSlotTypes.hasInjuryModel.include();
+			SCIOSlotTypes.hasOrganismModel.includeRec();
+			SCIOSlotTypes.hasInjuryDevice.includeRec();
+			SCIOSlotTypes.hasInjuryLocation.includeRec();
+			SCIOSlotTypes.hasInjuryAnaesthesia.includeRec();
+
+			SCIOSlotTypes.hasTreatmentType.include();
+			SCIOSlotTypes.hasCompound.include();
 		}
 		SCIOSlotTypes.hasTrend.includeRec();
 		SCIOSlotTypes.hasInvestigationMethod.include();

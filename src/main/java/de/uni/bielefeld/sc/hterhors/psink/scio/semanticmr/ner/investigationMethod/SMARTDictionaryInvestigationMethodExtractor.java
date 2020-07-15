@@ -46,6 +46,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wr
 
 /**
  * NOT SO SMART...
+ * 
  * @author hterhors
  *
  */
@@ -89,7 +90,7 @@ public class SMARTDictionaryInvestigationMethodExtractor {
 			List<Instance> developInstances) throws IOException {
 
 		if (includeFastText)
-			t = new FastTextSentenceClassification(SCIOEntityTypes.investigationMethod, trainingInstances);
+			t = new FastTextSentenceClassification("TFIDFInvExtractor",false, SCIOEntityTypes.investigationMethod, trainingInstances);
 
 		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
 		for (Instance trainInstance : trainingInstances) {

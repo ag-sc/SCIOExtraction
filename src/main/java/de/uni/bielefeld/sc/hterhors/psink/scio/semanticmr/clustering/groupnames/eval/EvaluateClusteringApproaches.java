@@ -161,7 +161,7 @@ public class EvaluateClusteringApproaches {
 	}
 
 	public Score wekaBasedKMeans(List<Instance> trainInstances, List<Instance> testInstances, int k) throws Exception {
-		WEKAClustering gnc = new WEKAClustering();
+		WEKAClustering gnc = new WEKAClustering("TEST");
 
 		gnc.trainOrLoad(trainInstances);
 

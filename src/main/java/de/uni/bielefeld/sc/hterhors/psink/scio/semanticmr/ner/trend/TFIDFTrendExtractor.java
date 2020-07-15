@@ -58,7 +58,7 @@ public class TFIDFTrendExtractor {
 //			Score [macroF1=0.190, macroPrecision=0.110, macroRecall=0.693, macroAddCounter=1]
 //			90/10 one out: Score [macroF1=0.191, macroPrecision=0.111, macroRecall=0.705, macroAddCounter=10]
 
-//	MIt Fast Text
+//	Mit Fast Text
 //	Score [macroF1=0.284, macroPrecision=0.177, macroRecall=0.706, macroAddCounter=1]
 //	Score [macroF1=0.273, macroPrecision=0.170, macroRecall=0.694, macroAddCounter=1]
 //	Score [macroF1=0.327, macroPrecision=0.208, macroRecall=0.761, macroAddCounter=1]
@@ -99,19 +99,22 @@ public class TFIDFTrendExtractor {
 //		With fast text as sentence prediciton
 //		Score [getF1()=0.325, getPrecision()=0.208, getRecall()=0.742, tp=310, fp=1179, fn=108, tn=0]
 
-//		TFIDFTrendExtractor t = new TFIDFTrendExtractor(instanceProvider.getRedistributedTrainingInstances());
+		boolean binary = false;
+		// TFIDFTrendExtractor t = new
+		// TFIDFTrendExtractor(instanceProvider.getRedistributedTrainingInstances());
 //		Score sAll = t.evaluate(instanceProvider.getRedistributedDevelopmentInstances());
 //		System.out.println(sAll);
 //		 Score s =
 //		 TFIDFTrendExtractor.leaveOneOutEval(instanceProvider.getInstances());
 //		System.out.println("leave one out: " + s);
-		Score s = TFIDFTrendExtractor.tenRandom9010Split(instanceProvider.getInstances(), 1000L);
+		Score s = TFIDFTrendExtractor.tenRandom9010Split(binary, instanceProvider.getInstances(), 1000L);
 		System.out.println("90/10 one out: " + s);
 //		90/10 one out: Score [macroF1=0.199, macroPrecision=0.116, macroRecall=0.680, macroAddCounter=10]
 
 	}
 
-	private static Score tenRandom9010Split(List<Instance> instances, long randomSeed) throws IOException {
+	private static Score tenRandom9010Split(boolean binary, List<Instance> instances, long randomSeed)
+			throws IOException {
 
 		Score mScore = new Score(EScoreType.MACRO);
 
@@ -127,7 +130,7 @@ public class TFIDFTrendExtractor {
 			List<Instance> trainingInstances = instances.subList(0, x);
 			List<Instance> testInstances = instances.subList(x, instances.size());
 
-			TFIDFTrendExtractor t = new TFIDFTrendExtractor(trainingInstances);
+			TFIDFTrendExtractor t = new TFIDFTrendExtractor(binary, trainingInstances);
 			Score s = t.evaluate(testInstances).toMacro();
 			System.out.println(s);
 			mScore.add(s);
@@ -136,7 +139,7 @@ public class TFIDFTrendExtractor {
 		return mScore;
 	}
 
-	private static Score leaveOneOutEval(List<Instance> instances) throws IOException {
+	private static Score leaveOneOutEval(boolean binary, List<Instance> instances) throws IOException {
 //		Ohne fast text as sentence detection
 //		leave one out: Score [macroF1=0.228, macroPrecision=0.138, macroRecall=0.675]
 //		mitfast text as sentence detection
@@ -156,7 +159,7 @@ public class TFIDFTrendExtractor {
 				else
 					trainingInstances.add(instances.get(j));
 			}
-			TFIDFTrendExtractor t = new TFIDFTrendExtractor(trainingInstances);
+			TFIDFTrendExtractor t = new TFIDFTrendExtractor(binary, trainingInstances);
 			Score s = t.evaluate(testInstances).toMacro();
 			System.out.println(s);
 			mScore.add(s);
@@ -166,15 +169,18 @@ public class TFIDFTrendExtractor {
 
 	Set<String> additionalStopWords;
 	Map<String, Map<String, Double>> tfidfs;
+	boolean useFastText = false;
+
 	FastTextSentenceClassification t;
 
-	public TFIDFTrendExtractor(List<Instance> trainingInstances) throws IOException {
+	public TFIDFTrendExtractor(boolean binary, List<Instance> trainingInstances) throws IOException {
 
 		additionalStopWords = new HashSet<>(
 				Arrays.asList("rats", "either", "number", "group", "groups", "numbers", "treatment", "respectively"));
 		Map<String, List<String>> documents = new HashMap<>();
 		Map<String, Integer> count = new HashMap<>();
-		t = new FastTextSentenceClassification(SCIOEntityTypes.trend, trainingInstances);
+		if (useFastText)
+			t = new FastTextSentenceClassification("TFIDFtrendExtractor",binary, SCIOEntityTypes.trend, trainingInstances);
 
 		for (Instance trainInstance : trainingInstances) {
 
@@ -220,7 +226,8 @@ public class TFIDFTrendExtractor {
 //		System.exit(1);
 
 		tfidfs = TFIDF.getTFIDFs(documents, true);
-		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
+		keyTerms = new HashSet<>();
+//		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
 //		List<Instance> instances = instanceProvider.getRedistributedDevelopmentInstances();
 
 	}
@@ -291,15 +298,20 @@ public class TFIDFTrendExtractor {
 	private Set<String> keyTerms;
 
 	public Score evaluate(List<Instance> instances) {
+		List<FastTextPrediction> testData = new ArrayList<>();
 
-		List<FastTextPrediction> testData = t.predict(t.getLabledDocuments(instances, 1));
+		if (useFastText)
+			testData = t.predict(t.getLabledDocuments(instances, 1));
 
 		Score score = new Score();
 		for (Instance testInstance : instances) {
-			Set<Integer> skipSentences = testData.stream()
-					.filter(a -> a.fastTextInstance.instance.getName().equals(testInstance.getName()))
-					.filter(a -> a.label.equals(FastTextSentenceClassification.NO_LABEL))
-					.map(a -> a.fastTextInstance.sentenceIndex).collect(Collectors.toSet());
+			Set<Integer> skipSentences = new HashSet<>();
+			if (useFastText) {
+				skipSentences = testData.stream()
+						.filter(a -> a.fastTextInstance.instance.getName().equals(testInstance.getName()))
+						.filter(a -> a.label.equals(FastTextSentenceClassification.NO_LABEL))
+						.map(a -> a.fastTextInstance.sentenceIndex).collect(Collectors.toSet());
+			}
 
 //			System.out.println("Name " + testInstance.getName());
 //			Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
@@ -310,7 +322,7 @@ public class TFIDFTrendExtractor {
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
 					.getNumberOfSentences(); sentenceIndex++) {
 
-				if (skipSentences.contains(new Integer(sentenceIndex)))
+				if (useFastText && skipSentences.contains(new Integer(sentenceIndex)))
 					continue;
 
 				if (sec.getSection(sentenceIndex) != ESection.RESULTS)

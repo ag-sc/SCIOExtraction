@@ -67,10 +67,10 @@ public class BuildNERCorpusFromSlotFillingData {
 //		buildForTreatment();
 //		buildForVertebralArea();
 //		buildForDeliveryMethod();
-//		buildForInvestigationMethod();
+		buildForInvestigationMethod();
 //		buildForGroupName();
-		buildForCompound();
-//		buildForTrend();
+//		buildForCompound();
+		buildForTrend();
 
 	}
 
@@ -245,7 +245,7 @@ public class BuildNERCorpusFromSlotFillingData {
 				annotations = unifyET;
 			}
 
-//			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
+			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
@@ -293,11 +293,11 @@ public class BuildNERCorpusFromSlotFillingData {
 	 * @param document
 	 * @param annotations
 	 */
-	private static void projectAnnotationsIntoDocument(Document document, Set<AbstractAnnotation> annotations) {
+	private static void projectAnnotationsIntoDocument(Document document, Set<DocumentLinkedAnnotation> annotations) {
 
-		Set<AbstractAnnotation> additionalAnnotations = new HashSet<>();
+		Set<DocumentLinkedAnnotation> additionalAnnotations = new HashSet<>();
 
-		for (AbstractAnnotation abstractAnnotation : annotations) {
+		for (DocumentLinkedAnnotation abstractAnnotation : annotations) {
 
 			Matcher m = Pattern
 					.compile(Pattern.quote(abstractAnnotation.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))

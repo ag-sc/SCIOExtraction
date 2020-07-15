@@ -56,7 +56,7 @@ public class PredictGroupNameCluster {
 
 	public PredictGroupNameCluster(List<Instance> trainInstances) throws Exception {
 
-		gnc = new WEKAClustering();
+		gnc = new WEKAClustering("TEST");
 
 		gnc.trainOrLoad(trainInstances);
 	}
@@ -72,7 +72,7 @@ public class PredictGroupNameCluster {
 
 	public List<List<DocumentLinkedAnnotation>> clusterWordBased(List<DocumentLinkedAnnotation> annotations, int k) {
 		WordBasedKMeans<DocumentLinkedAnnotation> kMeans = new WordBasedKMeans<>();
-		return kMeans.clusterRSS(annotations, 1,8);
+		return kMeans.clusterRSS(annotations, 1, 8);
 	}
 
 }

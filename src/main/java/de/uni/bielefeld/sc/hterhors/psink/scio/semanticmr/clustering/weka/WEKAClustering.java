@@ -62,9 +62,15 @@ public class WEKAClustering {
 
 	public double lambda = 1.1D;
 
+	private final String expGroupModelName;
+
+	public WEKAClustering(String modelName) {
+		this.expGroupModelName = modelName;
+	}
+
 	public void trainOrLoad(List<Instance> train) throws IOException {
 
-		String modelName = "wekamodels/smithwaterman_jaccard_q3.model";
+		String modelName = "wekamodels/"+expGroupModelName+"_smithwaterman_jaccard_q3.model";
 		collectInstances(train, trainingDataCollector, true);
 		trainingDataCollector = trainingDataCollector.removeRareFeatures(25);
 

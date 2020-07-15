@@ -35,7 +35,7 @@ public class LocalSentenceHeuristic {
 
 	private static final double jaccardThreshold = 0.2D;
 	final Map<Instance, Set<DocumentLinkedAnnotation>> annotations;
-	private final WEKAClustering gnc;
+//	private final WEKAClustering gnc;
 	private Map<Instance, Set<EntityTemplate>> groupAnnotations;
 //	private GroupNameMapping groupNameMapping;
 
@@ -43,13 +43,13 @@ public class LocalSentenceHeuristic {
 			Map<Instance, Set<EntityTemplate>> groupAnnotations, List<Instance> trainingInstances) throws IOException {
 		this.annotations = annotations;
 		this.groupAnnotations = groupAnnotations;
-		gnc = new WEKAClustering();
+//		gnc = new WEKAClustering(modelName);
 //		this.groupNameMapping = new GroupNameMapping(100);
-		try {
-			gnc.trainOrLoad(trainingInstances);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			gnc.trainOrLoad(trainingInstances);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 

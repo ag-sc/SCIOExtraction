@@ -55,7 +55,7 @@ public class NPChunker {
 	}
 
 	public NPChunker(final Document document) throws IOException {
-
+		npChunkerDir.mkdirs();
 		System.out.println("Process: " + document.documentID);
 
 		chunks = new File(npChunkerDir, document.documentID);
