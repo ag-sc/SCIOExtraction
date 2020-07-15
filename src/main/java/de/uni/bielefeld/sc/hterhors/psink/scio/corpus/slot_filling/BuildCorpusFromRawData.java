@@ -206,6 +206,7 @@ public class BuildCorpusFromRawData {
 		treatmentSlotTypes.add(SCIOSlotTypes.hasCompound);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDirection);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasLocation);
+		treatmentSlotTypes.add(SCIOSlotTypes.hasLocations);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasApplicationInstrument);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDosage);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasVoltage);

@@ -64,13 +64,13 @@ public class BuildNERCorpusFromSlotFillingData {
 
 //		buildForOrganismModel();
 //		buildForInjuryModel();
-//		buildForTreatment();
+		buildForTreatment();
 //		buildForVertebralArea();
 //		buildForDeliveryMethod();
-		buildForInvestigationMethod();
+//		buildForInvestigationMethod();
 //		buildForGroupName();
 //		buildForCompound();
-		buildForTrend();
+//		buildForTrend();
 
 	}
 
@@ -130,7 +130,7 @@ public class BuildNERCorpusFromSlotFillingData {
 		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasDirection.include();
-		SCIOSlotTypes.hasLocation.include();
+		SCIOSlotTypes.hasLocations.include();
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 		buildInstances(SCIOEntityTypes.deliveryMethod);
 		SlotType.restoreExcludance(x);
@@ -143,7 +143,7 @@ public class BuildNERCorpusFromSlotFillingData {
 
 		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.excludeAll();
-		SCIOSlotTypes.hasDeliveryMethod.include();
+		SCIOSlotTypes.hasDeliveryMethod.includeRec();
 		SCIOSlotTypes.hasCompound.include();
 		SCIOSlotTypes.hasDirection.include();
 		SCIOSlotTypes.hasLocation.include();
