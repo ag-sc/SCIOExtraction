@@ -24,15 +24,14 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelActiveLearningSlotFilling;
 
 /**
  * Slot filling for organism models.
@@ -103,13 +102,13 @@ public class InjuryActiveLearningSlotFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
 
-			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+			List<String> allTrainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 					.map(t -> t.getName()).sorted().collect(Collectors.toList());
 
-			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
 			final List<String> trainingInstancesNames = new ArrayList<>();

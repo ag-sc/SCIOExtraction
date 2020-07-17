@@ -2,14 +2,13 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebra
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,11 +26,10 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 
@@ -122,11 +120,11 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 			String modelName = modusName + "_VertebralArea_Final_" + seed;
 
 			VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName,
-					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
+					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 							.collect(Collectors.toList()),
-					instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
+					instanceProvider.getDevelopmentInstances().stream().map(t -> t.getName())
 							.collect(Collectors.toList()),
-					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+					instanceProvider.getTestInstances().stream().map(t -> t.getName())
 							.collect(Collectors.toList()),
 					rule, modus);
 

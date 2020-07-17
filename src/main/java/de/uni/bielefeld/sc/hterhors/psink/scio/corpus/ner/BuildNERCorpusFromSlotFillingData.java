@@ -64,13 +64,13 @@ public class BuildNERCorpusFromSlotFillingData {
 
 //		buildForOrganismModel();
 //		buildForInjuryModel();
-		buildForTreatment();
+//		buildForTreatment();
 //		buildForVertebralArea();
 //		buildForDeliveryMethod();
-//		buildForInvestigationMethod();
+		buildForInvestigationMethod();
 //		buildForGroupName();
 //		buildForCompound();
-//		buildForTrend();
+		buildForTrend();
 
 	}
 
@@ -245,7 +245,7 @@ public class BuildNERCorpusFromSlotFillingData {
 				annotations = unifyET;
 			}
 
-			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
+//			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
 
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));

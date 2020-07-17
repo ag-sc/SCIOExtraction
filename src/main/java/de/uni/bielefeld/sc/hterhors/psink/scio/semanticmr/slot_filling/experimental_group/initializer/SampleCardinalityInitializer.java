@@ -3,8 +3,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experime
 import java.util.ArrayList;
 import java.util.List;
 
-import com.apple.eawt.event.RotationEvent;
-
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
@@ -13,7 +11,6 @@ import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 
 public class SampleCardinalityInitializer implements IStateInitializer {
 

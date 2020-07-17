@@ -34,9 +34,9 @@ public class PredictGroupNameCluster {
 				corpusDistributor);
 
 		PredictGroupNameCluster clustering = new PredictGroupNameCluster(
-				instanceProvider.getRedistributedTrainingInstances());
+				instanceProvider.getTrainingInstances());
 
-		for (Instance instance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance instance : instanceProvider.getTestInstances()) {
 			System.out.println("*********" + instance.getName() + "********");
 			System.out.println(instance.getGoldAnnotations().getAbstractAnnotations().size());
 			List<DocumentLinkedAnnotation> annotations = GroupNameExtraction.extractGroupNames(instance,

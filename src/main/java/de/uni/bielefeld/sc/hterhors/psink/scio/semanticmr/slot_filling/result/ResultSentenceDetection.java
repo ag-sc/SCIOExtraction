@@ -2,7 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
@@ -10,16 +9,14 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.exploration.SlotFillingExplorer;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
-import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
 
 public class ResultSentenceDetection {
 
@@ -60,12 +57,12 @@ public class ResultSentenceDetection {
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		devInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 		for (Instance instance : trainingInstances) {
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 			for (AbstractAnnotation result : instance.getGoldAnnotations().getAnnotations()) {
 				if (!result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTrend"))
 						.containsSlotFiller())
@@ -88,7 +85,7 @@ public class ResultSentenceDetection {
 
 	}
 
-	public void printRec(SCIOAutomatedSectionifcation sectionification, AbstractAnnotation et) {
+	public void printRec(AutomatedSectionifcation sectionification, AbstractAnnotation et) {
 		if (et.isInstanceOfDocumentLinkedAnnotation()) {
 			System.out.print(et.getEntityType().name + "\t");
 			System.out.print(

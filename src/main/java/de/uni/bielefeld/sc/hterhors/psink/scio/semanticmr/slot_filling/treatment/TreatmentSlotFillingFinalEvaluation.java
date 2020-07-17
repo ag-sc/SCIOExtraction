@@ -2,15 +2,14 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatmen
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,13 +28,12 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
@@ -55,7 +53,9 @@ public class TreatmentSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
+//		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
+		new TreatmentSlotFillingFinalEvaluation(1000L, "GOLD");
+		new TreatmentSlotFillingFinalEvaluation(1000L, "PREDICT");
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -84,7 +84,7 @@ public class TreatmentSlotFillingFinalEvaluation {
 		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 
 		/**
-		 * 
+		 * QUICK FIX in File : remove 9th annotation
 		 * 
 		 * 
 		 * 
@@ -108,24 +108,28 @@ public class TreatmentSlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
 
-			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 			dataRandomSeed = "" + seed;
 			String modelName = modusName + "_Treatment_Final_" + seed;
 
-			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-			testInstances = instanceProvider.getRedistributedTestInstances();
+			trainingInstances = instanceProvider.getTrainingInstances();
+			devInstances = instanceProvider.getDevelopmentInstances();
+			testInstances = instanceProvider.getTestInstances();
+
+			for (Instance string : instanceProvider.getInstances()) {
+				System.out.println(string.getGoldAnnotations().getAbstractAnnotations().size());
+			}
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
-		
+
 			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));

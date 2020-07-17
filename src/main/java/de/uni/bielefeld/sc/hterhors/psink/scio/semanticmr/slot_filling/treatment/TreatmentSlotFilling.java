@@ -29,11 +29,11 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
@@ -134,22 +134,22 @@ public class TreatmentSlotFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
 
-			List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
 //			String modelName = "Treatment-1842612192";
 			dataRandomSeed = "" + new Random().nextInt();
 			String modelName = "Treatment" + dataRandomSeed;
 
-			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-			testInstances = instanceProvider.getRedistributedTestInstances();
+			trainingInstances = instanceProvider.getTrainingInstances();
+			devInstances = instanceProvider.getDevelopmentInstances();
+			testInstances = instanceProvider.getTestInstances();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);

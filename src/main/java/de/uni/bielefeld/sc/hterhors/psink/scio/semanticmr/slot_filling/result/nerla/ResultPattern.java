@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.nerla.annotation.BasicRegExPattern;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.AgeInterpreter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.WeightInterpreter;
 
 public class ResultPattern extends BasicRegExPattern {
 

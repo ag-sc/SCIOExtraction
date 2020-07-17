@@ -95,7 +95,7 @@ public class PlayGround {
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		instanceProvider.getRedistributedTrainingInstances().stream().forEach(i -> {
+		instanceProvider.getTrainingInstances().stream().forEach(i -> {
 			countExpGroups.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 							.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
@@ -127,7 +127,7 @@ public class PlayGround {
 	}
 
 	private void playGround() {
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 
 //			if (!instance.getName().startsWith("N235"))
 //				continue;
@@ -355,7 +355,7 @@ public class PlayGround {
 		Pattern etAlPattern = Pattern.compile("et al");
 		Map<String, Integer> countWords = new HashMap<>();
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
 //			if (!instance.getName().startsWith("N075"))
@@ -596,7 +596,7 @@ public class PlayGround {
 
 	private void findMeterialsAndMethodsSectionStart() throws Exception {
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			System.out.println(instance.getName());
 			Set<Integer> keyPoints = getKeyPoints(instance);
 			keyPoints.forEach(System.out::println);
@@ -686,7 +686,7 @@ public class PlayGround {
 		Map<String, Integer> countIn = new HashMap<>();
 		Map<String, Integer> countPost = new HashMap<>();
 		Map<String, Integer> countPrePost = new HashMap<>();
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
 			List<DocumentLinkedAnnotation> annotations = instance.getGoldAnnotations().getAnnotations().stream()
@@ -746,7 +746,7 @@ public class PlayGround {
 	private void DIRECT_METNION() throws Exception {
 
 		int MAX_SEN_CONTEXT = 5;
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			String docDContent = instance.getDocument().documentContent;
 
 //			Pattern p = Pattern.compile("(separated|divided).{1,30}groups?");

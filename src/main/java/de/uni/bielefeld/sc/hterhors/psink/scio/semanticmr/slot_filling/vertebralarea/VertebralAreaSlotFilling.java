@@ -28,13 +28,11 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EMainClassMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
@@ -127,19 +125,19 @@ public class VertebralAreaSlotFilling {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				VertebralAreaRestrictionProvider.getByRule(rule));
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		devInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 		dataRandomSeed = "" + new Random().nextInt();
 
 		String modelName = "VertebralArea" + dataRandomSeed;
 		VertebralAreaPredictor predictor = new VertebralAreaPredictor(modelName,
-				instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
+				instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
-				instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
+				instanceProvider.getDevelopmentInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
-				instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+				instanceProvider.getTestInstances().stream().map(t -> t.getName())
 						.collect(Collectors.toList()),
 				rule, ENERModus.PREDICT);
 

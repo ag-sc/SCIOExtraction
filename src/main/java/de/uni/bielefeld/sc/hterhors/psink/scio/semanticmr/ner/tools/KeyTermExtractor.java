@@ -2,7 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.tools;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -60,7 +59,7 @@ public class KeyTermExtractor {
 				corpusDistributor);
 
 		Map<String, List<String>> documents = new HashMap<>();
-		for (Instance trainInstance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance trainInstance : instanceProvider.getTrainingInstances()) {
 
 			Set<Integer> invMSentences = new HashSet<>();
 
@@ -119,8 +118,8 @@ public class KeyTermExtractor {
 
 		System.out.println(keyTerms.size() + "/" + frequendInvSentenceTerms.size());
 
-		evaluate(instanceProvider, keyTerms, instanceProvider.getRedistributedTrainingInstances());
-		evaluate(instanceProvider, keyTerms, instanceProvider.getRedistributedDevelopmentInstances());
+		evaluate(instanceProvider, keyTerms, instanceProvider.getTrainingInstances());
+		evaluate(instanceProvider, keyTerms, instanceProvider.getDevelopmentInstances());
 
 //		for (Entry<String, List<String>> document : documents.entrySet()) {
 //			for (Entry<String, Double> e : TFIDF.getTFs(document.getValue(), true).entrySet()) {

@@ -28,12 +28,11 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthetic.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
@@ -160,18 +159,18 @@ public class AnaestheticSlotFilling {
 			dataRandomSeed = "" + new Random().nextInt();
 			String modelName = "Anaesthetic" + dataRandomSeed;
 
-			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-			testInstances = instanceProvider.getRedistributedTestInstances();
+			trainingInstances = instanceProvider.getTrainingInstances();
+			devInstances = instanceProvider.getDevelopmentInstances();
+			testInstances = instanceProvider.getTestInstances();
 
 			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName,
-					instanceProvider.getRedistributedTrainingInstances().stream().map(t -> t.getName())
+					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					instanceProvider.getRedistributedDevelopmentInstances().stream().map(t -> t.getName())
+					instanceProvider.getDevelopmentInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+					instanceProvider.getTestInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
 					rule, modus);

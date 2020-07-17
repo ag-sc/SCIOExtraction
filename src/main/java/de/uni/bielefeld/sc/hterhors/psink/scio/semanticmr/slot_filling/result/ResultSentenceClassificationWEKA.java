@@ -23,23 +23,18 @@ import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
-import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
-import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
-import de.hterhors.semanticmr.crf.variables.Document;
-import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.sentenceclassification.Classification;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -83,12 +78,12 @@ public class ResultSentenceClassificationWEKA {
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		ResultSentenceClassificationWEKA sentenceClassification = new ResultSentenceClassificationWEKA(
-				instanceProvider.getRedistributedTrainingInstances());
+				instanceProvider.getTrainingInstances());
 
 		Score score = new Score();
-		for (Instance testInstance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance testInstance : instanceProvider.getTestInstances()) {
 			System.out.println(testInstance.getName());
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(testInstance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(testInstance);
 			Map<Integer, Classification> x = sentenceClassification.test(testInstance, score);
 
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
@@ -348,7 +343,7 @@ public class ResultSentenceClassificationWEKA {
 
 		for (Instance instance : instances) {
 
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 			
 			File groupNamesCacheDir = new File("data/annotations/result/");
 

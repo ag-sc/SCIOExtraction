@@ -60,13 +60,13 @@ public class Heuristics {
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
 		String rand = String.valueOf(new Random().nextInt());
@@ -78,7 +78,7 @@ public class Heuristics {
 		Map<String, Integer> countInjuries = new HashMap<>();
 		Map<String, Integer> countOrganismModels = new HashMap<>();
 
-		instanceProvider.getRedistributedTrainingInstances().stream().forEach(i -> {
+		instanceProvider.getTrainingInstances().stream().forEach(i -> {
 			countExpGroups.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 							.map(gresult -> Arrays.asList(

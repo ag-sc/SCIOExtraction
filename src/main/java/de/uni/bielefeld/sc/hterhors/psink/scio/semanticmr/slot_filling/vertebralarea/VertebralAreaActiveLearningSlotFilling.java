@@ -21,10 +21,10 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.IModificationRule;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
 
 /**
@@ -82,13 +82,13 @@ public class VertebralAreaActiveLearningSlotFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					getGoldModificationRules(rule));
 
-			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+			List<String> allTrainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
 			final List<String> trainingInstancesNames = new ArrayList<>();
@@ -118,7 +118,7 @@ public class VertebralAreaActiveLearningSlotFilling {
 
 				predictor.trainOrLoadModel();
 
-				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
+				List<Instance> remainingInstances = instanceProvider.getTrainingInstances().stream()
 						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
 				predictor.evaluateOnDevelopment();

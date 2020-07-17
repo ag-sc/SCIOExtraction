@@ -164,7 +164,7 @@ public class CollectExpGroupNames {
 
 	private Map<String, Set<AbstractAnnotation>> getTreatments() {
 		Map<String, Set<AbstractAnnotation>> treatmentsPerDocument = new HashMap<>();
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 
 			Set<AbstractAnnotation> treatments = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
@@ -181,7 +181,7 @@ public class CollectExpGroupNames {
 
 	private Map<String, Set<AbstractAnnotation>> getOrganismModels() {
 		Map<String, Set<AbstractAnnotation>> orgModelsPerDocument = new HashMap<>();
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 
 			Set<AbstractAnnotation> orgModels = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
@@ -198,7 +198,7 @@ public class CollectExpGroupNames {
 
 	private Map<String, Set<AbstractAnnotation>> getInjuryModels() {
 		Map<String, Set<AbstractAnnotation>> injuriesPerDocument = new HashMap<>();
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 
 			Set<AbstractAnnotation> injuries = new HashSet<>();
 			for (EntityTemplate expGroup : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
@@ -282,7 +282,7 @@ public class CollectExpGroupNames {
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		instanceProvider.getRedistributedTrainingInstances().stream().forEach(i -> {
+		instanceProvider.getTrainingInstances().stream().forEach(i -> {
 			countExpGroups.put(i.getName(),
 					Integer.valueOf((int) i.getGoldAnnotations().getAnnotations().stream()
 							.filter(b -> b != null && (b.asInstanceOfEntityTemplate()
@@ -326,7 +326,7 @@ public class CollectExpGroupNames {
 		final NerlaEvaluator simpleEval = new NerlaEvaluator(EEvaluationDetail.ENTITY_TYPE);
 		final CartesianEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE);
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 
 //			if (!instance.getName().startsWith("N253"))
 //				continue;
@@ -949,7 +949,7 @@ public class CollectExpGroupNames {
 		Map<String, HashMap<Integer, Cluster>> clustersPerInstance = new HashMap<>();
 
 		PatternIndexPair nullPattern = new PatternIndexPair(10000, Pattern.compile(""));
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			System.out.println("########\t" + instance.getName() + "\t########");
 
 //			if (!instance.getName().startsWith("N253"))

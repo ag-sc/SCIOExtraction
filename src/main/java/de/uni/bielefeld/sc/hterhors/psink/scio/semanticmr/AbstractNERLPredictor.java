@@ -21,7 +21,6 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.NERSemanticParsingCRF;
-import de.hterhors.semanticmr.crf.SemanticParsingCRF;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.FactorPoolCache;
@@ -40,7 +39,6 @@ import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
-import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.tools.KeyTermExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.SectionizedEntityRecLinkExplorer;
@@ -98,9 +96,9 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 */
 		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		developmentInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 //		Map<EntityType, Set<String>> words = new HashMap<>();
 //		for (Instance trainingInstance : trainingInstances) {

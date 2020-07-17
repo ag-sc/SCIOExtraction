@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.PressureInterpreter.EPressureUnits.EType;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.struct.AbstractNumericInterpreter;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.struct.IDoubleUnit;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.interpreter.struct.IDoubleUnitType;
 
 public class PressureInterpreter extends AbstractNumericInterpreter {

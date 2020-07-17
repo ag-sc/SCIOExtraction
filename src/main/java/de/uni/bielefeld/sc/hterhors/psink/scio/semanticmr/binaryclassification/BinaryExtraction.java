@@ -9,13 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -29,7 +28,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPoin
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DistanceNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.ForceNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.LengthNormalization;
@@ -37,8 +35,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.ThicknessNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
-import edu.stanford.nlp.trees.TreeCoreAnnotations.BinarizedTreeAnnotation;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -100,7 +96,7 @@ public abstract class BinaryExtraction {
 
 		System.out.println("Collect training data points... ");
 		Set<BinaryDataPoint> trainingDataPoints = toBinaryDataPoints(nerlaJSONReader,
-				instanceProvider.getRedistributedTrainingInstances(), true);
+				instanceProvider.getTrainingInstances(), true);
 		System.out.println("Number of binary training data points: " + trainingDataPoints.size());
 		System.out.println("Convert to weka...");
 		List<DataPoint> wekaTrainingDataPoints = toWekaDataPoints(trainingDataPoints, true);
@@ -155,7 +151,7 @@ public abstract class BinaryExtraction {
 
 		List<BinaryDataPointPrediction> predictions = new ArrayList<>();
 
-		for (Instance instance : instanceProvider.getRedistributedDevelopmentInstances()) {
+		for (Instance instance : instanceProvider.getDevelopmentInstances()) {
 			System.out.println(instance.getName());
 			System.out.println("Collect test data points... ");
 			Set<BinaryDataPoint> testDataPoints = toBinaryDataPoints(nerlaJSONReader, Arrays.asList(instance), false);

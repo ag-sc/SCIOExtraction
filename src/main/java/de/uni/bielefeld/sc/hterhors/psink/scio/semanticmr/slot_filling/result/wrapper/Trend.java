@@ -3,8 +3,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.w
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.jena.sparql.function.library.leviathan.sin;
-
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;

@@ -44,8 +44,8 @@ public class DetermineRSSLambda {
 		SlotType.excludeAll();
 		SCIOSlotTypes.hasGroupName.include();
 
-		List<Instance> trainInstances = instanceProvider.getRedistributedTrainingInstances();
-		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
+		List<Instance> trainInstances = instanceProvider.getTrainingInstances();
+		List<Instance> testInstances = instanceProvider.getTestInstances();
 
 //		WordBasedKMeans<DocumentLinkedAnnotation> wordkMeans = new WordBasedKMeans<>();
 //		WordBasedKMeansMedoid<DocumentLinkedAnnotation> medoidkMeans = new WordBasedKMeansMedoid<>();

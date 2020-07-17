@@ -67,13 +67,13 @@ public class TrendNER {
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.trend),
 				originalCorpusDistributor);
 
-		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
 		TrendNERLPredictor predictor = new TrendNERLPredictor(modelName, trainingInstanceNames, developInstanceNames,
@@ -82,7 +82,7 @@ public class TrendNER {
 		predictor.trainOrLoadModel();
 
 		Map<Instance, State> results = predictor.crf.predict(
-				predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
+				predictor.instanceProvider.getDevelopmentInstances(), predictor.maxStepCrit,
 				predictor.noModelChangeCrit);
 
 		log.info(

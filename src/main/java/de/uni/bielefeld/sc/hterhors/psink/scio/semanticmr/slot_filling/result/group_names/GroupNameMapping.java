@@ -9,15 +9,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.apache.jena.sparql.function.library.leviathan.root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,11 +29,9 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
-import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
@@ -43,6 +39,8 @@ import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -51,8 +49,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimen
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.goldmodrules.OnlyDefinedExpGroupResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Trend;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 public class GroupNameMapping {
 
@@ -444,7 +440,7 @@ public class GroupNameMapping {
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
 		for (Instance instance : instances) {
 
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			annotations.putIfAbsent(instance, new HashSet<>());
 			for (DocumentLinkedAnnotation eta : new HashSet<>(nerlaJSONReader.getForInstance(instance))) {
@@ -466,7 +462,7 @@ public class GroupNameMapping {
 		return annotations;
 	}
 
-	public void collectAnnotationForResult(SCIOAutomatedSectionifcation sectionification,
+	public void collectAnnotationForResult(AutomatedSectionifcation sectionification,
 			Map<Integer, List<EntityType>> entitiesPerSentence, AbstractAnnotation et) {
 
 		if (et.isInstanceOfDocumentLinkedAnnotation() && sectionification
@@ -548,9 +544,9 @@ public class GroupNameMapping {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules,
 				deduplicationRule);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		devInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 	}
 

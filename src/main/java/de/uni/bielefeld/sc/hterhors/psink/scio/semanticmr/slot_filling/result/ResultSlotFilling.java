@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,6 +48,8 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -63,10 +64,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimen
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.templates.type_based.TB_TreatmentInGroupCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.templates.type_based.TB_TreatmentPriorInverseTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.templates.type_based.TB_TreatmentPriorTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 public class ResultSlotFilling extends AbstractSemReadProject {
 
@@ -334,9 +331,9 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules,
 				deduplicationRule);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		devInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 		addCandidates();
 
@@ -352,7 +349,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 			instance.addCandidateAnnotation(
 					new EntityTemplate(AnnotationBuilder.toAnnotation(EntityType.get("Trend"))));
 
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			for (DocumentLinkedAnnotation eta : new HashSet<>(nerlaJSONReader.getForInstance(instance))) {
 

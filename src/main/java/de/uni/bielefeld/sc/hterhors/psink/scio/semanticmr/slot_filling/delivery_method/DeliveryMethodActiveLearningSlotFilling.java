@@ -18,11 +18,11 @@ import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning.ActiveLearningProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DosageNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 
 /**
@@ -83,13 +83,13 @@ public class DeliveryMethodActiveLearningSlotFilling {
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-			List<String> allTrainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+			List<String> allTrainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream()
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
 			final List<String> trainingInstancesNames = new ArrayList<>();
@@ -119,7 +119,7 @@ public class DeliveryMethodActiveLearningSlotFilling {
 
 				predictor.trainOrLoadModel();
 
-				List<Instance> remainingInstances = instanceProvider.getRedistributedTrainingInstances().stream()
+				List<Instance> remainingInstances = instanceProvider.getTrainingInstances().stream()
 						.filter(t -> !trainingInstancesNames.contains(t.getName())).collect(Collectors.toList());
 
 				predictor.evaluateOnDevelopment();

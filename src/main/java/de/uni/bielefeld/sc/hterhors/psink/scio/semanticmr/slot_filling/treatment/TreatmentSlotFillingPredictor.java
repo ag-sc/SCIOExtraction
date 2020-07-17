@@ -45,6 +45,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
@@ -107,16 +108,16 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 			return map;
 
 		if (useGoldLocationsForTraining) {
-			addGold(map, instanceProvider.getRedistributedTrainingInstances());
+			addGold(map, instanceProvider.getTrainingInstances());
 		} else {
-			addPredictions(map, instanceProvider.getRedistributedTrainingInstances());
+			addPredictions(map, instanceProvider.getTrainingInstances());
 		}
 		if (useGoldLocationsForPrediction || modus == ENERModus.GOLD) {
-			addGold(map, instanceProvider.getRedistributedDevelopmentInstances());
-			addGold(map, instanceProvider.getRedistributedTestInstances());
+			addGold(map, instanceProvider.getDevelopmentInstances());
+			addGold(map, instanceProvider.getTestInstances());
 		} else {
-			addPredictions(map, instanceProvider.getRedistributedDevelopmentInstances());
-			addPredictions(map, instanceProvider.getRedistributedTestInstances());
+			addPredictions(map, instanceProvider.getDevelopmentInstances());
+			addPredictions(map, instanceProvider.getTestInstances());
 		}
 
 		for (Instance instance : instanceProvider.getInstances()) {
@@ -227,7 +228,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	protected IStateInitializer getStateInitializer() {
 //		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment, 2, 6);
 		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment,
-				instanceProvider.getRedistributedTrainingInstances());
+				instanceProvider.getTrainingInstances());
 //		return (instance -> {
 //		return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.compoundTreatment)));
 //	});

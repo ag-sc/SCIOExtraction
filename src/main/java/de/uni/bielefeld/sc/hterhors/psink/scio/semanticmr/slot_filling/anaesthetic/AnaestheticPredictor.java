@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
-import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
@@ -24,7 +22,6 @@ import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
-import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -45,13 +42,11 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBu
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.anaesthetic.AnaestheticRestrictionProvider.EAnaestheticModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.SCIOWrapper;
 
 /**
  * Slot filling for organism models.
@@ -153,16 +148,16 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 			return map;
 
 		if (useGoldLocationsForTraining) {
-			addGold(map, instanceProvider.getRedistributedTrainingInstances());
+			addGold(map, instanceProvider.getTrainingInstances());
 		} else {
-			addPredictions(map, instanceProvider.getRedistributedTrainingInstances());
+			addPredictions(map, instanceProvider.getTrainingInstances());
 		}
 		if (useGoldLocationsForPrediction|| modus == ENERModus.GOLD) {
-			addGold(map, instanceProvider.getRedistributedDevelopmentInstances());
-			addGold(map, instanceProvider.getRedistributedTestInstances());
+			addGold(map, instanceProvider.getDevelopmentInstances());
+			addGold(map, instanceProvider.getTestInstances());
 		} else {
-			addPredictions(map, instanceProvider.getRedistributedDevelopmentInstances());
-			addPredictions(map, instanceProvider.getRedistributedTestInstances());
+			addPredictions(map, instanceProvider.getDevelopmentInstances());
+			addPredictions(map, instanceProvider.getTestInstances());
 		}
 
 		for (Instance instance : instanceProvider.getInstances()) {

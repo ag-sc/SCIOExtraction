@@ -70,13 +70,13 @@ public class CompoundNER {
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.compound), corpusDistributor);
 
-		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
 		CompoundNERLPredictor predictor = new CompoundNERLPredictor(modelName, trainingInstanceNames,
@@ -86,7 +86,7 @@ public class CompoundNER {
 		predictor.trainOrLoadModel();
 
 		Map<Instance, State> results = predictor.crf.predict(
-				predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
+				predictor.instanceProvider.getDevelopmentInstances(), predictor.maxStepCrit,
 				predictor.noModelChangeCrit);
 
 		log.info(

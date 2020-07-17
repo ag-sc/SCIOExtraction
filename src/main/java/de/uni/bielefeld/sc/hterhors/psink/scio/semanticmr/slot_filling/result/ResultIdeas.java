@@ -28,12 +28,12 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.investigation.CollectExpGroupNames;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * Collection of some ideas to tackle results:
@@ -89,9 +89,9 @@ public class ResultIdeas {
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		devInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 		Map<Instance, List<Map<Integer, List<EntityType>>>> gold = resultsPerSentenceGOLD();
 		System.out.println("----------------------------");
@@ -165,7 +165,7 @@ public class ResultIdeas {
 
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			annotations.put(instance,
 					DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
 		}
@@ -218,8 +218,8 @@ public class ResultIdeas {
 			}
 		}
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			collectAnnotations.putIfAbsent(instance, new HashMap<>());
 			/**
@@ -312,9 +312,9 @@ public class ResultIdeas {
 
 	private Map<Instance, List<Map<Integer, List<EntityType>>>> resultsPerSentenceGOLD() {
 		Map<Instance, List<Map<Integer, List<EntityType>>>> results = new HashMap<>();
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			results.putIfAbsent(instance, new ArrayList<>());
 			for (AbstractAnnotation result : instance.getGoldAnnotations().getAnnotations()) {
@@ -410,7 +410,7 @@ public class ResultIdeas {
 	 * 
 	 */
 
-	public void collectAnnotationForResult(SCIOAutomatedSectionifcation sectionification,
+	public void collectAnnotationForResult(AutomatedSectionifcation sectionification,
 			Map<Integer, List<EntityType>> entitiesPerSentence, AbstractAnnotation et) {
 
 		if (et.isInstanceOfDocumentLinkedAnnotation() && sectionification

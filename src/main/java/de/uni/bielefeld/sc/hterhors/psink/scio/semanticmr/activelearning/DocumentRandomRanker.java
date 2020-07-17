@@ -3,16 +3,13 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.activelearning;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.activelearning.IActiveLearningDocumentRanker;
 import de.hterhors.semanticmr.crf.variables.Instance;
-import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor;
 
 public class DocumentRandomRanker implements IActiveLearningDocumentRanker {

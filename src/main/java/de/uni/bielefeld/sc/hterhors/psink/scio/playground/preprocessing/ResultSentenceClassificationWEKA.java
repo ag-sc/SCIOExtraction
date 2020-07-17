@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
@@ -71,10 +70,10 @@ public class ResultSentenceClassificationWEKA {
 				corpusDistributor);
 
 		ResultSentenceClassificationWEKA sentenceClassification = new ResultSentenceClassificationWEKA(
-				instanceProvider.getRedistributedTrainingInstances());
+				instanceProvider.getTrainingInstances());
 
 		Score score = new Score();
-		for (Instance testInstance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance testInstance : instanceProvider.getTestInstances()) {
 			System.out.println(testInstance.getName());
 			Map<Integer, Classification> x = sentenceClassification.test(testInstance, score);
 

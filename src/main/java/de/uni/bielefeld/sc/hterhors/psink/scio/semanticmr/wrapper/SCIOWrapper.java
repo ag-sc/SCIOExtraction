@@ -2,8 +2,6 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper;
 
 import java.util.List;
 
-import org.apache.jena.sparql.function.library.collation;
-
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;

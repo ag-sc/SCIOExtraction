@@ -4,20 +4,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.jena.base.Sys;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.github.jsonldjava.shaded.com.google.common.base.Predicate;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.of.IObjectiveFunction;
-import de.hterhors.semanticmr.crf.of.NerlaObjectiveFunction;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
@@ -79,13 +73,13 @@ public class InvestigationMethodNER {
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
 				originalCorpusDistributor);
 
-		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
 		InvestigationMethodNERLPredictor predictor = new InvestigationMethodNERLPredictor(modelName,
@@ -94,7 +88,7 @@ public class InvestigationMethodNER {
 		predictor.trainOrLoadModel();
 
 		Map<Instance, State> results = predictor.crf.predict(
-				predictor.instanceProvider.getRedistributedDevelopmentInstances(), predictor.maxStepCrit,
+				predictor.instanceProvider.getDevelopmentInstances(), predictor.maxStepCrit,
 				predictor.noModelChangeCrit);
 
 		log.info(

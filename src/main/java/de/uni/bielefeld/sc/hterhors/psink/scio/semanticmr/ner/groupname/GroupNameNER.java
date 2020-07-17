@@ -68,13 +68,13 @@ public class GroupNameNER {
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.groupName), corpusDistributor);
 
-		List<String> trainingInstanceNames = instanceProvider.getRedistributedTrainingInstances().stream()
+		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getRedistributedDevelopmentInstances().stream()
+		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 				.map(t -> t.getName()).collect(Collectors.toList());
 
-		List<String> testInstanceNames = instanceProvider.getRedistributedTestInstances().stream().map(t -> t.getName())
+		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
 		GroupNameNERLPredictor predictor = new GroupNameNERLPredictor(modelName, trainingInstanceNames,
@@ -82,7 +82,7 @@ public class GroupNameNER {
 
 		predictor.trainOrLoadModel();
 
-		Map<Instance, State> results = predictor.crf.predict(predictor.instanceProvider.getRedistributedTestInstances(),
+		Map<Instance, State> results = predictor.crf.predict(predictor.instanceProvider.getTestInstances(),
 				predictor.maxStepCrit, predictor.noModelChangeCrit);
 
 		log.info(

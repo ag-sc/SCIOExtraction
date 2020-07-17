@@ -1,12 +1,8 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,8 +11,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.print.Doc;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
@@ -27,7 +21,6 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.variables.Document;
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
@@ -75,8 +68,8 @@ public class SMARTDictionaryInvestigationMethodExtractor {
 				corpusDistributor);
 
 		SMARTDictionaryInvestigationMethodExtractor t = new SMARTDictionaryInvestigationMethodExtractor(
-				instanceProvider.getRedistributedTrainingInstances(),
-				instanceProvider.getRedistributedDevelopmentInstances());
+				instanceProvider.getTrainingInstances(),
+				instanceProvider.getDevelopmentInstances());
 
 //		t.evaluate(instanceProvider.getRedistributedTestInstances());
 	}

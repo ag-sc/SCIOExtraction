@@ -48,8 +48,9 @@ import de.hterhors.semanticmr.json.JsonInstanceReader;
 import de.hterhors.semanticmr.json.converter.InstancesToJsonInstanceWrapper;
 import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -65,8 +66,12 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod.InvestigationMethodIDFPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod.TFIDFInvestigationMethodExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.result_sentences.ExtractSentencesWithResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TFIDFTrendExtractor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TrendIDFPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPredictorFinalEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
@@ -75,16 +80,17 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.go
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.heuristics.LocalSentenceHeuristic;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Trend;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 	public static void main(String[] args) throws Exception {
 
-		new ResultSlotFillingHeuristic(1000L, "PREDICT");
-//		new ResultSlotFillingHeuristic(1000L, "GOLD");
-
+		if (args != null && args.length > 0)
+			new ResultSlotFillingHeuristic(Long.parseLong(args[0]), args[1]);
+		else {
+			new ResultSlotFillingHeuristic(1000L, "PREDICT");
+//			new ResultSlotFillingHeuristic(1000L, "GOLD");
+		}
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -102,7 +108,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	private List<Instance> testInstances;
 	private String modelName;
 	public boolean includeGroups = true;
-	ENERModus modus;
+	private ENERModus modus;
 
 	public ResultSlotFillingHeuristic(long dataRandomSeed, String modusName) throws Exception {
 
@@ -137,7 +143,10 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		modus = ENERModus.valueOf(modusName);
 		readData();
 
-//		buildTFIDFAnnotations();
+		boolean includeFastTextAnnotations = true;
+		boolean includeIDFAnnotations = true;
+		boolean addDicitionaryBasedAnnotations = false;
+		boolean includeRegexData = true;
 
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
@@ -175,65 +184,69 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				annotations.get(instance).addAll(getGroupNameCandidates(instance));
 			}
 
-			Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
-					new File("data/slot_filling/result/regex_nerla"));
-			for (Instance instance : regexp.keySet()) {
-				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(regexp.get(instance));
+			if (includeRegexData) {
+				Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
+						new File("data/slot_filling/result/regex_nerla"));
+				for (Instance instance : regexp.keySet()) {
+					annotations.putIfAbsent(instance, new HashSet<>());
+					annotations.get(instance).addAll(regexp.get(instance));
+				}
 			}
 
-//		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = readAnnotations(
-//				new File("data/annotations/fasttext/InvestigationMethod"));
-//		for (Instance instance : annotationsInvFT.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(annotationsInvFT.get(instance));
-//		}
+			if (includeFastTextAnnotations) {
+				FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
+						SCIOEntityTypes.investigationMethod, trainingInstances);
+				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(testInstances);
+				for (Instance instance : annotationsInvFT.keySet()) {
+					annotations.putIfAbsent(instance, new HashSet<>());
+					annotations.get(instance).addAll(annotationsInvFT.get(instance));
+				}
 
-			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
-					SCIOEntityTypes.investigationMethod, trainingInstances);
-			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(testInstances);
-			for (Instance instance : annotationsInvFT.keySet()) {
-				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(annotationsInvFT.get(instance));
+				FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
+						SCIOEntityTypes.trend, trainingInstances);
+				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
+				for (Instance instance : annotationsTredFT.keySet()) {
+					annotations.putIfAbsent(instance, new HashSet<>());
+					annotations.get(instance).addAll(annotationsTredFT.get(instance));
+				}
+
 			}
 
-			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
-					SCIOEntityTypes.trend, trainingInstances);
-			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
-			for (Instance instance : annotationsTredFT.keySet()) {
-				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(annotationsTredFT.get(instance));
+			if (includeIDFAnnotations) {
+				ExtractSentencesWithResults r = new ExtractSentencesWithResults(trainingInstanceNames,
+						testInstanceNames);
+
+				Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> trends = r.predictTrendInstances();
+				Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> investigationMethods = r
+						.predictInvestigationMethodInstances();
+
+				r.filter();
+
+				for (Instance instance : trends.keySet()) {
+					annotations.putIfAbsent(instance, new HashSet<>());
+					for (Set<DocumentLinkedAnnotation> trendAnnotations : trends.get(instance).values()) {
+						annotations.get(instance).addAll(trendAnnotations);
+					}
+				}
+				for (Instance instance : investigationMethods.keySet()) {
+					annotations.putIfAbsent(instance, new HashSet<>());
+					for (Set<DocumentLinkedAnnotation> invMAnnotations : investigationMethods.get(instance).values()) {
+						annotations.get(instance).addAll(invMAnnotations);
+					}
+				}
+
 			}
 
-//		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTrendFT = readAnnotations(
-//				new File("data/annotations/fasttext/Trend"));
-//		for (Instance instance : annotationsTrendFT.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(annotationsTrendFT.get(instance));
-//		}
-//
-//		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInv = readAnnotations(
-//				new File("data/annotations/invMTFIDF/"));
-//		for (Instance instance : annotationsInv.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(annotationsInv.get(instance));
-//		}
-
-//		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTrend = readAnnotations(
-//				new File("data/annotations/trendTFIDF/"));
-//		for (Instance instance : annotationsTrend.keySet()) {
-//			annotations.putIfAbsent(instance, new HashSet<>());
-//			annotations.get(instance).addAll(annotationsTrend.get(instance));
-//		}
-
-			addDictionaryBasedAnnotations(annotations);
+			if (addDicitionaryBasedAnnotations)
+				addDictionaryBasedAnnotations(annotations);
 		}
 
-		if (modus == ENERModus.GOLD)
-			expGroups = getGoldGroups();
-		else {
-			expGroups = getPredictedGroups();
-		}
+		expGroups = getGoldGroups();
+//		if (modus == ENERModus.GOLD)
+//			expGroups = getGoldGroups();
+//		else {
+//			expGroups = getPredictedGroups();
+//		}
 
 		LocalSentenceHeuristic heuristic = new LocalSentenceHeuristic(annotations, expGroups, trainingInstances);
 
@@ -761,7 +774,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		for (Instance instance : instanceProvider.getInstances()) {
 
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			/**
 			 * Apply dictionary to document
@@ -789,6 +802,9 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			}
 		}
 	}
+
+	private List<String> trainingInstanceNames;
+	private List<String> testInstanceNames;
 
 	public void readData() throws IOException {
 
@@ -833,8 +849,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		final int x = (int) (((double) docs.size() / 100D) * 80D);
 //		List<String> trainingInstanceNames = docs.subList(0, 10);
 //		List<String> testInstanceNames = docs.subList(10, 15);
-		List<String> trainingInstanceNames = docs.subList(0, x);
-		List<String> testInstanceNames = docs.subList(x, docs.size());
+		trainingInstanceNames = docs.subList(0, x);
+		testInstanceNames = docs.subList(x, docs.size());
 
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();
@@ -860,9 +876,9 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules,
 				deduplicationRule);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		devInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 //		for (Instance instance : testInstances) {
 //			for (AbstractAnnotation goldA : instance.getGoldAnnotations().getAbstractAnnotations()) {
@@ -879,7 +895,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
 		for (Instance instance : instanceProvider.getInstances()) {
 
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			annotations.putIfAbsent(instance, new HashSet<>());
 			for (DocumentLinkedAnnotation eta : new HashSet<>(nerlaJSONReader.getForInstance(instance))) {

@@ -61,18 +61,13 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.initializer.GenericMultiCardinalityInitializer;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProject {
 	public interface IModificationRule {
-
-	}
-
-	public static enum ENERModus {
-
-		GOLD, PREDICT;
 
 	}
 
@@ -187,9 +182,9 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor, goldModificationRules,
 				deduplicationRule);
 
-		trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		developmentInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		testInstances = instanceProvider.getRedistributedTestInstances();
+		trainingInstances = instanceProvider.getTrainingInstances();
+		developmentInstances = instanceProvider.getDevelopmentInstances();
+		testInstances = instanceProvider.getTestInstances();
 
 		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(getExternalNerlaFile());
 
@@ -326,11 +321,11 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 		IFilter sectionFilter = new IFilter() {
 
-			Map<Document, SCIOAutomatedSectionifcation> cache = new HashMap<>();
+			Map<Document, AutomatedSectionifcation> cache = new HashMap<>();
 			{
 
 				for (Instance instance : instanceProvider.getInstances()) {
-					cache.put(instance.getDocument(), SCIOAutomatedSectionifcation.getInstance(instance));
+					cache.put(instance.getDocument(), AutomatedSectionifcation.getInstance(instance));
 				}
 
 			}
@@ -343,7 +338,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 				Document doc = candidate.asInstanceOfDocumentLinkedAnnotation().document;
 
-				SCIOAutomatedSectionifcation sectionification = cache.get(doc);
+				AutomatedSectionifcation sectionification = cache.get(doc);
 
 				if (candidate.isInstanceOfEntityTemplate()) {
 
@@ -372,7 +367,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				return false;
 			}
 
-			private boolean isRelevant(SCIOAutomatedSectionifcation sectionification, DocumentLinkedAnnotation a) {
+			private boolean isRelevant(AutomatedSectionifcation sectionification, DocumentLinkedAnnotation a) {
 				ESection sec = sectionification.getSection(a.asInstanceOfDocumentLinkedAnnotation());
 				return sec == ESection.METHODS || sec == ESection.UNKNOWN;
 //				return sec != ESection.REFERENCES;
@@ -651,8 +646,6 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				.filter(i -> remainingNames.contains(i.getName())).collect(Collectors.toList()), n, maxStepCrit,
 				noModelChangeCrit);
 
-		
-		
 		for (Entry<Instance, State> res : results.entrySet()) {
 			for (Iterator<AbstractAnnotation> iterator = res.getValue().getCurrentPredictions().getAnnotations()
 					.iterator(); iterator.hasNext();) {
@@ -663,7 +656,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				}
 			}
 		}
-		
+
 		for (Entry<Instance, State> result : results.entrySet()) {
 
 			for (AbstractAnnotation aa : result.getValue().getCurrentPredictions().getAnnotations()) {
@@ -723,7 +716,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	final public Map<Instance, State> evaluateOnDevelopment() {
 
-		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedDevelopmentInstances(), maxStepCrit,
+		Map<Instance, State> results = crf.predict(instanceProvider.getDevelopmentInstances(), maxStepCrit,
 				noModelChangeCrit);
 
 		log.info(crf.getTestStatistics());
@@ -745,7 +738,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	final public void evaluateOnTest() {
 
-		Map<Instance, State> results = crf.predict(instanceProvider.getRedistributedTestInstances(), maxStepCrit,
+		Map<Instance, State> results = crf.predict(instanceProvider.getTestInstances(), maxStepCrit,
 				noModelChangeCrit);
 
 		AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);

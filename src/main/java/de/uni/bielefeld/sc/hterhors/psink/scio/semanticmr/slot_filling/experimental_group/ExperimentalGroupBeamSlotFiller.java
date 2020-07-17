@@ -125,9 +125,9 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor, goldModificationRules);
 
-		List<Instance> trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
+		List<Instance> trainingInstances = instanceProvider.getTrainingInstances();
+		List<Instance> devInstances = instanceProvider.getDevelopmentInstances();
+		List<Instance> testInstances = instanceProvider.getTestInstances();
 
 		String rand = String.valueOf(new Random().nextInt());
 
@@ -152,14 +152,14 @@ public class ExperimentalGroupBeamSlotFiller extends AbstractSemReadProject {
 		 * Create annotations for treatments/organismModel/injury with gold data.
 		 */
 
-		for (Instance instance : instanceProvider.getRedistributedTrainingInstances()) {
+		for (Instance instance : instanceProvider.getTrainingInstances()) {
 			extractCandidatesFromGold(instance);
 		}
-		for (Instance instance : instanceProvider.getRedistributedDevelopmentInstances()) {
+		for (Instance instance : instanceProvider.getDevelopmentInstances()) {
 			extractCandidatesFromGold(instance);
 		}
 
-		for (Instance instance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance instance : instanceProvider.getTestInstances()) {
 			extractCandidatesFromGold(instance);
 		}
 

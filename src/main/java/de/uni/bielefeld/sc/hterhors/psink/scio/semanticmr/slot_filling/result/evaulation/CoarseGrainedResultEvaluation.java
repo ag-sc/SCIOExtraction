@@ -83,12 +83,12 @@ public class CoarseGrainedResultEvaluation {
 					goldAnnotations, predictedAnnotations, mapGoldGroupToID, mapPredictedGroupToID);
 
 		}
-		
+
 		log.info("MACRO CoarseGrained overallTrend: " + overallTrend);
 		log.info("MACRO CoarseGrained overallInvest: " + overallInvest);
 		log.info("MACRO CoarseGrained overallGroups: " + overallGroups);
 		log.info("MACRO CoarseGrained overallResult: " + overall);
-		
+
 		return overall;
 	}
 
@@ -101,10 +101,10 @@ public class CoarseGrainedResultEvaluation {
 		 */
 		List<EntityTemplate> goldExperimentalGroups = new ArrayList<>(
 				goldAnnotations.stream().flatMap(g -> new Result(g).getDefinedExperimentalGroups().stream())
-						.map(g -> g.get()).distinct().collect(Collectors.toSet()));
+						.map(g -> g.get()).filter(a -> a != null).distinct().collect(Collectors.toSet()));
 		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(
 				predictedAnnotations.stream().flatMap(g -> new Result(g).getDefinedExperimentalGroups().stream())
-						.map(g -> g.get()).collect(Collectors.toSet()));
+						.map(g -> g.get()).filter(a -> a != null).distinct().collect(Collectors.toSet()));
 
 		x: for (EntityTemplate goldGroup : goldExperimentalGroups) {
 
@@ -143,10 +143,10 @@ public class CoarseGrainedResultEvaluation {
 		/*
 		 * Get experimental groups and their assignments to get IDs
 		 */
-		List<EntityTemplate> goldExperimentalGroups = new ArrayList<>(
-				goldAnnotations.stream().map(g -> new Result(g).getTrend()).distinct().collect(Collectors.toSet()));
-		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(
-				predictedAnnotations.stream().map(g -> new Result(g).getTrend()).collect(Collectors.toSet()));
+		List<EntityTemplate> goldExperimentalGroups = new ArrayList<>(goldAnnotations.stream()
+				.map(g -> new Result(g).getTrend()).filter(a -> a != null).distinct().collect(Collectors.toSet()));
+		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(predictedAnnotations.stream()
+				.map(g -> new Result(g).getTrend()).filter(a -> a != null).collect(Collectors.toSet()));
 
 		x: for (EntityTemplate goldGroup : goldExperimentalGroups) {
 
@@ -188,8 +188,9 @@ public class CoarseGrainedResultEvaluation {
 		List<EntityTemplate> goldExperimentalGroups = new ArrayList<>(
 				goldAnnotations.stream().map(g -> new Result(g).getInvestigationMethod()).distinct()
 						.filter(a -> a != null).collect(Collectors.toSet()));
-		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(predictedAnnotations.stream()
-				.map(g -> new Result(g).getInvestigationMethod()).filter(a -> a != null).collect(Collectors.toSet()));
+		List<EntityTemplate> predictedExperimentalGroups = new ArrayList<>(
+				predictedAnnotations.stream().map(g -> new Result(g).getInvestigationMethod()).filter(a -> a != null)
+						.distinct().collect(Collectors.toSet()));
 
 		x: for (EntityTemplate goldGroup : goldExperimentalGroups) {
 

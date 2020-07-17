@@ -13,9 +13,9 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate.DocumentSectionScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * @author hterhors
@@ -84,7 +84,7 @@ public class DocumentSectionTemplate extends AbstractFeatureTemplate<DocumentSec
 
 		List<DocumentSectionScope> factors = new ArrayList<>();
 
-		SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(state.getInstance());
+		AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(state.getInstance());
 
 		for (EntityTemplate annotation : super.<EntityTemplate>getPredictedAnnotations(state)) {
 

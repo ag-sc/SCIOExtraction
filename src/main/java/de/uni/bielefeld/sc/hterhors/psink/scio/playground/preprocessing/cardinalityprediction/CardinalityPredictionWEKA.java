@@ -62,12 +62,12 @@ public class CardinalityPredictionWEKA {
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		CardinalityPredictionWEKA sentenceClassification = new CardinalityPredictionWEKA(
-				instanceProvider.getRedistributedTrainingInstances()
+				instanceProvider.getTrainingInstances()
 //				, instanceProvider.getRedistributedTestInstances()
 		);
 
 		double mse = 0;
-		for (Instance testInstance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance testInstance : instanceProvider.getTestInstances()) {
 			System.out.println(testInstance.getName());
 			double x = sentenceClassification.test(testInstance);
 			mse += Math.pow(x - testInstance.getGoldAnnotations().getAnnotations().size(), 2);

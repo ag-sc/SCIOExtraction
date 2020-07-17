@@ -17,9 +17,9 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.AnnotationExistsInAbstractTemplate.DocumentSectionScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * @author hterhors
@@ -83,7 +83,7 @@ public class AnnotationExistsInAbstractTemplate extends AbstractFeatureTemplate<
 
 		List<DocumentSectionScope> factors = new ArrayList<>();
 
-		SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(state.getInstance());
+		AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(state.getInstance());
 
 		for (EntityTemplate annotation : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
@@ -134,7 +134,7 @@ public class AnnotationExistsInAbstractTemplate extends AbstractFeatureTemplate<
 		return factors;
 	}
 
-	public boolean isAbstract(SCIOAutomatedSectionifcation sectionification, DocumentLinkedAnnotation eta) {
+	public boolean isAbstract(AutomatedSectionifcation sectionification, DocumentLinkedAnnotation eta) {
 		return sectionification.getSection(eta.getSentenceIndex()) == ESection.ABSTRACT;
 	}
 

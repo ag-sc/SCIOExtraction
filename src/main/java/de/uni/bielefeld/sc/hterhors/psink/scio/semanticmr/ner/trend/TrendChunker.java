@@ -1,15 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
-import de.hterhors.semanticmr.crf.variables.Document;
 import edu.stanford.nlp.ling.SentenceUtils;
 import edu.stanford.nlp.pipeline.CoreDocument;
 import edu.stanford.nlp.pipeline.CoreSentence;

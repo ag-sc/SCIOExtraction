@@ -32,7 +32,6 @@ import de.hterhors.semanticmr.eval.NerlaEvaluator;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
-import de.hterhors.semanticmr.tools.KeyTermExtractor;
 import de.hterhors.semanticmr.tools.TFIDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
@@ -43,6 +42,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextS
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TrendChunker.TermIndexPair;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Trend;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stemmer;
 
 public class TFIDFTrendExtractor {
 //	Ohne Fast Text
@@ -82,6 +82,7 @@ public class TFIDFTrendExtractor {
 				 * Finally, we build the systems scope.
 				 */
 				.build();
+
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 				.setSeed(1000L).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
 		InstanceProvider.removeEmptyInstances = true;
@@ -180,7 +181,8 @@ public class TFIDFTrendExtractor {
 		Map<String, List<String>> documents = new HashMap<>();
 		Map<String, Integer> count = new HashMap<>();
 		if (useFastText)
-			t = new FastTextSentenceClassification("TFIDFtrendExtractor",binary, SCIOEntityTypes.trend, trainingInstances);
+			t = new FastTextSentenceClassification("TFIDFtrendExtractor", binary, SCIOEntityTypes.trend,
+					trainingInstances);
 
 		for (Instance trainInstance : trainingInstances) {
 
@@ -194,8 +196,8 @@ public class TFIDFTrendExtractor {
 
 				List<String> tokens = invM.relatedTokens.stream()
 						.filter(t -> !(t.isPunctuation() || t.isStopWord() || t.isNumber()
-								|| additionalStopWords.contains(t.getText())))
-						.map(t -> t.getText()).collect(Collectors.toList());
+								|| additionalStopWords.contains(modify(t.getText()))))
+						.map(t -> modify(t.getText())).collect(Collectors.toList());
 				documents.putIfAbsent(invM.getEntityType().name, new ArrayList<>());
 				documents.get(invM.getEntityType().name).addAll(tokens);
 //
@@ -225,11 +227,20 @@ public class TFIDFTrendExtractor {
 //		}
 //		System.exit(1);
 
-		tfidfs = TFIDF.getTFIDFs(documents, true);
+		tfidfs = TFIDF.getIDFs(documents, false);
 		keyTerms = new HashSet<>();
 //		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
 //		List<Instance> instances = instanceProvider.getRedistributedDevelopmentInstances();
 
+	}
+
+	Stemmer stemmer = new Stemmer();
+
+	private String modify(String text) {
+		String ret = text;
+		ret = text.toLowerCase();
+		ret = stemmer.stem(ret);
+		return ret;
 	}
 
 	private List<DocumentLinkedAnnotation> extractTrends(Instance trainInstance) {
@@ -322,11 +333,17 @@ public class TFIDFTrendExtractor {
 			for (int sentenceIndex = 0; sentenceIndex < testInstance.getDocument()
 					.getNumberOfSentences(); sentenceIndex++) {
 
+				if (sec.getSection(sentenceIndex) != ESection.RESULTS)
+					continue;
+
 				if (useFastText && skipSentences.contains(new Integer(sentenceIndex)))
 					continue;
 
-				if (sec.getSection(sentenceIndex) != ESection.RESULTS)
-					continue;
+				final int sentenceIndexF = sentenceIndex;
+
+				Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
+						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
+						.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
 
 				boolean containsKeyterm = false;
 				String sentence = testInstance.getDocument().getContentOfSentence(sentenceIndex);
@@ -342,11 +359,6 @@ public class TFIDFTrendExtractor {
 //				if (!containsKeyterm)
 //					continue;
 
-				final int sentenceIndexF = sentenceIndex;
-
-				Set<EntityTypeAnnotation> gold = testInstance.getGoldAnnotations().getAnnotations().stream()
-						.filter(a -> sentenceIndexF == a.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex())
-						.map(a -> AnnotationBuilder.toAnnotation(a.getEntityType())).collect(Collectors.toSet());
 				Set<EntityTypeAnnotation> predicted = getForSentence(testInstance.getDocument(),
 						testInstance.getDocument().getSentenceByIndex(sentenceIndexF)).stream()
 								.map(s -> AnnotationBuilder.toAnnotation(s.getEntityType()))
@@ -388,7 +400,7 @@ public class TFIDFTrendExtractor {
 
 			for (DocumentToken token : sentence) {
 
-				double val = tfidfs.get(etn).getOrDefault(token.getText(), 0D);
+				double val = tfidfs.get(etn).getOrDefault(modify(token.getText()), 0D);
 
 				if (val > maxTokenImpact) {
 					maxTokenImpact = val;

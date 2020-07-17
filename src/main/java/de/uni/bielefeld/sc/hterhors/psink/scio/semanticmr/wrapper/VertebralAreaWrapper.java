@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class VertebralAreaWrapper extends SCIOWrapper {
 

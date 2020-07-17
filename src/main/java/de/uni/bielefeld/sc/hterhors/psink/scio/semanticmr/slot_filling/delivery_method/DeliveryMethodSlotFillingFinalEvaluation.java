@@ -27,11 +27,11 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPredictor.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
@@ -143,9 +143,9 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 
 			String modelName = modusName + "_DeliveryMethod_Final_" + seed;
 
-			trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-			devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-			testInstances = instanceProvider.getRedistributedTestInstances();
+			trainingInstances = instanceProvider.getTrainingInstances();
+			devInstances = instanceProvider.getDevelopmentInstances();
+			testInstances = instanceProvider.getTestInstances();
 
 //			Map<Instance, Set<AbstractAnnotation>> organismModel = predictOrganismModel(
 //					instanceProvider.getInstances());

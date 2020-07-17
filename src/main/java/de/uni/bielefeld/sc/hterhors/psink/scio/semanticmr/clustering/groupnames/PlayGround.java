@@ -19,10 +19,10 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.variables.DocumentToken;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper.GroupNameExtraction;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.tools.SCIOAutomatedSectionifcation.ESection;
 
 /**
  * IDEA:
@@ -58,7 +58,7 @@ public class PlayGround {
 		for (Instance instance : instanceProvider.getInstances()) {
 
 //			System.out.println("Instance: " + instance.getName());
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			List<DocumentLinkedAnnotation> goldGroupNames = GroupNameExtraction.extractGroupNamesFromGold(instance);
 
@@ -109,7 +109,7 @@ public class PlayGround {
 		for (Instance instance : instanceProvider.getInstances()) {
 
 			System.out.println("Instance: " + instance.getName());
-			SCIOAutomatedSectionifcation sectionification = SCIOAutomatedSectionifcation.getInstance(instance);
+			AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 
 			List<DocumentLinkedAnnotation> groupNames = GroupNameExtraction.extractGroupNamesWithPattern(instance);
 

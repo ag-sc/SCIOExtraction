@@ -71,10 +71,10 @@ public class SentenceClassificationWEKA {
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		SentenceClassificationWEKA sentenceClassification = new SentenceClassificationWEKA(
-				instanceProvider.getRedistributedTrainingInstances());
+				instanceProvider.getTrainingInstances());
 
 		Score score = new Score();
-		for (Instance testInstance : instanceProvider.getRedistributedTestInstances()) {
+		for (Instance testInstance : instanceProvider.getTestInstances()) {
 			System.out.println(testInstance.getName());
 			Map<Integer, Classification> x = sentenceClassification.test(testInstance, score);
 

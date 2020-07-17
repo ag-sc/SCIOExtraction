@@ -192,9 +192,9 @@ public class OrgModelBeamSlotFilling extends AbstractSemReadProject {
 
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		List<Instance> trainingInstances = instanceProvider.getRedistributedTrainingInstances();
-		List<Instance> devInstances = instanceProvider.getRedistributedDevelopmentInstances();
-		List<Instance> testInstances = instanceProvider.getRedistributedTestInstances();
+		List<Instance> trainingInstances = instanceProvider.getTrainingInstances();
+		List<Instance> devInstances = instanceProvider.getDevelopmentInstances();
+		List<Instance> testInstances = instanceProvider.getTestInstances();
 		/**
 		 * The choice of the objective function is crucial for interpreting the systems
 		 * performance. For now, we provide two different evaluator-strategies that can
