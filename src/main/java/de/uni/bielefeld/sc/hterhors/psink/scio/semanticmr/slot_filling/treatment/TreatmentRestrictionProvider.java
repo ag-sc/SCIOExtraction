@@ -20,7 +20,6 @@ public class TreatmentRestrictionProvider {
 	}
 
 	public static List<GoldModificationRule> getByRule(ETreatmentModifications modelModifications) {
-
 		switch (modelModifications) {
 		case ROOT:
 			return getRoot();

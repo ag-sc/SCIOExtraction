@@ -1,4 +1,4 @@
-package de.uni.bielefeld.sc.hterhors.psink.scio.tools.results;
+package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.evaulation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,78 +25,51 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
  * extraction.
  * 
  * Reads and converts to other file format e.g. to csv for a better import in
- * excel . EXAMPLE INPUT:
+ * ==> result_final_evaluation_GOLD_1000.log <== Unsorted Score: Score
+ * [getF1()=0.737, getPrecision()=0.752, getRecall()=0.722, tp=10971, fp=3622,
+ * fn=4219, tn=0] Sorted macro Result Sentence Score = Score [macroF1=0.842,
+ * macroPrecision=0.838, macroRecall=0.846, macroAddCounter=20] Sorted micro
+ * Full score = Score [getF1()=0.756, getPrecision()=0.770, getRecall()=0.743,
+ * tp=11264, fp=3359, fn=3902, tn=0] Sorted macro Full score = Score
+ * [macroF1=0.851, macroPrecision=0.856, macroRecall=0.846, macroAddCounter=20]
+ * Sorted macro Reference score = Score [macroF1=0.851, macroPrecision=0.860,
+ * macroRecall=0.842, macroAddCounter=20] Sorted macro Target score = Score
+ * [macroF1=0.867, macroPrecision=0.864, macroRecall=0.870, macroAddCounter=20]
+ * Sorted macro Trend score = Score [macroF1=0.643, macroPrecision=0.691,
+ * macroRecall=0.601, macroAddCounter=20] Sorted macro Investigation score =
+ * Score [macroF1=0.706, macroPrecision=0.713, macroRecall=0.700,
+ * macroAddCounter=20] Sorted macro Cardinality score = Score [macroF1=0.879,
+ * macroPrecision=0.885, macroRecall=0.873, macroAddCounter=20] Sorted macro
+ * Both score = Score [macroF1=0.790, macroPrecision=0.802, macroRecall=0.777,
+ * macroAddCounter=100] MACRO CoarseGrained overallTrend: Score [macroF1=0.716,
+ * macroPrecision=0.771, macroRecall=0.668, macroAddCounter=20] MACRO
+ * CoarseGrained overallInvest: Score [macroF1=0.680, macroPrecision=0.633,
+ * macroRecall=0.735, macroAddCounter=20] MACRO CoarseGrained overallGroups:
+ * Score [macroF1=0.832, macroPrecision=0.843, macroRecall=0.821,
+ * macroAddCounter=20] MACRO CoarseGrained overallResult: Score [macroF1=0.769,
+ * macroPrecision=0.772, macroRecall=0.767, macroAddCounter=20]
+ * CoarseGrainedResultEvaluation Score: Score [macroF1=0.769,
+ * macroPrecision=0.772, macroRecall=0.767, macroAddCounter=20]
  * 
- * samplingMode: TYPE_BASED
- * 
- * assignmentMode: TREATMENT_ORGANISM_MODEL_INJURY
- * 
- * cardinalityMode: GOLD_CARDINALITY
- * 
- * groupNameProcessingMode: GOLD_CLUSTERING
- * 
- * groupNameProviderMode: EMPTY
- * 
- * mainClassProviderMode: GOLD
- * 
- * distinctGroupNamesMode: NOT_DISTINCT
- * 
- * TREATMENTS MICRO: BOTH = Score [ getF1()=0.962, getPrecision()=1.000,
- * getRecall()=0.926, tp=50, fp=0, fn=4, tn=0]
- * 
- * TREATMENTS MICRO: Vehicle = Score [ getF1()=0.857, getPrecision()=1.000,
- * getRecall()=0.750, tp=12, fp=0, fn=4, tn=0]
- * 
- * TREATMENTS MICRO: Non Vehicle = Score [ getF1()=1.000, getPrecision()=1.000,
- * getRecall()=1.000, tp=38, fp=0, fn=0, tn=0]
- * 
- * ORGANISM MODEL MICRO: SCORE = Score [ getF1()=0.974, getPrecision()=1.000,
- * getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
- * 
- * INJURY MODEL MICRO: SCORE = Score [ getF1()=0.974, getPrecision()=1.000,
- * getRecall()=0.950, tp=19, fp=0, fn=1, tn=0]
- * 
- * EXP GROUP MICRO CARDINALITY = Score [ getF1()=1.000, getPrecision()=1.000,
- * getRecall()=1.000, tp=57, fp=0, fn=0, tn=0]
- * 
- * EXP GROUP MICRO INTERVALL CARDINALITY = 0:1.0 1:1.0 2:1.0 3:1.0
- * 
- * EXP GROUP MICRO CARDINALITY RMSE = 0.0
- * 
- * EXP GROUP MICRO SCORE = Score [ getF1()=0.797, getPrecision()=0.782,
- * getRecall()=0.813, tp=161, fp=45, fn=37, tn=0]
- * 
- * EXP GROUP MICRO: TREATMENT BOTH = Score [ getF1()=0.724,
- * getPrecision()=0.632, getRecall()=0.847, tp=72, fp=42, fn=13, tn=0]
- * 
- * EXP GROUP MICRO: TREATMENT Vehicle = Score [ getF1()=0.606,
- * getPrecision()=0.714, getRecall()=0.526, tp=10, fp=4, fn=9, tn=0]
- * 
- * EXP GROUP MICRO: TREATMENT Non Vehicle = Score [ getF1()=0.747,
- * getPrecision()=0.620, getRecall()=0.939, tp=62, fp=38, fn=4, tn=0]
- * 
- * EXP GROUP MICRO: ORG MODEL = Score [ getF1()=0.828, getPrecision()=0.976,
- * getRecall()=0.719, tp=41, fp=1, fn=16, tn=0]
- * 
- * EXP GROUP MICRO: INJURY MODEL = Score [ getF1()=0.906, getPrecision()=0.960,
- * getRecall()=0.857, tp=48, fp=2, fn=8, tn=0]
- * 
- * 
+ * ==> result_final_evaluation_GOLD_1001.log <== Unsorted Score: Score
+ * [getF1()=0.789, getPrecision()=0.798, getRecall()=0.780, tp=12963, fp=3290,
+ * fn=3647, tn=0] Sorted macro Result Sentence Score = Score [macroF1=0.910,
+ * macroPrecision=0.929, macroRecall=0.891, macroAddCounter=20]
  * 
  * 
  * 
  * @author hterhors
  *
  */
-public class ResultOutPutReaderFinalEval {
+public class ResultFinalEvaluationOutPutReader {
 
-	final private static Pattern modePattern = Pattern.compile("(.*): (.*)");
+	final private static Pattern modePattern = Pattern.compile("(.*): ?(.*)");
 
 	final private static Pattern microDataPattern = Pattern.compile(
 			"(.*) = Score \\[getF1\\(\\)=(.+?), getPrecision\\(\\)=(.+?), getRecall\\(\\)=(.+?), tp=(.+?), fp=(.+?), fn=(.+?), tn=(.+?)\\]");
 
-	final private static Pattern macroDataPattern = Pattern
-			.compile("(.*) = Score \\[macroF1=(.+?), macroPrecision=(.+?), macroRecall=(.+?), macroAddCounter=.*?\\]");
+	final private static Pattern macroDataPattern = Pattern.compile(
+			"(.*)(=|:) Score \\[macroF1=(.+?), macroPrecision=(.+?), macroRecall=(.+?), macroAddCounter=.*?\\]");
 
 	final private static Pattern intervalCardinalityPattern = Pattern
 			.compile("EXP GROUP MICRO  INTERVALL CARDINALITY = (.*?)	(.*?)	(.*?)	(.*?)");
@@ -141,15 +114,20 @@ public class ResultOutPutReaderFinalEval {
 
 	}
 
-	static public EValue value = EValue.F1;
+//	static public EValue value = EValue.F1;
+//	static public EValue value = EValue.RECALL;
+	static public EValue value = EValue.PRECISION;
 
 	/*
-	 * FOR ISWC
+	 * for run for F1 RECALL and PRECISION
 	 */
-//	static String folder = "iswc_baseline/results/";
-	static String folder = "Final_Evaluation_Results/res/";
+//	static String folder = "final_evaluation_results/result/reg_ex_results/evaluations";
+//	static String folder = "final_evaluation_results/result/fast_text_results/evaluations";
+	static String folder = "final_evaluation_results/result/evaluations";
 
 	public static void main(String[] args) throws Exception {
+
+		preProcess();
 
 		PrintStream ps = new PrintStream(
 				new File(folder + "/merged_cardinality_" + value.toString().toLowerCase() + ".csv"));
@@ -157,9 +135,9 @@ public class ResultOutPutReaderFinalEval {
 		Map<String, Map<String, String>> modePairsMap = new HashMap<>();
 		Set<String> dataNames = new HashSet<>();
 		Set<String> modeValueNames = new HashSet<>();
-		for (int run = 1; run < 11; run++) {
+		for (int run = 0; run < 10; run++) {
 
-			File dir = new File(folder+"/"+run);
+			File dir = new File(folder + "/" + run);
 
 			int modeCounter = 0;
 
@@ -170,7 +148,7 @@ public class ResultOutPutReaderFinalEval {
 
 				@Override
 				public int compare(String o1, String o2) {
-					return Integer.compare(Integer.parseInt(o1.split("_")[0]), Integer.parseInt(o2.split("_")[0]));
+					return o1.split("_")[0].compareTo("" + (o2.split("_")[0]));
 				}
 			});
 
@@ -181,12 +159,12 @@ public class ResultOutPutReaderFinalEval {
 				final String modeName = "Mode_" + modeCounter;
 				modePairsMap.put(modeName, new HashMap<>());
 				List<String> readAllLines = Files.readAllLines(file.toPath());
-				for (int i = 2; i < 6; i++) {
+				for (int i = 0; i < 1; i++) {
 					ModePair modePair = getModePattern(readAllLines.get(i));
 					modePairsMap.get(modeName).put(modePair.mode, modePair.value);
 					modeValueNames.add(modePair.mode);
 				}
-				for (int i = 8; i < readAllLines.size(); i++) {
+				for (int i = 1; i < readAllLines.size(); i++) {
 					DataPair dataPair = getDataPattern(readAllLines.get(i));
 
 					if (dataPair == null)
@@ -274,8 +252,49 @@ public class ResultOutPutReaderFinalEval {
 
 	}
 
+	private static void preProcess() throws IOException {
+
+		List<String> lines = Files.readAllLines(new File(folder, "results").toPath());
+
+		for (int i = 0; i < 10; i++) {
+			new File(folder, "" + i).mkdirs();
+		}
+
+		int counter = 0;
+		PrintStream ps = null;
+
+		for (String line : lines) {
+
+			if (line.contains("==>")) {
+
+				String prefix = "";
+
+				if (line.contains("GOLD_COVERAGE")) {
+					prefix = "GOLD-COVERAGE";
+				} else if (line.contains("GOLD")) {
+					prefix = "GOLD";
+				} else if (line.contains("PREDICT_COVERAGE")) {
+					prefix = "PREDICT-COVERAGE";
+				} else {
+					prefix = "PREDICT";
+				}
+
+				if (counter == 10)
+					counter = 0;
+				ps = new PrintStream(new File(folder, counter + "/" + prefix + "_Results_" + counter));
+
+				ps.println("mode:" + prefix);
+
+				counter++;
+			} else
+				ps.println(line);
+
+		}
+
+	}
+
 	public static void singleFolder(int run) throws FileNotFoundException, IOException {
-		File dir = new File(folder+"/"+run);
+		File dir = new File(folder + "/" + run);
 
 		int modeCounter = 0;
 
@@ -293,26 +312,26 @@ public class ResultOutPutReaderFinalEval {
 
 			@Override
 			public int compare(String o1, String o2) {
-				return Integer.compare(Integer.parseInt(o1.split("_")[0]), Integer.parseInt(o2.split("_")[0]));
+				return o1.split("_")[0].compareTo("" + (o2.split("_")[0]));
 			}
 		});
 
-		PrintStream ps = new PrintStream(new File(folder+"/"+run
-				+ "/single_run_results_" + value.toString().toLowerCase() + ".csv"));
-		
+		PrintStream ps = new PrintStream(
+				new File(folder + "/" + run + "/single_run_results_" + value.toString().toLowerCase() + ".csv"));
+
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
-			System.out.println(file);
+			System.out.println("single folder: "+file);
 
 			final String modeName = "Mode_" + modeCounter;
 			modePairsMap.put(modeName, new HashMap<>());
 			List<String> readAllLines = Files.readAllLines(file.toPath());
-			for (int i = 2; i < 6; i++) {
+			for (int i = 0; i < 1; i++) {
 				ModePair modePair = getModePattern(readAllLines.get(i));
 				modePairsMap.get(modeName).put(modePair.mode, modePair.value);
 				modeValueNames.add(modePair.mode);
 			}
-			for (int i = 8; i < readAllLines.size(); i++) {
+			for (int i = 1; i < readAllLines.size(); i++) {
 
 				DataPair dataPair = getDataPattern(readAllLines.get(i));
 				if (dataPair == null)
@@ -405,8 +424,8 @@ public class ResultOutPutReaderFinalEval {
 		} else {
 			Matcher macro = macroDataPattern.matcher(string);
 			if (macro.find()) {
-				return new DataPair(macro.group(1), new Score(Double.parseDouble(macro.group(2)),
-						Double.parseDouble(macro.group(3)), Double.parseDouble(macro.group(4))));
+				return new DataPair(macro.group(1), new Score(Double.parseDouble(macro.group(3)),
+						Double.parseDouble(macro.group(4)), Double.parseDouble(macro.group(5))));
 			} else {
 				return null;
 			}

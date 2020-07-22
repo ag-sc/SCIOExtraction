@@ -65,4 +65,27 @@ public class Result {
 		return null;
 	}
 
+	public AbstractAnnotation getReferenceGroup() {
+
+		if (!SCIOSlotTypes.hasReferenceGroup.isExcluded()) {
+
+			AbstractAnnotation reference = result.getSingleFillerSlot(SCIOSlotTypes.hasReferenceGroup).getSlotFiller();
+
+			if (reference != null)
+				return reference.asInstanceOfEntityTemplate();
+		}
+		return null;
+	}
+
+	public AbstractAnnotation getTargetGroup() {
+		if (!SCIOSlotTypes.hasTargetGroup.isExcluded()) {
+
+			AbstractAnnotation reference = result.getSingleFillerSlot(SCIOSlotTypes.hasTargetGroup).getSlotFiller();
+
+			if (reference != null)
+				return reference.asInstanceOfEntityTemplate();
+		}
+		return null;
+	}
+
 }

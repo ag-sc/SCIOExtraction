@@ -12,6 +12,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.templates.VertebralAreaRootOverlapTemplate.VertebralLocationScope;
 
 /**
@@ -73,7 +74,7 @@ public class VertebralAreaRootOverlapTemplate extends AbstractFeatureTemplate<Ve
 		Set<String> overlapNames = new HashSet<>();
 		for (EntityTemplate annotation : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
-			if (annotation.getEntityType() != EntityType.get("VertebralArea"))
+			if (annotation.getEntityType() != SCIOEntityTypes.vertebralArea)
 				continue;
 
 			if (!annotation.getRootAnnotation().isInstanceOfDocumentLinkedAnnotation())

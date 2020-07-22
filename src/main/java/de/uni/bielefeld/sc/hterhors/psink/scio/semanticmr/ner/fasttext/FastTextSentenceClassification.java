@@ -62,8 +62,8 @@ public class FastTextSentenceClassification {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
-//				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
+//				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
+				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
 				/**
 				 * Finally, we build the systems scope.
 				 */
@@ -86,8 +86,8 @@ public class FastTextSentenceClassification {
 		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
-//		EntityType type = SCIOEntityTypes.investigationMethod;
-		EntityType type = SCIOEntityTypes.trend;
+		EntityType type = SCIOEntityTypes.investigationMethod;
+//		EntityType type = SCIOEntityTypes.trend;
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(type), corpusDistributor);
@@ -126,6 +126,7 @@ public class FastTextSentenceClassification {
 			Score s = t.score(testInstances).toMacro();
 			log.info(s);
 			mScore.add(s);
+			break;
 		}
 
 		return mScore;
@@ -178,19 +179,6 @@ public class FastTextSentenceClassification {
 		List<FastTextInstance> trainData = buildTrainingData(trainingInstances, trainingDataFileName, false);
 		
 		
-//		Score [macroF1=0.104, macroPrecision=0.075, macroRecall=0.168, macroAddCounter=10] NOT same size invest NOT project annotations
-//		Score [macroF1=0.255, macroPrecision=0.246, macroRecall=0.264, macroAddCounter=10] NOT same size invest project annotations
-//	 	Score [macroF1=0.086, macroPrecision=0.057, macroRecall=0.171, macroAddCounter=10] same size invest NOT project annotations
-//		Score [macroF1=0.213, macroPrecision=0.229, macroRecall=0.199, macroAddCounter=10] same size invest project annotations
-//		Score [macroF1=0.323, macroPrecision=0.308, macroRecall=0.341, macroAddCounter=10] NOT same size invest project annotations +pretrained
-
-
-		
-//		Score [macroF1=0.279, macroPrecision=0.238, macroRecall=0.337, macroAddCounter=10] NOT same size trend NOT project annotations		
-//		Score [macroF1=0.455, macroPrecision=0.543, macroRecall=0.391, macroAddCounter=10] NOT same size trend project annotations + +pretrained
-//		Score [macroF1=0.442, macroPrecision=0.514, macroRecall=0.388, macroAddCounter=10] NOT same size trend project annotations
-//		Score [macroF1=0.270, macroPrecision=0.227, macroRecall=0.333, macroAddCounter=10] same size trend NOT project annotations
-//		Score [macroF1=0.411, macroPrecision=0.568, macroRecall=0.322, macroAddCounter=10]  same size trend  project annotations
 
 		log.info("Training Negative samples: " + trainData.stream().filter(a -> a.goldLabel == NO_LABEL).count());
 		log.info("Training Positive Samples: "
@@ -203,7 +191,7 @@ public class FastTextSentenceClassification {
 		jft = new JFastText();
 		String ftModelName = modelName +
 //				
-//				"pretrained_" +
+				"pretrained_" +
 //				
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 				+ "_supervised.model";
@@ -211,7 +199,7 @@ public class FastTextSentenceClassification {
 		jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 				"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
 
-//				"-pretrainedVectors", preTrainedvec,
+				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 				"-dim", numberOfDimensions + "" });

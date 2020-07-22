@@ -67,8 +67,9 @@ public class BuildAnnotationsJSONFromRawData {
 //		buildForAnaesthetic();
 //		buildForTreatment();
 //		buildForVertebralArea();
+		buildForVertebralLocation();
 //		buildForDeliveryMethod();
-		buildForInjuryDevice();
+//		buildForInjuryDevice();
 //		buildForInvestigationMethod();
 //		buildForGroupName();
 //		buildForTrend();
@@ -96,6 +97,10 @@ public class BuildAnnotationsJSONFromRawData {
 	private static void buildForVertebralArea() throws Exception {
 
 		convertAnnotations(SCIOEntityTypes.vertebralArea);
+	}
+	private static void buildForVertebralLocation() throws Exception {
+		
+		convertAnnotations(SCIOEntityTypes.vertebralLocation);
 	}
 
 	private static void buildForDeliveryMethod() throws Exception {

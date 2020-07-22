@@ -11,6 +11,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.DoubleVector;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.templates.VertebralAreaConditionTemplate.VertebralLocationScope;
 
@@ -90,6 +91,8 @@ public class VertebralAreaConditionTemplate extends AbstractFeatureTemplate<Vert
 
 		for (EntityTemplate vertebralArea : super.<EntityTemplate>getPredictedAnnotations(state)) {
 
+			if (vertebralArea.getEntityType() != SCIOEntityTypes.vertebralArea)
+				continue;
 			if (SCIOSlotTypes.hasLowerVertebrae.isExcluded() || SCIOSlotTypes.hasUpperVertebrae.isExcluded())
 				continue;
 			

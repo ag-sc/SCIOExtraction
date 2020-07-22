@@ -26,6 +26,7 @@ public class SCIOEntityTypes {
 	public static final EntityType observedDifference = getLazy("ObservedDifference");
 	public static final EntityType anaesthetic = getLazy("Anaesthetic");
 	public static final EntityType injuryDevice = getLazy("InjuryDevice");
+	public static final EntityType vertebralLocation = getLazy("VertebralLocation");
 
 	private static EntityType getLazy(String name) {
 		try {

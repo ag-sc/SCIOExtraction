@@ -66,11 +66,9 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod.InvestigationMethodIDFPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod.TFIDFInvestigationMethodExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.result_sentences.ExtractSentencesWithResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TFIDFTrendExtractor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TrendIDFPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPredictorFinalEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
@@ -88,8 +86,10 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		if (args != null && args.length > 0)
 			new ResultSlotFillingHeuristic(Long.parseLong(args[0]), args[1]);
 		else {
-			new ResultSlotFillingHeuristic(1000L, "PREDICT");
+//			new ResultSlotFillingHeuristic(1000L, "PREDICT");
+//			new ResultSlotFillingHeuristic(1000L, "PREDICT_COVERAGE");
 //			new ResultSlotFillingHeuristic(1000L, "GOLD");
+			new ResultSlotFillingHeuristic(1000L, "GOLD_COVERAGE");
 		}
 	}
 
@@ -140,10 +140,13 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
 
 		this.dataRandomSeed = dataRandomSeed;
-		modus = ENERModus.valueOf(modusName);
+		modus = ENERModus.valueOf(modusName.split("_")[0]);
+
+		boolean isCoverage = modusName.contains("COVERAGE");
+
 		readData();
 
-		boolean includeFastTextAnnotations = true;
+		boolean includeFastTextAnnotations = false;
 		boolean includeIDFAnnotations = true;
 		boolean addDicitionaryBasedAnnotations = false;
 		boolean includeRegexData = true;
@@ -179,7 +182,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //		});
 
 		if (modus == ENERModus.PREDICT) {
-			for (Instance instance : goldAnnotations.keySet()) {
+			for (Instance instance : instanceProvider.getInstances()) {
 				annotations.putIfAbsent(instance, new HashSet<>());
 				annotations.get(instance).addAll(getGroupNameCandidates(instance));
 			}
@@ -223,15 +226,32 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				r.filter();
 
 				for (Instance instance : trends.keySet()) {
+					AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 					annotations.putIfAbsent(instance, new HashSet<>());
+
 					for (Set<DocumentLinkedAnnotation> trendAnnotations : trends.get(instance).values()) {
-						annotations.get(instance).addAll(trendAnnotations);
+						for (DocumentLinkedAnnotation trendAnnotation : trendAnnotations) {
+
+							if (sectionification.getSection(trendAnnotation) != ESection.RESULTS) {
+								continue;
+							}
+
+							annotations.get(instance).add(trendAnnotation);
+						}
 					}
 				}
 				for (Instance instance : investigationMethods.keySet()) {
+					AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
 					annotations.putIfAbsent(instance, new HashSet<>());
+
 					for (Set<DocumentLinkedAnnotation> invMAnnotations : investigationMethods.get(instance).values()) {
-						annotations.get(instance).addAll(invMAnnotations);
+						for (DocumentLinkedAnnotation invMAnnotation : invMAnnotations) {
+
+							if (sectionification.getSection(invMAnnotation) != ESection.RESULTS) {
+								continue;
+							}
+							annotations.get(instance).add(invMAnnotation);
+						}
 					}
 				}
 
@@ -241,27 +261,180 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				addDictionaryBasedAnnotations(annotations);
 		}
 
-		expGroups = getGoldGroups();
-//		if (modus == ENERModus.GOLD)
-//			expGroups = getGoldGroups();
-//		else {
-//			expGroups = getPredictedGroups();
-//		}
+		if (modus == ENERModus.GOLD)
+			expGroups = getGoldGroups();
+		else {
+			expGroups = getPredictedGroups();
+		}
 
 		LocalSentenceHeuristic heuristic = new LocalSentenceHeuristic(annotations, expGroups, trainingInstances);
 
-		Map<Instance, State> results = heuristic.predictInstancesByHeuristic(testInstances);
+		Map<Instance, State> coverage = new HashMap<>();
+		Map<Instance, State> results = new HashMap<>();
+		if (!isCoverage)
+			results = heuristic.predictInstancesByHeuristic(testInstances);
+
+		if (isCoverage)
+			coverage = computeCoverage(annotations, expGroups, testInstances);
 
 		SCIOSlotTypes.hasGroupName.exclude();
 
-		Score score = evaluate(log, results, this.objectiveFunction);
-		log.info("Unsorted Score: " + score);
+		if (!isCoverage) {
 
-		scoreDetailed(results);
+			Score score = evaluate(log, results, this.objectiveFunction);
+			log.info("Unsorted Score: " + score);
 
-		Score coarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
-		log.info("CoarseGrainedResultEvaluation Score: " + coarseGrained);
+			scoreDetailed(results);
 
+			Score coarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
+			log.info("CoarseGrainedResultEvaluation Score: " + coarseGrained);
+		} else {
+
+			Score coverageScore = evaluate(log, coverage, this.objectiveFunction);
+			log.info("COVERAGE Unsorted Score: " + coverageScore);
+
+			scoreDetailed(coverage);
+
+			Score coverageCoarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction,
+					coverage);
+			log.info("COVERAGE CoarseGrainedResultEvaluation Score: " + coverageCoarseGrained);
+		}
+
+	}
+
+	private Map<Instance, State> computeCoverage(Map<Instance, Set<DocumentLinkedAnnotation>> annotations,
+			Map<Instance, Set<EntityTemplate>> expGroups, List<Instance> testInstances) {
+
+		Map<Instance, State> coverage = new HashMap<>();
+
+		for (Instance instance : testInstances) {
+			List<AbstractAnnotation> resultAnnotations = new ArrayList<>();
+
+			for (AbstractAnnotation goldResult : instance.getGoldAnnotations().getAnnotations()) {
+				resultAnnotations.add(toCoveredResult(new Result(goldResult.asInstanceOfEntityTemplate()),
+						annotations.getOrDefault(instance, Collections.emptySet()),
+						expGroups.getOrDefault(instance, Collections.emptySet())));
+			}
+
+			Annotations coverageAnnotations = new Annotations(resultAnnotations);
+			coverage.put(instance, new State(instance, coverageAnnotations));
+		}
+
+		return coverage;
+	}
+
+	private AbstractAnnotation toCoveredResult(Result goldResult, Set<DocumentLinkedAnnotation> annotations,
+			Set<EntityTemplate> predDefGroups) {
+
+		ResultData resultData = new ResultData();
+
+		Trend goldTrend = new Trend(goldResult.getTrend());
+
+		Score bestScore;
+		DocumentLinkedAnnotation goldAnn;
+		DocumentLinkedAnnotation bestAnnotation;
+
+		if (goldTrend.get() != null) {
+			bestScore = new Score();
+			goldAnn = goldTrend.getRootAnntoationAsDocumentLinkedAnnotation();
+			bestAnnotation = null;
+			if (goldAnn != null) {
+				for (DocumentLinkedAnnotation annotation : annotations) {
+
+					Score s = objectiveFunction.getEvaluator().scoreSingle(annotation, goldAnn);
+
+					if (s.getF1() > bestScore.getF1()) {
+						bestScore = s;
+						bestAnnotation = annotation;
+					}
+
+				}
+			}
+			resultData.trend = bestAnnotation;
+
+			bestScore = new Score();
+			goldAnn = goldTrend.getDifferenceAsDocumentLinkedAnnotation();
+			bestAnnotation = null;
+			if (goldAnn != null) {
+				for (DocumentLinkedAnnotation annotation : annotations) {
+
+					Score s = objectiveFunction.getEvaluator().scoreSingle(annotation, goldAnn);
+
+					if (s.getF1() > bestScore.getF1()) {
+						bestScore = s;
+						bestAnnotation = annotation;
+					}
+
+				}
+			}
+			resultData.difference = bestAnnotation;
+
+			bestScore = new Score();
+			goldAnn = goldTrend.getPValueAsDocumentLinkedAnnotation();
+			bestAnnotation = null;
+			if (goldAnn != null) {
+				for (DocumentLinkedAnnotation annotation : annotations) {
+
+					Score s = objectiveFunction.getEvaluator().scoreSingle(annotation, goldAnn);
+
+					if (s.getF1() > bestScore.getF1()) {
+						bestScore = s;
+						bestAnnotation = annotation;
+					}
+
+				}
+			}
+			resultData.pValue = bestAnnotation;
+		}
+		bestScore = new Score();
+		/**
+		 * InvestigationMethod
+		 */
+		if (goldResult.getInvestigationMethod() != null)
+			for (DocumentLinkedAnnotation annotation : annotations) {
+
+				Score s = objectiveFunction.getEvaluator().scoreSingle(annotation,
+						goldResult.getInvestigationMethod().getRootAnnotation());
+
+				if (s.getF1() > bestScore.getF1()) {
+					bestScore = s;
+					resultData.invMethod = annotation;
+				}
+
+			}
+
+		bestScore = new Score();
+		/**
+		 * TargetGroup
+		 */
+		for (EntityTemplate predDefGroup : predDefGroups) {
+
+			Score s = objectiveFunction.getEvaluator().scoreSingle(predDefGroup, goldResult.getTargetGroup());
+
+			if (s.getF1() > bestScore.getF1()) {
+				bestScore = s;
+				resultData.group1 = predDefGroup;
+			}
+
+		}
+
+		bestScore = new Score();
+
+		/**
+		 * ReferenceGroup
+		 */
+		for (EntityTemplate predDefGroup : predDefGroups) {
+
+			Score s = objectiveFunction.getEvaluator().scoreSingle(predDefGroup, goldResult.getReferenceGroup());
+
+			if (s.getF1() > bestScore.getF1()) {
+				bestScore = s;
+				resultData.group2 = predDefGroup;
+			}
+
+		}
+
+		return resultData.toResult(true);
 	}
 
 	/**
@@ -378,8 +551,14 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	}
 
 	private List<DocumentLinkedAnnotation> getGroupNameCandidates(Instance instance) {
-//return GroupNameExtraction.extractGroupNamesWithNPCHunks(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
-		return GroupNameExtraction.extractGroupNamesWithPattern(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
+		List<DocumentLinkedAnnotation> list = GroupNameExtraction
+				.extractGroupNamesWithPattern(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
+
+//		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction
+//				.extractGroupNamesWithNPCHunks(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
+//		list.addAll(list2);
+
+		return list;
 
 //		switch (groupNameProviderMode) {
 //		case EMPTY:

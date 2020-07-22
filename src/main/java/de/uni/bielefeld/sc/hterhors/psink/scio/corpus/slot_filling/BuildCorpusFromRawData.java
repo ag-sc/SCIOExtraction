@@ -91,13 +91,14 @@ public class BuildCorpusFromRawData {
 //		buildCorpusForObservation();
 //		buildCorpusForOrganismModel();
 //		buildCorpusForInjuryModel();
-		buildCorpusForTreatmentType();
+//		buildCorpusForTreatmentType();
+//		buildCorpusForInjuryLocation();
 //		buildCorpusForVertebralArea();
 //		buildCorpusForAnaesthesia();
 //		buildCorpusForDeliveryMethod();
 //		buildCorpusForInjuryDevice();
-//		buildCorpusForInvestigationMethod();
-//		buildCorpusForTrend();
+		buildCorpusForInvestigationMethod();
+		buildCorpusForTrend();
 		System.exit(1);
 	}
 
@@ -158,6 +159,13 @@ public class BuildCorpusFromRawData {
 		annotateWithRegularExpressions(new VertebralAreaPattern(SCIOEntityTypes.vertebralArea));
 	}
 
+	private static void buildCorpusForInjuryLocation() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.vertebralLocation);
+		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.vertebralLocation,
+				true, true, false);
+		annotateWithRegularExpressions(new VertebralAreaPattern(SCIOEntityTypes.vertebralLocation));
+	}
+
 	private static void buildCorpusForAnaesthesia() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.anaesthetic);
 		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.anaesthetic, true,
@@ -189,7 +197,7 @@ public class BuildCorpusFromRawData {
 				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
 
 		Set<SlotType> investigationMethodSlotTypes = new HashSet<>();
-		investigationMethodSlotTypes.add(SCIOSlotTypes.hasLocation);
+//		investigationMethodSlotTypes.add(SCIOSlotTypes.hasLocation);
 		convertFromSanto2JsonCorpus(annotatedDocuments, investigationMethodSlotTypes,
 				SCIOEntityTypes.investigationMethod, true, true, false);
 		annotateWithRegularExpressions(new InvestigationMethodPattern(SCIOEntityTypes.investigationMethod));

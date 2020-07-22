@@ -128,7 +128,7 @@ public class DefinedExperimentalGroup {
 
 	public boolean isEmpty() {
 		return getOrganisModel() == null
-				|| getInjury() == null && (getTreatments() == null || getTreatments().isEmpty());
+				&& getInjury() == null && (getTreatments() == null || getTreatments().isEmpty());
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,6 +62,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.SingleFillerSlot;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.templates.et.SlotIsFilledTemplate;
+import de.hterhors.semanticmr.crf.variables.Annotations;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
@@ -138,6 +140,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment
 public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends AbstractSemReadProject {
 
 	private Map<Instance, State> resultsTest;
+	private Map<Instance, State> coverageTest;
 
 	public static void main(String[] args) throws Exception {
 
@@ -166,7 +169,9 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		if (args.length == 0) {
 			modusIndex = 17; // GOLD
 //			modusIndex = 18; // PREDICTED
-			dataRandomSeed = 1000L;
+//			modusIndex = 19; // COVERGAE GOLD
+//			modusIndex = 20; // COVERGAE PREDICT
+			dataRandomSeed = 1004L;
 		} else {
 			modusIndex = Integer.parseInt(args[0]);
 			dataRandomSeed = Integer.parseInt(args[1]);
@@ -209,7 +214,10 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 				devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 				testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
 
-		a.eval(a.resultsTest);
+		if (modusIndex == 19 || modusIndex == 20)
+			a.eval(a.coverageTest);
+		else
+			a.eval(a.resultsTest);
 
 	}
 
@@ -477,6 +485,34 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 			groupNameProviderMode = EExtractGroupNamesMode.MANUAL_PATTERN_NP_CHUNKS;
 			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
 			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
+		} else if (id == 19) {
+			/*
+			 * COVERAGE MODE GOLD !!!
+			 */
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.FULL;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.GOLD;
+
+			groupNameProviderMode = EExtractGroupNamesMode.GOLD;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
+		} else if (id == 20) {
+			/*
+			 * COVERAGE MODE PREDICT!!!
+			 */
+			distinctGroupNamesMode = EDistinctGroupNamesMode.NOT_DISTINCT;
+			assignmentMode = EAssignmentMode.TREATMENT_ORGANISM_MODEL_INJURY;
+			complexityMode = EComplexityMode.FULL;
+			explorationMode = EExplorationMode.TYPE_BASED;
+
+			mainClassProviderMode = EMainClassMode.PRE_PREDICTED;
+
+			groupNameProviderMode = EExtractGroupNamesMode.MANUAL_PATTERN_NP_CHUNKS;
+			groupNameClusteringMode = EGroupNamesClusteringMode.WEKA_CLUSTERING;
+			cardinalityMode = ECardinalityMode.PARALLEL_MODEL_UPDATE;
 		}
 
 		log.info("explorationMode: " + explorationMode);
@@ -515,6 +551,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		rand = String.valueOf(new Random(dataRandomSeed).nextInt() + new Random(parameterID).nextInt());
 
 		setParameterByID(parameterID);
+
 		modus = mainClassProviderMode == EMainClassMode.GOLD ? ENERModus.GOLD : ENERModus.PREDICT;
 
 		modelName = modus + "_ExperimentalGroup" + rand;
@@ -570,7 +607,10 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		ISamplingStoppingCriterion[] sampleStoppingCrits = new ISamplingStoppingCriterion[] { maxStepCrit,
 				noModelChangeCrit };
 
-		run(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates, parameter);
+		if (parameterID == 19 || parameterID == 20)
+			coverageTest = coverageInstances(SCIOEntityTypes.definedExperimentalGroup, true, explorerList);
+		else
+			run(explorerList, sampler, initializer, sampleStoppingCrits, maxStepCrit, featureTemplates, parameter);
 
 	}
 
@@ -605,6 +645,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		/**
 		 * Create a new semantic parsing CRF and initialize with needed parameter.
 		 */
+
 		ISemanticParsingCRF crf;
 		if (cardinalityMode == ECardinalityMode.PARALLEL || cardinalityMode == ECardinalityMode.PARALLEL_MODEL_UPDATE) {
 			crf = new SemanticParsingCRFMultiState(model, explorerList, (AbstractBeamSampler) sampler,
@@ -617,14 +658,14 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 			crf.setInitializer(initializer);
 
-//			log.info("Training instances coverage: "
-//					+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, trainingInstances));
-//
-//			log.info("Test instances coverage: "
-//					+ ((SemanticParsingCRF) crf).computeCoverage(true, predictionObjectiveFunction, testInstances));
 		}
+
+//		log.info("Training instances coverage: " + ((SemanticParsingCRF) crf).computeCoverage(true,
+//				predictionObjectiveFunction, trainingInstances));
 //
-//		System.exit(1);	
+//		log.info("Test instances coverage: " + ((SemanticParsingCRF) crf).computeCoverage(true,
+//				predictionObjectiveFunction, testInstances));
+////
 
 		/**
 		 * If the model was loaded from the file system, we do not need to train it.
@@ -680,6 +721,30 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		log.info("States generated in total: " + SlotFillingExplorer.statesgenerated);
 	}
 
+	public Map<Instance, State> coverageInstances(EntityType type, boolean detailedLog,
+			List<IExplorationStrategy> explorerList) {
+		List<IExplorationStrategy> explorer = new ArrayList<>(explorerList);
+		explorer.addAll(getCoverageAdditionalExplorer(type));
+
+		Map<Instance, State> coverage = new SemanticParsingCRF(
+				new Model(getFeatureTemplates(), getModelBaseDir(), modelName), explorer,
+				new EpochSwitchSampler(epoch -> epoch % 2 == 0), getCoverageStateInitializer(type),
+				predictionObjectiveFunction).computeCoverage(detailedLog, predictionObjectiveFunction, testInstances);
+
+		return coverage;
+	}
+
+	private IStateInitializer getCoverageStateInitializer(EntityType type) {
+		return (instance -> {
+			return new State(instance, new Annotations(new EntityTemplate(type)));
+		});
+	}
+
+	private Collection<? extends IExplorationStrategy> getCoverageAdditionalExplorer(EntityType type) {
+		return Arrays.asList(new RootTemplateCardinalityExplorer(predictionObjectiveFunction.getEvaluator(),
+				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(type)));
+	}
+
 	public void eval(Map<Instance, State> results) throws Exception {
 		/*
 		 * Exclude from evaluation.
@@ -707,7 +772,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		evaluateDetailed(ps, results);
 
 		Map<SlotType, Boolean> stored = SlotType.storeExcludance();
-		Map<SlotType, Boolean> x = SlotType.storeExcludance();
+		SlotType.excludeAll();
 		if (!stored.get(SCIOSlotTypes.hasTreatmentType)) {
 			SCIOSlotTypes.hasTreatmentType.include();
 			SCIOSlotTypes.hasCompound.include();
@@ -739,7 +804,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		expGroupEval.evaluate(ps, results, EScoreType.MICRO);
 		expGroupEval.evaluate(ps, results, EScoreType.MACRO);
 
-		SlotType.restoreExcludance(x);
+		SlotType.restoreExcludance(stored);
 
 	}
 
@@ -1304,13 +1369,6 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 			throw new IllegalArgumentException("Can not combine modes: groupNameClusteringMode = "
 					+ groupNameClusteringMode + " with cardinalityMode = " + cardinalityMode);
 		}
-//		SCIOSlotTypes.hasGender.include();
-//		SCIOSlotTypes.hasWeight.include();
-//		SCIOSlotTypes.hasAgeCategory.include();
-//		SCIOSlotTypes.hasAge.include();
-//		SCIOSlotTypes.hasLocation.include();
-//		SCIOSlotTypes.hasInjuryAnaesthesia.include();
-//		SCIOSlotTypes.hasInjuryDevice.include();
 
 		if (groupNameProviderMode == EExtractGroupNamesMode.EMPTY) {
 			/*
@@ -1693,12 +1751,13 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		 */
 		goldModificationRules.add(a -> {
 			if (a.asInstanceOfEntityTemplate().getRootAnnotation().isInstanceOfDocumentLinkedAnnotation()
-					|| (SCIOSlotTypes.hasGroupName.isIncluded() && a.asInstanceOfEntityTemplate()
-							.getMultiFillerSlot(SCIOSlotTypes.hasGroupName).containsSlotFiller())
-					|| (SCIOSlotTypes.hasInjuryModel.isIncluded() && a.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
-					|| (SCIOSlotTypes.hasOrganismModel.isIncluded() && a.asInstanceOfEntityTemplate()
-							.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
+					|| (SCIOSlotTypes.hasGroupName.isIncluded() && !SCIOSlotTypes.hasGroupName.isFrozen()
+							&& a.asInstanceOfEntityTemplate().getMultiFillerSlot(SCIOSlotTypes.hasGroupName)
+									.containsSlotFiller())
+//					|| (SCIOSlotTypes.hasInjuryModel.isIncluded() && a.asInstanceOfEntityTemplate()
+//							.getSingleFillerSlot(SCIOSlotTypes.hasInjuryModel).containsSlotFiller())
+//					|| (SCIOSlotTypes.hasOrganismModel.isIncluded() && a.asInstanceOfEntityTemplate()
+//							.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel).containsSlotFiller())
 					|| (SCIOSlotTypes.hasTreatmentType.isIncluded() && a.asInstanceOfEntityTemplate()
 							.getMultiFillerSlot(SCIOSlotTypes.hasTreatmentType).containsSlotFiller()))
 				return a;
@@ -1974,41 +2033,6 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		SlotType.restoreExcludance(x);
 		return injuryModelAnnotations;
-	}
-
-	private void preprocessingPrediction() {
-		/**
-		 * Predict GroupNames.
-		 */
-
-//		GroupNameNERLPredictor groupNamePredictor = new GroupNameNERLPredictor("GroupName" + rand, scope,
-//				trainingInstanceNames, developInstanceNames, testInstanceNames);
-//
-//		groupNamePredictor.trainOrLoadModel();
-//
-//		Map<String, Set<AbstractAnnotation>> groupNameAnnotations = groupNamePredictor.predictBatchInstances();
-
-//		/**
-//		 * Predict Injuries
-//		 */
-//
-//		InjurySlotFillingPredictor injuryPredictor = new InjurySlotFillingPredictor("InjuryModel" + rand, scope,
-//				trainingInstanceNames, developInstanceNames, testInstanceNames);
-//
-//		injuryPredictor.trainOrLoadModel();
-//
-//		Map<String, Set<AbstractAnnotation>> injuryAnnotations = injuryPredictor.predictAllInstances();
-
-		/**
-		 * Predict Treatments
-		 */
-
-//		TreatmentSlotFillingPredictor treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment" + rand, scope,
-//				trainingInstanceNames, developInstanceNames, testInstanceNames);
-//
-//		treatmentPredictor.trainOrLoadModel();
-//
-//		Map<String, Set<AbstractAnnotation>> treatmentAnnotations = treatmentPredictor.predictAllInstances();
 	}
 
 	private Map<Instance, Set<AbstractAnnotation>> getDictionaryBasedCandidates() {

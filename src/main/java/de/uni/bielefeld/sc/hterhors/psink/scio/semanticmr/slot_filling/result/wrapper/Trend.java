@@ -65,15 +65,16 @@ public class Trend {
 
 		if (significance != null) {
 
-			DocumentLinkedAnnotation rootSig =  getRootAnntoationAsDocumentLinkedAnnotation(significance);
+			DocumentLinkedAnnotation rootSig = getRootAnntoationAsDocumentLinkedAnnotation(significance);
 			if (rootSig != null)
 				relIds.add(rootSig.getSentenceIndex());
-			
+
 			DocumentLinkedAnnotation pvalue = getDocumentLinkedAnnotation(significance, SCIOSlotTypes.hasPValue);
 			if (pvalue != null)
 				relIds.add(pvalue.getSentenceIndex());
 
-			DocumentLinkedAnnotation alphaSignificanceNiveau = getDocumentLinkedAnnotation(significance, SCIOSlotTypes.hasAlphaSignificanceNiveau);
+			DocumentLinkedAnnotation alphaSignificanceNiveau = getDocumentLinkedAnnotation(significance,
+					SCIOSlotTypes.hasAlphaSignificanceNiveau);
 			if (alphaSignificanceNiveau != null)
 				relIds.add(alphaSignificanceNiveau.getSentenceIndex());
 
@@ -81,6 +82,78 @@ public class Trend {
 
 		return relIds;
 
+	}
+
+	public List<DocumentLinkedAnnotation> getRelevantDocumentLinkedAnnotations() {
+
+		List<DocumentLinkedAnnotation> relDocs = new ArrayList<>();
+
+		DocumentLinkedAnnotation difference = getDifferenceAsDocumentLinkedAnnotation();
+		if (difference != null)
+			relDocs.add(difference);
+
+		DocumentLinkedAnnotation root = getRootAnntoationAsDocumentLinkedAnnotation();
+		if (root != null)
+			relDocs.add(root);
+
+		EntityTemplate significance = getSignificance();
+
+		if (significance != null) {
+
+			DocumentLinkedAnnotation rootSig = getRootAnntoationAsDocumentLinkedAnnotation(significance);
+			if (rootSig != null)
+				relDocs.add(rootSig);
+
+			DocumentLinkedAnnotation pvalue = getDocumentLinkedAnnotation(significance, SCIOSlotTypes.hasPValue);
+			if (pvalue != null)
+				relDocs.add(pvalue);
+
+			DocumentLinkedAnnotation alphaSignificanceNiveau = getDocumentLinkedAnnotation(significance,
+					SCIOSlotTypes.hasAlphaSignificanceNiveau);
+			if (alphaSignificanceNiveau != null)
+				relDocs.add(alphaSignificanceNiveau);
+
+		}
+
+		return relDocs;
+
+	}
+
+	public DocumentLinkedAnnotation getSignificanceRootAsDocumentLinkedAnnotation() {
+		EntityTemplate significance = getSignificance();
+
+		if (significance != null) {
+
+			DocumentLinkedAnnotation rootSig = getRootAnntoationAsDocumentLinkedAnnotation(significance);
+
+			return rootSig;
+		}
+		return null;
+	}
+
+	public DocumentLinkedAnnotation getPValueAsDocumentLinkedAnnotation() {
+		EntityTemplate significance = getSignificance();
+
+		if (significance != null) {
+
+			DocumentLinkedAnnotation pvalue = getDocumentLinkedAnnotation(significance, SCIOSlotTypes.hasPValue);
+
+			return pvalue;
+		}
+		return null;
+	}
+
+	public DocumentLinkedAnnotation getAlphaSigNivAsDocumentLinkedAnnotation() {
+		EntityTemplate significance = getSignificance();
+
+		if (significance != null) {
+
+			DocumentLinkedAnnotation pvalue = getDocumentLinkedAnnotation(significance,
+					SCIOSlotTypes.hasAlphaSignificanceNiveau);
+
+			return pvalue;
+		}
+		return null;
 	}
 
 	public EntityTemplate getSignificance() {

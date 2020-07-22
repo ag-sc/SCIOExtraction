@@ -24,6 +24,7 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.ResultData;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaccardSimilarity;
 import uk.ac.shef.wit.simmetrics.tokenisers.TokeniserQGram3;
 
@@ -71,8 +72,10 @@ public class LocalSentenceHeuristic {
 
 			if (SCIOSlotTypes.hasTargetGroup.isIncluded()) {
 				Map<DocumentLinkedAnnotation, EntityTemplate> namePerGroup = getGroupMapping(instance);
+			
 				trendInvResultData = addExperimentalGroupData(namePerGroup, trendInvResultData, instance,
 						entitiesPerSentence);
+		
 			}
 			System.out.println(trendInvResultData.size());
 
@@ -150,6 +153,7 @@ public class LocalSentenceHeuristic {
 					names.addAll(getSubClassOf(annotationsInSentence, SCIOEntityTypes.experimentalGroup));
 
 					List<DocumentLinkedAnnotation> sortedLocalNames = new ArrayList<>(names);
+			
 					/**
 					 * Sort to compare first mention against all following ones if there are
 					 * mentioned multiple. Sorting gains 4 points in macro F
@@ -172,7 +176,7 @@ public class LocalSentenceHeuristic {
 							return Integer.compare(o1.getStartDocCharOffset(), o2.getStartDocCharOffset());
 						}
 					});
-					System.out.println((trendSentenceIndex - sentenceIndex) + " --> ### NUmber of Local Names = "
+					System.out.println((trendSentenceIndex - sentenceIndex) + " --> ### Number of Local Names = "
 							+ sortedLocalNames.size());
 
 //				System.out.println("namePerGroup: " + namePerGroup.keySet().stream()
@@ -804,96 +808,6 @@ public class LocalSentenceHeuristic {
 			}
 		}
 		return namePerGroup;
-	}
-
-	class ResultData {
-
-		public EntityTemplate group1;
-		public EntityTemplate group2;
-		public DocumentLinkedAnnotation trend;
-		public DocumentLinkedAnnotation difference;
-		public DocumentLinkedAnnotation significance;
-		public DocumentLinkedAnnotation pValue;
-		public DocumentLinkedAnnotation invMethod;
-
-		public ResultData() {
-		}
-
-		public ResultData(ResultData resultData) {
-
-			this.trend = resultData.trend;
-			this.difference = resultData.difference;
-			this.significance = resultData.significance;
-			this.pValue = resultData.pValue;
-			this.invMethod = resultData.invMethod;
-			this.group1 = resultData.group1;
-			this.group2 = resultData.group2;
-
-		}
-
-		public EntityTemplate toResult() {
-
-			if (SCIOSlotTypes.hasTargetGroup.isIncluded() && group1 == null && group2 == null)
-				return null;
-			EntityTemplate result = new EntityTemplate(SCIOEntityTypes.result)
-					.setSingleSlotFiller(SCIOSlotTypes.hasInvestigationMethod, new EntityTemplate(invMethod));
-
-			EntityTemplate tr = null;
-
-			if (trend == null && difference == null && significance == null && pValue == null)
-				throw new IllegalStateException("Trend is null");
-
-			if (trend != null)
-				tr = new EntityTemplate(trend);
-
-			if (difference != null) {
-
-				if (tr == null)
-					tr = new EntityTemplate(SCIOEntityTypes.trend);
-
-				tr.setSingleSlotFiller(SCIOSlotTypes.hasDifference, difference);
-			}
-
-			EntityTemplate sig = null;
-			if (significance != null) {
-
-				if (tr == null)
-					tr = new EntityTemplate(SCIOEntityTypes.trend);
-
-				sig = new EntityTemplate(significance);
-			}
-
-			if (pValue != null) {
-
-				if (tr == null)
-					tr = new EntityTemplate(SCIOEntityTypes.trend);
-				if (sig == null)
-					sig = new EntityTemplate(SCIOEntityTypes.significance);
-
-				sig.setSingleSlotFiller(SCIOSlotTypes.hasPValue, pValue);
-			}
-
-			if (sig != null)
-				tr.setSingleSlotFiller(SCIOSlotTypes.hasSignificance, sig);
-
-			if (tr != null)
-				result.setSingleSlotFiller(SCIOSlotTypes.hasTrend, tr);
-
-			if (group1 != null)
-				result.setSingleSlotFiller(SCIOSlotTypes.hasTargetGroup, group1);
-
-			if (group2 != null)
-				result.setSingleSlotFiller(SCIOSlotTypes.hasReferenceGroup, group2);
-
-			return result;
-		}
-
-		@Override
-		public String toString() {
-			return "ResultData [trend=" + trend + ", difference=" + difference + ", significance=" + significance
-					+ ", pValue=" + pValue + ", invMethod=" + invMethod + "]";
-		}
-
 	}
 
 	private List<ResultData> extractTrendInvMethodResultData(
