@@ -28,6 +28,7 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -151,8 +152,19 @@ public class DeliveryMethodSlotFilling {
 							.collect(Collectors.toList()),
 					rule, ENERModus.GOLD);
 
-//			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+			Set<SlotType> slotTypesToConsider = new HashSet<>();
+			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
+			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
 
+//			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+			
+			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
+					predictor.predictionObjectiveFunction.getEvaluator());
+
+			
+			
+			
+			
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
@@ -161,9 +173,6 @@ public class DeliveryMethodSlotFilling {
 
 //			resultsOut.println(toResults(rule, score));
 
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
-			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 

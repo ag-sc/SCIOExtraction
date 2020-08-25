@@ -102,7 +102,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 	public final IObjectiveFunction predictionObjectiveFunction = new SlotFillingObjectiveFunction(EScoreType.MICRO,
 			new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE));
 
-	protected final InstanceProvider instanceProvider;
+	public final InstanceProvider instanceProvider;
 
 	protected final List<String> trainingInstanceNames;
 	protected final List<String> developInstanceNames;

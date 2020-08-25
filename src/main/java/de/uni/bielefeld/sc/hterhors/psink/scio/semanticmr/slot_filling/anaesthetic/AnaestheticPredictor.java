@@ -242,14 +242,14 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-		return (instance -> {
-			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic)));
-		});
-
 //		return (instance -> {
-//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
-//					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic)));
 //		});
+
+		return (instance -> {
+			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
+					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+		});
 
 //		return (instance -> {
 //
@@ -402,3 +402,12 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 //				EExplorationMode.ANNOTATION_BASED, AnnotationBuilder.toAnnotation(EntityType.get("Anaesthetic"))));
 	}
 }
+
+//MACRO	Root = 0.582	0.719	0.490	0.592	0.719	0.505	0.984	1.000	0.969
+//MACRO	hasDeliveryMethod = 0.377	0.466	0.316	0.443	0.548	0.372	0.849	0.849	0.849
+//MACRO	hasDosage = 0.854	1.000	0.745	0.868	1.000	0.769	0.984	1.000	0.969
+//MACRO	Cardinality = 0.850	1.000	0.740	0.864	1.000	0.763	0.984	1.000	0.969
+//MACRO	Overall = 0.644	0.747	0.566	0.688	0.784	0.614	0.937	0.953	0.922
+//modelName: Anaesthetic2052882097
+//CRFStatistics [context=Train, getTotalDuration()=14878]
+//CRFStatistics [context=Test, getTotalDuration()=165]

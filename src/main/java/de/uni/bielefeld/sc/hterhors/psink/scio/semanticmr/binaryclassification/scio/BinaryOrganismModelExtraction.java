@@ -1,6 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.scio;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,14 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.normalization.AbstractNormalizationFunction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.BinaryDataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.BinaryExtraction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.DLAPredictions;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.IGetNormalizationFunction;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
 
 /**
@@ -33,8 +37,14 @@ public class BinaryOrganismModelExtraction extends BinaryExtraction {
 
 	}
 
+
 	public BinaryOrganismModelExtraction() throws Exception {
-		super("OrganismModel");
+		super("OrganismModel", new IGetNormalizationFunction() {
+			@Override
+			public List<AbstractNormalizationFunction> get() {
+				return Arrays.asList(new WeightNormalization());
+			}
+		});
 	}
 
 	@Override

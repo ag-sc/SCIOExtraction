@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -51,6 +52,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -88,8 +90,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		else {
 //			new ResultSlotFillingHeuristic(1000L, "PREDICT");
 //			new ResultSlotFillingHeuristic(1000L, "PREDICT_COVERAGE");
-//			new ResultSlotFillingHeuristic(1000L, "GOLD");
-			new ResultSlotFillingHeuristic(1000L, "GOLD_COVERAGE");
+			new ResultSlotFillingHeuristic(1000L, "GOLD");
+//			new ResultSlotFillingHeuristic(1000L, "GOLD_COVERAGE");
 		}
 	}
 
@@ -146,10 +148,38 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		readData();
 
+		for (Instance instance : instanceProvider.getInstances()) {
+
+			if (!instance.getName().startsWith("N075"))
+				continue;
+
+			List<EntityTemplate> l = new ArrayList<>();
+			for (AbstractAnnotation aa : instance.getGoldAnnotations().getAnnotations()) {
+
+				System.out.println(aa.toPrettyString());
+				if (!aa.toPrettyString().contains("BBB"))
+					continue;
+
+				if (!aa.toPrettyString().contains("Positive"))
+					continue;
+
+				if (!aa.toPrettyString().contains("control"))
+					continue;
+
+				if (!aa.toPrettyString().contains("OEG/MSC"))
+					continue;
+				
+				l.add(aa.asInstanceOfEntityTemplate());
+			}
+
+			ConvertToRDF x = new ConvertToRDF(new File("test.n-triples"), l);
+
+		}
+		System.exit(1);
 		boolean includeFastTextAnnotations = false;
 		boolean includeIDFAnnotations = true;
 		boolean addDicitionaryBasedAnnotations = false;
-		boolean includeRegexData = true;
+		boolean includeRegexData = false;
 
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
@@ -171,15 +201,76 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				annotations.get(instance).addAll(goldAnnotations.get(instance));
 			}
 		}
+		/*
+		 * TEST ALL GOLD BUT IDF PREDICT FOR TREND AND INV M
+		 */
+		annotations.values().stream().forEach(a -> {
+			for (Iterator<DocumentLinkedAnnotation> iterator = a.iterator(); iterator.hasNext();) {
+				DocumentLinkedAnnotation documentLinkedAnnotation = (DocumentLinkedAnnotation) iterator.next();
+				if (documentLinkedAnnotation.getEntityType() != SCIOEntityTypes.groupName) {
+					iterator.remove();
+				}
+			}
+		});
 
-//		annotations.values().stream().forEach(a -> {
-//			for (Iterator<DocumentLinkedAnnotation> iterator = a.iterator(); iterator.hasNext();) {
-//				DocumentLinkedAnnotation documentLinkedAnnotation = (DocumentLinkedAnnotation) iterator.next();
-//				if (documentLinkedAnnotation.getEntityType() != SCIOEntityTypes.groupName) {
-//					iterator.remove();
+//		if (includeIDFAnnotations) {
+//			ExtractSentencesWithResults r = new ExtractSentencesWithResults(trainingInstanceNames,
+//					testInstanceNames);
+//
+//			Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> trends = r.predictTrendInstances();
+//			Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> investigationMethods = r
+//					.predictInvestigationMethodInstances();
+//
+//			r.filter();
+//
+//			for (Instance instance : trends.keySet()) {
+//				AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+//				annotations.putIfAbsent(instance, new HashSet<>());
+//
+//				for (Set<DocumentLinkedAnnotation> trendAnnotations : trends.get(instance).values()) {
+//					for (DocumentLinkedAnnotation trendAnnotation : trendAnnotations) {
+//
+//						if (sectionification.getSection(trendAnnotation) != ESection.RESULTS) {
+//							continue;
+//						}
+//
+//						annotations.get(instance).add(trendAnnotation);
+//					}
 //				}
 //			}
-//		});
+//			for (Instance instance : investigationMethods.keySet()) {
+//				AutomatedSectionifcation sectionification = AutomatedSectionifcation.getInstance(instance);
+//				annotations.putIfAbsent(instance, new HashSet<>());
+//
+//				for (Set<DocumentLinkedAnnotation> invMAnnotations : investigationMethods.get(instance).values()) {
+//					for (DocumentLinkedAnnotation invMAnnotation : invMAnnotations) {
+//
+//						if (sectionification.getSection(invMAnnotation) != ESection.RESULTS) {
+//							continue;
+//						}
+//						annotations.get(instance).add(invMAnnotation);
+//					}
+//				}
+//			}
+//
+//		}
+		{
+			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
+					SCIOEntityTypes.investigationMethod, trainingInstances);
+			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(testInstances);
+			for (Instance instance : annotationsInvFT.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(annotationsInvFT.get(instance));
+			}
+
+			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
+					SCIOEntityTypes.trend, trainingInstances);
+			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
+			for (Instance instance : annotationsTredFT.keySet()) {
+				annotations.putIfAbsent(instance, new HashSet<>());
+				annotations.get(instance).addAll(annotationsTredFT.get(instance));
+			}
+		}
 
 		if (modus == ENERModus.PREDICT) {
 			for (Instance instance : instanceProvider.getInstances()) {
@@ -269,36 +360,22 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		LocalSentenceHeuristic heuristic = new LocalSentenceHeuristic(annotations, expGroups, trainingInstances);
 
-		Map<Instance, State> coverage = new HashMap<>();
 		Map<Instance, State> results = new HashMap<>();
 		if (!isCoverage)
 			results = heuristic.predictInstancesByHeuristic(testInstances);
 
 		if (isCoverage)
-			coverage = computeCoverage(annotations, expGroups, testInstances);
+			results = computeCoverage(annotations, expGroups, testInstances);
 
 		SCIOSlotTypes.hasGroupName.exclude();
 
-		if (!isCoverage) {
+		Score score = evaluate(log, results, this.objectiveFunction);
+		log.info("Unsorted Score: " + score);
 
-			Score score = evaluate(log, results, this.objectiveFunction);
-			log.info("Unsorted Score: " + score);
+		scoreDetailed(results);
 
-			scoreDetailed(results);
-
-			Score coarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
-			log.info("CoarseGrainedResultEvaluation Score: " + coarseGrained);
-		} else {
-
-			Score coverageScore = evaluate(log, coverage, this.objectiveFunction);
-			log.info("COVERAGE Unsorted Score: " + coverageScore);
-
-			scoreDetailed(coverage);
-
-			Score coverageCoarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction,
-					coverage);
-			log.info("COVERAGE CoarseGrainedResultEvaluation Score: " + coverageCoarseGrained);
-		}
+		Score coarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
+		log.info("CoarseGrainedResultEvaluation Score: " + coarseGrained);
 
 	}
 
@@ -311,9 +388,11 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			List<AbstractAnnotation> resultAnnotations = new ArrayList<>();
 
 			for (AbstractAnnotation goldResult : instance.getGoldAnnotations().getAnnotations()) {
-				resultAnnotations.add(toCoveredResult(new Result(goldResult.asInstanceOfEntityTemplate()),
+
+				AbstractAnnotation coveredResult = toCoveredResult(new Result(goldResult.asInstanceOfEntityTemplate()),
 						annotations.getOrDefault(instance, Collections.emptySet()),
-						expGroups.getOrDefault(instance, Collections.emptySet())));
+						expGroups.getOrDefault(instance, Collections.emptySet()));
+				resultAnnotations.add(coveredResult);
 			}
 
 			Annotations coverageAnnotations = new Annotations(resultAnnotations);
@@ -385,6 +464,23 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				}
 			}
 			resultData.pValue = bestAnnotation;
+
+			bestScore = new Score();
+			goldAnn = goldTrend.getSignificanceRootAsDocumentLinkedAnnotation();
+			bestAnnotation = null;
+			if (goldAnn != null) {
+				for (DocumentLinkedAnnotation annotation : annotations) {
+
+					Score s = objectiveFunction.getEvaluator().scoreSingle(annotation, goldAnn);
+
+					if (s.getF1() > bestScore.getF1()) {
+						bestScore = s;
+						bestAnnotation = annotation;
+					}
+
+				}
+			}
+			resultData.significance = bestAnnotation;
 		}
 		bestScore = new Score();
 		/**
@@ -661,23 +757,10 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			if (predictedAnnotation != null) {
 				predictedProperty = predictedAnnotation.getSingleFillerSlot(property).getSlotFiller();
 			}
-			if (goldAnnotation != null || predictedAnnotation != null)
-				score.add(this.objectiveFunction.getEvaluator().scoreSingle(goldProperty, predictedProperty));
-
-//			if (goldProperty != null && predictedProperty != null) {
-//				if (goldProperty.equals(predictedProperty)) {
-//					score.increaseTruePositive();
-//				} else {
-//					score.increaseFalsePositive();
-//					score.increaseFalseNegative();
-//				}
-//			} else {
-//				if (goldProperty == null) {
-//					score.increaseFalsePositive();
-//				} else {
-//					score.increaseFalseNegative();
-//				}
-//			}
+			if (goldAnnotation != null || predictedAnnotation != null) {
+				Score s = this.objectiveFunction.getEvaluator().scoreSingle(goldProperty, predictedProperty);
+				score.add(s);
+			}
 
 		}
 
@@ -1097,3 +1180,66 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	}
 
 }
+
+//GOLD
+//
+//Unsorted Score: Score [getF1()=0.737, getPrecision()=0.752, getRecall()=0.722, tp=10971, fp=3622, fn=4219, tn=0]
+//Sorted macro Result Sentence Score = Score [macroF1=0.857, macroPrecision=0.861, macroRecall=0.854, macroAddCounter=20]
+//Sorted micro Full score = Score [getF1()=0.756, getPrecision()=0.770, getRecall()=0.743, tp=11264, fp=3359, fn=3902, tn=0]
+//Sorted macro Full score = Score [macroF1=0.851, macroPrecision=0.856, macroRecall=0.846, macroAddCounter=20]
+//Sorted macro Reference score = Score [macroF1=0.851, macroPrecision=0.860, macroRecall=0.842, macroAddCounter=20]
+//Sorted macro Target score = Score [macroF1=0.867, macroPrecision=0.864, macroRecall=0.870, macroAddCounter=20]
+//Sorted macro Trend score = Score [macroF1=0.643, macroPrecision=0.691, macroRecall=0.601, macroAddCounter=20]
+//Sorted macro Investigation score = Score [macroF1=0.706, macroPrecision=0.713, macroRecall=0.700, macroAddCounter=20]
+//Sorted macro Cardinality score = Score [macroF1=0.879, macroPrecision=0.885, macroRecall=0.873, macroAddCounter=20]
+//Sorted macro Both score = Score [macroF1=0.790, macroPrecision=0.802, macroRecall=0.777, macroAddCounter=100]
+//MACRO CoarseGrained overallTrend: Score [macroF1=0.716, macroPrecision=0.771, macroRecall=0.668, macroAddCounter=20]
+//MACRO CoarseGrained overallInvest: Score [macroF1=0.680, macroPrecision=0.633, macroRecall=0.735, macroAddCounter=20]
+//MACRO CoarseGrained overallGroups: Score [macroF1=0.832, macroPrecision=0.843, macroRecall=0.821, macroAddCounter=20]
+//MACRO CoarseGrained overallRefGroups: Score [macroF1=0.849, macroPrecision=0.861, macroRecall=0.838, macroAddCounter=20]
+//MACRO CoarseGrained overallTargetGroups: Score [macroF1=0.817, macroPrecision=0.829, macroRecall=0.806, macroAddCounter=20]
+//MACRO CoarseGrained overallResult: Score [macroF1=0.692, macroPrecision=0.693, macroRecall=0.691, macroAddCounter=20]
+//CoarseGrainedResultEvaluation Score: Score [macroF1=0.692, macroPrecision=0.693, macroRecall=0.691, macroAddCounter=20]
+//
+//
+//GOLD + IDF PREDICTOR
+//
+//
+//Unsorted Score: Score [getF1()=0.336, getPrecision()=0.263, getRecall()=0.466, tp=7315, fp=20490, fn=8370, tn=0]
+//Sorted macro Result Sentence Score = Score [macroF1=0.444, macroPrecision=0.319, macroRecall=0.730, macroAddCounter=19]
+//Sorted micro Full score = Score [getF1()=0.351, getPrecision()=0.274, getRecall()=0.487, tp=7632, fp=20210, fn=8024, tn=0]
+//Sorted macro Full score = Score [macroF1=0.503, macroPrecision=0.402, macroRecall=0.672, macroAddCounter=20]
+//Sorted macro Reference score = Score [macroF1=0.519, macroPrecision=0.413, macroRecall=0.696, macroAddCounter=20]
+//Sorted macro Target score = Score [macroF1=0.523, macroPrecision=0.415, macroRecall=0.705, macroAddCounter=20]
+//Sorted macro Trend score = Score [macroF1=0.253, macroPrecision=0.208, macroRecall=0.323, macroAddCounter=19]
+//Sorted macro Investigation score = Score [macroF1=0.216, macroPrecision=0.158, macroRecall=0.343, macroAddCounter=19]
+//Sorted macro Cardinality score = Score [macroF1=0.537, macroPrecision=0.432, macroRecall=0.709, macroAddCounter=20]
+//Sorted macro Both score = Score [macroF1=0.414, macroPrecision=0.328, macroRecall=0.560, macroAddCounter=98]
+//MACRO CoarseGrained overallTrend: Score [macroF1=0.512, macroPrecision=0.474, macroRecall=0.557, macroAddCounter=20]
+//MACRO CoarseGrained overallInvest: Score [macroF1=0.682, macroPrecision=0.710, macroRecall=0.655, macroAddCounter=20]
+//MACRO CoarseGrained overallGroups: Score [macroF1=0.515, macroPrecision=0.409, macroRecall=0.696, macroAddCounter=20]
+//MACRO CoarseGrained overallRefGroups: Score [macroF1=0.527, macroPrecision=0.422, macroRecall=0.703, macroAddCounter=20]
+//MACRO CoarseGrained overallTargetGroups: Score [macroF1=0.500, macroPrecision=0.392, macroRecall=0.689, macroAddCounter=20]
+//MACRO CoarseGrained overallResult: Score [macroF1=0.627, macroPrecision=0.627, macroRecall=0.627, macroAddCounter=20]
+//CoarseGrainedResultEvaluation Score: Score [macroF1=0.627, macroPrecision=0.627, macroRecall=0.627, macroAddCounter=20]
+
+//GOLD + IDF PREDICTOR
+//BESTE IDF Modelle
+
+//Unsorted Score: Score [getF1()=0.366, getPrecision()=0.316, getRecall()=0.435, tp=6847, fp=14848, fn=8904, tn=0]
+//Sorted macro Result Sentence Score = Score [macroF1=0.446, macroPrecision=0.336, macroRecall=0.663, macroAddCounter=19]
+//Sorted micro Full score = Score [getF1()=0.381, getPrecision()=0.329, getRecall()=0.454, tp=7142, fp=14591, fn=8588, tn=0]
+//Sorted macro Full score = Score [macroF1=0.523, macroPrecision=0.435, macroRecall=0.655, macroAddCounter=20]
+//Sorted macro Reference score = Score [macroF1=0.540, macroPrecision=0.448, macroRecall=0.680, macroAddCounter=20]
+//Sorted macro Target score = Score [macroF1=0.550, macroPrecision=0.456, macroRecall=0.692, macroAddCounter=20]
+//Sorted macro Trend score = Score [macroF1=0.198, macroPrecision=0.154, macroRecall=0.277, macroAddCounter=19]
+//Sorted macro Investigation score = Score [macroF1=0.182, macroPrecision=0.131, macroRecall=0.299, macroAddCounter=19]
+//Sorted macro Cardinality score = Score [macroF1=0.560, macroPrecision=0.469, macroRecall=0.696, macroAddCounter=20]
+//Sorted macro Both score = Score [macroF1=0.412, macroPrecision=0.335, macroRecall=0.534, macroAddCounter=98]
+//MACRO CoarseGrained overallTrend: Score [macroF1=0.501, macroPrecision=0.468, macroRecall=0.538, macroAddCounter=20]
+//MACRO CoarseGrained overallInvest: Score [macroF1=0.684, macroPrecision=0.721, macroRecall=0.651, macroAddCounter=20]
+//MACRO CoarseGrained overallGroups: Score [macroF1=0.538, macroPrecision=0.444, macroRecall=0.681, macroAddCounter=20]
+//MACRO CoarseGrained overallRefGroups: Score [macroF1=0.550, macroPrecision=0.458, macroRecall=0.687, macroAddCounter=20]
+//MACRO CoarseGrained overallTargetGroups: Score [macroF1=0.523, macroPrecision=0.427, macroRecall=0.676, macroAddCounter=20]
+//MACRO CoarseGrained overallResult: Score [macroF1=0.642, macroPrecision=0.667, macroRecall=0.619, macroAddCounter=20]
+//CoarseGrainedResultEvaluation Score: Score [macroF1=0.642, macroPrecision=0.667, macroRecall=0.619, macroAddCounter=20]

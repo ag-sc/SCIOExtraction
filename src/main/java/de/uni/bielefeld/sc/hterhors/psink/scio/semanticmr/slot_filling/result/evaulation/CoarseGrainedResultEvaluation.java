@@ -49,6 +49,8 @@ public class CoarseGrainedResultEvaluation {
 		Score overallTrend = new Score(EScoreType.MACRO);
 		Score overallInvest = new Score(EScoreType.MACRO);
 		Score overallGroups = new Score(EScoreType.MACRO);
+		Score overallRefGroups = new Score(EScoreType.MACRO);
+		Score overallTargetGroups = new Score(EScoreType.MACRO);
 
 		for (State finalState : results.values()) {
 			goldResults.put(finalState.getInstance(), new ArrayList<>());
@@ -79,14 +81,17 @@ public class CoarseGrainedResultEvaluation {
 			getBestInvestigationMethodMappings(objectiveFunction, goldAnnotations, predictedAnnotations,
 					mapGoldGroupToID, mapPredictedGroupToID);
 
-			scoreCoarsGrainedProperty(overall, overallTrend, overallInvest, overallGroups, objectiveFunction,
-					goldAnnotations, predictedAnnotations, mapGoldGroupToID, mapPredictedGroupToID);
+			scoreCoarsGrainedProperty(overall, overallTrend, overallInvest, overallGroups, overallRefGroups,
+					overallTargetGroups, objectiveFunction, goldAnnotations, predictedAnnotations, mapGoldGroupToID,
+					mapPredictedGroupToID);
 
 		}
 
 		log.info("MACRO CoarseGrained overallTrend: " + overallTrend);
 		log.info("MACRO CoarseGrained overallInvest: " + overallInvest);
 		log.info("MACRO CoarseGrained overallGroups: " + overallGroups);
+		log.info("MACRO CoarseGrained overallRefGroups: " + overallRefGroups);
+		log.info("MACRO CoarseGrained overallTargetGroups: " + overallTargetGroups);
 		log.info("MACRO CoarseGrained overallResult: " + overall);
 
 		return overall;
@@ -223,7 +228,8 @@ public class CoarseGrainedResultEvaluation {
 	}
 
 	private static void scoreCoarsGrainedProperty(Score overallAll, Score overallTrendAll, Score overallInvestAll,
-			Score overallGroupsAll, IObjectiveFunction objectiveFunction, List<EntityTemplate> goldAnnotations,
+			Score overallGroupsAll, Score overallRefGroupsAll, Score overallTargetGroupsAll,
+			IObjectiveFunction objectiveFunction, List<EntityTemplate> goldAnnotations,
 			List<EntityTemplate> predictedAnnotations, Map<EntityTemplate, String> mapGoldGroupToID,
 			Map<EntityTemplate, String> mapPredictedGroupToID) {
 
@@ -234,6 +240,8 @@ public class CoarseGrainedResultEvaluation {
 		Score overallTrend = new Score(EScoreType.MICRO);
 		Score overallInvestigationMethod = new Score(EScoreType.MICRO);
 		Score overallGroups = new Score(EScoreType.MICRO);
+		Score overallRefGroups = new Score(EScoreType.MICRO);
+		Score overallTargetGroups = new Score(EScoreType.MICRO);
 
 		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
 			final int predictionIndex = bestAssignment.get(goldIndex);
@@ -261,6 +269,8 @@ public class CoarseGrainedResultEvaluation {
 
 			Score trendS = new Score();
 			Score invMS = new Score();
+			Score refGroupsS = new Score();
+			Score targetGroupsS = new Score();
 			Score groupsS = new Score();
 
 			if (goldTuple.trend == predictedTuple.trend)
@@ -278,22 +288,25 @@ public class CoarseGrainedResultEvaluation {
 				invMS.increaseFalseNegative();
 
 			if (goldTuple.referenceGroupID == predictedTuple.referenceGroupID)
-				groupsS.increaseTruePositive();
+				refGroupsS.increaseTruePositive();
 			else if (goldTuple.referenceGroupID == null)
-				groupsS.increaseFalsePositive();
+				refGroupsS.increaseFalsePositive();
 			else
-				groupsS.increaseFalseNegative();
+				refGroupsS.increaseFalseNegative();
 
 			if (goldTuple.targetGroupID == predictedTuple.targetGroupID)
-				groupsS.increaseTruePositive();
+				targetGroupsS.increaseTruePositive();
 			else if (goldTuple.targetGroupID == null)
-				groupsS.increaseFalsePositive();
+				targetGroupsS.increaseFalsePositive();
 			else
-				groupsS.increaseFalseNegative();
+				targetGroupsS.increaseFalseNegative();
 
 			overallTrend.add(trendS);
 			overallInvestigationMethod.add(invMS);
-			overallGroups.add(groupsS);
+			overallGroups.add(targetGroupsS);
+			overallGroups.add(refGroupsS);
+			overallRefGroups.add(refGroupsS);
+			overallTargetGroups.add(targetGroupsS);
 
 			overall.add(trendS);
 			overall.add(invMS);
@@ -303,6 +316,8 @@ public class CoarseGrainedResultEvaluation {
 		overallTrendAll.add(overallTrend.toMacro());
 		overallInvestAll.add(overallInvestigationMethod.toMacro());
 		overallGroupsAll.add(overallGroups.toMacro());
+		overallRefGroupsAll.add(overallRefGroups.toMacro());
+		overallTargetGroupsAll.add(overallTargetGroups.toMacro());
 	}
 
 	private static CoarseGrainedResultTuple convertToTuple(Map<EntityTemplate, String> mapPredictedGroupToID,

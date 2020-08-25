@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -121,6 +122,16 @@ public class TreatmentSlotFilling {
 		 */
 		Map<String, Score> scoreMap = new HashMap<>();
 
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
+		slotTypesToConsider.add(SCIOSlotTypes.hasDirection);
+		slotTypesToConsider.add(SCIOSlotTypes.hasApplicationInstrument);
+		slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
+		slotTypesToConsider.add(SCIOSlotTypes.hasCompound);
+		slotTypesToConsider.add(SCIOSlotTypes.hasVoltage);
+		slotTypesToConsider.add(SCIOSlotTypes.hasRehabMedication);
+		slotTypesToConsider.add(SCIOSlotTypes.hasElectricFieldStrength);
+
 		for (ETreatmentModifications rule : ETreatmentModifications.values()) {
 //			this.rule = rule;
 			rule = ETreatmentModifications.DOSAGE_DELIVERY_METHOD_APPLICATION_INSTRUMENT_DIRECTION;
@@ -134,14 +145,14 @@ public class TreatmentSlotFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
 
-			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
 			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
 //			String modelName = "Treatment-1842612192";
 			dataRandomSeed = "" + new Random().nextInt();
@@ -174,6 +185,8 @@ public class TreatmentSlotFilling {
 //			log.info("Coverage Development: " + devCoverage);
 //
 //			log.info("results: " + toResults(rule, score));
+			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
+					predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 
@@ -185,16 +198,6 @@ public class TreatmentSlotFilling {
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 //			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
-			slotTypesToConsider.add(SCIOSlotTypes.hasDirection);
-			slotTypesToConsider.add(SCIOSlotTypes.hasApplicationInstrument);
-			slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
-			slotTypesToConsider.add(SCIOSlotTypes.hasCompound);
-			slotTypesToConsider.add(SCIOSlotTypes.hasVoltage);
-			slotTypesToConsider.add(SCIOSlotTypes.hasRehabMedication);
-			slotTypesToConsider.add(SCIOSlotTypes.hasElectricFieldStrength);
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);

@@ -26,6 +26,7 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -104,7 +105,7 @@ public class InjuryDeviceFilling {
 				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(100L).setTrainingProportion(80).setDevelopmentProportion(20).build();
+				.setSeed(1001L).setTrainingProportion(80).setDevelopmentProportion(20).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
@@ -114,6 +115,12 @@ public class InjuryDeviceFilling {
 
 		resultsOut.println(header);
 		Map<String, Score> scoreMap = new HashMap<>();
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
+		slotTypesToConsider.add(SCIOSlotTypes.hasForce);
+		slotTypesToConsider.add(SCIOSlotTypes.hasDistance);
+		slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
+		slotTypesToConsider.add(SCIOSlotTypes.hasVolume);
 
 		for (EInjuryDeviceModifications rule : EInjuryDeviceModifications.values()) {
 //			DeliveryMethodFilling.rule =rule;
@@ -143,24 +150,19 @@ public class InjuryDeviceFilling {
 							.collect(Collectors.toList()),
 					rule, ENERModus.GOLD);
 
+			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 //			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
-			slotTypesToConsider.add(SCIOSlotTypes.hasForce);
-			slotTypesToConsider.add(SCIOSlotTypes.hasDistance);
-			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
-			slotTypesToConsider.add(SCIOSlotTypes.hasVolume);
-
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
 			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.injuryDevice,
-					false);
+					true);
 
 			System.out.println("---------------------------------------");
 

@@ -49,26 +49,44 @@ public class InjuryRestrictionProvider {
 			return;
 		case ROOT_DEVICE:
 			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasForce.include();
+			SCIOSlotTypes.hasDistance.include();
+			SCIOSlotTypes.hasDuration.include();
+			SCIOSlotTypes.hasVolume.include();
 			return;
 		case ROOT_LOCATION_DEVICE:
 			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasForce.include();
+			SCIOSlotTypes.hasDistance.include();
+			SCIOSlotTypes.hasDuration.include();
+			SCIOSlotTypes.hasVolume.include();
 			SCIOSlotTypes.hasInjuryLocation.include();
 			SCIOSlotTypes.hasUpperVertebrae.include();
 			SCIOSlotTypes.hasLowerVertebrae.include();
 			return;
 		case ROOT_DEVICE_LOCATION_ANAESTHESIA:
 			SCIOSlotTypes.hasInjuryDevice.include();
+			SCIOSlotTypes.hasWeight.include();
+			SCIOSlotTypes.hasForce.include();
+			SCIOSlotTypes.hasDistance.include();
+			SCIOSlotTypes.hasDuration.include();
+			SCIOSlotTypes.hasVolume.include();
 			SCIOSlotTypes.hasInjuryLocation.include();
 			SCIOSlotTypes.hasUpperVertebrae.include();
 			SCIOSlotTypes.hasLowerVertebrae.include();
 			SCIOSlotTypes.hasAnaesthesia.include();
 			SCIOSlotTypes.hasDosage.include();
 			SCIOSlotTypes.hasDeliveryMethod.include();
+			SCIOSlotTypes.hasDuration.include();
+			SCIOSlotTypes.hasLocations.include();
 			return;
 		}
 
 	}
 
+	
 	public static List<GoldModificationRule> getRoot() {
 
 		List<GoldModificationRule> rules = new ArrayList<>();

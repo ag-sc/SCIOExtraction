@@ -47,6 +47,11 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wr
 
 public class FastTextSentenceClassification {
 
+//	Score [macroF1=0.364, macroPrecision=0.227, macroRecall=0.922, macroAddCounter=1]
+
+//	Score [macroF1=0.393, macroPrecision=0.254, macroRecall=0.873, macroAddCounter=1]
+
+//	public static final String NO_LABEL = "";
 	public static final String NO_LABEL = "__label__UNLABELED";
 
 	public EntityType type;
@@ -59,9 +64,9 @@ public class FastTextSentenceClassification {
 
 	public static void main(String[] args) throws IOException {
 		SystemScope.Builder.getScopeHandler()
-				/**
-				 * We add a scope reader that reads and interprets the 4 specification files.
-				 */
+		/**
+		 * We add a scope reader that reads and interprets the 4 specification files.
+		 */
 //				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
 				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
 				/**
@@ -120,10 +125,13 @@ public class FastTextSentenceClassification {
 			List<Instance> trainingInstances = instances.subList(0, x);
 			List<Instance> testInstances = instances.subList(x, instances.size());
 
-			FastTextSentenceClassification t = new FastTextSentenceClassification("tenRandom9010Split_TEST", binary,
-					type, trainingInstances);
+			FastTextSentenceClassification t = new FastTextSentenceClassification("Bert", binary, type,
+					trainingInstances);
 
 			Score s = t.score(testInstances).toMacro();
+
+			System.out.println(t.lables);
+
 			log.info(s);
 			mScore.add(s);
 			break;
@@ -175,10 +183,9 @@ public class FastTextSentenceClassification {
 		this.modelName = modelName;
 		final String trainingDataFileName = "fasttext/resources/data/" + modelName + "_" + type.name
 				+ "_train_labeled_data.txt";
+//		final String bertFileName = "bert/" + modelName + "_" + type.name + "_train.csv";
 
 		List<FastTextInstance> trainData = buildTrainingData(trainingInstances, trainingDataFileName, false);
-		
-		
 
 		log.info("Training Negative samples: " + trainData.stream().filter(a -> a.goldLabel == NO_LABEL).count());
 		log.info("Training Positive Samples: "
@@ -191,7 +198,7 @@ public class FastTextSentenceClassification {
 		jft = new JFastText();
 		String ftModelName = modelName +
 //				
-				"pretrained_" +
+//				"pretrained_" +
 //				
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 				+ "_supervised.model";
@@ -199,7 +206,7 @@ public class FastTextSentenceClassification {
 		jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 				"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
 
-				"-pretrainedVectors", preTrainedvec,
+//				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 				"-dim", numberOfDimensions + "" });
@@ -225,6 +232,13 @@ public class FastTextSentenceClassification {
 				iterator.remove();
 
 		}
+		try {
+			final String bertFileName = "fasttext/resources/" + modelName + "_" + type.name + "_test.csv";
+
+			printInstances(new File(bertFileName), testData);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		log.info("Test Negative samples: " + testData.stream().filter(a -> a.goldLabel == NO_LABEL).count());
 		log.info("Test Positive Samples: "
 				+ (testData.size() - testData.stream().filter(a -> a.goldLabel == NO_LABEL).count()));
@@ -235,6 +249,8 @@ public class FastTextSentenceClassification {
 		Score scoreTest = evaluate(predictions);
 
 		return scoreTest;
+//		return new Score();
+
 		// for (int k = 1; k <= 10; k++) {
 //
 //			log.info("Test evaluate at " + k + "\t" + evaluateAtK(jft, testData, k));
@@ -316,7 +332,6 @@ public class FastTextSentenceClassification {
 	private List<FastTextInstance> buildTrainingData(List<Instance> instances, final String trainingDataFileName,
 			boolean sameSize) throws FileNotFoundException {
 		File trainingDataFile = new File(trainingDataFileName);
-		PrintStream ps = new PrintStream(trainingDataFile);
 
 		List<FastTextInstance> trainData = getLabledDocuments(instances, numOfTrainingDuplicates);
 
@@ -353,13 +368,17 @@ public class FastTextSentenceClassification {
 				else
 					countPos++;
 			}
+		printInstances(trainingDataFile, trainData);
+		return trainData;
 
-		trainData.stream().map(i -> i.toSimpleString()).forEach(ps::println);
+	}
+
+	private void printInstances(File dataFile, List<FastTextInstance> instance) throws FileNotFoundException {
+		PrintStream ps = new PrintStream(dataFile);
+		instance.stream().map(i -> i.toBERTString()).forEach(ps::println);
 
 		ps.flush();
 		ps.close();
-		return trainData;
-
 	}
 
 	public List<FastTextPrediction> predict(List<FastTextInstance> data) {
@@ -398,9 +417,17 @@ public class FastTextSentenceClassification {
 		Score score = new Score();
 		for (FastTextPrediction fti : predicitons) {
 
-			final String predLabel = fti.label;
-			final String goldLabel = fti.fastTextInstance.goldLabel;
+			String predLabel = fti.label;
+			String goldLabel = fti.fastTextInstance.goldLabel;
+			System.out.println(predLabel + "\t" + goldLabel);
+			if (!fti.label.equals(NO_LABEL))
+				predLabel = fti.getEntityType().getDirectSuperEntityTypes().iterator().next().name;
 
+			if (!fti.fastTextInstance.goldLabel.equals(NO_LABEL))
+				goldLabel = fti.fastTextInstance.getEntityType().getDirectSuperEntityTypes().iterator().next().name;
+
+			System.out.println(predLabel + "\t" + goldLabel);
+System.out.println();
 			if (predLabel.equals(goldLabel)) {
 				if (predLabel.equals(NO_LABEL)) {
 					score.increaseTrueNegative();
@@ -508,6 +535,14 @@ public class FastTextSentenceClassification {
 			return goldLabel + " " + text;
 		}
 
+		public String toBERTString() {
+			return text + "\t" + goldLabel;
+		}
+
+		public EntityType getEntityType() {
+			return EntityType.get(goldLabel.replaceFirst("__label__", ""));
+		}
+
 		@Override
 		public String toString() {
 			return "FastTextInstance [text=" + text + ", goldLabel=" + goldLabel + ", instance=" + instance
@@ -562,6 +597,8 @@ public class FastTextSentenceClassification {
 
 	}
 
+	public Set<String> lables = new HashSet<>();
+
 //	public List<FastTextInstance> getMultiLabledDocuments(List<Instance> instances, int numOfDuplicates) {
 //
 //		List<FastTextInstance> labeledData = new ArrayList<>();
@@ -572,15 +609,19 @@ public class FastTextSentenceClassification {
 //			List<DocumentLinkedAnnotation> annotations = extractTrends(instance);
 //			for (DocumentLinkedAnnotation annotation : annotations) {
 //
+//				lables.add(annotation.getEntityType().name);
+//				
 //				if (positiveSentences.contains(annotation.getSentenceIndex()))
 //					continue;
 //
 //				positiveSentences.add(annotation.getSentenceIndex());
 //
 //				String label = annotations.stream().filter(a -> annotation.getSentenceIndex() == a.getSentenceIndex())
-//						.map(a -> "__label__" + a.getEntityType().name + " ").distinct().reduce("", String::concat)
-//						.trim();
-//
+//						.map(a -> a.getEntityType().name + "\t").distinct().reduce("", String::concat).trim();
+////				String label = annotations.stream().filter(a -> annotation.getSentenceIndex() == a.getSentenceIndex())
+////						.map(a -> "__label__" + a.getEntityType().name + " ").distinct().reduce("", String::concat)
+////						.trim();
+//				label = label.replaceAll("\t", ",");
 //				for (int j = 0; j < numOfDuplicates; j++) {
 //					labeledData.add(new FastTextInstance(
 //							instance.getDocument().getContentOfSentence(annotation.getSentenceIndex()), label, instance,

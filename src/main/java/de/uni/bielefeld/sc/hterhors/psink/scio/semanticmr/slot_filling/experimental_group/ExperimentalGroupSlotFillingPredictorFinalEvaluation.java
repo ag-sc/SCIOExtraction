@@ -76,6 +76,7 @@ import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -579,6 +580,12 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		applyModesAndRestrictions();
 
 		getData(trainingInstanceNames, devInstanceNames, testInstanceNames);
+
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasTreatmentType);
+		
+		AnalyzeComplexity.analyze(slotTypesToConsider, instanceProvider.getInstances(),
+				predictionObjectiveFunction.getEvaluator());
 
 		SCIOSlotTypes.hasTreatmentType.slotMaxCapacity = 3;
 

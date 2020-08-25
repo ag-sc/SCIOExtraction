@@ -19,22 +19,16 @@ import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
+import de.hterhors.semanticmr.crf.structure.annotations.normalization.AbstractNormalizationFunction;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.hterhors.semanticmr.init.specifications.SystemScope.NormalizationFunctionHandler;
 import de.hterhors.semanticmr.json.JSONNerlaReader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector;
 import de.uni.bielefeld.sc.hterhors.psink.scio.playground.preprocessing.DataPointCollector.DataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DistanceNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.DurationNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.ForceNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.LengthNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.PressureNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.ThicknessNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instances;
@@ -67,24 +61,17 @@ public abstract class BinaryExtraction {
 
 	private final DataPointCollector trainingData = new DataPointCollector();
 
-	public BinaryExtraction(String context) throws Exception {
+	public BinaryExtraction(String context, IGetNormalizationFunction getNormalizationfunctions) throws Exception {
 
-		SystemScope.Builder.getScopeHandler()
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader(context)).apply()
-				
-				
-				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new DurationNormalization())
-				.registerNormalizationFunction(new VolumeNormalization())
-				.registerNormalizationFunction(new ForceNormalization())
-				.registerNormalizationFunction(new ThicknessNormalization())
-				.registerNormalizationFunction(new PressureNormalization())
-				.registerNormalizationFunction(new LengthNormalization())
-				.registerNormalizationFunction(new DistanceNormalization())
-//				.registerNormalizationFunction(new DosageNormalization())
-				
-				
-				.build();
+		NormalizationFunctionHandler x = SystemScope.Builder.getScopeHandler()
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader(context)).apply();
+
+		for (AbstractNormalizationFunction iNormalizationFunction : getNormalizationfunctions.get()) {
+
+			x.registerNormalizationFunction(iNormalizationFunction);
+		}
+
+		x.build();
 
 		this.instanceDirectory = getInstanceDirectory();
 
@@ -113,11 +100,9 @@ public abstract class BinaryExtraction {
 		List<BinaryDataPointPrediction> predictions = predict(instanceProvider, nerlaJSONReader, rf, binaryScore);
 
 		Map<Instance, List<DLAPredictions>> sortedPredictions = sortPredictions(predictions);
-		
+
 		CartesianEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE);
-		
-		
-		
+
 		Score macroScore = new Score(EScoreType.MACRO);
 		for (Entry<Instance, List<DLAPredictions>> binaryDataPointPrediction : sortedPredictions.entrySet()) {
 			System.out.println(binaryDataPointPrediction.getKey().getName());

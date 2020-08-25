@@ -242,40 +242,41 @@ public class ExtractSentencesWithResults {
 //		return investigationMethodsPredictions;
 //	}
 
+//	public Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictTrendInstances() {
+//
+//		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
+//				new File("data/slot_filling/trend/regex_nerla"), trendInstances);
+//		trendPredictions = new HashMap<>();
+//		for (Instance instance : regexp.keySet()) {
+//			trendPredictions.putIfAbsent(instance, new HashMap<>());
+//			trendPredictions.get(instance).putAll(toSentenceBasedAnnotations(regexp.get(instance)));
+//		}
+//
+//		return trendPredictions;
+//	}
+//
+//	public Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictInvestigationMethodInstances() {
+//
+//		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
+//				new File("data/slot_filling/investigation_method/regex_nerla"), investigationMethodInstances);
+//		investigationMethodsPredictions = new HashMap<>();
+//		for (Instance instance : regexp.keySet()) {
+//			investigationMethodsPredictions.putIfAbsent(instance, new HashMap<>());
+//			investigationMethodsPredictions.get(instance).putAll(toSentenceBasedAnnotations(regexp.get(instance)));
+//		}
+//		return investigationMethodsPredictions;
+//	}
+
 	public Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictTrendInstances() {
-
-		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
-				new File("data/slot_filling/trend/regex_nerla"), trendInstances);
-		trendPredictions = new HashMap<>();
-		for (Instance instance : regexp.keySet()) {
-			trendPredictions.putIfAbsent(instance, new HashMap<>());
-			trendPredictions.get(instance).putAll(toSentenceBasedAnnotations(regexp.get(instance)));
-		}
-
+		trendPredictions = trendPredictor.predictInstances(trendTestInstances);
 		return trendPredictions;
 	}
 
 	public Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictInvestigationMethodInstances() {
+		investigationMethodsPredictions = investigationPredictor.predictInstances(investigationMethodTestInstances);
 
-		Map<Instance, Set<DocumentLinkedAnnotation>> regexp = readAnnotations(
-				new File("data/slot_filling/investigation_method/regex_nerla"), investigationMethodInstances);
-		investigationMethodsPredictions = new HashMap<>();
-		for (Instance instance : regexp.keySet()) {
-			investigationMethodsPredictions.putIfAbsent(instance, new HashMap<>());
-			investigationMethodsPredictions.get(instance).putAll(toSentenceBasedAnnotations(regexp.get(instance)));
-		}
 		return investigationMethodsPredictions;
 	}
-//	public Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictTrendInstances() {
-//		trendPredictions = trendPredictor.predictInstances(trendTestInstances);
-//		return trendPredictions;
-//	}
-//	
-//	public Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictInvestigationMethodInstances() {
-//		investigationMethodsPredictions = investigationPredictor.predictInstances(investigationMethodTestInstances);
-//		
-//		return investigationMethodsPredictions;
-//	}
 
 	private Map<Instance, Set<DocumentLinkedAnnotation>> readAnnotations(File groupNamesCacheDir,
 			List<Instance> instances) {
@@ -309,20 +310,30 @@ public class ExtractSentencesWithResults {
 
 	private void buildInvestigationMethodPredictor(List<Instance> investigationMethodTrainingInstances) {
 		investigationPredictor = new InvestigationMethodIDFPredictor();
-		investigationPredictor.setAnnotationStopwords(Arrays.asList("either", "number", "group", "groups", "numbers"));
+
+		investigationPredictor.setAnnotationStopwords(
+				Arrays.asList("either", "number", "group", "groups", "numbers", "not", "did", "spinal", "cord"));
 		investigationPredictor.setSentenceStopWords(Arrays.asList("arrow", "asterisk", "*", "bar"));
-		investigationPredictor.setRemoveEntityTypes(Arrays.asList(EntityType.get("InvestigationMethod")));
+		investigationPredictor.setRemoveEntityTypes(
+				Arrays.asList(EntityType.get("InvestigationMethod"), EntityType.get("FunctionalTest")));
 		investigationPredictor.setEnableUniGram(true);
-		investigationPredictor.setEnableBiGram(false);
+		investigationPredictor.setEnableBiGram(true);
 		investigationPredictor.setRestrictToSections(Arrays.asList(ESection.RESULTS));
 		investigationPredictor.setLocalNormalizing(true);
 		investigationPredictor.setEnableStemming(true);
+		investigationPredictor.setIncludeNameContains(true);
+		investigationPredictor.setMinTokenLength(2);
 		investigationPredictor.setEnableLowerCasing(true);
+		investigationPredictor.setTrehsold(1);
+		investigationPredictor.setMinAnnotationsPerSentence(0);
+
+		investigationPredictor.setMaxAnnotationsPerSentence(2);
 		investigationPredictor.train(investigationMethodTrainingInstances);
 	}
 
 	private void buildTreandPredictor(List<Instance> trendTrainingInstances) {
 		trendPredictor = new TrendIDFPredictor();
+
 		trendPredictor.setAnnotationStopwords(Arrays.asList("rat", "rats", "either", "number", "group", "groups",
 				"numbers", "treatment", "respectively"));
 		trendPredictor.setRemoveEntityTypes(
@@ -330,10 +341,16 @@ public class ExtractSentencesWithResults {
 		trendPredictor.setSentenceStopWords(Arrays.asList("arrow", "asterisk", "*", "bar"));
 		trendPredictor.setEnableUniGram(true);
 		trendPredictor.setEnableBiGram(false);
-		trendPredictor.setLocalNormalizing(true);
-		trendPredictor.setEnableStemming(true);
 		trendPredictor.setRestrictToSections(Arrays.asList(ESection.RESULTS));
-		trendPredictor.setEnableLowerCasing(true);
+		trendPredictor.setLocalNormalizing(true);
+		trendPredictor.setEnableStemming(false);
+		trendPredictor.setIncludeNameContains(false);
+		trendPredictor.setMinTokenLength(2);
+		trendPredictor.setEnableLowerCasing(false);
+		trendPredictor.setTrehsold(1);
+		trendPredictor.setMinAnnotationsPerSentence(0);
+		trendPredictor.setMaxAnnotationsPerSentence(3);
+
 		trendPredictor.train(trendTrainingInstances);
 	}
 
@@ -394,11 +411,11 @@ public class ExtractSentencesWithResults {
 
 			t.trendPredictor.printIDFs("idf/trend_idf.csv");
 			t.investigationPredictor.printIDFs("idf/investigationMethod_idf.csv");
-//			break;
 			System.out.println("trend pre filter:" + macroTrendScorePreFiltered);
 			System.out.println("trend post filter:" + macroTrendScorePostFiltered);
 			System.out.println("inv method pre filter:" + macroInvestigationScorePreFiltered);
 			System.out.println("inv method post filter:" + macroInvestigationScorePostFiltered);
+//			break;
 		}
 //		Score [macroF1=0.258, macroPrecision=0.204, macroRecall=0.351, macroAddCounter=10] trend
 

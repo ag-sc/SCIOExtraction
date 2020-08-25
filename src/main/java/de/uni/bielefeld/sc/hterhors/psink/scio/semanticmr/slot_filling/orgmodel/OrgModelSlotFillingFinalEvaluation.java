@@ -105,9 +105,17 @@ public class OrgModelSlotFillingFinalEvaluation {
 				 * Finally, we build the systems scope.
 				 */
 				.build();
-
 		instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.organismModel);
+
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasAge);
+		slotTypesToConsider.add(SCIOSlotTypes.hasAgeCategory);
+		slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
+		slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
+		slotTypesToConsider.add(SCIOSlotTypes.hasGender);
+
+		
 
 		Map<String, Score> scoreMap = new HashMap<>();
 		Random random = new Random(randomSeed);
@@ -144,12 +152,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasAge);
-			slotTypesToConsider.add(SCIOSlotTypes.hasAgeCategory);
-			slotTypesToConsider.add(SCIOSlotTypes.hasWeight);
-			slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
-			slotTypesToConsider.add(SCIOSlotTypes.hasGender);
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);

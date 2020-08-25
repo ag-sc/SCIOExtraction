@@ -28,6 +28,7 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -142,7 +143,14 @@ public class VertebralAreaSlotFilling {
 				rule, ENERModus.PREDICT);
 
 //		predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+		
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
+		slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
 
+		AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+
+		
 		predictor.trainOrLoadModel();
 
 		Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
@@ -150,10 +158,6 @@ public class VertebralAreaSlotFilling {
 //		Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
 		Map<String, Score> scoreMap = new HashMap<>();
-
-		Set<SlotType> slotTypesToConsider = new HashSet<>();
-		slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
-		slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
 
 		AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.LITERAL);
 

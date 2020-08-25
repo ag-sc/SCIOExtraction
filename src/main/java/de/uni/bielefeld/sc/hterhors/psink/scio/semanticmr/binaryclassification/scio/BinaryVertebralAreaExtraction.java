@@ -1,6 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.scio;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,14 @@ import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTypeAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
+import de.hterhors.semanticmr.crf.structure.annotations.normalization.AbstractNormalizationFunction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.BinaryDataPoint;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.BinaryExtraction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.DLAPredictions;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.binaryclassification.IGetNormalizationFunction;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.VertebralAreaWrapper;
 
 /**
@@ -34,12 +38,16 @@ public class BinaryVertebralAreaExtraction extends BinaryExtraction {
 	}
 
 	public BinaryVertebralAreaExtraction() throws Exception {
-		super("VertebralArea");
+		super("VertebralArea", new IGetNormalizationFunction() {
+			@Override
+			public List<AbstractNormalizationFunction> get() {
+				return Arrays.asList();
+			}
+		});
 	}
 
 	@Override
 	protected File getExternalNerlaFile() {
-//		macroScore = Score [macroF1=0.384, macroPrecision=0.417, macroRecall=0.356]
 		return SlotFillingCorpusBuilderBib.getDefaultRegExNerlaDir(SCIOEntityTypes.vertebralArea);
 //		return new File("data/additional_nerla/organism_model/LITERAL");
 //		return new File("data/additional_nerla/organism_model/DOCUMENT_LINKED");
@@ -56,7 +64,7 @@ public class BinaryVertebralAreaExtraction extends BinaryExtraction {
 			}
 
 		}
-		
+
 		EntityTemplate etPrediction = new EntityTemplate(root);
 		for (DocumentLinkedAnnotation dla : dlaPredictions.collection) {
 
@@ -97,14 +105,17 @@ public class BinaryVertebralAreaExtraction extends BinaryExtraction {
 
 		Map<String, Double> features = new HashMap<>();
 
-		String name = "same sentence " + dataPoint.annotation1.getEntityType().name + "\t"
+		String name = "same sentence "+ dataPoint.annotation1.getEntityType().name + "\t"
 				+ dataPoint.annotation2.getEntityType().name;
 
 		double value = dataPoint.annotation1.getSentenceIndex() == dataPoint.annotation2.getSentenceIndex() ? 1D : 0D;
 
 		features.put(name, value);
 
-		
+		features.put("DIFFERENT",
+				!dataPoint.annotation1.getEntityType().name.equals(dataPoint.annotation2.getEntityType().name) ? 1D
+						: 0D);
+
 		return features;
 	}
 }

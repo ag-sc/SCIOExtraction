@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,24 +61,39 @@ public class TrendIDFPredictor extends AbstractIDFPredictor {
 		trendPredictor.setRemoveEntityTypes(
 				Arrays.asList(EntityType.get("AlphaSignificanceNiveau"), EntityType.get("RepeatedMeasureTrend")));
 		trendPredictor.setEnableUniGram(true);
-		trendPredictor.setEnableBiGram(false);
 		trendPredictor.setSentenceStopWords(Arrays.asList("arrow", "asterisk", "*", "bar"));
-		trendPredictor.setLocalNormalizing(true);
-		trendPredictor.setEnableStemming(true);
-		trendPredictor.setEnableLowerCasing(true);
+		trendPredictor.setEnableBiGram(false);
 		trendPredictor.setRestrictToSections(Arrays.asList(ESection.RESULTS));
+		trendPredictor.setLocalNormalizing(true);
+		trendPredictor.setEnableStemming(false);
+		trendPredictor.setIncludeNameContains(false);
+		trendPredictor.setMinTokenLength(2);
+		trendPredictor.setEnableLowerCasing(false);
+		trendPredictor.setTrehsold(1);
+		trendPredictor.setMaxAnnotationsPerSentence(3);
+		trendPredictor.setMinAnnotationsPerSentence(2);
 		trendPredictor.train(instanceProvider.getTrainingInstances());
-		trendPredictor.printIDFs("idf/trend_idf.csv");
 
 		Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictions = trendPredictor
 				.predictInstances(instanceProvider.getTestInstances());
 
 		Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> groundTruth = trendPredictor
 				.getGroundTruthAnnotations(instanceProvider.getTestInstances());
-
 		Score s = trendPredictor.evaluate(groundTruth, predictions);
-		System.out.println(s);
+
+		new File("idf/trend/" + trendPredictor.toString().hashCode() + "/").mkdirs();
+
+		trendPredictor.printErrors("idf/trend/" + trendPredictor.toString().hashCode() + "/"
+				+ trendPredictor.toString().hashCode() + "_trend_errors.csv", groundTruth, predictions);
+		trendPredictor.printIDFs("idf/trend/" + trendPredictor.toString().hashCode() + "/"
+				+ trendPredictor.toString().hashCode() + "_trend_idfs.csv");
+		String info = trendPredictor.printInfo("idf/trend/" + trendPredictor.toString().hashCode() + "/"
+				+ trendPredictor.toString().hashCode() + "_trend_info.csv", s);
+
+		System.out.println(info);
 	}
+//	score	Score [getF1()=0.219, getPrecision()=0.137, getRecall()=0.546, tp=231, fp=1456, fn=192, tn=0]
+//	score	Score [getF1()=0.293, getPrecision()=0.210, getRecall()=0.489, tp=207, fp=781, fn=216, tn=0]
 
 	protected List<DocumentLinkedAnnotation> extractData(Instance trainInstance) {
 

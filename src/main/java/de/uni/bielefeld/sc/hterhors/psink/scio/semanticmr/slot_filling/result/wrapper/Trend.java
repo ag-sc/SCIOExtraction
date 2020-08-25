@@ -159,9 +159,7 @@ public class Trend {
 	public EntityTemplate getSignificance() {
 		SingleFillerSlot sfs = trend.getSingleFillerSlot(SCIOSlotTypes.hasSignificance);
 		if (sfs.containsSlotFiller())
-			return sfs.getSlotFiller().isInstanceOfDocumentLinkedAnnotation()
-					? sfs.getSlotFiller().asInstanceOfEntityTemplate()
-					: null;
+			return sfs.getSlotFiller().asInstanceOfEntityTemplate();
 		return null;
 	}
 

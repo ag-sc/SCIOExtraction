@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.examples.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -135,6 +136,11 @@ public class InjurySlotFilling {
 
 		Map<String, Score> scoreMap = new HashMap<>();
 
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasInjuryDevice);
+		slotTypesToConsider.add(SCIOSlotTypes.hasInjuryLocation);
+		slotTypesToConsider.add(SCIOSlotTypes.hasAnaesthesia);
+
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
 			rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 //			rule = rule;
@@ -164,17 +170,14 @@ public class InjurySlotFilling {
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
+			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 //			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
 
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-
-			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryDevice);
-			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryLocation);
-			slotTypesToConsider.add(SCIOSlotTypes.hasAnaesthesia);
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);

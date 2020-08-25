@@ -141,9 +141,9 @@ public class ExperimentalGroupFinalEvaluationOutPutReader {
 
 	}
 
-	static public EValue value = EValue.F1;
+//	static public EValue value = EValue.F1;
 //	static public EValue value = EValue.RECALL;
-//	static public EValue value = EValue.PRECISION;
+	static public EValue value = EValue.PRECISION;
 
 	/**
 	 * TODO: Run for F1 RECALL and PRECISION

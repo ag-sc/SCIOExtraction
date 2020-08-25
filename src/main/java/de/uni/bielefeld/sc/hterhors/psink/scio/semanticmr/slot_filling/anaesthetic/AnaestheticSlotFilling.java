@@ -28,6 +28,7 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -112,7 +113,7 @@ public class AnaestheticSlotFilling {
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(20).build();
-		modus = ENERModus.PREDICT;
+		modus = ENERModus.GOLD;
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
@@ -141,6 +142,9 @@ public class AnaestheticSlotFilling {
 
 		resultsOut.println(header);
 		Map<String, Score> scoreMap = new HashMap<>();
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
+		slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
 
 		for (EAnaestheticModifications rule : EAnaestheticModifications.values()) {
 //			DeliveryMethodFilling.rule =rule;
@@ -176,6 +180,8 @@ public class AnaestheticSlotFilling {
 					rule, modus);
 
 //			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
+					predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 //
@@ -185,10 +191,7 @@ public class AnaestheticSlotFilling {
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 ////
 
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
-			slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);
-
+		
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 //

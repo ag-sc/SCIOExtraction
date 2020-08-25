@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMethod;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,17 +54,24 @@ public class InvestigationMethodIDFPredictor extends AbstractIDFPredictor {
 		}
 
 		InvestigationMethodIDFPredictor investigationPredictor = new InvestigationMethodIDFPredictor();
-		investigationPredictor.setAnnotationStopwords(Arrays.asList("either", "number", "group", "groups", "numbers"));
-		investigationPredictor.setSentenceStopWords(Arrays.asList("arrow", "asterisk", "*", "bar"));
-		investigationPredictor.setRemoveEntityTypes(Arrays.asList(EntityType.get("InvestigationMethod")));
+//		investigationPredictor.setAnnotationStopwords(
+//				Arrays.asList("either", "number", "group", "groups", "numbers", "not", "did", "spinal", "cord"));
+//		investigationPredictor.setSentenceStopWords(Arrays.asList("arrow", "asterisk", "*", "bar"));
+//		investigationPredictor.setRemoveEntityTypes(
+//				Arrays.asList(EntityType.get("InvestigationMethod"), EntityType.get("FunctionalTest")));
 		investigationPredictor.setEnableUniGram(true);
 		investigationPredictor.setEnableBiGram(false);
 		investigationPredictor.setRestrictToSections(Arrays.asList(ESection.RESULTS));
 		investigationPredictor.setLocalNormalizing(true);
-		investigationPredictor.setEnableStemming(true);
+		investigationPredictor.setEnableStemming(false);
+		investigationPredictor.setIncludeNameContains(false);
+		investigationPredictor.setMinTokenLength(2);
 		investigationPredictor.setEnableLowerCasing(true);
+		investigationPredictor.setTrehsold(0);
+		investigationPredictor.setMinAnnotationsPerSentence(0);
+		investigationPredictor.setMaxAnnotationsPerSentence(2);
+
 		investigationPredictor.train(instanceProvider.getTrainingInstances());
-		investigationPredictor.printIDFs("idf/investigationMethod_idf.csv");
 
 		Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> predictions = investigationPredictor
 				.predictInstances(instanceProvider.getTestInstances());
@@ -71,8 +79,22 @@ public class InvestigationMethodIDFPredictor extends AbstractIDFPredictor {
 		Map<Instance, Map<Integer, Set<DocumentLinkedAnnotation>>> groundTruth = investigationPredictor
 				.getGroundTruthAnnotations(instanceProvider.getTestInstances());
 		Score s = investigationPredictor.evaluate(groundTruth, predictions);
-		System.out.println(s);
+
+		new File("idf/invm/" + investigationPredictor.toString().hashCode() + "/").mkdirs();
+
+		investigationPredictor.printErrors(
+				"idf/invm/" + investigationPredictor.toString().hashCode() + "/"
+						+ investigationPredictor.toString().hashCode() + "_investigationMethod_errors.csv",
+				groundTruth, predictions);
+		investigationPredictor.printIDFs("idf/invm/" + investigationPredictor.toString().hashCode() + "/"
+				+ investigationPredictor.toString().hashCode() + "_investigationMethod_idfs.csv");
+		String info = investigationPredictor.printInfo("idf/invm/" + investigationPredictor.toString().hashCode() + "/"
+				+ investigationPredictor.toString().hashCode() + "_investigationMethod_info.csv", s);
+
+		System.out.println(info);
+
 	}
+//	score	Score [getF1()=0.092, getPrecision()=0.050, getRecall()=0.582, tp=99, fp=1893, fn=71, tn=0]
 
 	protected List<DocumentLinkedAnnotation> extractData(Instance trainInstance) {
 
@@ -96,4 +118,5 @@ public class InvestigationMethodIDFPredictor extends AbstractIDFPredictor {
 		return ims;
 
 	}
+
 }

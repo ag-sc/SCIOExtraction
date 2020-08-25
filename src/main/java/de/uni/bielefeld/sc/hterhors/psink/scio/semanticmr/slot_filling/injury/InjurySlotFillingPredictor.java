@@ -45,6 +45,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_de
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDeviceRestrictionProvider.EInjuryDeviceModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralLocationPredictor;
 
 /**
  * Slot filling for injuries.
@@ -140,6 +141,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	InjuryDevicePredictor injuryDevicePrediction = null;
 	AnaestheticPredictor anaestheticPrediction = null;
 	VertebralAreaPredictor vertebralAreaPrediction = null;
+	VertebralLocationPredictor VertebralLocationPrediction = null;
 
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
@@ -180,26 +182,60 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		}
 
 		SlotType.restoreExcludance(x);
-
+//		MACRO	Root = 0.631	0.650	0.613	0.647	0.667	0.628	0.975	0.975	0.975
+//				MACRO	hasInjuryAnaesthesia = 0.330	0.417	0.273	0.903	0.931	0.885	0.365	0.448	0.308
+//				MACRO	hasInjuryDevice = 0.665	0.687	0.644	0.977	1.000	0.955	0.680	0.687	0.674
+//				MACRO	hasInjuryLocation = 0.614	0.633	0.596	0.979	1.000	0.960	0.627	0.633	0.621
+//				MACRO	Cardinality = 0.974	1.000	0.950	0.974	1.000	0.950	1.000	1.000	1.000
+//				MACRO	Overall = 0.495	0.534	0.462	0.765	0.652	0.864	0.647	0.819	0.535
+//				modelName: Injury5298992
 		Map<SlotType, Boolean> y = SlotType.storeExcludance();
 		SlotType.includeAll();
-		String vertebralAreaModelName = "VertebralArea_" + modelName;
+		String injuryLocationModelName = "VertebralLocation_" + modelName;
 
-		if (vertebralAreaPrediction == null) {
+		if (VertebralLocationPrediction == null) {
 
-			vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, trainingInstanceNames,
+			VertebralLocationPrediction = new VertebralLocationPredictor(injuryLocationModelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, EVertebralAreaModifications.NO_MODIFICATION, modus);
 
-			vertebralAreaPrediction.trainOrLoadModel();
+			VertebralLocationPrediction.trainOrLoadModel();
 
-			vertebralAreaPrediction.predictAllInstances(1);
+			VertebralLocationPrediction.predictAllInstances(1);
 		}
 
 		for (Instance instance : instances) {
 			map.putIfAbsent(instance, new ArrayList<>());
-			map.get(instance).addAll(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 1));
+			map.get(instance)
+					.addAll(VertebralLocationPrediction.predictHighRecallInstanceByName(instance.getName(), 1));
 		}
 		SlotType.restoreExcludance(y);
+		
+//		MACRO	Root = 0.631	0.650	0.613	0.647	0.667	0.628	0.975	0.975	0.975
+//				MACRO	hasInjuryAnaesthesia = 0.325	0.410	0.270	0.891	0.932	0.865	0.365	0.440	0.312
+//				MACRO	hasInjuryDevice = 0.665	0.687	0.644	0.977	1.000	0.955	0.680	0.687	0.674
+//				MACRO	hasInjuryLocation = 0.194	0.200	0.188	0.968	1.000	0.938	0.200	0.200	0.200
+//				MACRO	Cardinality = 0.974	1.000	0.950	0.974	1.000	0.950	1.000	1.000	1.000
+//				MACRO	Overall = 0.450	0.534	0.389	0.770	0.674	0.839	0.585	0.791	0.464
+//				modelName: Injury1920527509
+//		Map<SlotType, Boolean> y = SlotType.storeExcludance();
+//		SlotType.includeAll();
+//		String vertebralAreaModelName = "VertebralArea_" + modelName;
+//		
+//		if (vertebralAreaPrediction == null) {
+//			
+//			vertebralAreaPrediction = new VertebralAreaPredictor(vertebralAreaModelName, trainingInstanceNames,
+//					developInstanceNames, testInstanceNames, EVertebralAreaModifications.NO_MODIFICATION, modus);
+//			
+//			vertebralAreaPrediction.trainOrLoadModel();
+//			
+//			vertebralAreaPrediction.predictAllInstances(1);
+//		}
+//		
+//		for (Instance instance : instances) {
+//			map.putIfAbsent(instance, new ArrayList<>());
+//			map.get(instance).addAll(vertebralAreaPrediction.predictHighRecallInstanceByName(instance.getName(), 1));
+//		}
+//		SlotType.restoreExcludance(y);
 
 	}
 

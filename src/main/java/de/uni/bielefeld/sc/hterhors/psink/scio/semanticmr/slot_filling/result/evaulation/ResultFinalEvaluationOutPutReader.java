@@ -114,9 +114,9 @@ public class ResultFinalEvaluationOutPutReader {
 
 	}
 
-//	static public EValue value = EValue.F1;
+	static public EValue value = EValue.F1;
 //	static public EValue value = EValue.RECALL;
-	static public EValue value = EValue.PRECISION;
+//	static public EValue value = EValue.PRECISION;
 
 	/*
 	 * for run for F1 RECALL and PRECISION
@@ -321,7 +321,7 @@ public class ResultFinalEvaluationOutPutReader {
 
 		for (String fileName : files) {
 			File file = new File(dir, fileName);
-			System.out.println("single folder: "+file);
+			System.out.println("single folder: " + file);
 
 			final String modeName = "Mode_" + modeCounter;
 			modePairsMap.put(modeName, new HashMap<>());
