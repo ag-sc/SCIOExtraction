@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.jena.vocabulary.RDF;
+
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.MultiFillerSlot;
@@ -35,6 +37,8 @@ public class ConvertToRDF {
 		return idMap.get(et);
 	}
 
+	public int count = 0;
+
 	public ConvertToRDF(File outPutFile, List<EntityTemplate> annotations) throws IOException {
 		Set<String> RDFData = new HashSet<>();
 		for (EntityTemplate et : annotations) {
@@ -42,6 +46,7 @@ public class ConvertToRDF {
 		}
 
 		List<String> RDFDataSorted = new ArrayList<>(RDFData);
+		count = RDFDataSorted.size();
 		Collections.sort(RDFDataSorted);
 
 		PrintStream ps = new PrintStream(outPutFile);

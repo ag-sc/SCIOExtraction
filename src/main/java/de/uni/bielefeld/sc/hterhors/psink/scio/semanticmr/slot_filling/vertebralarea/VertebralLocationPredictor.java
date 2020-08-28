@@ -173,15 +173,16 @@ public class VertebralLocationPredictor extends AbstractSlotFillingPredictor {
 //			return null;
 //		});
 
-//		goldModificationRules.add(a -> {
-//			if (a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasUpperVertebrae"))
-//					.containsSlotFiller()
-//					&& a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasLowerVertebrae"))
-//							.containsSlotFiller())
-//
-//				return a;
-//			return null; // remove from annotation if upper or lower vertebrae is missing.
-//		});
+		goldModificationRules.add(a -> {
+			if (a.getEntityType() == SCIOEntityTypes.vertebralArea
+					&& a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasUpperVertebrae"))
+							.containsSlotFiller()
+					&& a.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasLowerVertebrae"))
+							.containsSlotFiller()|| a.getEntityType()!= SCIOEntityTypes.vertebralArea)
+
+				return a;
+			return null; // remove from annotation if upper or lower vertebrae is missing.
+		});
 		return goldModificationRules;
 	}
 

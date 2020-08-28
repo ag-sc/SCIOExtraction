@@ -140,7 +140,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	InjuryDevicePredictor injuryDevicePrediction = null;
 	AnaestheticPredictor anaestheticPrediction = null;
-	VertebralAreaPredictor vertebralAreaPrediction = null;
+//	VertebralAreaPredictor vertebralAreaPrediction = null;
 	VertebralLocationPredictor VertebralLocationPrediction = null;
 
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {

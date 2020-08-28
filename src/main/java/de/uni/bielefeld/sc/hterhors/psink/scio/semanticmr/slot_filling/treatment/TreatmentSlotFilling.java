@@ -163,7 +163,7 @@ public class TreatmentSlotFilling {
 			testInstances = instanceProvider.getTestInstances();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
-					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 //
 //			predictor.trainOrLoadModel();
@@ -185,7 +185,7 @@ public class TreatmentSlotFilling {
 //			log.info("Coverage Development: " + devCoverage);
 //
 //			log.info("results: " + toResults(rule, score));
-			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
+			AnalyzeComplexity.analyze(SCIOEntityTypes.treatment,slotTypesToConsider, predictor.instanceProvider.getInstances(),
 					predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));

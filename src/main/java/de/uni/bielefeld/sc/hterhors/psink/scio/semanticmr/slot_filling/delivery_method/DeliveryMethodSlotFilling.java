@@ -158,7 +158,7 @@ public class DeliveryMethodSlotFilling {
 
 //			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 			
-			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
+			AnalyzeComplexity.analyze(SCIOEntityTypes.deliveryMethod,slotTypesToConsider, predictor.instanceProvider.getInstances(),
 					predictor.predictionObjectiveFunction.getEvaluator());
 
 			

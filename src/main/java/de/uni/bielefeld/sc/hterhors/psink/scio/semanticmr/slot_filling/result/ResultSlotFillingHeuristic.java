@@ -148,36 +148,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		readData();
 
-		for (Instance instance : instanceProvider.getInstances()) {
-
-			if (!instance.getName().startsWith("N075"))
-				continue;
-
-			List<EntityTemplate> l = new ArrayList<>();
-			for (AbstractAnnotation aa : instance.getGoldAnnotations().getAnnotations()) {
-
-				System.out.println(aa.toPrettyString());
-				if (!aa.toPrettyString().contains("BBB"))
-					continue;
-
-				if (!aa.toPrettyString().contains("Positive"))
-					continue;
-
-				if (!aa.toPrettyString().contains("control"))
-					continue;
-
-				if (!aa.toPrettyString().contains("OEG/MSC"))
-					continue;
-				
-				l.add(aa.asInstanceOfEntityTemplate());
-			}
-
-			ConvertToRDF x = new ConvertToRDF(new File("test.n-triples"), l);
-
-		}
-		System.exit(1);
-		boolean includeFastTextAnnotations = false;
-		boolean includeIDFAnnotations = true;
+		boolean includeFastTextAnnotations = true;
+		boolean includeIDFAnnotations = false;
 		boolean addDicitionaryBasedAnnotations = false;
 		boolean includeRegexData = false;
 
@@ -204,14 +176,14 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		/*
 		 * TEST ALL GOLD BUT IDF PREDICT FOR TREND AND INV M
 		 */
-		annotations.values().stream().forEach(a -> {
-			for (Iterator<DocumentLinkedAnnotation> iterator = a.iterator(); iterator.hasNext();) {
-				DocumentLinkedAnnotation documentLinkedAnnotation = (DocumentLinkedAnnotation) iterator.next();
-				if (documentLinkedAnnotation.getEntityType() != SCIOEntityTypes.groupName) {
-					iterator.remove();
-				}
-			}
-		});
+//		annotations.values().stream().forEach(a -> {
+//			for (Iterator<DocumentLinkedAnnotation> iterator = a.iterator(); iterator.hasNext();) {
+//				DocumentLinkedAnnotation documentLinkedAnnotation = (DocumentLinkedAnnotation) iterator.next();
+//				if (documentLinkedAnnotation.getEntityType() != SCIOEntityTypes.groupName) {
+//					iterator.remove();
+//				}
+//			}
+//		});
 
 //		if (includeIDFAnnotations) {
 //			ExtractSentencesWithResults r = new ExtractSentencesWithResults(trainingInstanceNames,
@@ -254,23 +226,6 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //			}
 //
 //		}
-		{
-			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
-					SCIOEntityTypes.investigationMethod, trainingInstances);
-			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(testInstances);
-			for (Instance instance : annotationsInvFT.keySet()) {
-				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(annotationsInvFT.get(instance));
-			}
-
-			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
-					SCIOEntityTypes.trend, trainingInstances);
-			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
-			for (Instance instance : annotationsTredFT.keySet()) {
-				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(annotationsTredFT.get(instance));
-			}
-		}
 
 		if (modus == ENERModus.PREDICT) {
 			for (Instance instance : instanceProvider.getInstances()) {
@@ -549,7 +504,6 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		new File("data/annotations/trendTFIDF/").mkdirs();
 
 		for (Instance instance : testInstances) {
-			System.out.println("NAME = " + instance.getName());
 //			annotations.putIfAbsent(instance, new HashSet<>());
 			Set<DocumentLinkedAnnotation> invAnns = new HashSet<>();
 			for (List<DocumentToken> sentence : instance.getDocument().getSentences()) {
@@ -593,8 +547,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		} else {
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
 			SlotType.includeAll();
-			ExperimentalGroupSlotFillingPredictorFinalEvaluation.maxCacheSize = 800_000;
-			ExperimentalGroupSlotFillingPredictorFinalEvaluation.minCacheSize = 400_000;
+//			ExperimentalGroupSlotFillingPredictorFinalEvaluation.maxCacheSize = 800_000;
+//			ExperimentalGroupSlotFillingPredictorFinalEvaluation.minCacheSize = 400_000;
 
 			int modusIndex = modus == ENERModus.GOLD ? 17 : 18; // here only PREDICT
 			ExperimentalGroupSlotFillingPredictorFinalEvaluation a = new ExperimentalGroupSlotFillingPredictorFinalEvaluation(
@@ -650,9 +604,9 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		List<DocumentLinkedAnnotation> list = GroupNameExtraction
 				.extractGroupNamesWithPattern(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
 
-//		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction
-//				.extractGroupNamesWithNPCHunks(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
-//		list.addAll(list2);
+		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction
+				.extractGroupNamesWithNPCHunks(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
+		list.addAll(list2);
 
 		return list;
 

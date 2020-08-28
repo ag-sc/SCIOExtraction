@@ -583,9 +583,10 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
 		slotTypesToConsider.add(SCIOSlotTypes.hasTreatmentType);
-		
-		AnalyzeComplexity.analyze(slotTypesToConsider, instanceProvider.getInstances(),
-				predictionObjectiveFunction.getEvaluator());
+//		
+//		AnalyzeComplexity.analyze(SCIOEntityTypes.definedExperimentalGroup
+//				,slotTypesToConsider, instanceProvider.getInstances(),
+//				predictionObjectiveFunction.getEvaluator());
 
 		SCIOSlotTypes.hasTreatmentType.slotMaxCapacity = 3;
 
@@ -1292,6 +1293,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 				.setTrainingInstanceNames(trainingInstanceNames).setDevelopInstanceNames(devInstanceNames)
 				.setTestInstanceNames(testInstanceNames).build();
 
+		InstanceProvider.verbose= true;
 		InstanceProvider.maxNumberOfAnnotations = 8;
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;

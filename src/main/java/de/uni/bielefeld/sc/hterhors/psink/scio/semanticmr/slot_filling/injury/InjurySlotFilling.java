@@ -170,7 +170,7 @@ public class InjurySlotFilling {
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
-			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.injury,slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 
