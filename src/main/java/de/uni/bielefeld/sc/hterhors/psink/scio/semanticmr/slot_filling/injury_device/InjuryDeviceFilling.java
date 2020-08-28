@@ -150,7 +150,7 @@ public class InjuryDeviceFilling {
 							.collect(Collectors.toList()),
 					rule, ENERModus.GOLD);
 
-			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.injuryDevice,slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 

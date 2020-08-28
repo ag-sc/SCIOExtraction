@@ -148,7 +148,7 @@ public class VertebralAreaSlotFilling {
 		slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
 		slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
 
-		AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+		AnalyzeComplexity.analyze(SCIOEntityTypes.vertebralArea,slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
 
 		
 		predictor.trainOrLoadModel();

@@ -47,7 +47,10 @@ public class VertebralAreaSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new VertebralAreaSlotFillingFinalEvaluation(1000L, args[0]);
+		if (args.length == 0)
+			new VertebralAreaSlotFillingFinalEvaluation(1000L, "GOLD");
+		else
+			new VertebralAreaSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private final static DecimalFormat resultFormatter = new DecimalFormat("#.##");

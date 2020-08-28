@@ -242,14 +242,14 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-//		return (instance -> {
-//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic)));
-//		});
-
 		return (instance -> {
-			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
-					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic)));
 		});
+
+//		return (instance -> {
+//			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.anaesthetic),
+//					new EntityTemplate(SCIOEntityTypes.anaesthetic)));
+//		});
 
 //		return (instance -> {
 //

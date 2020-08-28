@@ -60,6 +60,9 @@ public class AnaestheticSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		if( args.length==0)
+			new AnaestheticSlotFillingFinalEvaluation(1000L, "GOLD");
+		else
 		new AnaestheticSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 

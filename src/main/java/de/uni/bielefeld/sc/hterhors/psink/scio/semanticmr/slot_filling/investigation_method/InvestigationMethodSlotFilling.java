@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -14,12 +15,19 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.OriginalCorpusDistributor;
+import de.hterhors.semanticmr.crf.of.SlotFillingObjectiveFunction;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
+import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
+import de.hterhors.semanticmr.eval.CartesianEvaluator;
+import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.investigation_method.InvestigationMethodRestrictionProvider.EInvestigationMethodModifications;
 
@@ -46,8 +54,7 @@ public class InvestigationMethodSlotFilling {
 	 * The directory of the corpus instances. In this example each instance is
 	 * stored in its own json-file.
 	 */
-	private final File instanceDirectory = new File(
-			"src/main/resources/slotfilling/investigation_method/corpus/instances/");
+	private final File instanceDirectory;
 
 	public InvestigationMethodSlotFilling() throws IOException {
 
@@ -61,12 +68,14 @@ public class InvestigationMethodSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("InvestigationMethod"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Trend"))
 				/**
 				 * Finally, we build the systems scope.
 				 */
 				.build();
-
+		this.instanceDirectory = SlotFillingCorpusBuilderBib
+				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.trend
+						);
 //		SpecificationWriter w = new SpecificationWriter(scope);
 //		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/investigation_method/entities.csv"),
 //				EntityType.get("InvestigationMethod"));
@@ -87,25 +96,32 @@ public class InvestigationMethodSlotFilling {
 
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 //				.setSeed(1000L).setDevelopmentProportion(20).setTestProportion(20).setCorpusSizeFraction(1F).build();
-//		InstanceProvider.maxNumberOfAnnotations = 8;
+		InstanceProvider.maxNumberOfAnnotations = 100;
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				getGoldModificationRules());
 
-		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
-				.map(t -> t.getName()).collect(Collectors.toList());
+		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
+				.collect(Collectors.toList());
 
-		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
-				.map(t -> t.getName()).collect(Collectors.toList());
+		List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream().map(t -> t.getName())
+				.collect(Collectors.toList());
 
 		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
 		String modelName = "InvestigationMethod" + new Random().nextInt();
 
+		AnalyzeComplexity.analyze(SCIOEntityTypes.trend
+				,new HashSet<>(), instanceProvider.getInstances(),
+				new SlotFillingObjectiveFunction(EScoreType.MICRO,
+						new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE))
+				.getEvaluator());
+
 		InvestigationMethodSlotFillingPredictor predictor = new InvestigationMethodSlotFillingPredictor(modelName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames, EInvestigationMethodModifications.ROOT,
 				ENERModus.GOLD);
+
 
 //		predictor.trainOrLoadModel();
 //
@@ -139,17 +155,18 @@ public class InvestigationMethodSlotFilling {
 
 		List<GoldModificationRule> list = new ArrayList<>();
 //
-		list.add(new GoldModificationRule() {
+//		list.add(
+//				new GoldModificationRule() {
 
-			@Override
-			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
-				if (goldAnnotation.getEntityType() == EntityType.get("InvestigationMethod"))
-					if (goldAnnotation.asInstanceOfEntityTemplate().isEmpty())
-						return null;
-
-				return goldAnnotation;
-			}
-		});
+//			@Override
+//			public AbstractAnnotation modify(AbstractAnnotation goldAnnotation) {
+//				if (goldAnnotation.getEntityType() == EntityType.get("Trend"))
+//					if (goldAnnotation.asInstanceOfEntityTemplate().isEmpty())
+//						return null;
+//
+//				return goldAnnotation;
+//			}
+//		});
 
 		return list;
 	}

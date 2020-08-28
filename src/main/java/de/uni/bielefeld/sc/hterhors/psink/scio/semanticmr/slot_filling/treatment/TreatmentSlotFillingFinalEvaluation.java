@@ -53,9 +53,9 @@ public class TreatmentSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-//		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
-		new TreatmentSlotFillingFinalEvaluation(1000L, "GOLD");
-		new TreatmentSlotFillingFinalEvaluation(1000L, "PREDICT");
+		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
+//		new TreatmentSlotFillingFinalEvaluation(1000L, "GOLD");
+//		new TreatmentSlotFillingFinalEvaluation(1000L, "PREDICT");
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -123,9 +123,9 @@ public class TreatmentSlotFillingFinalEvaluation {
 			devInstances = instanceProvider.getDevelopmentInstances();
 			testInstances = instanceProvider.getTestInstances();
 
-			for (Instance string : instanceProvider.getInstances()) {
-				System.out.println(string.getGoldAnnotations().getAbstractAnnotations().size());
-			}
+//			for (Instance string : instanceProvider.getInstances()) {
+//				System.out.println(string.getGoldAnnotations().getAbstractAnnotations().size());
+//			}
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
 					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);

@@ -120,7 +120,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		readData();
 	
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
-		AnalyzeComplexity.analyze(slotTypesToConsider , instanceProvider.getInstances(),
+		AnalyzeComplexity.analyze(SCIOEntityTypes.result,slotTypesToConsider , instanceProvider.getInstances(),
 				predictionObjectiveFunction.getEvaluator());
 		
 		String rand = String.valueOf(new Random().nextInt(100000));

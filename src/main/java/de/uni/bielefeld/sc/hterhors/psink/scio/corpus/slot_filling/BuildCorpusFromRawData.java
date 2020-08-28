@@ -86,17 +86,17 @@ public class BuildCorpusFromRawData {
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 		InstanceProvider.maxNumberOfAnnotations = Integer.MAX_VALUE;
 
-//		buildCorpusForResult();
-//		buildCorpusForDefinedExperimentalGroup();
-//		buildCorpusForObservation();
-//		buildCorpusForOrganismModel();
-//		buildCorpusForInjuryModel();
-//		buildCorpusForTreatmentType();
-//		buildCorpusForInjuryLocation();
-//		buildCorpusForVertebralArea();
-//		buildCorpusForAnaesthesia();
-//		buildCorpusForDeliveryMethod();
-//		buildCorpusForInjuryDevice();
+		buildCorpusForResult();
+		buildCorpusForDefinedExperimentalGroup();
+		buildCorpusForObservation();
+		buildCorpusForOrganismModel();
+		buildCorpusForInjuryModel();
+		buildCorpusForTreatmentType();
+		buildCorpusForInjuryLocation();
+		buildCorpusForVertebralArea();
+		buildCorpusForAnaesthesia();
+		buildCorpusForDeliveryMethod();
+		buildCorpusForInjuryDevice();
 		buildCorpusForInvestigationMethod();
 		buildCorpusForTrend();
 		System.exit(1);

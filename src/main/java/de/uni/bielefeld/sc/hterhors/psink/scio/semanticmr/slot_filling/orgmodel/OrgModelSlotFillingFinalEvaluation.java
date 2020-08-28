@@ -57,8 +57,10 @@ public class OrgModelSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-//		new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
-		new OrgModelSlotFillingFinalEvaluation(1000L, "GOLD");
+		if (args.length == 0)
+			new OrgModelSlotFillingFinalEvaluation(1000L, "GOLD");
+		else
+			new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
 //		new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
@@ -115,8 +117,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 		slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
 		slotTypesToConsider.add(SCIOSlotTypes.hasGender);
 
-		
-
 		Map<String, Score> scoreMap = new HashMap<>();
 		Random random = new Random(randomSeed);
 		ENERModus modus = ENERModus.valueOf(modusName);
@@ -134,14 +134,14 @@ public class OrgModelSlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getByRule(rule));
 
-			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
 			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
 			String modelName = modusName + "_OrganismModel_Final_" + seed;
 
@@ -151,7 +151,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
-
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);

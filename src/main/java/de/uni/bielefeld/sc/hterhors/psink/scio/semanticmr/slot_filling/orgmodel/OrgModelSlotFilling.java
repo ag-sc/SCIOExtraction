@@ -155,8 +155,8 @@ public class OrgModelSlotFilling {
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
-			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
-					predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.organismModel, slotTypesToConsider,
+					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 

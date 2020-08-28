@@ -26,6 +26,7 @@ import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.CartesianEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -48,7 +49,7 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0)
-			new VertebralLocationSlotFillingFinalEvaluation(123, "PREDICT");
+			new VertebralLocationSlotFillingFinalEvaluation(1001L, "GOLD");
 		else
 			new VertebralLocationSlotFillingFinalEvaluation(1000L, args[0]);
 	}
@@ -129,13 +130,13 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 					instanceProvider.getTestInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),
 					rule, modus);
 
-			predictor.trainOrLoadModel();
-
-			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
-
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
 			slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
+
+			predictor.trainOrLoadModel();
+
+			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
@@ -198,9 +199,6 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 //Overall-Absolute	0.727	0.735	0.719
 //	*************************
 
-
-
-
 //PREDICT
 
 //*************************
@@ -220,4 +218,3 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 //hasLowerVertebrae-Coverage	0.812	0.812	0.812
 //Overall-Absolute	0.643	0.652	0.635
 //	*************************
-

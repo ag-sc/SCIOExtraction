@@ -180,7 +180,7 @@ public class AnaestheticSlotFilling {
 					rule, modus);
 
 //			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
-			AnalyzeComplexity.analyze(slotTypesToConsider, predictor.instanceProvider.getInstances(),
+			AnalyzeComplexity.analyze(SCIOEntityTypes.anaesthetic,slotTypesToConsider, predictor.instanceProvider.getInstances(),
 					predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
