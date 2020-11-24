@@ -80,6 +80,7 @@ public class BuildCorpusFromRawData {
 
 	private static final String SCIO_NAME_SPACE = "http://psink.de/scio";
 	private static final String RESOURCE_NAME_SPACE = "http://scio/data";
+	private static final String CORPUS_DOCS = "corpus_docs_new.csv";
 
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
@@ -101,11 +102,11 @@ public class BuildCorpusFromRawData {
 		buildCorpusForTrend();
 		System.exit(1);
 	}
-
+	
 	private static void buildCorpusForTrend() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.trend);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.trend, true, true,
 				true);
 		annotateWithRegularExpressions(new TrendPattern(SCIOEntityTypes.trend));
@@ -114,7 +115,8 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForResult() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.result);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
+
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.result, true, true,
 				true);
 
@@ -137,7 +139,7 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForObservation() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.observation);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.observation, true, true,
 				true);
 
@@ -146,7 +148,7 @@ public class BuildCorpusFromRawData {
 	private static void buildCorpusForDefinedExperimentalGroup() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.definedExperimentalGroup);
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
 		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(),
 				SCIOEntityTypes.definedExperimentalGroup, true, true, true);
 
@@ -184,7 +186,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.deliveryMethod);
 //
 //		Set<String> annotatedDocuments = new HashSet<>(
-//				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+//				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
 		convertFromSanto2JsonCorpus(Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.deliveryMethod,
 				true, true, false);
 		annotateWithRegularExpressions(new DeliveryMethodPattern(SCIOEntityTypes.deliveryMethod));
@@ -194,7 +196,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.investigationMethod);
 
 		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
 
 		Set<SlotType> investigationMethodSlotTypes = new HashSet<>();
 //		investigationMethodSlotTypes.add(SCIOSlotTypes.hasLocation);
@@ -208,7 +210,7 @@ public class BuildCorpusFromRawData {
 		buildSubDataStructureFiles(SCIOEntityTypes.treatment);
 
 //		Set<String> annotatedDocuments = new HashSet<>(
-//				Files.readAllLines(new File(SRC_MAIN_RESOURCES, "corpus_docs.csv").toPath()));
+//				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
 		Set<SlotType> treatmentSlotTypes = new HashSet<>();
 		treatmentSlotTypes.add(SCIOSlotTypes.hasDeliveryMethod);
 		treatmentSlotTypes.add(SCIOSlotTypes.hasCompound);

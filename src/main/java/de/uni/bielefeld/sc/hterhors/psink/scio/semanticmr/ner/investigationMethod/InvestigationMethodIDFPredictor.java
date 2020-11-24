@@ -25,6 +25,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.result_sentences.AbstractIDFPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class InvestigationMethodIDFPredictor extends AbstractIDFPredictor {
 
@@ -49,10 +50,15 @@ public class InvestigationMethodIDFPredictor extends AbstractIDFPredictor {
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
 				corpusDistributor);
+		int count=0;
 		for (Instance instance : instanceProvider.getInstances()) {
 			AutomatedSectionifcation.getInstance(instance);
+			count+=instance.getGoldAnnotations().getAnnotations().size();
 		}
+		System.out.println(count);
+		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.investigationMethod);
 
+		
 		InvestigationMethodIDFPredictor investigationPredictor = new InvestigationMethodIDFPredictor();
 //		investigationPredictor.setAnnotationStopwords(
 //				Arrays.asList("either", "number", "group", "groups", "numbers", "not", "did", "spinal", "cord"));

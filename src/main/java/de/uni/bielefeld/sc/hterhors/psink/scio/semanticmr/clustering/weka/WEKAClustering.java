@@ -303,6 +303,13 @@ public class WEKAClustering {
 
 		Map<Boolean, Set<GroupNamePair>> dataSet = GroupNameDataSetHelper.getGroupNameClusterDataSet(instances);
 
+		/*
+		 * training data size
+		 */
+//		System.out.println(dataSet.get(true).size());
+//		System.out.println(dataSet.get(false).size());
+//		
+		
 		for (DataPoint fdp : convertToDataPoints(dataSet.get(false), training)) {
 			collector.addFeatureDataPoint(fdp);
 		}

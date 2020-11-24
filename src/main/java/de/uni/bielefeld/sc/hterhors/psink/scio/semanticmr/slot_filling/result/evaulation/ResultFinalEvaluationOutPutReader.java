@@ -114,16 +114,16 @@ public class ResultFinalEvaluationOutPutReader {
 
 	}
 
-	static public EValue value = EValue.F1;
+//	static public EValue value = EValue.F1;
 //	static public EValue value = EValue.RECALL;
-//	static public EValue value = EValue.PRECISION;
+	static public EValue value = EValue.PRECISION;
 
 	/*
 	 * for run for F1 RECALL and PRECISION
 	 */
 //	static String folder = "final_evaluation_results/result/reg_ex_results/evaluations";
 //	static String folder = "final_evaluation_results/result/fast_text_results/evaluations";
-	static String folder = "final_evaluation_results/result/evaluations";
+	static String folder = "final_evaluation_results/result_new/evaluations";
 
 	public static void main(String[] args) throws Exception {
 

@@ -39,6 +39,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluatio
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class AnaestheticSlotFilling {
 
@@ -112,8 +113,8 @@ public class AnaestheticSlotFilling {
 				.build();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(80).setDevelopmentProportion(20).build();
-		modus = ENERModus.GOLD;
+				.setSeed(1000L).setTrainingProportion(100).build();
+		modus = ENERModus.PREDICT;
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
@@ -134,8 +135,6 @@ public class AnaestheticSlotFilling {
 //				modelName: Anaesthetic-345509746
 //				CRFStatistics [context=Train, getTotalDuration()=17000]
 //				CRFStatistics [context=Test, getTotalDuration()=116]
-
-		
 
 		PrintStream resultsOut = new PrintStream(new File("results/anaestheticResults.csv"));
 //		List<String> names = Files.readAllLines(new File("src/main/resources/slotfilling/corpus_docs.csv").toPath());
@@ -160,8 +159,18 @@ public class AnaestheticSlotFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					AnaestheticRestrictionProvider.getByRule(rule));
 
-			dataRandomSeed = "" + new Random().nextInt();
-			String modelName = "Anaesthetic" + dataRandomSeed;
+//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.anaesthetic);
+//
+//			
+//			for (SlotType slotType : slotTypesToConsider) {
+//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//			}
+//			System.exit(1);
+//			
+
+//			dataRandomSeed = "" + new Random().nextInt();
+//			String modelName = "Anaesthetic" + dataRandomSeed;
+			String modelName = "Anaesthetic_PREDICTION";
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();
@@ -180,8 +189,8 @@ public class AnaestheticSlotFilling {
 					rule, modus);
 
 //			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
-			AnalyzeComplexity.analyze(SCIOEntityTypes.anaesthetic,slotTypesToConsider, predictor.instanceProvider.getInstances(),
-					predictor.predictionObjectiveFunction.getEvaluator());
+//			AnalyzeComplexity.analyze(SCIOEntityTypes.anaesthetic,slotTypesToConsider, predictor.instanceProvider.getInstances(),
+//					predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 //
@@ -191,7 +200,6 @@ public class AnaestheticSlotFilling {
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 ////
 
-		
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 //

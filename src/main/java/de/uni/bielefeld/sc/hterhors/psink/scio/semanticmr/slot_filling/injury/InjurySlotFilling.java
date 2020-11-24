@@ -44,6 +44,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * Slot filling for injuries.
@@ -140,13 +141,14 @@ public class InjurySlotFilling {
 		slotTypesToConsider.add(SCIOSlotTypes.hasInjuryDevice);
 		slotTypesToConsider.add(SCIOSlotTypes.hasInjuryLocation);
 		slotTypesToConsider.add(SCIOSlotTypes.hasAnaesthesia);
+		slotTypesToConsider.add(SCIOSlotTypes.hasInjuryIntensity);
 
 		for (EInjuryModifications rule : EInjuryModifications.values()) {
 			rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 //			rule = rule;
 
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+					.setTrainingProportion(100).setDevelopmentProportion(0).setCorpusSizeFraction(1F).build();
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
@@ -155,29 +157,36 @@ public class InjurySlotFilling {
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
-
-			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+//
+//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.injury);
+//
+//			for (SlotType slotType : slotTypesToConsider) {
+//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//			}
+//			System.exit(1);
+			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
 			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
-			String modelName = "Injury" + new Random().nextInt();
+			String modelName = "Injury_PREDICTION";
+//			String modelName = "Injury" + new Random().nextInt();
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
+					developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
 
-			AnalyzeComplexity.analyze(SCIOEntityTypes.injury,slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
+//			AnalyzeComplexity.analyze(SCIOEntityTypes.injury, slotTypesToConsider,
+//					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
 
 //			Score score = AbstractSemReadProject.evaluate(log, finalStates, predictor.predictionObjectiveFunction);
-
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);

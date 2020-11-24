@@ -14,6 +14,8 @@ import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.AbstractEvaluator;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 
 public class PerSlotEvaluator {
 
@@ -57,10 +59,10 @@ public class PerSlotEvaluator {
 					: 0;
 
 			Score sC = new Score(tp, fp, fn);
-			
+
 			if (scoreType == EScoreType.MACRO)
 				sC.toMacro();
-			
+
 			cardinality.add(sC);
 
 		}
@@ -91,8 +93,8 @@ public class PerSlotEvaluator {
 										: (cardinality.getF1()
 												/ Math.max(cardinality.getF1(), coverageCardinality.getF1())),
 								coverageCardinality.getPrecision() == 0D ? 0
-										: (cardinality.getPrecision()
-												/ Math.max(cardinality.getPrecision(), coverageCardinality.getPrecision())),
+										: (cardinality.getPrecision() / Math.max(cardinality.getPrecision(),
+												coverageCardinality.getPrecision())),
 								coverageCardinality.getRecall() == 0D ? 0
 										: (cardinality.getRecall()
 												/ Math.max(cardinality.getRecall(), coverageCardinality.getRecall()))));
@@ -104,8 +106,24 @@ public class PerSlotEvaluator {
 			Map<String, Score> scoreMap) {
 		for (SlotType consideredSlotType : slotTypesToConsider) {
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
+		
 			SlotType.excludeAll();
+			
+			
+			
+		
+			
+			/**
+			 *TODO: Extra eval for significance and trend and pvalue...
+			 */
+//			if (consideredSlotType == SCIOSlotTypes.hasPValue)
+//				SCIOSlotTypes.hasSignificance.include();
+//			consideredSlotType.include();
+			/**
+			 * ELSE
+			 */
 			consideredSlotType.includeRec();
+			
 			Score score = new Score(scoreType);
 
 			Score coverageRootScore = new Score(scoreType);

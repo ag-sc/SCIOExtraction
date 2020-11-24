@@ -40,7 +40,14 @@ public class ConvertToRDF {
 	public int count = 0;
 
 	public ConvertToRDF(File outPutFile, List<EntityTemplate> annotations) throws IOException {
+		this(new HashMap<>(), outPutFile, annotations);
+
+	}
+
+	public ConvertToRDF(Map<AbstractAnnotation, Integer> idMap, File outPutFile, List<EntityTemplate> annotations)
+			throws IOException {
 		Set<String> RDFData = new HashSet<>();
+		this.idMap = idMap;
 		for (EntityTemplate et : annotations) {
 			RDFData.addAll(convert(new HashSet<>(), et));
 		}

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -34,18 +35,30 @@ public class ConvertJSONToRDF {
 //	OEC+CELL
 //	OEC+SUBSTANCE
 
-//	Liste mit pubulcations + treatment(s) an Nicole
-//	judgements 
-
 	/*
-	 * Inbvestigationmethod, Trend ,Judgement ;
+	 * Investigation Method, Trend ,Judgement ;
 	 */
 	public static Map<EntityType, Map<EntityType, EntityType>> judgement = new HashMap<>();
+
+//	static List<String[]> dataContainingAdditionalInfo = new ArrayList<>();
+	static Set<String[]> all;
+
+	static Map<AbstractAnnotation, Integer> idMap = new HashMap<>();
+
+	static private Integer getID(AbstractAnnotation et) {
+		if (idMap.get(et) == null) {
+			idMap.put(et, idMap.size());
+		}
+		return idMap.get(et);
+	}
 
 	public static void main(String[] args) throws IOException {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(BuildCorpusFromRawData.dataStructureReader).build();
 
 		Files.readAllLines(new File("judgements.csv").toPath()).stream().skip(1).forEach(a -> addToJudgement(a));
+
+//		Files.readAllLines(new File("AdditionalInfo_Rules_Judgements_OEC_Cluster_V5.3.csv").toPath()).stream().skip(1)
+//				.forEach(a -> addToAdditionalData(a));
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(80)
 				.setTestProportion(20).setSeed(1000L).build();
@@ -60,12 +73,17 @@ public class ConvertJSONToRDF {
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
 		List<EntityTemplate> dataPoints = new ArrayList<>();
-		String header = "Document\tInvestigationMethod\tSignificance\tPvalue\tTrend\tJudgement\tTargetTreatments\tReferenceTreatments\tBoth contain OEC\tAny contains OEC\tSwitch was applied\tAutomated Judgment\tPositiveFunctional\tPositiveNonFunctional";
+		String header = "RDF-ID\tDocument\tInvestigationMethod\tSignificance\tPvalue\tTrend\tJudgement\tTargetTreatments\tReferenceTreatments\tBoth contain OEC\tAny contains OEC\tSwitch was applied\tAutomated Judgment\tPositiveFunctional\tPositiveNonFunctional";
 		System.out.println(header);
+
+//		all = new HashSet<>(dataContainingAdditionalInfo);
+
 		instanceProvider.getInstances().stream()
 				.forEach(a -> dataPoints.add(toPublication(a.getName(), a.getGoldAnnotations().getAnnotations())));
+//		System.out.println("REMAINING_-------------");
+//		all.forEach(s -> System.out.println(Arrays.toString(s)));
 
-		new ConvertToRDF(new File("OEC.n-triples"), dataPoints);
+		new ConvertToRDF(idMap, new File("OEC.n-triples"), dataPoints);
 
 		System.exit(1);
 
@@ -141,6 +159,11 @@ public class ConvertJSONToRDF {
 
 	}
 
+//	private static void addToAdditionalData(String a) {
+//		if (a.split("\t").length > 7 && !a.split("\t")[6].isEmpty())
+//			dataContainingAdditionalInfo.add(a.split("\t"));
+//	}
+
 	private static void addToJudgement(String line) {
 		if (line.split("\t").length < 3 || !line.split("\t")[2].trim().equals("100"))
 			return;
@@ -155,9 +178,6 @@ public class ConvertJSONToRDF {
 	private static EntityTemplate toPublication(String docName, List<AbstractAnnotation> results) {
 		EntityTemplate publication = new EntityTemplate(EntityType.get("Publication"));
 
-//		if (!docName.startsWith("N075"))
-//			return publication;
-
 		publication.setSingleSlotFiller(SlotType.get("hasPubmedID"), getPubmedID(docName));
 		EntityTemplate experiment = new EntityTemplate(EntityType.get("Experiment"));
 
@@ -171,8 +191,25 @@ public class ConvertJSONToRDF {
 		return publication;
 	}
 
+	static Map<AbstractAnnotation, String> resultToGroupMap = new HashMap<>();
+
 	private static void setJudgement(String docName, AbstractAnnotation result) {
 
+		/**
+		 * Adds a comment field to RDF that contains the group the result belongs to The
+		 * additional infomration need to be maped from nicols handmade annotations in
+		 * the csv to the json data. For this we check several columns to be equal...
+		 */
+
+		/**
+		 * FURTHER: we need to add the judgment here if there is an overlap of the
+		 * several columns.
+		 */
+
+		final List<Integer> importantColoumnsToOverlap = Arrays.asList(0, 1, 2, 3, 4, 8, 9);
+
+		String[] resultDataToOverlap = new String[10];
+		resultDataToOverlap[0] = docName;
 		try {
 			DefinedExperimentalGroup def1 = new DefinedExperimentalGroup(
 					result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasReferenceGroup"))
@@ -207,15 +244,24 @@ public class ConvertJSONToRDF {
 			AbstractAnnotation invest = result.asInstanceOfEntityTemplate()
 					.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller();
 
+			int id = getID(result);
+
+			System.out.print("<http://scio/data/Result_"+id+">\t");
+
 			System.out.print(docName + "\t");
+			String investN;
 			try {
-				System.out.print(invest.getEntityType().name);
+				investN = invest.getEntityType().name;
 			} catch (Exception e) {
-				System.out.print("-");
+				investN = "-";
 			}
+			System.out.print(investN);
+			resultDataToOverlap[1] = investN;
 
 			AbstractAnnotation trend = null;
 			AbstractAnnotation sig = null;
+
+			String sigN;
 			try {
 				trend = result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasTrend"))
 						.getSlotFiller();
@@ -225,30 +271,51 @@ public class ConvertJSONToRDF {
 						.getSlotFiller();
 
 				if (sig.getEntityType() == EntityType.get("Significance"))
-					System.out.print("-");
+					sigN = "-";
+//					System.out.print("-");
 				else
-					System.out.print(sig.getEntityType().name);
+					sigN = sig.getEntityType().name;
+//					System.out.print(sig.getEntityType().name);
 			} catch (Exception e) {
-				System.out.print("-");
+				sigN = "-";
+//				System.out.print("-");
 			}
-
+			resultDataToOverlap[2] = sigN;
+			System.out.print(sigN);
 			System.out.print("\t");
 			AbstractAnnotation pvalue = null;
+			String pvalN;
 			try {
 				pvalue = sig.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasPValue"))
 						.getSlotFiller();
-				System.out.print(pvalue.asInstanceOfLiteralAnnotation().getSurfaceForm());
+				pvalN = (pvalue.asInstanceOfLiteralAnnotation().getSurfaceForm());
+//				System.out.print(pvalue.asInstanceOfLiteralAnnotation().getSurfaceForm());
 			} catch (Exception e) {
-				System.out.print("-");
+				pvalN = "-";
+//				System.out.print("-");
 			}
 
+			System.out.print(pvalN);
+			resultDataToOverlap[3] = pvalN;
 			System.out.print("\t");
 			EntityType difference = null;
+			String trendN;
+
+			/**
+			 * SWITCH Increase zu higher and Decrease zu lower
+			 */
+			boolean switchRepMT = true;
+			if (trend != null && trend.getEntityType() == EntityType.get("RepeatedMeasureTrend")) {
+				switchRepMT = false;
+			}
 			try {
+
 				trend = trend.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasDifference"))
 						.getSlotFiller();
 
 				difference = trend.getEntityType();
+//
+
 				if (change) {
 
 					if (difference == EntityType.get("Higher"))
@@ -263,14 +330,24 @@ public class ConvertJSONToRDF {
 				}
 
 				if (difference == EntityType.get("ObservedDifference"))
-					System.out.print("-");
+//					System.out.print("-");
+					trendN = "-";
 				else
-					System.out.print(difference.name);
+					trendN = (difference.name);
 
 			} catch (Exception e) {
-				System.out.print("-");
+				trendN = "-";
+//				System.out.print("-");
 			}
+//print correct one
+			System.out.print(trendN);
 
+			/**
+			 * Correction was made in current data that was not done in comparing data...
+			 */
+
+			// compare with old value
+			resultDataToOverlap[4] = trendN;
 			System.out.print("\t");
 			AbstractAnnotation annJudgement = null;
 			try {
@@ -291,18 +368,30 @@ public class ConvertJSONToRDF {
 							+ e.getRootAnnotation().asInstanceOfLiteralAnnotation().getSurfaceForm() + "'\n")
 					.reduce("", String::concat);
 
+			String targetTN;
+
 			System.out.print("\t\"");
 			if (targetT.trim().isEmpty()) {
-				System.out.print("-");
+				targetTN = ("-");
+//				System.out.print("-");
 			} else {
-				System.out.print(targetT.trim().replaceAll("\n", ","));
+				targetTN = (targetT.trim().replaceAll("\n", ","));
+//				System.out.print(targetT.trim().replaceAll("\n", ","));
 			}
+			System.out.print(targetTN);
+			resultDataToOverlap[8] = targetTN;
+			String refTN;
 			System.out.print("\"\t\"");
 			if (refT.trim().isEmpty()) {
+				refTN = ("-");
 				System.out.print("-");
 			} else {
-				System.out.print(refT.trim().replaceAll("\n", ","));
+				refTN = (refT.trim().replaceAll("\n", ","));
+//				System.out.print(refT.trim().replaceAll("\n", ","));
 			}
+			System.out.print(refTN);
+			resultDataToOverlap[9] = refTN;
+
 			System.out.print("\"");
 			System.out.print("\t");
 			System.out.print(bothOEC);
@@ -344,14 +433,62 @@ public class ConvertJSONToRDF {
 			System.out.print(positiveFunctional);
 			System.out.print("\t");
 			System.out.print(positiveNonFunctional);
-			/**
-			 * TODO: change data accordingly.
-			 */
-//			if (annJudgement == null && _judgement != null)
-//				result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
-//						AnnotationBuilder.toAnnotation(_judgement));
-
 			System.out.println();
+
+//			for (String[] externalInfo : dataContainingAdditionalInfo) {
+//
+//				boolean overlap = externalInfo.length > 8 && !externalInfo[6].isEmpty();
+//				if (overlap)
+//					for (Integer integer : importantColoumnsToOverlap) {
+//
+//						if (switchRepMT && integer == 4) {
+//
+//							String reverseC = resultDataToOverlap[integer];
+//
+//							if (reverseC.equals("Higher"))
+//								reverseC = "FasterIncrease";
+//							if (reverseC.equals("Lower"))
+//								reverseC = "FasterDecrease";
+//
+//							overlap &= externalInfo[integer].equals(resultDataToOverlap[integer])
+//									|| externalInfo[integer].equals(reverseC);
+//
+////							if (!overlap) {
+////								System.out.println("Failed at " + integer + "\t" + reverseC + "\t"
+////										+ externalInfo[integer] + "\t" + resultDataToOverlap[integer]);
+////								break;
+////							}
+//						} else {
+//
+//							overlap &= resultDataToOverlap[integer].equals(externalInfo[integer]);
+//						}
+//
+//					}
+//				if (overlap) {
+//					System.out.println("GROUP = " + externalInfo[6]);
+//					resultToGroupMap.put(result, externalInfo[6]);
+//					System.out.println("-------------------------------");
+//					all.remove(externalInfo);
+//
+//					/**
+//					 * TODO: change data accordingly.
+//					 */
+////			if (annJudgement == null && _judgement != null)
+//
+//					if (externalInfo[17].equals("negative") || externalInfo[17].equals("positive"))
+//						result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
+//								AnnotationBuilder
+//										.toAnnotation(externalInfo[17].replaceAll("n", "N").replaceAll("p", "P")));
+////					}
+////			}
+////			if (annJudgement == null && _judgement != null)
+////				result.asInstanceOfEntityTemplate().setSingleSlotFiller(SlotType.get("hasJudgement"),
+////						AnnotationBuilder.toAnnotation(_judgement));
+//					break;
+//
+//				}
+//			}
+
 		} catch (IllegalArgumentException e) {
 		}
 

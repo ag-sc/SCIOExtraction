@@ -543,7 +543,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		EScoreType scoreType = EScoreType.MACRO;
 
-		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 8;
+//		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 8;
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 

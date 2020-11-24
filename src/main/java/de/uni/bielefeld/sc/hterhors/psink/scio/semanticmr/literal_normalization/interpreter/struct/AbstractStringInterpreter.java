@@ -27,6 +27,8 @@ public abstract class AbstractStringInterpreter extends AbstractInterpreter impl
 		super(surfaceForm);
 	}
 
+	protected boolean interpretable = false;
+
 	public static final int PATTERN_BITMASK = Pattern.CASE_INSENSITIVE + Pattern.DOTALL;
 
 	/**
@@ -159,6 +161,6 @@ public abstract class AbstractStringInterpreter extends AbstractInterpreter impl
 
 	@Override
 	public boolean isInterpretable() {
-		return surfaceForm != null;
+		return interpretable;
 	}
 }

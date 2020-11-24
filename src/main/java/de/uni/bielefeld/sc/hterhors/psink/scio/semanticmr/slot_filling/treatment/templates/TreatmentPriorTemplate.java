@@ -89,7 +89,7 @@ public class TreatmentPriorTemplate extends AbstractFeatureTemplate<TreatmentPri
 	}
 
 	public Set<EntityType> getRelevantTreatments(List<EntityTemplate> list) {
-		Set<EntityType> treatments = null;
+		Set<EntityType> treatments = new HashSet<>();
 
 		for (AbstractAnnotation treatment : list) {
 			if (treatment.getEntityType() == SCIOEntityTypes.compoundTreatment) {

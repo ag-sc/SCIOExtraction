@@ -36,6 +36,7 @@ import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.ConverganceCrit;
 import de.hterhors.semanticmr.crf.sampling.stopcrit.impl.MaxChainLengthCrit;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
@@ -67,6 +68,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimen
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.templates.type_based.TB_TreatmentInGroupCardinalityTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.templates.type_based.TB_TreatmentPriorInverseTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.templates.type_based.TB_TreatmentPriorTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class ResultSlotFilling extends AbstractSemReadProject {
 
@@ -118,11 +120,15 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		this.dataRandomSeed = dataRandomSeed;
 
 		readData();
-	
-		Set<SlotType> slotTypesToConsider = new HashSet<>();
-		AnalyzeComplexity.analyze(SCIOEntityTypes.result,slotTypesToConsider , instanceProvider.getInstances(),
-				predictionObjectiveFunction.getEvaluator());
+		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.result);
+
+		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOSlotTypes.hasInvestigationMethod);
+		System.exit(1);
 		
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		AnalyzeComplexity.analyze(SCIOEntityTypes.result, slotTypesToConsider, instanceProvider.getInstances(),
+				predictionObjectiveFunction.getEvaluator());
+
 		String rand = String.valueOf(new Random().nextInt(100000));
 
 		modelName = "Result" + rand;

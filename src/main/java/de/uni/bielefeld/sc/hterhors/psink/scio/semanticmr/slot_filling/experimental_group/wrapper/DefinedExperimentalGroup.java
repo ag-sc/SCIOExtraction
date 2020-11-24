@@ -127,8 +127,8 @@ public class DefinedExperimentalGroup {
 	}
 
 	public boolean isEmpty() {
-		return getOrganisModel() == null
-				&& getInjury() == null && (getTreatments() == null || getTreatments().isEmpty());
+		return getOrganisModel() == null && getInjury() == null
+				&& (getTreatments() == null || getTreatments().isEmpty());
 	}
 
 	/**
@@ -207,6 +207,7 @@ public class DefinedExperimentalGroup {
 					if (compound.containsSlotFiller()) {
 						if (treatments == null)
 							treatments = new HashSet<>();
+
 						treatments.add((EntityTemplate) compound.getSlotFiller());
 					}
 				} else {

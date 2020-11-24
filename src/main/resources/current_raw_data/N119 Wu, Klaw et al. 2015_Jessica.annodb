@@ -1,8 +1,0 @@
-# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
-48820, Adult, 8268, 8273, "Adult", "", "<http://scio/data/OrganismModel_911> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
-48821, Female, 8274, 8280, "female", "", "<http://scio/data/OrganismModel_911> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
-48822, WistarRat, 8281, 8292, "Wistar rats", "", "<http://scio/data/OrganismModel_911> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
-48823, Weight, 8294, 8303, "225–250 g", "", "<http://scio/data/OrganismModel_911> <http://psink.de/scio/hasWeight> \"225–250 g\"."
-54881, Isoflurane, 8579, 8589, "isoflurane", "", "<http://scio/data/Isoflurane_7345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/CompleteTransection_7342> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_7345>."
-54880, T7, 12457, 12459, "T7", "", "<http://scio/data/CompleteTransection_7342> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T7>."
-54878, CompleteTransection, 12497, 12516, "completely transect", "", "<http://scio/data/CompleteTransection_7342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_7342> <http://www.w3.org/2000/01/rdf-schema#label> \"Complete Transection\"."

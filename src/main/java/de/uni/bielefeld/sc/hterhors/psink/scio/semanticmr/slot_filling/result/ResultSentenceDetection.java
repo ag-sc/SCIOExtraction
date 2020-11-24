@@ -42,7 +42,7 @@ public class ResultSentenceDetection {
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
 
-		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
+//		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 4;
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 

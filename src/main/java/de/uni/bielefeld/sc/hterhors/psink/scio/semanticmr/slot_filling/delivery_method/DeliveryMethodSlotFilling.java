@@ -39,6 +39,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluatio
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrgModelSlotFillingPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * 
@@ -133,8 +134,8 @@ public class DeliveryMethodSlotFilling {
 
 //			dataRandomSeed = "123";// + new Random().nextInt();
 			dataRandomSeed = "" + new Random().nextInt();
-			// String modelName = "DeliveryMethod1104810543";
-			String modelName = "DeliveryMethod" + dataRandomSeed;
+			 String modelName = "DeliveryMethod_PREDICT";
+//			String modelName = "DeliveryMethod" + dataRandomSeed;
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();
@@ -155,13 +156,21 @@ public class DeliveryMethodSlotFilling {
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
 			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
-
-//			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 			
-			AnalyzeComplexity.analyze(SCIOEntityTypes.deliveryMethod,slotTypesToConsider, predictor.instanceProvider.getInstances(),
-					predictor.predictionObjectiveFunction.getEvaluator());
-
-			
+//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.deliveryMethod);
+//
+//			
+//			for (SlotType slotType : slotTypesToConsider) {
+//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//			}
+//			System.exit(1);
+//			
+////			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
+//			
+//			AnalyzeComplexity.analyze(SCIOEntityTypes.deliveryMethod,slotTypesToConsider, predictor.instanceProvider.getInstances(),
+//					predictor.predictionObjectiveFunction.getEvaluator());
+//
+//			
 			
 			
 			

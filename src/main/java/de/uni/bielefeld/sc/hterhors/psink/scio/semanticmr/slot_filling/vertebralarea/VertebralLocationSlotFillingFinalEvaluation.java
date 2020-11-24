@@ -33,6 +33,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.VertebralAreaRestrictionProvider.EVertebralAreaModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * Slot filling for organism models.
@@ -133,7 +134,14 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
 			slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
+//
+			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.vertebralLocation);
 
+			
+			for (SlotType slotType : slotTypesToConsider) {
+				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+			}
+			System.exit(1);
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();

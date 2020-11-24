@@ -29,9 +29,6 @@ public class SCIOSlotTypes {
 	public static final SlotType hasInjuryModel = getLazy("hasInjuryModel");
 	public static final SlotType hasInjuryDevice = getLazy("hasInjuryDevice");
 
-	
-	
-	
 	public static final SlotType hasVolume = getLazy("hasVolume");
 	public static final SlotType hasForce = getLazy("hasForce");
 	public static final SlotType hasDistance = getLazy("hasDistance");
@@ -41,6 +38,7 @@ public class SCIOSlotTypes {
 	public static final SlotType hasUpperVertebrae = getLazy("hasUpperVertebrae");
 	public static final SlotType hasLowerVertebrae = getLazy("hasLowerVertebrae");
 	public static final SlotType hasAnaesthesia = getLazy("hasInjuryAnaesthesia");
+	public static final SlotType hasInjuryIntensity = getLazy("hasInjuryIntensity");
 
 	public static final SlotType hasNNumber = getLazy("hasNNumber");
 	public static final SlotType hasTotalPopulationSize = getLazy("hasTotalPopulationSize");

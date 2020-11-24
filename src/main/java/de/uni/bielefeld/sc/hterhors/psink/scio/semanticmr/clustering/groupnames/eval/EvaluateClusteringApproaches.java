@@ -43,7 +43,11 @@ public class EvaluateClusteringApproaches {
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("ExperimentalGroup"))
 				.build();
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(100L)
-				.setTrainingProportion(80).setTestProportion(20).setCorpusSizeFraction(1F).build();
+				.setTrainingProportion(90).setTestProportion(10).setCorpusSizeFraction(1F).build();
+
+//	TODO:	SET MAXIMUM PERMUTATIONSIZE to 10
+//		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 10;
+		InstanceProvider.maxNumberOfAnnotations = 100;
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.experimentalGroup),
@@ -58,10 +62,10 @@ public class EvaluateClusteringApproaches {
 
 		int k = 4;
 
-		evaluator.word2VecBasedMeans(trainInstances, testInstances, k);
+//		evaluator.word2VecBasedMeans(trainInstances, testInstances, k);
 //		System.out.println();
 //		System.out.println();
-//		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
+		evaluator.wekaBasedKMeans(trainInstances, testInstances, k);
 //		System.out.println();
 //		System.out.println();
 //		evaluator.wordBasedKMeans(trainInstances, testInstances, k);
@@ -174,15 +178,20 @@ public class EvaluateClusteringApproaches {
 		Score overallCardinalityScore = new Score(EScoreType.MACRO);
 
 		double cardinalityRMSE = 0;
-
+int t = 0;
 		Map<Integer, Score> intervallCardinality = new HashMap<>();
 
 		for (Instance instance : testInstances) {
 			Map<Boolean, Set<GroupNamePair>> goldPairs = GroupNameDataSetHelper
 					.getGroupNameClusterDataSet(Arrays.asList(instance));
 
+			
+			System.out.println(goldPairs.get(true).size());
+			System.out.println(goldPairs.get(false).size());
+			
 			List<DocumentLinkedAnnotation> datapoints = GroupNameDataSetHelper.extractGroupNameAnnotations(goldPairs);
-
+//			System.out.println(t+= datapoints.size());
+			
 			if (datapoints.size() == 0)
 				continue;
 
@@ -191,6 +200,11 @@ public class EvaluateClusteringApproaches {
 //			List<List<DocumentLinkedAnnotation>> clusters = gnc.cluster(datapoints, k);
 			List<List<DocumentLinkedAnnotation>> clusters = gnc.clusterRSS(datapoints, 1, 8);
 
+			
+//			for (List<DocumentLinkedAnnotation> list : clusters) {
+//			System.out.println(list.size());
+//			}
+			
 			cardinalityRMSE = computeRMSE(cardinalityRMSE, instance, clusters);
 			computeIntervallCardinality(intervallCardinality, instance, clusters);
 

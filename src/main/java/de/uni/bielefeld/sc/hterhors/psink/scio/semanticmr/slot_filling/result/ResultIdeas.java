@@ -74,7 +74,7 @@ public class ResultIdeas {
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
 
-		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 200;
+//		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 200;
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 200;
 

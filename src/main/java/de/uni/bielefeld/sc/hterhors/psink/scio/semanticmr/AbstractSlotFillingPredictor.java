@@ -142,7 +142,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Remove empty instances from corpus
 		 */
-		InstanceProvider.removeEmptyInstances = true;
+//		InstanceProvider.removeEmptyInstances = true;
 
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
@@ -376,19 +376,20 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 		};
 
-		for (Instance instance : instanceProvider.getInstances()) {
+		if (!trainDictionary.keySet().isEmpty())
+			for (Instance instance : instanceProvider.getInstances()) {
 //			instance.removeCandidateAnnotation(predictFilter);
 //			instance.removeCandidateAnnotation(goldFilter);
 //			instance.removeCandidateAnnotation(sectionFilter);
-			instance.removeCandidateAnnotation(new IFilter() {
+				instance.removeCandidateAnnotation(new IFilter() {
 
-				@Override
-				public boolean remove(AbstractAnnotation candidate) {
-					return !trainDictionary.keySet().contains(candidate.getEntityType());
-				}
+					@Override
+					public boolean remove(AbstractAnnotation candidate) {
+						return !trainDictionary.keySet().contains(candidate.getEntityType());
+					}
 
-			});
-		}
+				});
+			}
 
 		HardConstraintsProvider prov = getHardConstraints();
 
@@ -566,11 +567,13 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			 * If the model exists load from the file system.
 			 */
 			model = Model.load(getModelBaseDir(), modelName);
+			log.info("Load model successfully!");
 		} else {
 			/**
 			 * If the model does not exists, create a new model.
 			 */
 			model = new Model(getFeatureTemplates(), getModelBaseDir(), modelName);
+			log.info("Create new untrained model!");
 		}
 
 		model.setFeatureTemplateParameter(getFeatureTemplateParameters());
@@ -738,8 +741,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 
 	final public void evaluateOnTest() {
 
-		Map<Instance, State> results = crf.predict(instanceProvider.getTestInstances(), maxStepCrit,
-				noModelChangeCrit);
+		Map<Instance, State> results = crf.predict(instanceProvider.getTestInstances(), maxStepCrit, noModelChangeCrit);
 
 		AbstractSemReadProject.evaluate(log, results, predictionObjectiveFunction);
 
@@ -792,6 +794,10 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 				.concat(trainingInstances.stream(),
 						Streams.concat(developmentInstances.stream(), testInstances.stream()))
 				.map(i -> i.getName()).collect(Collectors.toSet()), n);
+	}
+
+	final public Map<Instance, State> predictInstance(List<Instance> i) {
+		return crf.predictHighRecall(i, 1, maxStepCrit, noModelChangeCrit);
 	}
 
 	protected Collection<GoldModificationRule> getGoldModificationRules(IModificationRule rule) {

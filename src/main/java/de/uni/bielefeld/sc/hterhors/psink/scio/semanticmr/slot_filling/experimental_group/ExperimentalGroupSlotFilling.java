@@ -124,6 +124,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
@@ -424,7 +425,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		EScoreType scoreType = EScoreType.MACRO;
 
-		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 8;
+//		CartesianEvaluator.MAXIMUM_PERMUTATION_SIZE = 8;
 
 		SlotFillingExplorer.MAX_NUMBER_OF_ANNOTATIONS = 8;
 
@@ -459,8 +460,12 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * Apply different modes that were previously set.
 		 */
 		applyModesAndRestrictions();
+	
 
 		getData(dataRandomSeed);
+		
+		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.experimentalGroup);
+
 		addGroupNameCandidates();
 
 		addTreatmentCandidates();
@@ -1074,10 +1079,10 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		Collections.shuffle(docs, new Random(dataRandomSeed));
 
 		final int x = (int) (((double) docs.size() / 100D) * 80D);
-//		List<String> trainingInstanceNames = docs.subList(0, x);
-//		List<String> testInstanceNames = docs.subList(x, docs.size());
-		List<String> trainingInstanceNames = docs.subList(0, 2);
-		List<String> testInstanceNames = docs.subList(2, 3);
+		List<String> trainingInstanceNames = docs.subList(0, x);
+		List<String> testInstanceNames = docs.subList(x, docs.size());
+//		List<String> trainingInstanceNames = docs.subList(0, 2);
+//		List<String> testInstanceNames = docs.subList(2, 3);
 
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();

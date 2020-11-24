@@ -40,6 +40,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * 
@@ -47,33 +48,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment
  */
 public class TreatmentSlotFilling {
 
-//	--------------PREDICT MODUS------------------------
-//	MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//			MACRO	hasDeliveryMethod = 0.271	0.223	0.346	0.840	0.827	0.861	0.322	0.269	0.401
-//			MACRO	hasRehabMedication = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//			MACRO	hasElectricFieldStrength = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//			MACRO	hasDirection = 0.072	0.096	0.058	0.075	0.096	0.063	0.957	1.000	0.917
-//			MACRO	hasApplicationInstrument = 0.270	0.272	0.268	0.480	0.446	0.514	0.562	0.609	0.522
-//			MACRO	hasVoltage = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//			MACRO	hasDosage = 0.644	0.641	0.647	0.990	0.877	1.000	0.651	0.731	0.647
-//			MACRO	hasCompound = 0.416	0.497	0.357	0.458	0.497	0.431	0.907	1.000	0.830
-//			MACRO	Cardinality = 0.861	0.796	0.938	0.861	0.796	0.938	1.000	1.000	1.000
-//			MACRO	Overall = 0.360	0.370	0.350	0.485	0.406	0.559	0.742	0.911	0.626
-//			modelName: Treatment1533266230
-
-//	--------------GOLD MODUS------------------------
-//	MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//	MACRO	hasDeliveryMethod = 0.495	0.535	0.461	0.713	0.668	0.751	0.695	0.800	0.614
-//	MACRO	hasRehabMedication = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//	MACRO	hasElectricFieldStrength = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//	MACRO	hasDirection = 0.116	0.154	0.093	0.121	0.154	0.101	0.957	1.000	0.917
-//	MACRO	hasApplicationInstrument = 0.357	0.366	0.348	0.534	0.495	0.571	0.668	0.739	0.609
-//	MACRO	hasVoltage = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
-//	MACRO	hasDosage = 0.644	0.628	0.660	0.778	0.681	0.880	0.828	0.923	0.751
-//	MACRO	hasCompound = 0.475	0.556	0.414	0.523	0.556	0.499	0.907	1.000	0.830
-//	MACRO	Cardinality = 0.861	0.796	0.938	0.861	0.796	0.938	1.000	1.000	1.000
-//	MACRO	Overall = 0.429	0.444	0.416	0.503	0.444	0.558	0.854	1.000	0.745
-//	modelName: Treatment-721030610
 	/**
 	 * Start the slot filling procedure.
 	 * 
@@ -140,11 +114,18 @@ public class TreatmentSlotFilling {
 //					.setCorpusSizeFraction(1F).build();
 
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+					.setTrainingProportion(100).setDevelopmentProportion(0).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
 
+//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.treatment);
+//
+//			
+//			for (SlotType slotType : slotTypesToConsider) {
+//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//			}
+//			System.exit(1);
 			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
@@ -155,15 +136,16 @@ public class TreatmentSlotFilling {
 					.collect(Collectors.toList());
 
 //			String modelName = "Treatment-1842612192";
-			dataRandomSeed = "" + new Random().nextInt();
-			String modelName = "Treatment" + dataRandomSeed;
+//			dataRandomSeed = "" + new Random().nextInt();
+			String modelName = "Treatment_PREDICT";
+//			String modelName = "Treatment" + dataRandomSeed;
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();
 			testInstances = instanceProvider.getTestInstances();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
-					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
 			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 //
 //			predictor.trainOrLoadModel();
@@ -185,8 +167,8 @@ public class TreatmentSlotFilling {
 //			log.info("Coverage Development: " + devCoverage);
 //
 //			log.info("results: " + toResults(rule, score));
-			AnalyzeComplexity.analyze(SCIOEntityTypes.treatment,slotTypesToConsider, predictor.instanceProvider.getInstances(),
-					predictor.predictionObjectiveFunction.getEvaluator());
+//			AnalyzeComplexity.analyze(SCIOEntityTypes.treatment, slotTypesToConsider,
+//					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 
@@ -263,7 +245,7 @@ public class TreatmentSlotFilling {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //	+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
-				"OrganismModel_Treatment_" + dataRandomSeed, trainingInstanceNames, developInstanceNames,
+				"OrganismModel_Treatment_PREDICT", trainingInstanceNames, developInstanceNames,
 				testInstanceNames, rule, ENERModus.PREDICT);
 		predictor.trainOrLoadModel();
 

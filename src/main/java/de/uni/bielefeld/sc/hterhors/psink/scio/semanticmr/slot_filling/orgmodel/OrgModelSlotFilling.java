@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,7 +20,6 @@ import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
-import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -31,7 +29,6 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -40,6 +37,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * Slot filling for organism models.
@@ -128,8 +126,8 @@ public class OrgModelSlotFilling {
 
 			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-					.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(1F).build();
+			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1)
+					.setTrainingProportion(100).setDevelopmentProportion(0).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getByRule(rule));
@@ -141,6 +139,11 @@ public class OrgModelSlotFilling {
 			slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
 			slotTypesToConsider.add(SCIOSlotTypes.hasGender);
 
+//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.organismModel);
+//			
+//			for (SlotType slotType : slotTypesToConsider) {
+//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//			}
 			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
@@ -150,13 +153,18 @@ public class OrgModelSlotFilling {
 			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
-			String modelName = "OrganismModel" + new Random().nextInt();
+			
+//			System.out.println(developInstanceNames);
+//			System.exit(1);
+			
+			String modelName = "OrganismModel_PREDICT" ;
+//			String modelName = "OrganismModel" + new Random().nextInt();
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
+					developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
 
-			AnalyzeComplexity.analyze(SCIOEntityTypes.organismModel, slotTypesToConsider,
-					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
+//			AnalyzeComplexity.analyze(SCIOEntityTypes.organismModel, slotTypesToConsider,
+//					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 
@@ -169,7 +177,8 @@ public class OrgModelSlotFilling {
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);
 
-			coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.organismModel, false);
+			coverageStates = finalStates;// predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.organismModel,
+											// true);
 
 			System.out.println("---------------------------------------");
 

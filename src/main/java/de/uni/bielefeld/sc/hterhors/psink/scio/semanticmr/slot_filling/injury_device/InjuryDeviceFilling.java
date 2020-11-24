@@ -41,6 +41,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDeviceRestrictionProvider.EInjuryDeviceModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class InjuryDeviceFilling {
 
@@ -150,6 +151,9 @@ public class InjuryDeviceFilling {
 							.collect(Collectors.toList()),
 					rule, ENERModus.GOLD);
 
+			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.injuryDevice);
+
+			
 			AnalyzeComplexity.analyze(SCIOEntityTypes.injuryDevice,slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
