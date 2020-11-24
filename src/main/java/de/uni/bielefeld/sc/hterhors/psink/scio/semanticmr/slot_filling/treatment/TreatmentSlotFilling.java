@@ -145,7 +145,7 @@ public class TreatmentSlotFilling {
 			testInstances = instanceProvider.getTestInstances();
 
 			TreatmentSlotFillingPredictor predictor = new TreatmentSlotFillingPredictor(modelName,
-					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
+					trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 			SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 //
 //			predictor.trainOrLoadModel();

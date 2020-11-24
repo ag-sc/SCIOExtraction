@@ -60,7 +60,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 		if (args.length == 0)
 			new OrgModelSlotFillingFinalEvaluation(1000L, "PREDICT");
 		else
-			new OrgModelSlotFillingFinalEvaluation(100L, args[0]);
+			new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
 //		new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 

@@ -124,7 +124,7 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 
 		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOSlotTypes.hasInvestigationMethod);
 		System.exit(1);
-		
+	
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
 		AnalyzeComplexity.analyze(SCIOEntityTypes.result, slotTypesToConsider, instanceProvider.getInstances(),
 				predictionObjectiveFunction.getEvaluator());

@@ -216,15 +216,14 @@ public class FastTextSentenceClassification {
 		jft = new JFastText();
 		String ftModelName = modelName +
 //				
-//				"pretrained_" +
-////				
+				"pretrained_" +
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 				+ "_supervised.model";
 		String preTrainedvec = "wordvector/w2v.vec";
 		jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 				"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
 
-//				"-pretrainedVectors", preTrainedvec,
+				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 				"-dim", numberOfDimensions + "" });
