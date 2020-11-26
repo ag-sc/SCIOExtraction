@@ -110,7 +110,7 @@ public class DictionaryInvestigationMethodExtractor {
 	public DictionaryInvestigationMethodExtractor(boolean binary, List<Instance> trainingInstances) throws IOException {
 
 		if (includeFastText)
-			t = new FastTextSentenceClassification("TFIDFInvExtractor",binary, SCIOEntityTypes.investigationMethod, trainingInstances);
+			t = new FastTextSentenceClassification("TFIDFInvExtractor",binary, SCIOEntityTypes.investigationMethod, trainingInstances,false);
 
 		for (Instance trainInstance : trainingInstances) {
 

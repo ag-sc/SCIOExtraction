@@ -39,17 +39,25 @@ public class ConvertToRDF {
 
 	public int count = 0;
 
-	public ConvertToRDF(File outPutFile, List<EntityTemplate> annotations) throws IOException {
+	public ConvertToRDF(File outPutFile, Map<String, List<EntityTemplate>> annotations) throws IOException {
 		this(new HashMap<>(), outPutFile, annotations);
 
 	}
 
-	public ConvertToRDF(Map<AbstractAnnotation, Integer> idMap, File outPutFile, List<EntityTemplate> annotations)
-			throws IOException {
+	public ConvertToRDF(Map<AbstractAnnotation, Integer> idMap, File outPutFile,
+			Map<String, List<EntityTemplate>> annotationsMap) throws IOException {
 		Set<String> RDFData = new HashSet<>();
 		this.idMap = idMap;
-		for (EntityTemplate et : annotations) {
-			RDFData.addAll(convert(new HashSet<>(), et));
+
+		for (Entry<String, List<EntityTemplate>> annMap : annotationsMap.entrySet()) {
+			for (EntityTemplate et : annMap.getValue()) {
+				try {
+					RDFData.add(toRDFLabel(et, annMap.getKey()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				RDFData.addAll(convert(new HashSet<>(), et));
+			}
 		}
 
 		List<String> RDFDataSorted = new ArrayList<>(RDFData);
@@ -98,6 +106,10 @@ public class ConvertToRDF {
 		}
 		return rdf;
 
+	}
+
+	private String toRDFLabel(EntityTemplate et, String label) throws Exception {
+		return toResourceName(et) + " " + "<http://www.w3.org/2000/01/rdf-schema#label>" + " " + "\"" + label + "\" .";
 	}
 
 	private String toRDFTypeLine(EntityTemplate et) throws Exception {

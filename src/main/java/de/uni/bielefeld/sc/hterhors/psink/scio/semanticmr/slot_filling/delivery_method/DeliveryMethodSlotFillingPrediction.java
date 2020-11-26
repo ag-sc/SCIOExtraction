@@ -107,8 +107,8 @@ public class DeliveryMethodSlotFillingPrediction {
 				 * weights "500 g", "0.5kg", "500g" are all equal. Each normalization function
 				 * is bound to exactly one entity type.
 				 */
-				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization())
+//				.registerNormalizationFunction(new WeightNormalization())
+//				.registerNormalizationFunction(new AgeNormalization())
 				/**
 				 * Finally, we build the systems scope.
 				 */
@@ -150,16 +150,16 @@ public class DeliveryMethodSlotFillingPrediction {
 //					+ instance.getValue().getCurrentPredictions().getAnnotations().get(0).toPrettyString());
 //			annotations.addAll(instance.getValue().getCurrentPredictions().getAnnotations());
 //		}
-
-		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
-
-			for (AbstractAnnotation entityTemplate : instance.getValue()) {
-				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
-				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
-			}
-		}
-
-		new ConvertToRDF(new File("deliveryMethod.n-triples"), annotations);
+//
+//		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
+//
+//			for (AbstractAnnotation entityTemplate : instance.getValue()) {
+//				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+//				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
+//			}
+//		}
+//
+//		new ConvertToRDF(new File("deliveryMethod.n-triples"), annotations);
 
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the

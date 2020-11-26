@@ -66,19 +66,22 @@ public class ConvertKwonExcelToRDF {
 		List<String> lines = Files.readAllLines(new File("Kwon_HtH_NB_cleaned_v65.csv").toPath()).stream().skip(1)
 				.collect(Collectors.toList());
 
+		/**
+		 * TODO: INCLUDE, change annotations to map etc... s
+		 */
 		List<EntityTemplate> dataPoints = new ArrayList<>();
-
-		Set<String> pubmedIDs = new HashSet<>();
-		for (String line : lines) {
-			String[] data = line.split("\t");
-
-			EntityTemplate annotation = toDataPoint(data);
-
-			if (pubmedIDs.add(data[0]))
-				dataPoints.add(annotation);
-
-		}
-		new ConvertToRDF(new File("Excel2RDF.n-triples"), dataPoints);
+//
+//		Set<String> pubmedIDs = new HashSet<>();
+//		for (String line : lines) {
+//			String[] data = line.split("\t");
+//
+//			EntityTemplate annotation = toDataPoint(data);
+//
+//			if (pubmedIDs.add(data[0]))
+//				dataPoints.add(annotation);
+//
+//		}
+//		new ConvertToRDF(new File("Excel2RDF.n-triples"), dataPoints);
 
 		for (EntityTemplate publication : dataPoints) {
 

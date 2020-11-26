@@ -60,10 +60,9 @@ public class InjurySlotFillingPredictorPrediction extends InjurySlotFillingPredi
 	private static Logger log = LogManager.getFormatterLogger(InjurySlotFillingPredictorPrediction.class);
 
 	public InjurySlotFillingPredictorPrediction(String modelName, List<String> trainingInstanceNames,
-			List<String> developInstanceNames, List<String> testInstanceNames, IModificationRule rule,
-			ENERModus modus) {
+			IModificationRule rule, ENERModus modus) {
 
-		super(modelName, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+		super(modelName, trainingInstanceNames, new ArrayList<>(), new ArrayList<>(), rule, modus);
 	}
 
 	final public boolean useGoldLocationsForTraining = true;

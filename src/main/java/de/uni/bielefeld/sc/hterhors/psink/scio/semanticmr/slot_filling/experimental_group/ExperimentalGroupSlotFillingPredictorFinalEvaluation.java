@@ -76,7 +76,6 @@ import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -151,7 +150,6 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 				.apply().registerNormalizationFunction(new WeightNormalization())
 				.registerNormalizationFunction(new AgeNormalization())
 				.registerNormalizationFunction(new WeightNormalization())
-				.registerNormalizationFunction(new AgeNormalization())
 				//
 				.registerNormalizationFunction(new DosageNormalization())
 				.registerNormalizationFunction(new DurationNormalization())
@@ -168,8 +166,8 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		long dataRandomSeed;
 
 		if (args.length == 0) {
-			modusIndex = 17; // GOLD
-//			modusIndex = 18; // PREDICTED
+//			modusIndex = 17; // GOLD
+			modusIndex = 18; // PREDICTED
 //			modusIndex = 19; // COVERGAE GOLD
 //			modusIndex = 20; // COVERGAE PREDICT
 			dataRandomSeed = 1004L;
@@ -184,13 +182,21 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 	private static void run(int modusIndex, long dataRandomSeed) throws Exception {
 		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
-		Collections.sort(docs);
+		List<String> trainingInstanceNames = docs;
+		List<String> testInstanceNames = new ArrayList<>();
 
-		Collections.shuffle(docs, new Random(dataRandomSeed));
+		/**
+		 * TODO: FULL MODEL
+		 */
 
-		final int x = (int) (((double) docs.size() / 100D) * 80D);
-		List<String> trainingInstanceNames = docs.subList(0, x);
-		List<String> testInstanceNames = docs.subList(x, docs.size());
+//		Collections.sort(docs);
+//
+//		Collections.shuffle(docs, new Random(dataRandomSeed));
+//
+//		
+//		final int x = (int) (((double) docs.size() / 100D) * 80D);
+//		List<String> trainingInstanceNames = docs.subList(0, x);
+//		List<String> testInstanceNames = docs.subList(x, docs.size());
 
 		List<Instance> trainingInstances;
 		List<Instance> devInstances;
@@ -555,7 +561,8 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		modus = mainClassProviderMode == EMainClassMode.GOLD ? ENERModus.GOLD : ENERModus.PREDICT;
 
-		modelName = modus + "_ExperimentalGroup" + rand;
+		modelName = modus + "_ExperimentalGroup_PREDICT";
+//		modelName = modus + "_ExperimentalGroup" + rand;
 		log.info("Model name = " + modelName);
 
 		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed);
@@ -1289,11 +1296,12 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 	public void getData(List<String> trainingInstanceNames, List<String> devInstanceNames,
 			List<String> testInstanceNames) throws IOException {
+
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setDevelopInstanceNames(devInstanceNames)
 				.setTestInstanceNames(testInstanceNames).build();
 
-		InstanceProvider.verbose= true;
+		InstanceProvider.verbose = true;
 		InstanceProvider.maxNumberOfAnnotations = 8;
 		InstanceProvider.removeEmptyInstances = true;
 		InstanceProvider.removeInstancesWithToManyAnnotations = true;
@@ -1979,8 +1987,9 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (orgModelPredictor == null) {
-			orgModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel_" + modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, modus);
+			orgModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel_PREDICT"
+//		+ modelName
+					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 			orgModelPredictor.trainOrLoadModel();
 		}
 
@@ -2006,8 +2015,9 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (treatmentPredictor == null) {
-			treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment_" + modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, modus);
+			treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment_PREDICT"
+//		+ modelName
+					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 			treatmentPredictor.trainOrLoadModel();
 		}
 
@@ -2034,8 +2044,9 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (injuryPredictor == null) {
-			injuryPredictor = new InjurySlotFillingPredictor("InjuryModel_" + modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, modus);
+			injuryPredictor = new InjurySlotFillingPredictor("InjuryModel_PREDICT"
+//		+ modelName
+					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
 			injuryPredictor.trainOrLoadModel();
 		}
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = injuryPredictor.predictInstances(instances, k);

@@ -182,7 +182,7 @@ public class TFIDFTrendExtractor {
 		Map<String, Integer> count = new HashMap<>();
 		if (useFastText)
 			t = new FastTextSentenceClassification("TFIDFtrendExtractor", binary, SCIOEntityTypes.trend,
-					trainingInstances);
+					trainingInstances,false);
 
 		for (Instance trainInstance : trainingInstances) {
 

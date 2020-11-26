@@ -94,8 +94,8 @@ public class FastTextSentenceClassification {
 //		EntityType type = SCIOEntityTypes.investigationMethod;
 		EntityType type = SCIOEntityTypes.trend;
 
-		System.out.println("num of values "+type.getRelatedEntityTypes().size());
-		
+		System.out.println("num of values " + type.getRelatedEntityTypes().size());
+
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(type), corpusDistributor);
 		int a = 0;
@@ -142,7 +142,7 @@ public class FastTextSentenceClassification {
 			List<Instance> testInstances = instances.subList(x, instances.size());
 
 			FastTextSentenceClassification t = new FastTextSentenceClassification("Bert", binary, type,
-					trainingInstances);
+					trainingInstances, false);
 
 			Score s = t.score(testInstances).toMacro();
 
@@ -173,7 +173,7 @@ public class FastTextSentenceClassification {
 					trainingInstances.add(instances.get(j));
 			}
 			FastTextSentenceClassification t = new FastTextSentenceClassification("leaveOneOutEval_TEST", binary, type,
-					trainingInstances);
+					trainingInstances, false);
 
 			Score s = t.score(testInstances).toMacro();
 			log.info(s);
@@ -188,46 +188,50 @@ public class FastTextSentenceClassification {
 	private String modelName;
 
 	public FastTextSentenceClassification(String modelName, boolean binary, EntityType type,
-			List<Instance> trainingInstances) throws IOException {
+			List<Instance> trainingInstances, boolean loadModel) throws IOException {
 
 		log.info("Number of Json training instances: " + trainingInstances.size());
 
 		this.type = type;
+
+		this.modelName = modelName;
 		numberOfEpochs = 50;
 		numberOfDimensions = 200;
 		binaryClassification = binary;
-		this.modelName = modelName;
-		final String trainingDataFileName = "fasttext/resources/data/" + modelName + "_" + type.name
-				+ "_train_labeled_data.txt";
-//		final String bertFileName = "bert/" + modelName + "_" + type.name + "_train.csv";
-
-		List<FastTextInstance> trainData = buildTrainingData(trainingInstances, trainingDataFileName, false);
-
-		System.out.println(trainData.size());
-
-		log.info("Training Negative samples: " + trainData.stream().filter(a -> a.goldLabel == NO_LABEL).count());
-		log.info("Training Positive Samples: "
-				+ (trainData.size() - trainData.stream().filter(a -> a.goldLabel == NO_LABEL).count()));
-		log.info("Training Total: " + trainData.size());
-
-		this.keyTerms = new HashSet<>();
-//		this.keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
-
-		jft = new JFastText();
 		String ftModelName = modelName +
 //				
-				"pretrained_" +
+//				"pretrained_" +
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 				+ "_supervised.model";
-		String preTrainedvec = "wordvector/w2v.vec";
-		jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
-				"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
+		jft = new JFastText();
 
-				"-pretrainedVectors", preTrainedvec,
+		if (!loadModel) {
+			final String trainingDataFileName = "fasttext/resources/data/" + modelName + "_" + type.name
+					+ "_train_labeled_data.txt";
+//		final String bertFileName = "bert/" + modelName + "_" + type.name + "_train.csv";
+
+			List<FastTextInstance> trainData = buildTrainingData(trainingInstances, trainingDataFileName, false);
+
+			System.out.println(trainData.size());
+
+			log.info("Training Negative samples: " + trainData.stream().filter(a -> a.goldLabel == NO_LABEL).count());
+			log.info("Training Positive Samples: "
+					+ (trainData.size() - trainData.stream().filter(a -> a.goldLabel == NO_LABEL).count()));
+			log.info("Training Total: " + trainData.size());
+
+			this.keyTerms = new HashSet<>();
+//		this.keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
+
+			String preTrainedvec = "wordvector/w2v.vec";
+			jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
+					"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
+
+//				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
-				"-dim", numberOfDimensions + "" });
-
+					"-dim", numberOfDimensions + "" });
+		}
+		System.out.println("LOAD: " + "fasttext/resources/models/" + ftModelName + ".bin");
 		jft.loadModel("fasttext/resources/models/" + ftModelName + ".bin");
 
 //		Score scoreTrain = evaluate(jft, getLabledDocuments(trainignInstances, 1));
@@ -261,15 +265,6 @@ public class FastTextSentenceClassification {
 		log.info("Test Total: " + testData.size());
 
 		List<FastTextPrediction> predictions = predict(testData);
-
-		
-		
-		
-		
-		
-		
-
-
 
 		Score scoreTest = evaluate(predictions);
 
@@ -309,7 +304,7 @@ public class FastTextSentenceClassification {
 
 	}
 
-	public Map<Instance, Set<DocumentLinkedAnnotation>> predictNerlas(List<Instance> testInstances) {
+	public Map<Instance, Set<DocumentLinkedAnnotation>> predictNerlasEvaluate(List<Instance> testInstances) {
 		List<FastTextInstance> testData = getLabledDocuments(testInstances, 1);
 
 		for (Iterator<FastTextInstance> iterator = testData.iterator(); iterator.hasNext();) {
@@ -341,6 +336,34 @@ public class FastTextSentenceClassification {
 		return annotationsToWrite;
 	}
 
+	public Map<Instance, Set<DocumentLinkedAnnotation>> predictNerlas(List<Instance> testInstances) {
+		List<FastTextInstance> testData = getFastTextInstances(testInstances);
+
+		for (Iterator<FastTextInstance> iterator = testData.iterator(); iterator.hasNext();) {
+			FastTextInstance fastTextInstance = (FastTextInstance) iterator.next();
+
+			if (fastTextInstance.section != ESection.RESULTS)
+				iterator.remove();
+
+		}
+
+		List<FastTextPrediction> predictions = predict(testData);
+
+		Map<Instance, Set<DocumentLinkedAnnotation>> annotationsToWrite = new HashMap<>();
+		for (FastTextPrediction fastTextPrediction : predictions) {
+
+			if (fastTextPrediction.label.equals(NO_LABEL))
+				continue;
+
+			annotationsToWrite.putIfAbsent(fastTextPrediction.fastTextInstance.instance, new HashSet<>());
+			annotationsToWrite.get(fastTextPrediction.fastTextInstance.instance)
+					.add(toDocLinkedAnnotation(fastTextPrediction));
+
+		}
+		
+		return annotationsToWrite;
+	}
+
 	private DocumentLinkedAnnotation toDocLinkedAnnotation(FastTextPrediction fastTextPrediction) {
 		// convert a sentence based annotation to doc-linked annotation. This req. a doc
 		// link which in this case is always the first token.
@@ -352,7 +375,7 @@ public class FastTextSentenceClassification {
 				fastTextPrediction.getEntityType(), textualContent, offset);
 	}
 
-	private final Set<String> keyTerms;
+	private Set<String> keyTerms;
 
 	private List<FastTextInstance> buildTrainingData(List<Instance> instances, final String trainingDataFileName,
 			boolean sameSize) throws FileNotFoundException {
@@ -616,6 +639,26 @@ public class FastTextSentenceClassification {
 					labeledData.add(new FastTextInstance(instance.getDocument().getContentOfSentence(i), NO_LABEL,
 							instance, i, AutomatedSectionifcation.getInstance(instance).getSection(i)));
 				}
+			}
+		}
+		return labeledData;
+
+	}
+
+	public List<FastTextInstance> getFastTextInstances(List<Instance> instances) {
+
+		List<FastTextInstance> labeledData = new ArrayList<>();
+
+		Set<Integer> positiveSentences = new HashSet<>();
+		for (Instance instance : instances) {
+
+			for (int i = 0; i < instance.getDocument().getNumberOfSentences(); i++) {
+
+				if (positiveSentences.contains(i))
+					continue;
+
+				labeledData.add(new FastTextInstance(instance.getDocument().getContentOfSentence(i), NO_LABEL, instance,
+						i, AutomatedSectionifcation.getInstance(instance).getSection(i)));
 			}
 		}
 		return labeledData;

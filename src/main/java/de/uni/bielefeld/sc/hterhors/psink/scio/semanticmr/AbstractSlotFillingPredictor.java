@@ -186,11 +186,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		developmentInstances = instanceProvider.getDevelopmentInstances();
 		testInstances = instanceProvider.getTestInstances();
 
-		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(getExternalNerlaFile());
+		JSONNerlaReader nerlaJSONReader = new JSONNerlaReader(getExternalNerlaFile(),
+				Streams.concat(trainingInstances.stream(), developmentInstances.stream(), testInstances.stream())
+						.collect(Collectors.toSet()));
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			instance.addCandidateAnnotations(nerlaJSONReader.getForInstance(instance));
 		}
+		
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
 		for (Instance instance : instanceProvider.getInstances()) {

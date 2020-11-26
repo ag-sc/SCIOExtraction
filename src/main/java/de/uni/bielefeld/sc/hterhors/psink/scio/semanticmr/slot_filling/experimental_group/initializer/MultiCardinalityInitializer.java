@@ -30,12 +30,12 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 	/**
 	 * The maximum number of annotations
 	 */
-	private final int max;
+	private int max;
 
 	/**
 	 * The least number of annotation
 	 */
-	private final int min;
+	private int min;
 
 	private final EExtractGroupNamesMode groupNameMode;
 	private final EGroupNamesClusteringMode groupNamesPreProcessingMode;
@@ -59,6 +59,9 @@ public class MultiCardinalityInitializer implements IStateInitializer {
 			this.max = max;
 			this.min = min;
 		}
+
+		this.min = this.min == 0 ? 2 : this.min;
+		this.max = this.max == 0 ? 5 : this.max;
 
 		this.groupNameMode = groupNameMode;
 		this.groupNamesPreProcessingMode = groupNamesPreProcessingMode;

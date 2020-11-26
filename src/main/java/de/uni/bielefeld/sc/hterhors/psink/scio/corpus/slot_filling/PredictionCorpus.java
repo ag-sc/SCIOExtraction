@@ -1,11 +1,15 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.corpus.EInstanceContext;
@@ -35,7 +39,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.trend.nerla.TrendPattern;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.vertebralarea.nerla.VertebralAreaPattern;
 
-public class Prediction {
+public class PredictionCorpus {
 	public static final File SRC_MAIN_RESOURCES = new File("src/main/resources/");
 
 	private static final File ROOT_DATA_STRUCTURE_DIR = new File(SRC_MAIN_RESOURCES,
@@ -62,59 +66,78 @@ public class Prediction {
 		File writeToFile = new File("prediction/instances/");
 		writeToFile.mkdirs();
 
-		int c = 0;
+		AtomicInteger c = new AtomicInteger(0);
 
-		int max = new File("Upload/XML1/").listFiles().length;
-		for (File file : new File("Upload/XML1/").listFiles()) {
+		final int max = new File("Upload/XML2/").listFiles().length;
+//		for (File file : new File("Upload/XML1/").listFiles()) {
+
+		List<File> l = new ArrayList<File>(Arrays.asList(new File("Upload/XML2/").listFiles()));
+
+		Collections.sort(l);
+
+		l.stream().parallel().forEach(file -> {
+			String name = "";
 			try {
-				String content = Files.readAllLines(file.toPath()).stream().reduce("", String::concat);
+
+				String content = Files.readAllLines(file.toPath()).stream().reduce("", String::concat).trim();
 				Document d = new Document(file.getName(), content);
-				JsonNerlaIO io = new JsonNerlaIO(true);
+				name = d.documentID.replaceAll("\\.txt", "") + ".json";
+				System.out.println(name + " content.length() = " + content.length());
+				File outputFile = new File(writeToFile, name);
+				File nerlaOutFile = new File(nerlaDirectory, d.documentID.replaceAll("\\.txt", "") + ".nerla.json");
 
-				Instance i = new Instance(EInstanceContext.PREDICT, d, new Annotations());
+				if (!(outputFile.exists() && nerlaOutFile.exists())) {
 
-				List<JsonEntityAnnotationWrapper> wrappedAnnotation = new ArrayList<>();
-				System.out.println("Doc:\t" + d.documentID);
+					JsonNerlaIO io = new JsonNerlaIO(true);
 
-				wrappedAnnotation.addAll(
-						annotateWithRegularExpressions(d, new OrganismModelPattern(SCIOEntityTypes.organismModel)));
-//				wrappedAnnotation.addAll(annotateWithRegularExpressions(d, new TrendPattern(SCIOEntityTypes.trend)));
-//				wrappedAnnotation.addAll(annotateWithRegularExpressions(d, new ResultPattern(SCIOEntityTypes.result)));
-				wrappedAnnotation.addAll(
-						annotateWithRegularExpressions(d, new VertebralAreaPattern(SCIOEntityTypes.vertebralLocation)));
-				wrappedAnnotation
-						.addAll(annotateWithRegularExpressions(d, new AnaestheticPattern(SCIOEntityTypes.anaesthetic)));
-				wrappedAnnotation.addAll(
-						annotateWithRegularExpressions(d, new InjuryDevicePattern(SCIOEntityTypes.injuryDevice)));
-				wrappedAnnotation.addAll(
-						annotateWithRegularExpressions(d, new DeliveryMethodPattern(SCIOEntityTypes.deliveryMethod)));
-//				wrappedAnnotation.addAll(annotateWithRegularExpressions(d,
-//						new InvestigationMethodPattern(SCIOEntityTypes.investigationMethod)));
-				wrappedAnnotation
-						.addAll(annotateWithRegularExpressions(d, new TreatmentPattern(SCIOEntityTypes.treatment)));
-				wrappedAnnotation.addAll(annotateWithRegularExpressions(d, new InjuryPattern(SCIOEntityTypes.injury)));
+					Instance i = new Instance(EInstanceContext.PREDICT, d, new Annotations());
 
-				io.writeNerlas(new File(nerlaDirectory, d.documentID.replaceAll("\\.txt", "") + ".nerla.json"),
-						wrappedAnnotation);
+					List<JsonEntityAnnotationWrapper> wrappedAnnotation = new ArrayList<>();
 
-				List<Instance> instances = new ArrayList<>();
+					wrappedAnnotation.addAll(
+							annotateWithRegularExpressions(d, new OrganismModelPattern(SCIOEntityTypes.organismModel)));
+					wrappedAnnotation
+							.addAll(annotateWithRegularExpressions(d, new TrendPattern(SCIOEntityTypes.trend)));
+					wrappedAnnotation
+							.addAll(annotateWithRegularExpressions(d, new ResultPattern(SCIOEntityTypes.result)));
+					wrappedAnnotation.addAll(annotateWithRegularExpressions(d,
+							new VertebralAreaPattern(SCIOEntityTypes.vertebralLocation)));
+					wrappedAnnotation.addAll(
+							annotateWithRegularExpressions(d, new AnaestheticPattern(SCIOEntityTypes.anaesthetic)));
+					wrappedAnnotation.addAll(
+							annotateWithRegularExpressions(d, new InjuryDevicePattern(SCIOEntityTypes.injuryDevice)));
+					wrappedAnnotation.addAll(annotateWithRegularExpressions(d,
+							new DeliveryMethodPattern(SCIOEntityTypes.deliveryMethod)));
+					wrappedAnnotation.addAll(annotateWithRegularExpressions(d,
+							new InvestigationMethodPattern(SCIOEntityTypes.investigationMethod)));
+					wrappedAnnotation
+							.addAll(annotateWithRegularExpressions(d, new TreatmentPattern(SCIOEntityTypes.treatment)));
+					wrappedAnnotation
+							.addAll(annotateWithRegularExpressions(d, new InjuryPattern(SCIOEntityTypes.injury)));
 
-				instances.add(i);
+					List<Instance> instances = new ArrayList<>();
+					instances.add(i);
 
-				InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(instances);
-				JsonInstanceIO writer = new JsonInstanceIO(true);
-				writer.writeInstances(new File(writeToFile, d.documentID.replaceAll("\\.txt", "") + ".json"),
-						conv.convertToWrapperInstances());
+					print(outputFile, nerlaOutFile, io, wrappedAnnotation, instances);
+				}
 
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 
 			}
-			c++;
-			System.out.println(c + " / " + max);
-		}
+			c.incrementAndGet();
+			System.out.println(c + " / " + max + "Doc:\t" + name);
+		});
 
+	}
+
+	private synchronized static void print(File outputFile, File nerlaOutFile, JsonNerlaIO io,
+			List<JsonEntityAnnotationWrapper> wrappedAnnotation, List<Instance> instances) throws IOException {
+		InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(instances);
+		JsonInstanceIO writer = new JsonInstanceIO(true);
+		writer.writeInstances(outputFile, conv.convertToWrapperInstances());
+		io.writeNerlas(nerlaOutFile, wrappedAnnotation);
 	}
 
 	private static List<JsonEntityAnnotationWrapper> annotateWithRegularExpressions(Document document,

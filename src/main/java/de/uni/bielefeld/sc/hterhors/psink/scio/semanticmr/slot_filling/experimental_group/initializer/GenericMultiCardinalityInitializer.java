@@ -21,12 +21,12 @@ public class GenericMultiCardinalityInitializer implements IStateInitializer {
 	/**
 	 * The maximum number of annotations
 	 */
-	private final int max;
+	private int max;
 
 	/**
 	 * The least number of annotation
 	 */
-	private final int min;
+	private int min;
 
 	private EntityType rootType;
 
@@ -42,7 +42,9 @@ public class GenericMultiCardinalityInitializer implements IStateInitializer {
 		double e = computeMean(trainingInstances);
 		double stdDev = computeStdDeviation(trainingInstances, e);
 		this.min = (int) Math.round((e - stdDev));
+		this.min = this.min == 0 ? 2 : this.min;
 		this.max = (int) Math.round((e + stdDev));
+		this.max = this.max == 0 ? 6 : this.max;
 	}
 
 	private double computeStdDeviation(List<Instance> trainingInstances, double e) {

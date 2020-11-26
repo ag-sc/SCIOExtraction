@@ -1,6 +1,7 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
@@ -15,9 +16,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
 public class OrgModelSlotFillingPredictorPrediction extends OrgModelSlotFillingPredictor {
 
 	public OrgModelSlotFillingPredictorPrediction(String modelName, List<String> trainingInstances,
-			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule,
-			ENERModus modus) {
-		super(modelName, trainingInstances, developmentInstances, testInstances, rule, modus);
+			EOrgModelModifications rule, ENERModus modus) {
+		super(modelName, trainingInstances, new ArrayList<>(), new ArrayList<>(), rule, modus);
 	}
 
 	@Override

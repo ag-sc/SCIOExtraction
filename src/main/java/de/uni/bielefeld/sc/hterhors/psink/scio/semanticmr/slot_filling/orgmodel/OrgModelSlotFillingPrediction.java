@@ -2,16 +2,14 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,30 +17,18 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
-import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
-import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
-import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
-import de.hterhors.semanticmr.eval.AbstractEvaluator;
-import de.hterhors.semanticmr.eval.CartesianEvaluator;
-import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
-import de.hterhors.semanticmr.projects.AbstractSemReadProject;
-import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.AgeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
-import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * Slot filling for organism models.
@@ -121,9 +107,18 @@ public class OrgModelSlotFillingPrediction {
 
 		EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 		OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
+	
+		List<String> instanceNames = Arrays.asList(new File("prediction/instances").list());
+		Collections.sort(instanceNames);
+		int batchCount =0;
+		int batachSize =100;
+		instanceNames = instanceNames.subList(batchCount * batachSize, (1 + batchCount) * batachSize);
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1)
-				.setTrainingProportion(100).setDevelopmentProportion(0).setCorpusSizeFraction(1F).build();
+		
+		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
+				.setTrainingInstanceNames(instanceNames).build();
+//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1)
+//				.setTrainingProportion(100).setDevelopmentProportion(0).setCorpusSizeFraction(1F).build();
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				OrganismModelRestrictionProvider.getByRule(rule));
@@ -140,7 +135,7 @@ public class OrgModelSlotFillingPrediction {
 		String modelName = "OrganismModel_PREDICT";
 
 		OrgModelSlotFillingPredictorPrediction predictor = new OrgModelSlotFillingPredictorPrediction(modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
+				trainingInstanceNames, rule, ENERModus.PREDICT);
 
 		predictor.trainOrLoadModel();
 
@@ -153,15 +148,15 @@ public class OrgModelSlotFillingPrediction {
 //			annotations.addAll(instance.getValue().getCurrentPredictions().getAnnotations());
 //		}
 
-		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
-
-			for (AbstractAnnotation entityTemplate : instance.getValue()) {
-				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
-				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
-			}
-		}
-
-		new ConvertToRDF(new File("organismModel.n-triples"), annotations);
+//		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
+//
+//			for (AbstractAnnotation entityTemplate : instance.getValue()) {
+//				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+//				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
+//			}
+//		}
+//
+//		new ConvertToRDF(new File("organismModel.n-triples"), annotations);
 
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the

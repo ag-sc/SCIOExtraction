@@ -75,12 +75,12 @@ public class WEKAClustering {
 		trainingDataCollector = trainingDataCollector.removeRareFeatures(25);
 
 		try {
-			log.info("Load classifier...");
+			log.info("Load WEKA classifier...");
 			rf = (RandomForest) SerializationHelper.read(new FileInputStream(modelName));
 			log.info("Done...");
 
 		} catch (Exception e1) {
-			log.info("Could not load classifiery: " + e1.getMessage());
+			log.info("Could not load WEKA classifiery: " + e1.getMessage());
 			rf = null;
 		}
 		if (rf != null)
@@ -94,7 +94,7 @@ public class WEKAClustering {
 		((RandomForest) rf).setNumIterations(200);
 
 		try {
-			log.info("Build classifier...");
+			log.info("Build WEKA classifier...");
 			rf.buildClassifier(wekaTRAINInstance);
 
 		} catch (Exception e2) {
@@ -102,7 +102,7 @@ public class WEKAClustering {
 		}
 
 		try {
-			log.info("Save classifier...");
+			log.info("Save WEKA classifier...");
 			SerializationHelper.write(new FileOutputStream(modelName), rf);
 		} catch (Exception e3) {
 			e3.printStackTrace();

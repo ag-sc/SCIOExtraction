@@ -111,21 +111,21 @@ public class InjurySlotFillingPrediction {
 		String modelName = "Injury_PREDICTION";
 
 		InjurySlotFillingPredictorPrediction predictor = new InjurySlotFillingPredictorPrediction(modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
+				trainingInstanceNames,rule, ENERModus.PREDICT);
 
 		predictor.trainOrLoadModel();
 		
-		List<EntityTemplate> annotations = new ArrayList<>();
-
-		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
-
-			for (AbstractAnnotation entityTemplate : instance.getValue()) {
-				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
-				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
-			}
-		}
-
-		new ConvertToRDF(new File("injury.n-triples"), annotations);
+//		List<EntityTemplate> annotations = new ArrayList<>();
+//
+//		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
+//
+//			for (AbstractAnnotation entityTemplate : instance.getValue()) {
+//				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+//				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
+//			}
+//		}
+//
+//		new ConvertToRDF(new File("injury.n-triples"), annotations);
 
 	}
 

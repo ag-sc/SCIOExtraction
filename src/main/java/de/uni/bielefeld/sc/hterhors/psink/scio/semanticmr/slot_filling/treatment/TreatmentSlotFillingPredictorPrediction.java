@@ -63,9 +63,8 @@ public class TreatmentSlotFillingPredictorPrediction extends TreatmentSlotFillin
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
 
 	public TreatmentSlotFillingPredictorPrediction(String modelName, List<String> trainingInstanceNames,
-			List<String> developmentInstanceNames, List<String> testInstanceNames, ETreatmentModifications rule,
-			ENERModus modus) {
-		super(modelName, trainingInstanceNames, developmentInstanceNames, testInstanceNames, rule, modus);
+			ETreatmentModifications rule, ENERModus modus) {
+		super(modelName, trainingInstanceNames, new ArrayList<>(), new ArrayList<>(), rule, modus);
 	}
 
 	final public boolean useGoldLocationsForTraining = true;
@@ -135,7 +134,7 @@ public class TreatmentSlotFillingPredictorPrediction extends TreatmentSlotFillin
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 
-		String deliveryMethodModelName = "DeliveryMethod" + modelName;
+		String deliveryMethodModelName = "DeliveryMethod_PREDICT";
 
 		if (deliveryMethodPrediction == null) {
 

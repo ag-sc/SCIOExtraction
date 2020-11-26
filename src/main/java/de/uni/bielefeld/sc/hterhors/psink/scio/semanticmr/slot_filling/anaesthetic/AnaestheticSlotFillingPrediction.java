@@ -135,17 +135,17 @@ public class AnaestheticSlotFillingPrediction {
 
 		predictor.trainOrLoadModel();
 
-		List<EntityTemplate> annotations = new ArrayList<>();
-
-		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
-
-			for (AbstractAnnotation entityTemplate : instance.getValue()) {
-				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
-				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
-			}
-		}
-
-		new ConvertToRDF(new File("anaesthetic.n-triples"), annotations);
+//		List<EntityTemplate> annotations = new ArrayList<>();
+//
+//		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
+//
+//			for (AbstractAnnotation entityTemplate : instance.getValue()) {
+//				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+//				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
+//			}
+//		}
+//
+//		new ConvertToRDF(new File("anaesthetic.n-triples"), annotations);
 
 		/**
 		 * Computes the coverage of the given instances. The coverage is defined by the

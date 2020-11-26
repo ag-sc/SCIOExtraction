@@ -88,9 +88,9 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		if (args != null && args.length > 0)
 			new ResultSlotFillingHeuristic(Long.parseLong(args[0]), args[1]);
 		else {
-//			new ResultSlotFillingHeuristic(1000L, "PREDICT");
+			new ResultSlotFillingHeuristic(1000L, "PREDICT");
 //			new ResultSlotFillingHeuristic(1000L, "PREDICT_COVERAGE");
-			new ResultSlotFillingHeuristic(1000L, "GOLD");
+//			new ResultSlotFillingHeuristic(1000L, "GOLD");
 //			new ResultSlotFillingHeuristic(1000L, "GOLD_COVERAGE");
 		}
 	}
@@ -156,7 +156,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
 
-		modelName = modus + "_Result" + rand;
+//		modelName = modus + "_Result" + rand;
+		modelName = "Result_PREDICTION"  ;
 		log.info("Model name = " + modelName);
 
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
@@ -244,18 +245,20 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 			if (includeFastTextAnnotations) {
 				FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
-						SCIOEntityTypes.investigationMethod, trainingInstances);
-				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(testInstances);
+						SCIOEntityTypes.investigationMethod, trainingInstances,false);
+				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlasEvaluate(testInstances);
 				for (Instance instance : annotationsInvFT.keySet()) {
+					System.out.println(annotationsInvFT.get(instance).size());
 					annotations.putIfAbsent(instance, new HashSet<>());
 					annotations.get(instance).addAll(annotationsInvFT.get(instance));
 				}
 
 				FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
-						SCIOEntityTypes.trend, trainingInstances);
-				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(testInstances);
+						SCIOEntityTypes.trend, trainingInstances,false);
+				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlasEvaluate(testInstances);
 				for (Instance instance : annotationsTredFT.keySet()) {
 					annotations.putIfAbsent(instance, new HashSet<>());
+					System.out.println(annotationsTredFT.get(instance).size());
 					annotations.get(instance).addAll(annotationsTredFT.get(instance));
 				}
 

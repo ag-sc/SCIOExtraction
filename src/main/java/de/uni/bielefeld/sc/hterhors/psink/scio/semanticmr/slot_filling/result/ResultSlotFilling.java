@@ -54,6 +54,7 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
@@ -120,11 +121,27 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		this.dataRandomSeed = dataRandomSeed;
 
 		readData();
+		int max = 1000;
+		for (Instance instance : instanceProvider.getInstances()) {
+			int c = 0;
+			System.out.println(instance.getName());
+			for (AbstractAnnotation aa : instance.getGoldAnnotations().getAbstractAnnotations()) {
+
+				c += trainingObjectiveFunction.getEvaluator().scoreSingle(aa, aa).getTp();
+			}
+
+			System.out.println(instance.getGoldAnnotations().getAbstractAnnotations().size());
+			System.out.println(c);
+			System.out.println();
+			max = Math.min(max, c);
+		}
+		System.out.println(max);
+		System.exit(1);
+
 		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.result);
 
 		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOSlotTypes.hasInvestigationMethod);
-		System.exit(1);
-	
+
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
 		AnalyzeComplexity.analyze(SCIOEntityTypes.result, slotTypesToConsider, instanceProvider.getInstances(),
 				predictionObjectiveFunction.getEvaluator());
@@ -304,18 +321,18 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		SCIOSlotTypes.hasEventBefore.exclude();
 		SCIOSlotTypes.belongsTo.exclude();
 
-		SCIOSlotTypes.hasTargetGroup.excludeRec();
-		SCIOSlotTypes.hasReferenceGroup.excludeRec();
-
-		SCIOSlotTypes.hasTargetGroup.include();
-		SCIOSlotTypes.hasReferenceGroup.include();
-
-		SCIOSlotTypes.hasTreatmentType.include();
-		SCIOSlotTypes.hasCompound.include();
-
-		SCIOSlotTypes.hasTrend.includeRec();
-		SCIOSlotTypes.hasInvestigationMethod.includeRec();
-		SCIOSlotTypes.hasJudgement.includeRec();
+//		SCIOSlotTypes.hasTargetGroup.excludeRec();
+//		SCIOSlotTypes.hasReferenceGroup.excludeRec();
+//
+//		SCIOSlotTypes.hasTargetGroup.include();
+//		SCIOSlotTypes.hasReferenceGroup.include();
+//
+//		SCIOSlotTypes.hasTreatmentType.include();
+//		SCIOSlotTypes.hasCompound.include();
+//
+//		SCIOSlotTypes.hasTrend.includeRec();
+//		SCIOSlotTypes.hasInvestigationMethod.includeRec();
+//		SCIOSlotTypes.hasJudgement.includeRec();
 
 		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
 		Collections.sort(docs);

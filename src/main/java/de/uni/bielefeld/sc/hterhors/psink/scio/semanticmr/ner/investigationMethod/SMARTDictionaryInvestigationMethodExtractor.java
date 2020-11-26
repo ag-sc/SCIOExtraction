@@ -83,7 +83,7 @@ public class SMARTDictionaryInvestigationMethodExtractor {
 			List<Instance> developInstances) throws IOException {
 
 		if (includeFastText)
-			t = new FastTextSentenceClassification("TFIDFInvExtractor",false, SCIOEntityTypes.investigationMethod, trainingInstances);
+			t = new FastTextSentenceClassification("TFIDFInvExtractor",false, SCIOEntityTypes.investigationMethod, trainingInstances,false);
 
 		keyTerms = KeyTermExtractor.getKeyTerms(trainingInstances);
 		for (Instance trainInstance : trainingInstances) {

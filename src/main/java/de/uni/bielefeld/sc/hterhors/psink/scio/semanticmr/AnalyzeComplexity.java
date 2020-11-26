@@ -30,9 +30,11 @@ public class AnalyzeComplexity {
 		Map<String, Map<Integer, Integer>> histograms = new HashMap<>();
 		int countIndividuals = 0;
 		int countInstances = 0;
-		List<EntityTemplate> annotations = new ArrayList<>();
+		Map<String, List<EntityTemplate>> annotationsMap = new HashMap<>();
 		String name = et.name;
 		for (Instance instance : instances) {
+			List<EntityTemplate> annotations = new ArrayList<>();
+			annotationsMap.put(instance.getName(), annotations);
 			for (AbstractAnnotation goldAnn : instance.getGoldAnnotations().getAbstractAnnotations()) {
 				annotations.add(goldAnn.asInstanceOfEntityTemplate());
 
@@ -97,8 +99,8 @@ public class AnalyzeComplexity {
 		}
 
 		try {
-			ConvertToRDF rdf = new ConvertToRDF(new File(name+".n-triples"), annotations);
-			System.out.println("RDF Triples: "+rdf.count);
+			ConvertToRDF rdf = new ConvertToRDF(new File(name + ".n-triples"), annotationsMap);
+			System.out.println("RDF Triples: " + rdf.count);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

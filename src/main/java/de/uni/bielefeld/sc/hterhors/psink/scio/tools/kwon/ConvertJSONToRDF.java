@@ -83,7 +83,12 @@ public class ConvertJSONToRDF {
 //		System.out.println("REMAINING_-------------");
 //		all.forEach(s -> System.out.println(Arrays.toString(s)));
 
-		new ConvertToRDF(idMap, new File("OEC.n-triples"), dataPoints);
+		
+		/**
+		 *  TODO: INCLUDE 
+		 */
+		
+//		new ConvertToRDF(idMap, new File("OEC.n-triples"), dataPoints);
 
 		System.exit(1);
 
@@ -246,7 +251,7 @@ public class ConvertJSONToRDF {
 
 			int id = getID(result);
 
-			System.out.print("<http://scio/data/Result_"+id+">\t");
+			System.out.print("<http://scio/data/Result_" + id + ">\t");
 
 			System.out.print(docName + "\t");
 			String investN;

@@ -169,7 +169,7 @@ public class TFIDFInvestigationMethodExtractor {
 	public TFIDFInvestigationMethodExtractor(boolean binary, List<Instance> trainingInstances) throws IOException {
 		if (includeFastText)
 			t = new FastTextSentenceClassification("TFIDFInvExtractor", binary, SCIOEntityTypes.investigationMethod,
-					trainingInstances);
+					trainingInstances,false);
 
 		Map<String, List<String>> documents = new HashMap<>();
 		Set<String> additionalStopWords = new HashSet<>(

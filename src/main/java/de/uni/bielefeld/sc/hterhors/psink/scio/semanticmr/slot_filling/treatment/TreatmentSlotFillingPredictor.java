@@ -227,8 +227,10 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	@Override
 	protected IStateInitializer getStateInitializer() {
 //		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment, 2, 6);
-		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment,
+
+				return new GenericMultiCardinalityInitializer(SCIOEntityTypes.compoundTreatment,
 				instanceProvider.getTrainingInstances());
+		
 //		return (instance -> {
 //		return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.compoundTreatment)));
 //	});

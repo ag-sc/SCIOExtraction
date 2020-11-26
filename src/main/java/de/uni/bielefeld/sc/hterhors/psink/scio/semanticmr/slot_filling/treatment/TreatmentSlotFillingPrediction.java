@@ -3,6 +3,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatmen
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
@@ -64,8 +66,7 @@ public class TreatmentSlotFillingPrediction {
 	public TreatmentSlotFillingPrediction() throws IOException {
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).apply()
-				.registerNormalizationFunction(new DosageNormalization())
-				.build();
+				.registerNormalizationFunction(new DosageNormalization()).build();
 
 		instanceDirectory = new File("prediction/instances");
 
@@ -88,7 +89,7 @@ public class TreatmentSlotFillingPrediction {
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				TreatmentRestrictionProvider.getByRule(rule));
-		
+
 		List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
@@ -98,33 +99,43 @@ public class TreatmentSlotFillingPrediction {
 		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 				.collect(Collectors.toList());
 
-		String modelName = "Treatment_PREDICTION";
+		String modelName = "Treatment_PREDICT";
 
 		trainingInstances = instanceProvider.getTrainingInstances();
 		devInstances = instanceProvider.getDevelopmentInstances();
 		testInstances = instanceProvider.getTestInstances();
 
 		TreatmentSlotFillingPredictorPrediction predictor = new TreatmentSlotFillingPredictorPrediction(modelName,
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
-	
+				trainingInstanceNames, rule, ENERModus.PREDICT);
+
 		SCIOSlotTypes.hasDirection.slotMaxCapacity = 3;
 
 //		predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 
 		predictor.trainOrLoadModel();
 
-		List<EntityTemplate> annotations = new ArrayList<>();
+//		Map<String, List<EntityTemplate>> ansMap = new HashMap<>();
 
-		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
+//		List<EntityTemplate> annotations = new ArrayList<>();
+//
+//		for (Entry<String, Set<AbstractAnnotation>> instance : predictor.predictAllInstances().entrySet()) {
+//
+//			for (AbstractAnnotation entityTemplate : instance.getValue()) {
+//				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+//				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
+//			}
+//		}
 
-			for (AbstractAnnotation entityTemplate : instance.getValue()) {
-				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
-				annotations.add(entityTemplate.asInstanceOfEntityTemplate());
-			}
-		}
+//			List<EntityTemplate> ans = new ArrayList<>();
+//			for (AbstractAnnotation entityTemplate : instance.getValue().getCurrentPredictions().getAnnotations()) {
+//				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+//				ans.add(entityTemplate.asInstanceOfEntityTemplate());
+//			}
+//			ansMap.put(instance.getKey().getName(), ans);
 
-		new ConvertToRDF(new File("treatment.n-triples"), annotations);
+//		File outPutFile = new File("treatment.n-triples");
 
+//		new ConvertToRDF(outPutFile, ansMap);
 	}
 
 	private Map<String, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
@@ -144,8 +155,8 @@ public class TreatmentSlotFillingPrediction {
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //	+ modelName
-		OrgModelSlotFillingPredictorPrediction predictor = new OrgModelSlotFillingPredictorPrediction("OrganismModel_PREDICTION",
-				trainingInstanceNames, developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
+		OrgModelSlotFillingPredictorPrediction predictor = new OrgModelSlotFillingPredictorPrediction(
+				"OrganismModel_PREDICTION", trainingInstanceNames, rule, ENERModus.PREDICT);
 		predictor.trainOrLoadModel();
 
 		Map<String, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1)
