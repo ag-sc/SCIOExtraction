@@ -113,7 +113,7 @@ public class VertebralLocationSlotFilling {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				VertebralAreaRestrictionProvider.getByRule(rule));
 
-		String modelName = modusName + "_VertebralLocation_PREDICTION";
+		String modelName =  "VertebralLocation_PREDICT";
 
 		VertebralLocationPredictor predictor = new VertebralLocationPredictor(modelName,
 				instanceProvider.getTrainingInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),

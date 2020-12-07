@@ -135,14 +135,14 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		this.developInstanceNames = developInstanceNames;
 		this.testInstanceNames = testInstanceNames;
 
-		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
+		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder().setFilter(true)
 				.setTrainingInstanceNames(trainingInstanceNames).setDevelopInstanceNames(developInstanceNames)
 				.setTestInstanceNames(testInstanceNames).build();
 
 		/**
 		 * Remove empty instances from corpus
 		 */
-//		InstanceProvider.removeEmptyInstances = true;
+		InstanceProvider.removeEmptyInstances = true;
 
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
@@ -154,7 +154,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * And remove all instances that exceeds the maximum number.
 		 */
-		InstanceProvider.removeInstancesWithToManyAnnotations = false;
+		InstanceProvider.removeInstancesWithToManyAnnotations = true;
 
 		DeduplicationRule deduplicationRule = (a1, a2) -> {
 			return a1.evaluateEquals(predictionObjectiveFunction.getEvaluator(), a2);

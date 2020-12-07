@@ -101,7 +101,7 @@ public class DeliveryMethodSlotFilling {
 		SlotType.excludeAll();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(90).setDevelopmentProportion(10).build();
+				.setSeed(1000L).setTrainingProportion(100).setDevelopmentProportion(0).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();

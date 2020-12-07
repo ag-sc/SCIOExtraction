@@ -65,6 +65,36 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
  * 
  * 
  */
+
+/**
+ * MIX
+ */
+//MACRO	Root = 0.747	0.882	0.647	0.806	0.938	0.710	0.926	0.941	0.912
+//MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//MACRO	hasLocations = 0.413	0.529	0.338	0.578	0.711	0.493	0.714	0.745	0.686
+//MACRO	Cardinality = 0.847	1.000	0.735	0.915	1.062	0.806	0.926	0.941	0.912
+//MACRO	Overall = 0.580	0.706	0.492	0.712	0.831	0.630	0.813	0.849	0.781
+//CRFStatistics [context=Train, getTotalDuration()=63953]
+//CRFStatistics [context=Test, getTotalDuration()=222]
+//modelName: PREDICT_DeliveryMethod_Final_-470456323649602622
+//
+//
+//
+
+/**
+ * Greedy model
+ */
+//MACRO	Root = 0.369	0.471	0.304	0.399	0.500	0.333	0.926	0.941	0.912
+//MACRO	hasDuration = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//MACRO	hasLocations = 0.039	0.059	0.029	0.055	0.079	0.043	0.714	0.745	0.686
+//MACRO	Cardinality = 0.431	0.529	0.363	0.465	0.562	0.398	0.926	0.941	0.912
+//MACRO	Overall = 0.229	0.382	0.164	0.282	0.450	0.210	0.813	0.849	0.781
+//CRFStatistics [context=Train, getTotalDuration()=60357]
+//CRFStatistics [context=Test, getTotalDuration()=126]
+//modelName: PREDICT_DeliveryMethod_Final_-470456323649602622
+//
+
+
 public class DeliveryMethodSlotFillingFinalEvaluation {
 	/**
 	 * Start the slot filling procedure.
@@ -73,7 +103,10 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new DeliveryMethodSlotFillingFinalEvaluation(1000L, args[0]);
+		if (args.length == 0)
+			new DeliveryMethodSlotFillingFinalEvaluation(1000L, "PREDICT");
+		else
+			new DeliveryMethodSlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");

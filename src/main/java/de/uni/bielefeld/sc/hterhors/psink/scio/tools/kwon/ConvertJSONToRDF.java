@@ -72,23 +72,21 @@ public class ConvertJSONToRDF {
 
 		InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor);
 
-		List<EntityTemplate> dataPoints = new ArrayList<>();
+		Map<String, List<EntityTemplate>> dataPoints = new HashMap<>();
 		String header = "RDF-ID\tDocument\tInvestigationMethod\tSignificance\tPvalue\tTrend\tJudgement\tTargetTreatments\tReferenceTreatments\tBoth contain OEC\tAny contains OEC\tSwitch was applied\tAutomated Judgment\tPositiveFunctional\tPositiveNonFunctional";
 		System.out.println(header);
 
 //		all = new HashSet<>(dataContainingAdditionalInfo);
 
-		instanceProvider.getInstances().stream()
-				.forEach(a -> dataPoints.add(toPublication(a.getName(), a.getGoldAnnotations().getAnnotations())));
+		instanceProvider.getInstances().stream().forEach(a -> {
+			dataPoints.putIfAbsent(a.getDocument().documentID, new ArrayList<>());
+			dataPoints.get(a.getDocument().documentID)
+					.add(toPublication(a.getName(), a.getGoldAnnotations().getAnnotations()));
+		});
 //		System.out.println("REMAINING_-------------");
 //		all.forEach(s -> System.out.println(Arrays.toString(s)));
 
-		
-		/**
-		 *  TODO: INCLUDE 
-		 */
-		
-//		new ConvertToRDF(idMap, new File("OEC.n-triples"), dataPoints);
+		new ConvertToRDF(idMap, new File("OEC.n-triples"), dataPoints);
 
 		System.exit(1);
 
@@ -123,44 +121,44 @@ public class ConvertJSONToRDF {
 
 //		System.exit(1);
 
-		for (EntityTemplate publication : dataPoints) {
-
-			boolean containsNonFuc = false;
-			boolean containsFuc = false;
-			Set<String> nonfuncTests = new HashSet<>();
-			Set<String> funcTests = new HashSet<>();
-			Set<String> trends = new HashSet<>();
-			for (AbstractAnnotation experiment : publication.getMultiFillerSlot(SlotType.get("describes"))
-					.getSlotFiller()) {
-
-				Set<AbstractAnnotation> results = experiment.asInstanceOfEntityTemplate()
-						.getMultiFillerSlot(SlotType.get("hasResult")).getSlotFiller();
-
-				for (AbstractAnnotation result : results) {
-					if (result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInvestigationMethod"))
-							.containsSlotFiller()) {
-						EntityType investMethod = result.asInstanceOfEntityTemplate()
-								.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller()
-								.getEntityType();
-						containsFuc |= EntityType.get("FunctionalTest").isSuperEntityOf(investMethod);
-						containsNonFuc |= EntityType.get("NonFunctionalTest").isSuperEntityOf(investMethod);
-
-						if (EntityType.get("NonFunctionalTest").isSuperEntityOf(investMethod))
-							nonfuncTests.add(investMethod.name);
-						if (EntityType.get("FunctionalTest").isSuperEntityOf(investMethod))
-							funcTests.add(investMethod.name);
-					}
-				}
-			}
-
-			if (containsFuc && containsNonFuc)
-				System.out.println(publication.getSingleFillerSlot(SlotType.get("hasPubmedID")).getSlotFiller()
-						.asInstanceOfLiteralAnnotation().getSurfaceForm());
+//		for (EntityTemplate publication : dataPoints) {
+//
+//			boolean containsNonFuc = false;
+//			boolean containsFuc = false;
+//			Set<String> nonfuncTests = new HashSet<>();
+//			Set<String> funcTests = new HashSet<>();
+//			Set<String> trends = new HashSet<>();
+//			for (AbstractAnnotation experiment : publication.getMultiFillerSlot(SlotType.get("describes"))
+//					.getSlotFiller()) {
+//
+//				Set<AbstractAnnotation> results = experiment.asInstanceOfEntityTemplate()
+//						.getMultiFillerSlot(SlotType.get("hasResult")).getSlotFiller();
+//
+//				for (AbstractAnnotation result : results) {
+//					if (result.asInstanceOfEntityTemplate().getSingleFillerSlot(SlotType.get("hasInvestigationMethod"))
+//							.containsSlotFiller()) {
+//						EntityType investMethod = result.asInstanceOfEntityTemplate()
+//								.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller()
+//								.getEntityType();
+//						containsFuc |= EntityType.get("FunctionalTest").isSuperEntityOf(investMethod);
+//						containsNonFuc |= EntityType.get("NonFunctionalTest").isSuperEntityOf(investMethod);
+//
+//						if (EntityType.get("NonFunctionalTest").isSuperEntityOf(investMethod))
+//							nonfuncTests.add(investMethod.name);
+//						if (EntityType.get("FunctionalTest").isSuperEntityOf(investMethod))
+//							funcTests.add(investMethod.name);
+//					}
+//				}
+//			}
+//
+//			if (containsFuc && containsNonFuc)
 //				System.out.println(publication.getSingleFillerSlot(SlotType.get("hasPubmedID")).getSlotFiller()
-//						.asInstanceOfLiteralAnnotation().getSurfaceForm() + "\t" + (pos) + "\t" + trends + "\t"
-//						+ nonfuncTests + "\t" + funcTests);
-
-		}
+//						.asInstanceOfLiteralAnnotation().getSurfaceForm());
+////				System.out.println(publication.getSingleFillerSlot(SlotType.get("hasPubmedID")).getSlotFiller()
+////						.asInstanceOfLiteralAnnotation().getSurfaceForm() + "\t" + (pos) + "\t" + trends + "\t"
+////						+ nonfuncTests + "\t" + funcTests);
+//
+//		}
 
 	}
 

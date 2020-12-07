@@ -22,7 +22,8 @@ public class NPChunker {
 
 	public static int maxLength = 25;
 
-	private final File npChunkerDir = new File("npchunker");
+	private File npChunkerDir = new File("npchunker");
+//	private  File npChunkerDir = new File("prediciton/data/npchunks/");
 
 	private StanfordCoreNLP pipeline;
 	private final static String SPLITTER = "\t";
@@ -44,57 +45,88 @@ public class NPChunker {
 
 	}
 
-	private final File chunks;
-
 	public static void main(String[] args) throws IOException {
 
-		NPChunker chunker = new NPChunker(new Document("test2",
-				"Groups receiving ECs, both alone (71.84 ± 5.20%) and in combination with MP (78.26 ± 0668%), performed the DFR task significantly better than all other lesioned animals; however, these two groups were not significantly different from each other."));
+		new NPChunker().apply(new Document("test2",
+				"They received both OEG and MSC. Groups receiving ECs, both alone (71.84 ± 5.20%) and in combination with MP (78.26 ± 0668%), performed the DFR task significantly better than all other lesioned animals; however, these two groups were not significantly different from each other."));
 
-		chunker.getNPs().forEach(System.out::println);
+//		chunker.getNPs().forEach(System.out::println);
+//		chunker.getVPs().forEach(System.out::println);
+
 	}
 
-	public NPChunker(final Document document) throws IOException {
+	public NPChunker() throws IOException {
+		this(new File("npchunker"));
+	}
+
+	public NPChunker(final File cacheDir) {
+
+		if (cacheDir != null)
+			npChunkerDir = cacheDir;
+		else
+			npChunkerDir = new File("npchunker");
+
+		Properties props = new Properties();
+		props.setProperty("parse.nthreads", "4");
+		props.setProperty("pos.nthreads", "4");
+		props.setProperty("annotators", "tokenize,ssplit,pos,parse");
+		pipeline = new StanfordCoreNLP(props);
+
 		npChunkerDir.mkdirs();
-		System.out.println("Process: " + document.documentID);
+	}
+
+	private File chunks;
+
+	public void apply(final Document document) throws IOException {
 
 		chunks = new File(npChunkerDir, document.documentID);
 
-		if (chunks.exists())
-			nps = Files.readAllLines(chunks.toPath()).stream().map(l -> l.split(SPLITTER))
-					.map(l -> new TermIndexPair(l[0], Integer.parseInt(l[1])))
+		System.out.println("Process: " + document.documentID);
+
+		if (chunks.exists()) {
+			nps = Files.readAllLines(chunks.toPath()).stream().filter(l->l.startsWith("@NP")).map(l -> l.split(SPLITTER))
+					.map(l -> new TermIndexPair(l[1], Integer.parseInt(l[2])))
 					.filter(t -> t.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
 					.collect(Collectors.toList());
-		else {
-			Properties props = new Properties();
-			props.setProperty("parse.nthreads", "4");
-			props.setProperty("annotators", "tokenize,ssplit,pos, parse");
-			pipeline = new StanfordCoreNLP(props);
-			nps = extractNPs(document.documentContent);
+			vps = Files.readAllLines(chunks.toPath()).stream().filter(l->l.startsWith("@VP")).map(l -> l.split(SPLITTER))
+					.map(l -> new TermIndexPair(l[2], Integer.parseInt(l[2])))
+					.filter(t -> t.term.matches(".+(receiv|inject|contus|transplant|injur|train|treat).+"))
+					.collect(Collectors.toList());
+		} else {
+			CoreDocument d = new CoreDocument(document.documentContent);
+			System.out.println("Apply pipeline...");
+			pipeline.annotate(d);
+			System.out.println("annotated !");
+			System.out.println("Extract NPS");
+			nps = extractNPs(d);
+			System.out.println("Extract VPS");
+			vps = extractVPs(d);
 		}
 	}
 
-	final private List<TermIndexPair> nps;
+	private List<TermIndexPair> nps = new ArrayList<>();
+	private List<TermIndexPair> vps = new ArrayList<>();
 
 	public List<TermIndexPair> getNPs() {
 		return nps;
 	}
 
-	private List<TermIndexPair> extractNPs(String text) throws IOException {
+	public List<TermIndexPair> getVPs() {
+		return vps;
+	}
 
-		CoreDocument document = new CoreDocument(text);
-		pipeline.annotate(document);
-		List<TermIndexPair> nps = new ArrayList<>();
-
+	private List<TermIndexPair> extractNPs(CoreDocument d) throws IOException {
 		TregexPattern NPpattern = TregexPattern.compile("@NP");
-		for (CoreSentence sentence : document.sentences()) {
+		for (CoreSentence sentence : d.sentences()) {
 			Tree constituencyParse = sentence.constituencyParse();
 			TregexMatcher matcher = NPpattern.matcher(constituencyParse);
 			while (matcher.findNextMatchingNode()) {
 				String term = SentenceUtils.listToString(matcher.getMatch().yield());
+				
 				if (term.length() > 80)
 					continue;
-				if (term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
+			
+				if (!term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
 					continue;
 
 				nps.add(new TermIndexPair(term, matcher.getMatch().yieldWords().get(0).beginPosition()));
@@ -104,6 +136,29 @@ public class NPChunker {
 		nps.forEach(np -> ps.println(np.term + SPLITTER + np.index));
 		ps.close();
 		return nps;
+	}
+
+	private List<TermIndexPair> extractVPs(CoreDocument d) throws IOException {
+		TregexPattern VPpattern = TregexPattern.compile("@VP");
+		for (CoreSentence sentence : d.sentences()) {
+			Tree constituencyParse = sentence.constituencyParse();
+			TregexMatcher matcher = VPpattern.matcher(constituencyParse);
+			while (matcher.findNextMatchingNode()) {
+				String term = SentenceUtils.listToString(matcher.getMatch().yield());
+
+				if (term.length() > 80)
+					continue;
+
+				if (!term.matches(".+(receiv|inject|contus|transplant|injur|train|treat).+"))
+					continue;
+
+				vps.add(new TermIndexPair(term, matcher.getMatch().yieldWords().get(0).beginPosition()));
+			}
+		}
+		PrintStream ps = new PrintStream(chunks);
+		vps.forEach(np -> ps.println(np.term + SPLITTER + np.index));
+		ps.close();
+		return vps;
 	}
 
 }

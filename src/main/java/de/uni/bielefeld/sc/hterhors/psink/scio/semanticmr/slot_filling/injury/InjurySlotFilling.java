@@ -173,7 +173,7 @@ public class InjurySlotFilling {
 			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
-			String modelName = "Injury_PREDICTION";
+			String modelName = "Injury_PREDICT";
 //			String modelName = "Injury" + new Random().nextInt();
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,

@@ -56,7 +56,7 @@ public class ConvertToRDF {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				RDFData.addAll(convert(new HashSet<>(), et));
+				RDFData.addAll(convert(new HashSet<>(), et, annMap.getKey()));
 			}
 		}
 
@@ -71,13 +71,13 @@ public class ConvertToRDF {
 
 	}
 
-	private Set<String> convert(Set<String> rdf, AbstractAnnotation et) {
+	private Set<String> convert(Set<String> rdf, AbstractAnnotation et, String label) {
 
 		if (!et.isInstanceOfEntityTemplate())
 			return rdf;
 
 		try {
-			rdf.add(toRDFTypeLine(et.asInstanceOfEntityTemplate()));
+			rdf.add(toRDFTypeLine(et.asInstanceOfEntityTemplate(), label));
 		} catch (Exception e) {
 
 		}
@@ -86,22 +86,22 @@ public class ConvertToRDF {
 				.entrySet()) {
 			AbstractAnnotation singleSlotFiller = singleSlots.getValue().getSlotFiller();
 			try {
-				rdf.add(toRDFLine(et, singleSlots.getKey(), singleSlotFiller));
+				rdf.add(toRDFLine(et, label, singleSlots.getKey(), singleSlotFiller));
 			} catch (Exception e) {
 
 			}
 
-			convert(rdf, singleSlotFiller);
+			convert(rdf, singleSlotFiller, label);
 		}
 		for (Entry<SlotType, MultiFillerSlot> multiSlots : et.asInstanceOfEntityTemplate().getMultiFillerSlots()
 				.entrySet()) {
 			for (AbstractAnnotation multiSlotFiller : multiSlots.getValue().getSlotFiller()) {
 				try {
-					rdf.add(toRDFLine(et, multiSlots.getKey(), multiSlotFiller));
+					rdf.add(toRDFLine(et, label, multiSlots.getKey(), multiSlotFiller));
 				} catch (Exception e) {
 
 				}
-				convert(rdf, multiSlotFiller);
+				convert(rdf, multiSlotFiller, label);
 			}
 		}
 		return rdf;
@@ -109,29 +109,31 @@ public class ConvertToRDF {
 	}
 
 	private String toRDFLabel(EntityTemplate et, String label) throws Exception {
-		return toResourceName(et) + " " + "<http://www.w3.org/2000/01/rdf-schema#label>" + " " + "\"" + label + "\" .";
+		return toResourceName(et, label) + " " + "<http://www.w3.org/2000/01/rdf-schema#label>" + " " + "\"" + label
+				+ "\" .";
+	}
+	private String toRDFTypeLine(EntityTemplate et, String label) throws Exception {
+		return toResourceName(et, label) + " " + "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>" + " " + "<"
+				+ SCIO_PREFIX + et.getEntityType().name + "> .";
 	}
 
-	private String toRDFTypeLine(EntityTemplate et) throws Exception {
-		return toResourceName(et) + " " + "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>" + " " + "<" + SCIO_PREFIX
-				+ et.getEntityType().name + "> .";
-	}
-
-	private String toRDFLine(AbstractAnnotation et, SlotType slotType, AbstractAnnotation slotFiller) throws Exception {
-		return toResourceName(et) + " " + toPropertyName(slotType) + " " + toResourceName(slotFiller) + " .";
+	private String toRDFLine(AbstractAnnotation et, String label, SlotType slotType, AbstractAnnotation slotFiller)
+			throws Exception {
+		return toResourceName(et, label) + " " + toPropertyName(slotType) + " " + toResourceName(slotFiller, label)
+				+ " .";
 	}
 
 	private String toPropertyName(SlotType st) {
 		return "<" + SCIO_PREFIX + st.name + ">";
 	}
 
-	private String toResourceName(AbstractAnnotation et) throws Exception {
+	private String toResourceName(AbstractAnnotation et, String label) throws Exception {
 		if (et.getEntityType().isLiteral)
 			return "\"" + et.asInstanceOfLiteralAnnotation().getSurfaceForm() + "\"";
 		if (et.isInstanceOfEntityTypeAnnotation())
 			return "<" + SCIO_PREFIX + et.getEntityType().name + ">";
 
-		return "<" + SCIO_DATA_PREFIX + et.getEntityType().name + "_" + getID(et) + ">";
+		return "<" + SCIO_DATA_PREFIX + label + "_" + et.getEntityType().name + "_" +  getID(et) + ">";
 	}
 
 }

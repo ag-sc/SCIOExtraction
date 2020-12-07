@@ -994,7 +994,9 @@ public class CollectExpGroupNames {
 			/**
 			 * HEURISTIC NPCHUNKS
 			 */
-			List<TermIndexPair> groupNames = new NPChunker(instance.getDocument()).getNPs();
+			NPChunker chunker = new NPChunker();
+			chunker.apply(instance.getDocument());
+			List<TermIndexPair> groupNames = chunker.getNPs();
 			for (TermIndexPair groupName : groupNames) {
 				if (groupName.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
 					addFinding(keyPoints, referencePoint, instance, findings, nullPattern, groupName.term,

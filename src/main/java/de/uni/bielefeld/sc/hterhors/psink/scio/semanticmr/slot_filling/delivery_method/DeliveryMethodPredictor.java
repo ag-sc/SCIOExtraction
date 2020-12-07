@@ -130,13 +130,12 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 //		return new GenericMultiCardinalityInitializer(SCIOEntityTypes.deliveryMethod, 2, 2);
 
 //		results: ROOT_LOCATION_DURATION	0.57	0.52	0.62
-		
+
 		return (instance -> {
 			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod),
 					new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
 		});
-		
-		
+
 //		results: ROOT_LOCATION_DURATION	0.43	0.67	0.32
 //		return (instance -> {
 //			return new State(instance, new Annotations(new EntityTemplate(SCIOEntityTypes.deliveryMethod)));
@@ -160,6 +159,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 //		return SamplerCollection.greedyModelStrategy();
 //		return SamplerCollection.greedyObjectiveStrategy();
 //		return new EpochSwitchSampler(epoch -> epoch <5);
+//		return SamplerCollection.linearModelSamplingStrategy();
 		return new EpochSwitchSampler(epoch -> epoch % 2 == 0);
 //		return new EpochSwitchSampler(new RandomSwitchSamplingStrategy());
 //		return new EpochSwitchSampler(e -> new Random(e).nextBoolean());

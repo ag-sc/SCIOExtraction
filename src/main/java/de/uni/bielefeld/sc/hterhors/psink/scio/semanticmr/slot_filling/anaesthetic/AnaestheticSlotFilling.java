@@ -170,7 +170,7 @@ public class AnaestheticSlotFilling {
 
 //			dataRandomSeed = "" + new Random().nextInt();
 //			String modelName = "Anaesthetic" + dataRandomSeed;
-			String modelName = "Anaesthetic_PREDICTION";
+			String modelName = "Anaesthetic_PREDICT";
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();

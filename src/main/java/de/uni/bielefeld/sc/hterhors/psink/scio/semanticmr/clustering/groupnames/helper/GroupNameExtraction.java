@@ -1,5 +1,6 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.clustering.groupnames.helper;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -119,11 +120,27 @@ public class GroupNameExtraction {
 
 	public static List<DocumentLinkedAnnotation> extractGroupNamesWithNPCHunks(
 			EDistinctGroupNamesMode distinctGroupNamesMode, Instance instance) {
+
+		return extractGroupNamesWithNPCHunks(null, distinctGroupNamesMode, instance);
+
+	}
+
+	public static List<DocumentLinkedAnnotation> extractGroupNamesWithNPCHunks(File file,
+			EDistinctGroupNamesMode distinctGroupNamesMode, Instance instance) {
 		Set<String> distinct = new HashSet<>();
 
 		List<DocumentLinkedAnnotation> anns = new ArrayList<>();
+
+		NPChunker npChunker = new NPChunker(file);
 		try {
-			for (TermIndexPair groupName : new NPChunker(instance.getDocument()).getNPs()) {
+
+			npChunker.apply(instance.getDocument());
+			
+			List<TermIndexPair> l = new ArrayList<>();
+			l.addAll(npChunker.getVPs());
+			l.addAll(npChunker.getNPs());
+
+			for (TermIndexPair groupName : l) {
 				DocumentLinkedAnnotation annotation;
 				if (CollectExpGroupNames.STOP_TERM_LIST.contains(groupName.term))
 					continue;

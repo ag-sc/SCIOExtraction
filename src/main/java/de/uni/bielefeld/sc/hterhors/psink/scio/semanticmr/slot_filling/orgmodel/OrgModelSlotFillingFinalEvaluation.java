@@ -117,6 +117,106 @@ public class OrgModelSlotFillingFinalEvaluation {
 		slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
 		slotTypesToConsider.add(SCIOSlotTypes.hasGender);
 
+		/**
+		 * draw from model prob
+		 */
+//Time: 258
+//CRFStatistics [context=Test, getTotalDuration()=258]
+//Compute coverage...
+//---------------------------------------
+//MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//MACRO	hasAge = 0.100	0.100	0.100	0.400	0.400	0.400	0.250	0.250	0.250
+//MACRO	hasWeight = 0.687	0.700	0.675	0.916	0.933	0.900	0.750	0.750	0.750
+//MACRO	hasOrganismSpecies = 0.637	0.650	0.625	0.729	0.722	0.735	0.874	0.900	0.850
+//MACRO	hasAgeCategory = 0.750	0.750	0.750	0.845	0.833	0.857	0.887	0.900	0.875
+//MACRO	hasGender = 0.850	0.850	0.850	0.944	0.944	0.944	0.900	0.900	0.900
+//MACRO	Cardinality = 0.924	0.950	0.900	0.936	0.950	0.923	0.987	1.000	0.975
+//MACRO	Overall = 0.835	0.933	0.755	0.868	0.933	0.815	0.962	1.000	0.927
+//modelName: PREDICT_OrganismModel_Final_-470456323649602622
+//null
+//CRFStatistics [context=Test, getTotalDuration()=258]
+
+		
+		/**
+		 * draw greedily from model
+		 */
+//		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//				MACRO	hasAge = 0.200	0.200	0.200	0.800	0.800	0.800	0.250	0.250	0.250
+//				MACRO	hasWeight = 0.737	0.750	0.725	0.983	1.000	0.967	0.750	0.750	0.750
+//				MACRO	hasOrganismSpecies = 0.874	0.900	0.850	1.000	1.000	1.000	0.874	0.900	0.850
+//				MACRO	hasAgeCategory = 0.824	0.850	0.800	0.929	0.944	0.914	0.887	0.900	0.875
+//				MACRO	hasGender = 0.887	0.900	0.875	0.986	1.000	0.972	0.900	0.900	0.900
+//				MACRO	Cardinality = 0.961	1.000	0.925	0.973	1.000	0.949	0.987	1.000	0.975
+//				MACRO	Overall = 0.931	1.000	0.870	0.967	1.000	0.938	0.962	1.000	0.927
+//				modelName: PREDICT_OrganismModel_Final_-470456323649602622
+//				CRFStatistics [context=Train, getTotalDuration()=23438]
+//				CRFStatistics [context=Test, getTotalDuration()=151]
+//
+//
+
+		
+		/**
+		 * mix
+		 */
+//		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//				MACRO	hasAge = 0.237	0.250	0.225	0.947	1.000	0.900	0.250	0.250	0.250
+//				MACRO	hasWeight = 0.737	0.750	0.725	0.983	1.000	0.967	0.750	0.750	0.750
+//				MACRO	hasOrganismSpecies = 0.874	0.900	0.850	1.000	1.000	1.000	0.874	0.900	0.850
+//				MACRO	hasAgeCategory = 0.824	0.850	0.800	0.929	0.944	0.914	0.887	0.900	0.875
+//				MACRO	hasGender = 0.887	0.900	0.875	0.986	1.000	0.972	0.900	0.900	0.900
+//				MACRO	Cardinality = 0.961	1.000	0.925	0.973	1.000	0.949	0.987	1.000	0.975
+//				MACRO	Overall = 0.934	1.000	0.876	0.970	1.000	0.944	0.962	1.000	0.927
+//				modelName: PREDICT_OrganismModel_Final_-470456323649602622
+//				CRFStatistics [context=Train, getTotalDuration()=11838]
+//				CRFStatistics [context=Test, getTotalDuration()=173]
+
+		/**
+		 * Random switch
+		 */
+//		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//				MACRO	hasAge = 0.237	0.250	0.225	0.947	1.000	0.900	0.250	0.250	0.250
+//				MACRO	hasWeight = 0.687	0.700	0.675	0.916	0.933	0.900	0.750	0.750	0.750
+//				MACRO	hasOrganismSpecies = 0.874	0.900	0.850	1.000	1.000	1.000	0.874	0.900	0.850
+//				MACRO	hasAgeCategory = 0.874	0.900	0.850	0.985	1.000	0.971	0.887	0.900	0.875
+//				MACRO	hasGender = 0.887	0.900	0.875	0.986	1.000	0.972	0.900	0.900	0.900
+//				MACRO	Cardinality = 0.961	1.000	0.925	0.973	1.000	0.949	0.987	1.000	0.975
+//				MACRO	Overall = 0.862	0.850	0.874	0.896	0.850	0.943	0.962	1.000	0.927
+//				modelName: PREDICT_OrganismModel_Final_-470456323649602622
+//				CRFStatistics [context=Train, getTotalDuration()=6944]
+//				CRFStatistics [context=Test, getTotalDuration()=230]
+
+/**
+ * draw from top k=2 model dist		
+ */
+//		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//				MACRO	hasAge = 0.237	0.250	0.225	0.947	1.000	0.900	0.250	0.250	0.250
+//				MACRO	hasWeight = 0.737	0.750	0.725	0.983	1.000	0.967	0.750	0.750	0.750
+//				MACRO	hasOrganismSpecies = 0.737	0.750	0.725	0.843	0.833	0.853	0.874	0.900	0.850
+//				MACRO	hasAgeCategory = 0.737	0.750	0.725	0.831	0.833	0.829	0.887	0.900	0.875
+//				MACRO	hasGender = 0.887	0.900	0.875	0.986	1.000	0.972	0.900	0.900	0.900
+//				MACRO	Cardinality = 0.961	1.000	0.925	0.973	1.000	0.949	0.987	1.000	0.975
+//				MACRO	Overall = 0.893	0.983	0.818	0.928	0.983	0.883	0.962	1.000	0.927
+//				modelName: PREDICT_OrganismModel_Final_-470456323649602622
+//				CRFStatistics [context=Train, getTotalDuration()=34614]
+//				CRFStatistics [context=Test, getTotalDuration()=158]
+//
+
+		/**
+		 * draw from top k=10 model dist		
+		 */
+//		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//				MACRO	hasAge = 0.237	0.250	0.225	0.947	1.000	0.900	0.250	0.250	0.250
+//				MACRO	hasWeight = 0.737	0.750	0.725	0.983	1.000	0.967	0.750	0.750	0.750
+//				MACRO	hasOrganismSpecies = 0.774	0.800	0.750	0.886	0.889	0.882	0.874	0.900	0.850
+//				MACRO	hasAgeCategory = 0.737	0.750	0.725	0.831	0.833	0.829	0.887	0.900	0.875
+//				MACRO	hasGender = 0.850	0.850	0.850	0.944	0.944	0.944	0.900	0.900	0.900
+//				MACRO	Cardinality = 0.961	1.000	0.925	0.973	1.000	0.949	0.987	1.000	0.975
+//				MACRO	Overall = 0.904	1.000	0.825	0.940	1.000	0.890	0.962	1.000	0.927
+//				modelName: PREDICT_OrganismModel_Final_-470456323649602622
+//				CRFStatistics [context=Train, getTotalDuration()=40367]
+//				CRFStatistics [context=Test, getTotalDuration()=165]
+
+		
 		Map<String, Score> scoreMap = new HashMap<>();
 		Random random = new Random(randomSeed);
 		ENERModus modus = ENERModus.valueOf(modusName);
@@ -143,7 +243,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
-			String modelName = modusName + "_OrganismModel_Final_" + seed;
+			String modelName = modusName + "_OrganismModel_DissFinal_" + seed;
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);

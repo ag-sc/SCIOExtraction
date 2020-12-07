@@ -80,7 +80,7 @@ public class BuildCorpusFromRawData {
 
 	private static final String SCIO_NAME_SPACE = "http://psink.de/scio";
 	private static final String RESOURCE_NAME_SPACE = "http://scio/data";
-	private static final String CORPUS_DOCS = "corpus_docs_new.csv";
+	private static final String CORPUS_DOCS = "corpus_docs.csv";
 
 	public static void main(String[] args) throws Exception {
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
@@ -100,9 +100,8 @@ public class BuildCorpusFromRawData {
 		buildCorpusForInjuryDevice();
 		buildCorpusForInvestigationMethod();
 		buildCorpusForTrend();
-		System.exit(1);
 	}
-	
+
 	private static void buildCorpusForTrend() throws Exception {
 		buildSubDataStructureFiles(SCIOEntityTypes.trend);
 		Set<String> annotatedDocuments = new HashSet<>(
@@ -328,7 +327,8 @@ public class BuildCorpusFromRawData {
 
 		for (String dataFileName : fileNames) {
 
-			if (!filterNames.isEmpty() && !filterNames.contains(dataFileName)) {
+			if (!filterNames.isEmpty() && !(filterNames.contains(dataFileName))
+					|| !startsWith(filterNames, dataFileName)) {
 				log.info("Skip: " + dataFileName + "...");
 				continue;
 			}
@@ -354,6 +354,16 @@ public class BuildCorpusFromRawData {
 					jsonPrettyString, deepRec);
 
 		}
+	}
+
+	private static boolean startsWith(Set<String> filterNames, String dataFileName) {
+
+		for (String string : filterNames) {
+			if (dataFileName.startsWith(string))
+				return true;
+		}
+
+		return false;
 	}
 
 }

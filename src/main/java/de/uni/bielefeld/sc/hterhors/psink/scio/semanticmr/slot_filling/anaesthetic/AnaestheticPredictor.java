@@ -195,7 +195,7 @@ public class AnaestheticPredictor extends AbstractSlotFillingPredictor {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 
 //		String deliveryMethodModelName = "DeliveryMethodFIX";
-		String deliveryMethodModelName = "DeliveryMethod" + modelName;
+		String deliveryMethodModelName = "DeliveryMethod_PREDICT";// + modelName;
 
 		if (deliveryMethodPrediction == null) {
 

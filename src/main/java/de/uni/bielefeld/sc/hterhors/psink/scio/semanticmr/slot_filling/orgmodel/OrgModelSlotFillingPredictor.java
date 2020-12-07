@@ -46,7 +46,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	private EOrgModelModifications rule;
 
 	public OrgModelSlotFillingPredictor(String modelName, List<String> trainingInstances,
-			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule, ENERModus modus) {
+			List<String> developmentInstances, List<String> testInstances, EOrgModelModifications rule,
+			ENERModus modus) {
 		super(modelName, trainingInstances, developmentInstances, testInstances, rule, modus);
 	}
 
@@ -150,7 +151,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected AbstractSampler getSampler() {
-//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(2);
+//		AbstractSampler sampler = SamplerCollection.linearModelSamplingStrategy();
+//		AbstractSampler sampler = SamplerCollection.topKModelDistributionSamplingStrategy(10);
 //		AbstractSampler sampler = SamplerCollection.greedyModelStrategy();
 //		AbstractSampler sampler = SamplerCollection.greedyObjectiveStrategy();
 		AbstractSampler sampler = new EpochSwitchSampler(epoch -> epoch % 2 == 0);

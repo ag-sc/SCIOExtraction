@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.candidateretrieval.helper.DictionaryFromInstanceHelper;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
@@ -55,7 +55,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.fasttext.FastTextSentenceClassification;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.result_sentences.ExtractSentencesWithResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPrediction;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
@@ -65,7 +64,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 
 	public static void main(String[] args) throws Exception {
 
-		new ResultSlotFillingHeuristicPrediction(4);
+		new ResultSlotFillingHeuristicPrediction(3);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -108,7 +107,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		List<String> instanceNames = Arrays.asList(new File("prediction/instances").list());
 		Collections.sort(instanceNames);
 		instanceNames = instanceNames.subList(batchCount * batchSize, (1 + batchCount) * batchSize);
-
+//		instanceNames =instanceNames.subList(0, 10);
 		readData(instanceNames);
 
 		/**
@@ -238,17 +237,15 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 
 	private Map<Instance, Set<EntityTemplate>> getPredictedGroups() throws Exception {
 
-		File root = new File("prediction/data/annotations/slot_filling/experimental_group_Full" + modelName + "/batch_"
-				+ batch + "_" + batchSize + "/");
-		Map<Instance, Set<EntityTemplate>> expGroups;
+		File root = new File("prediction/data/annotations/slot_filling/experimental_group_Full" + modelName + "/");
+		Map<Instance, Set<EntityTemplate>> expGroups = new HashMap<>();
 		if (root.exists() && root.list().length != 0) {
 			// Cache
-			expGroups = new HashMap<>();
 			log.info("Read cached files: " + root.list().length);
 
 			JsonInstanceReader reader = new JsonInstanceReader(root, Collections.emptyList(), (a, b) -> false);
 
-			List<Instance> prePredictedInstances = reader.readInstances(1000);
+			List<Instance> prePredictedInstances = reader.readInstances(10000);
 
 			for (Instance instance : prePredictedInstances) {
 				expGroups.put(instance, new HashSet<>(instance.getGoldAnnotations().<EntityTemplate>getAnnotations()));
@@ -257,7 +254,21 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 
 			}
 
-		} else {
+		}
+
+		List<Instance> remaining = new ArrayList<>(instances);
+
+		for (Instance instance : expGroups.keySet()) {
+			for (Iterator iterator = remaining.iterator(); iterator.hasNext();) {
+				Instance instance2 = (Instance) iterator.next();
+				if (instance.getName().equals(instance2.getName()))
+					iterator.remove();
+			}
+		}
+
+		if (expGroups.isEmpty())
+
+		{
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
 			SlotType.includeAll();
 //			ExperimentalGroupSlotFillingPredictorFinalEvaluation.maxCacheSize = 800_000;
@@ -312,13 +323,9 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		List<DocumentLinkedAnnotation> list = GroupNameExtraction
 				.extractGroupNamesWithPattern(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
 
-		/**
-		 * TODO: apply NPChunks to 8000 docs!
-		 */
-
-//		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction
-//				.extractGroupNamesWithNPCHunks(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
-//		list.addAll(list2);
+		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction.extractGroupNamesWithNPCHunks(
+				new File("prediction/data/npchunks/"), EDistinctGroupNamesMode.NOT_DISTINCT, instance);
+		list.addAll(list2);
 
 		return list;
 
@@ -582,7 +589,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		SCIOSlotTypes.hasInvestigationMethod.include();
 //		SCIOSlotTypes.hasJudgement.includeRec();
 
-		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
+		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder().setFilter(true)
 				.setTrainingInstanceNames(instanceNames).build();
 
 		InstanceProvider.maxNumberOfAnnotations = 1000;

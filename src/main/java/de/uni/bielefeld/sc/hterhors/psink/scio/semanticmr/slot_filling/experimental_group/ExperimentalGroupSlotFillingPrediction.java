@@ -147,8 +147,8 @@ public class ExperimentalGroupSlotFillingPrediction extends AbstractSemReadProje
 		long dataRandomSeed;
 
 		if (args.length == 0) {
-			modusIndex = 17; // GOLD
-//			modusIndex = 18; // PREDICTED
+//			modusIndex = 17; // GOLD
+			modusIndex = 18; // PREDICTED
 //			modusIndex = 19; // COVERGAE GOLD
 //			modusIndex = 20; // COVERGAE PREDICT
 			dataRandomSeed = 1004L;
