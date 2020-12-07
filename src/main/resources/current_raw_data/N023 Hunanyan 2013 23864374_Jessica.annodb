@@ -1,0 +1,63 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+49613, InjuryArea, 1650, 1670, "disrupted dCST axons", "", "<http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+48539, Adult, 11595, 11600, "adult", "", "<http://scio/data/OrganismModel_387> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48540, Weight, 11602, 11608, "~210 g", "", "<http://scio/data/OrganismModel_387> <http://psink.de/scio/hasWeight> \"~210 g\"."
+48541, Female, 11610, 11616, "female", "", "<http://scio/data/OrganismModel_387> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48542, SpragueDawleyRat, 11617, 11636, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_387> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+79519, SpragueDawleyRat, 11829, 11835, "animal", "", 
+79520, DefinedExperimentalGroup, 11905, 11930, "SCI and control treatment", "E1", 
+79527, Penicillinase, 11932, 11945, "penicillinase", "", 
+79526, Virus, 11950, 11958, "AAV- gfp", "", 
+79524, DefinedExperimentalGroup, 11996, 12040, "SCI and treatment with ChABC and AAV-NT3-gfp", "E2", 
+79529, ChondroitinaseABC, 12019, 12024, "ChABC", "", 
+79530, Virus, 12029, 12040, "AAV-NT3-gfp", "", 
+49588, SpragueDawleyRat, 12769, 12776, "Animals", "", 
+49609, DosageExtracorporal, 12800, 12802, "3%", "", "<http://scio/data/Isoflurane_2094> <http://psink.de/scio/hasDosage> \"3%\"."
+49574, Isoflurane, 12803, 12813, "isoflurane", "", "<http://scio/data/Isoflurane_2094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2094>."
+50777, InhalationDelivery, 12825, 12848, "in an induction chamber", "", "<http://scio/data/InhalationDelivery_3345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery>. <http://scio/data/Isoflurane_2094> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_3345>."
+49610, InhalationDelivery, 12875, 12894, "facemask delivering", "", "<http://scio/data/InhalationDelivery_2103> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery>. <http://scio/data/Isoflurane_2102> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2103>."
+49611, DosageExtracorporal, 12895, 12899, "1.5%", "", "<http://scio/data/Isoflurane_2102> <http://psink.de/scio/hasDosage> \"1.5%\"."
+49575, Isoflurane, 12900, 12910, "isoflurane", "", "<http://scio/data/Isoflurane_2102> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2102>."
+49606, SpragueDawleyRat, 13179, 13186, "animals", "", 
+50775, SubcutaneousLocation, 13198, 13210, "subcutaneous", "", "<http://scio/data/InjectionDelivery_14519> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>."
+50774, InjectionDelivery, 13211, 13220, "injection", "", "<http://scio/data/InjectionDelivery_14519> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/MedicationDuringSurgery_14518> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_14519>."
+57483, MedicationDuringSurgery, 13224, 13237, "buprenorphine", "", "<http://scio/data/MedicationDuringSurgery_14518> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/Contusion_2091> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_14518>."
+49578, DosageIntracorporal, 13239, 13250, "0.01 mg/kg)", "", 
+49579, Contusion, 13281, 13290, "Contusion", "", "<http://scio/data/Contusion_2091> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2091> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+49580, T10, 13315, 13318, "T10", "", "<http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+49581, InfiniteHorizonImpactor, 13339, 13382, "computer-controlled IH-0400 Impactor device", "", "<http://scio/data/InfiniteHorizonImpactor_2098> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2098>."
+79491, T8, 13572, 13574, "T8", "", 
+79492, T10, 13579, 13582, "T10", "", 
+49584, Force, 13607, 13621, "150-kdyn force", "", "<http://scio/data/InfiniteHorizonImpactor_2098> <http://psink.de/scio/hasForce> \"150-kdyn force\"."
+49615, ModerateInjury, 13643, 13660, "moderate-severity", "", "<http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+49585, Contusion, 13661, 13670, "contusion", "", 
+79493, Duration, 13927, 13955, "Immediately after the injury", "", 
+79494, Penicillinase, 13963, 13976, "penicillinase", "", 
+79495, DosageExtracorporal, 13978, 13985, "2 mg/ml", "", 
+79497, SigmaAldrich, 13987, 13992, "Sigma", "", 
+79499, ChondroitinaseABC, 13997, 14002, "ChABC", "", 
+79496, DosageExtracorporal, 14004, 14011, "75 U/ml", "", 
+79498, Seikagaku, 14013, 14022, "Seikagaku", "", 
+79500, InjectionDelivery, 14028, 14041, "microinjected", "", 
+79501, Rostral, 14047, 14054, "rostral", "", 
+79502, Caudal, 14064, 14070, "caudal", "", 
+79503, SpinalLesionSite, 14078, 14094, "injury epicenter", "", 
+79504, InjectionDelivery, 14129, 14138, "injection", "", 
+79505, Duration, 14150, 14174, "immediately after injury", "", 
+79506, SpragueDawleyRat, 14188, 14192, "rats", "", 
+79507, DefinedExperimentalGroup, 14202, 14221, "penicillinase group", "E2", 
+79509, Intraspinal, 14231, 14242, "intraspinal", "", 
+79510, InjectionDelivery, 14243, 14253, "injections", "", 
+79511, Virus, 14257, 14268, "AAV-rh10gfp", "", 
+79512, DosageExtracorporal, 14270, 14307, "4.1 x 1013 GC/ml, 1 µl each injection", "", 
+79508, DefinedExperimentalGroup, 14319, 14330, "ChABC group", "E3", 
+79514, Virus, 14340, 14356, "AAV-rh10-NT3-gfp", "", 
+79513, DosageExtracorporal, 14358, 14395, "2.5 x 1012 GC/ml, 1 µl each injection", "", 
+79515, InjectionDelivery, 14398, 14408, "Injections", "", 
+79516, Rostral, 14443, 14450, "rostral", "", 
+79517, Caudal, 14462, 14468, "caudal", "", 
+79518, SpinalLesionSite, 14476, 14492, "injury epicenter", "", 
+50780, SubcutaneousLocation, 14921, 14933, "subcutaneous", "", 
+50781, InjectionDelivery, 14934, 14944, "injections", "", 
+50779, AntibioticMedication, 14948, 14958, "antibiotic", "", "<http://scio/data/AntibioticMedication_3346> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2091> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3346>."
+49586, DosageIntracorporal, 14969, 14976, "5 mg/kg", "", 

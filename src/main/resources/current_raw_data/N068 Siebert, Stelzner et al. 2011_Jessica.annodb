@@ -1,0 +1,26 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48686, Female, 7354, 7360, "Female", "", "<http://scio/data/OrganismModel_622> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48687, LongEvansRat, 7368, 7383, "Long-Evans rats", "", "<http://scio/data/OrganismModel_622> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>."
+48688, Age, 7435, 7457, "77 days (±10 days) old", "", "<http://scio/data/OrganismModel_622> <http://psink.de/scio/hasAge> \"77 days (±10 days) old\"."
+54283, LongEvansRat, 7484, 7491, "Animals", "", 
+50196, SodiumPentobarbital, 7515, 7535, "sodium pentobarbital", "", "<http://scio/data/SodiumPentobarbital_2742> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2742>."
+50205, DosageIntracorporal, 7547, 7559, "0.1 ml/100 g", "", "<http://scio/data/SodiumPentobarbital_2742> <http://psink.de/scio/hasDosage> \"0.1 ml/100 g\"."
+54286, IntraperitonealLocation, 7561, 7565, "i.p.", "", "<http://scio/data/InjectionDelivery_3870> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+54287, InjectionDelivery, 7566, 7575, "injection", "", "<http://scio/data/InjectionDelivery_3870> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_2742> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3870>."
+54285, LongEvansRat, 7587, 7593, "animal", "", 
+50206, Laminectomy, 7668, 7679, "laminectomy", "", 
+50198, T9, 7687, 7689, "T9", "", "<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9>."
+54294, LongEvansRat, 7711, 7717, "animal", "", 
+50199, NYUImpactor, 7772, 7784, "NYU Impactor", "", "<http://scio/data/NYUImpactor_2746> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NYUImpactor>. <http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/NYUImpactor_2746>."
+50207, ModerateInjury, 7833, 7841, "moderate", "", "<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+50217, Contusion, 7849, 7858, "contusion", "", "<http://scio/data/Contusion_2739> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2739> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+54288, Weight, 7896, 7913, "10 g impactor rod", "", "<http://scio/data/NYUImpactor_2746> <http://psink.de/scio/hasWeight> \"10 g impactor rod\"."
+54290, Distance, 7921, 7936, "height of 25 mm", "", "<http://scio/data/NYUImpactor_2746> <http://psink.de/scio/hasDistance> \"height of 25 mm\"."
+50209, BladderExpression, 8898, 8925, "bladders manually expressed", "", "<http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+57625, AntibioticMedication, 8995, 9004, "Cefazolin", "", "<http://scio/data/AntibioticMedication_15112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_15112>."
+50218, Dosage, 9034, 9041, "0.03 ml", "", "<http://scio/data/AntibioticMedication_15112> <http://psink.de/scio/hasDosage> \"0.03 ml\"."
+50200, PostsurgicalMedication, 9174, 9201, "Buprenorphine Hydrochloride", "", "<http://scio/data/PostsurgicalMedication_2750> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2739> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2750>."
+50219, Dosage, 9265, 9272, "0.03 ml", "", "<http://scio/data/PostsurgicalMedication_2750> <http://psink.de/scio/hasDosage> \"0.03 ml\"."
+54291, SubcutaneousLocation, 9273, 9277, "s.q.", "", 
+50203, Nutrition, 9534, 9564, "ad libitum access to both food", "", "<http://scio/data/Contusion_2739> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+50204, Hydration, 9569, 9574, "water", "", "<http://scio/data/Contusion_2739> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."

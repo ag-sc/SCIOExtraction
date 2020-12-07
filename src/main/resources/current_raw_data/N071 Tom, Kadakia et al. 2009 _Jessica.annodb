@@ -1,0 +1,33 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+50260, LateralHemisection, 5118, 5129, "hemisection", "", "<http://scio/data/LateralHemisection_2784> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2784> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+48709, Adult, 5140, 5145, "adult", "", "<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48710, Female, 5146, 5152, "female", "", "<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48711, SpragueDawleyRat, 5153, 5172, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48712, Weight, 5174, 5183, "225–250 g", "", "<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasWeight> \"225–250 g\"."
+50250, Isoflurane, 5239, 5249, "isoflurane", "", "<http://scio/data/Isoflurane_2787> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2787>."
+50251, Laminectomy, 5261, 5272, "laminectomy", "", 
+50252, C5, 5319, 5321, "C5", "", "<http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5>."
+50261, Right, 5337, 5342, "right", "", "<http://scio/data/Right_2793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasDirection> <http://scio/data/Right_2793>."
+50265, Contusion, 6524, 6537, "hemicontusion", "", "<http://scio/data/Contusion_2798> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2798> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+54304, Adult, 6547, 6552, "adult", "", 
+54305, Female, 6553, 6559, "female", "", 
+54306, SpragueDawleyRat, 6560, 6579, "Sprague-Dawley rats", "", 
+50262, SpragueDawleyRat, 6650, 6657, "animals", "", 
+54307, InjectionDelivery, 6663, 6671, "injected", "", "<http://scio/data/InjectionDelivery_3895> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2801> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3895>. <http://scio/data/InjectionDelivery_3894> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2813> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3894>."
+54309, IntraperitonealLocation, 6672, 6689, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_3895> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3894> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50272, KetamineAsAnaesthetic, 6695, 6703, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2813>."
+50255, DosageIntracorporal, 6705, 6712, "60mg=kg", "", "<http://scio/data/KetamineAsAnaesthetic_2813> <http://psink.de/scio/hasDosage> \"60mg=kg\"."
+50256, Xylazine, 6718, 6726, "xylazine", "", "<http://scio/data/Xylazine_2801> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2801>."
+50257, DosageIntracorporal, 6728, 6735, "10mg=kg", "", "<http://scio/data/Xylazine_2801> <http://psink.de/scio/hasDosage> \"10mg=kg\"."
+50263, C5, 6766, 6768, "C5", "", "<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5>."
+50258, Laminectomy, 6784, 6795, "laminectomy", "", 
+50259, InfiniteHorizonImpactor, 6913, 6936, "Infinite Horizon Impact", "", "<http://scio/data/InfiniteHorizonImpactor_2805> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2805>."
+54313, SpragueDawleyRat, 7004, 7011, "animals", "", 
+50266, Right, 7145, 7150, "right", "", 
+54312, SpragueDawleyRat, 7167, 7174, "animals", "", 
+50264, Force, 7196, 7205, "200 kdyne", "", "<http://scio/data/InfiniteHorizonImpactor_2805> <http://psink.de/scio/hasForce> \"200 kdyne\"."
+54311, SpragueDawleyRat, 7643, 7650, "animals", "", 
+54310, AntibioticMedication, 7662, 7672, "ampicillin", "", "<http://scio/data/AntibioticMedication_3887> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3887>. <http://scio/data/AntibioticMedication_3896> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3896>."
+50268, DosageIntracorporal, 7674, 7682, "200mg=kg", "", "<http://scio/data/AntibioticMedication_3887> <http://psink.de/scio/hasDosage> \"200mg=kg\". <http://scio/data/AntibioticMedication_3896> <http://psink.de/scio/hasDosage> \"200mg=kg\"."
+50269, PostsurgicalMedication, 7688, 7701, "buprenorphine", "", "<http://scio/data/PostsurgicalMedication_2795> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2795>. <http://scio/data/PostsurgicalMedication_2808> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2808>."
+50270, DosageIntracorporal, 7703, 7711, "0.1mg=kg", "", "<http://scio/data/PostsurgicalMedication_2795> <http://psink.de/scio/hasDosage> \"0.1mg=kg\". <http://scio/data/PostsurgicalMedication_2808> <http://psink.de/scio/hasDosage> \"0.1mg=kg\"."

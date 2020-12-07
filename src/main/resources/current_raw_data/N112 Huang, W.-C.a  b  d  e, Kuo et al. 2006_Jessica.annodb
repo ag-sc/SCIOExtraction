@@ -1,0 +1,11 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48801, SpragueDawleyRat, 5178, 5192, "SD female rats", "", "<http://scio/data/OrganismModel_875> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48802, Female, 5181, 5187, "female", "", "<http://scio/data/OrganismModel_875> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48803, Weight, 5194, 5203, "250–300 g", "", "<http://scio/data/OrganismModel_875> <http://psink.de/scio/hasWeight> \"250–300 g\"."
+54424, InhalationDelivery, 5243, 5253, "inhalation", "", "<http://scio/data/InhalationDelivery_4026> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery>. <http://scio/data/Isoflurane_4020> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_4026>."
+54421, Isoflurane, 5270, 5279, "isoﬂurane", "", "<http://scio/data/Isoflurane_4020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/CompleteTransection_4017> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_4020>."
+54425, T8, 5812, 5814, "T8", "", 
+54427, Laminectomy, 5821, 5832, "laminectomy", "", 
+54426, T8, 5894, 5896, "T8", "", 
+54422, CompleteTransection, 5908, 5928, "complete transection", "", "<http://scio/data/CompleteTransection_4017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_4017> <http://www.w3.org/2000/01/rdf-schema#label> \"complete transection\"."
+54423, T8, 6121, 6123, "T8", "", "<http://scio/data/CompleteTransection_4017> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."

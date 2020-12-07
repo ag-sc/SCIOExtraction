@@ -1,0 +1,442 @@
+# RDF export of group: InvestigationMethod
+<http://scio/data/AxonalRegenerationTest_62074> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
+<http://scio/data/BBBTest_62097> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/MotorEvokedPotentialsTest_62112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest> .
+<http://scio/data/BBBTest_62652> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/AxonalRegenerationTest_74689> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
+<http://scio/data/AxonalRegenerationTest_74689> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalRegenerationTest (count of regenerated/survived axons)" .
+<http://scio/data/BBBTest_74693> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_74693> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (gait scaling)" .
+<http://scio/data/NeurologicScaleParameter_85435> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
+<http://scio/data/MotorEvokedPotentialsTest_74700> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest> .
+<http://scio/data/MotorEvokedPotentialsTest_74700> <http://www.w3.org/2000/01/rdf-schema#label> "MotorEvokedPotentialsTest (latencies)" .
+<http://scio/data/BBBTest_74943> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_74943> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (BBB scores)" .
+<http://scio/data/AxonalRegenerationTest_80186> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
+<http://scio/data/AxonalRegenerationTest_80186> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalRegenerationTest (count of regenerated/survived axons)" .
+<http://scio/data/AxonalRegenerationTest_80188> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest> .
+<http://scio/data/AxonalRegenerationTest_80188> <http://www.w3.org/2000/01/rdf-schema#label> "AxonalRegenerationTest (count of regenerated/survived axons)" .
+<http://scio/data/BBBTest_80190> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_80190> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (gait scaling)" .
+<http://scio/data/BBBTest_80192> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_80192> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (gait scaling)" .
+<http://scio/data/NeurologicScaleParameter_85430> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeurologicScaleParameter> .
+<http://scio/data/BBBTest_80194> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_80194> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (gait scaling)" .
+<http://scio/data/BBBTest_80196> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_80196> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (gait scaling)" .
+<http://scio/data/BBBTest_80198> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest> .
+<http://scio/data/BBBTest_80198> <http://www.w3.org/2000/01/rdf-schema#label> "BBBTest (gait scaling)" .
+<http://scio/data/MotorEvokedPotentialsTest_80200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest> .
+<http://scio/data/MotorEvokedPotentialsTest_80200> <http://www.w3.org/2000/01/rdf-schema#label> "MotorEvokedPotentialsTest (latencies)" .
+<http://scio/data/MotorEvokedPotentialsTest_80202> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest> .
+<http://scio/data/MotorEvokedPotentialsTest_80202> <http://www.w3.org/2000/01/rdf-schema#label> "MotorEvokedPotentialsTest (latencies)" .
+# RDF export of group: Results
+<http://scio/data/Result_7908> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_7908> <http://www.w3.org/2000/01/rdf-schema#label> "axonalregeneration R1" .
+<http://scio/data/Observation_7909> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Trend_7915> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_7915> .
+<http://scio/data/PositiveSignificance_7918> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_7915> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_7918> .
+<http://scio/data/Trend_7915> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19789> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_7908> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/AxonalRegenerationTest_74689> .
+<http://scio/data/Result_7920> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_7920> <http://www.w3.org/2000/01/rdf-schema#label> "axonalregeneration R2" .
+<http://scio/data/Observation_7921> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Trend_7929> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_7929> .
+<http://scio/data/PositiveSignificance_7930> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_7929> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_7930> .
+<http://scio/data/Trend_7929> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19790> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_7920> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/AxonalRegenerationTest_80186> .
+<http://scio/data/Result_7932> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_7932> <http://www.w3.org/2000/01/rdf-schema#label> "axonalregeneration R3" .
+<http://scio/data/Observation_7933> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Trend_7941> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_7941> .
+<http://scio/data/PositiveSignificance_7942> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_7941> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_7942> .
+<http://scio/data/Trend_7941> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19791> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_7932> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/AxonalRegenerationTest_80188> .
+<http://scio/data/Result_8069> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8069> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R4" .
+<http://scio/data/Observation_8070> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Trend_8076> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8076> .
+<http://scio/data/PositiveSignificance_8077> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8076> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8077> .
+<http://scio/data/Trend_8076> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19771> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8069> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_80192> .
+<http://scio/data/Result_8081> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8081> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R5" .
+<http://scio/data/Observation_8082> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Trend_8088> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8088> .
+<http://scio/data/PositiveSignificance_8089> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8088> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8089> .
+<http://scio/data/Trend_8088> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19772> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8081> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_80190> .
+<http://scio/data/Result_8093> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8093> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R6" .
+<http://scio/data/Observation_8094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Trend_8100> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8100> .
+<http://scio/data/PositiveSignificance_8101> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8100> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8101> .
+<http://scio/data/Trend_8100> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19773> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8093> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_80194> .
+<http://scio/data/Result_8105> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8105> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R7" .
+<http://scio/data/Observation_8106> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Trend_8112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8112> .
+<http://scio/data/PositiveSignificance_8114> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8112> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8114> .
+<http://scio/data/Trend_8112> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19774> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8105> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_74693> .
+<http://scio/data/Result_8123> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8123> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R8" .
+<http://scio/data/Observation_8124> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Trend_8133> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8133> .
+<http://scio/data/PositiveSignificance_8134> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8133> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8134> .
+<http://scio/data/Trend_8133> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19775> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8123> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_80196> .
+<http://scio/data/Result_8138> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8138> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R9" .
+<http://scio/data/Observation_8139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Trend_8148> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8148> .
+<http://scio/data/PositiveSignificance_8149> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8148> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8149> .
+<http://scio/data/Trend_8148> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19776> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8138> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_80198> .
+<http://scio/data/Result_8159> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8159> <http://www.w3.org/2000/01/rdf-schema#label> "MMP R10" .
+<http://scio/data/Observation_8160> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Trend_8166> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8166> .
+<http://scio/data/PositiveSignificance_8167> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8166> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8167> .
+<http://scio/data/Trend_8166> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/ExperimentalGroup_19793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8159> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/MotorEvokedPotentialsTest_74700> .
+<http://scio/data/Result_8171> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8171> <http://www.w3.org/2000/01/rdf-schema#label> "MMP R11" .
+<http://scio/data/Observation_8172> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Trend_8178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8178> .
+<http://scio/data/PositiveSignificance_8179> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8178> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8179> .
+<http://scio/data/Trend_8178> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/ExperimentalGroup_19795> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8171> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/MotorEvokedPotentialsTest_80200> .
+<http://scio/data/Result_8183> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_8183> <http://www.w3.org/2000/01/rdf-schema#label> "MMP R12" .
+<http://scio/data/Observation_8184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Trend_8190> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_8190> .
+<http://scio/data/PositiveSignificance_8191> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance> .
+<http://scio/data/Trend_8190> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_8191> .
+<http://scio/data/Trend_8190> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive> .
+<http://scio/data/ExperimentalGroup_19797> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_8183> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/MotorEvokedPotentialsTest_80202> .
+<http://scio/data/Result_14855> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Result> .
+<http://scio/data/Result_14855> <http://www.w3.org/2000/01/rdf-schema#label> "BBB R13" .
+<http://scio/data/Observation_14856> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Result_14855> <http://psink.de/scio/hasTargetGroup> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Result_14855> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest> .
+<http://scio/data/Result_14855> <http://psink.de/scio/hasReferenceGroup> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Trend_14862> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Trend> .
+<http://scio/data/Result_14855> <http://psink.de/scio/hasTrend> <http://scio/data/Trend_14862> .
+<http://scio/data/Significance_14863> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance> .
+<http://scio/data/Trend_14862> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher> .
+<http://scio/data/ExperimentalGroup_19798> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Result_14855> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation> .
+<http://scio/data/Result_14855> <http://psink.de/scio/hasInvestigationMethod> <http://scio/data/BBBTest_74943> .
+# RDF export of group: Observations
+<http://scio/data/Observation_6730> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_6730> <http://www.w3.org/2000/01/rdf-schema#label> "TP BMSC + OEC transplantation" .
+<http://scio/data/TemporalInterval_6732> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_6730> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_6732> .
+<http://scio/data/TemporalInterval_6732> <http://psink.de/scio/hasDuration> "within 30 min post-injury" .
+<http://scio/data/TemporalInterval_6732> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/TemporalInterval_6732> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_6720> .
+<http://scio/data/NumericValue_6733> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_6730> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Observation_7848> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7848> <http://www.w3.org/2000/01/rdf-schema#label> "TP BMSC transplanation" .
+<http://scio/data/TemporalInterval_7850> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7848> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7850> .
+<http://scio/data/TemporalInterval_7850> <http://psink.de/scio/hasDuration> "within 30 min post-injury" .
+<http://scio/data/TemporalInterval_7850> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/TemporalInterval_7850> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_6720> .
+<http://scio/data/NumericValue_7851> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7848> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Observation_7856> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7856> <http://www.w3.org/2000/01/rdf-schema#label> "TP OEC transplantation" .
+<http://scio/data/TemporalInterval_7858> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7856> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7858> .
+<http://scio/data/TemporalInterval_7858> <http://psink.de/scio/hasDuration> "within 30 min post-injury" .
+<http://scio/data/TemporalInterval_7858> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/TemporalInterval_7858> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_7743> .
+<http://scio/data/NumericValue_7862> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7856> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Observation_7864> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7864> <http://www.w3.org/2000/01/rdf-schema#label> "TP vehicle transplantation" .
+<http://scio/data/TemporalInterval_7866> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7864> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7866> .
+<http://scio/data/TemporalInterval_7866> <http://psink.de/scio/hasDuration> "within 30 min post-injury" .
+<http://scio/data/TemporalInterval_7866> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/TemporalInterval_7866> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_7767> .
+<http://scio/data/NumericValue_7867> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7864> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7829> .
+<http://scio/data/Observation_7872> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7872> <http://www.w3.org/2000/01/rdf-schema#label> "TP BMSC + OEC + CycA" .
+<http://scio/data/TemporalInterval_7874> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7872> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7874> .
+<http://scio/data/TemporalInterval_7874> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/Event_7907> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Event> .
+<http://scio/data/TemporalInterval_7874> <http://psink.de/scio/hasDuration> "for 2 weeks" .
+<http://scio/data/NumericValue_7875> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7872> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7797> .
+<http://scio/data/Observation_7880> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7880> <http://www.w3.org/2000/01/rdf-schema#label> "TP BMSC transplantation + CycA" .
+<http://scio/data/TemporalInterval_7882> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7880> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7882> .
+<http://scio/data/TemporalInterval_7882> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/Event_7906> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Event> .
+<http://scio/data/TemporalInterval_7882> <http://psink.de/scio/hasDuration> "for 2 weeks" .
+<http://scio/data/NumericValue_7886> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7880> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7807> .
+<http://scio/data/Observation_7888> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7888> <http://www.w3.org/2000/01/rdf-schema#label> "TP OEC transplanation + CycA" .
+<http://scio/data/TemporalInterval_7890> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7888> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7890> .
+<http://scio/data/TemporalInterval_7890> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/Event_7905> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Event> .
+<http://scio/data/TemporalInterval_7890> <http://psink.de/scio/hasDuration> "for 2 weeks" .
+<http://scio/data/NumericValue_7894> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7888> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7816> .
+<http://scio/data/Observation_7896> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_7896> <http://www.w3.org/2000/01/rdf-schema#label> "TP vehicle transplantation + CycA" .
+<http://scio/data/TemporalInterval_7898> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_7896> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_7898> .
+<http://scio/data/TemporalInterval_7898> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_6707> .
+<http://scio/data/Event_7904> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Event> .
+<http://scio/data/TemporalInterval_7898> <http://psink.de/scio/hasDuration> "for 2 weeks" .
+<http://scio/data/NumericValue_7902> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_7896> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_7829> .
+# RDF export of group: Experimental groups
+<http://scio/data/DefinedExperimentalGroup_7797> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://www.w3.org/2000/01/rdf-schema#label> "BMSC + OEC E1" .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1008> .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Contusion_6707> .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasNNumber> "15" .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_6720> .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7743> .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7785> .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasGroupName> "co-graft" .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasGroupName> "co-graft group" .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasGroupName> "cograft animals" .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasGroupName> "co-grafted animals" .
+<http://scio/data/DefinedExperimentalGroup_7797> <http://psink.de/scio/hasGroupName> "co-graft rats" .
+<http://scio/data/ShamOperation_74088> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://www.w3.org/2000/01/rdf-schema#label> "BMSC E2" .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1008> .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://psink.de/scio/hasGroupName> "BMSC group" .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Contusion_6707> .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://psink.de/scio/hasNNumber> "15" .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_6720> .
+<http://scio/data/DefinedExperimentalGroup_7807> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7785> .
+<http://scio/data/ShamOperation_74089> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://www.w3.org/2000/01/rdf-schema#label> "OEC E3" .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1008> .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://psink.de/scio/hasGroupName> "OEC group" .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Contusion_6707> .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://psink.de/scio/hasNNumber> "15" .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7743> .
+<http://scio/data/DefinedExperimentalGroup_7816> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7785> .
+<http://scio/data/ShamOperation_74090> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://www.w3.org/2000/01/rdf-schema#label> "vehicle control E4" .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1008> .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasGroupName> "control group" .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Contusion_6707> .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasNNumber> "15" .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7767> .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_7785> .
+<http://scio/data/DefinedExperimentalGroup_7829> <http://psink.de/scio/hasGroupName> "control" .
+<http://scio/data/ShamOperation_74091> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_1008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_1008> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_1008> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_1008> <http://psink.de/scio/hasWeight> "240-270 g" .
+<http://scio/data/OrganismModel_1008> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/Contusion_6707> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion> .
+<http://scio/data/Contusion_6707> <http://www.w3.org/2000/01/rdf-schema#label> "contusion" .
+<http://scio/data/Contusion_6707> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10> .
+<http://scio/data/AntibioticMedication_6709> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Contusion_6707> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_6709> .
+<http://scio/data/AntibioticMedication_6709> <http://psink.de/scio/hasDosage> "25 mg/kg" .
+<http://scio/data/Anaesthetic_6710> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/DeliveryMethod_55227> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Contusion_6707> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury> .
+<http://scio/data/MedicationDuringSurgery_6712> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Contusion_6707> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_6712> .
+<http://scio/data/WeightDrop_6714> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/WeightDrop> .
+<http://scio/data/Contusion_6707> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/WeightDrop_6714> .
+<http://scio/data/WeightDrop_6714> <http://psink.de/scio/hasDistance> "height of 50 mm" .
+<http://scio/data/WeightDrop_6714> <http://psink.de/scio/hasWeight> "10 g" .
+<http://scio/data/Contusion_6707> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_6720> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_6720> <http://www.w3.org/2000/01/rdf-schema#label> "BMSC transplantation" .
+<http://scio/data/InjectionDelivery_6722> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_6720> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_6722> .
+<http://scio/data/SpinalLesionSite_7741> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_6722> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_7741> .
+<http://scio/data/Compound_6727> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_6720> <http://psink.de/scio/hasDosage> "50 000 cells/µL" .
+<http://scio/data/Rostral_16193> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_6720> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16193> .
+<http://scio/data/SpinalLesionSite_19779> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_16193> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19779> .
+<http://scio/data/Caudal_19780> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_6720> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19780> .
+<http://scio/data/SpinalLesionSite_19781> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_19780> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19781> .
+<http://scio/data/MesenchymalStemCell_85417> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MesenchymalStemCell> .
+<http://scio/data/CompoundTreatment_6720> <http://psink.de/scio/hasCompound> <http://scio/data/MesenchymalStemCell_85417> .
+<http://scio/data/AnatomicalLocation_85419> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/MesenchymalStemCell_85417> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_85419> .
+<http://scio/data/MesenchymalStemCell_85417> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/OrganismSpecies> .
+<http://scio/data/MesenchymalStemCell_85417> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic> .
+<http://scio/data/MesenchymalStemCell_85417> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling> .
+<http://scio/data/CompoundTreatment_7743> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_7743> <http://www.w3.org/2000/01/rdf-schema#label> "OEC treatment" .
+<http://scio/data/InjectionDelivery_7745> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_7743> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_7745> .
+<http://scio/data/SpinalLesionSite_7747> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_7745> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_7747> .
+<http://scio/data/Compound_7752> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_7743> <http://psink.de/scio/hasDosage> "50 000 cells/µL" .
+<http://scio/data/OlfactoryEnsheathingGliaCell_7761> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell> .
+<http://scio/data/CompoundTreatment_7743> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_7761> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_7761> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic> .
+<http://scio/data/AnatomicalLocation_19778> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_7761> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_19778> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_7761> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling> .
+<http://scio/data/Rostral_19777> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_7743> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_19777> .
+<http://scio/data/SpinalLesionSite_19782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_19777> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19782> .
+<http://scio/data/Caudal_19783> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_7743> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19783> .
+<http://scio/data/SpinalLesionSite_19784> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_19783> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19784> .
+<http://scio/data/CompoundTreatment_7767> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_7767> <http://www.w3.org/2000/01/rdf-schema#label> "vehicle treatment" .
+<http://scio/data/InjectionDelivery_7769> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_7767> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_7769> .
+<http://scio/data/SpinalLesionSite_7771> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_7769> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_7771> .
+<http://scio/data/Compound_7776> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Vehicle_7779> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle> .
+<http://scio/data/CompoundTreatment_7767> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_7779> .
+<http://scio/data/AnatomicalLocation_55232> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/Rostral_19785> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_7767> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_19785> .
+<http://scio/data/SpinalLesionSite_19786> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_19785> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19786> .
+<http://scio/data/Caudal_19787> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_7767> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19787> .
+<http://scio/data/SpinalLesionSite_19788> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_19787> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19788> .
+<http://scio/data/CompoundTreatment_7785> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_7785> <http://www.w3.org/2000/01/rdf-schema#label> "CycA treatment" .
+<http://scio/data/InjectionDelivery_7787> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_7785> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_7787> .
+<http://scio/data/InjectionDelivery_7787> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation> .
+<http://scio/data/Compound_7792> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_7785> <http://psink.de/scio/hasDosage> "10 mg/kg body weight" .
+<http://scio/data/CyclosporineA_7794> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CyclosporineA> .
+<http://scio/data/CompoundTreatment_7785> <http://psink.de/scio/hasCompound> <http://scio/data/CyclosporineA_7794> .
+<http://scio/data/AnatomicalLocation_55235> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/Direction_27609> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+# RDF export of group: Sacrifices

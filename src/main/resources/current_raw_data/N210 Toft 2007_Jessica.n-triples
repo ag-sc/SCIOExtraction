@@ -1,0 +1,45 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_1399> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_1399> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_1399> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat> .
+<http://scio/data/OrganismModel_1399> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_1399> <http://psink.de/scio/hasWeight> "200–250 g" .
+<http://scio/data/OrganismModel_1399> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_10482> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_10482> <http://www.w3.org/2000/01/rdf-schema#label> "Dorsal Hemisection" .
+<http://scio/data/VertebralArea_10483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/DorsalHemisection_10482> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_10483> .
+<http://scio/data/VertebralArea_10483> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/L3> .
+<http://scio/data/VertebralArea_10483> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/L4> .
+<http://scio/data/Halothane_10485> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Halothane> .
+<http://scio/data/DorsalHemisection_10482> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Halothane_10485> .
+<http://scio/data/DeliveryMethod_15300> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/MedicationDuringSurgery_10487> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DorsalHemisection_10482> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/ScoutenWireKnife> .
+<http://scio/data/DorsalHemisection_10482> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_24129> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_24129> <http://www.w3.org/2000/01/rdf-schema#label> "Purified neonatal OECs" .
+<http://scio/data/DeliveryMethod_24131> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_24136> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_24137> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_24139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell> .
+<http://scio/data/CompoundTreatment_24129> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_24139> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_24139> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_24139> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_24139> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification> .
+<http://scio/data/AnatomicalLocation_24144> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_24139> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_24144> .
+<http://scio/data/CompoundTreatment_24145> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_24145> <http://www.w3.org/2000/01/rdf-schema#label> "Mixed olfactory bulb OECs P7" .
+<http://scio/data/DeliveryMethod_24147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_24152> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_24153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Compound_24155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/AnatomicalLocation_29598> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+# RDF export of group: Sacrifices

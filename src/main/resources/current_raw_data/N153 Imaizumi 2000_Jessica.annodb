@@ -1,0 +1,214 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+38758, OlfactoryEnsheathingGliaCell, 530, 564, "Olfactory ensheathing cells (OECs)", "", 
+38759, SchwannCell, 568, 581, "Schwann cells", "", 
+38760, DeliveryMethod, 587, 599, "transplanted", "", 
+75214, DorsalHemisection, 609, 634, "transected dorsal columns", "", 
+48920, WistarRat, 642, 645, "rat", "", 
+38763, SpinalCord, 646, 657, "spinal cord", "", 
+38764, AxonalRegenerationTest, 668, 687, "axonal regeneration", "", 
+38765, ElectrophysiologyTest, 689, 720, "Electrophysiological recordings", "", 
+38766, SpinalCord, 750, 761, "spinal cord", "", 
+98283, DeliveryMethod, 783, 798, "transplantation", "", 
+98282, OlfactoryEnsheathingGliaCell, 802, 807, "cells", "", 
+38768, None, 809, 811, "no", "", 
+38769, ElectrophysiologyTest, 812, 830, "impulse conduction", "", 
+38770, SpinalLesionSite, 855, 871, "transection site", "", 
+38772, ElectrophysiologyTest, 909, 927, "impulse conduction", "", 
+38773, Distance, 941, 962, "for over a centimeter", "", 
+38774, LesionAdjacentTissue, 963, 980, "beyond the lesion", "", 
+38775, Cell, 982, 986, "Cell", "", 
+38776, AxonalRegenerationTest, 1016, 1033, "regenerated axons", "", 
+38777, Cell, 1094, 1105, "donor cells", "", 
+38778, SpinalFiberTract, 1140, 1145, "tract", "", 
+38779, AxonalRegenerationTest, 1194, 1211, "regenerated axons", "", 
+38780, ElectrophysiologyTest, 1225, 1257, "Conduction velocity measurements", "", 
+38781, AxonalRegenerationTest, 1262, 1272, "morphology", "", 
+38782, AxonalRegenerationTest, 1292, 1309, "regenerated axons", "", 
+38783, MyelinationTest, 1315, 1325, "myelinated", "", 
+38784, ElectrophysiologyTest, 1331, 1340, "conducted", "", 
+38785, Higher, 1341, 1347, "faster", "", 
+38786, Higher, 1356, 1362, "larger", "", 
+38787, AxonalRegenerationTest, 1363, 1373, "axon areas", "", 
+38788, AxonalRegenerationTest, 1425, 1454, "regenerated spinal cord axons", "", 
+38789, Higher, 1455, 1462, "induced", "", 
+38790, Cell, 1466, 1470, "cell", "", 
+38791, DeliveryMethod, 1471, 1486, "transplantation", "", 
+38792, SpinalLesionSite, 1566, 1582, "transection site", "", 
+38793, Adult, 4806, 4811, "Adult", "", "<http://scio/data/OrganismModel_1086> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+38794, WistarRat, 4812, 4823, "Wistar rats", "", "<http://scio/data/OrganismModel_1086> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+38795, KetamineAsAnaesthetic, 4854, 4865, "ke- taminer", "", "<http://scio/data/KetamineAsAnaesthetic_9498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/DorsalHemisection_9495> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_9498>. <http://scio/data/KetamineAsAnaesthetic_11879> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Laminectomy_11876> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_11879>."
+38796, Xylazine, 4866, 4874, "xylazine", "", "<http://scio/data/Xylazine_9508> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/DorsalHemisection_9495> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_9508>. <http://scio/data/Xylazine_11889> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Laminectomy_11876> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_11889>."
+38797, DosageIntracorporal, 4876, 4884, "75 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_9498> <http://psink.de/scio/hasDosage> \"75 mg/kg\". <http://scio/data/KetamineAsAnaesthetic_11879> <http://psink.de/scio/hasDosage> \"75 mg/kg\"."
+38798, DosageIntracorporal, 4886, 4894, "10 mg/kg", "", "<http://scio/data/Xylazine_9508> <http://psink.de/scio/hasDosage> \"10 mg/kg\". <http://scio/data/Xylazine_11889> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+57676, InjectionDelivery, 4896, 4900, "i.p.", "", "<http://scio/data/InjectionDelivery_9504> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_9498> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9504>. <http://scio/data/InjectionDelivery_9509> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_9508> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9509>. <http://scio/data/InjectionDelivery_11880> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_11879> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11880>. <http://scio/data/InjectionDelivery_11890> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_11889> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11890>."
+55414, IntraperitonealLocation, 4896, 4900, "i.p.", "", "<http://scio/data/InjectionDelivery_9504> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_9509> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_11880> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_11890> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+38800, Lumbar, 4930, 4936, "lumbar", "", 
+38801, SpinalCord, 4937, 4948, "spinal cord", "", 
+55413, DorsalHemisection, 4949, 4974, "dorsal column transection", "", "<http://scio/data/DorsalHemisection_9495> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_9495> <http://www.w3.org/2000/01/rdf-schema#label> \"Dorsal Column Transection Injury\"."
+56958, DorsalColumn, 4949, 4962, "dorsal column", "", 
+38804, T11, 4994, 4997, "T11", "", "<http://scio/data/DorsalHemisection_9495> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T11>."
+38805, Laminectomy, 5009, 5020, "laminectomy", "", "<http://scio/data/Laminectomy_11876> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Laminectomy>. <http://scio/data/Laminectomy_11876> <http://www.w3.org/2000/01/rdf-schema#label> \"Laminectomy\"."
+38806, T11, 5038, 5041, "T11", "", "<http://scio/data/Laminectomy_11876> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T11>."
+75215, DorsalHemisection, 5050, 5105, "dorsal column severed by making several transverse cuts", "", 
+38809, SpinalCord, 5057, 5063, "column", "", 
+38810, Injury, 5075, 5105, "making several transverse cuts", "", 
+38811, Distance, 5121, 5127, "8.5 cm", "", 
+55415, Scissors, 5148, 5163, "spring scissors", "", "<http://scio/data/DorsalHemisection_9495> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+38813, SpinalCord, 5224, 5235, "spinal cord", "", 
+38814, Duration, 5439, 5480, "Immediately after spinal cord transection", "", "<http://scio/data/TemporalInterval_11955> <http://psink.de/scio/hasDuration> \"Immediately after spinal cord transection\". <http://scio/data/TemporalInterval_11966> <http://psink.de/scio/hasDuration> \"Immediately after spinal cord transection\". <http://scio/data/TemporalInterval_11977> <http://psink.de/scio/hasDuration> \"Immediately after spinal cord transection\"."
+38815, Volume, 5482, 5489, "1.0 ¬µl", "", 
+38816, Young, 5510, 5518, "neonatal", "", 
+38817, OlfactoryEnsheathingGliaCell, 5519, 5523, "OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_11905> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_11896> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_11905>."
+38818, Adult, 5542, 5547, "adult", "", 
+38819, SchwannCell, 5552, 5565, "Schwann cells", "", 
+38820, Vehicle, 5570, 5582, "control DMEM", "", "<http://scio/data/Vehicle_11951> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_11934> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_11951>."
+56742, InjectionDelivery, 5600, 5608, "injected", "", "<http://scio/data/InjectionDelivery_11898> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_11896> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11898>. <http://scio/data/InjectionDelivery_11914> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_11912> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11914>. <http://scio/data/InjectionDelivery_11936> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_11934> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_11936>."
+38823, SpinalCord, 5625, 5631, "column", "", "<http://scio/data/SpinalCord_11911> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_11898> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_11911>. <http://scio/data/SpinalCord_11916> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_11914> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_11916>. <http://scio/data/SpinalCord_11938> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_11936> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_11938>."
+38824, ApplicationInstrument, 5636, 5662, "a drawn glass micropipette", "", "<http://scio/data/CompoundTreatment_11896> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>. <http://scio/data/CompoundTreatment_11912> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>. <http://scio/data/CompoundTreatment_11934> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/ApplicationInstrument>."
+38825, Depth, 5676, 5679, "0.5", "", 
+38826, Depth, 5684, 5690, "0.7 mm", "", 
+56741, InjectionDelivery, 5698, 5707, "injection", "", 
+38828, Rostral, 5714, 5721, "rostral", "", "<http://scio/data/Rostral_22267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_11896> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_22267>. <http://scio/data/Rostral_17112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_11912> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_17112>. <http://scio/data/Rostral_20688> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_11934> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_20688>."
+38829, Caudal, 5726, 5732, "caudal", "", "<http://scio/data/Caudal_22270> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_11896> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_22270>. <http://scio/data/Caudal_17115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_11912> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_17115>. <http://scio/data/Caudal_22273> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_11934> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_22273>."
+73573, SpinalLesionSite, 5755, 5761, "lesion", "", "<http://scio/data/SpinalLesionSite_22269> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_22267> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_22269>. <http://scio/data/SpinalLesionSite_22271> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_22270> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_22271>. <http://scio/data/SpinalLesionSite_17114> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_17112> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_17114>. <http://scio/data/SpinalLesionSite_17116> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_17115> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_17116>. <http://scio/data/SpinalLesionSite_22272> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_20688> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_22272>. <http://scio/data/SpinalLesionSite_22274> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_22273> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_22274>."
+38832, OlfactoryEnsheathingGliaCell, 5773, 5777, "OECs", "", 
+38833, SchwannCell, 5782, 5795, "Schwann cells", "", 
+56740, InjectionDelivery, 5801, 5809, "injected", "", 
+38835, DosageExtracorporal, 5832, 5866, "30,000 cells for a total of 60,000", "", 
+38836, Cell, 5867, 5872, "cells", "", 
+38837, WistarRat, 5896, 5902, "animal", "", 
+38861, ElectrophysiologyTest, 7107, 7141, "electro-  physiological recordings", "", 
+73586, AnatomicalLocation, 7965, 7992, "tips of the olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_22268> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_11905> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_22268>."
+38862, Allogeneic, 7965, 8019, "tips of the olfactory bulbs of 2-4 day Wistar rat pups", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_11905> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+48921, Age, 7996, 8003, "2-4 day", "", 
+38865, WistarRat, 8004, 8014, "Wistar rat", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_11905> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+38866, Allogeneic, 8145, 8216, "adult rat Schwann cells, the sciatic nerves of adult female Wistar rats", "", "<http://scio/data/SchwannCell_11928> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+38867, Adult, 8145, 8150, "adult", "", 
+38868, WistarRat, 8151, 8154, "rat", "", 
+38869, SchwannCell, 8155, 8168, "Schwann cells", "", "<http://scio/data/SchwannCell_11928> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SchwannCell>. <http://scio/data/CompoundTreatment_11912> <http://psink.de/scio/hasCompound> <http://scio/data/SchwannCell_11928>."
+75216, AnatomicalLocation, 8174, 8188, "sciatic nerves", "", "<http://scio/data/AnatomicalLocation_17113> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/SchwannCell_11928> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_17113>."
+38871, Adult, 8192, 8197, "adult", "", 
+38872, Female, 8198, 8204, "female", "", 
+38873, WistarRat, 8205, 8216, "Wistar rats", "", "<http://scio/data/SchwannCell_11928> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+56745, DosageExtracorporal, 8873, 8889, "30,000 cells/¬µl", "", "<http://scio/data/CompoundTreatment_11896> <http://psink.de/scio/hasDosage> \"30,000 cells/¬µl\". <http://scio/data/CompoundTreatment_11912> <http://psink.de/scio/hasDosage> \"30,000 cells/¬µl\"."
+56746, Vehicle, 8893, 8897, "DMEM", "", 
+98307, DeliveryMethod, 8902, 8917, "transplantation", "", 
+38874, HistologicalInvestigationTest, 10039, 10056, "routine histology", "", 
+38875, AxonalRegenerationTest, 11272, 11300, "number of axons regenerating", "", 
+98301, SpinalLesionSite, 11312, 11318, "lesion", "", 
+38876, MyelinationTest, 11354, 11399, "showing Schwann cell-like myelinated profiles", "", 
+98302, DorsalColumn, 11407, 11421, "dorsal columns", "", 
+98303, Rostral, 11474, 11481, "rostral", "", 
+98304, SpinalLesionSite, 11489, 11495, "lesion", "", 
+98300, AxonalChangesTest, 12345, 12382, "Size distribution of myelinated axons", "", 
+98305, MyelinationTest, 12366, 12382, "myelinated axons", "", 
+38877, StatisticalTest, 12403, 12414, "a x 2 -test", "", "<http://scio/data/Result_12160> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_12172> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_12184> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+98306, AxonalChangesTest, 12416, 12428, "Axon numbers", "", 
+38878, StatisticalTest, 12482, 12511, "unpaired Student‚Äôs t -test.", "", "<http://scio/data/Result_12132> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_12142> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+38879, ElectrophysiologyTest, 18023, 18042, "Conduction velocity", "", "<http://scio/data/ElectrophysiologyTest_62373> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74828> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74828> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (Conduction velocity)\". <http://scio/data/ElectrophysiologyTest_80234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_80234> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (Conduction velocity)\". <http://scio/data/Result_12018> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12033> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+38880, Voltage, 18088, 18095, ">80 ¬µV", "", 
+38881, DefinedExperimentalGroup, 18108, 18127, "OEC transplantation", "E2", "<http://scio/data/DefinedExperimentalGroup_11994> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_11994> <http://www.w3.org/2000/01/rdf-schema#label> \"OEC transplantation E2\"."
+38882, MeanValue, 18129, 18133, "18.9", "", 
+38883, StandardError, 18135, 18138, "7.2", "", 
+38884, PValue, 18150, 18155, "P<0.0", "", "<http://scio/data/Significance_12026> <http://psink.de/scio/hasPValue> \"P<0.0\"."
+38885, DefinedExperimentalGroup, 18161, 18189, "Schwann cell transplantation", "E3", "<http://scio/data/DefinedExperimentalGroup_12002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_12002> <http://www.w3.org/2000/01/rdf-schema#label> \"Schwann cell transplantation E3\"."
+38886, MeanValue, 18191, 18193, "19", "", 
+38887, StandardError, 18194, 18197, "9.9", "", 
+38888, NNumber, 18205, 18206, "7", "", 
+38889, PValue, 18208, 18213, "P<0.0", "", "<http://scio/data/Significance_12044> <http://psink.de/scio/hasPValue> \"P<0.0\"."
+38890, Higher, 18220, 18227, "greater", "R1,R2", "<http://scio/data/Trend_12025> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>. <http://scio/data/Trend_12043> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>."
+38891, DefinedExperimentalGroup, 18233, 18260, "intact control spinal cords", "E1", "<http://scio/data/DefinedExperimentalGroup_11986> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_11986> <http://www.w3.org/2000/01/rdf-schema#label> \"non-lesioned E1\"."
+38892, MeanValue, 18262, 18266, "12.9", "", 
+38893, StandardError, 18267, 18270, "2.1", "", 
+38894, NNumber, 18278, 18280, "11", "", 
+38895, PValue, 18282, 18289, "P< 0.01", "", 
+38896, ElectrophysiologyTest, 19074, 19078, "CAPs", "", "<http://scio/data/ElectrophysiologyTest_62384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74831> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74831> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (CAPs)\". <http://scio/data/ElectrophysiologyTest_80236> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_80236> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (CAPs)\". <http://scio/data/Result_12048> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12060> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+75217, AnalyzedExperimentalGroup, 19087, 19104, "transplant groups", "", 
+38898, None, 19109, 19116, "similar", "R3,R4", "<http://scio/data/Trend_12055> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_12067> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+75218, GroupName, 19121, 19129, "controls", "", 
+98284, GroupName, 19158, 19182, "Schwann cell transplants", "", "<http://scio/data/DefinedExperimentalGroup_12002> <http://psink.de/scio/hasGroupName> \"Schwann cell transplants\"."
+38901, Higher, 19193, 19201, "increase", "R5", "<http://scio/data/Trend_12079> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>."
+38902, ElectrophysiologyTest, 19205, 19214, "amplitude", "", "<http://scio/data/ElectrophysiologyTest_62387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74834> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (amplitude)\". <http://scio/data/Result_12072> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+38903, Distance, 19218, 19224, "2-3 mm", "", 
+38905, None, 19887, 19900, "no difference", "R6,R7", "<http://scio/data/Trend_12091> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_12103> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+98286, GroupName, 19913, 19927, "intact control", "", "<http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> \"intact control\"."
+75220, AnalyzedExperimentalGroup, 19932, 19949, "transplant groups", "", 
+38908, Lower, 19995, 20004, "reduction", "R8,R9", "<http://scio/data/Trend_12113> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_12127> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+38909, ElectrophysiologyTest, 20008, 20021, "CAP amplitude", "", "<http://scio/data/ElectrophysiologyTest_62394> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74836> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_74836> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (CAP amplitude)\". <http://scio/data/ElectrophysiologyTest_80238> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_80238> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (CAP amplitude)\". <http://scio/data/ElectrophysiologyTest_80240> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_80240> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (CAP amplitude)\". <http://scio/data/ElectrophysiologyTest_80242> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_80242> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (CAP amplitude)\". <http://scio/data/Result_12084> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12095> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12106> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12120> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+38910, AnalyzedExperimentalGroup, 20030, 20047, "transplant groups", "E2,E3", 
+98285, GroupName, 20060, 20075, "intact controls", "", "<http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> \"intact controls\"."
+56479, InjuryArea, 22303, 22386, "complete transection of the dorsal columns with minimal damage to the ventral horns", "", "<http://scio/data/DorsalHemisection_9495> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."
+38919, SpinalCord, 23993, 24007, "dorsal columns", "", 
+98287, GroupName, 24031, 24035, "OECs", "", "<http://scio/data/DefinedExperimentalGroup_11994> <http://psink.de/scio/hasGroupName> \"OECs\"."
+98288, GroupName, 24039, 24052, "Schwann cells", "", 
+38923, ElectrophysiologyTest, 24063, 24090, "measurable impulse activity", "", 
+38925, MeanValue, 24142, 24145, "536", "", 
+38926, StandardError, 24146, 24149, "117", "", 
+38927, NNumber, 24153, 24155, "10", "", 
+38928, MeanValue, 24161, 24164, "421", "", 
+38929, StandardError, 24165, 24167, "96", "", 
+38930, NNumber, 24171, 24172, "8", "", 
+38931, AxonalRegenerationTest, 24174, 24207, "myelinated (peripheral type) axon", "", 
+75222, DefinedExperimentalGroup, 24294, 24345, "transected spinal cords injected with control media", "", "<http://scio/data/DefinedExperimentalGroup_22275> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_22275> <http://www.w3.org/2000/01/rdf-schema#label> \"lesion control E4\"."
+38936, MeanValue, 24352, 24355, "168", "", 
+38937, StandardError, 24356, 24358, "60", "", 
+38938, NNumber, 24363, 24365, "10", "", 
+38939, AxonalRegenerationTest, 24368, 24392, "myelinated axon profiles", "", 
+75223, AnalyzedExperimentalGroup, 24494, 24514, "cell transplantation", "", 
+38941, Higher, 24515, 24524, "increases", "R10,R11", "<http://scio/data/Trend_12139> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>. <http://scio/data/Trend_12149> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>."
+38942, AxonalRegenerationTest, 24525, 24544, "axonal regeneration", "", "<http://scio/data/AxonalRegenerationTest_62404> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_74841> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_74841> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (axonal regeneration)\". <http://scio/data/AxonalRegenerationTest_80244> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_80244> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (axonal regeneration)\". <http://scio/data/Result_12132> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12142> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+38944, MyelinationTest, 25185, 25201, "myelinated axons", "", 
+75225, GroupName, 25205, 25212, "control", "", "<http://scio/data/DefinedExperimentalGroup_22275> <http://psink.de/scio/hasGroupName> \"control\"."
+98317, DorsalColumn, 25213, 25227, "dorsal columns", "", 
+98318, Rostral, 25278, 25285, "rostral", "", 
+98319, SpinalLesionSite, 25293, 25309, "transection site", "", 
+38948, SpinalLesionSite, 25360, 25366, "lesion", "", 
+38949, MyelinationTest, 25372, 25382, "myelinated", "", 
+38950, PositiveSignificance, 25387, 25400, "significantly", "", "<http://scio/data/PositiveSignificance_12168> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_12167> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_12168>."
+38951, Higher, 25401, 25407, "larger", "R12", "<http://scio/data/Trend_12167> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>."
+38952, MyelinationTest, 25413, 25429, "myelinated axons", "", 
+75224, GroupName, 25433, 25443, "unlesioned", "", "<http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> \"unlesioned\"."
+98320, DorsalColumn, 25444, 25458, "dorsal columns", "", 
+38954, MyelinationTest, 25825, 25841, "myelinated axons", "", "<http://scio/data/MyelinationTest_62410> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest>. <http://scio/data/MyelinationTest_74844> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest>. <http://scio/data/MyelinationTest_74844> <http://www.w3.org/2000/01/rdf-schema#label> \"MyelinationTest (myelinated axons)\". <http://scio/data/MyelinationTest_80246> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest>. <http://scio/data/MyelinationTest_80246> <http://www.w3.org/2000/01/rdf-schema#label> \"MyelinationTest (myelinated axons)\". <http://scio/data/MyelinationTest_80248> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MyelinationTest>. <http://scio/data/MyelinationTest_80248> <http://www.w3.org/2000/01/rdf-schema#label> \"MyelinationTest (myelinated axons)\". <http://scio/data/Result_12160> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12172> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12184> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+38956, SpinalCord, 25867, 25881, "dorsal columns", "", 
+38958, ElectrophysiologyTest, 25938, 25967, "electrophysiological analysis", "", 
+38959, Higher, 25969, 25978, "increased", "R13,R14", "<http://scio/data/Trend_12179> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_12191> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>."
+38960, MeanValue, 25984, 25987, "2.7", "", 
+38961, StandardError, 25988, 25991, "0.1", "", 
+38962, NNumber, 26000, 26003, "291", "", 
+75226, GroupName, 26010, 26029, "unlesioned controls", "", "<http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> \"unlesioned controls\"."
+38964, MeanValue, 26033, 26036, "3.2", "", 
+38965, StandardError, 26037, 26040, "0.1", "", 
+38966, NNumber, 26049, 26052, "689", "", 
+38967, MeanValue, 26059, 26062, "4.4", "", 
+38968, StandardError, 26063, 26066, "0.3", "", 
+38969, NNumber, 26075, 26078, "807", "", 
+75227, AnalyzedExperimentalGroup, 26085, 26126, "OEC and Schwann cell transplanted lesions", "", 
+98299, AxonalChangesTest, 26230, 26240, "axon areas", "", "<http://scio/data/AxonalChangesTest_62423> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_74848> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_74848> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (axon areas)\". <http://scio/data/AxonalChangesTest_80250> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_80250> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (axon areas)\". <http://scio/data/Result_12196> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_12209> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+38973, CorticospinalTract, 26304, 26322, "cortiospinal tract", "", 
+38974, Higher, 26324, 26333, "increased", "R15,R16", "<http://scio/data/Trend_12203> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>. <http://scio/data/Trend_12217> <http://psink.de/scio/hasDifference> <http://psink.de/scio/FasterIncrease>."
+38975, MeanValue, 26337, 26340, "3.1", "", 
+38976, StandardError, 26341, 26344, "0.1", "", 
+38977, NNumber, 26349, 26352, "220", "", 
+38978, MeanValue, 26359, 26362, "4.3", "", 
+38979, StandardError, 26363, 26366, "0.4", "", 
+38980, NNumber, 26371, 26374, "263", "", 
+75230, GroupName, 26381, 26385, "OECs", "", "<http://scio/data/DefinedExperimentalGroup_11994> <http://psink.de/scio/hasGroupName> \"OECs\"."
+75231, GroupName, 26390, 26403, "Schwann cells", "", "<http://scio/data/DefinedExperimentalGroup_12002> <http://psink.de/scio/hasGroupName> \"Schwann cells\"."
+38983, MeanValue, 26424, 26427, "1.7", "", 
+38984, StandardError, 26429, 26433, "0.09", "", 
+38985, NNumber, 26438, 26441, "451", "", 
+75228, GroupName, 26448, 26467, "unlesioned controls", "", 
+38988, PositiveSignificance, 26508, 26521, "significantly", "", "<http://scio/data/PositiveSignificance_12205> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_12203> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_12205>. <http://scio/data/PositiveSignificance_12218> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_12217> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_12218>."
+75229, GroupName, 26527, 26535, "controls", "", "<http://scio/data/DefinedExperimentalGroup_11986> <http://psink.de/scio/hasGroupName> \"controls\"."
+38990, PValue, 26539, 26546, "P<0.005", "", "<http://scio/data/PositiveSignificance_12205> <http://psink.de/scio/hasPValue> \"P<0.005\". <http://scio/data/PositiveSignificance_12218> <http://psink.de/scio/hasPValue> \"P<0.005\"."
+56749, StatisticalTest, 26548, 26556, "x2 -test", "", "<http://scio/data/Result_12196> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_12209> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+98308, ElectrophysiologyTest, 26575, 26595, "Electrophysiological", "", 
+98310, DorsalHemisection, 26628, 26638, "transected", "", 
+98309, DorsalColumn, 26639, 26653, "dorsal columns", "", 
+98311, DeliveryMethod, 26696, 26711, "transplantation", "", 
+98312, OlfactoryEnsheathingGliaCell, 26722, 26726, "OECs", "", 
+98313, SchwannCell, 26730, 26743, "Schwann cells", "", 
+98314, Positive, 26758, 26770, "facilitating", "", "<http://scio/data/Result_12018> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_12033> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_12172> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_12184> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+98315, MyelinationTest, 26814, 26832, "remyelinated axons", "", 
+98316, SpinalCord, 26844, 26855, "spinal cord", "", 

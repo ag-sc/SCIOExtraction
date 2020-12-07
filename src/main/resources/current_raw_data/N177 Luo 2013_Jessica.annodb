@@ -1,0 +1,155 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+86618, StemCell, 1136, 1160, "Neural stem cells (NSCs)", "", 
+86619, DeliveryMethod, 1161, 1176, "transplantation", "", 
+86620, SpinalCord, 1258, 1261, "SCI", "", 
+86621, Injury, 1258, 1261, "SCI", "", 
+86622, StemCell, 1308, 1312, "NSCs", "", 
+86623, SpinalCord, 1341, 1353, "spinal cords", "", 
+86624, StemCell, 1373, 1377, "NSCs", "", 
+86626, DeliveryMethod, 1493, 1511, "co-transplantation", "", 
+86627, StemCell, 1515, 1519, "NSCs", "", 
+86628, OlfactoryEnsheathingGliaCell, 1525, 1559, "olfactory ensheathing cells (OECs)", "", 
+86630, FunctionalTest, 1594, 1646, "In the measurement of thermal and mechanical stimuli", "", 
+86631, StemCell, 1648, 1659, "NSCs grafts", "", 
+86632, Positive, 1660, 1669, "recovered", "", 
+86635, SpinalCord, 1689, 1692, "SCI", "", 
+86636, Injury, 1689, 1692, "SCI", "", 
+86634, SpragueDawleyRat, 1693, 1697, "rats", "", 
+86637, OlfactoryEnsheathingGliaCell, 1705, 1709, "OECs", "", 
+86639, TailFlickReflexTest, 1748, 1772, "tail flick latency (TFL)", "", 
+86640, ThermalHyperalgesiaTest, 1777, 1802, "pawwithdraw latency (PWL)", "", 
+86641, PValue, 1804, 1812, "p < 0.05", "", 
+86661, DeliveryMethod, 1815, 1833, "Co-transplantation", "", 
+86664, Positive, 1840, 1847, "promote", "", 
+86642, StemCell, 1848, 1852, "NSCs", "", 
+86643, OlfactoryEnsheathingGliaCell, 1905, 1909, "OECs", "", 
+86645, PositiveSignificance, 1939, 1950, "significant", "", 
+86646, Positive, 1951, 1962, "improvement", "", 
+86648, Protein, 1993, 1996, "NGF", "", 
+86649, GeneExpressionAnalysis, 1997, 2007, "expression", "", 
+86662, Lower, 2024, 2037, "downregulated", "", 
+86650, SpinalCord, 2045, 2056, "spinal cord", "", 
+86651, GroupName, 2060, 2087, "co-transplantation rats.The", "", "<http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> \"co-transplantation rats.The\"."
+86652, DeliveryMethod, 2120, 2138, "co-transplantation", "", 
+86653, StemCell, 2142, 2146, "NSCs", "", 
+86654, OlfactoryEnsheathingGliaCell, 2147, 2156, "with OECs", "", 
+86655, Positive, 2163, 2170, "improve", "", 
+86657, Protein, 2229, 2232, "NGF", "", 
+86663, Lower, 2233, 2247, "downregulation", "", 
+86658, SpragueDawleyRat, 2251, 2255, "rats", "", 
+86659, SpinalCord, 2261, 2264, "SCI", "", 
+86660, Injury, 2261, 2264, "SCI", "", 
+48983, Adult, 5249, 5254, "adult", "", "<http://scio/data/OrganismModel_1226> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48984, Female, 5255, 5261, "female", "", "<http://scio/data/OrganismModel_1226> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48985, SpragueDawleyRat, 5262, 5280, "Sprague-Dawleyrats", "", "<http://scio/data/OrganismModel_1226> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48986, Weight, 5290, 5299, "180–250 g", "", "<http://scio/data/OrganismModel_1226> <http://psink.de/scio/hasWeight> \"180–250 g\"."
+48987, Age, 5321, 5335, "90 to 120 days", "", "<http://scio/data/OrganismModel_1226> <http://psink.de/scio/hasAge> \"90 to 120 days\"."
+86665, Nutrition, 5395, 5414, "Standardrodent food", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+86666, Hydration, 5419, 5424, "water", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+86667, Hydration, 5440, 5450, "ad libitum", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+86668, Nutrition, 5440, 5450, "ad libitum", "", 
+86669, Housing, 5452, 5530, "Room temperatureand relative humidity were maintained at 22 ± 0.5◦C and 40–50%", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+86670, Housing, 5545, 5573, "A 12-h light/12-h dark cycle", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+86671, DoubleBlindStudy, 5632, 5644, "blind manner", "", 
+55607, SpragueDawleyRat, 6376, 6380, "Rats", "", 
+55604, DosageIntracorporal, 6411, 6422, "40–60 mg kg", "", "<http://scio/data/SodiumPentobarbital_48150> <http://psink.de/scio/hasDosage> \"40–60 mg kg\"."
+55605, SodiumPentobarbital, 6428, 6442, "pento-barbital", "", "<http://scio/data/SodiumPentobarbital_48150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_48150>."
+55606, IntraperitonealLocation, 6443, 6447, "i.p.", "", "<http://scio/data/InjectionDelivery_48158> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+57688, InjectionDelivery, 6443, 6447, "i.p.", "", "<http://scio/data/InjectionDelivery_48158> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_48150> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_48158>."
+55612, Laminectomy, 6467, 6480, "Laminectomies", "", 
+55613, VertebralArea, 6484, 6489, "7–9th", "", "<http://scio/data/VertebralArea_48148> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_48148>."
+55614, T7, 6484, 6485, "7", "", 
+55615, T9, 6486, 6489, "9th", "", 
+55610, SpinalCord, 6586, 6597, "spinal cord", "", 
+55608, CompleteTransection, 6602, 6628, "completely transectedusing", "", "<http://scio/data/CompleteTransection_48147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_48147> <http://www.w3.org/2000/01/rdf-schema#label> \"complete transection\"."
+55609, Scissors, 6651, 6659, "scissors", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+73989, DosageExtracorporal, 6856, 6872, "of3 × 105NSCs/µl", "", "<http://scio/data/CompoundTreatment_18670> <http://psink.de/scio/hasDosage> \"of3 × 105NSCs/µl\"."
+74011, StemCell, 6862, 6869, "105NSCs", "", "<http://scio/data/StemCell_18680> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/StemCell>. <http://scio/data/CompoundTreatment_18670> <http://psink.de/scio/hasCompound> <http://scio/data/StemCell_18680>."
+74010, DosageExtracorporal, 6874, 6888, "3 × 105OECs/µl", "", "<http://scio/data/CompoundTreatment_18657> <http://psink.de/scio/hasDosage> \"3 × 105OECs/µl\"."
+74013, OlfactoryEnsheathingGliaCell, 6878, 6885, "105OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_18667> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_18657> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_18667>."
+73990, DosageExtracorporal, 6893, 6914, "3 × 105NSCs + OECs/µl", "", 
+74012, StemCell, 6897, 6904, "105NSCs", "", 
+74014, OlfactoryEnsheathingGliaCell, 6907, 6911, "OECs", "", 
+74018, Duration, 6989, 7028, "Immediately after completing the lesion", "", "<http://scio/data/TemporalInterval_18824> <http://psink.de/scio/hasDuration> \"Immediately after completing the lesion\". <http://scio/data/TemporalInterval_18832> <http://psink.de/scio/hasDuration> \"Immediately after completing the lesion\"."
+73993, Conduit, 7034, 7066, "cells weredeposited into gelatin", "", "<http://scio/data/Conduit_18665> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_18657> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_18665>. <http://scio/data/Conduit_18678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_18670> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_18678>."
+73991, Matrix, 7059, 7066, "gelatin", "", 
+73992, SpinalLesionSite, 7090, 7101, "injury site", "", "<http://scio/data/SpinalLesionSite_18669> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/DeliveryMethod_18659> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_18669>. <http://scio/data/SpinalLesionSite_18682> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/DeliveryMethod_18672> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_18682>."
+99477, BladderExpression, 7276, 7316, "Bladders of animals wereemptied manually", "", "<http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+99478, AntibioticMedication, 7347, 7357, "penicillin", "", "<http://scio/data/AntibioticMedication_56302> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_48147> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_56302>."
+73983, CyclosporineA, 7399, 7413, "cyclosporine A", "", "<http://scio/data/CyclosporineA_18707> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CyclosporineA>. <http://scio/data/CompoundTreatment_18697> <http://psink.de/scio/hasCompound> <http://scio/data/CyclosporineA_18707>. <http://scio/data/CyclosporineA_18718> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CyclosporineA>. <http://scio/data/CompoundTreatment_18708> <http://psink.de/scio/hasCompound> <http://scio/data/CyclosporineA_18718>."
+73984, DosageExtracorporal, 7415, 7424, "5 mg ml−1", "", "<http://scio/data/CompoundTreatment_18697> <http://psink.de/scio/hasDosage> \"5 mg ml−1\". <http://scio/data/CompoundTreatment_18708> <http://psink.de/scio/hasDosage> \"5 mg ml−1\"."
+73985, Frequency, 7453, 7464, "twice a day", "", "<http://scio/data/CompoundTreatment_18697> <http://psink.de/scio/hasFrequency> \"twice a day\"."
+73988, Duration, 7465, 7492, "before cell transplantation", "", "<http://scio/data/TemporalInterval_18768> <http://psink.de/scio/hasDuration> \"before cell transplantation\". <http://scio/data/TemporalInterval_18776> <http://psink.de/scio/hasDuration> \"before cell transplantation\"."
+74017, Duration, 7497, 7509, "continues to", "", "<http://scio/data/TemporalInterval_18800> <http://psink.de/scio/hasDuration> \"continues to\". <http://scio/data/TemporalInterval_18808> <http://psink.de/scio/hasDuration> \"continues to\"."
+73986, Duration, 7510, 7525, "last for 1 week", "", "<http://scio/data/CompoundTreatment_18708> <http://psink.de/scio/hasDuration> \"last for 1 week\"."
+73987, Frequency, 7527, 7537, "once a day", "", "<http://scio/data/CompoundTreatment_18708> <http://psink.de/scio/hasFrequency> \"once a day\"."
+90887, TailFlickReflexTest, 7725, 7752, "Tail flick latencies (TFLs)", "", 
+90888, TailFlickApparatus, 7772, 7791, "TAIL FLICK UNIT7360", "", "<http://scio/data/TailFlickReflexTest_66343> <http://psink.de/scio/makesUseOf> <http://psink.de/scio/Apparatus>. <http://scio/data/TailFlickReflexTest_66347> <http://psink.de/scio/makesUseOf> <http://psink.de/scio/Apparatus>."
+90890, ThermalHyperalgesiaTest, 8361, 8394, "Mechanical nociceptive thresholds", "", 
+100381, HargreavesApparatus, 8415, 8454, "theDynamic Plantar Aesthesiometer 37215", "", 
+90891, StatisticalTest, 9539, 9554, "Students t-test", "", 
+90892, StatisticalTest, 9645, 9670, "one-wayANOVA with a LSD-t", "", 
+90910, ThermalHyperalgesiaTest, 13258, 13277, "Mechanical stimulus", "", "<http://scio/data/ThermalHyperalgesiaTest_66331> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_76473> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_76473> <http://www.w3.org/2000/01/rdf-schema#label> \"ThermalHyperalgesiaTest (Mechanical stimulus)\". <http://scio/data/ThermalHyperalgesiaTest_81320> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_81320> <http://www.w3.org/2000/01/rdf-schema#label> \"ThermalHyperalgesiaTest (Mechanical stimulus)\". <http://scio/data/ThermalHyperalgesiaTest_81322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_81322> <http://www.w3.org/2000/01/rdf-schema#label> \"ThermalHyperalgesiaTest (Mechanical stimulus)\". <http://scio/data/ThermalHyperalgesiaTest_81324> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_81324> <http://www.w3.org/2000/01/rdf-schema#label> \"ThermalHyperalgesiaTest (Mechanical stimulus)\". <http://scio/data/Result_40357> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_48188> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_48205> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_48222> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+74004, DefinedExperimentalGroup, 13290, 13293, "SCT", "E4", "<http://scio/data/DefinedExperimentalGroup_18743> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18743> <http://www.w3.org/2000/01/rdf-schema#label> \"SCT E4\"."
+90855, PositiveSignificance, 13294, 13307, "significantly", "", "<http://scio/data/PositiveSignificance_48184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_40364> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_48184>. <http://scio/data/PositiveSignificance_48200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_48199> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_48200>."
+90897, Lower, 13308, 13320, "decreasedPWL", "R1", "<http://scio/data/Trend_40364> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+78653, DefinedExperimentalGroup, 13335, 13343, "sham one", "E5", "<http://scio/data/DefinedExperimentalGroup_18751> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18751> <http://www.w3.org/2000/01/rdf-schema#label> \"sham E5\"."
+90857, PValue, 13345, 13353, "p < 0.01", "", "<http://scio/data/PositiveSignificance_48184> <http://psink.de/scio/hasPValue> \"p < 0.01\"."
+73996, DefinedExperimentalGroup, 13356, 13360, "OECs", "E2", "<http://scio/data/DefinedExperimentalGroup_18727> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18727> <http://www.w3.org/2000/01/rdf-schema#label> \"OECs E2\"."
+90896, DeliveryMethod, 13361, 13385, "transplantationcontinued", "", 
+90902, Lower, 13389, 13397, "decrease", "R2", "<http://scio/data/Trend_48199> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+78654, GroupName, 13416, 13423, "SCT one", "E4", "<http://scio/data/DefinedExperimentalGroup_18743> <http://psink.de/scio/hasGroupName> \"SCT one\"."
+90859, PValue, 13425, 13433, "p < 0.05", "", "<http://scio/data/PositiveSignificance_48200> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+73997, DefinedExperimentalGroup, 13445, 13481, "co-transplantation of NSCs with OECs", "E1", "<http://scio/data/DefinedExperimentalGroup_18719> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_18719> <http://www.w3.org/2000/01/rdf-schema#label> \"OECs+NSCs E1\"."
+90860, PositiveSignificance, 13491, 13505, "signif-icantly", "", "<http://scio/data/PositiveSignificance_48217> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_48216> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_48217>."
+90903, Higher, 13506, 13514, "increase", "R3", "<http://scio/data/Trend_48216> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+78415, GroupName, 13539, 13564, "OECs transplantationgroup", "E2", "<http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> \"OECs transplantationgroup\". <http://scio/data/DefinedExperimentalGroup_18727> <http://psink.de/scio/hasGroupName> \"OECs transplantationgroup\"."
+90862, PValue, 13566, 13574, "p < 0.01", "", "<http://scio/data/PositiveSignificance_48217> <http://psink.de/scio/hasPValue> \"p < 0.01\". <http://scio/data/ZeroSignificance_48234> <http://psink.de/scio/hasPValue> \"p < 0.01\"."
+90935, None, 13596, 13621, "no significant difference", "R4", "<http://scio/data/RepeatedMeasureTrend_48233> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+90863, ZeroSignificance, 13596, 13621, "no significant difference", "", "<http://scio/data/ZeroSignificance_48234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_48233> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_48234>."
+90930, GroupName, 13622, 13653, "betweenco-transplantation group", "E1", 
+78416, GroupName, 13658, 13668, "sham group", "E5", "<http://scio/data/DefinedExperimentalGroup_18751> <http://psink.de/scio/hasGroupName> \"sham group\"."
+74000, DefinedExperimentalGroup, 13691, 13727, "co-transplantation of NSCs with OECs", "E1", 
+90866, Positive, 13734, 13741, "benefit", "", "<http://scio/data/Result_48222> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+90867, RepeatedMeasureTrend, 13746, 13754, "recovery", "", "<http://scio/data/RepeatedMeasureTrend_48233> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_48222> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_48233>."
+90917, TailFlickReflexTest, 13765, 13795, "function.Thermal stimulus test", "", 
+74001, DefinedExperimentalGroup, 13808, 13812, "OECs", "E2", 
+90915, DeliveryMethod, 13813, 13836, "transplantationmarkedly", "", 
+90922, Lower, 13837, 13846, "decreased", "R5", "<http://scio/data/Trend_48246> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+100410, TailFlickReflexTest, 13847, 13850, "TFL", "", "<http://scio/data/TailFlickReflexTest_66343> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TailFlickReflexTest>. <http://scio/data/TailFlickReflexTest_76478> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TailFlickReflexTest>. <http://scio/data/TailFlickReflexTest_76478> <http://www.w3.org/2000/01/rdf-schema#label> \"TailFlickReflexTest (TFL)\". <http://scio/data/Result_48239> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+90918, OlfactoryEnsheathingGliaCell, 13871, 13875, "OECs", "", 
+90931, GroupName, 13911, 13919, "SCT rats", "E4", "<http://scio/data/DefinedExperimentalGroup_18743> <http://psink.de/scio/hasGroupName> \"SCT rats\"."
+90870, PValue, 13921, 13929, "p < 0.01", "", "<http://scio/data/Significance_48251> <http://psink.de/scio/hasPValue> \"p < 0.01\"."
+90920, SpragueDawleyRat, 13945, 13949, "rats", "", 
+74005, DefinedExperimentalGroup, 13967, 13970, "SCT", "E4", 
+90932, GroupName, 13987, 14019, "co-transplantation NSCs withOECs", "E1", "<http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> \"co-transplantation NSCs withOECs\"."
+90881, PositiveSignificance, 14020, 14033, "significantly", "", "<http://scio/data/PositiveSignificance_48266> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_48265> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_48266>."
+90923, Lower, 14034, 14042, "reversed", "R6", "<http://scio/data/Trend_48265> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+100411, TailFlickReflexTest, 14043, 14046, "TFL", "", "<http://scio/data/TailFlickReflexTest_66347> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TailFlickReflexTest>. <http://scio/data/TailFlickReflexTest_76480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TailFlickReflexTest>. <http://scio/data/TailFlickReflexTest_76480> <http://www.w3.org/2000/01/rdf-schema#label> \"TailFlickReflexTest (TFL)\". <http://scio/data/TailFlickReflexTest_81326> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TailFlickReflexTest>. <http://scio/data/TailFlickReflexTest_81326> <http://www.w3.org/2000/01/rdf-schema#label> \"TailFlickReflexTest (TFL)\". <http://scio/data/Result_48255> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_48271> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78417, GroupName, 14062, 14089, "OECs transplanta-tion group", "E2", "<http://scio/data/DefinedExperimentalGroup_18727> <http://psink.de/scio/hasGroupName> \"OECs transplanta-tion group\"."
+90934, DefinedExperimentalGroup, 14099, 14110, "NSCs grafts", "E3", "<http://scio/data/DefinedExperimentalGroup_48139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_48139> <http://www.w3.org/2000/01/rdf-schema#label> \"NSC E3\"."
+90925, Positive, 14114, 14121, "benefit", "", "<http://scio/data/Result_48255> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+90882, PValue, 14163, 14171, "p < 0.05", "", "<http://scio/data/PositiveSignificance_48266> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+74008, DefinedExperimentalGroup, 14200, 14236, "co-transplantation of NSCs with OECs", "E1", 
+90928, RepeatedMeasureTrend, 14274, 14282, "recovery", "", "<http://scio/data/RepeatedMeasureTrend_48281> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_48271> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_48281>."
+90884, ZeroSignificance, 14321, 14345, "no significantdifference", "", "<http://scio/data/ZeroSignificance_48282> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_48281> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_48282>."
+90937, None, 14321, 14345, "no significantdifference", "R7", "<http://scio/data/RepeatedMeasureTrend_48281> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+90933, GroupName, 14354, 14378, "co-transplantation group", "E1", "<http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> \"co-transplantation group\"."
+78418, GroupName, 14383, 14397, "sham group.The", "E5", "<http://scio/data/DefinedExperimentalGroup_18751> <http://psink.de/scio/hasGroupName> \"sham group.The\"."
+90939, GroupName, 15144, 15148, "NSCs", "E3", "<http://scio/data/DefinedExperimentalGroup_48139> <http://psink.de/scio/hasGroupName> \"NSCs\"."
+90938, GroupName, 15149, 15176, "orOECs transplantation rats", "E2", "<http://scio/data/DefinedExperimentalGroup_18727> <http://psink.de/scio/hasGroupName> \"orOECs transplantation rats\"."
+90951, Lower, 15178, 15187, "decreased", "R8,9", "<http://scio/data/Trend_48297> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_48308> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+90941, GeneExpressionAnalysis, 15188, 15207, "NGF mRNA expression", "", "<http://scio/data/GeneExpressionAnalysis_66355> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GeneExpressionAnalysis>. <http://scio/data/GeneExpressionAnalysis_76483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GeneExpressionAnalysis>. <http://scio/data/GeneExpressionAnalysis_76483> <http://www.w3.org/2000/01/rdf-schema#label> \"GeneExpressionAnalysis (NGF mRNA expression)\". <http://scio/data/GeneExpressionAnalysis_81328> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GeneExpressionAnalysis>. <http://scio/data/GeneExpressionAnalysis_81328> <http://www.w3.org/2000/01/rdf-schema#label> \"GeneExpressionAnalysis (NGF mRNA expression)\". <http://scio/data/Result_48290> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_48301> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+90942, GroupName, 15208, 15233, "inco-transplantation rats", "E1", "<http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> \"inco-transplantation rats\"."
+90943, SpinalCord, 15254, 15265, "spinal cord", "", 
+90944, SpragueDawleyRat, 15269, 15273, "rats", "", 
+90945, PositiveSignificance, 15357, 15368, "significant", "", "<http://scio/data/PositiveSignificance_48321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_48319> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_48321>. <http://scio/data/PositiveSignificance_48331> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_48330> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_48331>."
+90952, Lower, 15369, 15377, "decrease", "R10,11", "<http://scio/data/Trend_48319> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_48330> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+90947, ProteinLevelAnalysis, 15385, 15399, "NGF proteinwas", "", "<http://scio/data/ProteinLevelAnalysis_66364> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_76486> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_76486> <http://www.w3.org/2000/01/rdf-schema#label> \"ProteinLevelAnalysis (NGF proteinwas)\". <http://scio/data/ProteinLevelAnalysis_81330> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_81330> <http://www.w3.org/2000/01/rdf-schema#label> \"ProteinLevelAnalysis (NGF proteinwas)\". <http://scio/data/Result_48312> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_48323> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+90948, GroupName, 15409, 15433, "co-transplantation group", "E1", 
+90949, DefinedExperimentalGroup, 15461, 15465, "OECs", "E2", 
+90950, GroupName, 15469, 15479, "NSCs group", "E3", "<http://scio/data/DefinedExperimentalGroup_48139> <http://psink.de/scio/hasGroupName> \"NSCs group\"."
+99466, GroupName, 15860, 15893, "transplantation of NSCs with OECs", "", "<http://scio/data/DefinedExperimentalGroup_18719> <http://psink.de/scio/hasGroupName> \"transplantation of NSCs with OECs\"."
+90953, Positive, 15900, 15907, "improve", "", "<http://scio/data/Result_48271> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+99475, SpinalCord, 15934, 15945, "spinal cord", "", 
+99476, Injury, 15946, 15952, "injury", "", 

@@ -1,0 +1,41 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48632, Adult, 5924, 5929, "Adult", "", "<http://scio/data/OrganismModel_531> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48633, Female, 5930, 5936, "female", "", "<http://scio/data/OrganismModel_531> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48634, Weight, 5938, 5949, "220‚àº240 g", "", "<http://scio/data/OrganismModel_531> <http://psink.de/scio/hasWeight> \"220‚àº240 g\"."
+48635, WistarRat, 5951, 5962, "Wistar rats", "", "<http://scio/data/OrganismModel_531> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+49997, Housing, 6013, 6098, "housed in a temperatureregulated (23¬∞C) animal facility with a 12-h light/dark cycle", "", "<http://scio/data/CompleteTransection_2487> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+49989, Nutrition, 6118, 6122, "food", "", "<http://scio/data/CompleteTransection_2487> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+49990, Hydration, 6127, 6143, "water ad libitum", "", "<http://scio/data/CompleteTransection_2487> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+54228, WistarRat, 6312, 6316, "rats", "", 
+54229, InjectionDelivery, 6343, 6352, "injection", "", "<http://scio/data/InjectionDelivery_3394> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_2490> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3394>."
+49991, SodiumPentobarbital, 6356, 6376, "sodium pentobarbital", "", "<http://scio/data/SodiumPentobarbital_2490> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/CompleteTransection_2487> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_2490>."
+49992, DosageIntracorporal, 6378, 6386, "50 mg/kg", "", "<http://scio/data/SodiumPentobarbital_2490> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+50831, IntraperitonealLocation, 6388, 6390, "ip", "", "<http://scio/data/InjectionDelivery_3394> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+49994, Laminectomy, 6500, 6511, "laminectomy", "", 
+49995, T10, 6567, 6570, "T10", "", "<http://scio/data/CompleteTransection_2487> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+49996, Scissors, 6576, 6589, "microscissors", "", "<http://scio/data/CompleteTransection_2487> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+49999, CompleteTransection, 6877, 6897, "complete transection", "", "<http://scio/data/CompleteTransection_2487> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_2487> <http://www.w3.org/2000/01/rdf-schema#label> \"complete transection\"."
+103590, ChondroitinaseABC, 7298, 7303, "chABC", "", 
+103595, SpinalLesionSite, 7319, 7335, "transection site", "", 
+103596, DosageExtracorporal, 7400, 7412, "2.5 units/ml", "", 
+103591, ChondroitinaseABC, 7416, 7421, "chABC", "", 
+103597, SigmaAldrich, 7445, 7450, "Sigma", "", 
+103598, Gelfoam, 7529, 7536, "gelfoam", "", 
+103592, ChondroitinaseABC, 7584, 7589, "chABC", "", 
+103599, SpinalLesionSite, 7617, 7628, "lesion site", "", 
+103600, WistarRat, 7634, 7638, "rats", "", 
+103593, ChondroitinaseABC, 7661, 7666, "chABC", "", 
+103601, SpinalLesionSite, 7708, 7724, "transection site", "", 
+103604, DosageExtracorporal, 7761, 7765, "0.9%", "", 
+103603, Saline, 7766, 7770, "NaCl", "", 
+103594, ChondroitinaseABC, 7788, 7793, "chABC", "", 
+103605, Gelfoam, 7800, 7807, "gelfoam", "", 
+103606, Saline, 7835, 7839, "NaCl", "", 
+103602, SpinalLesionSite, 7867, 7878, "lesion site", "", 
+103583, Substance, 8101, 8112, "clenbuterol", "", 
+103586, OralDelivery, 8216, 8247, "adding it to the drinking water", "", 
+103584, DosageExtracorporal, 8270, 8276, "9 mg/L", "", 
+103585, DosageIntracorporal, 8303, 8318, "âà1.6 mg/kg/day", "", 
+103587, DosageExtracorporal, 8539, 8544, "0.02%", "", 
+103588, AntibioticMedication, 8545, 8556, "amoxicillin", "", 
+103589, BladderExpression, 8648, 8680, "bladders were expressed manually", "", 

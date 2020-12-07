@@ -1,0 +1,13 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48655, Adult, 8499, 8504, "adult", "", "<http://scio/data/OrganismModel_567> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48656, Female, 8505, 8511, "female", "", "<http://scio/data/OrganismModel_567> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48657, LongEvansRat, 8512, 8526, "Long-Evan rats", "", "<http://scio/data/OrganismModel_567> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat>."
+50846, DosageExtracorporal, 8594, 8598, "1.8%", "", "<http://scio/data/Isoflurane_2592> <http://psink.de/scio/hasDosage> \"1.8%\"."
+50845, Isoflurane, 8599, 8609, "isoflurane", "", "<http://scio/data/Isoflurane_2592> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2592>."
+50074, AntibioticMedication, 8680, 8689, "Cefazolin", "", "<http://scio/data/AntibioticMedication_3405> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3405>."
+50064, DosageIntracorporal, 8691, 8699, "50 mg/kg", "", "<http://scio/data/AntibioticMedication_3405> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+50847, SubcutaneousLocation, 8701, 8704, "s.c", "", 
+50065, Laminectomy, 8889, 8900, "laminectomy", "", 
+54248, VertebralArea, 8908, 8918, "T9 and T10", "", "<http://scio/data/VertebralArea_3818> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3818>."
+50070, Compression, 9630, 9641, "compressing", "", "<http://scio/data/Compression_2589> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression>. <http://scio/data/Compression_2589> <http://www.w3.org/2000/01/rdf-schema#label> \"compression\"."
+50071, Forceps, 9684, 9691, "forceps", "", "<http://scio/data/Compression_2589> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps>."

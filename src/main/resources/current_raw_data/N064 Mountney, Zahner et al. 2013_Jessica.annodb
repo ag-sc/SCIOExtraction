@@ -1,0 +1,23 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48377, Female, 5823, 5829, "Female", "", "<http://scio/data/OrganismModel_170> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48378, SpragueDawleyRat, 5830, 5849, "Sprague–Dawley rats", "", "<http://scio/data/OrganismModel_170> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48379, Weight, 5851, 5860, "250–275 g", "", "<http://scio/data/OrganismModel_170> <http://psink.de/scio/hasWeight> \"250–275 g\"."
+57623, InjectionDelivery, 5888, 5903, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3846> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2686> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3846>. <http://scio/data/InjectionDelivery_3847> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_2697> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3847>."
+54265, IntraperitonealLocation, 5888, 5903, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3846> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3847> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50138, KetamineAsAnaesthetic, 5915, 5923, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2686> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2686>."
+50139, DosageIntracorporal, 5925, 5932, "60mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2686> <http://psink.de/scio/hasDosage> \"60mg/kg\"."
+50140, Anaesthetic, 5977, 5989, "medetomidine", "", "<http://scio/data/Anaesthetic_2697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2697>."
+50141, DosageIntracorporal, 6000, 6007, "40mg/kg", "", "<http://scio/data/Anaesthetic_2697> <http://psink.de/scio/hasDosage> \"40mg/kg\"."
+50142, Laminectomy, 6121, 6132, "laminectomy", "", 
+50150, ModerateInjury, 6360, 6368, "moderate", "", "<http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+50143, Contusion, 6369, 6378, "contusion", "", "<http://scio/data/Contusion_2683> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2683> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+50144, Force, 6387, 6396, "200 kdyne", "", "<http://scio/data/InfiniteHorizonImpactor_2690> <http://psink.de/scio/hasForce> \"200 kdyne\"."
+50145, T9, 6415, 6417, "T9", "", "<http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9>."
+50151, InfiniteHorizonImpactor, 6428, 6454, "Infinite Horizons Impactor", "", "<http://scio/data/InfiniteHorizonImpactor_2690> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2690>."
+54269, SpragueDawleyRat, 6896, 6903, "animals", "", 
+50146, PostsurgicalMedication, 6939, 6948, "Antisedan", "", "<http://scio/data/PostsurgicalMedication_2685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2685>."
+54268, DosageIntracorporal, 6977, 6985, "1.3mg/kg", "", "<http://scio/data/PostsurgicalMedication_2685> <http://psink.de/scio/hasDosage> \"1.3mg/kg\"."
+54267, IntramuscularLocation, 6987, 6991, "i.m.", "", 
+54266, AntibioticMedication, 7076, 7086, "gentamicin", "", "<http://scio/data/AntibioticMedication_3845> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3845>."
+50153, DosageIntracorporal, 7088, 7094, "5mg/kg", "", "<http://scio/data/AntibioticMedication_3845> <http://psink.de/scio/hasDosage> \"5mg/kg\"."
+50148, BladderExpression, 7162, 7180, "Bladder expression", "", "<http://scio/data/Contusion_2683> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."

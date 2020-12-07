@@ -1,0 +1,31 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_513> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_513> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat> .
+<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasWeight> "280-300 g" .
+<http://scio/data/OrganismModel_513> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/PartialTransection_2445> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection> .
+<http://scio/data/PartialTransection_2445> <http://www.w3.org/2000/01/rdf-schema#label> "partial transection" .
+<http://scio/data/Isoflurane_2448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2448> .
+<http://scio/data/DeliveryMethod_2454> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Isoflurane_2448> <http://psink.de/scio/hasDosage> "1.5-2.5%" .
+<http://scio/data/MedicationDuringSurgery_2450> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Blade_2452> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Blade> .
+<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/Blade_2452> .
+<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/InjuryArea_2456> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjuryArea> .
+<http://scio/data/RubrospinalTract_84229> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RubrospinalTract> .
+<http://scio/data/InjuryArea_2456> <http://psink.de/scio/hasIntraSpinalLocation> <http://scio/data/RubrospinalTract_84229> .
+<http://scio/data/VertebralArea_3778> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/PartialTransection_2445> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3778> .
+<http://scio/data/VertebralArea_3778> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/C4> .
+<http://scio/data/VertebralArea_3778> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C5> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

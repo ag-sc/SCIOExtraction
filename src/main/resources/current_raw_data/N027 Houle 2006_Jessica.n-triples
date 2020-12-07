@@ -1,0 +1,35 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_9268> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_9268> <http://www.w3.org/2000/01/rdf-schema#label> "rat" .
+<http://scio/data/OrganismModel_9268> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_9268> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_9268> <http://psink.de/scio/hasWeight> "225-250 g" .
+<http://scio/data/OrganismModel_9268> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/AspirationLesion_15394> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AspirationLesion> .
+<http://scio/data/AspirationLesion_15394> <http://www.w3.org/2000/01/rdf-schema#label> "C3 Injury" .
+<http://scio/data/AspirationLesion_15394> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C3> .
+<http://scio/data/KetamineAsAnaesthetic_15397> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/AspirationLesion_15394> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_15397> .
+<http://scio/data/DeliveryMethod_15403> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/KetamineAsAnaesthetic_15397> <http://psink.de/scio/hasDosage> "60 mg/kg" .
+<http://scio/data/MedicationDuringSurgery_15399> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/AspirationLesion_15394> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/UnilateralInjuryArea> .
+<http://scio/data/Xylazine_15405> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/AspirationLesion_15394> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_15405> .
+<http://scio/data/DeliveryMethod_15406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Xylazine_15405> <http://psink.de/scio/hasDosage> "10 mg/kg" .
+# RDF export of group: Treatments
+<http://scio/data/Treatment_15380> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
+<http://scio/data/Treatment_15380> <http://www.w3.org/2000/01/rdf-schema#label> "C5 lesion" .
+<http://scio/data/DeliveryMethod_15382> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_33317> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Treatment_15387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
+<http://scio/data/Treatment_15387> <http://www.w3.org/2000/01/rdf-schema#label> "Nerve Graft" .
+<http://scio/data/DeliveryMethod_15389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_33318> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+# RDF export of group: Sacrifices

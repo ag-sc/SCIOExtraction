@@ -1,0 +1,173 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+80216, RatSpecies, 355, 359, "rats", "", 
+80146, LateralHemisection, 365, 390, "lateral TVIII hemisection", "", 
+80147, T8, 373, 378, "TVIII", "", 
+80148, SpinalCord, 398, 409, "spinal cord", "", 
+80217, DeliveryMethod, 414, 429, "transplantation", "", 
+80149, OlfactoryEnsheathingGliaCell, 433, 459, "ensheating olfactory cells", "", 
+80150, SpinalLesionSite, 498, 509, "lesion site", "", 
+80151, Rostral, 523, 530, "rostral", "", 
+80218, Direction, 535, 541, "dorsal", "", 
+80152, SpinalCord, 557, 569, "spinal cord.", "", 
+80153, OligodendrogliaChangesTest, 583, 599, "oligodendrocytes", "", 
+80154, MyelinationTest, 604, 618, "myelin fi bers", "", 
+80219, RatSpecies, 641, 660, "experimental animal", "", 
+80157, OpenFieldTest, 676, 695, "Open fi eld testing", "", 
+80158, BBBTest, 697, 705, "BBB test", "", 
+80161, Higher, 744, 753, "increased", "", 
+80221, MeanValue, 758, 761, "13%", "", 
+81276, RepeatedMeasureTrend, 785, 837, "interval from day 21 to day 53 after transplantation", "", 
+81277, Duration, 785, 838, "interval from day 21 to day 53 after transplantation.", "", 
+80163, HistologicalInvestigationTest, 839, 863, "Histological examination", "", 
+57379, Xenogeneic, 886, 934, "transplanted cells carrying human nuclear marker", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_14120> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic>."
+80164, SpinalLesionSite, 974, 985, "lesion site", "", 
+80165, Duration, 986, 1007, "30 days after surgery", "", 
+80225, OlfactoryEnsheathingGliaCell, 1023, 1028, "cells", "", 
+80166, Rostral, 1045, 1052, "rostral", "", 
+80167, Caudal, 1057, 1063, "caudal", "", 
+80223, InjectionDelivery, 1084, 1093, "injection", "", 
+80226, Distance, 1104, 1123, "distance up to 6 mm", "", 
+80169, Duration, 1125, 1164, "At the initial period after hemisection", "", 
+80170, OligodendrogliaChangesTest, 1177, 1208, "of oligodendrocytes (O4+-cells)", "", 
+80171, SpinalLesionSite, 1242, 1253, "lesion site", "", 
+80172, Lower, 1254, 1263, "decreased", "", 
+81280, Value, 1264, 1270, "2-fold", "", 
+81278, ZeroSignificance, 1276, 1291, "no signifi cant", "", 
+81279, None, 1276, 1299, "no signifi cant changes", "", 
+80227, NeuronalChangesTest, 1292, 1324, "changes in the number of neurons", "", 
+80228, Rostral, 1343, 1350, "rostral", "", 
+80229, Direction, 1355, 1361, "dorsal", "", 
+80230, SpinalCord, 1379, 1390, "spinal cord", "", 
+80231, GroupName, 1434, 1442, "controls", "", "<http://scio/data/DefinedExperimentalGroup_14148> <http://psink.de/scio/hasGroupName> \"controls\"."
+80175, Duration, 1444, 1476, "Sixty days after transplantation", "", 
+80176, Rostral, 1508, 1515, "rostral", "", 
+80177, SpinalCord, 1528, 1539, "spinal cord", "", 
+80178, Distance, 1557, 1561, "3 mm", "", 
+80179, SpinalLesionSite, 1567, 1578, "damage site", "", 
+80180, Higher, 1579, 1588, "increased", "", 
+80233, MeanValue, 1592, 1597, "15.3%", "", 
+80232, GroupName, 1614, 1621, "control", "", "<http://scio/data/DefinedExperimentalGroup_14148> <http://psink.de/scio/hasGroupName> \"control\"."
+80181, OligodendrogliaChangesTest, 1637, 1647, "O4+- cells", "", 
+80182, SpinalLesionSite, 1655, 1666, "lesion site", "", 
+80183, Rostral, 1683, 1690, "rostral", "", 
+80184, Caudal, 1695, 1701, "caudal", "", 
+80185, SpinalCord, 1715, 1726, "spinal cord", "", 
+80234, MeanValue, 1730, 1735, "22.8%", "", 
+80235, GroupName, 1758, 1771, "control group", "", "<http://scio/data/DefinedExperimentalGroup_14148> <http://psink.de/scio/hasGroupName> \"control group\"."
+80186, MyelinationTest, 1787, 1805, "remyelinated axons", "", 
+80187, Higher, 1811, 1820, "increased", "", 
+80236, Rostral, 1898, 1905, "rostral", "", 
+80237, Caudal, 1910, 1916, "caudal", "", 
+80238, SpinalCord, 1930, 1941, "spinal cord", "", 
+80239, SpinalLesionSite, 1954, 1965, "lesion site", "", 
+80240, OlfactoryEnsheathingGliaCell, 1999, 2003, "cell", "", 
+80241, DeliveryMethod, 2004, 2019, "transplantation", "", 
+80242, OligodendrogliaChangesTest, 2050, 2080, "activation of oligodendrocytes", "", 
+80243, SchwannCell, 2137, 2150, "Schwann cells", "", 
+80244, SpinalCord, 2269, 2280, "spinal cord", "", 
+48989, RatSpecies, 3665, 3677, "mongrel rats", "", "<http://scio/data/OrganismModel_1232> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/RatSpecies>."
+48988, Weight, 3687, 3696, "200-250 g", "", "<http://scio/data/OrganismModel_1232> <http://psink.de/scio/hasWeight> \"200-250 g\"."
+55616, Laminectomy, 3788, 3799, "laminectomy", "", 
+55633, Anaesthetic, 3806, 3814, "urethane", "", "<http://scio/data/Anaesthetic_9990> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/LateralHemisection_9987> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_9990>."
+55617, DosageIntracorporal, 3827, 3837, "600 mg/ kg", "", "<http://scio/data/Anaesthetic_9990> <http://psink.de/scio/hasDosage> \"600 mg/ kg\"."
+55623, IntraperitonealLocation, 3838, 3855, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_9997> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+57689, InjectionDelivery, 3838, 3855, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_9997> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_9990> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9997>."
+55618, LateralHemisection, 3864, 3875, "hemisection", "", "<http://scio/data/LateralHemisection_9987> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_9987> <http://www.w3.org/2000/01/rdf-schema#label> \"lateral Hemisection\". <http://scio/data/Right_9996> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/LateralHemisection_9987> <http://psink.de/scio/hasDirection> <http://scio/data/Right_9996>."
+55622, SpinalCord, 3883, 3894, "spinal cord", "", 
+55618, Right, 3902, 3912, "right side", "", 
+55619, T8, 3916, 3921, "TVIII", "", "<http://scio/data/LateralHemisection_9987> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+57368, OlfactoryEnsheathingGliaCell, 4113, 4144, "Olfactory epithelium (OE) cells", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_14120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_14111> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_14120>."
+80247, DeliveryMethod, 4159, 4174, "transplantation", "", 
+80246, OlfactoryEnsheathingGliaCell, 4180, 4185, "cells", "", 
+72767, CompoundSupplier, 4205, 4252, "Department of Applied and Fundamental Neurology", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_14120> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/CompoundSupplier>."
+57388, Duration, 4362, 4379, "After hemisection", "", "<http://scio/data/TemporalInterval_14158> <http://psink.de/scio/hasDuration> \"After hemisection\". <http://scio/data/TemporalInterval_14166> <http://psink.de/scio/hasDuration> \"After hemisection\"."
+57369, LateralHemisection, 4368, 4379, "hemisection", "", 
+57380, DosageExtracorporal, 4381, 4402, "200,000 cells in 5 μl", "", "<http://scio/data/CompoundTreatment_14111> <http://psink.de/scio/hasDosage> \"200,000 cells in 5 μl\"."
+80248, RingersSolution, 4403, 4418, "Ringer solution", "", 
+57383, InjectionDelivery, 4424, 4432, "injected", "", "<http://scio/data/InjectionDelivery_14113> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_14111> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_14113>. <http://scio/data/InjectionDelivery_14129> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_14127> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_14129>."
+57381, DefinedExperimentalGroup, 4436, 4462, "experimental group animals", "", "<http://scio/data/DefinedExperimentalGroup_14140> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_14140> <http://www.w3.org/2000/01/rdf-schema#label> \"OECs E1\"."
+57371, NNumber, 4464, 4467, "n=8", "", "<http://scio/data/DefinedExperimentalGroup_14140> <http://psink.de/scio/hasNNumber> \"n=8\"."
+80279, Distance, 4483, 4487, "1 mm", "", 
+72765, Rostral, 4488, 4497, "rostrally", "", "<http://scio/data/Rostral_15546> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_14111> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_15546>. <http://scio/data/Rostral_15549> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_14127> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_15549>."
+72766, Caudal, 4502, 4510, "caudally", "", "<http://scio/data/Caudal_20203> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_14111> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_20203>. <http://scio/data/Caudal_20206> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_14127> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_20206>."
+80278, SpinalLesionSite, 4520, 4537, "hemisection plane", "", "<http://scio/data/SpinalLesionSite_34103> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_15546> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_34103>. <http://scio/data/SpinalLesionSite_34104> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_20203> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_34104>. <http://scio/data/SpinalLesionSite_34105> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_15549> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_34105>. <http://scio/data/SpinalLesionSite_34106> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_20206> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_34106>."
+80280, Distance, 4542, 4548, "0.5 mm", "", 
+80249, SpinalLesionSite, 4588, 4600, "damaged side", "", 
+57372, DefinedExperimentalGroup, 4602, 4617, "Control animals", "", "<http://scio/data/DefinedExperimentalGroup_14148> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_14148> <http://www.w3.org/2000/01/rdf-schema#label> \"Control E2\"."
+57373, NNumber, 4619, 4622, "n=6", "", "<http://scio/data/DefinedExperimentalGroup_14148> <http://psink.de/scio/hasNNumber> \"n=6\"."
+57385, DosageExtracorporal, 4633, 4637, "5 μl", "", "<http://scio/data/CompoundTreatment_14127> <http://psink.de/scio/hasDosage> \"5 μl\"."
+57374, RingersSolution, 4638, 4653, "Ringer solution", "", "<http://scio/data/RingersSolution_14136> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RingersSolution>. <http://scio/data/CompoundTreatment_14127> <http://psink.de/scio/hasCompound> <http://scio/data/RingersSolution_14136>."
+99480, GroupName, 4696, 4703, "control", "", 
+99481, GroupName, 4708, 4728, "experimental animals", "", "<http://scio/data/DefinedExperimentalGroup_14140> <http://psink.de/scio/hasGroupName> \"experimental animals\"."
+80250, OpenFieldTest, 4790, 4806, "open fi eld test", "", 
+80251, BBBTest, 4808, 4816, "BBB test", "", 
+80252, StatisticalTest, 4867, 4872, "ANOVA", "", 
+80253, StatisticalTest, 4877, 4894, "Mann–Whitney test", "", 
+80254, LesionVolumeTest, 5551, 5575, "area of the damaged site", "", 
+80255, TissueSparingTest, 5581, 5610, "area of preserved grey matter", "", 
+80256, Caudal, 5660, 5668, "caudally", "", 
+80257, Rostral, 5673, 5682, "rostrally", "", 
+80281, SpinalLesionSite, 5692, 5709, "hemisection plane", "", 
+80259, NeuronalChangesTest, 5754, 5771, "number of neurons", "", 
+80260, OligodendrogliaChangesTest, 5832, 5858, "number of oligodendrocytes", "", 
+80261, MyelinationTest, 6124, 6148, "number of myelin fi bers", "", 
+80266, Distance, 6169, 6185, "distance of 5 mm", "", 
+80262, Rostral, 6186, 6195, "rostrally", "", 
+80263, Caudal, 6200, 6208, "caudally", "", 
+80282, SpinalLesionSite, 6218, 6235, "hemisection plane", "", 
+80265, SpinalCord, 6279, 6290, "spinal cord", "", 
+80267, StatisticalTest, 6648, 6653, "ANOVA", "", 
+80268, StatisticalTest, 6655, 6668, "Mann– Whitney", "", 
+80269, StatisticalTest, 6674, 6687, "Student tests", "", 
+80270, InjectionDelivery, 8655, 8664, "injection", "", 
+80271, OlfactoryEnsheathingGliaCell, 8668, 8676, "OE cells", "", 
+80188, LateralHemisection, 8694, 8705, "hemisection", "", 
+80189, LesionVolumeTest, 8711, 8725, "area of damage", "", "<http://scio/data/LesionVolumeTest_63157> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_75156> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_75156> <http://www.w3.org/2000/01/rdf-schema#label> \"LesionVolumeTest (area of damage)\". <http://scio/data/Result_34107> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+80190, Lower, 8730, 8737, "smaller", "", 
+80272, GroupName, 8750, 8757, "control", "", 
+80304, RepeatedMeasureTrend, 8761, 8775, "days 30 and 60", "", 
+80192, PositiveSignificance, 8777, 8789, "Signifi cant", "", "<http://scio/data/PositiveSignificance_34142> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_34141> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_34142>."
+80193, LesionVolumeTest, 8805, 8819, "area of damage", "", "<http://scio/data/LesionVolumeTest_63161> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_75158> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_75158> <http://www.w3.org/2000/01/rdf-schema#label> \"LesionVolumeTest (area of damage)\". <http://scio/data/Result_34120> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+80194, Distance, 8834, 8838, "7 mm", "", 
+80273, Rostral, 8839, 8848, "rostrally", "", 
+80195, SpinalLesionSite, 8858, 8869, "damage site", "", 
+80196, Duration, 8870, 8896, "30 days after intervention", "", 
+80197, Duration, 8910, 8942, "Sixty days after transplantation", "", 
+80198, Distance, 8984, 8988, "3 mm", "", 
+80274, Rostral, 8989, 8998, "rostrally", "", 
+80283, SpinalLesionSite, 9008, 9025, "hemisection plane", "", 
+80302, Lower, 9026, 9035, "surpassed", "", "<http://scio/data/Trend_34138> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+80284, DefinedExperimentalGroup, 9044, 9059, "control animals", "", 
+80285, MeanValue, 9063, 9068, "15.3%", "", 
+80200, PValue, 9069, 9077, "(p<0.05)", "", "<http://scio/data/Significance_34139> <http://psink.de/scio/hasPValue> \"(p<0.05)\"."
+80286, TissueSparingTest, 9083, 9112, "area of preserved grey matter", "", "<http://scio/data/TissueSparingTest_63165> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_75160> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_75160> <http://www.w3.org/2000/01/rdf-schema#label> \"TissueSparingTest (area of preserved grey matter)\". <http://scio/data/Result_34146> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+80202, Higher, 9128, 9136, "increase", "", "<http://scio/data/RepeatedMeasureTrend_34153> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+80305, RepeatedMeasureTrend, 9137, 9173, "30 and 60 days after transplantation", "", "<http://scio/data/RepeatedMeasureTrend_34153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_34146> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_34153>."
+80204, OlfactoryEnsheathingGliaCell, 9177, 9185, "OE cells", "", 
+80205, OligodendrogliaChangesTest, 9206, 9225, "number of O4+ cells", "", "<http://scio/data/OligodendrogliaChangesTest_63169> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OligodendrogliaChangesTest>. <http://scio/data/OligodendrogliaChangesTest_75162> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OligodendrogliaChangesTest>. <http://scio/data/OligodendrogliaChangesTest_75162> <http://www.w3.org/2000/01/rdf-schema#label> \"OligodendrogliaChangesTest (number of O4+ cells)\". <http://scio/data/Result_34159> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+80619, LesionAdjacentTissue, 9233, 9274, "immediate proximity to the site of damage", "", 
+80207, Lower, 9275, 9284, "decreased", "", "<http://scio/data/Trend_34166> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+80208, Duration, 9303, 9309, "day 60", "", 
+80209, OligodendrogliaChangesTest, 9330, 9349, "number of O4+-cells", "", "<http://scio/data/OligodendrogliaChangesTest_63173> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OligodendrogliaChangesTest>. <http://scio/data/OligodendrogliaChangesTest_75164> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OligodendrogliaChangesTest>. <http://scio/data/OligodendrogliaChangesTest_75164> <http://www.w3.org/2000/01/rdf-schema#label> \"OligodendrogliaChangesTest (number of O4+-cells)\". <http://scio/data/Result_34172> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+80210, Distance, 9367, 9371, "3 mm", "", 
+80211, Rostral, 9372, 9381, "rostrally", "", 
+80287, SpinalLesionSite, 9391, 9408, "hemisection plane", "", 
+80303, Higher, 9422, 9430, "exceeded", "", "<http://scio/data/Trend_34179> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+80288, DefinedExperimentalGroup, 9462, 9477, "control animals", "", 
+80289, MeanValue, 9481, 9486, "22.8%", "", 
+80213, PValue, 9488, 9495, "p<0.05,", "", "<http://scio/data/Significance_34181> <http://psink.de/scio/hasPValue> \"p<0.05,\"."
+80301, RatSpecies, 9800, 9807, "animals", "", 
+81275, RepeatedMeasureTrend, 9833, 9873, "from 21 day to 53 day after he misection", "", 
+80290, Duration, 9833, 9873, "from 21 day to 53 day after he misection", "", 
+57378, Xenogeneic, 9878, 9911, "transplantation of human OE cells", "", 
+80300, DeliveryMethod, 9878, 9893, "transplantation", "", 
+100388, HumanSpecies, 9897, 9902, "human", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_14120> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/AnimalSpecies>."
+80306, RepeatedMeasureTrend, 9913, 9931, "During this period", "", "<http://scio/data/RepeatedMeasureTrend_34192> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_34185> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_34192>."
+80291, RatSpecies, 9951, 9955, "rats", "", 
+80292, DeliveryMethod, 9966, 9981, "transplantation", "", 
+80293, OlfactoryEnsheathingGliaCell, 9985, 9987, "OE", "", 
+80214, Higher, 9999, 10007, "improved", "", "<http://scio/data/RepeatedMeasureTrend_34192> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+80612, Positive, 9999, 10007, "improved", "", "<http://scio/data/Result_34185> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+80215, BBBTest, 10021, 10029, "BBB test", "", "<http://scio/data/BBBTest_63177> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75166> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75166> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB test)\". <http://scio/data/Result_34185> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+80294, MeanValue, 10033, 10038, "12.8%", "", 
+80295, DefinedExperimentalGroup, 10070, 10085, "control animals", "", 

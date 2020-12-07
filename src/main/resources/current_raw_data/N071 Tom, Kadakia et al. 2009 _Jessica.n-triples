@@ -1,0 +1,55 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_694> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_694> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasWeight> "225–250 g" .
+<http://scio/data/OrganismModel_694> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/LateralHemisection_2784> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_2784> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5> .
+<http://scio/data/Isoflurane_2787> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2787> .
+<http://scio/data/MedicationDuringSurgery_2789> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DeliveryMethod_89222> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Right_2793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
+<http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasDirection> <http://scio/data/Right_2793> .
+<http://scio/data/PostsurgicalMedication_2795> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2795> .
+<http://scio/data/PostsurgicalMedication_2795> <http://psink.de/scio/hasDosage> "0.1mg=kg" .
+<http://scio/data/AntibioticMedication_3887> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/LateralHemisection_2784> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3887> .
+<http://scio/data/AntibioticMedication_3887> <http://psink.de/scio/hasDosage> "200mg=kg" .
+<http://scio/data/Contusion_2798> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion> .
+<http://scio/data/Contusion_2798> <http://www.w3.org/2000/01/rdf-schema#label> "contusion" .
+<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5> .
+<http://scio/data/Xylazine_2801> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2801> .
+<http://scio/data/Xylazine_2801> <http://psink.de/scio/hasDosage> "10mg=kg" .
+<http://scio/data/InjectionDelivery_3895> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_2801> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3895> .
+<http://scio/data/InjectionDelivery_3895> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_2803> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DeliveryMethod_89223> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/InfiniteHorizonImpactor_2805> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor> .
+<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2805> .
+<http://scio/data/InfiniteHorizonImpactor_2805> <http://psink.de/scio/hasForce> "200 kdyne" .
+<http://scio/data/PostsurgicalMedication_2808> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2808> .
+<http://scio/data/PostsurgicalMedication_2808> <http://psink.de/scio/hasDosage> "0.1mg=kg" .
+<http://scio/data/KetamineAsAnaesthetic_2813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2813> .
+<http://scio/data/KetamineAsAnaesthetic_2813> <http://psink.de/scio/hasDosage> "60mg=kg" .
+<http://scio/data/InjectionDelivery_3894> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_2813> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3894> .
+<http://scio/data/InjectionDelivery_3894> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/AntibioticMedication_3896> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Contusion_2798> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3896> .
+<http://scio/data/AntibioticMedication_3896> <http://psink.de/scio/hasDosage> "200mg=kg" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

@@ -1,0 +1,22 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48745, Adult, 5490, 5495, "Adult", "", "<http://scio/data/OrganismModel_772> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>. <http://scio/data/OrganismModel_778> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48746, Age, 5497, 5507, "8–10 weeks", "", "<http://scio/data/OrganismModel_772> <http://psink.de/scio/hasAge> \"8–10 weeks\". <http://scio/data/OrganismModel_778> <http://psink.de/scio/hasAge> \"8–10 weeks\"."
+48747, Male, 5509, 5513, "male", "", "<http://scio/data/OrganismModel_772> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+48748, Female, 5518, 5524, "female", "", "<http://scio/data/OrganismModel_778> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+54347, MouseSpecies, 5538, 5548, "YFP-H mice", "", "<http://scio/data/OrganismModel_772> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies>. <http://scio/data/OrganismModel_778> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies>."
+54346, MouseSpecies, 6652, 6656, "mice", "", 
+50414, KetamineAsAnaesthetic, 6681, 6689, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2950> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2950>."
+50402, DosageIntracorporal, 6691, 6699, "60 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2950> <http://psink.de/scio/hasDosage> \"60 mg/kg\"."
+50403, Anaesthetic, 6705, 6717, "medetomidine", "", "<http://scio/data/Anaesthetic_2941> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2941>."
+50404, DosageIntracorporal, 6719, 6729, "0.25 mg/kg", "", "<http://scio/data/Anaesthetic_2941> <http://psink.de/scio/hasDosage> \"0.25 mg/kg\"."
+54348, Left, 6858, 6862, "left", "", 
+54349, C4, 6891, 6893, "C4", "", 
+50405, Laminectomy, 6932, 6943, "laminectomy", "", 
+50411, DeliveryMethod, 6945, 6959, "Gelfoam soaked", "", "<http://scio/data/DeliveryMethod_2953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod>. <http://scio/data/MedicationDuringSurgery_2943> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_2953>."
+50408, MedicationDuringSurgery, 6970, 6980, "lignocaine", "", "<http://scio/data/MedicationDuringSurgery_2943> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_2943>."
+50410, Left, 7033, 7037, "left", "", "<http://scio/data/Left_2947> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left>. <http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasDirection> <http://scio/data/Left_2947>."
+50413, LateralHemisection, 7038, 7047, "hemi-cord", "", "<http://scio/data/LateralHemisection_2938> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2938> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+50406, Scissors, 7069, 7088, "iridectomy scissors", "", "<http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+54345, Depth, 7095, 7110, "depth of 0.5 mm", "", 
+50407, C4, 7130, 7132, "C4", "", "<http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C4>."
+50409, InjuryArea, 7134, 7178, "lesioning RST axons in the lateral funiculus", "", "<http://scio/data/LateralHemisection_2938> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/InjuryArea>."

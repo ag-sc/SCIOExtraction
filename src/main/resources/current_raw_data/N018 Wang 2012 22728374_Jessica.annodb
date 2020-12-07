@@ -1,0 +1,20 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48517, Female, 10676, 10682, "female", "", "<http://scio/data/OrganismModel_345> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48518, SpragueDawleyRat, 10683, 10702, "Sprague–Dawley rats", "", "<http://scio/data/OrganismModel_345> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48519, Age, 10704, 10715, "11–12 weeks", "", "<http://scio/data/OrganismModel_345> <http://psink.de/scio/hasAge> \"11–12 weeks\"."
+48520, Weight, 10717, 10726, "250–270 g", "", "<http://scio/data/OrganismModel_345> <http://psink.de/scio/hasWeight> \"250–270 g\"."
+50762, IntraperitonealLocation, 12169, 12184, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_2013> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_2016> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50761, InjectionDelivery, 12186, 12195, "injection", "", "<http://scio/data/InjectionDelivery_2013> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2007> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_2013>. <http://scio/data/InjectionDelivery_2016> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2015> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_2016>."
+49501, KetamineAsAnaesthetic, 12199, 12207, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2007> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Compression_2004> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2007>."
+49502, DosageIntracorporal, 12209, 12217, "60 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2007> <http://psink.de/scio/hasDosage> \"60 mg/kg\"."
+49503, Xylazine, 12223, 12231, "xylazine", "", "<http://scio/data/Xylazine_2015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Compression_2004> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2015>."
+49504, DosageIntracorporal, 12233, 12241, "10 mg/kg", "", "<http://scio/data/Xylazine_2015> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+49509, T7, 12269, 12271, "T7", "", "<http://scio/data/Compression_2004> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T7>."
+49505, Laminectomy, 12278, 12292, "laminectomywas", "", 
+49506, Anaesthetic, 12334, 12343, "Lidocaine", "", "<http://scio/data/Anaesthetic_2009> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/Compression_2004> <http://psink.de/scio/hasMedication> <http://scio/data/Anaesthetic_2009>."
+49514, DosageExtracorporal, 12345, 12347, "2%", "", "<http://scio/data/Anaesthetic_2009> <http://psink.de/scio/hasDosage> \"2%\"."
+57616, SpinalCord, 12367, 12389, "exposed spinal surface", "", "<http://scio/data/SpinalCord_15017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/DeliveryMethod_15015> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_15017>."
+49508, Forceps, 12443, 12460, "jeweler's forceps", "", "<http://scio/data/Compression_2004> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps>."
+49513, Depth, 12562, 12580, "depth of 1.5 mmand", "", 
+49511, Compression, 12621, 12633, "crush injury", "", "<http://scio/data/Compression_2004> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression>. <http://scio/data/Compression_2004> <http://www.w3.org/2000/01/rdf-schema#label> \"compression\"."
+49512, Duration, 12665, 12672, "for10 s", "", 

@@ -1,0 +1,205 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+54970, InjectionDelivery, 400, 409, "injection", "", 
+38992, OlfactoryEnsheathingGliaCell, 413, 446, "olfactory ensheathing cells (ECs)", "", 
+38993, SpinalCord, 456, 467, "spinal cord", "", 
+38994, AxonalRegenerationTest, 521, 550, "regeneration of injured axons", "", 
+38995, DeliveryMethod, 599, 612, "transplanting", "", 
+38996, Capsule, 613, 625, "encapsulated", "", 
+38997, OlfactoryEnsheathingGliaCell, 626, 629, "ECs", "", 
+54969, InjectionDelivery, 641, 649, "injected", "", 
+38999, SpinalCord, 668, 679, "spinal cord", "", 
+39000, Adult, 703, 708, "adult", "", 
+39001, AnimalModel, 709, 713, "rats", "", 
+57668, VertebralArea, 726, 730, "T8–9", "", "<http://scio/data/VertebralArea_6971> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_6971>."
+39002, T8, 726, 728, "T8", "", "<http://scio/data/VertebralArea_6971> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T8>."
+39003, T9, 729, 730, "9", "", "<http://scio/data/VertebralArea_6971> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9>."
+39004, AnimalModel, 735, 739, "rats", "", 
+39005, OlfactoryEnsheathingGliaCell, 779, 788, "EC-filled", "", 
+39006, Capsule, 789, 812, "porous polymer capsules", "", 
+39007, Vehicle, 816, 830, "culture medium", "", 
+39008, Capsule, 843, 851, "capsules", "", 
+39009, OlfactoryEnsheathingGliaCell, 857, 860, "ECs", "", 
+54971, InjectionDelivery, 861, 869, "injected", "", 
+39011, SpinalLesionSite, 877, 889, "injury site.", "", 
+95221, GroupName, 929, 938, "uninjured", "", 
+95222, GroupName, 944, 993, "lesion with transplantation of CM-filled capsules", "", "<http://scio/data/DefinedExperimentalGroup_7664> <http://psink.de/scio/hasGroupName> \"lesion with transplantation of CM-filled capsules\". <http://scio/data/DefinedExperimentalGroup_7681> <http://psink.de/scio/hasGroupName> \"lesion with transplantation of CM-filled capsules\"."
+95223, GroupName, 1002, 1072, "lesion with transplantation of CM-filled capsules and injections of CM", "", "<http://scio/data/DefinedExperimentalGroup_7664> <http://psink.de/scio/hasGroupName> \"lesion with transplantation of CM-filled capsules and injections of CM\"."
+39015, Duration, 1074, 1098, "Three weeks after injury", "", 
+39016, PartialTransection, 1092, 1098, "injury", "", 
+39017, Compound, 1100, 1110, "Fluororuby", "", 
+57549, InjectionDelivery, 1115, 1123, "injected", "", 
+39019, Brain, 1133, 1172, "hindlimb motor and somatosensory cortex", "", 
+39020, CorticospinalTract, 1182, 1204, "corticospinal neurons.", "", 
+39021, AxonalRegenerationTest, 1250, 1269, "regenerating fibres", "", 
+95224, GroupName, 1288, 1305, "EC-treated groups", "", 
+95228, GroupName, 1310, 1345, "rats that received encapsulated ECs", "", "<http://scio/data/DefinedExperimentalGroup_7673> <http://psink.de/scio/hasGroupName> \"rats that received encapsulated ECs\"."
+39024, AxonalRegenerationTest, 1347, 1366, "regenerating fibres", "", 
+39025, Capsule, 1410, 1417, "capsule", "", 
+95227, GroupName, 1419, 1451, "Rats that received EC injections", "", "<http://scio/data/DefinedExperimentalGroup_7655> <http://psink.de/scio/hasGroupName> \"Rats that received EC injections\"."
+39027, PositiveSignificance, 1467, 1478, "significant", "", 
+57550, Higher, 1479, 1487, "increase", "", 
+39029, AxonalSproutingTest, 1495, 1524, "number of collateral branches", "", 
+39030, CorticospinalTract, 1541, 1575, "ventral corticospinal tract (vCST)", "", 
+95225, GroupName, 1617, 1634, "CM-injected group", "", "<http://scio/data/DefinedExperimentalGroup_7681> <http://psink.de/scio/hasGroupName> \"CM-injected group\"."
+39032, PValue, 1637, 1646, "P = 0.003", "", 
+57551, Higher, 1667, 1676, "increased", "", 
+39035, AxonalSproutingTest, 1677, 1696, "collateral branches", "", 
+95226, GroupName, 1713, 1748, "rats that received encapsulated ECs", "", 
+39037, PValue, 1751, 1759, "P = 0.07", "", 
+39038, Allogeneic, 5118, 5209, "olfactory nerve layer (ONL) and mucosa (OM) were isolated from 3-day-old hooded Wistar rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_7587> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>. <http://scio/data/OlfactoryEnsheathingGliaCell_7603> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+57519, AnatomicalLocation, 5118, 5145, "olfactory nerve layer (ONL)", "", "<http://scio/data/AnatomicalLocation_19637> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_7587> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_19637>."
+57520, AnatomicalLocation, 5150, 5161, "mucosa (OM)", "", 
+39041, Age, 5181, 5190, "3-day-old", "", 
+39042, WistarRat, 5198, 5209, "Wistar rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_7587> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>. <http://scio/data/OlfactoryEnsheathingGliaCell_7603> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+39043, Purification, 6206, 6214, "Purified", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_7587> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>. <http://scio/data/OlfactoryEnsheathingGliaCell_7603> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+39044, OlfactoryEnsheathingGliaCell, 6215, 6218, "ECs", "", 
+39045, Capsule, 6658, 6665, "capsule", "", "<http://scio/data/CompoundTreatment_81> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Capsule>. <http://scio/data/CompoundTreatment_7617> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Capsule>."
+39047, DosageExtracorporal, 6709, 6712, "105", "", "<http://scio/data/CompoundTreatment_81> <http://psink.de/scio/hasDosage> \"105\"."
+39048, OlfactoryEnsheathingGliaCell, 6713, 6716, "ECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_7587> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_81> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_7587>."
+39049, OlfactoryEnsheathingGliaCell, 7967, 7970, "ECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_7603> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_7603>."
+39050, DosageExtracorporal, 8072, 8084, "104 cells/µl", "", "<http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasDosage> \"104 cells/µl\"."
+39051, Adult, 8113, 8118, "Adult", "", "<http://scio/data/OrganismModel_75> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+39052, WistarRat, 8119, 8123, "rats", "", "<http://scio/data/OrganismModel_75> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+39053, Weight, 8133, 8142, "270–380 g", "", "<http://scio/data/OrganismModel_75> <http://psink.de/scio/hasWeight> \"270–380 g\"."
+39054, DosageExtracorporal, 8167, 8169, "3%", "", "<http://scio/data/Isoflurane_6973> <http://psink.de/scio/hasDosage> \"3%\"."
+39055, Isoflurane, 8170, 8180, "isoflurane", "", "<http://scio/data/Isoflurane_6973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_6973>."
+39056, DosageExtracorporal, 8212, 8218, "2–2.5%", "", "<http://scio/data/Isoflurane_6981> <http://psink.de/scio/hasDosage> \"2–2.5%\"."
+39057, Isoflurane, 8219, 8229, "isoflurane", "", "<http://scio/data/Isoflurane_6981> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_6981>."
+39059, WistarRat, 8279, 8283, "Rats", "", 
+54815, InjectionDelivery, 8289, 8297, "injected", "", "<http://scio/data/InjectionDelivery_15283> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/MedicationDuringSurgery_6989> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15283>. <http://scio/data/InjectionDelivery_15287> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/MedicationDuringSurgery_15286> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15287>."
+39060, SubcutaneousLocation, 8298, 8312, "subcutaneously", "", "<http://scio/data/InjectionDelivery_15283> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>."
+39061, DosageIntracorporal, 8318, 8327, "0.1 ml/kg", "", 
+57669, MedicationDuringSurgery, 8328, 8335, "Rimadyl", "", "<http://scio/data/MedicationDuringSurgery_6989> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_6989>."
+39063, DosageExtracorporal, 8347, 8355, "50 mg/ml", "", 
+39064, IntramuscularLocation, 8432, 8447, "intramuscularly", "", "<http://scio/data/InjectionDelivery_15287> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>."
+39065, DosageIntracorporal, 8453, 8462, "0.1 ml/kg", "", 
+54814, AntibioticMedication, 8463, 8473, "Norocillin", "", 
+57670, MedicationDuringSurgery, 8463, 8473, "Norocillin", "", "<http://scio/data/MedicationDuringSurgery_15286> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_15286>."
+54818, IntraperitonealLocation, 8584, 8601, "intraperitoneally", "", 
+39068, DosageIntracorporal, 8607, 8615, "40 ml/kg", "", 
+39069, Saline, 8616, 8633, "Hartmann’s saline", "", 
+39070, DosageExtracorporal, 8637, 8641, "0.9%", "", 
+39071, Saline, 8642, 8648, "saline", "", 
+54820, VertebralArea, 9047, 9056, "T8 and T9", "", 
+39074, Laminectomy, 9090, 9101, "laminectomy", "", 
+39076, SpinalCord, 9167, 9178, "spinal cord", "", 
+54827, DorsalHemisection, 9225, 9239, "dorsal columns", "", "<http://scio/data/DorsalHemisection_6970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection>. <http://scio/data/DorsalHemisection_6970> <http://www.w3.org/2000/01/rdf-schema#label> \"dorsal hemisection\"."
+57521, DorsalColumn, 9225, 9239, "dorsal columns", "", 
+39079, CorticospinalTract, 9259, 9263, "dCST", "", 
+39080, Scissors, 9286, 9299, "microscissors", "", "<http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+39082, Depth, 9335, 9350, "depth of 1.5 mm", "", 
+39084, SpinalCord, 9383, 9394, "spinal cord", "", 
+39085, Distance, 9439, 9449, "1.5–2.0 mm", "", 
+39086, Intraspinal, 9451, 9473, "centred on the midline", "", 
+39087, WistarRat, 9634, 9638, "rats", "", 
+54819, InjectionDelivery, 9648, 9658, "injections", "", "<http://scio/data/InjectionDelivery_7596> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_7596>. <http://scio/data/InjectionDelivery_7638> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_7638>."
+39089, DefinedExperimentalGroup, 9662, 9665, "ECs", "E1", "<http://scio/data/DefinedExperimentalGroup_7655> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_7655> <http://www.w3.org/2000/01/rdf-schema#label> \"OEC injection + CM capsule E1\"."
+39090, NNumber, 9671, 9672, "6", "", "<http://scio/data/DefinedExperimentalGroup_7655> <http://psink.de/scio/hasNNumber> \"6\"."
+39091, DefinedExperimentalGroup, 9677, 9679, "CM", "E2", "<http://scio/data/DefinedExperimentalGroup_7664> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_7664> <http://www.w3.org/2000/01/rdf-schema#label> \"CM injection + CM capsule E2\"."
+39092, NNumber, 9685, 9686, "5", "", "<http://scio/data/DefinedExperimentalGroup_7664> <http://psink.de/scio/hasNNumber> \"5\"."
+39093, Vehicle, 9715, 9728, "CM-containing", "", "<http://scio/data/Vehicle_7634> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_7617> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_7634>."
+39094, Capsule, 9729, 9741, "PVDF capsule", "", 
+39095, OlfactoryEnsheathingGliaCell, 9774, 9777, "ECs", "", 
+39096, Vehicle, 9791, 9793, "CM", "", 
+39097, Vehicle, 9797, 9799, "CM", "", 
+39098, Syringe, 9831, 9838, "syringe", "", "<http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+39100, Volume, 10032, 10046, "One microlitre", "", 
+39101, OlfactoryEnsheathingGliaCell, 10050, 10053, "ECs", "", 
+39102, Vehicle, 10057, 10059, "CM", "", "<http://scio/data/Vehicle_7653> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_7653>."
+54821, InjectionDelivery, 10064, 10072, "injected", "", 
+39105, Distance, 10147, 10153, "0.3 mm", "", 
+39106, Right, 10161, 10166, "right", "", "<http://scio/data/Right_19648> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasDirection> <http://scio/data/Right_19648>. <http://scio/data/Right_19639> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasDirection> <http://scio/data/Right_19639>."
+39107, Left, 10171, 10175, "left", "", "<http://scio/data/Left_19650> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left>. <http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasDirection> <http://scio/data/Left_19650>. <http://scio/data/Left_19655> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasDirection> <http://scio/data/Left_19655>."
+39108, Intraspinal, 10183, 10190, "midline", "", "<http://scio/data/Intraspinal_19649> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal>. <http://scio/data/Right_19648> <http://psink.de/scio/relativeTo> <http://scio/data/Intraspinal_19649>. <http://scio/data/Intraspinal_19651> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal>. <http://scio/data/Left_19650> <http://psink.de/scio/relativeTo> <http://scio/data/Intraspinal_19651>. <http://scio/data/Intraspinal_19654> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal>. <http://scio/data/Right_19639> <http://psink.de/scio/relativeTo> <http://scio/data/Intraspinal_19654>. <http://scio/data/Intraspinal_19656> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal>. <http://scio/data/Left_19655> <http://psink.de/scio/relativeTo> <http://scio/data/Intraspinal_19656>."
+39109, Distance, 10195, 10201, "2–3 mm", "", 
+39110, Rostral, 10202, 10210, "anterior", "", "<http://scio/data/Rostral_19642> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_19642>. <http://scio/data/Rostral_19657> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_19657>."
+39111, Caudal, 10215, 10224, "posterior", "", "<http://scio/data/Caudal_19644> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_7594> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19644>. <http://scio/data/Caudal_19659> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_7636> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19659>."
+39112, SpinalLesionSite, 10232, 10243, "injury site", "", "<http://scio/data/SpinalLesionSite_19643> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_19642> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19643>. <http://scio/data/SpinalLesionSite_19645> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_19644> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19645>. <http://scio/data/SpinalLesionSite_19658> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_19657> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19658>. <http://scio/data/SpinalLesionSite_19660> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_19659> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19660>."
+54826, InjectionDelivery, 10249, 10259, "injections", "", 
+39114, Depth, 10265, 10276, "1.0 mm deep", "", 
+39116, SpinalCord, 10306, 10317, "spinal cord", "", 
+39117, Volume, 10422, 10426, "4 µl", "", 
+39118, OlfactoryEnsheathingGliaCell, 10430, 10433, "ECs", "", 
+39119, Vehicle, 10437, 10439, "CM", "", 
+54822, InjectionDelivery, 10444, 10452, "injected", "", 
+39121, SpinalLesionSite, 10472, 10483, "injury site", "", 
+39122, Capsule, 10601, 10621, "a PVDF fibre capsule", "", 
+39123, Vehicle, 10634, 10636, "CM", "", 
+39125, Intraspinal, 10666, 10679, "median sulcus", "", "<http://scio/data/Intraspinal_7621> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal>. <http://scio/data/DeliveryMethod_7619> <http://psink.de/scio/hasLocations> <http://scio/data/Intraspinal_7621>."
+39126, SpinalCord, 10687, 10698, "spinal cord", "", 
+39127, Rostral, 10708, 10725, "anteroposteriorly", "", "<http://scio/data/Rostral_19661> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_81> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_19661>. <http://scio/data/Rostral_19665> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_7617> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_19665>."
+39128, Caudal, 10708, 10725, "anteroposteriorly", "", "<http://scio/data/Caudal_19636> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_81> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19636>. <http://scio/data/Caudal_19638> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_7617> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_19638>."
+39129, SpinalLesionSite, 10733, 10744, "injury site", "", "<http://scio/data/SpinalLesionSite_19662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_19636> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19662>. <http://scio/data/SpinalLesionSite_19663> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_19661> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19663>. <http://scio/data/SpinalLesionSite_19664> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_19638> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19664>. <http://scio/data/SpinalLesionSite_19666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_19665> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_19666>."
+39130, WistarRat, 10771, 10775, "rats", "", 
+39131, Capsule, 10787, 10805, "PVDF fibre capsule", "", 
+39132, OlfactoryEnsheathingGliaCell, 10818, 10821, "ECs", "", 
+39133, NNumber, 10827, 10828, "5", "", 
+39134, NNumber, 10841, 10842, "6", "", 
+39135, DefinedExperimentalGroup, 10849, 10869, "no injections of ECs", "E3", "<http://scio/data/DefinedExperimentalGroup_7673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_7673> <http://www.w3.org/2000/01/rdf-schema#label> \"OEC capsule E3\"."
+39136, OlfactoryEnsheathingGliaCell, 10866, 10869, "ECs", "", 
+39137, Vehicle, 10873, 10875, "CM", "", 
+39138, DefinedExperimentalGroup, 10873, 10875, "CM", "E4", "<http://scio/data/DefinedExperimentalGroup_7681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_7681> <http://www.w3.org/2000/01/rdf-schema#label> \"CM capsule E4\"."
+39139, WistarRat, 11335, 11339, "Rats", "", 
+54828, InjectionDelivery, 11345, 11353, "injected", "", 
+39143, SubcutaneousLocation, 11389, 11403, "subcutaneously", "", 
+39144, DosageIntracorporal, 11409, 11418, "0.1 ml/kg", "", "<http://scio/data/PostsurgicalMedication_6972> <http://psink.de/scio/hasDosage> \"0.1 ml/kg\"."
+39145, PostsurgicalMedication, 11419, 11426, "Rimadyl", "", "<http://scio/data/PostsurgicalMedication_6972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/DorsalHemisection_6970> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_6972>."
+39146, DosageExtracorporal, 11438, 11446, "50 mg/ml", "", 
+97165, AxonalRegenerationTest, 15403, 15434, "count the number of dCST fibres", "", 
+39177, CorticospinalTract, 15423, 15427, "dCST", "", 
+97169, AxonalSproutingTest, 16129, 16165, "number of terminal branches of axons", "", 
+97170, SpinalGrayMatter, 16181, 16192, "grey matter", "", 
+39178, SingleBlindStudy, 16492, 16499, "blinded", "", 
+39179, StatisticalTest, 16724, 16737, "one-way ANOVA", "", "<http://scio/data/Result_61> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+39180, StatisticalTest, 16798, 16839, "multiple pair wise comparison (Tukey test", "", "<http://scio/data/Result_19685> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_19698> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_19713> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_19726> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_19739> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+39182, Cervical, 24059, 24067, "cervical", "", 
+57557, Thoracic, 24079, 24091, "mid-thoracic", "", 
+39184, ZeroSignificance, 24109, 24148, "no statistically significant difference", "", "<http://scio/data/ZeroSignificance_14725> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_68> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_14725>."
+57556, None, 24109, 24148, "no statistically significant difference", "", "<http://scio/data/Trend_68> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+97171, AxonalRegenerationTest, 24152, 24177, "the number of dCST fibres", "", "<http://scio/data/AxonalRegenerationTest_67854> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_77109> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalRegenerationTest>. <http://scio/data/AxonalRegenerationTest_77109> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalRegenerationTest (the number of dCST fibres)\". <http://scio/data/Result_61> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+39186, CorticospinalTract, 24166, 24177, "dCST fibres", "", 
+74312, AnalyzedExperimentalGroup, 24181, 24201, "all treatment groups", "", 
+39189, CorticospinalTract, 24231, 24237, "fibres", "", 
+74313, AnalyzedExperimentalGroup, 24245, 24295, "groups that received ECs (encapsulated or injected", "", 
+39191, Thoracic, 24317, 24335, "mid-thoracic level", "", 
+97172, GroupName, 24341, 24419, "control group that received CM-containing capsules together with CM injections", "", "<http://scio/data/DefinedExperimentalGroup_7664> <http://psink.de/scio/hasGroupName> \"control group that received CM-containing capsules together with CM injections\"."
+39193, MeanValue, 24456, 24458, "86", "", 
+39194, StandardError, 24461, 24463, "20", "", 
+39195, CorticospinalTract, 24464, 24470, "fibres", "", 
+39196, Thoracic, 24478, 24496, "mid-thoracic level", "", 
+39197, MeanValue, 24523, 24525, "27", "", 
+39198, StandardError, 24528, 24530, "5%", "", 
+39199, CorticospinalTract, 24548, 24554, "fibres", "", 
+39200, Cervical, 24570, 24584, "cervical level", "", 
+39239, SpinalCord, 30362, 30374, "spinal cords", "", 
+97177, GroupName, 30384, 30396, "ECs injected", "", 
+74314, SpinalLesionSite, 30422, 30428, "lesion", "", 
+39242, PositiveSignificance, 30433, 30446, "significantly", "", "<http://scio/data/PositiveSignificance_19696> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_19692> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_19696>."
+39243, Higher, 30447, 30451, "more", "R5", "<http://scio/data/Trend_19692> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+39245, AxonalSproutingTest, 30452, 30460, "branches", "", "<http://scio/data/AxonalSproutingTest_62685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74957> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74957> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (branches)\". <http://scio/data/Result_19685> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+39246, CorticospinalTract, 30473, 30477, "vCST", "", 
+74316, GroupName, 30517, 30532, "control animals", "", "<http://scio/data/DefinedExperimentalGroup_7664> <http://psink.de/scio/hasGroupName> \"control animals\"."
+39248, PValue, 30535, 30544, "P = 0.003", "", 
+39250, SpinalCord, 30588, 30600, "spinal cords", "", 
+97178, GroupName, 30610, 30626, "encapsulated ECs", "", "<http://scio/data/DefinedExperimentalGroup_7673> <http://psink.de/scio/hasGroupName> \"encapsulated ECs\"."
+39252, Higher, 30635, 30639, "more", "R6", "<http://scio/data/Trend_19705> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+39254, AxonalSproutingTest, 30640, 30655, "axonal branches", "", "<http://scio/data/AxonalSproutingTest_62689> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74959> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74959> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (axonal branches)\". <http://scio/data/Result_19698> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+97179, GroupName, 30673, 30704, "received CM containing capsules", "", "<http://scio/data/DefinedExperimentalGroup_7681> <http://psink.de/scio/hasGroupName> \"received CM containing capsules\"."
+39256, PValue, 30710, 30715, "0.07)", "", "<http://scio/data/Significance_19709> <http://psink.de/scio/hasPValue> \"0.07)\"."
+39257, ZeroSignificance, 30717, 30742, "No significant difference", "", 
+39258, None, 30717, 30742, "No significant difference", "R7", "<http://scio/data/Trend_19720> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+39259, AxonalSproutingTest, 30746, 30762, "axonal branching", "", "<http://scio/data/AxonalSproutingTest_62693> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74961> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_74961> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (axonal branching)\". <http://scio/data/AxonalSproutingTest_80312> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_80312> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (axonal branching)\". <http://scio/data/AxonalSproutingTest_80314> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_80314> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (axonal branching)\". <http://scio/data/Result_19713> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_19726> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_19739> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+97180, GroupName, 30804, 30815, "EC-injected", "", "<http://scio/data/DefinedExperimentalGroup_7655> <http://psink.de/scio/hasGroupName> \"EC-injected\"."
+97181, GroupName, 30820, 30842, "EC-encapsulated groups", "", "<http://scio/data/DefinedExperimentalGroup_7673> <http://psink.de/scio/hasGroupName> \"EC-encapsulated groups\"."
+39262, PValue, 30845, 30853, "P = 1.00", "", "<http://scio/data/Significance_19722> <http://psink.de/scio/hasPValue> \"P = 1.00\". <http://scio/data/Significance_19734> <http://psink.de/scio/hasPValue> \"P = 1.00\". <http://scio/data/Significance_19747> <http://psink.de/scio/hasPValue> \"P = 1.00\"."
+39267, Higher, 31025, 31029, "more", "R9", "<http://scio/data/Trend_19733> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_19746> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+39268, CorticospinalTract, 31030, 31035, "fibre", "", 
+74318, AnalyzedExperimentalGroup, 31056, 31084, "two groups that received ECs", "", 
+97182, GroupName, 31105, 31164, "group that had ECs injected into the vicinity of the lesion", "", 
+39271, MeanValue, 31185, 31188, "9.2", "", 
+39272, StandardError, 31189, 31194, "± 2.7", "", 
+39273, CorticospinalTract, 31212, 31217, "fibre", "", 
+74319, GroupName, 31236, 31243, "control", "", "<http://scio/data/DefinedExperimentalGroup_7681> <http://psink.de/scio/hasGroupName> \"control\"."
+39275, MeanValue, 31259, 31262, "3.1", "", 
+39276, StandardError, 31265, 31268, "0.7", "", 
+39277, PValue, 31270, 31279, "P = 0.075", "", 

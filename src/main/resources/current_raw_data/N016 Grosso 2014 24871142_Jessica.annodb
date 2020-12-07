@@ -1,0 +1,354 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+102726, ChondroitinaseABC, 1309, 1324, "chondroitinases", "", 
+102730, Injury, 1409, 1427, "spinal cord injury", "", 
+102731, Injury, 1575, 1593, "spinal cord injury", "", 
+102732, Liposomes, 1652, 1673, "liposome-encapsulated", "", 
+102734, Clodronate, 1674, 1684, "clodronate", "", 
+102740, Rolipram, 1740, 1748, "rolipram", "", 
+102700, ChondroitinaseABC, 1882, 1900, "chondroitinase ABC", "", 
+102727, ChondroitinaseABC, 1902, 1907, "ChABC", "", 
+102699, Positive, 1944, 1951, "promote", "", 
+102701, AxonalRegenerationTest, 1952, 1967, "axonal regrowth", "", 
+102746, Positive, 1972, 1979, "improve", "", 
+102747, RepeatedMeasureTrend, 1990, 1998, "recovery", "", 
+102702, Thoracic, 2009, 2020, "midthoracic", "", 
+102703, SpinalCord, 2021, 2032, "spinal cord", "", 
+102748, LateralHemisection, 2021, 2051, "spinal cord hemisection injury", "", 
+102704, Adult, 2055, 2060, "adult", "", 
+102705, SpragueDawleyRat, 2061, 2065, "rats", "", 
+102733, Liposomes, 2120, 2129, "liposomal", "", 
+102735, Clodronate, 2130, 2140, "clodronate", "", 
+102741, Rolipram, 2142, 2150, "rolipram", "", 
+102709, ChondroitinaseABC, 2156, 2161, "ChABC", "", 
+102706, Lower, 2162, 2172, "attenuates", "", 
+102749, InflammationTest, 2173, 2196, "macrophage accumulation", "", 
+102707, SpinalLesionSite, 2200, 2218, "the site of injury", "", 
+102710, Lower, 2220, 2227, "reduces", "", 
+102708, AxonalDiebackTest, 2228, 2243, "axonal die-back", "", 
+102750, DorsalColumn, 2255, 2274, "dorsal column axons", "", 
+102751, Higher, 2293, 2301, "greatest", "", 
+102752, Positive, 2302, 2313, "improvement", "", 
+102753, RepeatedMeasureTrend, 2327, 2335, "recovery", "", 
+102711, Duration, 2336, 2357, "at 6 weeks postinjury", "", 
+102754, GroupName, 2372, 2380, "controls", "E1", 
+102755, GroupName, 2385, 2404, "noncombined therapy", "E3", 
+102736, Clodronate, 2467, 2477, "clodronate", "", 
+102742, Rolipram, 2479, 2487, "rolipram", "", 
+102728, ChondroitinaseABC, 2493, 2498, "ChABC", "", 
+102757, Neutral, 2499, 2514, "did not promote", "", 
+102712, AxonalRegenerationTest, 2527, 2546, "axonal regeneration", "", 
+102713, SpinalLesionSite, 2559, 2573, "site of injury", "", 
+102714, Lower, 2602, 2607, "limit", "", 
+102715, AxonalDiebackTest, 2622, 2637, "axonal die-back", "", 
+102720, HistologicalInvestigationTest, 2639, 2663, "Histological assessments", "", 
+102737, Clodronate, 2702, 2712, "clodronate", "", 
+102743, Rolipram, 2713, 2721, "rolipram", "", 
+102717, ChondroitinaseABC, 2729, 2734, "ChABC", "", 
+102718, PositiveSignificance, 2749, 2760, "significant", "", 
+102716, Lower, 2761, 2770, "reduction", "", 
+102719, LesionVolumeTest, 2774, 2785, "lesion size", "", 
+102721, CystVolumeTest, 2790, 2807, "cystic cavitation", "", 
+102756, GroupName, 2827, 2843, "injured controls", "E1", 
+102738, Clodronate, 2854, 2864, "clodronate", "", 
+102744, Rolipram, 2866, 2874, "rolipram", "", 
+102722, ChondroitinaseABC, 2880, 2885, "ChABC", "", 
+102723, Lower, 2896, 2903, "reduced", "", 
+102724, InflammationTest, 2908, 2935, "accumulation of macrophages", "", 
+102758, SpinalCord, 2955, 2966, "spinal cord", "", 
+102725, Duration, 2967, 2987, "7 weeks after injury", "", 
+102759, Injury, 2981, 2987, "injury", "", 
+102739, Clodronate, 3085, 3095, "clodronate", "", 
+102745, Rolipram, 3100, 3108, "rolipram", "", 
+102729, ChondroitinaseABC, 3130, 3135, "ChABC", "", 
+102760, Lower, 3137, 3144, "reduces", "", 
+102761, Higher, 3163, 3171, "enhances", "", 
+102762, RepeatedMeasureTrend, 3225, 3233, "recovery", "", 
+102763, Duration, 3234, 3270, "after hemisection spinal cord injury", "", 
+102764, Injury, 3252, 3270, "spinal cord injury", "", 
+102766, Adult, 3274, 3279, "adult", "", 
+102767, SpragueDawleyRat, 3280, 3284, "rats", "", 
+48509, Adult, 6808, 6813, "Adult", "", "<http://scio/data/OrganismModel_333> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48510, Female, 6814, 6820, "female", "", "<http://scio/data/OrganismModel_333> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48511, SpragueDawleyRat, 6821, 6840, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_333> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48512, Weight, 6858, 6870, "250 to 300 g", "", "<http://scio/data/OrganismModel_333> <http://psink.de/scio/hasWeight> \"250 to 300 g\"."
+79243, NNumber, 6876, 6878, "10", "", "<http://scio/data/DefinedExperimentalGroup_32311> <http://psink.de/scio/hasNNumber> \"10\". <http://scio/data/DefinedExperimentalGroup_32321> <http://psink.de/scio/hasNNumber> \"10\". <http://scio/data/DefinedExperimentalGroup_32331> <http://psink.de/scio/hasNNumber> \"10\". <http://scio/data/DefinedExperimentalGroup_32341> <http://psink.de/scio/hasNNumber> \"10\"."
+79245, SpragueDawleyRat, 7098, 7102, "Rats", "", 
+50751, IntraperitonealLocation, 7137, 7152, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3307> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3308> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50752, InjectionDelivery, 7160, 7169, "injection", "", "<http://scio/data/InjectionDelivery_3307> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_1968> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3307>. <http://scio/data/InjectionDelivery_3308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_1979> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3308>."
+49438, KetamineAsAnaesthetic, 7173, 7181, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_1968> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_1968>."
+49439, DosageIntracorporal, 7183, 7191, "10 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_1968> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+49440, Xylazine, 7197, 7205, "xylazine", "", "<http://scio/data/Xylazine_1979> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_1979>."
+49441, DosageIntracorporal, 7207, 7215, "80 mg/kg", "", "<http://scio/data/Xylazine_1979> <http://psink.de/scio/hasDosage> \"80 mg/kg\"."
+79286, Thoracic, 7222, 7230, "thoracic", "", 
+49442, Laminectomy, 7231, 7242, "laminectomy", "", 
+49443, T9, 7264, 7266, "T9", "", 
+49444, T8, 7308, 7310, "T8", "", 
+49448, Scissors, 7641, 7653, "microscissor", "", 
+79287, SpinalCord, 7727, 7738, "spinal cord", "", 
+49447, Right, 7751, 7762, "right-sided", "", "<http://scio/data/Right_1974> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasDirection> <http://scio/data/Right_1974>."
+49449, T8, 7763, 7765, "T8", "", "<http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+49450, LateralHemisection, 7766, 7785, "lateral hemisection", "", "<http://scio/data/LateralHemisection_1965> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_1965> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+49465, Scissors, 7818, 7831, "microscissors", "", "<http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+79288, DefinedExperimentalGroup, 8499, 8512, "control group", "E1", "<http://scio/data/DefinedExperimentalGroup_32311> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32311> <http://www.w3.org/2000/01/rdf-schema#label> \"control group, E1\"."
+102449, Injury, 8514, 8517, "SCI", "", 
+79316, Vehicle, 8520, 8535, "empty liposomes", "", "<http://scio/data/Vehicle_32228> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_32218> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_32228>."
+79296, Liposomes, 8526, 8535, "liposomes", "", "<http://scio/data/CompoundTreatment_32218> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes>."
+79249, DMSO, 8536, 8561, "dimethyl sulfoxide [DMSO]", "", 
+79250, OsmoticMinipump, 8562, 8570, "minipump", "", 
+79251, PBS, 8571, 8601, "phosphate-buffered saline [PBS", "", 
+79292, InjectionDelivery, 8603, 8612, "injection", "", 
+79252, T8, 8618, 8620, "T8", "", 
+79253, Duration, 8626, 8645, "1 week after injury", "", 
+79289, DefinedExperimentalGroup, 8652, 8677, "clodronate/rolipram group", "E2", "<http://scio/data/DefinedExperimentalGroup_32321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32321> <http://www.w3.org/2000/01/rdf-schema#label> \"clodronate / rolipram group, E2\"."
+102451, Injury, 8679, 8682, "SCI", "", 
+79297, Liposomes, 8685, 8694, "liposomal", "", 
+102446, Clodronate, 8695, 8705, "clodronate", "", 
+102444, Rolipram, 8706, 8714, "rolipram", "", 
+79256, OsmoticMinipump, 8715, 8723, "minipump", "", 
+79257, PBS, 8724, 8727, "PBS", "", 
+79293, InjectionDelivery, 8728, 8737, "injection", "", 
+79290, DefinedExperimentalGroup, 8744, 8755, "ChABC group", "E3", "<http://scio/data/DefinedExperimentalGroup_32331> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32331> <http://www.w3.org/2000/01/rdf-schema#label> \"ChABC group, E3\"."
+102452, Injury, 8757, 8760, "SCI", "", 
+79298, Liposomes, 8769, 8778, "liposomes", "", 
+79258, DMSO, 8779, 8783, "DMSO", "", 
+79259, OsmoticMinipump, 8784, 8792, "minipump", "", 
+79260, ChondroitinaseABC, 8793, 8798, "ChABC", "", 
+79294, InjectionDelivery, 8799, 8808, "injection", "", 
+79291, DefinedExperimentalGroup, 8819, 8850, "clodronate/rolipram/ChABC group", "E4", "<http://scio/data/DefinedExperimentalGroup_32341> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_32341> <http://www.w3.org/2000/01/rdf-schema#label> \"clodronate / rolipram / ChABC group, E4\"."
+102453, Injury, 8852, 8855, "SCI", "", 
+79299, Liposomes, 8858, 8867, "liposomal", "", 
+102447, Clodronate, 8868, 8878, "clodronate", "", 
+102445, Rolipram, 8879, 8887, "rolipram", "", 
+79263, OsmoticMinipump, 8888, 8896, "minipump", "", 
+79264, ChondroitinaseABC, 8897, 8902, "ChABC", "", 
+79295, InjectionDelivery, 8903, 8912, "injection", "", 
+102448, Clodronate, 8915, 8925, "Clodronate", "", "<http://scio/data/Clodronate_32239> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Clodronate>. <http://scio/data/CompoundTreatment_32229> <http://psink.de/scio/hasCompound> <http://scio/data/Clodronate_32239>."
+79300, Liposomes, 8946, 8955, "liposomes", "", "<http://scio/data/CompoundTreatment_32229> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes>."
+79266, DosageExtracorporal, 8981, 8990, "0.25 g/mL", "", "<http://scio/data/CompoundTreatment_32229> <http://psink.de/scio/hasDosage> \"0.25 g/mL\"."
+79301, InjectionDelivery, 8997, 9005, "injected", "", "<http://scio/data/InjectionDelivery_32220> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32218> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32220>. <http://scio/data/InjectionDelivery_32231> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32229> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32231>."
+79302, IntraperitonealLocation, 9006, 9010, "i.p.", "", "<http://scio/data/InjectionDelivery_32220> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_32231> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+79304, Volume, 9012, 9016, "2 mL", "", 
+79303, InjectionDelivery, 9021, 9030, "injection", "", 
+79267, Duration, 9032, 9065, "on postinjury days 1, 3, and 6.19", "", "<http://scio/data/TemporalInterval_32353> <http://psink.de/scio/hasDuration> \"on postinjury days 1, 3, and 6.19\". <http://scio/data/TemporalInterval_32377> <http://psink.de/scio/hasDuration> \"on postinjury days 1, 3, and 6.19\". <http://scio/data/TemporalInterval_32406> <http://psink.de/scio/hasDuration> \"on postinjury days 1, 3, and 6.19\". <http://scio/data/TemporalInterval_32430> <http://psink.de/scio/hasDuration> \"on postinjury days 1, 3, and 6.19\"."
+79268, OsmoticMinipump, 9066, 9083, "Miniosmotic pumps", "", "<http://scio/data/CompoundTreatment_32244> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump>. <http://scio/data/CompoundTreatment_32259> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump>."
+79269, SubcutaneousLocation, 9180, 9194, "subcutaneously", "", "<http://scio/data/DeliveryMethod_32246> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>. <http://scio/data/DeliveryMethod_32261> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>."
+102443, Rolipram, 9213, 9221, "rolipram", "", "<http://scio/data/Rolipram_61476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rolipram>. <http://scio/data/CompoundTreatment_32244> <http://psink.de/scio/hasCompound> <http://scio/data/Rolipram_61476>."
+79271, DosageIntracorporal, 9223, 9236, "0.5 mg/kg/day", "", "<http://scio/data/CompoundTreatment_32244> <http://psink.de/scio/hasDosage> \"0.5 mg/kg/day\"."
+79305, Frequency, 9223, 9236, "0.5 mg/kg/day", "", "<http://scio/data/CompoundTreatment_32244> <http://psink.de/scio/hasFrequency> \"0.5 mg/kg/day\". <http://scio/data/CompoundTreatment_32259> <http://psink.de/scio/hasFrequency> \"0.5 mg/kg/day\"."
+79272, SigmaAldrich, 9238, 9248, "Sigma, St.", "", "<http://scio/data/Rolipram_61476> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>. <http://scio/data/DMSO_32271> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>."
+79273, DMSO, 9269, 9273, "DMSO", "", 
+79274, DMSO, 9277, 9281, "DMSO", "", "<http://scio/data/DMSO_32271> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DMSO>. <http://scio/data/CompoundTreatment_32259> <http://psink.de/scio/hasCompound> <http://scio/data/DMSO_32271>."
+79276, Duration, 9299, 9332, "starting immediately after injury", "", "<http://scio/data/TemporalInterval_32361> <http://psink.de/scio/hasDuration> \"starting immediately after injury\". <http://scio/data/TemporalInterval_32385> <http://psink.de/scio/hasDuration> \"starting immediately after injury\". <http://scio/data/TemporalInterval_32414> <http://psink.de/scio/hasDuration> \"starting immediately after injury\". <http://scio/data/TemporalInterval_32438> <http://psink.de/scio/hasDuration> \"starting immediately after injury\"."
+102454, Injury, 9326, 9332, "injury", "", 
+79307, Duration, 9418, 9425, "2 weeks", "", "<http://scio/data/CompoundTreatment_32244> <http://psink.de/scio/hasDuration> \"2 weeks\". <http://scio/data/CompoundTreatment_32259> <http://psink.de/scio/hasDuration> \"2 weeks\"."
+79278, Duration, 9427, 9448, "One week after injury", "", "<http://scio/data/TemporalInterval_32369> <http://psink.de/scio/hasDuration> \"One week after injury\". <http://scio/data/TemporalInterval_32393> <http://psink.de/scio/hasDuration> \"One week after injury\". <http://scio/data/TemporalInterval_32422> <http://psink.de/scio/hasDuration> \"One week after injury\". <http://scio/data/TemporalInterval_32446> <http://psink.de/scio/hasDuration> \"One week after injury\"."
+79279, Volume, 9450, 9454, "1 mL", "", 
+79280, PBS, 9469, 9472, "PBS", "", "<http://scio/data/PBS_32285> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PBS>. <http://scio/data/CompoundTreatment_32275> <http://psink.de/scio/hasCompound> <http://scio/data/PBS_32285>."
+79281, ChondroitinaseABC, 9476, 9481, "ChABC", "", "<http://scio/data/ChondroitinaseABC_32306> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_32292> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_32306>."
+79282, DosageExtracorporal, 9483, 9490, "20 U/mL", "", "<http://scio/data/CompoundTreatment_32292> <http://psink.de/scio/hasDosage> \"20 U/mL\"."
+79309, Seikagaku, 9492, 9508, "Seikagaku, Japan", "", "<http://scio/data/ChondroitinaseABC_32306> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku>."
+79310, AnatomicalLocation, 9514, 9532, "intraparenchymally", "", "<http://scio/data/AnatomicalLocation_32287> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_32277> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_32287>. <http://scio/data/AnatomicalLocation_32296> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/InjectionDelivery_32294> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_32296>."
+79311, InjectionDelivery, 9533, 9546, "microinjected", "", "<http://scio/data/InjectionDelivery_32277> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32275> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32277>. <http://scio/data/InjectionDelivery_32294> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_32292> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_32294>."
+79312, Micropipette, 9622, 9640, "glass micropipette", "", "<http://scio/data/CompoundTreatment_32275> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>. <http://scio/data/CompoundTreatment_32292> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>."
+79313, SpinalLesionSite, 9677, 9709, "center of the hemisection lesion", "", "<http://scio/data/SpinalLesionSite_32288> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_32277> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_32288>. <http://scio/data/SpinalLesionSite_32297> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_32294> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_32297>."
+102455, Distance, 9734, 9738, "2 mm", "", 
+79283, Rostral, 9739, 9746, "rostral", "", "<http://scio/data/Rostral_32282> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_32275> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_32282>. <http://scio/data/Rostral_32302> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_32292> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_32302>."
+79284, Caudal, 9751, 9757, "caudal", "", "<http://scio/data/Caudal_32290> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_32275> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_32290>. <http://scio/data/Caudal_32307> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_32292> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_32307>."
+79314, SpinalLesionSite, 9765, 9771, "lesion", "", "<http://scio/data/SpinalLesionSite_32289> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_32282> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_32289>. <http://scio/data/SpinalLesionSite_32291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_32290> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_32291>. <http://scio/data/SpinalLesionSite_32303> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_32302> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_32303>. <http://scio/data/SpinalLesionSite_32308> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_32307> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_32308>."
+79285, Volume, 9773, 9777, "3 mL", "", 
+79315, SpragueDawleyRat, 9788, 9794, "animal", "", 
+49451, BladderExpression, 9859, 9885, "manual voiding of bladders", "", "<http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+49452, PostsurgicalMedication, 9966, 9974, "Buprenex", "", "<http://scio/data/PostsurgicalMedication_1982> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_1982>."
+49453, DosageIntracorporal, 9976, 9985, "0.1 mg/kg", "", "<http://scio/data/PostsurgicalMedication_1982> <http://psink.de/scio/hasDosage> \"0.1 mg/kg\"."
+57614, AntibioticMedication, 10082, 10094, "cephalozolin", "", "<http://scio/data/AntibioticMedication_15004> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/LateralHemisection_1965> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_15004>."
+49459, DosageIntracorporal, 10096, 10104, "50 mg/kg", "", "<http://scio/data/AntibioticMedication_15004> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+102471, LadderRungTest, 10311, 10328, "grid walk testing", "", 
+102613, RepeatedMeasureTrend, 10366, 10413, "on postinjury days 1, 7, 14, 21, 28, 35, and 42", "", 
+102456, DoubleBlindStudy, 10417, 10436, "2 observers blinded", "", 
+102459, LesionVolumeTest, 11583, 11594, "lesion area", "", 
+102460, CystVolumeTest, 11599, 11612, "cavitary area", "", 
+102614, InflammationTest, 12792, 12820, "used to identify macrophages", "", 
+102617, AstrogliosisTest, 12944, 12966, "identifying astrocytes", "", 
+102618, HistologicalInvestigationTest, 13043, 13077, "identifying the CS moiety in CSPGs", "", 
+102619, NeuronalChangesTest, 13224, 13249, "identifying motor neurons", "", 
+102461, AxonalRegenerationTest, 14554, 14573, "axonal regeneration", "", 
+102462, AxonalSproutingTest, 14574, 14583, "sprouting", "", 
+102463, DefinedExperimentalGroup, 14637, 14650, "control group", "", 
+102464, DefinedExperimentalGroup, 14652, 14677, "clodronate/rolipram group", "", 
+102465, DefinedExperimentalGroup, 14679, 14690, "ChABC group", "", 
+102466, DefinedExperimentalGroup, 14699, 14730, "clodronate/rolipram/ChABC group", "", 
+102469, AxonalDiebackTest, 15685, 15702, "axonal retraction", "", 
+102620, ANOVA, 16380, 16418, "Repeated-measures analysis of variance", "", 
+102470, StatisticalTest, 16435, 16454, "Tukey post hoc test", "", 
+102472, LadderRungTest, 16489, 16498, "grid walk", "", 
+102621, ANOVA, 16522, 16550, "One-way analysis of variance", "", 
+102473, StatisticalTest, 16563, 16582, "Tukey post hoc test", "", 
+102622, AxonalChangesTest, 16650, 16665, "axonal regrowth", "", 
+102474, AxonalDiebackTest, 16670, 16685, "axonal die-back", "", 
+102475, LesionVolumeTest, 16688, 16694, "lesion", "", 
+102476, CystVolumeTest, 16699, 16711, "cavity areas", "", 
+102477, InflammationTest, 16713, 16733, "macrophage densities", "", 
+102478, AxonalDiebackTest, 16739, 16761, "axonal die-back length", "", 
+102627, LadderRungTest, 22240, 22257, "grid walk testing", "", "<http://scio/data/LadderRungTest_69050> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_77610> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_77610> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82056> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82056> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82058> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82058> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82060> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82060> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82062> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82062> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82064> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82064> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82066> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82066> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82068> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82068> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82070> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82070> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/LadderRungTest_82072> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LadderRungTest>. <http://scio/data/LadderRungTest_82072> <http://www.w3.org/2000/01/rdf-schema#label> \"LadderRungTest (grid walk testing)\". <http://scio/data/Result_61529> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61570> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61584> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61598> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61612> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61626> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61640> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61654> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61666> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_61678> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102628, SpragueDawleyRat, 22265, 22272, "animals", "", 
+102479, DefinedExperimentalGroup, 22510, 22523, "control group", "", 
+102480, DefinedExperimentalGroup, 22532, 22543, "ChABC group", "", 
+102629, SpragueDawleyRat, 22552, 22559, "animals", "", 
+102635, Lower, 22577, 22589, "least degree", "R8ff", "<http://scio/data/RepeatedMeasureTrend_61661> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_61673> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/RepeatedMeasureTrend_61685> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102636, RepeatedMeasureTrend, 22603, 22624, "recovery over 7 weeks", "", "<http://scio/data/RepeatedMeasureTrend_61661> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61654> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61661>. <http://scio/data/RepeatedMeasureTrend_61673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61666> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61673>. <http://scio/data/RepeatedMeasureTrend_61685> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_61678> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_61685>."
+102488, Duration, 22612, 22624, "over 7 weeks", "", 
+102624, GroupName, 22626, 22633, "control", "E1", 
+102481, MeanValue, 22635, 22638, "46%", "", 
+102482, StandardDeviation, 22639, 22643, "± 18", "", 
+102489, Duration, 22654, 22663, "at day 42", "", 
+102625, GroupName, 22665, 22670, "ChABC", "E3", 
+102483, MeanValue, 22672, 22675, "43%", "", 
+102484, StandardDeviation, 22676, 22680, "±3.6", "", 
+102490, Duration, 22691, 22700, "at day 42", "", 
+102491, DefinedExperimentalGroup, 22713, 22739, "clodronate/ rolipram group", "", 
+102485, MeanValue, 22786, 22789, "34%", "", 
+102486, StandardDeviation, 22790, 22794, "± 10", "", 
+102487, Duration, 22805, 22814, "at day 42", "", 
+102495, PositiveSignificance, 22852, 22865, "significantly", "", "<http://scio/data/PositiveSignificance_61548> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61536> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61548>."
+102631, Higher, 22866, 22873, "greater", "R1", "<http://scio/data/Trend_61536> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+102496, DefinedExperimentalGroup, 22882, 22907, "clodronate/rolipram group", "", 
+102492, DefinedExperimentalGroup, 22930, 22943, "control group", "", 
+102493, Duration, 22944, 22953, "at day 28", "", 
+102497, PValue, 22955, 22962, "P < .05", "", "<http://scio/data/PositiveSignificance_61548> <http://psink.de/scio/hasPValue> \"P < .05\"."
+102509, DefinedExperimentalGroup, 22999, 23030, "clodronate/rolipram/ChABC group", "", 
+102510, PositiveSignificance, 23056, 23067, "significant", "", "<http://scio/data/PositiveSignificance_61580> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61577> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61580>. <http://scio/data/PositiveSignificance_61606> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61605> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61606>. <http://scio/data/PositiveSignificance_61620> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61619> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61620>. <http://scio/data/PositiveSignificance_61634> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61633> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61634>."
+102632, Positive, 23078, 23089, "improvement", "R2-6", "<http://scio/data/Result_61570> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61598> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61612> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_61626> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+102507, MeanValue, 23091, 23094, "22%", "", 
+102508, StandardDeviation, 23095, 23099, "± 10", "", 
+102511, Duration, 23110, 23119, "at day 42", "", 
+102512, DefinedExperimentalGroup, 23139, 23152, "control group", "", 
+102513, PositiveSignificance, 23159, 23184, "statistically significant", "", "<http://scio/data/PositiveSignificance_61592> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61591> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61592>."
+102630, Positive, 23185, 23197, "improvements", "", "<http://scio/data/Result_61584> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+102514, Duration, 23214, 23220, "day 14", "", 
+102515, PValue, 23222, 23229, "P < .05", "", "<http://scio/data/PositiveSignificance_61592> <http://psink.de/scio/hasPValue> \"P < .05\"."
+102498, Duration, 23291, 23297, "day 21", "", 
+102499, PValue, 23299, 23306, "P < .01", "", "<http://scio/data/PositiveSignificance_61606> <http://psink.de/scio/hasPValue> \"P < .01\"."
+102500, Duration, 23308, 23314, "day 28", "", 
+102501, PValue, 23316, 23323, "P < .01", "", "<http://scio/data/PositiveSignificance_61620> <http://psink.de/scio/hasPValue> \"P < .01\"."
+102502, Duration, 23325, 23331, "day 35", "", 
+102503, PValue, 23333, 23340, "P < .01", "", "<http://scio/data/PositiveSignificance_61634> <http://psink.de/scio/hasPValue> \"P < .01\"."
+102504, Duration, 23346, 23352, "day 42", "", 
+102505, PValue, 23354, 23362, "P < .001", "", "<http://scio/data/PositiveSignificance_61580> <http://psink.de/scio/hasPValue> \"P < .001\"."
+102518, DefinedExperimentalGroup, 23393, 23425, "clodronate/ rolipram/ChABC group", "", 
+102516, PositiveSignificance, 23451, 23464, "significantly", "", "<http://scio/data/PositiveSignificance_61650> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61647> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61650>."
+102634, Higher, 23465, 23472, "greater", "R7", "<http://scio/data/Trend_61647> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+102519, DefinedExperimentalGroup, 23482, 23493, "ChABC group", "", 
+102520, Duration, 23494, 23503, "at day 42", "", 
+102521, PValue, 23505, 23512, "P < .01", "", "<http://scio/data/PositiveSignificance_61650> <http://psink.de/scio/hasPValue> \"P < .01\"."
+102637, LesionVolumeTest, 23726, 23761, "Quantification of total lesion area", "", "<http://scio/data/LesionVolumeTest_69084> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_77623> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_77623> <http://www.w3.org/2000/01/rdf-schema#label> \"LesionVolumeTest (Quantification of total lesion area)\". <http://scio/data/Result_61766> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102638, PositiveSignificance, 23823, 23834, "significant", "", "<http://scio/data/PositiveSignificance_61755> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61752> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61755>. <http://scio/data/PositiveSignificance_61776> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_61773> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_61776>."
+102639, DefinedExperimentalGroup, 23855, 23880, "clodronate/rolipram group", "", 
+102640, DefinedExperimentalGroup, 23889, 23920, "clodronate/rolipram/ChABC group", "", 
+102641, DefinedExperimentalGroup, 23939, 23952, "control group", "", 
+102642, Liposomes, 23966, 23975, "liposomal", "", 
+102643, Clodronate, 23976, 23986, "clodronate", "", 
+102644, Rolipram, 23991, 23999, "rolipram", "", 
+102534, MeanValue, 24014, 24017, "42%", "", 
+102653, Lower, 24018, 24027, "reduction", "R11", "<http://scio/data/Trend_61752> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102522, LesionVolumeTest, 24031, 24042, "lesion area", "", "<http://scio/data/LesionVolumeTest_69081> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_77621> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionVolumeTest>. <http://scio/data/LesionVolumeTest_77621> <http://www.w3.org/2000/01/rdf-schema#label> \"LesionVolumeTest (lesion area)\". <http://scio/data/Result_61745> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102530, DefinedExperimentalGroup, 24066, 24079, "control group", "", 
+102523, MeanValue, 24081, 24085, "2.56", "", 
+102524, StandardDeviation, 24086, 24095, "± 0.5 mm2", "", 
+102525, DefinedExperimentalGroup, 24096, 24109, "control group", "", 
+102526, MeanValue, 24111, 24115, "1.48", "", 
+102527, StandardDeviation, 24116, 24125, "± 0.7 mm2", "", 
+102528, DefinedExperimentalGroup, 24126, 24151, "clodronate/rolipram group", "", 
+102531, PValue, 24153, 24160, "P < .01", "", "<http://scio/data/PositiveSignificance_61755> <http://psink.de/scio/hasPValue> \"P < .01\"."
+102535, DefinedExperimentalGroup, 24207, 24239, "clodronate/rolipram/ ChABC group", "", 
+102655, Lower, 24256, 24273, "largest reduction", "R12", "<http://scio/data/Trend_61773> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102536, MeanValue, 24275, 24278, "64%", "", 
+102533, LesionVolumeTest, 24283, 24294, "lesion area", "", 
+102539, DefinedExperimentalGroup, 24314, 24327, "control group", "", 
+102537, MeanValue, 24329, 24334, "0.923", "", 
+102538, StandardDeviation, 24335, 24344, "± 0.7 mm2", "", 
+102540, PValue, 24346, 24354, "P < .001", "", "<http://scio/data/PositiveSignificance_61776> <http://psink.de/scio/hasPValue> \"P < .001\"."
+102541, DefinedExperimentalGroup, 24381, 24412, "clodronate/rolipram/ChABC group", "", 
+102542, Lower, 24413, 24420, "reduced", "", 
+102645, LesionVolumeTest, 24421, 24432, "lesion size", "", 
+102646, Higher, 24438, 24452, "greater extent", "", 
+102543, AnalyzedExperimentalGroup, 24458, 24480, "either treatment alone", "", 
+102647, ZeroSignificance, 24482, 24554, "statistically significant differences in lesion volume were not observed", "", "<http://scio/data/ZeroSignificance_62498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_62267> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_62498>. <http://scio/data/ZeroSignificance_63078> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_63075> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_63078>."
+102656, None, 24508, 24554, "differences in lesion volume were not observed", "R13, R14", "<http://scio/data/Trend_62267> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>. <http://scio/data/Trend_63075> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+102544, LesionVolumeTest, 24523, 24536, "lesion volume", "", 
+102545, DefinedExperimentalGroup, 24589, 24600, "ChABC group", "", 
+102546, MeanValue, 24602, 24606, "1.87", "", 
+102649, StandardDeviation, 24609, 24616, "0.7 mm2", "", 
+102547, DefinedExperimentalGroup, 24625, 24650, "clodronate/rolipram group", "", 
+102548, CystVolumeTest, 24665, 24678, "cavitary area", "", 
+102549, PositiveSignificance, 24683, 24696, "significantly", "", "<http://scio/data/PositiveSignificance_64893> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_64351> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_64893>. <http://scio/data/PositiveSignificance_65454> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_65452> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_65454>. <http://scio/data/PositiveSignificance_65907> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_65904> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_65907>."
+102550, Lower, 24697, 24704, "reduced", "", 
+102551, AnalyzedExperimentalGroup, 24709, 24729, "all treatment groups", "", 
+102552, DefinedExperimentalGroup, 24748, 24761, "control group", "", 
+102554, DefinedExperimentalGroup, 24792, 24805, "control group", "", 
+102555, MeanValue, 24807, 24811, "1.13", "", 
+102556, StandardDeviation, 24812, 24821, "± 0.6 mm2", "", 
+102557, DefinedExperimentalGroup, 24828, 24853, "clodronate/rolipram group", "", 
+102558, MeanValue, 24855, 24860, "0.079", "", 
+102559, StandardDeviation, 24861, 24870, "± 0.1 mm2", "", 
+102560, PValue, 24872, 24880, "P < .001", "", "<http://scio/data/PositiveSignificance_64893> <http://psink.de/scio/hasPValue> \"P < .001\"."
+102561, DefinedExperimentalGroup, 24887, 24898, "ChABC group", "", 
+102562, MeanValue, 24900, 24904, "0.32", "", 
+102563, StandardDeviation, 24905, 24914, "± 0.2 mm2", "", 
+102564, PValue, 24916, 24924, "P < .001", "", "<http://scio/data/PositiveSignificance_65454> <http://psink.de/scio/hasPValue> \"P < .001\"."
+102565, DefinedExperimentalGroup, 24935, 24966, "clodronate/rolipram/ChABC group", "", 
+102566, MeanValue, 24968, 24973, "0.068", "", 
+102567, StandardDeviation, 24974, 24984, "± 0.13 mm2", "", 
+102568, PValue, 24986, 24994, "P < .001", "", "<http://scio/data/PositiveSignificance_65907> <http://psink.de/scio/hasPValue> \"P < .001\"."
+102650, MeanValue, 25012, 25015, "93%", "", 
+102651, MeanValue, 25017, 25020, "72%", "", 
+102652, MeanValue, 25026, 25029, "93%", "", 
+102658, Lower, 25030, 25039, "reduction", "R15-17", "<http://scio/data/Trend_64351> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_65452> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_65904> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102569, CystVolumeTest, 25043, 25056, "cavitary size", "", 
+102570, InflammationTest, 25106, 25143, "Quantification of the number of ED-1+", "", 
+102571, Duration, 25165, 25172, "49 days", "", 
+102572, PositiveSignificance, 25184, 25195, "significant", "", "<http://scio/data/PositiveSignificance_69008> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_68440> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_69008>. <http://scio/data/PositiveSignificance_69096> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_69095> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_69096>."
+102660, Lower, 25196, 25204, "decrease", "R18, R19", "<http://scio/data/Trend_68440> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_69095> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102659, DefinedExperimentalGroup, 25228, 25259, "clodronate/rolipram/ChABC group", "", 
+102574, MeanValue, 25261, 25265, "65.6", "", 
+102575, StandardDeviation, 25266, 25271, "± 8.8", "", 
+102576, DefinedExperimentalGroup, 25291, 25304, "control group", "", 
+102577, MeanValue, 25306, 25310, "95.1", "", 
+102578, StandardDeviation, 25311, 25317, "± 16.3", "", 
+102579, PValue, 25319, 25327, "P < .001", "", "<http://scio/data/PositiveSignificance_69008> <http://psink.de/scio/hasPValue> \"P < .001\"."
+102580, DefinedExperimentalGroup, 25338, 25349, "ChABC group", "", 
+102581, MeanValue, 25357, 25361, "83.3", "", 
+102582, StandardDeviation, 25362, 25368, "± 10.8", "", 
+102583, PValue, 25370, 25377, "P < .05", "", "<http://scio/data/PositiveSignificance_69096> <http://psink.de/scio/hasPValue> \"P < .05\"."
+102661, Lower, 25403, 25412, "reduction", "R20", "<http://scio/data/Trend_69109> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102585, InflammationTest, 25420, 25441, "number of macrophages", "", 
+102586, DefinedExperimentalGroup, 25450, 25476, "clodronate/ rolipram group", "", 
+102587, MeanValue, 25478, 25482, "81.1", "", 
+102588, StandardDeviation, 25483, 25488, "± 9.1", "", 
+102589, DefinedExperimentalGroup, 25508, 25521, "control group", "", 
+102590, ZeroSignificance, 25536, 25551, "not significant", "", "<http://scio/data/ZeroSignificance_69112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_69109> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_69112>."
+102591, PValue, 25553, 25560, "P = .08", "", "<http://scio/data/ZeroSignificance_69112> <http://psink.de/scio/hasPValue> \"P = .08\"."
+102595, DefinedExperimentalGroup, 25805, 25818, "control group", "", 
+102592, PositiveSignificance, 25826, 25839, "significantly", "", "<http://scio/data/PositiveSignificance_69126> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_69123> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_69126>."
+102662, Higher, 25840, 25847, "greater", "R21", "<http://scio/data/Trend_69123> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+102597, AxonalDiebackTest, 25848, 25856, "die-back", "", 
+102593, MeanValue, 25858, 25864, "1.7 mm", "", 
+102594, StandardError, 25898, 25905, "0.49 mm", "", 
+102598, DefinedExperimentalGroup, 25925, 25957, "Clodronate/ Rolipram/ChABC Group", "", 
+102599, MeanValue, 25959, 25966, "0.55 mm", "", 
+102600, StandardError, 25971, 25978, "0.16 mm", "", 
+102601, PValue, 25980, 25987, "P < .05", "", "<http://scio/data/PositiveSignificance_69126> <http://psink.de/scio/hasPValue> \"P < .05\"."
+102606, DefinedExperimentalGroup, 26005, 26016, "ChABC group", "", 
+102602, MeanValue, 26018, 26025, "0.86 mm", "", 
+102603, StandardError, 26030, 26037, "0.09 mm", "", 
+102607, DefinedExperimentalGroup, 26047, 26072, "clodronate/rolipram group", "", 
+102604, MeanValue, 26074, 26081, "0.86 mm", "", 
+102605, StandardError, 26086, 26093, "0.19 mm", "", 
+102663, Lower, 26113, 26120, "reduced", "R21, R22", "<http://scio/data/Trend_69137> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_69149> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+102608, AxonalDiebackTest, 26121, 26129, "die-back", "", 
+102665, Positive, 28489, 28501, "improvements", "", 
+102664, Neutral, 28525, 28550, "did not show improvements", "", 
+102666, Positive, 29354, 29363, "effective", "", 
+102689, Positive, 30219, 30230, "improvement", "", 
+102610, Positive, 30347, 30358, "improvement", "", 
+102611, DefinedExperimentalGroup, 30820, 30852, "clodronate/rolipram/ ChABC group", "", 
+102612, Positive, 30902, 30919, "enhanced outcomes", "", 

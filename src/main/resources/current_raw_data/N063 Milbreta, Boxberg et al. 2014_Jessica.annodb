@@ -1,0 +1,311 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+101871, Higher, 316, 328, "Upregulation", "", 
+101885, Neutral, 414, 421, "failure", "", 
+101886, AxonalRegenerationTest, 425, 444, "axons to regenerate", "", 
+101887, Duration, 445, 475, "after spinal cord injury (SCI)", "", 
+101888, Injury, 451, 475, "spinal cord injury (SCI)", "", 
+101889, SpinalCord, 451, 462, "spinal cord", "", 
+101890, Positive, 485, 502, "beneficial effect", "", 
+101872, ChondroitinaseABC, 527, 545, "chondroitinase ABC", "", 
+101891, ChondroitinaseABC, 547, 552, "ChABC", "", 
+101892, ChondroitinaseABC, 622, 627, "ChABC", "", 
+101873, AstrogliosisTest, 641, 653, "astrogliosis", "", 
+101894, AngiogenesisTest, 658, 675, "revascularization", "", 
+101874, AxonalRegenerationTest, 711, 724, "axon regrowth", "", 
+101895, Duration, 770, 813, "Immediately after a spinal cord hemisection", "", 
+101899, LateralHemisection, 790, 813, "spinal cord hemisection", "", 
+101897, Thoracic, 817, 825, "thoracic", "", 
+101875, T8, 832, 833, "8", "", 
+101876, T9, 834, 835, "9", "", 
+101900, InjectionDelivery, 840, 848, "injected", "", 
+101898, ChondroitinaseABC, 849, 854, "ChABC", "", 
+101877, Intrathecal, 855, 868, "intrathecally", "", 
+101878, Sacral, 876, 882, "sacral", "", 
+101879, Frequency, 899, 910, "three times", "", 
+101880, Duration, 911, 936, "until 10 days post-injury", "", "<http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasDuration> \"until 10 days post-injury\"."
+101901, AxonalChangesTest, 1029, 1046, "axonal remodeling", "", 
+101902, SpinalLesionSite, 1047, 1069, "within the injury site", "", 
+101903, AstrogliosisTest, 1108, 1128, "astrocyte remodeling", "", 
+101904, Duration, 1130, 1143, "up to 4 weeks", "", 
+101893, ChondroitinaseABC, 1161, 1166, "ChABC", "", 
+101905, AstrogliosisTest, 1188, 1223, "orientation of astrocytic processes", "", 
+101881, Duration, 1383, 1417, "during the first weeks post-injury", "", 
+101882, ChondroitinaseABC, 1419, 1424, "ChABC", "", 
+101906, AngiogenesisTest, 1435, 1510, "affected the morphology of laminin-positive blood vessel basement membranes", "", 
+101907, AngiogenesisTest, 1515, 1550, "vessel-independent laminin deposits", "", 
+101908, AngiogenesisTest, 1552, 1579, "hypertrophied blood vessels", "", 
+101909, Higher, 1631, 1644, "more numerous", "", 
+101910, GroupName, 1653, 1679, "lesioned untreated animals", "E1", "<http://scio/data/DefinedExperimentalGroup_59570> <http://psink.de/scio/hasGroupName> \"lesioned untreated animals\"."
+101883, Duration, 1694, 1714, "at later time points", "", 
+101912, AngiogenesisTest, 1716, 1734, "laminin expression", "", 
+101884, Higher, 1735, 1744, "increased", "", 
+101914, Higher, 1756, 1760, "more", "", 
+101915, AngiogenesisTest, 1761, 1812, "directly associated with newly formed blood vessels", "", 
+48673, Adult, 5153, 5158, "adult", "", "<http://scio/data/OrganismModel_604> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48674, Female, 5159, 5165, "female", "", "<http://scio/data/OrganismModel_604> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48675, Weight, 5167, 5175, "200–250g", "", "<http://scio/data/OrganismModel_604> <http://psink.de/scio/hasWeight> \"200–250g\"."
+48676, WistarRat, 5177, 5188, "Wistar rats", "", "<http://scio/data/OrganismModel_604> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+54262, IntraperitonealLocation, 5242, 5257, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3842> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3843> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+54263, InjectionDelivery, 5258, 5267, "injection", "", "<http://scio/data/InjectionDelivery_3842> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2671> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3842>. <http://scio/data/InjectionDelivery_3843> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2680> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3843>."
+50125, Xylazine, 5307, 5315, "xylazine", "", "<http://scio/data/Xylazine_2671> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/LateralHemisection_2668> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2671>."
+50126, DosageIntracorporal, 5317, 5324, "5 mg/kg", "", "<http://scio/data/Xylazine_2671> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+50127, KetamineAsAnaesthetic, 5365, 5373, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2680> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/LateralHemisection_2668> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2680>."
+50128, DosageIntracorporal, 5375, 5383, "50 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2680> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+50129, Laminectomy, 5432, 5443, "laminectomy", "", 
+54264, VertebralArea, 5456, 5470, "T8-9 vertebrae", "", "<http://scio/data/VertebralArea_3839> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/LateralHemisection_2668> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3839>."
+50135, Right, 5476, 5481, "right", "", "<http://scio/data/Right_2677> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/LateralHemisection_2668> <http://psink.de/scio/hasDirection> <http://scio/data/Right_2677>."
+50136, LateralHemisection, 5476, 5529, "right side of the spinal cord was entirely transected", "", "<http://scio/data/LateralHemisection_2668> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2668> <http://www.w3.org/2000/01/rdf-schema#label> \"LateralHemisection\"."
+50131, Scissors, 5536, 5549, "microscissors", "", "<http://scio/data/LateralHemisection_2668> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+101571, Duration, 5556, 5584, "Immediately after the injury", "", "<http://scio/data/TemporalInterval_59944> <http://psink.de/scio/hasDuration> \"Immediately after the injury\". <http://scio/data/TemporalInterval_59952> <http://psink.de/scio/hasDuration> \"Immediately after the injury\"."
+101572, Injury, 5578, 5584, "injury", "", 
+101582, WistarRat, 5607, 5614, "animals", "", 
+101567, Intrathecal, 5624, 5635, "intrathecal", "", "<http://scio/data/Intrathecal_59538> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_59528> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_59538>. <http://scio/data/Intrathecal_59546> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal>. <http://scio/data/InjectionDelivery_59544> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_59546>."
+101573, InjectionDelivery, 5636, 5646, "injections", "", "<http://scio/data/InjectionDelivery_59528> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_59528>. <http://scio/data/InjectionDelivery_59544> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_59544>."
+101574, Sacral, 5654, 5666, "sacral level", "", "<http://scio/data/InjectionDelivery_59528> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Sacral>. <http://scio/data/InjectionDelivery_59544> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Sacral>."
+101575, ChondroitinaseABC, 5670, 5689, "protease-free ChABC", "", "<http://scio/data/ChondroitinaseABC_59536> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_59536>."
+101576, Seikagaku, 5691, 5700, "Seikagaku", "", "<http://scio/data/ChondroitinaseABC_59536> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku>."
+101577, Penicillinase, 5727, 5740, "penicillinase", "", "<http://scio/data/Penicillinase_59555> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase>. <http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasCompound> <http://scio/data/Penicillinase_59555>."
+101578, Penicillinase, 5742, 5747, "P-ase", "", 
+101579, SigmaAldrich, 5749, 5762, "Sigma-Aldrich", "", "<http://scio/data/Penicillinase_59555> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>."
+101568, Frequency, 5774, 5789, "every third day", "", "<http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasFrequency> \"every third day\". <http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasFrequency> \"every third day\"."
+101580, InjectionDelivery, 5810, 5820, "injections", "", 
+101569, Duration, 5822, 5837, "days 0, 3, 6, 9", "", "<http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasDuration> \"days 0, 3, 6, 9\"."
+101570, Syringe, 5847, 5869, "0.5mL Hamilton syringe", "", "<http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>. <http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe>."
+101581, WistarRat, 5890, 5896, "animal", "", 
+101583, InjectionDelivery, 5901, 5909, "injected", "", 
+101584, ChondroitinaseABC, 5918, 5923, "ChABC", "", 
+101585, DosageExtracorporal, 5925, 5944, "0.15 units per dose", "", "<http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasDosage> \"0.15 units per dose\". <http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasDosage> \"0.15 units per dose\"."
+101586, Vehicle, 5958, 5988, "artificial cerebrospinal fluid", "", "<http://scio/data/Vehicle_59534> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_59526> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Vehicle_59534>."
+101587, Penicillinase, 6026, 6031, "P-ase", "", 
+101588, DosageExtracorporal, 6033, 6041, "30 µg/mL", "", 
+101589, Vehicle, 6055, 6058, "CSF", "", "<http://scio/data/Vehicle_59553> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_59542> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Vehicle_59553>."
+101917, AstrogliosisTest, 7527, 7570, "anti-glial fibrillary acidic protein (GFAP)", "", 
+101916, AngiogenesisTest, 7594, 7673, "anti-laminin (Sigma-Aldrich; 1:100) to identify blood vessel basement membranes", "", 
+101918, AngiogenesisTest, 7690, 7765, "AHNAK (clone 5; homemade; 1:512 to label blood–brain barrierforming vessels", "", 
+101919, HistologicalInvestigationTest, 7771, 7789, "non-neuronal cells", "", 
+101594, AxonalChangesTest, 7934, 7949, "to detect axons", "", 
+101920, AngiogenesisTest, 8089, 8174, "SMI 71 (Covance; 1:100) to identify rat blood-brain barrier-forming endothelial cells", "", 
+101922, HistologicalInvestigationTest, 8176, 8237, "monoclonal ZO-1 (Invitrogen; 1:1000) labeling tight junctions", "", 
+101598, ProteinLevelAnalysis, 9509, 9537, "Protein content was measured", "", 
+101599, TTest, 11220, 11234, "Student t test", "", "<http://scio/data/Result_59616> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59627> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59638> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59662> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59678> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59693> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59706> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59719> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59748> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59792> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59805> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59843> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59918> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_59929> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_60416> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>. <http://scio/data/Result_60427> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/TTest>."
+101863, ChondroitinaseABC, 24159, 24164, "ChABC", "", 
+101864, ZeroSignificance, 24192, 24207, "not significant", "", 
+101865, ProteinLevelAnalysis, 24218, 24243, "laminin expression levels", "", "<http://scio/data/ProteinLevelAnalysis_68748> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_77487> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_77487> <http://www.w3.org/2000/01/rdf-schema#label> \"ProteinLevelAnalysis (laminin expression levels)\". <http://scio/data/Result_59929> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101866, Duration, 24244, 24268, "during the first 2 weeks", "", 
+101868, PositiveSignificance, 24283, 24296, "significantly", "", "<http://scio/data/PositiveSignificance_59938> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59936> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59938>."
+101870, Higher, 24297, 24305, "stronger", "R27", "<http://scio/data/Trend_59936> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101869, PValue, 24308, 24316, "p < 0.05", "", "<http://scio/data/PositiveSignificance_59938> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101867, Duration, 24318, 24340, "at 4 weeks post-injury", "", 
+101613, ChondroitinaseABC, 26734, 26739, "ChABC", "", 
+101614, AstrogliosisTest, 26751, 26758, "GFAP IR", "", "<http://scio/data/AstrogliosisTest_68661> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77441> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77441> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (GFAP IR)\". <http://scio/data/Result_59594> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101631, Lower, 26763, 26775, "less intense", "R1", "<http://scio/data/Trend_59601> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101609, DefinedExperimentalGroup, 26784, 26801, "untreated animals", "E1", "<http://scio/data/DefinedExperimentalGroup_59570> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_59570> <http://www.w3.org/2000/01/rdf-schema#label> \"untreated animals, E1\"."
+101605, Duration, 26813, 26835, "At 2 weeks post-injury", "", 
+101610, DefinedExperimentalGroup, 26876, 26893, "untreated animals", "E1", 
+101615, AstrogliosisTest, 26916, 26941, "GFAP IR processes network", "", 
+101612, DefinedExperimentalGroup, 27013, 27034, "ChABC-treated animals", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_59578> <http://www.w3.org/2000/01/rdf-schema#label> \"ChABC-treated animals, E2\"."
+101620, ChondroitinaseABC, 27013, 27026, "ChABC-treated", "", 
+101632, Lower, 27087, 27099, "less compact", "R2", "<http://scio/data/Trend_59612> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101616, AstrogliosisTest, 27110, 27129, "astrocyte processes", "", "<http://scio/data/AstrogliosisTest_68664> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77443> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77443> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (astrocyte processes)\". <http://scio/data/Result_59605> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101608, Duration, 27177, 27198, "At 4 weeks postinjury", "", 
+101617, AstrogliosisTest, 27202, 27220, "compact glial scar", "", 
+101618, GroupName, 27259, 27268, "untreated", "E1", "<http://scio/data/DefinedExperimentalGroup_59570> <http://psink.de/scio/hasGroupName> \"untreated\"."
+101611, DefinedExperimentalGroup, 27283, 27304, "P-ase-treated animals", "E3", "<http://scio/data/DefinedExperimentalGroup_59586> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_59586> <http://www.w3.org/2000/01/rdf-schema#label> \"P-ase-treated animals, E3\"."
+101622, Penicillinase, 27283, 27296, "P-ase-treated", "", 
+101619, DefinedExperimentalGroup, 27438, 27459, "ChABC-treated animals", "E2", 
+101621, ChondroitinaseABC, 27438, 27451, "ChABC-treated", "", 
+101623, DefinedExperimentalGroup, 28649, 28670, "ChABC-treated animals", "", 
+101675, AxonalChangesTest, 28672, 28709, "the number of MAP1B-P-positive fibers", "", "<http://scio/data/AxonalChangesTest_68670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77445> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77445> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (the number of MAP1B-P-positive fibers)\". <http://scio/data/AxonalChangesTest_81918> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81918> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (the number of MAP1B-P-positive fibers)\". <http://scio/data/Result_59616> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59627> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+102099, AxonalChangesTest, 28720, 28783, "extension from the borders toward the center of the injury site", "", "<http://scio/data/AxonalChangesTest_68815> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77516> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77516> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (extension from the borders toward the center of the injury site)\". <http://scio/data/AxonalChangesTest_81956> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81956> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (extension from the borders toward the center of the injury site)\". <http://scio/data/Result_60416> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_60427> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101624, PositiveSignificance, 28789, 28802, "significantly", "", "<http://scio/data/PositiveSignificance_59625> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59623> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59625>. <http://scio/data/PositiveSignificance_59635> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59634> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59635>. <http://scio/data/PositiveSignificance_60424> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_60423> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_60424>. <http://scio/data/PositiveSignificance_60435> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_60434> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_60435>."
+101636, Higher, 28803, 28809, "higher", "R3, R4", "<http://scio/data/Trend_59623> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_59634> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_60423> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_60434> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101634, GroupName, 28818, 28827, "untreated", "E1", 
+101635, DefinedExperimentalGroup, 28832, 28853, "P-ase-treated animals", "", 
+101640, AxonalChangesTest, 29211, 29224, "fiber density", "", "<http://scio/data/AxonalChangesTest_68673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77448> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (fiber density)\". <http://scio/data/Result_59638> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101642, SpinalLesionSite, 29225, 29252, "within the lesion epicenter", "", "<http://scio/data/SpinalLesionSite_68674> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/AxonalChangesTest_68673> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_68674>."
+101643, PositiveSignificance, 29257, 29270, "significantly", "", "<http://scio/data/PositiveSignificance_59649> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_59645> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59649>."
+101674, Higher, 29271, 29277, "higher", "R5", "<http://scio/data/RepeatedMeasureTrend_59645> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101645, GroupName, 29281, 29294, "ChABC-treated", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABC-treated\"."
+101649, DefinedExperimentalGroup, 29303, 29320, "untreated animals", "", 
+101647, RepeatedMeasureTrend, 29321, 29348, "at all time points analyzed", "", "<http://scio/data/RepeatedMeasureTrend_59645> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59638> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59645>."
+101648, DefinedExperimentalGroup, 31000, 31017, "untreated animals", "", 
+101650, AstrogliosisTest, 31019, 31043, "GFAP-positive structures", "", 
+101652, MeanValue, 31053, 31056, "5.3", "", 
+101658, StandardError, 31057, 31063, "± 3.7%", "", 
+101665, SpinalLesionSite, 31071, 31096, "total primary injury area", "", 
+101666, Duration, 31097, 31118, "at 1 week post-injury", "", 
+101653, MeanValue, 31134, 31137, "7.5", "", 
+101659, StandardError, 31138, 31144, "± 4.5%", "", 
+101667, Duration, 31145, 31155, "at 2 weeks", "", 
+101668, Duration, 31187, 31212, "until 4 weeks post-injury", "", 
+101654, MeanValue, 31214, 31217, "7.9", "", 
+101660, StandardError, 31218, 31222, "± 3%", "", 
+101669, ChondroitinaseABC, 31231, 31236, "ChABC", "", 
+101651, AstrogliosisTest, 31252, 31289, "area occupied by astrocytic processes", "", "<http://scio/data/AstrogliosisTest_68677> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77450> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_77450> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (area occupied by astrocytic processes)\". <http://scio/data/AstrogliosisTest_81920> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_81920> <http://www.w3.org/2000/01/rdf-schema#label> \"AstrogliosisTest (area occupied by astrocytic processes)\". <http://scio/data/Result_59651> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59662> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101676, Higher, 31294, 31300, "larger", "R6", "<http://scio/data/RepeatedMeasureTrend_59658> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101655, MeanValue, 31302, 31305, "8.7", "", 
+101661, StandardError, 31306, 31312, "± 2.6%", "", 
+101656, MeanValue, 31318, 31319, "9", "", 
+101662, StandardError, 31320, 31326, "± 4.3%", "", 
+101671, Duration, 31342, 31346, "at 1", "", 
+101673, RepeatedMeasureTrend, 31342, 31370, "at 1 and 2 weeks post-injury", "", "<http://scio/data/RepeatedMeasureTrend_59658> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59651> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59658>."
+101672, Duration, 31351, 31370, "2 weeks post-injury", "", 
+101626, PositiveSignificance, 31377, 31390, "significantly", "", "<http://scio/data/PositiveSignificance_59674> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59673> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59674>."
+101677, Higher, 31391, 31400, "increased", "R7", "<http://scio/data/Trend_59673> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101657, MeanValue, 31404, 31408, "15.1", "", 
+101663, StandardError, 31409, 31415, "± 6.4%", "", 
+101664, PValue, 31418, 31426, "p < 0.05", "", "<http://scio/data/PositiveSignificance_59674> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101628, Duration, 31431, 31438, "4 weeks", "", 
+101680, Duration, 31686, 31707, "at 1 week post-injury", "", 
+101678, AxonalChangesTest, 31709, 31734, "MAP1B-P-positive labeling", "", "<http://scio/data/AxonalChangesTest_68683> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77453> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77453> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (MAP1B-P-positive labeling)\". <http://scio/data/Result_59678> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101683, MeanValue, 31748, 31752, "34.9", "", 
+101689, StandardError, 31753, 31760, "± 12.7%", "", 
+101698, SpinalLesionSite, 31761, 31787, "of the primary injury area", "", "<http://scio/data/SpinalLesionSite_68684> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/AxonalChangesTest_68683> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_68684>."
+101684, MeanValue, 31809, 31812, "6.4", "", 
+101690, StandardError, 31813, 31819, "± 0.9%", "", 
+101699, DefinedExperimentalGroup, 31824, 31841, "untreated animals", "", 
+101695, PValue, 31844, 31852, "p < 0.05", "", "<http://scio/data/Significance_59689> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101700, AxonalChangesTest, 31859, 31890, "extent of MAP1BP- labeled areas", "", "<http://scio/data/AxonalChangesTest_68687> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77455> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_77455> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (extent of MAP1BP- labeled areas)\". <http://scio/data/AxonalChangesTest_81922> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_81922> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (extent of MAP1BP- labeled areas)\". <http://scio/data/Result_59693> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59706> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101685, MeanValue, 31929, 31931, "33", "", 
+101691, StandardError, 31932, 31938, "± 6.9%", "", 
+101681, Duration, 31939, 31949, "at 2 weeks", "", 
+101686, MeanValue, 31955, 31959, "18.9", "", 
+101692, StandardError, 31960, 31966, "± 4.0%", "", 
+101696, PValue, 31968, 31976, "p < 0.05", "", "<http://scio/data/Significance_59702> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101687, MeanValue, 31983, 31987, "22.4", "", 
+101693, StandardError, 31988, 31995, "± 11.5%", "", 
+101682, Duration, 31996, 32006, "at 4 weeks", "", 
+101688, MeanValue, 32012, 32016, "10.5", "", 
+101694, StandardError, 32017, 32023, "± 1.6%", "", 
+101697, PValue, 32025, 32033, "p < 0.05", "", "<http://scio/data/Significance_59714> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101704, Higher, 32055, 32068, "twice as high", "R8-10", "<http://scio/data/Trend_59685> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_59700> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_59713> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101703, DefinedExperimentalGroup, 32075, 32092, "untreated animals", "", 
+101749, HistologicalInvestigationTest, 32205, 32261, "clear association of GFAP labeling with MAP1B-P labeling", "", "<http://scio/data/HistologicalInvestigationTest_68701> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77460> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77460> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (clear association of GFAP labeling with MAP1B-P labeling)\". <http://scio/data/HistologicalInvestigationTest_81924> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_81924> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (clear association of GFAP labeling with MAP1B-P labeling)\". <http://scio/data/Result_59719> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59748> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101751, GroupName, 32271, 32280, "untreated", "E1", 
+101752, GroupName, 32285, 32305, "ChABCtreated animals", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABCtreated animals\"."
+101753, Higher, 32560, 32575, "more pronounced", "R11, R13", "<http://scio/data/Trend_59726> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_59757> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101733, GroupName, 32579, 32592, "ChABC-treated", "E2", 
+101734, DefinedExperimentalGroup, 32601, 32618, "untreated animals", "", 
+101706, HistologicalInvestigationTest, 32636, 32753, "the deviation (angle) between the gross trajectories of GFAP-positive astrocytic processes and MAP1B-P-positive axons", "", "<http://scio/data/HistologicalInvestigationTest_68697> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77458> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77458> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (the deviation (angle) between the gross trajectories of GFAP-positive astrocytic processes and MAP1B-P-positive axons)\". <http://scio/data/Result_59734> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101707, LesionAdjacentTissue, 32761, 32782, "primary injury margin", "", "<http://scio/data/LesionAdjacentTissue_68698> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/HistologicalInvestigationTest_68697> <http://psink.de/scio/hasLocation> <http://scio/data/LesionAdjacentTissue_68698>. <http://scio/data/LesionAdjacentTissue_68702> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/HistologicalInvestigationTest_68701> <http://psink.de/scio/hasLocation> <http://scio/data/LesionAdjacentTissue_68702>."
+101708, NumericValue, 32787, 32788, "7", "", 
+101728, StandardError, 32789, 32802, "– 2.6 degrees", "", 
+101710, DefinedExperimentalGroup, 32807, 32824, "untreated animals", "", 
+101711, Duration, 32825, 32846, "at 1 week post-injury", "", 
+101709, NumericValue, 32867, 32868, "2", "", 
+101727, StandardError, 32869, 32880, "± 2 degrees", "", 
+101712, ChondroitinaseABC, 32887, 32892, "ChABC", "", 
+101713, PValue, 32905, 32913, "p < 0.05", "", "<http://scio/data/Significance_59728> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101715, Duration, 32916, 32926, "At 2 weeks", "", 
+101747, UnspecifiedDifference, 32932, 32942, "difference", "R12", "<http://scio/data/Trend_59741> <http://psink.de/scio/hasDifference> <http://psink.de/scio/UnspecifiedDifference>."
+101717, GroupName, 32951, 32960, "untreated", "E1", 
+101736, GroupName, 32965, 32980, "treated animals", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"treated animals\"."
+101721, MeanValue, 33002, 33005, "2.7", "", 
+101725, StandardError, 33006, 33019, "± 3.2 degrees", "", 
+101722, MeanValue, 33024, 33027, "2.3", "", 
+101726, StandardError, 33028, 33041, "± 0.6 degrees", "", 
+101720, PositiveSignificance, 33072, 33083, "significant", "", "<http://scio/data/PositiveSignificance_59758> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59757> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59758>."
+101716, Duration, 33084, 33094, "at 4 weeks", "", 
+101723, MeanValue, 33096, 33099, "4.1", "", 
+101729, StandardError, 33100, 33111, "± 3 degrees", "", 
+101731, GroupName, 33116, 33125, "untreated", "E1", 
+101724, MeanValue, 33131, 33134, "1.1", "", 
+101730, StandardError, 33135, 33148, "± 0.4 degrees", "", 
+101732, DefinedExperimentalGroup, 33153, 33174, "ChABC-treated animals", "", 
+101714, PValue, 33176, 33184, "p < 0.05", "", "<http://scio/data/PositiveSignificance_59758> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+101757, DefinedExperimentalGroup, 36509, 36530, "ChABC-treated animals", "", 
+101758, AngiogenesisTest, 36547, 36570, "blood vessel morphology", "", 
+101754, AngiogenesisTest, 36613, 36657, "laminin-positive hypertrophied blood vessels", "", "<http://scio/data/AngiogenesisTest_68705> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77463> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77463> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (laminin-positive hypertrophied blood vessels)\". <http://scio/data/Result_59768> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101759, Higher, 36730, 36743, "more numerous", "R14", "<http://scio/data/Trend_59775> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101756, GroupName, 36752, 36778, "lesioned untreated animals", "E1", 
+101762, SpinalLesionSite, 36911, 36929, "at the injury site", "", "<http://scio/data/SpinalLesionSite_68709> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/HistologicalInvestigationTest_68708> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_68709>."
+101761, HistologicalInvestigationTest, 37017, 37029, "ECM deposits", "", "<http://scio/data/HistologicalInvestigationTest_68708> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77465> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77465> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (ECM deposits)\". <http://scio/data/Result_59779> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101760, ChondroitinaseABC, 37192, 37197, "ChABC", "", 
+101763, Lower, 37258, 37263, "lower", "R15", "<http://scio/data/RepeatedMeasureTrend_59786> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101764, RepeatedMeasureTrend, 37264, 37291, "at all time points analyzed", "", "<http://scio/data/RepeatedMeasureTrend_59786> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59779> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59786>."
+101791, Duration, 37865, 37893, "At 1 and 2 weeks post-injury", "", 
+101795, RepeatedMeasureTrend, 37865, 37893, "At 1 and 2 weeks post-injury", "", "<http://scio/data/RepeatedMeasureTrend_59825> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59818> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59825>."
+101766, AngiogenesisTest, 37895, 37948, "mean diameters of laminin-positive tubular structures", "", "<http://scio/data/AngiogenesisTest_68712> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77467> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77467> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean diameters of laminin-positive tubular structures)\". <http://scio/data/AngiogenesisTest_81926> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_81926> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean diameters of laminin-positive tubular structures)\". <http://scio/data/Result_59792> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59805> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101792, Higher, 37954, 37960, "larger", "R16, R17", "<http://scio/data/Trend_59799> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_59812> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101769, GroupName, 37964, 37983, "ChABC-treated (ABC)", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABC-treated (ABC)\"."
+101783, GroupName, 37992, 38013, "untreated animals (L)", "E1", "<http://scio/data/DefinedExperimentalGroup_59570> <http://psink.de/scio/hasGroupName> \"untreated animals (L)\"."
+101771, Duration, 38024, 38030, "1 week", "", 
+101773, MeanValue, 38032, 38039, "8.71 µm", "", 
+101777, StandardError, 38040, 38047, "± 0.166", "", 
+101781, GroupName, 38051, 38064, "ChABC animals", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABC animals\"."
+101774, MeanValue, 38069, 38076, "8.09 µm", "", 
+101778, StandardError, 38077, 38084, "± 0.147", "", 
+101784, GroupName, 38088, 38089, "L", "E1", "<http://scio/data/DefinedExperimentalGroup_59570> <http://psink.de/scio/hasGroupName> \"L\"."
+101786, PValue, 38091, 38100, "p < 0.001", "", "<http://scio/data/Significance_59801> <http://psink.de/scio/hasPValue> \"p < 0.001\"."
+101772, Duration, 38102, 38109, "2 weeks", "", 
+101775, MeanValue, 38111, 38118, "7.08 µm", "", 
+101779, StandardError, 38119, 38126, "± 0.086", "", 
+101782, GroupName, 38130, 38135, "ChABC", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABC\"."
+101776, MeanValue, 38140, 38147, "6.29 µm", "", 
+101780, StandardError, 38148, 38154, "± 0.60", "", 
+101785, GroupName, 38158, 38159, "L", "E1", 
+101787, PValue, 38161, 38171, "p < 0.0001", "", "<http://scio/data/Significance_59813> <http://psink.de/scio/hasPValue> \"p < 0.0001\"."
+101794, Higher, 38218, 38225, "greater", "R18", "<http://scio/data/RepeatedMeasureTrend_59825> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101790, AngiogenesisTest, 38226, 38237, "variability", "", "<http://scio/data/AngiogenesisTest_68718> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77470> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77470> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (variability)\". <http://scio/data/Result_59818> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101796, Duration, 38309, 38319, "at 4 weeks", "", 
+101798, AngiogenesisTest, 38321, 38335, "mean diameters", "", "<http://scio/data/AngiogenesisTest_68721> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77472> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77472> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean diameters)\". <http://scio/data/Result_59832> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101799, None, 38341, 38357, "almost identical", "R19", "<http://scio/data/Trend_59839> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101801, GroupName, 38362, 38369, "treated", "E2", 
+101806, DefinedExperimentalGroup, 38374, 38391, "untreated animals", "", 
+101812, MeanValue, 38402, 38409, "6.23 µm", "", 
+101816, StandardError, 38410, 38417, "± 0.063", "", 
+101802, GroupName, 38421, 38434, "ChABC-treated", "E2", 
+101813, MeanValue, 38439, 38446, "6.12 µm", "", 
+101817, StandardError, 38447, 38453, "±0.059", "", 
+101804, GroupName, 38457, 38458, "L", "E1", 
+101797, Duration, 38465, 38488, "at 10 weeks post-injury", "", 
+101809, AngiogenesisTest, 38494, 38546, "mean diameter of laminin-positive tubular structures", "", "<http://scio/data/AngiogenesisTest_68724> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77474> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77474> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean diameter of laminin-positive tubular structures)\". <http://scio/data/Result_59843> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101807, DefinedExperimentalGroup, 38550, 38571, "ChABC-treated animals", "", 
+101810, PositiveSignificance, 38579, 38592, "significantly", "", "<http://scio/data/PositiveSignificance_59851> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59850> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59851>."
+101811, Lower, 38593, 38600, "smaller", "R20", "<http://scio/data/Trend_59850> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101808, DefinedExperimentalGroup, 38609, 38626, "untreated animals", "", 
+101814, MeanValue, 38637, 38644, "5.49 µm", "", 
+101818, StandardError, 38645, 38652, "± 0.081", "", 
+101803, GroupName, 38656, 38668, "ChABCtreated", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABCtreated\"."
+101815, MeanValue, 38673, 38680, "5.93 µm", "", 
+101819, StandardError, 38681, 38688, "± 0.118", "", 
+101805, GroupName, 38692, 38693, "L", "E1", 
+101820, PValue, 38695, 38704, "p < 0.005", "", "<http://scio/data/PositiveSignificance_59851> <http://psink.de/scio/hasPValue> \"p < 0.005\"."
+101821, GroupName, 39561, 39590, "ChABC-treated lesioned tissue", "E2", "<http://scio/data/DefinedExperimentalGroup_59578> <http://psink.de/scio/hasGroupName> \"ChABC-treated lesioned tissue\"."
+101822, AngiogenesisTest, 39596, 39640, "percentage of small laminin-positive vessels", "", "<http://scio/data/AngiogenesisTest_68727> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77476> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (percentage of small laminin-positive vessels)\". <http://scio/data/AngiogenesisTest_81928> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_81928> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (percentage of small laminin-positive vessels)\". <http://scio/data/Result_59856> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59867> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101823, MeanValue, 39642, 39645, "45%", "", 
+101850, Duration, 39651, 39660, "initially", "", 
+101832, None, 39661, 39668, "similar", "R21", "<http://scio/data/Trend_59863> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101827, DefinedExperimentalGroup, 39680, 39697, "untreated animals", "", 
+101831, RepeatedMeasureTrend, 39704, 39713, "gradually", "", "<http://scio/data/RepeatedMeasureTrend_59874> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59867> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59874>."
+101833, Higher, 39714, 39723, "increased", "R22", "<http://scio/data/RepeatedMeasureTrend_59874> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101824, MeanValue, 39729, 39732, "62%", "", 
+101829, Duration, 39733, 39743, "at 2 weeks", "", 
+101825, MeanValue, 39747, 39750, "90%", "", 
+101830, Duration, 39751, 39774, "at 10 weeks post-injury", "", 
+101924, AngiogenesisTest, 40917, 40967, "SMI-71 (Fig. 9), a marker for mature blood vessels", "", 
+101836, Duration, 41270, 41292, "At 4 weeks post-injury", "", 
+101838, AngiogenesisTest, 41294, 41317, "SMI-71 positive vessels", "", "<http://scio/data/AngiogenesisTest_68733> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77479> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_77479> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (SMI-71 positive vessels)\". <http://scio/data/Result_59878> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101839, SpinalLesionSite, 41328, 41342, "present within", "", "<http://scio/data/SpinalLesionSite_68734> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/AngiogenesisTest_68733> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_68734>."
+101840, LesionAdjacentTissue, 41348, 41378, "around the primary lesion site", "", 
+101834, None, 41380, 41410, "without any obvious difference", "R23", "<http://scio/data/Trend_59885> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101841, AnalyzedExperimentalGroup, 41419, 41450, "the two experimental conditions", "", 
+101923, HistologicalInvestigationTest, 43280, 43337, "The thin, microcavity-associated ZO-1 positive structures", "", "<http://scio/data/HistologicalInvestigationTest_68737> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77481> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77481> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (The thin, microcavity-associated ZO-1 positive structures)\". <http://scio/data/Result_59892> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101843, SpinalLesionSite, 43360, 43373, "injury center", "", "<http://scio/data/SpinalLesionSite_68738> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/HistologicalInvestigationTest_68737> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_68738>."
+101844, DefinedExperimentalGroup, 43377, 43394, "untreated animals", "", 
+101846, Lower, 43410, 43414, "less", "R24", "<http://scio/data/Trend_59899> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101845, DefinedExperimentalGroup, 43426, 43447, "ChABC-treated animals", "", 
+101849, Duration, 44549, 44558, "initially", "", 
+101851, None, 44562, 44600, "did not detect any obvious differences", "R25", "<http://scio/data/Trend_59912> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101853, HistologicalInvestigationTest, 44613, 44663, "immunostaining intensity of both AHNAK and laminin", "", "<http://scio/data/HistologicalInvestigationTest_68741> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_77483> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (immunostaining intensity of both AHNAK and laminin)\". <http://scio/data/Result_59905> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101854, SpinalLesionSite, 44671, 44687, "lesion epicenter", "", "<http://scio/data/SpinalLesionSite_68742> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/HistologicalInvestigationTest_68741> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_68742>."
+101855, GroupName, 44691, 44704, "ChABC-treated", "E2", 
+101856, DefinedExperimentalGroup, 44709, 44726, "untreated animals", "", 
+101857, ProteinLevelAnalysis, 44759, 44782, "levels of both proteins", "", "<http://scio/data/ProteinLevelAnalysis_68745> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_77485> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ProteinLevelAnalysis>. <http://scio/data/ProteinLevelAnalysis_77485> <http://www.w3.org/2000/01/rdf-schema#label> \"ProteinLevelAnalysis (levels of both proteins)\". <http://scio/data/Result_59918> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101630, ZeroSignificance, 44806, 44823, "not significantly", "", "<http://scio/data/ZeroSignificance_59927> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_59925> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_59927>."
+101852, Lower, 44824, 44829, "lower", "R26", "<http://scio/data/Trend_59925> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101858, Duration, 44830, 44854, "during the first 2 weeks", "", 
+101861, GroupName, 44858, 44870, "ChABCtreated", "E2", 
+101860, DefinedExperimentalGroup, 44886, 44903, "untreated animals", "", 
+101862, Higher, 44907, 44933, "tendency that was reversed", "R27", 
+101859, Duration, 44934, 44956, "at 4 weeks post-injury", "", 

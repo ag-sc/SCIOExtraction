@@ -1,0 +1,176 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+94029, OlfactoryEnsheathingGliaCell, 523, 526, "OEC", "", 
+94030, InVitroExperimentalProcedure, 531, 541, "transduced", "", 
+94031, Protein, 542, 570, "prostacyclin synthase (PGIS)", "", 
+94032, OlfactoryEnsheathingGliaCell, 574, 577, "OEC", "", 
+94033, Virus, 582, 611, "adenoviral (Ad) gene transfer", "", 
+94034, OlfactoryEnsheathingGliaCell, 639, 642, "OEC", "", 
+94070, Protein, 657, 669, "prostacyclin", "", 
+94071, Protein, 707, 719, "Prostacyclin", "", 
+94035, OlfactoryEnsheathingGliaCell, 808, 811, "OEC", "", 
+94037, Protein, 836, 851, "cyclooxygneases", "", 
+94036, Protein, 861, 865, "PGIS", "", 
+94038, InVitroExperimentalProcedure, 867, 876, "Infection", "", 
+94039, Virus, 880, 886, "AdPGIS", "", 
+94041, Protein, 880, 886, "AdPGIS", "", 
+94042, OlfactoryEnsheathingGliaCell, 890, 893, "OEC", "", 
+94072, Protein, 921, 933, "prostacyclin", "", 
+94073, OlfactoryEnsheathingGliaCell, 973, 976, "OEC", "", 
+94074, OlfactoryEnsheathingGliaCell, 980, 990, "AdPGIS-OEC", "", 
+94043, OlfactoryEnsheathingGliaCell, 1058, 1061, "OEC", "", 
+94045, DeliveryMethod, 1075, 1087, "transplanted", "", 
+94075, CompleteTransection, 1095, 1105, "transected", "", 
+94078, SpinalLesionSite, 1106, 1112, "cavity", "", 
+94076, Thoracic, 1116, 1124, "thoracic", "", 
+94046, SpinalCord, 1125, 1136, "spinal cord", "", 
+94048, Injury, 1137, 1144, "injured", "", 
+94047, SpragueDawleyRat, 1151, 1155, "rats", "", 
+94049, Duration, 1157, 1180, "By 6 weeks post-surgery", "", 
+94050, PositiveSignificance, 1182, 1193, "significant", "", 
+94055, RepeatedMeasureTrend, 1194, 1213, "functional recovery", "", 
+94077, GroupName, 1240, 1243, "OEC", "", 
+94051, GroupName, 1247, 1279, "AdPGIS-OEC transplanted SCI rats", "", "<http://scio/data/DefinedExperimentalGroup_16547> <http://psink.de/scio/hasGroupName> \"AdPGIS-OEC transplanted SCI rats\"."
+94052, GroupName, 1294, 1313, "nontreated SCI rats", "", "<http://scio/data/DefinedExperimentalGroup_16539> <http://psink.de/scio/hasGroupName> \"nontreated SCI rats\"."
+94057, Duration, 1315, 1339, "At 10–12 weeks postgraft", "", 
+94053, GroupName, 1341, 1373, "AdPGIS-OEC transplanted SCI rats", "", 
+93933, PositiveSignificance, 1381, 1394, "significantly", "", 
+93934, Positive, 1395, 1401, "better", "", 
+94054, GroupName, 1425, 1450, "OEC transplanted SCI rats", "", "<http://scio/data/DefinedExperimentalGroup_16555> <http://psink.de/scio/hasGroupName> \"OEC transplanted SCI rats\"."
+94059, SpinalFiberTract, 1464, 1489, "regenerating fiber tracts", "", 
+94060, SpinalCord, 1504, 1521, "spinal cord stump", "", 
+94061, Value, 1536, 1542, "40–60%", "", 
+94062, GroupName, 1546, 1579, "AdPGIS-OEC transplanted SCI rats.", "", 
+94063, Protein, 1615, 1627, "prostacyclin", "", 
+94064, OlfactoryEnsheathingGliaCell, 1639, 1642, "OEC", "", 
+93935, Positive, 1643, 1651, "improved", "", 
+94065, SpinalFiberTract, 1652, 1663, "fiber tract", "", 
+94067, SpinalCord, 1707, 1718, "spinal cord", "", 
+94068, Injury, 1719, 1726, "injured", "", 
+94069, SpragueDawleyRat, 1727, 1731, "rats", "", 
+73308, OlfactoryEnsheathingGliaCell, 6189, 6192, "OEC", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16488> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_16478> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_16488>."
+73298, Adult, 6300, 6305, "adult", "", 
+73299, SpragueDawleyRat, 6306, 6329, "Spraque-Dawley (SD) rat", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16488> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>. <http://scio/data/OlfactoryEnsheathingGliaCell_16503> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+73316, Allogeneic, 6326, 6329, "rat", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16488> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>. <http://scio/data/OlfactoryEnsheathingGliaCell_16503> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+73307, AnatomicalLocation, 6330, 6345, "olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_16534> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_16488> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_16534>. <http://scio/data/AnatomicalLocation_16516> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_16503> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_16516>."
+73309, InVitroExperimentalProcedure, 7232, 7270, "OEC were infected with AdGFP or AdPGIS", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16488> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>. <http://scio/data/OlfactoryEnsheathingGliaCell_16503> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+73310, OlfactoryEnsheathingGliaCell, 7232, 7235, "OEC", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16503> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_16491> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_16503>."
+73336, Virus, 7255, 7260, "AdGFP", "", 
+73338, Virus, 7264, 7270, "AdPGIS", "", 
+82064, Injury, 7381, 7384, "SCI", "", 
+73311, SpragueDawleyRat, 7385, 7389, "rats", "", 
+73330, OlfactoryEnsheathingGliaCell, 9401, 9404, "OEC", "", 
+82065, Injury, 9421, 9424, "SCI", "", 
+73335, SpragueDawleyRat, 9425, 9429, "rats", "", 
+73331, Duration, 9430, 9462, "at 2–3 days after being infected", "", 
+73333, Virus, 9468, 9473, "AdPGK", "", 
+73334, Virus, 9475, 9480, "AdGFP", "", 
+73332, Virus, 9484, 9490, "AdPGIS", "", 
+73300, Adult, 10440, 10445, "Adult", "", "<http://scio/data/OrganismModel_16461> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+73301, SpragueDawleyRat, 10446, 10453, "SD rats", "", "<http://scio/data/OrganismModel_16461> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+73312, SpragueDawleyRat, 11041, 11045, "rats", "", 
+73317, DosageExtracorporal, 11069, 11075, "1 – 2%", "", "<http://scio/data/Isoflurane_16470> <http://psink.de/scio/hasDosage> \"1 – 2%\"."
+73318, Isoflurane, 11076, 11086, "isoflurane", "", "<http://scio/data/Isoflurane_16470> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/CompleteTransection_16467> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_16470>."
+73302, Laminectomy, 11238, 11249, "laminectomy", "", 
+73303, T8, 11294, 11296, "T8", "", 
+82066, SpinalCord, 11367, 11378, "spinal cord", "", 
+73304, CompleteTransection, 11383, 11404, "completely transected", "", "<http://scio/data/CompleteTransection_16467> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_16467> <http://www.w3.org/2000/01/rdf-schema#label> \"complete transection\"."
+82067, SurgeryTreatment, 11412, 11469, "5 mm segment of spinal cord encompassing T8 being removed", "", "<http://scio/data/SurgeryTreatment_36012> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SurgeryTreatment>. <http://scio/data/SurgeryTreatment_36012> <http://www.w3.org/2000/01/rdf-schema#label> \"Surgery Treatment\"."
+73305, T8, 11453, 11455, "T8", "", "<http://scio/data/CompleteTransection_16467> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+83092, DeliveryMethod, 11588, 11600, "Transplanted", "", 
+83093, OlfactoryEnsheathingGliaCell, 11601, 11606, "cells", "", 
+78074, DosageExtracorporal, 11619, 11625, "5× 105", "", "<http://scio/data/CompoundTreatment_16478> <http://psink.de/scio/hasDosage> \"5× 105\". <http://scio/data/CompoundTreatment_16491> <http://psink.de/scio/hasDosage> \"5× 105\"."
+73306, OlfactoryEnsheathingGliaCell, 11626, 11629, "OEC", "", 
+83091, Vehicle, 11633, 11648, "fibrin solution", "", "<http://scio/data/Vehicle_16532> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_16522> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_16532>."
+73320, SpinalLesionSite, 11670, 11688, "transected cavity.", "", "<http://scio/data/SpinalLesionSite_16490> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/DeliveryMethod_16480> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_16490>. <http://scio/data/SpinalLesionSite_16495> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/DeliveryMethod_16493> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_16495>."
+83094, BladderExpression, 11745, 11763, "Bladder evacuation", "", "<http://scio/data/CompleteTransection_16467> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+83095, SpragueDawleyRat, 11792, 11796, "rats", "", 
+82071, BBBTest, 14544, 14598, "open field locomotor test initially developed by Basso", "", 
+82073, DoubleBlindStudy, 14672, 14710, "unaware of the experimental procedures", "", 
+82074, BBBTest, 14757, 14812, "Basso Beattie Bresnahan (BBB) open field locomotor test", "", 
+83098, GaleRatingScoreTest, 14817, 14846, "Combined Behavior Score (CBS)", "", 
+82076, ANOVA, 16018, 16054, "one-way analysis of variance (ANOVA)", "", 
+82077, StatisticalTest, 16067, 16075, "LSD test", "", "<http://scio/data/Result_36062> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_36073> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_36084> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_36100> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_36114> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_36130> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_36146> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+82105, OlfactoryEnsheathingGliaCell, 27268, 27271, "OEC", "", 
+78666, DefinedExperimentalGroup, 27291, 27331, "AdGFP-infected OEC transplanted SCI rats", "E3", 
+82106, Sacrifice, 27337, 27347, "sacrificed", "", 
+82107, Duration, 27368, 27426, "first, third, fifth, eighth and twelfth week after surgery", "", 
+83097, InflammationTest, 28174, 28203, "Iba1-immunoreactive microglia", "", 
+83096, SpinalCord, 28226, 28238, "spinal cords", "", 
+78676, GroupName, 28246, 28263, "AdGFP-OEC-grafted", "E3", "<http://scio/data/DefinedExperimentalGroup_16555> <http://psink.de/scio/hasGroupName> \"AdGFP-OEC-grafted\"."
+78668, DefinedExperimentalGroup, 28268, 28293, "AdPGIS-OEC-grafted groups", "E2", "<http://scio/data/DefinedExperimentalGroup_16547> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_16547> <http://www.w3.org/2000/01/rdf-schema#label> \"AdPGIS-OEC E2\"."
+82108, InflammationTest, 28490, 28506, "Microglial cells", "", "<http://scio/data/InflammationTest_63551> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_75327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_75327> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (Microglial cells)\". <http://scio/data/Result_36036> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+82078, Rostral, 28514, 28521, "rostral", "", 
+82079, Caudal, 28522, 28528, "caudal", "", 
+82080, SpinalLesionSite, 28529, 28535, "stumps", "", "<http://scio/data/SpinalLesionSite_63552> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InflammationTest_63551> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_63552>."
+82109, OlfactoryEnsheathingGliaCell, 28539, 28549, "AdPGIS-OEC", "", 
+82111, SpinalCord, 28558, 28570, "spinal cords", "", 
+82114, Lower, 28576, 28580, "less", "R1", "<http://scio/data/Trend_36043> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+82113, InflammationTest, 28581, 28597, "immunoreactivity", "", 
+82110, OlfactoryEnsheathingGliaCell, 28611, 28620, "AdGFP-OEC", "", 
+82112, SpinalCord, 28629, 28641, "spinal cords", "", 
+82082, SpinalLesionSite, 28654, 28668, "transected gap", "", "<http://scio/data/SpinalLesionSite_63556> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InflammationTest_63555> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_63556>."
+82117, InflammationTest, 28670, 28686, "microglial cells", "", "<http://scio/data/InflammationTest_63555> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_75328> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InflammationTest>. <http://scio/data/InflammationTest_75328> <http://www.w3.org/2000/01/rdf-schema#label> \"InflammationTest (microglial cells)\". <http://scio/data/Result_36049> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+82118, None, 28692, 28699, "similar", "R2", "<http://scio/data/Trend_36056> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+82116, InflammationTest, 28700, 28717, "immunocreactivity", "", 
+82119, GroupName, 28726, 28744, "AdPGIS-OEC-grafted", "", "<http://scio/data/DefinedExperimentalGroup_16547> <http://psink.de/scio/hasGroupName> \"AdPGIS-OEC-grafted\"."
+82120, GroupName, 28749, 28766, "AdGFP-OEC-grafted", "", 
+82121, SpinalCord, 28767, 28779, "spinal cords", "", 
+82084, BBBTest, 29111, 29121, "BBB scores", "", "<http://scio/data/BBBTest_63563> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75329> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75329> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scores)\". <http://scio/data/BBBTest_80458> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_80458> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scores)\". <http://scio/data/Result_36062> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_36073> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+78677, GroupName, 29129, 29151, "SCI rats receiving OEC", "E3", "<http://scio/data/DefinedExperimentalGroup_16555> <http://psink.de/scio/hasGroupName> \"SCI rats receiving OEC\"."
+78678, GroupName, 29156, 29166, "AdPGIS-OEC", "E2", "<http://scio/data/DefinedExperimentalGroup_16547> <http://psink.de/scio/hasGroupName> \"AdPGIS-OEC\"."
+82123, Higher, 29172, 29178, "higher", "R3, R4", "<http://scio/data/Trend_36069> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_36080> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+78679, DefinedExperimentalGroup, 29192, 29223, "SCI rats with vehicle treatment", "E1", "<http://scio/data/DefinedExperimentalGroup_16539> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_16539> <http://www.w3.org/2000/01/rdf-schema#label> \"Vehicle E1\". <http://scio/data/DefinedExperimentalGroup_16555> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_16555> <http://www.w3.org/2000/01/rdf-schema#label> \"AdGFP-OEC E3\"."
+82124, BBBTest, 29225, 29235, "BBB scores", "", 
+82138, MeanValue, 29236, 29240, "2 –5", "", 
+82125, PositiveSignificance, 29259, 29272, "significantly", "", "<http://scio/data/PositiveSignificance_36071> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_36069> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_36071>. <http://scio/data/PositiveSignificance_36081> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_36080> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_36081>."
+78681, DefinedExperimentalGroup, 29306, 29337, "SCI rats with vehicle treatment", "E1", 
+82126, BBBTest, 29339, 29349, "BBB scores", "", 
+82139, MeanValue, 29350, 29352, "<1", "", 
+82129, BBBTest, 29614, 29624, "BBB scores", "", "<http://scio/data/BBBTest_63566> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75332> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75332> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB scores)\". <http://scio/data/Result_36084> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+82133, GroupName, 29628, 29631, "OEC", "E3", "<http://scio/data/DefinedExperimentalGroup_16555> <http://psink.de/scio/hasGroupName> \"OEC\"."
+82135, GroupName, 29635, 29645, "AdPGIS-OEC", "E2", 
+82140, None, 29651, 29664, "not different", "R5", "<http://scio/data/Trend_36091> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+82086, Duration, 29681, 29705, "until 12 week post graft", "", 
+82087, PValue, 29707, 29715, "P < 0.05", "", "<http://scio/data/Significance_36093> <http://psink.de/scio/hasPValue> \"P < 0.05\"."
+82136, GroupName, 29740, 29765, "rats receiving AdPGIS-OEC", "E2", 
+82089, Positive, 29770, 29778, "improved", "", "<http://scio/data/Result_36100> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+82090, Duration, 29779, 29798, "at 12 week post SCI", "", 
+82091, PositiveSignificance, 29804, 29815, "significant", "", "<http://scio/data/PositiveSignificance_36112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_36107> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_36112>."
+82141, Higher, 29816, 29824, "increase", "R6", "<http://scio/data/Trend_36107> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+82130, BBBTest, 29828, 29837, "BBB score", "", "<http://scio/data/BBBTest_63570> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75334> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75334> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB score)\". <http://scio/data/Result_36100> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+82131, BBBTest, 29839, 29842, "BBB", "", 
+82092, MeanValue, 29843, 29846, "5.2", "", 
+82093, StandardError, 29847, 29852, "± 0.7", "", 
+82134, GroupName, 29876, 29890, "OEC graft only", "E3", "<http://scio/data/DefinedExperimentalGroup_16555> <http://psink.de/scio/hasGroupName> \"OEC graft only\"."
+82132, BBBTest, 29892, 29895, "BBB", "", 
+82094, MeanValue, 29896, 29899, "3.4", "", 
+82095, StandardError, 29900, 29905, "± 0.5", "", 
+82156, Injury, 30229, 30232, "SCI", "", 
+82157, SpragueDawleyRat, 30233, 30237, "rats", "", 
+82143, OlfactoryEnsheathingGliaCell, 30243, 30246, "OEC", "", 
+82155, OlfactoryEnsheathingGliaCell, 30250, 30260, "AdPGIS-OEC", "", 
+82098, Positive, 30277, 30288, "improvement", "", "<http://scio/data/Result_36114> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_36130> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+82158, PositiveSignificance, 30290, 30303, "significantly", "", "<http://scio/data/PositiveSignificance_36123> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_36121> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_36123>. <http://scio/data/PositiveSignificance_36141> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_36140> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_36141>."
+82171, Lower, 30304, 30309, "lower", "R7, R8", "<http://scio/data/Trend_36121> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_36140> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+83100, GaleRatingScoreTest, 30310, 30319, "CBS score", "", "<http://scio/data/GaleRatingScoreTest_63820> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GaleRatingScoreTest>. <http://scio/data/GaleRatingScoreTest_75451> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GaleRatingScoreTest>. <http://scio/data/GaleRatingScoreTest_75451> <http://www.w3.org/2000/01/rdf-schema#label> \"GaleRatingScoreTest (CBS score)\". <http://scio/data/GaleRatingScoreTest_80094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GaleRatingScoreTest>. <http://scio/data/GaleRatingScoreTest_80094> <http://www.w3.org/2000/01/rdf-schema#label> \"GaleRatingScoreTest (CBS score)\". <http://scio/data/Result_36114> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_36130> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+82161, GroupName, 30356, 30380, "vehicle-treated SCI rats", "E1", "<http://scio/data/DefinedExperimentalGroup_16539> <http://psink.de/scio/hasGroupName> \"vehicle-treated SCI rats\"."
+82100, PValue, 30382, 30390, "P < 0.05", "", "<http://scio/data/PositiveSignificance_36123> <http://psink.de/scio/hasPValue> \"P < 0.05\". <http://scio/data/PositiveSignificance_36141> <http://psink.de/scio/hasPValue> \"P < 0.05\"."
+82101, Duration, 30393, 30418, "At 10 & 12 week postgraft", "", 
+82166, RepeatedMeasureTrend, 30393, 30418, "At 10 & 12 week postgraft", "", "<http://scio/data/RepeatedMeasureTrend_36153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_36146> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_36153>."
+83101, GaleRatingScoreTest, 30424, 30427, "CBS", "", "<http://scio/data/GaleRatingScoreTest_63828> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GaleRatingScoreTest>. <http://scio/data/GaleRatingScoreTest_75452> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/GaleRatingScoreTest>. <http://scio/data/GaleRatingScoreTest_75452> <http://www.w3.org/2000/01/rdf-schema#label> \"GaleRatingScoreTest (CBS)\". <http://scio/data/Result_36146> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+82163, OlfactoryEnsheathingGliaCell, 30431, 30441, "AdPGIS-OEC", "", 
+82164, GroupName, 30431, 30458, "AdPGIS-OEC grafted SCI rats", "E2", "<http://scio/data/DefinedExperimentalGroup_16547> <http://psink.de/scio/hasGroupName> \"AdPGIS-OEC grafted SCI rats\"."
+82102, PositiveSignificance, 30464, 30477, "significantly", "", "<http://scio/data/PositiveSignificance_36155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_36153> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_36155>."
+82169, ObservedDifference, 30478, 30487, "different", "R9", "<http://scio/data/RepeatedMeasureTrend_36153> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+82165, GroupName, 30501, 30521, "OEC grafted SCI rats", "E3", "<http://scio/data/DefinedExperimentalGroup_16555> <http://psink.de/scio/hasGroupName> \"OEC grafted SCI rats\"."
+82104, PValue, 30523, 30531, "P < 0.05", "", "<http://scio/data/PositiveSignificance_36155> <http://psink.de/scio/hasPValue> \"P < 0.05\"."
+99225, OlfactoryEnsheathingGliaCell, 32181, 32184, "OEC", "", 
+99227, SpinalLesionSite, 32192, 32204, "injured site", "", 
+99228, Injury, 32208, 32211, "SCI", "", 
+99229, SpragueDawleyRat, 32212, 32216, "rats", "", 
+99224, Positive, 32283, 32291, "improved", "", "<http://scio/data/Result_36062> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+99226, OlfactoryEnsheathingGliaCell, 32330, 32351, "AdPGIS-transduced OEC", "", 
+99232, Injury, 32358, 32368, "transected", "", 
+99233, SpragueDawleyRat, 32369, 32373, "rats", "", 
+99234, PositiveSignificance, 32420, 32433, "significantly", "", 
+99223, Positive, 32434, 32442, "improved", "", "<http://scio/data/Result_36073> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."

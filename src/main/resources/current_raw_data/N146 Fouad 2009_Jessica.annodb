@@ -1,0 +1,215 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+95699, AxonalRegenerationTest, 747, 766, "axonal regeneration", "", 
+95700, CompleteTransection, 773, 800, "complete spinal cord injury", "", 
+95813, SpinalCord, 782, 793, "spinal cord", "", 
+97263, Injury, 802, 805, "SCI", "", 
+95814, FischerRat, 810, 814, "rats", "", 
+102683, UrineVoiding, 831, 865, "report effects on bladder function", "", 
+95815, BladderFunctionTest, 831, 865, "report effects on bladder function", "", 
+95816, CompleteTransection, 923, 935, "complete SCI", "", 
+55299, NNumber, 1031, 1036, "Eight", "", 
+95817, FischerRat, 1037, 1041, "rats", "", 
+55307, SchwannCell, 1051, 1064, "Schwann cells", "", "<http://scio/data/SchwannCell_17548> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SchwannCell>. <http://scio/data/CompoundTreatment_17538> <http://psink.de/scio/hasCompound> <http://scio/data/SchwannCell_17548>."
+55304, Matrix, 1068, 1083, "Matrigel-filled", "", 
+55305, Conduit, 1084, 1101, "guidance channels", "", "<http://scio/data/Conduit_29826> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_17519> <http://psink.de/scio/hasCompound> <http://scio/data/Conduit_29826>."
+55300, OlfactoryEnsheathingGliaCell, 1103, 1129, "olfactory ensheathing glia", "", 
+55301, ChondroitinaseABC, 1134, 1152, "chondroitinase ABC", "", 
+55302, SpinalLesionSite, 1160, 1171, "lesion site", "", 
+95818, Duration, 1172, 1203, "following complete thoracic SCI", "", 
+55303, CompleteTransection, 1182, 1203, "complete thoracic SCI", "", "<http://scio/data/CompleteTransection_9292> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection>. <http://scio/data/CompleteTransection_9292> <http://www.w3.org/2000/01/rdf-schema#label> \"Complete Transection\"."
+95820, Thoracic, 1191, 1199, "thoracic", "", 
+97264, Injury, 1200, 1203, "SCI", "", 
+95821, GroupName, 1205, 1213, "Controls", "E1", "<http://scio/data/DefinedExperimentalGroup_17578> <http://psink.de/scio/hasGroupName> \"Controls\"."
+95823, NNumber, 1217, 1218, "7", "", 
+95825, Matrix, 1229, 1237, "Matrigel", "", 
+95701, Frequency, 1244, 1249, "Daily", "", 
+102684, UrineVoiding, 1250, 1285, "bladder examinations were performed", "", 
+95826, BladderFunctionTest, 1250, 1285, "bladder examinations were performed", "", 
+97255, NonFunctionalTest, 1299, 1311, "bladder size", "", 
+95828, HistologicalInvestigationTest, 1313, 1327, "wall thickness", "", 
+95829, HistologicalInvestigationTest, 1329, 1334, "actin", "", 
+95830, HistologicalInvestigationTest, 1339, 1356, "collagen type III", "", 
+95702, Duration, 1371, 1386, "after 14 weeks.", "", 
+95832, Duration, 1396, 1409, "Following SCI", "", 
+95833, Injury, 1406, 1409, "SCI", "", 
+95834, AnalyzedExperimentalGroup, 1411, 1422, "both groups", "", 
+102680, UrineVoiding, 1432, 1447, "bladder voiding", "", 
+95703, BladderFunctionTest, 1432, 1447, "bladder voiding", "", 
+95704, Duration, 1448, 1461, "after 3 weeks", "", 
+95705, Duration, 1472, 1485, "2 weeks later", "", 
+102685, UrineVoiding, 1487, 1512, "incontinence was observed", "", 
+95835, BladderFunctionTest, 1487, 1512, "incontinence was observed", "", 
+95836, Value, 1516, 1519, "all", "", 
+95838, GroupName, 1520, 1534, "untreated rats", "E1", "<http://scio/data/DefinedExperimentalGroup_17578> <http://psink.de/scio/hasGroupName> \"untreated rats\"."
+95837, NumericValue, 1539, 1542, "two", "", 
+95857, DefinedExperimentalGroup, 1543, 1555, "treated rats", "", 
+97257, NonFunctionalTest, 1569, 1592, "examination of bladders", "", 
+95706, Higher, 1602, 1610, "enlarged", "", 
+97256, NonFunctionalTest, 1611, 1624, "bladder sizes", "", 
+95843, Higher, 1626, 1633, "Thicker", "", 
+95842, HistologicalInvestigationTest, 1634, 1647, "bladder walls", "", 
+95844, GroupName, 1662, 1676, "untreated rats", "E1", 
+97262, HistologicalInvestigationTest, 1760, 1795, "high amounts of collagen (type III)", "", 
+95848, GroupName, 1822, 1844, "the combined treatment", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"the combined treatment\"."
+95845, HistologicalInvestigationTest, 1854, 1890, "collagen deposition in bladder walls", "", 
+95847, FischerRat, 1909, 1912, "rat", "", 
+95849, Positive, 1933, 1944, "efficiently", "", 
+95851, Positive, 1990, 2001, "improvement", "", "<http://scio/data/Result_53236> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+95852, GroupName, 2047, 2066, "combinatory therapy", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"combinatory therapy\"."
+95856, Injury, 2163, 2166, "SCI", "", 
+95663, SpinalCord, 4843, 4854, "Spinal cord", "", 
+95664, Injury, 4855, 4862, "lesions", "", 
+48909, Adult, 4940, 4945, "adult", "", "<http://scio/data/OrganismModel_1038> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48910, Female, 4946, 4952, "female", "", "<http://scio/data/OrganismModel_1038> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48911, FischerRat, 4953, 4965, "Fischer rats", "", "<http://scio/data/OrganismModel_1038> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+95665, FischerRat, 5222, 5229, "animals", "", 
+55309, Anaesthetic, 5253, 5278, "Hypnorm (fentanyl citrate", "", "<http://scio/data/Anaesthetic_9295> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/CompleteTransection_9292> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_9295>."
+55293, DosageIntracorporal, 5280, 5308, "120 ml per 200 g body weight", "", "<http://scio/data/Anaesthetic_9295> <http://psink.de/scio/hasDosage> \"120 ml per 200 g body weight\"."
+55294, Anaesthetic, 5354, 5363, "Midazolam", "", "<http://scio/data/Anaesthetic_9305> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/CompleteTransection_9292> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_9305>."
+55295, DosageIntracorporal, 5365, 5404, "0.75mg in 150 ¬µl per 200 g body weight", "", "<http://scio/data/Anaesthetic_9305> <http://psink.de/scio/hasDosage> \"0.75mg in 150 ¬µl per 200 g body weight\"."
+55310, SubcutaneousLocation, 5406, 5410, "S.C.", "", "<http://scio/data/InjectionDelivery_9306> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation>."
+57671, InjectionDelivery, 5406, 5410, "S.C.", "", "<http://scio/data/InjectionDelivery_9306> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_9305> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9306>."
+95668, Duration, 5446, 5471, "After a T7- 9 laminectomy", "", 
+95666, T7, 5454, 5456, "T7", "", 
+95667, T9, 5458, 5459, "9", "", 
+55296, Laminectomy, 5460, 5471, "laminectomy", "", 
+55297, SpinalCord, 5505, 5516, "spinal cord", "", 
+55298, T8, 5520, 5523, "Th8", "", "<http://scio/data/CompleteTransection_9292> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+95670, AnalyzedExperimentalGroup, 5540, 5551, "both groups", "", 
+95669, SpinalCord, 5556, 5567, "spinal cord", "", 
+73691, Duration, 5580, 5584, "then", "", "<http://scio/data/TemporalInterval_17601> <http://psink.de/scio/hasDuration> \"then\". <http://scio/data/TemporalInterval_17614> <http://psink.de/scio/hasDuration> \"then\"."
+77975, Conduit, 5618, 5634, "guidance channel", "", 
+77977, CompoundSupplier, 5692, 5740, "T Hazlett, CytoTherapeutics, Providence, RI, USA", "", "<http://scio/data/Conduit_29826> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/CompoundSupplier>."
+95671, CompleteTransection, 5762, 5781, "lesion completeness", "", 
+73671, DefinedExperimentalGroup, 5787, 5802, "untreated group", "", "<http://scio/data/DefinedExperimentalGroup_17578> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17578> <http://www.w3.org/2000/01/rdf-schema#label> \"untreated group (ChanneluMatrix) E1\"."
+73688, DosageExtracorporal, 5814, 5825, "60:40 (v/v)", "", "<http://scio/data/CompoundTreatment_17527> <http://psink.de/scio/hasDosage> \"60:40 (v/v)\"."
+73680, Vehicle, 5838, 5881, "Dulbecco‚Äôs modified Eagle‚Äôs medium/F-12", "", "<http://scio/data/Vehicle_17535> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_17527> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Vehicle_17535>."
+73683, Matrix, 5885, 5893, "Matrigel", "", "<http://scio/data/Matrix_17537> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Matrix>. <http://scio/data/CompoundTreatment_17527> <http://psink.de/scio/hasCompound> <http://scio/data/Matrix_17537>."
+73672, DefinedExperimentalGroup, 5898, 5910, "treated rats", "", "<http://scio/data/DefinedExperimentalGroup_17588> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_17588> <http://www.w3.org/2000/01/rdf-schema#label> \"Treated group E2\"."
+95672, Volume, 5928, 5934, "30 ¬µl", "", 
+73673, SchwannCell, 5938, 5951, "Schwann cells", "", 
+73686, Conduit, 5938, 6063, "Schwann cells and olfactory ensheathing glia suspended in 60:40 (v/v) Dulbecco‚Äôs modified Eagle‚Äôs medium/F-12 in Matrigel", "", "<http://scio/data/Conduit_17546> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_17538> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_17546>."
+73674, OlfactoryEnsheathingGliaCell, 5956, 5982, "olfactory ensheathing glia", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_17564> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_17554> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_17564>."
+74233, Conduit, 5956, 6063, "olfactory ensheathing glia suspended in 60:40 (v/v) Dulbecco‚Äôs modified Eagle‚Äôs medium/F-12 in Matrigel", "", "<http://scio/data/Conduit_17562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Conduit>. <http://scio/data/CompoundTreatment_17554> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Conduit_17562>."
+73682, Vehicle, 6008, 6051, "Dulbecco‚Äôs modified Eagle‚Äôs medium/F-12", "", 
+73684, Matrix, 6055, 6063, "Matrigel", "", 
+73690, InjectionDelivery, 6069, 6077, "injected", "", 
+77976, Conduit, 6087, 6094, "channel", "", 
+95673, OlfactoryEnsheathingGliaCell, 6153, 6179, "olfactory ensheathing glia", "", 
+95674, InjectionDelivery, 6185, 6193, "injected", "", 
+95675, Location, 6203, 6214, "cord stumps", "", 
+73675, ChondroitinaseABC, 6217, 6235, "Chondroitinase ABC", "", "<http://scio/data/ChondroitinaseABC_17575> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_17565> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_17575>."
+78003, DosageExtracorporal, 6237, 6255, "2 ¬µl of 10mg ml-1", "", "<http://scio/data/CompoundTreatment_17565> <http://psink.de/scio/hasDosage> \"2 ¬µl of 10mg ml-1\"."
+73685, Seikagaku, 6263, 6304, "Seikagaku America, East Falmouth, MA, USA", "", "<http://scio/data/ChondroitinaseABC_17575> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku>."
+73677, Duration, 6350, 6367, "period of 4 weeks", "", "<http://scio/data/CompoundTreatment_17565> <http://psink.de/scio/hasDuration> \"period of 4 weeks\"."
+95678, GroupName, 6455, 6470, "injured-treated", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"injured-treated\"."
+95679, GroupName, 6475, 6489, "untreated rats", "E1", 
+95676, Housing, 6490, 6542, "were group housed, mixed together in guineapig cages", "", "<http://scio/data/CompleteTransection_9292> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+95680, BladderExpression, 6550, 6580, "bladders were manually emptied", "", "<http://scio/data/CompleteTransection_9292> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+95681, DoubleBlindStudy, 6788, 6820, "personnel blind to the treatment", "", 
+95684, FischerRat, 6828, 6832, "rats", "", 
+102686, UrineVoiding, 6834, 6861, "Bladder function was scored", "", 
+97260, BladderFunctionTest, 6834, 6861, "Bladder function was scored", "", 
+95685, FischerRat, 7142, 7146, "rats", "", 
+95686, AntibioticMedication, 7156, 7167, "antibiotics", "", "<http://scio/data/AntibioticMedication_53234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/CompleteTransection_9292> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_53234>."
+95687, DosageIntracorporal, 7188, 7198, "100mg kg-1", "", "<http://scio/data/AntibioticMedication_53234> <http://psink.de/scio/hasDosage> \"100mg kg-1\"."
+98069, Length, 7487, 7493, "length", "", 
+95688, InvestigationMethod, 7627, 7661, "calculate the overall bladder size", "", 
+95693, HistologicalInvestigationTest, 9030, 9112, "Analysis of bladder wall thickness, actin and collagen type III staining intensity", "", 
+95694, HistologicalInvestigationTest, 9240, 9282, "thickness of the bladder wall was measured", "", 
+97259, HistologicalInvestigationTest, 9747, 9786, "calculation of the collagen/actin ratio", "", 
+95811, AxonalChangesTest, 9861, 9898, "quantification of serotonergic fibers", "", 
+98070, Lumbar, 9906, 9912, "lumbar", "", 
+98071, SpinalCord, 9913, 9924, "spinal cord", "", 
+98072, SpinalCord, 9930, 9935, "cords", "", 
+98073, Sacrifice, 9961, 9970, "perfusion", "", 
+95698, StatisticalTest, 11259, 11279, "Mann‚Äì Whitney test", "", "<http://scio/data/Result_53236> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_53247> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_53258> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_53291> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_53302> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_53313> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+95707, Duration, 13974, 14014, "During the first two postoperative weeks", "", 
+95718, NumericValue, 14016, 14021, "three", "", 
+95724, FischerRat, 14022, 14026, "rats", "", 
+95726, GroupName, 14036, 14043, "treated", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"treated\"."
+95729, NNumber, 14047, 14048, "8", "", 
+95719, NumericValue, 14054, 14057, "two", "", 
+95728, DefinedExperimentalGroup, 14067, 14082, "untreated group", "", 
+95730, NNumber, 14086, 14087, "7", "", 
+97261, ObservationOfAnimalBehaviour, 14089, 14118, "developed transient hematuria", "", 
+95733, Duration, 14120, 14137, "Following 3 weeks", "", 
+95735, AnalyzedExperimentalGroup, 14139, 14147, "all rats", "", 
+95734, FischerRat, 14143, 14147, "rats", "", 
+102682, UrineVoiding, 14148, 14177, "exhibited spontaneous voiding", "", 
+95736, BladderFunctionTest, 14148, 14177, "exhibited spontaneous voiding", "", 
+95720, NumericValue, 14298, 14301, "Six", "", 
+95725, FischerRat, 14302, 14309, "animals", "", 
+95727, GroupName, 14302, 14346, "animals that received the combined treatment", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"animals that received the combined treatment\"."
+95721, NumericValue, 14357, 14360, "75%", "", 
+95741, RepeatedMeasureTrend, 14385, 14424, "for the remainder of the testing period", "", 
+95709, Duration, 14435, 14455, "12 weeks post injury", "", 
+95737, Injury, 14449, 14455, "injury", "", 
+95722, NumericValue, 14488, 14491, "two", "", 
+95710, DefinedExperimentalGroup, 14492, 14504, "treated rats", "", 
+95723, NumericValue, 14512, 14516, "100%", "", 
+95738, GroupName, 14524, 14538, "untreated rats", "E1", 
+102681, UrineVoiding, 14543, 14562, "spontaneous voiding", "", 
+95711, BladderFunctionTest, 14543, 14562, "spontaneous voiding", "", "<http://scio/data/BladderFunctionTest_76960> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BladderFunctionTest>. <http://scio/data/BladderFunctionTest_76960> <http://www.w3.org/2000/01/rdf-schema#label> \"BladderFunctionTest (spontaneous voiding)\". <http://scio/data/Result_53236> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95742, Lower, 14563, 14573, "diminished", "R1", "<http://scio/data/Trend_53243> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+95713, Duration, 14580, 14587, "2 weeks", "", 
+95714, PositiveSignificance, 14611, 14622, "significant", "", "<http://scio/data/PositiveSignificance_53245> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_53243> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_53245>."
+95739, AnalyzedExperimentalGroup, 14623, 14641, "between the groups", "", 
+95743, InvestigationMethod, 15015, 15042, "measurement of bladder size", "", 
+95748, MeanValue, 15188, 15192, "1.69", "", 
+95750, StandardError, 15192, 15201, "¬±0.21cm2", "", 
+95746, GroupName, 15205, 15219, "untreated rats", "E1", 
+95749, MeanValue, 15233, 15237, "2.14", "", 
+95751, StandardError, 15237, 15246, "¬±0.19cm2", "", 
+95747, GroupName, 15264, 15277, "treated group", "E2", 
+95755, ObservedDifference, 15283, 15293, "difference", "R2", "<http://scio/data/Trend_53254> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+97254, NonFunctionalTest, 15297, 15309, "bladder size", "", "<http://scio/data/NonFunctionalTest_67480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NonFunctionalTest>. <http://scio/data/NonFunctionalTest_76962> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NonFunctionalTest>. <http://scio/data/NonFunctionalTest_76962> <http://www.w3.org/2000/01/rdf-schema#label> \"NonFunctionalTest (bladder size)\". <http://scio/data/Result_53247> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95715, AnalyzedExperimentalGroup, 15310, 15340, "between the two injured groups", "", 
+95756, Injury, 15326, 15333, "injured", "", 
+95754, ZeroSignificance, 15345, 15374, "not statistically significant", "", "<http://scio/data/ZeroSignificance_53256> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_53254> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_53256>."
+95716, PositiveSignificance, 15572, 15585, "significantly", "", "<http://scio/data/PositiveSignificance_53267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_53265> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_53267>."
+95765, Higher, 15586, 15593, "thicker", "R3", "<http://scio/data/Trend_53265> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+95831, HistologicalInvestigationTest, 15594, 15607, "bladder walls", "", "<http://scio/data/HistologicalInvestigationTest_67498> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76974> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76974> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (bladder walls)\". <http://scio/data/Result_53258> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95759, GroupName, 15611, 15625, "untreated rats", "E1", 
+95761, MeanValue, 15627, 15632, "881.2", "", 
+95763, StandardError, 15632, 15642, "¬±57.6 ¬µm", "", 
+95760, GroupName, 15663, 15678, "treated animals", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"treated animals\"."
+95762, MeanValue, 15680, 15685, "481.9", "", 
+95764, StandardError, 15685, 15695, "¬±92.4 ¬µm", "", 
+95766, HistologicalInvestigationTest, 15747, 15844, "Immunohistochemical analysis of a-smooth muscle actin in the cross-section of bladder wall tissue", "", 
+95767, DefinedExperimentalGroup, 15933, 15948, "untreated group", "", 
+95768, GroupName, 15962, 15975, "treated group", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"treated group\"."
+95771, Higher, 15995, 15999, "more", "R4", "<http://scio/data/Trend_53276> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+95770, HistologicalInvestigationTest, 16000, 16056, "organized and aligned Œ±-smooth muscle fiber composition", "", "<http://scio/data/HistologicalInvestigationTest_67483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76964> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76964> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (organized and aligned Œ±-smooth muscle fiber composition)\". <http://scio/data/Result_53269> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95772, HistologicalInvestigationTest, 16270, 16282, "actin levels", "", "<http://scio/data/HistologicalInvestigationTest_67486> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76966> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76966> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (actin levels)\". <http://scio/data/Result_53280> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95781, None, 16283, 16298, "were comparable", "R5", "<http://scio/data/Trend_53287> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+95774, HistologicalInvestigationTest, 16308, 16354, "analysis of collagen type III immunoreactivity", "", 
+95775, PositiveSignificance, 16362, 16373, "significant", "", "<http://scio/data/PositiveSignificance_53300> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_53298> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_53300>."
+95782, Higher, 16374, 16386, "accumulation", "R6", "<http://scio/data/Trend_53298> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+95776, HistologicalInvestigationTest, 16390, 16414, "collagen in the bladders", "", "<http://scio/data/HistologicalInvestigationTest_67489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76968> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76968> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (collagen in the bladders)\". <http://scio/data/Result_53291> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95777, DefinedExperimentalGroup, 16418, 16433, "untreated group", "", 
+95778, GroupName, 16453, 16468, "treated animals", "E2", 
+95779, Duration, 16469, 16478, "after SCI", "", 
+95780, Injury, 16475, 16478, "SCI", "", 
+97258, HistologicalInvestigationTest, 16705, 16770, "The ratio of collagen type III to Œ±-smooth actin in the bladders", "", "<http://scio/data/HistologicalInvestigationTest_67492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76970> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_76970> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (The ratio of collagen type III to Œ±-smooth actin in the bladders)\". <http://scio/data/Result_53302> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95786, GroupName, 16778, 16797, "untreated SCI group", "E1", "<http://scio/data/DefinedExperimentalGroup_17578> <http://psink.de/scio/hasGroupName> \"untreated SCI group\"."
+95788, Injury, 16788, 16791, "SCI", "", 
+95791, MeanValue, 16799, 16802, "1.6", "", 
+95793, StandardError, 16802, 16807, "¬±0.1", "", 
+95795, PositiveSignificance, 16841, 16854, "significantly", "", "<http://scio/data/PositiveSignificance_53311> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_53309> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_53311>."
+95796, Higher, 16855, 16864, "increased", "", 
+95797, Higher, 16879, 16885, "higher", "R7", "<http://scio/data/Trend_53309> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+95787, GroupName, 16905, 16921, "treated SCI rats", "E2", "<http://scio/data/DefinedExperimentalGroup_17588> <http://psink.de/scio/hasGroupName> \"treated SCI rats\"."
+95789, Injury, 16913, 16916, "SCI", "", 
+95790, FischerRat, 16917, 16921, "rats", "", 
+95792, MeanValue, 16923, 16926, "1.1", "", 
+95794, StandardError, 16926, 16932, "¬±0.15", "", 
+95799, AxonalChangesTest, 17680, 17722, "analyzing the total length of these fibers", "", "<http://scio/data/AxonalChangesTest_67495> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_76972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalChangesTest>. <http://scio/data/AxonalChangesTest_76972> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalChangesTest (analyzing the total length of these fibers)\". <http://scio/data/Result_53313> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+95801, ZeroSignificance, 17727, 17753, "did not find a statistical", "", "<http://scio/data/ZeroSignificance_53322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/Trend_53320> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_53322>."
+95809, None, 17727, 17764, "did not find a statistical difference", "R8", "<http://scio/data/Trend_53320> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+95803, GroupName, 17773, 17780, "control", "E1", "<http://scio/data/DefinedExperimentalGroup_17578> <http://psink.de/scio/hasGroupName> \"control\"."
+95805, MeanValue, 17782, 17788, "94 ¬µm", "", 
+95807, StandardError, 17788, 17794, "¬±34.4", "", 
+95858, DefinedExperimentalGroup, 17800, 17812, "treated rats", "", 
+95806, MeanValue, 17814, 17820, "77 ¬µm", "", 
+95808, StandardError, 17820, 17826, "¬±33.6", "", 

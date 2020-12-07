@@ -1,0 +1,114 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+<http://scio/data/Observation_84204> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84204> <http://www.w3.org/2000/01/rdf-schema#label> "TP ChABC" .
+<http://scio/data/TemporalInterval_84206> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84204> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84206> .
+<http://scio/data/TemporalInterval_84206> <http://psink.de/scio/hasDuration> "Immediately after the spinal cord contusion" .
+<http://scio/data/TemporalInterval_84206> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_2412> .
+<http://scio/data/TemporalInterval_84206> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84161> .
+<http://scio/data/NumericValue_84207> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84208> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84212> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84212> <http://www.w3.org/2000/01/rdf-schema#label> "TP K-II" .
+<http://scio/data/TemporalInterval_84214> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84212> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84214> .
+<http://scio/data/TemporalInterval_84214> <http://psink.de/scio/hasDuration> "Immediately after the spinal cord contusion" .
+<http://scio/data/TemporalInterval_84214> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_2412> .
+<http://scio/data/TemporalInterval_84214> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84175> .
+<http://scio/data/NumericValue_84218> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84219> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+<http://scio/data/Observation_84220> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84220> <http://www.w3.org/2000/01/rdf-schema#label> "TP Saline" .
+<http://scio/data/TemporalInterval_84222> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84220> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84222> .
+<http://scio/data/TemporalInterval_84222> <http://psink.de/scio/hasDuration> "Immediately after the spinal cord contusion" .
+<http://scio/data/TemporalInterval_84222> <http://psink.de/scio/hasEventBefore> <http://scio/data/Contusion_2412> .
+<http://scio/data/TemporalInterval_84222> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_84189> .
+<http://scio/data/NumericValue_84226> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84227> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_501> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_501> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasWeight> "200 -230 g" .
+<http://scio/data/OrganismModel_501> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/Contusion_2412> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion> .
+<http://scio/data/Contusion_2412> <http://www.w3.org/2000/01/rdf-schema#label> "contusion" .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T9> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/KetamineAsAnaesthetic_2415> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2415> .
+<http://scio/data/KetamineAsAnaesthetic_2415> <http://psink.de/scio/hasDosage> "100 mg/kg)" .
+<http://scio/data/InjectionDelivery_3382> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_2415> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3382> .
+<http://scio/data/InjectionDelivery_3382> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_2417> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/InfiniteHorizonImpactor_2419> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2419> .
+<http://scio/data/InfiniteHorizonImpactor_2419> <http://psink.de/scio/hasForce> "200 kdyn" .
+<http://scio/data/Xylazine_2423> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2423> .
+<http://scio/data/Xylazine_2423> <http://psink.de/scio/hasDosage> "10 mg/kg" .
+<http://scio/data/InjectionDelivery_3383> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_2423> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3383> .
+<http://scio/data/InjectionDelivery_3383> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+<http://scio/data/AntibioticMedication_3384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3384> .
+<http://scio/data/AntibioticMedication_3384> <http://psink.de/scio/hasDosage> "1.0 ml of Bactramin (Roche) in 500 ml of acidified water" .
+<http://scio/data/Contusion_2412> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea> .
+<http://scio/data/DorsalInjuryArea_84360> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalInjuryArea> .
+<http://scio/data/CorticospinalTract_84361> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CorticospinalTract> .
+<http://scio/data/DorsalInjuryArea_84360> <http://psink.de/scio/hasIntraSpinalLocation> <http://scio/data/CorticospinalTract_84361> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_84161> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84161> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/CompoundTreatment_84161> <http://psink.de/scio/hasDuration> "14 d delivery" .
+<http://scio/data/DeliveryMethod_84163> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84161> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84163> .
+<http://scio/data/DeliveryMethod_84163> <http://psink.de/scio/hasDuration> "0.5 µl/h" .
+<http://scio/data/Intrathecal_84173> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/DeliveryMethod_84163> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84173> .
+<http://scio/data/DeliveryMethod_84163> <http://psink.de/scio/hasLocations> <http://psink.de/scio/T9> .
+<http://scio/data/CompoundTreatment_84161> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump> .
+<http://scio/data/Direction_84168> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84169> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_84161> <http://psink.de/scio/hasDosage> "0.05 U/200 µl" .
+<http://scio/data/ChondroitinaseABC_84171> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_84161> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_84171> .
+<http://scio/data/CompoundTreatment_84175> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84175> <http://www.w3.org/2000/01/rdf-schema#label> "K-II" .
+<http://scio/data/CompoundTreatment_84175> <http://psink.de/scio/hasDuration> "14 d delivery" .
+<http://scio/data/DeliveryMethod_84177> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84175> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84177> .
+<http://scio/data/DeliveryMethod_84177> <http://psink.de/scio/hasDuration> "0.5 µl/h" .
+<http://scio/data/Intrathecal_84179> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/DeliveryMethod_84177> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84179> .
+<http://scio/data/DeliveryMethod_84177> <http://psink.de/scio/hasLocations> <http://psink.de/scio/T9> .
+<http://scio/data/CompoundTreatment_84175> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump> .
+<http://scio/data/Direction_84185> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84186> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_84175> <http://psink.de/scio/hasDosage> "0.05 U/200 µl" .
+<http://scio/data/Enzyme_84188> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Enzyme> .
+<http://scio/data/CompoundTreatment_84175> <http://psink.de/scio/hasCompound> <http://scio/data/Enzyme_84188> .
+<http://scio/data/CompoundTreatment_84189> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84189> <http://www.w3.org/2000/01/rdf-schema#label> "Saline" .
+<http://scio/data/CompoundTreatment_84189> <http://psink.de/scio/hasDuration> "14 d delivery" .
+<http://scio/data/DeliveryMethod_84191> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84189> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_84191> .
+<http://scio/data/DeliveryMethod_84191> <http://psink.de/scio/hasDuration> "0.5 µl/h" .
+<http://scio/data/Intrathecal_84193> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/DeliveryMethod_84191> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_84193> .
+<http://scio/data/DeliveryMethod_84191> <http://psink.de/scio/hasLocations> <http://psink.de/scio/T9> .
+<http://scio/data/CompoundTreatment_84189> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/OsmoticMinipump> .
+<http://scio/data/Direction_84199> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Saline_84202> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Saline> .
+<http://scio/data/CompoundTreatment_84189> <http://psink.de/scio/hasCompound> <http://scio/data/Saline_84202> .
+# RDF export of group: Sacrifices

@@ -1,0 +1,422 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+83046, OlfactoryEnsheathingGliaCell, 260, 294, "Olfactory ensheathing cells (OECs)", "", 
+83047, DeliveryMethod, 300, 312, "transplanted", "", 
+83048, Adult, 316, 321, "adult", "", 
+83049, SpragueDawleyRat, 322, 326, "rats", "", 
+83050, PhotochemicalInjury, 333, 353, "photochemical injury", "", 
+83051, SpinalCord, 361, 372, "spinal cord", "", 
+83052, SpragueDawleyRat, 374, 378, "Rats", "", 
+83053, DosageExtracorporal, 395, 402, "180,000", "", 
+83054, OlfactoryEnsheathingGliaCell, 403, 407, "OECs", "", 
+83055, Vehicle, 421, 425, "DMEM", "", 
+83056, Vehicle, 429, 433, "DMEM", "", 
+83045, BBBTest, 473, 482, "BBB-scale", "", 
+83025, MotorEvokedPotentialsTest, 506, 511, "motor", "", 
+83026, SomatosensoryEvokedPotentialsTest, 516, 547, "somatosensory evoked potentials", "", 
+83027, MotorEvokedPotentialsTest, 530, 547, "evoked potentials", "", 
+83028, Duration, 574, 600, "first 14 days post-surgery", "", 
+83029, Duration, 602, 622, "At 3, 7, and 14 days", "", 
+83030, NNumber, 624, 625, "5", "", 
+83059, SpragueDawleyRat, 626, 630, "rats", "", 
+83189, AnalyzedExperimentalGroup, 642, 653, "both groups", "", 
+83188, SpinalLesionSite, 707, 715, "lesioned", "", 
+83060, SpinalCord, 727, 738, "spinal cord", "", 
+83061, HistologicalInvestigationTest, 751, 758, "stained", "", 
+83062, BBBTest, 797, 806, "BBB-score", "", 
+83063, MotorEvokedPotentialsTest, 828, 833, "motor", "", 
+83064, SomatosensoryEvokedPotentialsTest, 838, 869, "somatosensory evoked potentials", "", 
+83031, PositiveSignificance, 875, 888, "significantly", "", 
+83032, Higher, 889, 895, "higher", "", 
+99372, GroupName, 899, 902, "OEC", "", 
+99373, GroupName, 912, 933, "DMEM-injected animals", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://psink.de/scio/hasGroupName> \"DMEM-injected animals\"."
+83065, RepeatedMeasureTrend, 934, 954, "throughout follow-up", "", 
+83066, HindpawSensationTest, 968, 1011, "withdrawal latency to heat noxious stimulus", "", 
+83035, Lower, 1016, 1021, "lower", "", 
+99374, GroupName, 1025, 1028, "OEC", "", 
+99375, GroupName, 1038, 1056, "DMEM-injected rats", "", 
+83067, TissueSparingTest, 1062, 1091, "area of preserved spinal cord", "", 
+83191, HistologicalInvestigationTest, 1125, 1133, "staining", "", 
+83038, PositiveSignificance, 1139, 1152, "significantly", "", 
+83039, Higher, 1153, 1159, "higher", "", 
+83190, OlfactoryEnsheathingGliaCell, 1163, 1166, "OEC", "", 
+83192, GroupName, 1176, 1194, "DMEM-injected rats", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://psink.de/scio/hasGroupName> \"DMEM-injected rats\"."
+83194, HistologicalInvestigationTest, 1244, 1252, "staining", "", 
+83534, GroupName, 1256, 1277, "OEC-transplanted rats", "", "<http://scio/data/DefinedExperimentalGroup_16151> <http://psink.de/scio/hasGroupName> \"OEC-transplanted rats\"."
+83069, AngiogenesisTest, 1283, 1307, "density of blood vessels", "", 
+83041, PositiveSignificance, 1317, 1330, "significantly", "", 
+83042, Higher, 1331, 1340, "increased", "", 
+83212, OlfactoryEnsheathingGliaCell, 1344, 1347, "OEC", "", 
+83211, GroupName, 1365, 1383, "DMEM-injected rats", "", 
+83195, OlfactoryEnsheathingGliaCell, 1407, 1411, "OECs", "", 
+83196, Positive, 1412, 1419, "promote", "", 
+83198, SpinalCord, 1469, 1480, "spinal cord", "", 
+83199, PhotochemicalInjury, 1487, 1507, "photochemical injury", "", 
+83200, Higher, 1509, 1519, "increasing", "", 
+83201, AngiogenesisTest, 1520, 1535, "neoangiogenesis", "", 
+83202, Higher, 1540, 1553, "up-regulation", "", 
+73100, OlfactoryEnsheathingGliaCell, 4572, 4576, "OECs", "", 
+73095, AnatomicalLocation, 4596, 4631, "primary cultures of olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_16137> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_16132> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_16137>."
+73096, Adult, 4638, 4643, "adult", "", 
+83203, Age, 4645, 4663, "2.5–3.0 months old", "", 
+73097, Female, 4665, 4671, "female", "", 
+73098, SpragueDawleyRat, 4672, 4691, "Sprague-Dawley rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16132> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+73099, Allogeneic, 4672, 4691, "Sprague-Dawley rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16132> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+73101, OlfactoryEnsheathingGliaCell, 6246, 6250, "OECs", "", 
+73102, Purification, 6256, 6270, "immunopurified", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16132> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+55529, NNumber, 7943, 7949, "Thirty", "", 
+48963, Adult, 7950, 7955, "adult", "", "<http://scio/data/OrganismModel_1196> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48964, Female, 7956, 7962, "female", "", "<http://scio/data/OrganismModel_1196> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48965, SpragueDawleyRat, 7963, 7982, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_1196> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48966, Weight, 7984, 7993, "250–300 g", "", "<http://scio/data/OrganismModel_1196> <http://psink.de/scio/hasWeight> \"250–300 g\"."
+55527, SodiumPentobarbital, 8018, 8038, "sodium pentobarbital", "", "<http://scio/data/SodiumPentobarbital_9872> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SodiumPentobarbital>. <http://scio/data/PhotochemicalInjury_9869> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/SodiumPentobarbital_9872>."
+55528, DosageIntracorporal, 8040, 8048, "50 mg/kg", "", "<http://scio/data/SodiumPentobarbital_9872> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+57684, InjectionDelivery, 8050, 8054, "i.p.", "", "<http://scio/data/InjectionDelivery_9879> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/SodiumPentobarbital_9872> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_9879>."
+55537, IntraperitonealLocation, 8050, 8054, "i.p.", "", "<http://scio/data/InjectionDelivery_9879> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+55532, SpinalCord, 8279, 8290, "spinal cord", "", 
+55531, Laminectomy, 8315, 8326, "laminectomy", "", 
+55530, T8, 8330, 8332, "T8", "", "<http://scio/data/PhotochemicalInjury_9869> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+83204, MedicationDuringSurgery, 8410, 8421, "Rose Bengal", "", "<http://scio/data/MedicationDuringSurgery_9874> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery>. <http://scio/data/PhotochemicalInjury_9869> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_9874>."
+83205, SpinalCord, 8486, 8497, "spinal cord", "", 
+83206, Duration, 8498, 8512, "for 10 minutes", "", 
+55533, PhotochemicalInjury, 8706, 8740, "lesion was induced by illuminating", "", "<http://scio/data/PhotochemicalInjury_9869> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PhotochemicalInjury>. <http://scio/data/PhotochemicalInjury_9869> <http://www.w3.org/2000/01/rdf-schema#label> \"PhotochemicalInjury\"."
+83207, SpinalCord, 8775, 8786, "spinal cord", "", 
+55534, LightSource, 8815, 8826, "optic fiber", "", "<http://scio/data/PhotochemicalInjury_9869> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/LightSource>."
+83208, SpinalCord, 8858, 8862, "cord", "", 
+55535, LightSource, 8923, 8935, "halogen lamp", "", 
+55536, LightSource, 8952, 8979, "100–W Xenophot halogen bulb", "", 
+55539, SpinalCord, 9110, 9121, "Spinal cord", "", 
+55538, LightIntensity, 9162, 9170, "200 kLux", "", "<http://scio/data/PhotochemicalInjury_9869> <http://psink.de/scio/hasLightIntensity> \"200 kLux\"."
+83209, Duration, 9171, 9185, "during 2.5 min", "", 
+73071, Duration, 9501, 9528, "Thirty minutes after injury", "", "<http://scio/data/TemporalInterval_16169> <http://psink.de/scio/hasDuration> \"Thirty minutes after injury\". <http://scio/data/TemporalInterval_16185> <http://psink.de/scio/hasDuration> \"Thirty minutes after injury\"."
+73077, NNumber, 9530, 9532, "15", "", "<http://scio/data/DefinedExperimentalGroup_16151> <http://psink.de/scio/hasNNumber> \"15\"."
+73083, SpragueDawleyRat, 9533, 9540, "animals", "", 
+73078, InjectionDelivery, 9555, 9565, "injections", "", "<http://scio/data/InjectionDelivery_16124> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_16122> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_16124>."
+73086, OlfactoryEnsheathingGliaCell, 9585, 9589, "OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_16132> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_16122> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_16132>."
+83210, Vehicle, 9608, 9612, "DMEM", "", 
+73088, SpinalCord, 9636, 9647, "spinal cord", "", "<http://scio/data/SpinalCord_16139> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_16124> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_16139>."
+73072, DefinedExperimentalGroup, 9649, 9658, "group OEC", "", "<http://scio/data/DefinedExperimentalGroup_16151> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_16151> <http://www.w3.org/2000/01/rdf-schema#label> \"OECs E1\"."
+73091, InjectionDelivery, 9665, 9675, "injections", "", 
+73073, Rostral, 9694, 9701, "rostral", "", "<http://scio/data/Rostral_16129> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_16122> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16129>. <http://scio/data/Rostral_16147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_16140> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16147>."
+73079, InjectionDelivery, 9710, 9720, "injections", "", 
+73074, Caudal, 9726, 9732, "caudal", "", "<http://scio/data/Caudal_20200> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_16122> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_20200>. <http://scio/data/Caudal_37495> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_16140> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_37495>."
+73092, SpinalLesionSite, 9740, 9756, "lesion epicenter", "", "<http://scio/data/SpinalLesionSite_20199> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_16129> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_20199>. <http://scio/data/SpinalLesionSite_20201> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_20200> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_20201>. <http://scio/data/SpinalLesionSite_37494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/InjectionDelivery_16142> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_37494>. <http://scio/data/SpinalLesionSite_37490> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_16147> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_37490>. <http://scio/data/SpinalLesionSite_37496> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_37495> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_37496>."
+73080, InjectionDelivery, 9766, 9775, "injection", "", 
+73089, SpinalCord, 9811, 9815, "cord", "", 
+73093, Micropipette, 9829, 9847, "glass micropipette", "", "<http://scio/data/CompoundTreatment_16122> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>."
+73090, SpinalCord, 9914, 9925, "spinal cord", "", 
+78009, DosageExtracorporal, 9927, 9971, "Each animal received a total of 180,000 OECs", "", "<http://scio/data/CompoundTreatment_16122> <http://psink.de/scio/hasDosage> \"Each animal received a total of 180,000 OECs\"."
+73084, SpragueDawleyRat, 9932, 9938, "animal", "", 
+73087, OlfactoryEnsheathingGliaCell, 9967, 9971, "OECs", "", 
+73082, NNumber, 9981, 9983, "15", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://psink.de/scio/hasNNumber> \"15\"."
+73085, SpragueDawleyRat, 9984, 9988, "rats", "", 
+73081, InjectionDelivery, 10003, 10013, "injections", "", "<http://scio/data/InjectionDelivery_16142> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_16140> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_16142>."
+73075, Vehicle, 10036, 10043, "vehicle", "", "<http://scio/data/Vehicle_16150> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_16140> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_16150>."
+73076, DefinedExperimentalGroup, 10051, 10061, "group DMEM", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_16159> <http://www.w3.org/2000/01/rdf-schema#label> \"DMEM E2\"."
+73103, Micropipette, 10101, 10119, "glass micropipette", "", "<http://scio/data/CompoundTreatment_16140> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>."
+83214, OpenFieldTest, 10500, 10533, "open-field walking scoring system", "", 
+99378, Extremity, 10740, 10749, "hind-limb", "", 
+99376, SpragueDawleyRat, 10767, 10770, "rat", "", 
+83216, BBBTest, 10823, 10857, "Basso, Beattie and Bresnahan scale", "", 
+99379, SpragueDawleyRat, 11053, 11060, "Animals", "", 
+83217, InclinedPlaneTest, 11088, 11107, "inclined plane test", "", 
+83219, ThermalHyperalgesiaTest, 11294, 11343, "heat-radiation method using a plantar algesimeter", "", 
+83220, MotorEvokedPotentialsTest, 11923, 11928, "Motor", "", 
+83221, SomatosensoryEvokedPotentialsTest, 11933, 11964, "somatosensory evoked potentials", "", 
+99380, SpinalCord, 12008, 12019, "spinal cord", "", 
+99429, SpinalFiberTract, 12008, 12030, "spinal cord descending", "", 
+99381, AscendingFiberTract, 12035, 12051, "ascending tracts", "", 
+83222, MotorEvokedPotentialsTest, 12262, 12292, "Motor evoked potentials (MEPs)", "", 
+99385, AnatomicalLocation, 12350, 12374, "tibialis anterior muscle", "", 
+99382, Brain, 12386, 12419, "contralateral sensorimotor cortex", "", 
+99383, Brain, 12619, 12638, "sensorimotor cortex", "", 
+99384, AnatomicalLocation, 12660, 12664, "nose", "", 
+83223, SomatosensoryEvokedPotentialsTest, 12820, 12859, "somatosensory evoked potentials (SSEPs)", "", 
+99386, SpinalCord, 15900, 15911, "Spinal cord", "", 
+83224, TissueSparingTest, 15952, 15999, "measuring the area of preserved cord parenchyma", "", 
+83225, AngiogenesisTest, 17721, 17753, "density of blood vessel profiles", "", 
+99388, BBBTest, 17827, 17837, "functional", "", 
+99393, InclinedPlaneTest, 17827, 17837, "functional", "", 
+99395, ThermalHyperalgesiaTest, 17827, 17837, "functional", "", 
+99389, MotorEvokedPotentialsTest, 17839, 17859, "electrophysiological", "", 
+99390, SomatosensoryEvokedPotentialsTest, 17839, 17859, "electrophysiological", "", 
+99391, TissueSparingTest, 17864, 17876, "histological", "", 
+99394, AngiogenesisTest, 17864, 17876, "histological", "", 
+99396, HistologicalInvestigationTest, 17864, 17876, "histological", "", 
+83226, DoubleBlindStudy, 17911, 17926, "blinded” manner", "", 
+99387, SpragueDawleyRat, 17944, 17948, "rats", "", 
+83227, StatisticalTest, 18060, 18088, "nonparametric Kruskal-Wallis", "", 
+83228, StatisticalTest, 18093, 18113, "Mann-Whitney U-tests", "", 
+83301, BBBTest, 21122, 21131, "BBB-score", "", "<http://scio/data/BBBTest_63868> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75466> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_75466> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB-score)\". <http://scio/data/Result_37497> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83232, MeanValue, 21174, 21176, "12", "", 
+83233, MeanValue, 21181, 21183, "18", "", 
+83234, Duration, 21184, 21192, "at 7 dpo", "", 
+83235, MeanValue, 21198, 21200, "13", "", 
+83236, MeanValue, 21205, 21207, "20", "", 
+83237, Duration, 21211, 21217, "14 dpo", "", 
+83303, GroupName, 21221, 21225, "DMEM", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://psink.de/scio/hasGroupName> \"DMEM\"."
+83305, GroupName, 21230, 21240, "OEC groups", "", "<http://scio/data/DefinedExperimentalGroup_16151> <http://psink.de/scio/hasGroupName> \"OEC groups\"."
+83306, GroupName, 21270, 21279, "OEC group", "", "<http://scio/data/DefinedExperimentalGroup_16151> <http://psink.de/scio/hasGroupName> \"OEC group\"."
+83241, Significance, 21284, 21297, "significantly", "", "<http://scio/data/Significance_37506> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Significance>. <http://scio/data/RepeatedMeasureTrend_37504> <http://psink.de/scio/hasSignificance> <http://scio/data/Significance_37506>."
+83300, Higher, 21298, 21304, "higher", "R1", "<http://scio/data/RepeatedMeasureTrend_37504> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83243, DefinedExperimentalGroup, 21317, 21327, "group DMEM", "", 
+83298, RepeatedMeasureTrend, 21328, 21352, "at all postlesion times.", "", "<http://scio/data/RepeatedMeasureTrend_37504> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37497> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37504>."
+83244, Duration, 21441, 21449, "At 3 dpo", "", 
+83309, InclinedPlaneTest, 21455, 21473, "mean maximum angle", "", 
+83245, Lower, 21474, 21483, "decreased", "", 
+83246, MeanValue, 21487, 21489, "37", "", 
+83247, MeanValue, 21495, 21498, "41°", "", 
+83248, DefinedExperimentalGroup, 21502, 21506, "DMEM", "", 
+83249, DefinedExperimentalGroup, 21511, 21519, "OEC rats", "", 
+83250, Higher, 21526, 21535, "increased", "", 
+83251, MeanValue, 21574, 21576, "41", "", 
+83252, MeanValue, 21582, 21584, "48", "", 
+83307, GroupName, 21589, 21593, "DMEM", "", 
+83308, GroupName, 21598, 21608, "OEC groups", "", 
+83255, Duration, 21609, 21618, "at 14 dpo", "", 
+83310, RepeatedMeasureTrend, 21620, 21649, "During all postoperative days", "", "<http://scio/data/RepeatedMeasureTrend_37518> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37511> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37518>."
+83311, InclinedPlaneTest, 21655, 21673, "mean maximum angle", "", "<http://scio/data/InclinedPlaneTest_63872> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InclinedPlaneTest>. <http://scio/data/InclinedPlaneTest_75468> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InclinedPlaneTest>. <http://scio/data/InclinedPlaneTest_75468> <http://www.w3.org/2000/01/rdf-schema#label> \"InclinedPlaneTest (mean maximum angle)\". <http://scio/data/Result_37511> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83256, PositiveSignificance, 21678, 21691, "significantly", "", "<http://scio/data/PositiveSignificance_37520> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37518> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37520>."
+83314, Higher, 21692, 21698, "higher", "R2", "<http://scio/data/RepeatedMeasureTrend_37518> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83312, GroupName, 21702, 21705, "OEC", "", "<http://scio/data/DefinedExperimentalGroup_16151> <http://psink.de/scio/hasGroupName> \"OEC\"."
+83313, GroupName, 21714, 21726, "DMEM animals", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://psink.de/scio/hasGroupName> \"DMEM animals\"."
+83260, PValue, 21728, 21736, "p < 0.05", "", "<http://scio/data/PositiveSignificance_37520> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+83325, ThermalHyperalgesiaTest, 21785, 21804, "plantar algesimetry", "", 
+83319, SpinalCord, 21855, 21866, "spinal cord", "", 
+83318, ThermalHyperalgesiaTest, 21879, 21920, "mean time of withdrawal of the heated paw", "", 
+83261, Higher, 21921, 21930, "increased", "", 
+83262, Duration, 21934, 21939, "7 dpo", "", 
+83263, MeanValue, 21943, 21945, "22", "", 
+83264, MeanValue, 21950, 21952, "14", "", 
+83265, DefinedExperimentalGroup, 21960, 21964, "DMEM", "", 
+83266, DefinedExperimentalGroup, 21969, 21979, "OEC groups", "", 
+83267, Lower, 22000, 22009, "decreased", "", 
+83268, DefinedExperimentalGroup, 22013, 22023, "group DMEM", "", 
+83269, MeanValue, 22027, 22029, "18", "", 
+83271, DefinedExperimentalGroup, 22061, 22070, "group OEC", "", 
+83320, ThermalHyperalgesiaTest, 22076, 22094, "withdrawal latency", "", "<http://scio/data/ThermalHyperalgesiaTest_63875> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_75470> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ThermalHyperalgesiaTest>. <http://scio/data/ThermalHyperalgesiaTest_75470> <http://www.w3.org/2000/01/rdf-schema#label> \"ThermalHyperalgesiaTest (withdrawal latency)\". <http://scio/data/Result_37524> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83272, PositiveSignificance, 22099, 22112, "significantly", "", "<http://scio/data/PositiveSignificance_37536> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37531> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37536>."
+83321, Lower, 22113, 22118, "lower", "R3", "<http://scio/data/RepeatedMeasureTrend_37531> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+83322, GroupName, 22122, 22125, "OEC", "", 
+83324, GroupName, 22134, 22146, "DMEM animals", "", 
+83326, RepeatedMeasureTrend, 22147, 22163, "during follow-up", "", "<http://scio/data/RepeatedMeasureTrend_37531> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37524> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37531>."
+83328, PhotochemicalInjury, 22359, 22380, "photochemical injury,", "", 
+83327, None, 22381, 22391, "no changes", "R4", "<http://scio/data/RepeatedMeasureTrend_37545> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+83329, MotorEvokedPotentialsTest, 22399, 22406, "latency", "", "<http://scio/data/MotorEvokedPotentialsTest_63879> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest>. <http://scio/data/MotorEvokedPotentialsTest_75472> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest>. <http://scio/data/MotorEvokedPotentialsTest_75472> <http://www.w3.org/2000/01/rdf-schema#label> \"MotorEvokedPotentialsTest (latency)\". <http://scio/data/Result_37538> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83330, RepeatedMeasureTrend, 22421, 22438, "during follow-up,", "", "<http://scio/data/RepeatedMeasureTrend_37545> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37538> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37545>."
+83331, MotorEvokedPotentialsTest, 22447, 22456, "amplitude", "", "<http://scio/data/MotorEvokedPotentialsTest_63882> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest>. <http://scio/data/MotorEvokedPotentialsTest_75474> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MotorEvokedPotentialsTest>. <http://scio/data/MotorEvokedPotentialsTest_75474> <http://www.w3.org/2000/01/rdf-schema#label> \"MotorEvokedPotentialsTest (amplitude)\". <http://scio/data/Result_37549> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83277, Lower, 22457, 22466, "decreased", "", 
+83278, AnalyzedExperimentalGroup, 22479, 22490, "both groups", "", 
+83279, Duration, 22491, 22499, "by 3 dpo", "", 
+83280, Higher, 22509, 22518, "increased", "", 
+83335, MeanValue, 22542, 22544, "10", "", 
+83336, MeanValue, 22549, 22554, "15 mV", "", 
+83334, GroupName, 22558, 22562, "DMEM", "", 
+83333, GroupName, 22567, 22577, "OEC groups", "", 
+83281, Duration, 22592, 22601, "at 14 dpo", "", 
+83282, PositiveSignificance, 22608, 22619, "significant", "", "<http://scio/data/PositiveSignificance_37558> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37556> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37558>."
+83341, ObservedDifference, 22620, 22631, "differences", "R5", "<http://scio/data/RepeatedMeasureTrend_37556> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+83332, DefinedExperimentalGroup, 22644, 22653, "group OEC", "", 
+83284, Duration, 22654, 22669, "at 7 and 14 dpo", "", 
+83337, RepeatedMeasureTrend, 22654, 22669, "at 7 and 14 dpo", "", "<http://scio/data/RepeatedMeasureTrend_37556> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37549> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37556>."
+83339, SpinalCord, 22887, 22898, "spinal cord", "", 
+83340, SomatosensoryEvokedPotentialsTest, 22911, 22939, "amplitude of the three waves", "", "<http://scio/data/SomatosensoryEvokedPotentialsTest_63886> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SomatosensoryEvokedPotentialsTest>. <http://scio/data/SomatosensoryEvokedPotentialsTest_75476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SomatosensoryEvokedPotentialsTest>. <http://scio/data/SomatosensoryEvokedPotentialsTest_75476> <http://www.w3.org/2000/01/rdf-schema#label> \"SomatosensoryEvokedPotentialsTest (amplitude of the three waves)\". <http://scio/data/Result_37563> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83285, PositiveSignificance, 22944, 22957, "significantly", "", "<http://scio/data/PositiveSignificance_37572> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37570> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37572>."
+83343, Higher, 22958, 22964, "higher", "R6", "<http://scio/data/RepeatedMeasureTrend_37570> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83287, DefinedExperimentalGroup, 22968, 22977, "group OEC", "", 
+83288, DefinedExperimentalGroup, 22986, 22996, "group DMEM", "", 
+83342, RepeatedMeasureTrend, 22997, 23027, "at all postoperative test days", "", "<http://scio/data/RepeatedMeasureTrend_37570> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37563> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37570>."
+83346, TissueSparingTest, 23797, 23826, "area of preserved spinal cord", "", "<http://scio/data/TissueSparingTest_63889> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_75478> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TissueSparingTest>. <http://scio/data/TissueSparingTest_75478> <http://www.w3.org/2000/01/rdf-schema#label> \"TissueSparingTest (area of preserved spinal cord)\". <http://scio/data/Result_37574> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83289, PositiveSignificance, 23831, 23844, "significantly", "", "<http://scio/data/PositiveSignificance_37583> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37581> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37583>."
+83345, Higher, 23845, 23851, "larger", "R7", "<http://scio/data/RepeatedMeasureTrend_37581> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83291, DefinedExperimentalGroup, 23855, 23864, "group OEC", "", 
+83292, DefinedExperimentalGroup, 23873, 23883, "group DMEM", "", 
+83347, RepeatedMeasureTrend, 23884, 23916, "at the three intervals evaluated", "", "<http://scio/data/RepeatedMeasureTrend_37581> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37574> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37581>."
+83353, SpinalLesionSite, 24704, 24717, "lesion block,", "", "<http://scio/data/SpinalLesionSite_63893> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/HistologicalInvestigationTest_63892> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_63893>."
+83354, HistologicalInvestigationTest, 24727, 24749, "COX-2 reactivity grade", "", 
+83355, Duration, 24750, 24758, "at 3 dpo", "", 
+83356, MeanValue, 24769, 24770, "4", "", 
+83357, MeanValue, 24775, 24776, "8", "", 
+83358, GroupName, 24780, 24784, "DMEM", "", 
+83359, GroupName, 24789, 24799, "OEC groups", "", 
+83360, Lower, 24820, 24829, "decreased", "", 
+83361, AnalyzedExperimentalGroup, 24847, 24858, "both groups", "", 
+83362, MeanValue, 24868, 24871, "1.5", "", 
+83363, Duration, 24872, 24881, "at 14 dpo", "", 
+83348, HistologicalInvestigationTest, 24887, 24909, "COX-2 reactivity grade", "", "<http://scio/data/HistologicalInvestigationTest_63892> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75480> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75480> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (COX-2 reactivity grade)\". <http://scio/data/Result_37585> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83293, PositiveSignificance, 24914, 24927, "significantly", "", "<http://scio/data/PositiveSignificance_37594> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37592> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37594>."
+83349, Higher, 24928, 24934, "higher", "R8", "<http://scio/data/RepeatedMeasureTrend_37592> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83350, GroupName, 24938, 24941, "OEC", "", 
+83296, DefinedExperimentalGroup, 24950, 24960, "DMEM group", "", 
+83297, Duration, 24961, 24975, "at 3 and 7 dpo", "", 
+83351, RepeatedMeasureTrend, 24961, 24975, "at 3 and 7 dpo", "", "<http://scio/data/RepeatedMeasureTrend_37592> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37585> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37592>."
+83483, SpinalCord, 24989, 25000, "spinal cord", "", 
+83484, Rostral, 25019, 25033, "proximal block", "", 
+83492, HistologicalInvestigationTest, 25039, 25061, "COX-2 reactivity grade", "R9", "<http://scio/data/HistologicalInvestigationTest_63896> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75482> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75482> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (COX-2 reactivity grade)\". <http://scio/data/Result_37598> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83486, MeanValue, 25077, 25078, "3", "", 
+83487, MeanValue, 25083, 25084, "5", "", 
+83488, GroupName, 25088, 25092, "DMEM", "", 
+83489, GroupName, 25097, 25107, "OEC groups", "", 
+83364, PValue, 25109, 25117, "p < 0.05", "", "<http://scio/data/Significance_37607> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+83365, Duration, 25134, 25142, "at 3 dpo", "", 
+83366, Lower, 25148, 25157, "decreased", "", 
+83367, MeanValue, 25167, 25168, "3", "", 
+83368, Duration, 25169, 25177, "at 7 dpo", "", 
+83369, MeanValue, 25182, 25183, "2", "", 
+83370, Duration, 25184, 25193, "at 14 dpo", "", 
+83371, AnalyzedExperimentalGroup, 25194, 25208, "in both groups", "", 
+83490, Caudal, 25217, 25238, "distal block sections", "", 
+83491, HistologicalInvestigationTest, 25244, 25266, "COX-2 reactivity grade", "", 
+83372, MeanValue, 25276, 25277, "6", "", 
+83373, MeanValue, 25282, 25283, "5", "", 
+83374, DefinedExperimentalGroup, 25287, 25291, "DMEM", "", 
+83375, DefinedExperimentalGroup, 25296, 25306, "OEC groups", "", 
+83376, Duration, 25322, 25330, "at 3 dpo", "", 
+83377, DefinedExperimentalGroup, 25343, 25353, "group DMEM", "", 
+83493, HistologicalInvestigationTest, 25358, 25380, "COX-2 reactivity grade", "", "<http://scio/data/HistologicalInvestigationTest_63899> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75484> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75484> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (COX-2 reactivity grade)\". <http://scio/data/Result_37611> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83378, Lower, 25381, 25390, "decreased", "", 
+83379, MeanValue, 25394, 25395, "2", "", 
+83380, Duration, 25396, 25405, "at 14 dpo", "", 
+83381, DefinedExperimentalGroup, 25410, 25419, "group OEC", "", 
+83382, Higher, 25423, 25432, "increased", "", 
+83383, MeanValue, 25436, 25437, "7", "", 
+83384, Duration, 25438, 25446, "at 7 dpo", "", 
+83385, Lower, 25457, 25466, "decreased", "", 
+83386, PositiveSignificance, 25468, 25479, "Significant", "", "<http://scio/data/PositiveSignificance_37620> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_37618> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37620>."
+83494, ObservedDifference, 25480, 25491, "differences", "R10", "<http://scio/data/Trend_37618> <http://psink.de/scio/hasDifference> <http://psink.de/scio/ObservedDifference>."
+83495, GroupName, 25511, 25515, "DMEM", "", 
+83496, GroupName, 25520, 25530, "OEC groups", "", 
+83390, Duration, 25531, 25539, "at 7 dpo", "", 
+83497, HistologicalInvestigationTest, 25834, 25871, "Double labeling against COX-2 and LEC", "", "<http://scio/data/HistologicalInvestigationTest_63902> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75486> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75486> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (Double labeling against COX-2 and LEC)\". <http://scio/data/Result_37622> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83498, Higher, 25916, 25927, "more marked", "R11", "<http://scio/data/Trend_37629> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83499, SpinalCord, 25931, 25942, "spinal cord", "", 
+83392, DefinedExperimentalGroup, 25952, 25965, "in group DMEM", "", 
+83393, DefinedExperimentalGroup, 25971, 25983, "in group OEC", "", 
+83508, Duration, 26597, 26605, "At 3 dpo", "", 
+83506, SpinalLesionSite, 26628, 26640, "lesion block", "", "<http://scio/data/SpinalLesionSite_63906> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/HistologicalInvestigationTest_63905> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_63906>. <http://scio/data/SpinalLesionSite_63910> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/HistologicalInvestigationTest_63909> <http://psink.de/scio/hasLocation> <http://scio/data/SpinalLesionSite_63910>."
+83505, AnalyzedExperimentalGroup, 26644, 26655, "both groups", "", 
+83507, HistologicalInvestigationTest, 26657, 26678, "VEGF-immunoreactivity", "", 
+83511, SpinalCord, 26703, 26714, "spinal cord", "", 
+83509, SpinalGrayMatter, 26737, 26741, "grey", "", 
+83510, SpinalWhiteMatter, 26746, 26758, "white matter", "", 
+83394, Duration, 26772, 26780, "At 7 dpo", "", 
+83500, HistologicalInvestigationTest, 26782, 26809, "the levels of VEGF staining", "", "<http://scio/data/HistologicalInvestigationTest_63905> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75488> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75488> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (the levels of VEGF staining)\". <http://scio/data/Result_37633> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83395, Lower, 26810, 26819, "decreased", "", 
+83396, DefinedExperimentalGroup, 26823, 26833, "group DMEM", "", 
+83397, Higher, 26848, 26857, "increased", "", 
+83398, DefinedExperimentalGroup, 26861, 26870, "group OEC", "", 
+83399, PositiveSignificance, 26886, 26899, "significantly", "", "<http://scio/data/PositiveSignificance_37642> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_37640> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37642>."
+83501, Higher, 26900, 26906, "higher", "R12", "<http://scio/data/Trend_37640> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83401, Duration, 27016, 27025, "At 14 dpo", "", 
+83502, HistologicalInvestigationTest, 27027, 27040, "VEGF staining", "", "<http://scio/data/HistologicalInvestigationTest_63909> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75490> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75490> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (VEGF staining)\". <http://scio/data/Result_37646> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83503, None, 27045, 27052, "similar", "R13", "<http://scio/data/Trend_37653> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+83403, AnalyzedExperimentalGroup, 27056, 27067, "both groups", "", 
+83512, Rostral, 27114, 27128, "proximal block", "", 
+83513, HistologicalInvestigationTest, 27139, 27154, "VEGF reactivity", "", "<http://scio/data/HistologicalInvestigationTest_63913> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75492> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (VEGF reactivity)\". <http://scio/data/Result_37659> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83404, Lower, 27161, 27170, "decreased", "", 
+83405, PositiveSignificance, 27215, 27228, "significantly", "", "<http://scio/data/PositiveSignificance_37670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37666> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37670>."
+83514, Higher, 27229, 27235, "higher", "R14", "<http://scio/data/RepeatedMeasureTrend_37666> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83526, RepeatedMeasureTrend, 27239, 27250, "3 and 7 dpo", "", "<http://scio/data/RepeatedMeasureTrend_37666> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37659> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37666>."
+83407, Duration, 27239, 27250, "3 and 7 dpo", "", 
+83408, DefinedExperimentalGroup, 27254, 27263, "group OEC", "", 
+83409, DefinedExperimentalGroup, 27272, 27282, "group DMEM", "", 
+83516, HistologicalInvestigationTest, 27297, 27312, "VEGF reactivity", "", "<http://scio/data/HistologicalInvestigationTest_63917> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_75494> <http://www.w3.org/2000/01/rdf-schema#label> \"HistologicalInvestigationTest (VEGF reactivity)\". <http://scio/data/Result_37672> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83410, Lower, 27332, 27337, "lower", "", 
+83515, Caudal, 27365, 27377, "distal block", "", 
+83411, PositiveSignificance, 27383, 27396, "significantly", "", "<http://scio/data/PositiveSignificance_37681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_37679> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37681>."
+83517, Higher, 27397, 27403, "higher", "R15", "<http://scio/data/Trend_37679> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83413, DefinedExperimentalGroup, 27407, 27416, "group OEC", "", 
+83414, Duration, 27422, 27430, "at 7 dpo", "", 
+83415, DefinedExperimentalGroup, 27447, 27457, "group DMEM", "", 
+83518, AngiogenesisTest, 27638, 27670, "density of blood vessel profiles", "", 
+83416, MeanValue, 27675, 27678, "378", "", 
+83417, StandardError, 27681, 27683, "17", "", 
+83418, DefinedExperimentalGroup, 27687, 27697, "group DMEM", "", 
+83419, MeanValue, 27702, 27705, "369", "", 
+83420, StandardError, 27708, 27709, "9", "", 
+83421, DefinedExperimentalGroup, 27731, 27740, "group OEC", "", 
+83422, Duration, 27741, 27749, "at 3 dpo", "", 
+83423, Higher, 27754, 27763, "increased", "", 
+83424, MeanValue, 27778, 27781, "491", "", 
+83425, StandardError, 27784, 27786, "43", "", 
+83426, MeanValue, 27791, 27794, "604", "", 
+83427, StandardError, 27797, 27799, "27", "", 
+83428, Duration, 27800, 27808, "at 7 dpo", "", 
+83429, MeanValue, 27816, 27819, "512", "", 
+83430, StandardError, 27822, 27824, "25", "", 
+83431, MeanValue, 27829, 27832, "687", "", 
+83432, StandardError, 27835, 27837, "32", "", 
+83433, Duration, 27856, 27865, "at 14 dpo", "", 
+83519, GroupName, 27869, 27880, "groups DMEM", "", "<http://scio/data/DefinedExperimentalGroup_16159> <http://psink.de/scio/hasGroupName> \"groups DMEM\"."
+83520, GroupName, 27885, 27888, "OEC", "", 
+83521, AngiogenesisTest, 27908, 27945, "mean density of blood vessel profiles", "", "<http://scio/data/AngiogenesisTest_63920> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_75496> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_75496> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean density of blood vessel profiles)\". <http://scio/data/AngiogenesisTest_80518> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_80518> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean density of blood vessel profiles)\". <http://scio/data/AngiogenesisTest_80520> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AngiogenesisTest>. <http://scio/data/AngiogenesisTest_80520> <http://www.w3.org/2000/01/rdf-schema#label> \"AngiogenesisTest (mean density of blood vessel profiles)\". <http://scio/data/Result_37683> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_37696> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_37707> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+83436, PositiveSignificance, 27950, 27963, "significantly", "", "<http://scio/data/PositiveSignificance_37692> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_37690> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_37692>."
+83522, Higher, 27964, 27970, "higher", "R16", "<http://scio/data/RepeatedMeasureTrend_37690> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+83438, DefinedExperimentalGroup, 27974, 27983, "group OEC", "", 
+83439, DefinedExperimentalGroup, 27992, 28002, "group DMEM", "", 
+83523, RepeatedMeasureTrend, 28003, 28029, "at 7 (p < 0.05) and 14 dpo", "", "<http://scio/data/RepeatedMeasureTrend_37690> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_37683> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_37690>."
+83440, Duration, 28003, 28007, "at 7", "", 
+83441, PValue, 28009, 28017, "p < 0.05", "", 
+83442, Duration, 28023, 28029, "14 dpo", "", 
+83443, PValue, 28031, 28038, "p <0.01", "", "<http://scio/data/PositiveSignificance_37692> <http://psink.de/scio/hasPValue> \"p <0.01\"."
+83527, Rostral, 28221, 28241, "proximal cord blocks", "", 
+83529, AngiogenesisTest, 28247, 28254, "density", "", 
+83444, MeanValue, 28259, 28262, "410", "", 
+83445, StandardError, 28265, 28267, "14", "", 
+83446, MeanValue, 28272, 28275, "389", "", 
+83447, StandardError, 28278, 28280, "26", "", 
+83448, Duration, 28299, 28307, "at 3 dpo", "", 
+83449, DefinedExperimentalGroup, 28311, 28322, "groups DMEM", "", 
+83450, DefinedExperimentalGroup, 28327, 28330, "OEC", "", 
+83451, Higher, 28349, 28358, "increased", "", 
+83452, MeanValue, 28362, 28365, "487", "", 
+83453, StandardError, 28368, 28370, "41", "", 
+83454, MeanValue, 28375, 28378, "533", "", 
+83455, StandardError, 28381, 28383, "18", "", 
+83456, Duration, 28387, 28392, "7 dpo", "", 
+83457, MeanValue, 28401, 28404, "559", "", 
+83458, StandardError, 28407, 28409, "19", "", 
+83459, MeanValue, 28414, 28417, "665", "", 
+83460, StandardError, 28420, 28422, "26", "", 
+83461, PValue, 28424, 28432, "p < 0.01", "", "<http://scio/data/Significance_37705> <http://psink.de/scio/hasPValue> \"p < 0.01\"."
+83462, Duration, 28452, 28461, "at 14 dpo", "", 
+83463, AnalyzedExperimentalGroup, 28465, 28484, "groups DMEM and OEC", "", 
+83525, Caudal, 28628, 28640, "distal block", "", 
+83464, AnalyzedExperimentalGroup, 28653, 28665, "injured rats", "", 
+83528, AngiogenesisTest, 28670, 28677, "density", "", 
+83465, MeanValue, 28682, 28685, "400", "", 
+83466, StandardError, 28688, 28690, "14", "", 
+83467, MeanValue, 28695, 28698, "427", "", 
+83468, StandardError, 28701, 28703, "10", "", 
+83469, Duration, 28722, 28730, "at 3 dpo", "", 
+83470, MeanValue, 28732, 28735, "470", "", 
+83471, StandardError, 28738, 28740, "32", "", 
+83472, MeanValue, 28745, 28748, "532", "", 
+83473, StandardError, 28751, 28753, "20", "", 
+83474, Duration, 28772, 28780, "at 7 dpo", "", 
+83475, MeanValue, 28786, 28789, "590", "", 
+83476, StandardError, 28792, 28794, "14", "", 
+83477, MeanValue, 28799, 28802, "666", "", 
+83478, StandardError, 28805, 28807, "15", "", 
+83479, PValue, 28809, 28817, "p < 0.01", "", "<http://scio/data/Significance_37715> <http://psink.de/scio/hasPValue> \"p < 0.01\"."
+83480, Duration, 28837, 28846, "at 14 dpo", "", 
+83481, DefinedExperimentalGroup, 28857, 28861, "DMEM", "", 
+83482, DefinedExperimentalGroup, 28866, 28869, "OEC", "", 
+99397, SpragueDawleyRat, 29973, 29977, "rats", "", 
+99398, InjectionDelivery, 29995, 30004, "injection", "", 
+99399, Vehicle, 30008, 30014, "medium", "", 
+99400, GroupName, 30016, 30037, "OEC-transplanted rats", "", 
+83530, Positive, 30045, 30051, "better", "", "<http://scio/data/Result_37497> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_37511> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+83531, Positive, 30075, 30091, "closer to normal", "", "<http://scio/data/Result_37524> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+99403, MotorEvokedPotentialsTest, 30175, 30193, "amplitude of motor", "", 
+99404, SomatosensoryEvokedPotentialsTest, 30198, 30229, "somatosensory evoked potentials", "", 
+99405, PositiveSignificance, 30234, 30247, "significantly", "", 
+99406, Higher, 30248, 30254, "higher", "", 
+99407, GroupName, 30258, 30263, "OECs-", "", 
+99408, GroupName, 30272, 30290, "DMEM-injected rats", "", 
+99430, SpinalFiberTract, 30341, 30351, "descending", "", 
+99409, AscendingFiberTract, 30356, 30381, "ascending spinal pathways", "", 
+99410, GroupName, 30980, 31001, "OEC-transplanted rats", "", 
+83532, Positive, 31008, 31014, "better", "", "<http://scio/data/Result_37538> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_37549> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_37563> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+83533, Positive, 31070, 31077, "smaller", "", "<http://scio/data/Result_37574> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+99413, TissueSparingTest, 31078, 31094, "cord tissue loss", "", 
+99411, GroupName, 31100, 31118, "DMEM-injected rats", "", 

@@ -1,0 +1,41 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_845> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_845> <http://www.w3.org/2000/01/rdf-schema#label> "mouse" .
+<http://scio/data/OrganismModel_845> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse> .
+<http://scio/data/OrganismModel_845> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_845> <http://psink.de/scio/hasAge> "N8 wks age" .
+<http://scio/data/OrganismModel_845> <http://psink.de/scio/hasWeight> "20–22 g" .
+<http://scio/data/OrganismModel_845> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_3130> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_3130> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/KetamineAsAnaesthetic_3133> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/DorsalHemisection_3130> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_3133> .
+<http://scio/data/DeliveryMethod_15223> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/DorsalHemisection_3130> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife> .
+<http://scio/data/Xylazine_3141> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/DorsalHemisection_3130> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_3141> .
+<http://scio/data/DeliveryMethod_15226> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/MedicationDuringSurgery_3974> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DeliveryMethod_58044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/VertebralArea_3978> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/DorsalHemisection_3130> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3978> .
+<http://scio/data/VertebralArea_3978> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/C4> .
+<http://scio/data/VertebralArea_3978> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C5> .
+<http://scio/data/Compression_3144> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_3144> <http://www.w3.org/2000/01/rdf-schema#label> "compression" .
+<http://scio/data/Compression_3144> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8> .
+<http://scio/data/KetamineAsAnaesthetic_3147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Compression_3144> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_3147> .
+<http://scio/data/DeliveryMethod_3976> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Compression_3144> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Forceps> .
+<http://scio/data/Xylazine_3157> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/Compression_3144> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_3157> .
+<http://scio/data/DeliveryMethod_3977> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/MedicationDuringSurgery_3975> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

@@ -1,0 +1,179 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+100640, ChondroitinaseABC, 1043, 1061, "chondroitinase ABC", "", 
+100741, ChondroitinaseABC, 1063, 1068, "chABC", "", 
+100742, Brain, 1079, 1094, "cuneate nucleus", "", 
+100743, SpragueDawleyRat, 1098, 1102, "rats", "", 
+100744, LateralHemisection, 1103, 1154, "partially denervated of forepaw dorsal column axons", "", 
+100746, DorsalInjuryArea, 1113, 1154, "denervated of forepaw dorsal column axons", "", 
+100745, DorsalColumn, 1135, 1148, "dorsal column", "", 
+100747, DorsalInjuryArea, 1171, 1196, "dorsal column transection", "", 
+100748, DorsalColumn, 1171, 1184, "dorsal column", "", 
+100749, C6, 1209, 1211, "C6", "", 
+100750, C7, 1213, 1215, "C7", "", 
+100641, Duration, 1253, 1264, "immediately", "", 
+100751, Direction, 1271, 1282, "ipsilateral", "", 
+100752, Brain, 1283, 1292, "brainstem", "", 
+100753, InjectionDelivery, 1293, 1302, "injection", "", 
+100642, ChondroitinaseABC, 1313, 1318, "chABC", "", 
+100754, Penicillinase, 1358, 1371, "penicillinase", "", 
+100755, Penicillinase, 1373, 1378, "P-ase", "", 
+100643, Duration, 1390, 1417, "subsequently (1 week later)", "", 
+100756, Brain, 1441, 1450, "brainstem", "", 
+100757, Enzyme, 1451, 1457, "enzyme", "", 
+100758, InjectionDelivery, 1458, 1467, "injection", "", 
+100759, Direction, 1528, 1539, "ipsilateral", "", 
+100760, AnatomicalLocation, 1540, 1563, "forepaw digits and pads", "", 
+100644, Duration, 1565, 1588, "After 1 additional week", "", 
+100761, SpragueDawleyRat, 1594, 1598, "rats", "", 
+100645, ElectrophysiologyTest, 1609, 1653, "electrophysiological receptive field mapping", "", 
+100762, Brain, 1661, 1676, "cuneate nucleus", "", 
+100646, HistologicalInvestigationTest, 1684, 1705, "anatomical evaluation", "", 
+100763, Brain, 1726, 1736, "brainstems", "", 
+100764, SpragueDawleyRat, 1740, 1744, "rats", "", 
+100765, HistologicalInvestigationTest, 1775, 1780, "CSPGs", "", 
+100647, Lower, 1790, 1797, "reduced", "", 
+100766, ChondroitinaseABC, 1804, 1809, "chABC", "", 
+100767, GroupName, 1841, 1859, "chABC-treated rats", "E4", "<http://scio/data/DefinedExperimentalGroup_33441> <http://psink.de/scio/hasGroupName> \"chABC-treated rats\"."
+100768, GroupName, 1876, 1890, "P-ase controls", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasGroupName> \"P-ase controls\"."
+100650, PositiveSignificance, 1895, 1908, "significantly", "", 
+100648, Higher, 1909, 1916, "greater", "", 
+100769, AxonalSproutingTest, 1917, 1994, "area of the cuneate nucleus was occupied by physiologically active CTB traced", "", 
+100770, Brain, 1929, 1944, "cuneate nucleus", "", 
+100771, AscendingFiberTract, 1995, 2012, "forepaw afferents", "", 
+100649, Injury, 2041, 2060, "initial cord lesion", "", 
+100772, AxonalSproutingTest, 2171, 2180, "sprouting", "", 
+100773, AscendingFiberTract, 2184, 2205, "spinal cord afferents", "", 
+100774, ChondroitinaseABC, 2212, 2217, "chABC", "", 
+48560, Adult, 5780, 5785, "adult", "", "<http://scio/data/OrganismModel_423> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48561, Male, 5786, 5790, "male", "", "<http://scio/data/OrganismModel_423> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+48562, Weight, 5792, 5801, "250–300 g", "", "<http://scio/data/OrganismModel_423> <http://psink.de/scio/hasWeight> \"250–300 g\"."
+48563, SpragueDawleyRat, 5803, 5822, "Sprague Dawley rats", "", "<http://scio/data/OrganismModel_423> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+50800, IntramuscularLocation, 5846, 5859, "intramuscular", "", "<http://scio/data/InjectionDelivery_3363> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_3364> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_3365> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_33408> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_33419> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_33424> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>."
+50797, InjectionDelivery, 5860, 5870, "injections", "", "<http://scio/data/InjectionDelivery_3363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2219> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3363>. <http://scio/data/InjectionDelivery_3364> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2228> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3364>. <http://scio/data/InjectionDelivery_3365> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_2231> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3365>. <http://scio/data/InjectionDelivery_33408> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_33406> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33408>. <http://scio/data/InjectionDelivery_33419> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_33417> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33419>. <http://scio/data/InjectionDelivery_33424> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_33422> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33424>."
+49731, KetamineAsAnaesthetic, 5887, 5909, "ketamine hydrochloride", "", "<http://scio/data/KetamineAsAnaesthetic_2219> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2219>. <http://scio/data/KetamineAsAnaesthetic_33406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Laminectomy_33404> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_33406>."
+49732, DosageIntracorporal, 5911, 5921, "50 mg/ kg)", "", "<http://scio/data/KetamineAsAnaesthetic_2219> <http://psink.de/scio/hasDosage> \"50 mg/ kg)\". <http://scio/data/KetamineAsAnaesthetic_33406> <http://psink.de/scio/hasDosage> \"50 mg/ kg)\"."
+49733, Xylazine, 5923, 5931, "xylazine", "", "<http://scio/data/Xylazine_2228> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2228>. <http://scio/data/Xylazine_33417> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Laminectomy_33404> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_33417>."
+49734, DosageIntracorporal, 5933, 5942, "6.5 mg/kg", "", "<http://scio/data/Xylazine_2228> <http://psink.de/scio/hasDosage> \"6.5 mg/kg\". <http://scio/data/Xylazine_33417> <http://psink.de/scio/hasDosage> \"6.5 mg/kg\"."
+49736, Anaesthetic, 5949, 5961, "acepromazine", "", "<http://scio/data/Anaesthetic_2231> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2231>. <http://scio/data/Anaesthetic_33422> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/Laminectomy_33404> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_33422>."
+49735, DosageIntracorporal, 5962, 5972, "(2.5 mg/kg", "", "<http://scio/data/Anaesthetic_2231> <http://psink.de/scio/hasDosage> \"(2.5 mg/kg\". <http://scio/data/Anaesthetic_33422> <http://psink.de/scio/hasDosage> \"(2.5 mg/kg\"."
+79702, Laminectomy, 6136, 6191, "dorsal portions of the C5 and C6 vertebrae were removed", "", 
+100615, C5, 6159, 6161, "C5", "", "<http://scio/data/VertebralArea_3362> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/C5>. <http://scio/data/VertebralArea_33427> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/C5>."
+79701, VertebralArea, 6159, 6178, "C5 and C6 vertebrae", "", "<http://scio/data/VertebralArea_3362> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3362>. <http://scio/data/VertebralArea_33427> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Laminectomy_33404> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_33427>."
+100617, C6, 6166, 6168, "C6", "", "<http://scio/data/VertebralArea_3362> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C6>. <http://scio/data/VertebralArea_33427> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C6>."
+49737, Scissors, 6312, 6327, "spring scissors", "", "<http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+49741, LateralHemisection, 6390, 6449, "lateral portion of the right side of the dorsal spinal cord", "", "<http://scio/data/LateralHemisection_2216> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2216> <http://www.w3.org/2000/01/rdf-schema#label> \"lateral hemisection\"."
+49739, Right, 6413, 6418, "right", "", "<http://scio/data/Right_2225> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasDirection> <http://scio/data/Right_2225>. <http://scio/data/Right_33416> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>."
+100726, DorsalInjuryArea, 6451, 6517, "through the right dorsal horn and into the left gracile fasciculus", "", "<http://scio/data/LateralHemisection_2216> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea>."
+79703, SpragueDawleyRat, 7145, 7152, "animals", "", 
+79695, Duration, 7181, 7190, "after SCI", "", 
+79712, Right, 7196, 7201, "right", "", "<http://scio/data/Right_33337> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/CompoundTreatment_33319> <http://psink.de/scio/hasDirection> <http://scio/data/Right_33337>. <http://scio/data/Right_33356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/CompoundTreatment_33338> <http://psink.de/scio/hasDirection> <http://scio/data/Right_33356>. <http://scio/data/Right_33375> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/CompoundTreatment_33357> <http://psink.de/scio/hasDirection> <http://scio/data/Right_33375>. <http://scio/data/Right_33394> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right>. <http://scio/data/CompoundTreatment_33376> <http://psink.de/scio/hasDirection> <http://scio/data/Right_33394>."
+100728, Brain, 7202, 7209, "medulla", "", "<http://scio/data/Brain_57946> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/InjectionDelivery_33321> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_57946>. <http://scio/data/Brain_57947> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/InjectionDelivery_33340> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_57947>."
+79697, Duration, 7222, 7250, "immediately after the injury", "", "<http://scio/data/TemporalInterval_33460> <http://psink.de/scio/hasDuration> \"immediately after the injury\". <http://scio/data/TemporalInterval_33468> <http://psink.de/scio/hasDuration> \"immediately after the injury\"."
+100618, Injury, 7244, 7250, "injury", "", 
+79707, DosageExtracorporal, 7256, 7271, "1 µl of 50 U/ml", "", "<http://scio/data/CompoundTreatment_33319> <http://psink.de/scio/hasDosage> \"1 µl of 50 U/ml\". <http://scio/data/CompoundTreatment_33338> <http://psink.de/scio/hasDosage> \"1 µl of 50 U/ml\". <http://scio/data/CompoundTreatment_33357> <http://psink.de/scio/hasDosage> \"1 µl of 50 U/ml\". <http://scio/data/CompoundTreatment_33376> <http://psink.de/scio/hasDosage> \"1 µl of 50 U/ml\"."
+79708, Penicillinase, 7272, 7277, "P-ase", "", "<http://scio/data/Penicillinase_33329> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase>. <http://scio/data/CompoundTreatment_33319> <http://psink.de/scio/hasCompound> <http://scio/data/Penicillinase_33329>."
+79732, DefinedExperimentalGroup, 7272, 7277, "P-ase", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33432> <http://www.w3.org/2000/01/rdf-schema#label> \"P-ase, E3\"."
+79709, NNumber, 7283, 7284, "5", "", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasNNumber> \"5\"."
+79696, ChondroitinaseABC, 7289, 7294, "chABC", "", "<http://scio/data/ChondroitinaseABC_33353> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_33338> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_33353>."
+79734, DefinedExperimentalGroup, 7289, 7294, "chABC", "E4", "<http://scio/data/DefinedExperimentalGroup_33441> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33441> <http://www.w3.org/2000/01/rdf-schema#label> \"chABC, E4\"."
+79710, NNumber, 7300, 7301, "6", "", "<http://scio/data/DefinedExperimentalGroup_33441> <http://psink.de/scio/hasNNumber> \"6\"."
+79713, InjectionDelivery, 7307, 7315, "injected", "", "<http://scio/data/InjectionDelivery_33321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_33319> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33321>. <http://scio/data/InjectionDelivery_33340> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_33338> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33340>. <http://scio/data/InjectionDelivery_33359> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_33357> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33359>. <http://scio/data/InjectionDelivery_33378> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_33376> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33378>."
+79698, Duration, 7758, 7807, "One week after receiving SCI and enzyme injection", "", "<http://scio/data/TemporalInterval_33476> <http://psink.de/scio/hasDuration> \"One week after receiving SCI and enzyme injection\". <http://scio/data/TemporalInterval_33484> <http://psink.de/scio/hasDuration> \"One week after receiving SCI and enzyme injection\"."
+100619, Injury, 7783, 7786, "SCI", "", 
+100625, Enzyme, 7791, 7797, "enzyme", "", 
+100620, InjectionDelivery, 7798, 7807, "injection", "", 
+79720, Right, 7813, 7818, "right", "", 
+100727, Brain, 7819, 7828, "brainstem", "", "<http://scio/data/Brain_57938> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/InjectionDelivery_33359> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_57938>. <http://scio/data/Brain_57940> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/InjectionDelivery_33378> <http://psink.de/scio/hasLocations> <http://scio/data/Brain_57940>."
+79722, SpragueDawleyRat, 7837, 7840, "rat", "", 
+79723, InjectionDelivery, 7869, 7878, "injection", "", 
+79724, Penicillinase, 7889, 7894, "P-ase", "", "<http://scio/data/Penicillinase_33372> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Penicillinase>. <http://scio/data/CompoundTreatment_33357> <http://psink.de/scio/hasCompound> <http://scio/data/Penicillinase_33372>."
+79699, ChondroitinaseABC, 7898, 7903, "chABC", "", "<http://scio/data/ChondroitinaseABC_33391> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_33376> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_33391>."
+79736, DefinedExperimentalGroup, 8442, 8459, "Sham control rats", "E5", "<http://scio/data/DefinedExperimentalGroup_33450> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33450> <http://www.w3.org/2000/01/rdf-schema#label> \"sham control rats, E5\"."
+79711, NNumber, 8463, 8464, "5", "", "<http://scio/data/DefinedExperimentalGroup_33450> <http://psink.de/scio/hasNNumber> \"5\"."
+79725, AnatomicalLocation, 8476, 8486, "brainstems", "", 
+79726, SpinalCord, 8491, 8503, "spinal cords", "", 
+79727, Laminectomy, 8491, 8511, "spinal cords exposed", "", "<http://scio/data/Laminectomy_33404> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Laminectomy>. <http://scio/data/Laminectomy_33404> <http://www.w3.org/2000/01/rdf-schema#label> \"laminectomy\"."
+100622, Injury, 8534, 8537, "SCI", "", 
+100624, Enzyme, 8541, 8547, "enzyme", "", 
+100623, InjectionDelivery, 8548, 8558, "injections", "", 
+100775, NNumber, 8759, 8763, "Four", "", 
+100779, GroupName, 8764, 8790, "P-ase-treated injured rats", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasGroupName> \"P-ase-treated injured rats\"."
+100777, NNumber, 8792, 8796, "four", "", 
+100780, GroupName, 8797, 8823, "chABC-treated injured rats", "E4", "<http://scio/data/DefinedExperimentalGroup_33441> <http://psink.de/scio/hasGroupName> \"chABC-treated injured rats\"."
+100778, NNumber, 8828, 8829, "2", "", 
+100781, DefinedExperimentalGroup, 8830, 8847, "sham control rats", "", 
+100626, ElectrophysiologyTest, 8858, 8896, "microelectrode receptive field mapping", "", 
+100731, AxonalSproutingTest, 11902, 11957, "to label CTB traced cutaneous forepaw primary afferents", "", 
+100782, AscendingFiberTract, 11932, 11957, "forepaw primary afferents", "", 
+100783, AxonalSproutingTest, 14211, 14237, "CTB-labeled terminal areas", "", 
+100784, GroupName, 14243, 14261, "P-ase-treated rats", "E3", 
+100786, NNumber, 14267, 14268, "5", "", 
+100785, GroupName, 14274, 14292, "chABC-treated rats", "E4", 
+100787, NNumber, 14298, 14299, "6", "", 
+100634, TTest, 14325, 14341, "Student's t test", "", 
+100789, StatisticalTest, 15490, 15527, "Tukey's post hoc pairwise comparisons", "", 
+100788, StatisticalTest, 15674, 15711, "Tukey's post hoc pairwise comparisons", "", 
+100690, Brain, 26166, 26176, "brainstems", "", "<http://scio/data/Brain_68324> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Brain>. <http://scio/data/AxonalSproutingTest_68323> <http://psink.de/scio/hasLocation> <http://scio/data/Brain_68324>."
+100688, GroupName, 26180, 26205, "chABCtreated injured rats", "E4", "<http://scio/data/DefinedExperimentalGroup_33441> <http://psink.de/scio/hasGroupName> \"chABCtreated injured rats\"."
+100730, AxonalSproutingTest, 26225, 26243, "CTB-immunoreactive", "", "<http://scio/data/AxonalSproutingTest_68323> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_77321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AxonalSproutingTest>. <http://scio/data/AxonalSproutingTest_77321> <http://www.w3.org/2000/01/rdf-schema#label> \"AxonalSproutingTest (CTB-immunoreactive)\". <http://scio/data/Result_57831> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100692, MeanValue, 26245, 26251, "323.73", "", 
+100652, PositiveSignificance, 26291, 26304, "significantly", "", "<http://scio/data/PositiveSignificance_57840> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_57838> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_57840>."
+100698, Higher, 26305, 26312, "greater", "R1", "<http://scio/data/Trend_57838> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+100689, GroupName, 26331, 26344, "P-ase-treated", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasGroupName> \"P-ase-treated\"."
+100654, MeanValue, 26346, 26352, "165.41", "", 
+100655, StatisticalTest, 26366, 26382, "Student’s t test", "", "<http://scio/data/Result_57831> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+100651, PValue, 26384, 26392, "p < 0.01", "", "<http://scio/data/PositiveSignificance_57840> <http://psink.de/scio/hasPValue> \"p < 0.01\"."
+100656, ChondroitinaseABC, 27154, 27159, "chABC", "", 
+100657, DefinedExperimentalGroup, 27154, 27159, "chABC", "", 
+100693, Positive, 27160, 27168, "promotes", "", "<http://scio/data/Result_57831> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+100694, AxonalSproutingTest, 27169, 27218, "sprouting of uninjured forelimb primary afferents", "", 
+100697, Duration, 27264, 27282, "after cervical SCI", "", 
+100695, Cervical, 27270, 27278, "cervical", "", 
+100696, Injury, 27279, 27282, "SCI", "", 
+100703, ElectrophysiologyTest, 28868, 28884, "receptive fields", "", 
+100702, GroupName, 28907, 28924, "sham control rats", "E5", "<http://scio/data/DefinedExperimentalGroup_33450> <http://psink.de/scio/hasGroupName> \"sham control rats\"."
+100713, Lower, 29036, 29048, "more limited", "R2", "<http://scio/data/Trend_57851> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+100700, ElectrophysiologyTest, 29056, 29072, "receptive fields", "", "<http://scio/data/ElectrophysiologyTest_68327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77323> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77323> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (receptive fields)\". <http://scio/data/Result_57844> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100701, GroupName, 29092, 29120, "injured rats receiving P-ase", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasGroupName> \"injured rats receiving P-ase\"."
+100704, InjectionDelivery, 29121, 29131, "injections", "", 
+100658, PositiveSignificance, 30015, 30026, "significant", "", "<http://scio/data/PositiveSignificance_57864> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_57862> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_57864>."
+100714, Lower, 30027, 30036, "reduction", "R3", "<http://scio/data/Trend_57862> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+100661, StatisticalTest, 30064, 30085, "post hoc Tukey’s test", "", "<http://scio/data/Result_57855> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+100662, PValue, 30087, 30096, "p < 0.001", "", "<http://scio/data/PositiveSignificance_57864> <http://psink.de/scio/hasPValue> \"p < 0.001\"."
+100707, ElectrophysiologyTest, 30105, 30167, "frequency of recording sites responding to forepaw stimulation", "", "<http://scio/data/ElectrophysiologyTest_68331> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77325> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77325> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (frequency of recording sites responding to forepaw stimulation)\". <http://scio/data/Result_57855> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100663, MeanValue, 30169, 30173, "46.3", "", 
+100664, DefinedExperimentalGroup, 30200, 30217, "sham control rats", "", 
+100665, MeanValue, 30218, 30223, "(81.0", "", 
+100666, PositiveSignificance, 30265, 30276, "significant", "", "<http://scio/data/PositiveSignificance_57877> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_57875> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_57877>."
+100715, Higher, 30277, 30285, "increase", "R4", "<http://scio/data/Trend_57875> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+100668, StatisticalTest, 30312, 30333, "post hoc Tukey’s test", "", "<http://scio/data/Result_57868> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+100669, PValue, 30335, 30344, "p < 0.001", "", "<http://scio/data/PositiveSignificance_57877> <http://psink.de/scio/hasPValue> \"p < 0.001\"."
+100708, ElectrophysiologyTest, 30353, 30412, "frequency of recording sites not responsive to any stimulus", "", "<http://scio/data/ElectrophysiologyTest_68335> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77327> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (frequency of recording sites not responsive to any stimulus)\". <http://scio/data/Result_57868> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100671, DefinedExperimentalGroup, 30414, 30418, "Pase", "", 
+100710, MeanValue, 30420, 30424, "36.2", "", 
+100709, GroupName, 30431, 30435, "sham", "E5", "<http://scio/data/DefinedExperimentalGroup_33450> <http://psink.de/scio/hasGroupName> \"sham\"."
+100712, MeanValue, 30437, 30440, "5.6", "", 
+100717, GroupName, 30894, 30915, "P-ase control animals", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasGroupName> \"P-ase control animals\"."
+100716, MeanValue, 30917, 30921, "46.3", "", 
+100734, ElectrophysiologyTest, 30931, 30963, "responses to forepaw stimulation", "", "<http://scio/data/ElectrophysiologyTest_68352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77332> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77332> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (responses to forepaw stimulation)\". <http://scio/data/Result_57991> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100718, GroupName, 30967, 30989, "chABC-treated SCI rats", "E4", "<http://scio/data/DefinedExperimentalGroup_33441> <http://psink.de/scio/hasGroupName> \"chABC-treated SCI rats\"."
+100672, PositiveSignificance, 31012, 31025, "significantly", "", "<http://scio/data/PositiveSignificance_58000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_57998> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_58000>."
+100732, Higher, 31026, 31033, "greater", "R5", "<http://scio/data/Trend_57998> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+100675, MeanValue, 31045, 31049, "74.5", "", 
+100676, StatisticalTest, 31056, 31077, "post hoc Tukey’s test", "", "<http://scio/data/Result_57991> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+100674, PValue, 31079, 31086, "p<0.001", "", "<http://scio/data/PositiveSignificance_58000> <http://psink.de/scio/hasPValue> \"p<0.001\"."
+100677, PositiveSignificance, 31340, 31351, "significant", "", "<http://scio/data/PositiveSignificance_58013> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_58011> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_58013>."
+100738, Higher, 31352, 31361, "expansion", "R6", "<http://scio/data/Trend_58011> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+100735, ElectrophysiologyTest, 31365, 31389, "digit 2 receptive fields", "", "<http://scio/data/ElectrophysiologyTest_68355> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77334> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77334> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (digit 2 receptive fields)\". <http://scio/data/Result_58004> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100740, Brain, 31390, 31420, "throughout the cuneate nucleus", "", 
+100680, StatisticalTest, 31446, 31467, "post hoc Tukey’s test", "", "<http://scio/data/Result_58004> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+100681, PValue, 31469, 31478, "p < 0.001", "", "<http://scio/data/PositiveSignificance_58013> <http://psink.de/scio/hasPValue> \"p < 0.001\"."
+100682, PositiveSignificance, 31507, 31518, "significant", "", "<http://scio/data/PositiveSignificance_58029> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_58027> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_58029>."
+100683, StatisticalTest, 31521, 31542, "post hoc Tukey’s test", "", "<http://scio/data/Result_58020> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+100684, PValue, 31544, 31552, "p < 0.05", "", "<http://scio/data/PositiveSignificance_58029> <http://psink.de/scio/hasPValue> \"p < 0.05\"."
+100739, Lower, 31554, 31563, "reduction", "R7", "<http://scio/data/Trend_58027> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+100737, ElectrophysiologyTest, 31571, 31609, "number of unresponsive recording sites", "", "<http://scio/data/ElectrophysiologyTest_68359> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77336> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ElectrophysiologyTest>. <http://scio/data/ElectrophysiologyTest_77336> <http://www.w3.org/2000/01/rdf-schema#label> \"ElectrophysiologyTest (number of unresponsive recording sites)\". <http://scio/data/Result_58020> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+100719, GroupName, 31630, 31648, "chABC-treated rats", "E4", 
+100686, MeanValue, 31650, 31654, "19.1", "", 
+100720, GroupName, 31679, 31697, "P-ase-treated rats", "E3", "<http://scio/data/DefinedExperimentalGroup_33432> <http://psink.de/scio/hasGroupName> \"P-ase-treated rats\"."
+100687, MeanValue, 31699, 31703, "36.2", "", 

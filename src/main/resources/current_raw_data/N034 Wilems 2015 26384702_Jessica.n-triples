@@ -1,0 +1,115 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+<http://scio/data/Observation_84449> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_84449> <http://www.w3.org/2000/01/rdf-schema#label> "TP SurgeryTreatment" .
+<http://scio/data/TemporalInterval_84451> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_84449> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_84451> .
+<http://scio/data/TemporalInterval_84451> <http://psink.de/scio/hasDuration> "Two weeks after the dorsal hemisection" .
+<http://scio/data/TemporalInterval_84451> <http://psink.de/scio/hasEventBefore> <http://scio/data/DorsalHemisection_2276> .
+<http://scio/data/TemporalInterval_84451> <http://psink.de/scio/hasEventAfter> <http://scio/data/SurgeryTreatment_84430> .
+<http://scio/data/NumericValue_84452> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/ExperimentalGroup_84453> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ExperimentalGroup> .
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_447> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_447> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_447> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/LongEvansRat> .
+<http://scio/data/OrganismModel_447> <http://psink.de/scio/hasWeight> "250-275 g" .
+<http://scio/data/OrganismModel_447> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_2276> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_2276> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8> .
+<http://scio/data/Isoflurane_2279> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2279> .
+<http://scio/data/InhalationDelivery_2285> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery> .
+<http://scio/data/Isoflurane_2279> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_2285> .
+<http://scio/data/Isoflurane_2279> <http://psink.de/scio/hasDosage> "5%" .
+<http://scio/data/MedicationDuringSurgery_2281> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+<http://scio/data/Xylazine_2287> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2287> .
+<http://scio/data/InjectionDelivery_2288> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_2287> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_2288> .
+<http://scio/data/Xylazine_2287> <http://psink.de/scio/hasDosage> "5 mg/kg" .
+<http://scio/data/PostsurgicalMedication_2291> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2291> .
+<http://scio/data/PostsurgicalMedication_2291> <http://psink.de/scio/hasDosage> "0.04 mg/kg" .
+<http://scio/data/PostsurgicalMedication_2293> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2293> .
+<http://scio/data/PostsurgicalMedication_2293> <http://psink.de/scio/hasDosage> "0.01 mg/kg" .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/AntibioticMedication_3369> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/DorsalHemisection_2276> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3369> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_84345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84345> <http://www.w3.org/2000/01/rdf-schema#label> "matrix + factors" .
+<http://scio/data/DeliveryMethod_84347> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_84352> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Protein_84353> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Protein_84353> .
+<http://scio/data/Matrix_84355> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Matrix> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasCompound> <http://scio/data/Matrix_84355> .
+<http://scio/data/Substance_84356> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Substance_84356> .
+<http://scio/data/Substance_84382> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Substance_84382> .
+<http://scio/data/Substance_84383> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Substance_84383> .
+<http://scio/data/Protein_84384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Protein_84384> .
+<http://scio/data/Neurotrophin3_84385> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Neurotrophin3> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Neurotrophin3_84385> .
+<http://scio/data/Protein_84386> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Protein> .
+<http://scio/data/CompoundTreatment_84345> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Protein_84386> .
+<http://scio/data/CompoundTreatment_84363> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84363> <http://www.w3.org/2000/01/rdf-schema#label> "Trehalose for ChABC" .
+<http://scio/data/DeliveryMethod_84365> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84363> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes> .
+<http://scio/data/Direction_84370> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Enzyme_84389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Enzyme> .
+<http://scio/data/CompoundTreatment_84363> <http://psink.de/scio/hasCompound> <http://scio/data/Enzyme_84389> .
+<http://scio/data/CompoundTreatment_84390> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84390> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/DeliveryMethod_84392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84390> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes> .
+<http://scio/data/Direction_84397> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84409> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/ChondroitinaseABC_84411> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_84390> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_84411> .
+<http://scio/data/CompoundTreatment_84398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84398> <http://www.w3.org/2000/01/rdf-schema#label> "pMNs" .
+<http://scio/data/DeliveryMethod_84400> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_84405> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84406> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Cell_84408> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Cell> .
+<http://scio/data/CompoundTreatment_84398> <http://psink.de/scio/hasCompound> <http://scio/data/Cell_84408> .
+<http://scio/data/AnatomicalLocation_84413> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/Cell_84408> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies> .
+<http://scio/data/Cell_84408> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic> .
+<http://scio/data/Cell_84408> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Labeling> .
+<http://scio/data/Cell_84408> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Differentiation> .
+<http://scio/data/CompoundTreatment_84419> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84419> <http://www.w3.org/2000/01/rdf-schema#label> "NOGOReceptorAnagonist NEP1-40" .
+<http://scio/data/DeliveryMethod_84421> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84419> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Liposomes> .
+<http://scio/data/Direction_84426> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84427> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/NOGOReceptorAntagonist_84429> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NOGOReceptorAntagonist> .
+<http://scio/data/CompoundTreatment_84419> <http://psink.de/scio/hasCompound> <http://scio/data/NOGOReceptorAntagonist_84429> .
+<http://scio/data/SurgeryTreatment_84430> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SurgeryTreatment> .
+<http://scio/data/SurgeryTreatment_84430> <http://www.w3.org/2000/01/rdf-schema#label> "SurgeryTreatment" .
+<http://scio/data/DeliveryMethod_84432> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Direction_84437> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/CompoundTreatment_84438> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_84438> <http://www.w3.org/2000/01/rdf-schema#label> "CyclosporineA" .
+<http://scio/data/DeliveryMethod_84440> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_84438> <http://psink.de/scio/hasFrequency> "daily" .
+<http://scio/data/Direction_84445> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_84446> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_84438> <http://psink.de/scio/hasDosage> "10 mg/kg" .
+<http://scio/data/CyclosporineA_84448> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CyclosporineA> .
+<http://scio/data/CompoundTreatment_84438> <http://psink.de/scio/hasCompound> <http://scio/data/CyclosporineA_84448> .
+# RDF export of group: Sacrifices

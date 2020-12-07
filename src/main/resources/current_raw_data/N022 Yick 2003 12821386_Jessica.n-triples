@@ -1,0 +1,75 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_375> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_375> <http://www.w3.org/2000/01/rdf-schema#label> "young Rat" .
+<http://scio/data/OrganismModel_375> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_375> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Young> .
+<http://scio/data/OrganismModel_375> <http://psink.de/scio/hasAge> "7-day-old" .
+<http://scio/data/OrganismModel_375> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_381> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_381> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_381> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_381> <http://psink.de/scio/hasAge> "9-week-old" .
+<http://scio/data/OrganismModel_381> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/LateralHemisection_3329> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_3329> <http://www.w3.org/2000/01/rdf-schema#label> "adult hemisection" .
+<http://scio/data/LateralHemisection_3329> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T11> .
+<http://scio/data/MedicationDuringSurgery_3334> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/LateralHemisection_3329> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+<http://scio/data/Right_3338> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
+<http://scio/data/LateralHemisection_3329> <http://psink.de/scio/hasDirection> <http://scio/data/Right_3338> .
+<http://scio/data/KetamineAsAnaesthetic_3339> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/LateralHemisection_3329> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_3339> .
+<http://scio/data/InjectionDelivery_3340> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_3339> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3340> .
+<http://scio/data/InjectionDelivery_3340> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/KetamineAsAnaesthetic_3339> <http://psink.de/scio/hasDosage> "80 mg/kg" .
+<http://scio/data/Xylazine_3342> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/LateralHemisection_3329> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_3342> .
+<http://scio/data/InjectionDelivery_3343> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_3342> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3343> .
+<http://scio/data/InjectionDelivery_3343> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Xylazine_3342> <http://psink.de/scio/hasDosage> "(8 mg/kg" .
+<http://scio/data/LateralHemisection_14426> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_14426> <http://www.w3.org/2000/01/rdf-schema#label> "fetal hemisection" .
+<http://scio/data/LateralHemisection_14426> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T11> .
+<http://scio/data/MedicationDuringSurgery_14430> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/LateralHemisection_14426> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+<http://scio/data/Right_14434> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Right> .
+<http://scio/data/LateralHemisection_14426> <http://psink.de/scio/hasDirection> <http://scio/data/Right_14434> .
+<http://scio/data/Anaesthetic_14446> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/LateralHemisection_14426> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_14446> .
+<http://scio/data/DeliveryMethod_14447> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_32921> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_32921> <http://www.w3.org/2000/01/rdf-schema#label> "Vehicle" .
+<http://scio/data/DeliveryMethod_32923> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_32921> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_32923> .
+<http://scio/data/SpinalLesionSite_32933> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/DeliveryMethod_32923> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_32933> .
+<http://scio/data/CompoundTreatment_32921> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Gelfoam> .
+<http://scio/data/Direction_32928> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_32929> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/PBS_32931> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PBS> .
+<http://scio/data/CompoundTreatment_32921> <http://psink.de/scio/hasCompound> <http://scio/data/PBS_32931> .
+<http://scio/data/AnatomicalLocation_83166> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/CompoundTreatment_32934> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_32934> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/DeliveryMethod_32936> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_32934> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_32936> .
+<http://scio/data/SpinalLesionSite_32948> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/DeliveryMethod_32936> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_32948> .
+<http://scio/data/CompoundTreatment_32934> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Gelfoam> .
+<http://scio/data/Direction_32941> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_32942> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_32934> <http://psink.de/scio/hasDosage> "2.5 units/ml" .
+<http://scio/data/ChondroitinaseABC_32944> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_32934> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_32944> .
+<http://scio/data/ChondroitinaseABC_32944> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku> .
+<http://scio/data/AnatomicalLocation_32946> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+# RDF export of group: Sacrifices

@@ -1,0 +1,37 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48587, Adult, 7723, 7728, "adult", "", "<http://scio/data/OrganismModel_465> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48588, Female, 7729, 7735, "female", "", "<http://scio/data/OrganismModel_465> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48589, SpragueDawleyRat, 7736, 7755, "Sprague Dawley rats", "", "<http://scio/data/OrganismModel_465> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48590, Weight, 7759, 7764, "200 g", "", "<http://scio/data/OrganismModel_465> <http://psink.de/scio/hasWeight> \"200 g\"."
+49833, SpragueDawleyRat, 10859, 10866, "animals", "", 
+49829, Isoflurane, 10910, 10920, "isoflurane", "", "<http://scio/data/Isoflurane_2322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/LateralHemisection_2319> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2322>."
+49835, DosageExtracorporal, 10922, 10932, "1.5  L/min", "", "<http://scio/data/Isoflurane_2322> <http://psink.de/scio/hasDosage> \"1.5  L/min\"."
+49832, T8, 10992, 10994, "T8", "", "<http://scio/data/LateralHemisection_2319> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+49838, Left, 11119, 11123, "left", "", "<http://scio/data/Left_2328> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left>. <http://scio/data/LateralHemisection_2319> <http://psink.de/scio/hasDirection> <http://scio/data/Left_2328>."
+49837, LateralHemisection, 11124, 11159, "hemicord was completely  transected", "", "<http://scio/data/LateralHemisection_2319> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection>. <http://scio/data/LateralHemisection_2319> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+49839, Scissors, 11190, 11198, "scissors", "", "<http://scio/data/LateralHemisection_2319> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors>."
+103256, Duration, 11210, 11239, "Immediately  after the injury", "", 
+103258, LateralHemisection, 11233, 11239, "injury", "", 
+103257, SpragueDawleyRat, 11245, 11252, "animals", "", 
+103259, InjectionDelivery, 11329, 11339, "injections", "", 
+103261, ChondroitinaseABC, 11356, 11374, "chondroitinase ABC", "", 
+103262, DosageExtracorporal, 11376, 11384, "100 U/ml", "", 
+103264, Seikagaku, 11386, 11407, "Seikagaku Corporation", "", 
+103266, Penicillinase, 11424, 11437, "penicillinase", "", 
+103263, DosageExtracorporal, 11439, 11446, "2 mg/ml", "", 
+103265, SigmaAldrich, 11448, 11453, "Sigma", "", 
+103267, Rostral, 11465, 11475, "1mmrostral", "", 
+103268, Caudal, 11480, 11486, "caudal", "", 
+103269, SpinalLesionSite, 11495, 11501, "injury", "", 
+103270, Ipsilateral, 11509, 11520, "ipsilateral", "", 
+103260, InjectionDelivery, 11548, 11558, "injections", "", 
+103271, Duration, 11587, 11593, "10 min", "", 
+103272, Cannula, 11602, 11620, "glass micropipette", "", 
+103278, DNA, 12201, 12221, "HSV-1-gfp  amplicons", "", 
+103276, Substance, 12231, 12235, "NR2D", "", 
+103277, Substance, 12247, 12262, "β-galactosidase", "", 
+103274, InjectionDelivery, 12269, 12277, "injected", "", 
+103275, Intraspinal, 12278, 12291, "intraspinally", "", 
+103279, DosageExtracorporal, 12294, 12344, "2 injections of 1µl each; ~10 4 viral particles/µl", "", 
+103281, Caudal, 12389, 12395, "caudal", "", 
+103284, SpinalLesionSite, 12403, 12416, "injury region", "", 

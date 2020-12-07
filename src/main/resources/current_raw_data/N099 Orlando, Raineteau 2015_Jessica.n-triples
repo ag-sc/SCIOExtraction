@@ -1,0 +1,42 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_832> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_832> <http://www.w3.org/2000/01/rdf-schema#label> "WT mouse" .
+<http://scio/data/OrganismModel_832> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse> .
+<http://scio/data/OrganismModel_832> <http://psink.de/scio/hasAge> "2.5 months" .
+<http://scio/data/OrganismModel_832> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_838> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_838> <http://www.w3.org/2000/01/rdf-schema#label> "transgenic mouse" .
+<http://scio/data/OrganismModel_838> <http://psink.de/scio/hasAge> "2.5 months" .
+<http://scio/data/OrganismModel_838> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+<http://scio/data/OrganismModel_838> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MouseSpecies> .
+# RDF export of group: Injuries
+<http://scio/data/DorsalHemisection_3112> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalHemisection> .
+<http://scio/data/DorsalHemisection_3112> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8> .
+<http://scio/data/Anaesthetic_3115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3115> .
+<http://scio/data/Anaesthetic_3115> <http://psink.de/scio/hasDosage> "0.7 mg/kg" .
+<http://scio/data/InjectionDelivery_3972> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_3115> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3972> .
+<http://scio/data/InjectionDelivery_3972> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/MedicationDuringSurgery_3117> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+<http://scio/data/PostsurgicalMedication_3121> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_3121> .
+<http://scio/data/PostsurgicalMedication_3121> <http://psink.de/scio/hasDosage> "5 mg/kg" .
+<http://scio/data/AntibioticMedication_3123> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3123> .
+<http://scio/data/AntibioticMedication_3123> <http://psink.de/scio/hasDosage> "5 mg/kg" .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/Anaesthetic_3127> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/DorsalHemisection_3112> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3127> .
+<http://scio/data/Anaesthetic_3127> <http://psink.de/scio/hasDosage> "22.5 mg/kg" .
+<http://scio/data/InjectionDelivery_3973> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_3127> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3973> .
+<http://scio/data/InjectionDelivery_3973> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

@@ -1,0 +1,33 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_953> <http://www.w3.org/2000/01/rdf-schema#label> "Monkey" .
+<http://scio/data/OrganismModel_953> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/MonkeySpecies> .
+<http://scio/data/OrganismModel_953> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_953> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male> .
+# RDF export of group: Injuries
+<http://scio/data/LateralHemisection_11793> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_11793> <http://www.w3.org/2000/01/rdf-schema#label> "lateral hemisection" .
+<http://scio/data/VertebralArea_11794> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/LateralHemisection_11793> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_11794> .
+<http://scio/data/VertebralArea_11794> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/C5> .
+<http://scio/data/VertebralArea_11794> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/C6> .
+<http://scio/data/KetamineAsAnaesthetic_11796> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/LateralHemisection_11793> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_11796> .
+<http://scio/data/DeliveryMethod_11805> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/KetamineAsAnaesthetic_11796> <http://psink.de/scio/hasDosage> "8–10 mg/kg" .
+<http://scio/data/MedicationDuringSurgery_11798> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/Direction_11802> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Xylazine_11807> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/LateralHemisection_11793> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_11807> .
+<http://scio/data/DeliveryMethod_11808> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Xylazine_11807> <http://psink.de/scio/hasDosage> "0.4 mg/kg" .
+<http://scio/data/Isoflurane_11810> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/LateralHemisection_11793> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_11810> .
+<http://scio/data/DeliveryMethod_11811> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Isoflurane_11810> <http://psink.de/scio/hasDosage> "0.5–3.0%" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

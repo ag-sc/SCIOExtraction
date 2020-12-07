@@ -1,0 +1,15 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48693, Adult, 3578, 3583, "Adult", "", "<http://scio/data/OrganismModel_634> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48694, Female, 3584, 3590, "female", "", "<http://scio/data/OrganismModel_634> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48695, SpragueDawleyRat, 3591, 3610, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_634> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48696, Weight, 3612, 3620, "225-250g", "", "<http://scio/data/OrganismModel_634> <http://psink.de/scio/hasWeight> \"225-250g\"."
+50239, Isoflurane, 3660, 3670, "isoflurane", "", "<http://scio/data/Isoflurane_2774> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane>. <http://scio/data/PartialTransection_2771> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_2774>."
+50240, Laminectomy, 3674, 3689, "hemilaminectomy", "", 
+50241, C5, 3736, 3738, "C5", "", "<http://scio/data/PartialTransection_2771> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/C5>."
+50243, Right, 3772, 3777, "right", "", 
+50242, PartialTransection, 3803, 3825, "dorsal quadrant lesion", "", "<http://scio/data/PartialTransection_2771> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_2771> <http://www.w3.org/2000/01/rdf-schema#label> \"transection\"."
+54302, SpragueDawleyRat, 4271, 4278, "animals", "", 
+54303, AntibioticMedication, 4290, 4300, "ampicillin", "", "<http://scio/data/AntibioticMedication_3879> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/PartialTransection_2771> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3879>."
+50246, DosageIntracorporal, 4302, 4310, "200mg/kg", "", "<http://scio/data/AntibioticMedication_3879> <http://psink.de/scio/hasDosage> \"200mg/kg\"."
+50245, PostsurgicalMedication, 4316, 4329, "buprenorphine", "", "<http://scio/data/PostsurgicalMedication_2781> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/PartialTransection_2771> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2781>."
+50247, DosageIntracorporal, 4331, 4339, "0.1mg/kg", "", "<http://scio/data/PostsurgicalMedication_2781> <http://psink.de/scio/hasDosage> \"0.1mg/kg\"."

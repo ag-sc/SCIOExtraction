@@ -1,0 +1,240 @@
+# RDF export of group: InvestigationMethod
+<http://scio/data/HistologicalInvestigationTest_68639> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
+<http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasLocation> <http://psink.de/scio/C1> .
+<http://scio/data/Left_69155> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left> .
+<http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasDirection> <http://scio/data/Left_69155> .
+<http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasLocationDeprecated> <http://psink.de/scio/C3> .
+<http://scio/data/HistologicalInvestigationParameter_69157> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
+<http://scio/data/HistologicalInvestigationTest_68639> <http://psink.de/scio/hasLocation> <http://psink.de/scio/C2> .
+<http://scio/data/HistologicalInvestigationTest_69827> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest> .
+<http://scio/data/Left_69830> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left> .
+<http://scio/data/HistologicalInvestigationParameter_69834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationParameter> .
+# RDF export of group: Results
+# RDF export of group: Observations
+<http://scio/data/Observation_31311> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_31311> <http://www.w3.org/2000/01/rdf-schema#label> "TP severe ChABC" .
+<http://scio/data/TemporalInterval_31313> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_31311> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_31313> .
+<http://scio/data/TemporalInterval_31313> <http://psink.de/scio/hasDuration> "Immediately after spinal cord injury" .
+<http://scio/data/TemporalInterval_31313> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_4086> .
+<http://scio/data/TemporalInterval_31313> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_3436> .
+<http://scio/data/NumericValue_31314> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_31311> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_30782> .
+<http://scio/data/Observation_31319> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_31319> <http://www.w3.org/2000/01/rdf-schema#label> "TP severe ARSB" .
+<http://scio/data/TemporalInterval_31321> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_31319> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_31321> .
+<http://scio/data/TemporalInterval_31321> <http://psink.de/scio/hasDuration> "Immediately after spinal cord injury" .
+<http://scio/data/TemporalInterval_31321> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_4086> .
+<http://scio/data/TemporalInterval_31321> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_4115> .
+<http://scio/data/NumericValue_31322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_31319> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_30774> .
+<http://scio/data/Observation_31327> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_31327> <http://www.w3.org/2000/01/rdf-schema#label> "TP severe Vehicle" .
+<http://scio/data/TemporalInterval_31329> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_31327> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_31329> .
+<http://scio/data/TemporalInterval_31329> <http://psink.de/scio/hasDuration> "Immediately after spinal cord injury" .
+<http://scio/data/TemporalInterval_31329> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_4086> .
+<http://scio/data/TemporalInterval_31329> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_4134> .
+<http://scio/data/NumericValue_31333> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_31327> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_30790> .
+<http://scio/data/Observation_31335> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_31335> <http://www.w3.org/2000/01/rdf-schema#label> "TP moderate ARSB" .
+<http://scio/data/TemporalInterval_31337> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_31335> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_31337> .
+<http://scio/data/TemporalInterval_31337> <http://psink.de/scio/hasDuration> "Immediately after spinal cord injury" .
+<http://scio/data/TemporalInterval_31337> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_1610> .
+<http://scio/data/TemporalInterval_31337> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_4115> .
+<http://scio/data/NumericValue_31341> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_31335> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_3445> .
+<http://scio/data/Observation_31343> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_31343> <http://www.w3.org/2000/01/rdf-schema#label> "TP moderate vehicle" .
+<http://scio/data/TemporalInterval_31345> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_31343> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_31345> .
+<http://scio/data/TemporalInterval_31345> <http://psink.de/scio/hasDuration> "Immediately after spinal cord injury" .
+<http://scio/data/TemporalInterval_31345> <http://psink.de/scio/hasEventBefore> <http://scio/data/Compression_1610> .
+<http://scio/data/TemporalInterval_31345> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_4134> .
+<http://scio/data/NumericValue_31349> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_31343> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_4186> .
+# RDF export of group: Experimental groups
+<http://scio/data/DefinedExperimentalGroup_3445> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_3445> <http://www.w3.org/2000/01/rdf-schema#label> "moderate ARSB, E1" .
+<http://scio/data/DefinedExperimentalGroup_3445> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_231> .
+<http://scio/data/OrganismModel_3446> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/DefinedExperimentalGroup_3445> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_1610> .
+<http://scio/data/Injury_3449> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Injury> .
+<http://scio/data/Anaesthetic_4217> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/MedicationDuringSurgery_4219> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/DefinedExperimentalGroup_3445> <http://psink.de/scio/hasNNumber> "7" .
+<http://scio/data/DefinedExperimentalGroup_3445> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_4115> .
+<http://scio/data/Treatment_3451> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
+<http://scio/data/InjectionDelivery_4167> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Treatment_3451> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4167> .
+<http://scio/data/ShamOperation_69387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_4186> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_4186> <http://www.w3.org/2000/01/rdf-schema#label> "moderate control, E2" .
+<http://scio/data/DefinedExperimentalGroup_4186> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_231> .
+<http://scio/data/DefinedExperimentalGroup_4186> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_1610> .
+<http://scio/data/DefinedExperimentalGroup_4186> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_4134> .
+<http://scio/data/Treatment_4192> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Treatment> .
+<http://scio/data/InjectionDelivery_4194> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Treatment_4192> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4194> .
+<http://scio/data/DefinedExperimentalGroup_4186> <http://psink.de/scio/hasNNumber> "6" .
+<http://scio/data/ShamOperation_69390> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_30774> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_30774> <http://www.w3.org/2000/01/rdf-schema#label> "Severe ARSB, E3" .
+<http://scio/data/DefinedExperimentalGroup_30774> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_231> .
+<http://scio/data/DefinedExperimentalGroup_30774> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_4086> .
+<http://scio/data/DefinedExperimentalGroup_30774> <http://psink.de/scio/hasNNumber> "9" .
+<http://scio/data/DefinedExperimentalGroup_30774> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_4115> .
+<http://scio/data/ShamOperation_69391> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_30782> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_30782> <http://www.w3.org/2000/01/rdf-schema#label> "Severe ChABC, E4" .
+<http://scio/data/DefinedExperimentalGroup_30782> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_231> .
+<http://scio/data/DefinedExperimentalGroup_30782> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_4086> .
+<http://scio/data/DefinedExperimentalGroup_30782> <http://psink.de/scio/hasNNumber> "9" .
+<http://scio/data/DefinedExperimentalGroup_30782> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_3436> .
+<http://scio/data/ShamOperation_69388> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_30790> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_30790> <http://www.w3.org/2000/01/rdf-schema#label> "Severe control, E5" .
+<http://scio/data/DefinedExperimentalGroup_30790> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_231> .
+<http://scio/data/DefinedExperimentalGroup_30790> <http://psink.de/scio/hasInjuryModel> <http://scio/data/Compression_4086> .
+<http://scio/data/DefinedExperimentalGroup_30790> <http://psink.de/scio/hasNNumber> "7" .
+<http://scio/data/DefinedExperimentalGroup_30790> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_4134> .
+<http://scio/data/ShamOperation_69389> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_231> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_231> <http://www.w3.org/2000/01/rdf-schema#label> "Mouse" .
+<http://scio/data/OrganismModel_231> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/C57_BL6_Mouse> .
+<http://scio/data/OrganismModel_231> <http://psink.de/scio/hasAge> "Eight-week-old" .
+<http://scio/data/OrganismModel_231> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/Compression_1610> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_1610> <http://www.w3.org/2000/01/rdf-schema#label> "moderate Compression" .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury> .
+<http://scio/data/Intraspinal_84918> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal> .
+<http://scio/data/Xylazine_1629> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_1629> .
+<http://scio/data/Xylazine_1629> <http://psink.de/scio/hasDosage> "24 mg/kg" .
+<http://scio/data/InjectionDelivery_3507> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_1629> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3507> .
+<http://scio/data/InjectionDelivery_3507> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+<http://scio/data/VertebralArea_3433> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3433> .
+<http://scio/data/VertebralArea_3433> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T7> .
+<http://scio/data/VertebralArea_3433> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9> .
+<http://scio/data/KetamineAsAnaesthetic_3510> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_3510> .
+<http://scio/data/InjectionDelivery_3511> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_3510> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3511> .
+<http://scio/data/InjectionDelivery_3511> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/KetamineAsAnaesthetic_3510> <http://psink.de/scio/hasDosage> "160 mg/kg" .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/InjuryDevice> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/Anaesthetic_15018> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasMedication> <http://scio/data/Anaesthetic_15018> .
+<http://scio/data/InjectionDelivery_15019> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_15018> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15019> .
+<http://scio/data/InjectionDelivery_15019> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location> .
+<http://scio/data/Compression_1610> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration> .
+<http://scio/data/Compression_4086> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compression> .
+<http://scio/data/Compression_4086> <http://www.w3.org/2000/01/rdf-schema#label> "severe Compression" .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/Xylazine_4094> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_4094> .
+<http://scio/data/Xylazine_4094> <http://psink.de/scio/hasDosage> "24 mg/kg" .
+<http://scio/data/InjectionDelivery_4096> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Xylazine_4094> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4096> .
+<http://scio/data/InjectionDelivery_4096> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+<http://scio/data/VertebralArea_4101> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_4101> .
+<http://scio/data/VertebralArea_4101> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T7> .
+<http://scio/data/VertebralArea_4101> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9> .
+<http://scio/data/KetamineAsAnaesthetic_4104> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_4104> .
+<http://scio/data/InjectionDelivery_4105> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/KetamineAsAnaesthetic_4104> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4105> .
+<http://scio/data/InjectionDelivery_4105> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/KetamineAsAnaesthetic_4104> <http://psink.de/scio/hasDosage> "160 mg/kg" .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/InjuryDevice> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/SevereInjury> .
+<http://scio/data/Anaesthetic_15023> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/Compression_4086> <http://psink.de/scio/hasMedication> <http://scio/data/Anaesthetic_15023> .
+<http://scio/data/InjectionDelivery_15024> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_15023> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15024> .
+<http://scio/data/InjectionDelivery_15024> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_3436> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_3436> <http://www.w3.org/2000/01/rdf-schema#label> "ChABC" .
+<http://scio/data/InjectionDelivery_3438> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3438> .
+<http://scio/data/InjectionDelivery_3438> <http://psink.de/scio/hasDuration> "lasting for 7 min" .
+<http://scio/data/SpinalLesionSite_3444> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_3438> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_3444> .
+<http://scio/data/Intraspinal_85163> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal> .
+<http://scio/data/InjectionDelivery_3438> <http://psink.de/scio/hasLocations> <http://scio/data/Intraspinal_85163> .
+<http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe> .
+<http://scio/data/ChondroitinaseABC_4147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC> .
+<http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_4147> .
+<http://scio/data/ChondroitinaseABC_4147> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/Seikagaku> .
+<http://scio/data/AnatomicalLocation_16208> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasDosage> "10 units/ml" .
+<http://scio/data/Compound_4164> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Rostral_16194> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16194> .
+<http://scio/data/SpinalLesionSite_16195> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_16194> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_16195> .
+<http://scio/data/Caudal_30762> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_3436> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_30762> .
+<http://scio/data/SpinalLesionSite_30763> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_30762> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30763> .
+<http://scio/data/CompoundTreatment_4115> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_4115> <http://www.w3.org/2000/01/rdf-schema#label> "ARSB" .
+<http://scio/data/InjectionDelivery_4117> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_4115> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4117> .
+<http://scio/data/InjectionDelivery_4117> <http://psink.de/scio/hasDuration> "lasting for 7 min" .
+<http://scio/data/SpinalLesionSite_4119> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_4117> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_4119> .
+<http://scio/data/Intraspinal_85184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal> .
+<http://scio/data/InjectionDelivery_4117> <http://psink.de/scio/hasLocations> <http://scio/data/Intraspinal_85184> .
+<http://scio/data/CompoundTreatment_4115> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe> .
+<http://scio/data/Compound_4124> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_4115> <http://psink.de/scio/hasDosage> "10 units/ml" .
+<http://scio/data/ArylsulfataseB_4153> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ArylsulfataseB> .
+<http://scio/data/CompoundTreatment_4115> <http://psink.de/scio/hasCompound> <http://scio/data/ArylsulfataseB_4153> .
+<http://scio/data/AnatomicalLocation_16204> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/Rostral_16201> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_4115> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16201> .
+<http://scio/data/SpinalLesionSite_16205> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_16201> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_16205> .
+<http://scio/data/Caudal_30766> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_4115> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_30766> .
+<http://scio/data/SpinalLesionSite_30767> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_30766> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30767> .
+<http://scio/data/CompoundTreatment_4134> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_4134> <http://www.w3.org/2000/01/rdf-schema#label> "vehicle" .
+<http://scio/data/InjectionDelivery_4136> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_4136> .
+<http://scio/data/InjectionDelivery_4136> <http://psink.de/scio/hasDuration> "lasting for 7 min" .
+<http://scio/data/SpinalLesionSite_4138> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/InjectionDelivery_4136> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalLesionSite_4138> .
+<http://scio/data/Intraspinal_85187> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intraspinal> .
+<http://scio/data/InjectionDelivery_4136> <http://psink.de/scio/hasLocations> <http://scio/data/Intraspinal_85187> .
+<http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Syringe> .
+<http://scio/data/Compound_4143> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Vehicle_4149> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle> .
+<http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_4149> .
+<http://scio/data/AnatomicalLocation_42798> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/Rostral_16202> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_16202> .
+<http://scio/data/SpinalLesionSite_30770> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_16202> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30770> .
+<http://scio/data/Caudal_30769> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_4134> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_30769> .
+<http://scio/data/SpinalLesionSite_30771> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_30769> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_30771> .
+# RDF export of group: Sacrifices

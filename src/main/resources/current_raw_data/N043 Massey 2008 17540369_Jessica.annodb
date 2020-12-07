@@ -1,0 +1,25 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48601, Adult, 7788, 7793, "Adult", "", "<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48602, Male, 7794, 7798, "male", "", "<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+48603, Weight, 7800, 7809, "275-350 g", "", "<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasWeight> \"275-350 g\"."
+48604, SpragueDawleyRat, 7811, 7830, "Sprague-Dawley rats", "", "<http://scio/data/OrganismModel_489> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+49887, SpragueDawleyRat, 7870, 7873, "rat", "", 
+50822, IntramuscularLocation, 7900, 7913, "intramuscular", "", "<http://scio/data/InjectionDelivery_3376> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_3380> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>. <http://scio/data/InjectionDelivery_3381> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation>."
+50820, InjectionDelivery, 7914, 7923, "injection", "", "<http://scio/data/InjectionDelivery_3376> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2387> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3376>. <http://scio/data/InjectionDelivery_3380> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2395> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3380>. <http://scio/data/InjectionDelivery_3381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Anaesthetic_2398> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3381>."
+49881, KetamineAsAnaesthetic, 7940, 7962, "ketamine hydrochloride", "", "<http://scio/data/KetamineAsAnaesthetic_2387> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2387>."
+49882, DosageIntracorporal, 7965, 7973, "50 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2387> <http://psink.de/scio/hasDosage> \"50 mg/kg\"."
+49883, Xylazine, 7976, 7984, "xylazine", "", "<http://scio/data/Xylazine_2395> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2395>."
+49884, DosageIntracorporal, 7986, 7995, "6.5 mg/kg", "", "<http://scio/data/Xylazine_2395> <http://psink.de/scio/hasDosage> \"6.5 mg/kg\"."
+49885, Anaesthetic, 8001, 8013, "acepromazine", "", "<http://scio/data/Anaesthetic_2398> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic>. <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_2398>."
+49886, DosageIntracorporal, 8015, 8024, "2.5 mg/kg", "", "<http://scio/data/Anaesthetic_2398> <http://psink.de/scio/hasDosage> \"2.5 mg/kg\"."
+49900, Laminectomy, 9007, 9018, "laminectomy", "", 
+49901, PartialTransection, 9109, 9126, "transverse lesion", "", "<http://scio/data/PartialTransection_2384> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PartialTransection>. <http://scio/data/PartialTransection_2384> <http://www.w3.org/2000/01/rdf-schema#label> \"hemisection\"."
+54216, VertebralArea, 9139, 9148, "C3 and C4", "", "<http://scio/data/VertebralArea_3764> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3764>."
+49897, Vibraknife, 9179, 9189, "Vibraknife", "", "<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Vibraknife>."
+103401, DorsalInjuryArea, 9278, 9294, "dorsal columnDCN", "", "<http://scio/data/PartialTransection_2384> <http://psink.de/scio/hasInjuryArea> <http://psink.de/scio/DorsalInjuryArea>. <http://scio/data/DorsalInjuryArea_2392> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DorsalInjuryArea>."
+49893, T1, 9446, 9448, "T1", "", 
+49894, Laminectomy, 9484, 9495, "laminectomy", "", 
+49899, Forceps, 9518, 9530, "microforceps", "", 
+49892, Forceps, 9694, 9701, "forceps", "", 
+54214, Duration, 9743, 9747, "10 s", "", 
+103402, ChondroitinaseABC, 17063, 17068, "chABC", "", 

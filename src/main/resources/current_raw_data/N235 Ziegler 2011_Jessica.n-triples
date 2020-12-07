@@ -1,0 +1,254 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+<http://scio/data/Observation_26559> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26559> <http://www.w3.org/2000/01/rdf-schema#label> "TP Quipazine ip, before training, E2" .
+<http://scio/data/TemporalInterval_26561> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26559> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26561> .
+<http://scio/data/TemporalInterval_26561> <http://psink.de/scio/hasDuration> "~15 min before training" .
+<http://scio/data/TemporalInterval_26561> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/TemporalInterval_26561> <http://psink.de/scio/hasEventAfter> <http://scio/data/RehabilitativeTraining_26500> .
+<http://scio/data/NumericValue_26562> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26559> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26531> .
+<http://scio/data/Observation_26567> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26567> <http://www.w3.org/2000/01/rdf-schema#label> "TP Quipazine ip, before training, E4" .
+<http://scio/data/TemporalInterval_26569> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26567> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26569> .
+<http://scio/data/TemporalInterval_26569> <http://psink.de/scio/hasDuration> "~15 min before training" .
+<http://scio/data/TemporalInterval_26569> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/TemporalInterval_26569> <http://psink.de/scio/hasEventAfter> <http://scio/data/RehabilitativeTraining_26500> .
+<http://scio/data/NumericValue_26573> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26567> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26549> .
+<http://scio/data/Observation_26602> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26602> <http://www.w3.org/2000/01/rdf-schema#label> "TP catheter surgery, E2" .
+<http://scio/data/TemporalInterval_26604> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26602> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26604> .
+<http://scio/data/TemporalInterval_26604> <http://psink.de/scio/hasDuration> "Three months post-transection" .
+<http://scio/data/TemporalInterval_26604> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/TemporalInterval_26604> <http://psink.de/scio/hasEventAfter> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/NumericValue_26605> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26602> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26531> .
+<http://scio/data/Observation_26610> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26610> <http://www.w3.org/2000/01/rdf-schema#label> "TP catheter surgery, E4" .
+<http://scio/data/TemporalInterval_26612> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26610> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26612> .
+<http://scio/data/TemporalInterval_26612> <http://psink.de/scio/hasDuration> "Three months post-transection" .
+<http://scio/data/TemporalInterval_26612> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/TemporalInterval_26612> <http://psink.de/scio/hasEventAfter> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/NumericValue_26616> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26610> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26549> .
+<http://scio/data/Observation_26618> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26618> <http://www.w3.org/2000/01/rdf-schema#label> "TP Quipazine it, E2" .
+<http://scio/data/TemporalInterval_26620> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26618> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26620> .
+<http://scio/data/TemporalInterval_26620> <http://psink.de/scio/hasDuration> "After the intrathecal tube was implanted" .
+<http://scio/data/TemporalInterval_26620> <http://psink.de/scio/hasEventBefore> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/TemporalInterval_26620> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/NumericValue_26624> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26618> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26531> .
+<http://scio/data/Observation_26626> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26626> <http://www.w3.org/2000/01/rdf-schema#label> "TP Quipazine it, E4" .
+<http://scio/data/TemporalInterval_26628> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26626> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26628> .
+<http://scio/data/TemporalInterval_26628> <http://psink.de/scio/hasDuration> "After the intrathecal tube was implanted" .
+<http://scio/data/TemporalInterval_26628> <http://psink.de/scio/hasEventBefore> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/TemporalInterval_26628> <http://psink.de/scio/hasEventAfter> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/NumericValue_26632> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26626> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26549> .
+<http://scio/data/Observation_26634> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26634> <http://www.w3.org/2000/01/rdf-schema#label> "TP Quipazine ip, before catheter, E2" .
+<http://scio/data/TemporalInterval_26636> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26634> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26636> .
+<http://scio/data/TemporalInterval_26636> <http://psink.de/scio/hasDuration> "Prior to implantation of the intrathecal tube" .
+<http://scio/data/TemporalInterval_26636> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/TemporalInterval_26636> <http://psink.de/scio/hasEventAfter> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/NumericValue_26640> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26634> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26531> .
+<http://scio/data/Observation_26642> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Observation> .
+<http://scio/data/Observation_26642> <http://www.w3.org/2000/01/rdf-schema#label> "TP Quipazine ip, before catheter, E4" .
+<http://scio/data/TemporalInterval_26644> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/TemporalInterval> .
+<http://scio/data/Observation_26642> <http://psink.de/scio/hasTemporalInterval> <http://scio/data/TemporalInterval_26644> .
+<http://scio/data/TemporalInterval_26644> <http://psink.de/scio/hasDuration> "Prior to implantation of the intrathecal tube" .
+<http://scio/data/TemporalInterval_26644> <http://psink.de/scio/hasEventBefore> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/TemporalInterval_26644> <http://psink.de/scio/hasEventAfter> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/NumericValue_26648> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NumericValue> .
+<http://scio/data/Observation_26642> <http://psink.de/scio/belongsTo> <http://scio/data/DefinedExperimentalGroup_26549> .
+# RDF export of group: Experimental groups
+<http://scio/data/DefinedExperimentalGroup_26523> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26523> <http://www.w3.org/2000/01/rdf-schema#label> "media untrained, E1" .
+<http://scio/data/DefinedExperimentalGroup_26523> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1519> .
+<http://scio/data/DefinedExperimentalGroup_26523> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26523> <http://psink.de/scio/hasNNumber> "10" .
+<http://scio/data/DefinedExperimentalGroup_26523> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26463> .
+<http://scio/data/ShamOperation_69806> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://www.w3.org/2000/01/rdf-schema#label> "media trained, E2" .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1519> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasNNumber> "10" .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26463> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasTreatmentType> <http://scio/data/RehabilitativeTraining_26500> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/DefinedExperimentalGroup_26531> <http://psink.de/scio/hasTreatmentType> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/ShamOperation_69807> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_26539> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26539> <http://www.w3.org/2000/01/rdf-schema#label> "OEG untrained, E3" .
+<http://scio/data/OrganismModel_26540> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/DefinedExperimentalGroup_26539> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26539> <http://psink.de/scio/hasNNumber> "11" .
+<http://scio/data/DefinedExperimentalGroup_26539> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26479> .
+<http://scio/data/ShamOperation_69808> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://www.w3.org/2000/01/rdf-schema#label> "OEG trained, E4" .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1519> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasNNumber> "11" .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26479> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasTreatmentType> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/DefinedExperimentalGroup_26549> <http://psink.de/scio/hasTreatmentType> <http://scio/data/RehabilitativeTraining_26500> .
+<http://scio/data/ShamOperation_69809> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ShamOperation> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://www.w3.org/2000/01/rdf-schema#label> "quipazine alone, E5" .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1519> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26463> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://psink.de/scio/hasTreatmentType> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/DefinedExperimentalGroup_26681> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://www.w3.org/2000/01/rdf-schema#label> "quipazine plus step training, E6" .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1519> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26463> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasTreatmentType> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/DefinedExperimentalGroup_26692> <http://psink.de/scio/hasTreatmentType> <http://scio/data/RehabilitativeTraining_26500> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://www.w3.org/2000/01/rdf-schema#label> "quipazine plus step training plus 8-OH-DPAT, E7" .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasOrganismModel> <http://scio/data/OrganismModel_1519> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasInjuryModel> <http://scio/data/CompleteTransection_8043> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26463> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26510> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasTreatmentType> <http://scio/data/SurgeryTreatment_26592> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26575> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasTreatmentType> <http://scio/data/RehabilitativeTraining_26500> .
+<http://scio/data/DefinedExperimentalGroup_26704> <http://psink.de/scio/hasTreatmentType> <http://scio/data/CompoundTreatment_26650> .
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_1519> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_1519> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_1519> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
+<http://scio/data/OrganismModel_1519> <http://psink.de/scio/hasAge> "10–12 week old" .
+# RDF export of group: Injuries
+<http://scio/data/CompleteTransection_8043> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection> .
+<http://scio/data/CompleteTransection_8043> <http://www.w3.org/2000/01/rdf-schema#label> "Complete Transection" .
+<http://scio/data/VertebralArea_8044> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/CompleteTransection_8043> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_8044> .
+<http://scio/data/VertebralArea_8044> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T8> .
+<http://scio/data/VertebralArea_8044> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T9> .
+<http://scio/data/Isoflurane_8046> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/CompleteTransection_8043> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_8046> .
+<http://scio/data/InhalationDelivery_26461> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery> .
+<http://scio/data/Isoflurane_8046> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_26461> .
+<http://scio/data/MedicationDuringSurgery_8048> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/CompleteTransection_8043> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+# RDF export of group: Treatments
+<http://scio/data/CompoundTreatment_26463> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_26463> <http://www.w3.org/2000/01/rdf-schema#label> "vehicle" .
+<http://scio/data/InjectionDelivery_26465> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_26463> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_26465> .
+<http://scio/data/SpinalCord_26475> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
+<http://scio/data/InjectionDelivery_26465> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_26475> .
+<http://scio/data/Rostral_26470> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_26463> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_26470> .
+<http://scio/data/SpinalLesionSite_26476> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_26470> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_26476> .
+<http://scio/data/Compound_26471> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/Vehicle_26473> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle> .
+<http://scio/data/CompoundTreatment_26463> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_26473> .
+<http://scio/data/Caudal_26477> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_26463> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_26477> .
+<http://scio/data/SpinalLesionSite_26478> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_26477> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_26478> .
+<http://scio/data/CompoundTreatment_26479> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_26479> <http://www.w3.org/2000/01/rdf-schema#label> "OEG" .
+<http://scio/data/InjectionDelivery_26481> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_26479> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_26481> .
+<http://scio/data/SpinalCord_26483> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord> .
+<http://scio/data/InjectionDelivery_26481> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_26483> .
+<http://scio/data/Rostral_26488> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral> .
+<http://scio/data/CompoundTreatment_26479> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_26488> .
+<http://scio/data/SpinalLesionSite_26489> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Rostral_26488> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_26489> .
+<http://scio/data/Compound_26490> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_26492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell> .
+<http://scio/data/CompoundTreatment_26479> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_26492> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_26492> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_26492> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_26492> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification> .
+<http://scio/data/AnatomicalLocation_26499> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation> .
+<http://scio/data/OlfactoryEnsheathingGliaCell_26492> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_26499> .
+<http://scio/data/Caudal_26493> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal> .
+<http://scio/data/CompoundTreatment_26479> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_26493> .
+<http://scio/data/SpinalLesionSite_26494> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite> .
+<http://scio/data/Caudal_26493> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_26494> .
+<http://scio/data/CompoundTreatment_26479> <http://psink.de/scio/hasDosage> "Four injections of ~50,000 cells were made into each stump." .
+<http://scio/data/RehabilitativeTraining_26500> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RehabilitativeTraining> .
+<http://scio/data/RehabilitativeTraining_26500> <http://www.w3.org/2000/01/rdf-schema#label> "Training" .
+<http://scio/data/DeliveryMethod_26502> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/RehabilitativeTraining_26500> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_26502> .
+<http://scio/data/DeliveryMethod_26502> <http://psink.de/scio/hasDuration> "for 20 min per day" .
+<http://scio/data/RehabilitativeTraining_26500> <http://psink.de/scio/hasFrequency> "three days a week" .
+<http://scio/data/Direction_26507> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/CompoundTreatment_26510> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_26510> <http://www.w3.org/2000/01/rdf-schema#label> "Quipazine ip" .
+<http://scio/data/InjectionDelivery_26512> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_26510> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_26512> .
+<http://scio/data/InjectionDelivery_26512> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation> .
+<http://scio/data/Direction_26517> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_26518> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_26510> <http://psink.de/scio/hasDosage> "0.5 mg/kg" .
+<http://scio/data/Substance_26520> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_26510> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_26520> .
+<http://scio/data/CompoundTreatment_26575> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_26575> <http://www.w3.org/2000/01/rdf-schema#label> "Quipazine it" .
+<http://scio/data/Direction_26584> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_26585> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_26575> <http://psink.de/scio/hasDosage> "0.05 mg/kg" .
+<http://scio/data/Substance_26587> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_26575> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_26587> .
+<http://scio/data/DeliveryMethod_26588> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/CompoundTreatment_26575> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_26588> .
+<http://scio/data/Intrathecal_26591> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/DeliveryMethod_26588> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_26591> .
+<http://scio/data/SurgeryTreatment_26592> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SurgeryTreatment> .
+<http://scio/data/SurgeryTreatment_26592> <http://www.w3.org/2000/01/rdf-schema#label> "catheter surgery" .
+<http://scio/data/DeliveryMethod_26594> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/SurgeryTreatment_26592> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/DeliveryMethod_26594> .
+<http://scio/data/DeliveryMethod_26594> <http://psink.de/scio/hasLocations> <http://psink.de/scio/Location> .
+<http://scio/data/Direction_26599> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/CompoundTreatment_26650> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_26650> <http://www.w3.org/2000/01/rdf-schema#label> "8-OH-DPAT" .
+<http://scio/data/InjectionDelivery_26652> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_26650> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_26652> .
+<http://scio/data/Intrathecal_26662> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InjectionDelivery_26652> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_26662> .
+<http://scio/data/Direction_26657> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_26658> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_26650> <http://psink.de/scio/hasDosage> "0.03 mg/kg" .
+<http://scio/data/Substance_26660> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance> .
+<http://scio/data/CompoundTreatment_26650> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_26660> .
+<http://scio/data/CompoundTreatment_26663> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompoundTreatment> .
+<http://scio/data/CompoundTreatment_26663> <http://www.w3.org/2000/01/rdf-schema#label> "Quipazine in combi 8-OH-DPAT" .
+<http://scio/data/InjectionDelivery_26665> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/CompoundTreatment_26663> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_26665> .
+<http://scio/data/Intrathecal_26675> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Intrathecal> .
+<http://scio/data/InjectionDelivery_26665> <http://psink.de/scio/hasLocations> <http://scio/data/Intrathecal_26675> .
+<http://scio/data/Direction_26670> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Direction> .
+<http://scio/data/Compound_26671> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+<http://scio/data/CompoundTreatment_26663> <http://psink.de/scio/hasDosage> "0.03 mg/kg" .
+<http://scio/data/Compound_26673> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Compound> .
+# RDF export of group: Sacrifices

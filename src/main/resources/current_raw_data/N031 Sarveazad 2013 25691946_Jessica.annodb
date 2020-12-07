@@ -1,0 +1,249 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+101433, StemCell, 1695, 1727, "human adipose-derived stem cells", "", 
+101434, StemCell, 1729, 1735, "hADSCs", "", 
+101435, InjectionDelivery, 1754, 1763, "injection", "", 
+101291, ChondroitinaseABC, 1767, 1785, "Chondroitinase ABC", "", 
+101292, RepeatedMeasureTrend, 1897, 1905, "recovery", "", 
+101437, Duration, 1906, 1915, "after SCI", "", 
+101438, Injury, 1912, 1915, "SCI", "", 
+101436, WistarRat, 1919, 1922, "rat", "", 
+101439, StemCell, 1943, 1949, "hADSCs", "", 
+101444, InjectionDelivery, 1953, 1962, "injection", "", 
+101445, ChondroitinaseABC, 1966, 1971, "ChABC", "", 
+101450, SpinalCord, 2000, 2011, "spinal cord", "", 
+101451, WistarRat, 2015, 2019, "rats", "", 
+101293, Contusion, 2035, 2044, "contusion", "", 
+101294, WeightDrop, 2053, 2064, "weight-drop", "", 
+101295, T8, 2081, 2083, "T8", "", 
+101296, T9, 2084, 2085, "9", "", 
+101440, StemCell, 2091, 2097, "hADSCs", "", 
+101446, ChondroitinaseABC, 2102, 2120, "Chondroitinase ABC", "", 
+101452, SpinalCord, 2144, 2155, "spinal cord", "", 
+101453, Duration, 2163, 2175, "after injury", "", 
+101454, Injury, 2169, 2175, "injury", "", 
+101297, BBBTest, 2177, 2185, "BBB test", "", 
+101455, WistarRat, 2222, 2228, "animal", "", 
+101298, Frequency, 2229, 2235, "weekly", "", 
+101299, Duration, 2236, 2247, "for 8 weeks", "", 
+101300, Duration, 2249, 2268, "After the 8th weeks", "", 
+101456, CystVolumeTest, 2365, 2379, "area of cavity", "", 
+101457, SpinalCord, 2387, 2398, "spinal cord", "", 
+101301, Duration, 2422, 2450, "At 8th weeks after injection", "", 
+101458, InjectionDelivery, 2441, 2450, "injection", "", 
+101441, StemCell, 2452, 2458, "hADSCs", "", 
+101447, ChondroitinaseABC, 2463, 2468, "ChABC", "", 
+101302, PositiveSignificance, 2469, 2482, "significantly", "", 
+101459, Positive, 2483, 2490, "promote", "", 
+101303, PValue, 2511, 2517, "P<0.01", "", 
+101460, SpinalCord, 2523, 2535, "spinal cords", "", 
+101442, StemCell, 2539, 2545, "hADSCs", "", 
+101461, GroupName, 2539, 2545, "hADSCs", "E3", "<http://scio/data/DefinedExperimentalGroup_33565> <http://psink.de/scio/hasGroupName> \"hADSCs\"."
+101448, ChondroitinaseABC, 2550, 2555, "ChABC", "", 
+101462, GroupName, 2550, 2561, "ChABC group", "E4", "<http://scio/data/DefinedExperimentalGroup_33573> <http://psink.de/scio/hasGroupName> \"ChABC group\"."
+101463, CystVolumeTest, 2566, 2574, "cavities", "", 
+101304, Lower, 2580, 2587, "smaller", "", 
+101306, DefinedExperimentalGroup, 2606, 2619, "control group", "", 
+101305, PValue, 2621, 2628, "P<0.001", "", 
+101449, ChondroitinaseABC, 2752, 2757, "ChABC", "", 
+101443, StemCell, 2804, 2810, "hADSCs", "", 
+101464, Positive, 2816, 2825, "improving", "", 
+101465, Duration, 2841, 2850, "after SCI", "", 
+101466, Injury, 2847, 2850, "SCI", "", 
+101467, Injury, 2916, 2919, "SCI", "", 
+48564, Adult, 7407, 7412, "adult", "", "<http://scio/data/OrganismModel_429> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48565, Male, 7413, 7417, "male", "", "<http://scio/data/OrganismModel_429> <http://psink.de/scio/hasGender> <http://psink.de/scio/Male>."
+48566, WistarRat, 7418, 7429, "wistar rats", "", "<http://scio/data/OrganismModel_429> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/WistarRat>."
+48567, Weight, 7455, 7463, "250-350g", "", "<http://scio/data/OrganismModel_429> <http://psink.de/scio/hasWeight> \"250-350g\"."
+49757, WistarRat, 7580, 7587, "Animals", "", 
+49743, Housing, 7630, 7672, "temperature 21±3°C, 12 hr light/dark cycle", "", "<http://scio/data/Contusion_2234> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+49744, Hydration, 7679, 7690, "free access", "", "<http://scio/data/Contusion_2234> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+49746, Nutrition, 7679, 7698, "free access to food", "", "<http://scio/data/Contusion_2234> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+49745, Hydration, 7703, 7708, "water", "", "<http://scio/data/Contusion_2234> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+79747, AnimalSpecies, 7751, 7759, "patients", "", "<http://scio/data/StemCell_33500> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/AnimalSpecies>."
+79750, Xenogeneic, 7751, 7759, "patients", "", "<http://scio/data/StemCell_33500> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Xenogeneic>."
+79748, AnatomicalLocation, 7778, 7837, "fatty tissue was prepared from superficial layer of abdomen", "", "<http://scio/data/AnatomicalLocation_33506> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/StemCell_33500> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_33506>."
+79749, Age, 7870, 7881, "25-46 years", "", 
+79751, InVitroExperimentalProcedure, 10217, 10305, "Tagging Human Adipose- derived Stem cell (hADSCs) with GFP+ Recombinant lentiviral virus", "", "<http://scio/data/StemCell_33500> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/InVitroExperimentalProcedure>."
+79752, StemCell, 10259, 10265, "hADSCs", "", "<http://scio/data/StemCell_33500> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/StemCell>. <http://scio/data/CompoundTreatment_33490> <http://psink.de/scio/hasCompound> <http://scio/data/StemCell_33500>."
+49758, WistarRat, 11218, 11225, "Animals", "", 
+50805, IntraperitonealLocation, 11249, 11251, "IP", "", "<http://scio/data/InjectionDelivery_3367> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3368> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_59263> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_59268> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50803, InjectionDelivery, 11252, 11261, "injection", "", "<http://scio/data/InjectionDelivery_3367> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2237> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3367>. <http://scio/data/InjectionDelivery_3368> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2245> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3368>. <http://scio/data/InjectionDelivery_59263> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_33541> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_59263>. <http://scio/data/InjectionDelivery_59268> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_59267> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_59268>."
+49747, KetamineAsAnaesthetic, 11265, 11273, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2237> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2234> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2237>. <http://scio/data/KetamineAsAnaesthetic_33541> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_33541>."
+49748, DosageIntracorporal, 11275, 11283, "80 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2237> <http://psink.de/scio/hasDosage> \"80 mg/kg\". <http://scio/data/KetamineAsAnaesthetic_33541> <http://psink.de/scio/hasDosage> \"80 mg/kg\"."
+49749, Xylazine, 11289, 11297, "xylazine", "", "<http://scio/data/Xylazine_2245> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2234> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2245>. <http://scio/data/Xylazine_59267> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_59267>."
+49750, DosageIntracorporal, 11299, 11307, "10 mg/kg", "", "<http://scio/data/Xylazine_2245> <http://psink.de/scio/hasDosage> \"10 mg/kg\". <http://scio/data/Xylazine_59267> <http://psink.de/scio/hasDosage> \"10 mg/kg\"."
+79753, Laminectomy, 11605, 11616, "laminectomy", "", "<http://scio/data/Laminectomy_33538> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Laminectomy>. <http://scio/data/Laminectomy_33538> <http://www.w3.org/2000/01/rdf-schema#label> \"laminectomy\"."
+54207, VertebralArea, 11634, 11639, "T8-T9", "", "<http://scio/data/VertebralArea_3678> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Contusion_2234> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3678>. <http://scio/data/VertebralArea_33539> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_33539>."
+79754, SpinalCord, 11650, 11661, "spinal cord", "", 
+49764, InjuryDevice, 11663, 11677, "Metal cylinder", "", "<http://scio/data/Contusion_2234> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/InjuryDevice>."
+79755, Weight, 11688, 11692, "10 g", "", 
+79756, SpinalCord, 11743, 11754, "spinal cord", "", 
+79757, Distance, 11772, 11779, "12.5 cm", "", 
+50807, AntibioticMedication, 11958, 11968, "gentamicin", "", "<http://scio/data/AntibioticMedication_3366> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2234> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3366>. <http://scio/data/AntibioticMedication_33540> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_33540>."
+49752, DosageIntracorporal, 11970, 11983, "0.8 mg/100 g,", "", "<http://scio/data/AntibioticMedication_33540> <http://psink.de/scio/hasDosage> \"0.8 mg/100 g,\"."
+50808, IntraperitonealLocation, 11984, 11986, "IP", "", 
+49762, BladderExpression, 12019, 12034, "bladder massage", "", "<http://scio/data/Contusion_2234> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>. <http://scio/data/Laminectomy_33538> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."
+49763, WistarRat, 12052, 12063, "all animals", "", 
+49756, Contusion, 12120, 12129, "contusion", "", "<http://scio/data/Contusion_2234> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2234> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+101275, Duration, 12137, 12172, "seven days after spinal cord injury", "", 
+101276, Injury, 12166, 12172, "injury", "", 
+101274, CystVolumeTest, 12201, 12231, "evaluation of cavity formation", "", 
+79765, WistarRat, 12768, 12775, "Animals", "", 
+79758, DefinedExperimentalGroup, 12824, 12844, "Sham operative group", "E1", "<http://scio/data/DefinedExperimentalGroup_33549> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33549> <http://www.w3.org/2000/01/rdf-schema#label> \"sham operative group, E1\"."
+79739, NNumber, 12848, 12849, "6", "", "<http://scio/data/DefinedExperimentalGroup_33549> <http://psink.de/scio/hasNNumber> \"6\"."
+79766, Laminectomy, 12852, 12863, "laminectomy", "", 
+79760, DefinedExperimentalGroup, 12896, 12909, "Control group", "E2", "<http://scio/data/DefinedExperimentalGroup_33557> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33557> <http://www.w3.org/2000/01/rdf-schema#label> \"control group, E2\"."
+79740, NNumber, 12913, 12914, "6", "", "<http://scio/data/DefinedExperimentalGroup_33557> <http://psink.de/scio/hasNNumber> \"6\"."
+79761, DefinedExperimentalGroup, 12952, 12964, "hADSCs group", "E3", "<http://scio/data/DefinedExperimentalGroup_33565> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33565> <http://www.w3.org/2000/01/rdf-schema#label> \"hADSCs group, E3\"."
+101277, StemCell, 12952, 12958, "hADSCs", "", 
+79742, NNumber, 12968, 12969, "6", "", "<http://scio/data/DefinedExperimentalGroup_33565> <http://psink.de/scio/hasNNumber> \"6\"."
+79767, DosageExtracorporal, 12972, 12977, "1x106", "", 
+79768, StemCell, 12978, 12984, "hADSCs", "", 
+79769, Volume, 13002, 13007, "10¬µl", "", 
+79770, InjectionDelivery, 13013, 13021, "injected", "", 
+79773, Intraspinal, 13030, 13041, "intraspinal", "", 
+79772, InjectionDelivery, 13042, 13051, "injection", "", 
+79763, DefinedExperimentalGroup, 13055, 13079, "Chondroitinase ABC group", "E4", "<http://scio/data/DefinedExperimentalGroup_33573> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_33573> <http://www.w3.org/2000/01/rdf-schema#label> \"Chondroitinase ABC group, E4\"."
+101278, ChondroitinaseABC, 13055, 13073, "Chondroitinase ABC", "", 
+79744, NNumber, 13083, 13084, "6", "", "<http://scio/data/DefinedExperimentalGroup_33573> <http://psink.de/scio/hasNNumber> \"6\"."
+79774, DosageExtracorporal, 13086, 13102, "10µl of 100 U/ml", "", "<http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasDosage> \"10µl of 100 U/ml\"."
+79775, ChondroitinaseABC, 13103, 13121, "Chondroitinase ABC", "", "<http://scio/data/ChondroitinaseABC_33525> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChondroitinaseABC>. <http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasCompound> <http://scio/data/ChondroitinaseABC_33525>."
+79776, SigmaAldrich, 13123, 13128, "Sigma", "", "<http://scio/data/ChondroitinaseABC_33525> <http://psink.de/scio/hasSupplier> <http://psink.de/scio/SigmaAldrich>."
+79771, InjectionDelivery, 13141, 13149, "injected", "", 
+79777, Albumin, 13170, 13190, "bovine serum albumin", "", "<http://scio/data/Albumin_33523> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Albumin>. <http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasSuppliedCompositeCompound> <http://scio/data/Albumin_33523>."
+79778, PBS, 13207, 13210, "PBS", "", 
+79745, Duration, 13214, 13234, "Seven days after SCI", "", "<http://scio/data/TemporalInterval_33583> <http://psink.de/scio/hasDuration> \"Seven days after SCI\". <http://scio/data/TemporalInterval_33591> <http://psink.de/scio/hasDuration> \"Seven days after SCI\"."
+101279, Injury, 13231, 13234, "SCI", "", 
+79779, WistarRat, 13240, 13247, "animals", "", 
+79780, SpinalLesionSite, 13270, 13284, "contusion site", "", 
+79781, DosageExtracorporal, 13297, 13303, ".1x106", "", "<http://scio/data/CompoundTreatment_33490> <http://psink.de/scio/hasDosage> \".1x106\"."
+79782, StemCell, 13304, 13310, "hADSCs", "", 
+79783, Volume, 13333, 13339, "10 ¬µl", "", 
+79784, PBS, 13340, 13343, "PBS", "", 
+79746, Syringe, 13361, 13377, "Hamilton syringe", "", 
+79785, StemCell, 13379, 13383, "Cell", "", 
+79786, ChondroitinaseABC, 13404, 13422, "chondroitinase ABC", "", 
+79787, InjectionDelivery, 13423, 13432, "injection", "", "<http://scio/data/InjectionDelivery_33492> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_33490> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33492>. <http://scio/data/InjectionDelivery_33514> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_33514>."
+79788, Syringe, 13451, 13467, "Hamilton syringe", "", 
+101283, Cannula, 13483, 13498, "30 gauge needle", "", "<http://scio/data/CompoundTreatment_33490> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Cannula>. <http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Cannula>."
+79789, Syringe, 13521, 13528, "syringe", "", 
+101280, Cannula, 13574, 13580, "needle", "", 
+79790, SpinalCord, 13627, 13638, "spinal cord", "", "<http://scio/data/SpinalCord_33508> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_33492> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_33508>. <http://scio/data/SpinalCord_33516> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_33514> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_33516>."
+79791, Duration, 13650, 13655, "2 min", "", "<http://scio/data/InjectionDelivery_33492> <http://psink.de/scio/hasDuration> \"2 min\". <http://scio/data/InjectionDelivery_33514> <http://psink.de/scio/hasDuration> \"2 min\"."
+79792, Volume, 13656, 13659, "5µl", "", 
+79793, InjectionDelivery, 13665, 13673, "injected", "", 
+101281, Distance, 13674, 13677, "1mm", "", 
+79794, Rostral, 13678, 13687, "rostrally", "", "<http://scio/data/Rostral_33497> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_33490> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_33497>. <http://scio/data/Rostral_33521> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Rostral>. <http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasDirection> <http://scio/data/Rostral_33521>."
+101282, Distance, 13697, 13701, "1 mm", "", 
+79795, Caudal, 13702, 13710, "caudally", "", "<http://scio/data/Caudal_33509> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_33490> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_33509>. <http://scio/data/Caudal_33532> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Caudal>. <http://scio/data/CompoundTreatment_33512> <http://psink.de/scio/hasDirection> <http://scio/data/Caudal_33532>."
+79796, SpinalLesionSite, 13720, 13734, "site of injury", "", "<http://scio/data/SpinalLesionSite_33510> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_33497> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_33510>. <http://scio/data/SpinalLesionSite_33511> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_33509> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_33511>. <http://scio/data/SpinalLesionSite_33522> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Rostral_33521> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_33522>. <http://scio/data/SpinalLesionSite_33533> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalLesionSite>. <http://scio/data/Caudal_33532> <http://psink.de/scio/relativeTo> <http://scio/data/SpinalLesionSite_33533>."
+101284, BBBTest, 14347, 14387, "Basso, Beattie, and Bresnahan (BBB) test", "", 
+101468, WistarRat, 14424, 14430, "animal", "", 
+101469, Duration, 14438, 14449, "for 8 weeks", "", 
+101285, DoubleBlindStudy, 14451, 14512, "Two trained observers who were unaware of the treatment group", "", 
+101470, WistarRat, 14563, 14570, "animals", "", 
+101286, BBBTest, 14596, 14605, "BBB scale", "", 
+101288, CystVolumeTest, 15704, 15734, "measurement of the cavity size", "", 
+101471, WistarRat, 15736, 15740, "rats", "", 
+101472, Duration, 15741, 15765, "at postoperative 8 weeks", "", 
+101289, ANOVA, 16200, 16246, "repeated measures analysis of variance (ANOVA)", "", 
+101290, StatisticalTest, 16265, 16297, "tukey test for Post hoc analysis", "", "<http://scio/data/Result_59274> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_59287> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_59300> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_59313> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>. <http://scio/data/Result_59326> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/StatisticalTest>."
+101307, Duration, 20110, 20135, "8th weeks after injection", "", 
+101331, InjectionDelivery, 20126, 20135, "injection", "", 
+101337, Duration, 20137, 20158, "63 days after surgery", "", 
+101332, InjectionDelivery, 20161, 20170, "injection", "", 
+101320, StemCell, 20174, 20180, "hADSCs", "", 
+101325, ChondroitinaseABC, 20185, 20190, "ChABC", "", 
+101328, Positive, 20191, 20198, "promote", "", 
+101308, PValue, 20219, 20225, "P<0.01", "", 
+101321, StemCell, 20237, 20243, "hADSCs", "", 
+101333, MeanValue, 20245, 20250, "10.83", "", 
+101326, ChondroitinaseABC, 20256, 20261, "ChABC", "", 
+101334, MeanValue, 20263, 20268, "10.56", "", 
+101309, PositiveSignificance, 20282, 20293, "significant", "", 
+101414, Higher, 20294, 20302, "increase", "R1, R2", 
+101329, BBBTest, 20306, 20315, "BBB Score", "", 
+101330, DefinedExperimentalGroup, 20334, 20347, "control group", "", 
+101335, MeanValue, 20349, 20353, "5.70", "", 
+101311, PValue, 20356, 20362, "P<0.01", "", 
+101322, StemCell, 20393, 20399, "hADSCs", "", 
+101327, ChondroitinaseABC, 20404, 20409, "ChABC", "", 
+101336, RepeatedMeasureTrend, 20446, 20454, "recovery", "", 
+101312, Duration, 20456, 20482, "At1st week after injection", "", 
+101339, InjectionDelivery, 20473, 20482, "injection", "", 
+101338, Duration, 20484, 20505, "14 days after surgery", "", 
+101340, GroupName, 20511, 20522, "ChABC group", "E4", 
+101342, MeanValue, 20524, 20528, "8.12", "", 
+101313, PositiveSignificance, 20535, 20546, "significant", "", "<http://scio/data/PositiveSignificance_59283> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_59281> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59283>."
+101415, Higher, 20547, 20555, "increase", "R3", "<http://scio/data/RepeatedMeasureTrend_59281> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101341, BBBTest, 20559, 20568, "BBB Score", "", "<http://scio/data/BBBTest_68646> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77432> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77432> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB Score)\". <http://scio/data/Result_59274> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101344, DefinedExperimentalGroup, 20587, 20600, "control group", "", 
+101343, MeanValue, 20602, 20606, "1.50", "", 
+101315, PValue, 20609, 20616, "P<0.001", "", "<http://scio/data/PositiveSignificance_59283> <http://psink.de/scio/hasPValue> \"P<0.001\"."
+101345, Duration, 20637, 20667, "was maintained until 8th weeks", "", 
+101346, RepeatedMeasureTrend, 20637, 20667, "was maintained until 8th weeks", "", "<http://scio/data/RepeatedMeasureTrend_59281> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59274> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59281>."
+101323, StemCell, 20672, 20678, "hADSCs", "", 
+101347, DefinedExperimentalGroup, 20672, 20684, "hADSCs group", "", 
+101348, RepeatedMeasureTrend, 20685, 20716, "until 3th weeks after injection", "", "<http://scio/data/RepeatedMeasureTrend_59294> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59287> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59294>."
+101349, Duration, 20685, 20716, "until 3th weeks after injection", "", 
+101351, InjectionDelivery, 20707, 20716, "injection", "", 
+101350, Duration, 20718, 20739, "28 days after surgery", "", 
+101352, BBBTest, 20741, 20750, "BBB Score", "", "<http://scio/data/BBBTest_68649> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77434> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77434> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB Score)\". <http://scio/data/Result_59287> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101416, None, 20755, 20787, "not shown significant difference", "R4", "<http://scio/data/RepeatedMeasureTrend_59294> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+101353, ZeroSignificance, 20755, 20776, "not shown significant", "", "<http://scio/data/ZeroSignificance_59296> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ZeroSignificance>. <http://scio/data/RepeatedMeasureTrend_59294> <http://psink.de/scio/hasSignificance> <http://scio/data/ZeroSignificance_59296>."
+101354, DefinedExperimentalGroup, 20802, 20815, "control group", "", 
+101355, Duration, 20820, 20848, "at 3th weeks after injection", "", 
+101359, InjectionDelivery, 20839, 20848, "injection", "", 
+101356, DefinedExperimentalGroup, 20850, 20862, "hADSCs group", "", 
+101357, MeanValue, 20864, 20868, "8.67", "", 
+101360, PositiveSignificance, 20876, 20887, "significant", "", "<http://scio/data/PositiveSignificance_59309> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/RepeatedMeasureTrend_59307> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59309>."
+101417, Higher, 20888, 20896, "increase", "R5", "<http://scio/data/RepeatedMeasureTrend_59307> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+101362, BBBTest, 20900, 20909, "BBB Score", "", "<http://scio/data/BBBTest_68652> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77436> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_77436> <http://www.w3.org/2000/01/rdf-schema#label> \"BBBTest (BBB Score)\". <http://scio/data/Result_59300> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101363, DefinedExperimentalGroup, 20928, 20941, "control group", "", 
+101358, MeanValue, 20943, 20947, "3.50", "", 
+101364, PValue, 20950, 20956, "P<0.01", "", "<http://scio/data/PositiveSignificance_59309> <http://psink.de/scio/hasPValue> \"P<0.01\"."
+101365, BBBTest, 20962, 20971, "BBB Score", "", 
+101418, Higher, 20976, 20985, "increased", "", 
+101367, Duration, 20986, 21027, "gradually until 8th weeks after injection", "", 
+101368, RepeatedMeasureTrend, 20986, 21027, "gradually until 8th weeks after injection", "", "<http://scio/data/RepeatedMeasureTrend_59307> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/RepeatedMeasureTrend>. <http://scio/data/Result_59300> <http://psink.de/scio/hasTrend> <http://scio/data/RepeatedMeasureTrend_59307>."
+101369, InjectionDelivery, 21018, 21027, "injection", "", 
+101370, Duration, 21029, 21050, "63 days after surgery", "", 
+101385, StemCell, 21779, 21785, "hADSCs", "", 
+101397, GroupName, 21779, 21785, "hADSCs", "E3", 
+101386, ChondroitinaseABC, 21790, 21804, "ChABC-injected", "", 
+101387, GroupName, 21790, 21810, "ChABC-injected group", "E4", "<http://scio/data/DefinedExperimentalGroup_33573> <http://psink.de/scio/hasGroupName> \"ChABC-injected group\"."
+101388, CystVolumeTest, 21815, 21823, "cavities", "", "<http://scio/data/CystVolumeTest_68655> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CystVolumeTest>. <http://scio/data/CystVolumeTest_77438> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CystVolumeTest>. <http://scio/data/CystVolumeTest_77438> <http://www.w3.org/2000/01/rdf-schema#label> \"CystVolumeTest (cavities)\". <http://scio/data/CystVolumeTest_81916> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CystVolumeTest>. <http://scio/data/CystVolumeTest_81916> <http://www.w3.org/2000/01/rdf-schema#label> \"CystVolumeTest (cavities)\". <http://scio/data/Result_59313> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>. <http://scio/data/Result_59326> <http://psink.de/scio/hasInvestigationDeprecated> <http://psink.de/scio/Investigation>."
+101420, Lower, 21829, 21836, "smaller", "R6, R7", "<http://scio/data/Trend_59320> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_59333> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+101390, DefinedExperimentalGroup, 21855, 21868, "control group", "", 
+101391, GroupName, 21893, 21913, "hADSCs-injected rats", "E3", "<http://scio/data/DefinedExperimentalGroup_33565> <http://psink.de/scio/hasGroupName> \"hADSCs-injected rats\"."
+101408, StemCell, 21893, 21908, "hADSCs-injected", "", 
+101404, WistarRat, 21909, 21913, "rats", "", 
+101398, CystVolumeTest, 21923, 21934, "cavity size", "", 
+101401, MeanValue, 21938, 21952, "2618461.44 µm2", "", 
+101392, GroupName, 21957, 21976, "ChABC-injected rats", "E4", "<http://scio/data/DefinedExperimentalGroup_33573> <http://psink.de/scio/hasGroupName> \"ChABC-injected rats\"."
+101410, ChondroitinaseABC, 21957, 21971, "ChABC-injected", "", 
+101405, WistarRat, 21972, 21976, "rats", "", 
+101399, CystVolumeTest, 21986, 21997, "cavity size", "", 
+101402, MeanValue, 22001, 22015, "3338041.09 µm2", "", 
+101393, GroupName, 22040, 22052, "control rats", "E2", "<http://scio/data/DefinedExperimentalGroup_33557> <http://psink.de/scio/hasGroupName> \"control rats\"."
+101406, WistarRat, 22048, 22052, "rats", "", 
+101403, MeanValue, 22071, 22085, "6417159.48 µm2", "", 
+101400, CystVolumeTest, 22114, 22127, "cavity volume", "", 
+101412, PositiveSignificance, 22133, 22146, "significantly", "", "<http://scio/data/PositiveSignificance_59322> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59320> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59322>. <http://scio/data/PositiveSignificance_59334> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_59333> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_59334>."
+101396, GroupName, 22169, 22175, "hADSCs", "E3", 
+101409, StemCell, 22169, 22175, "hADSCs", "", 
+101395, GroupName, 22177, 22198, "ChABC-injected groups", "E4", "<http://scio/data/DefinedExperimentalGroup_33573> <http://psink.de/scio/hasGroupName> \"ChABC-injected groups\"."
+101411, ChondroitinaseABC, 22177, 22191, "ChABC-injected", "", 
+101394, GroupName, 22203, 22215, "control rats", "E2", 
+101407, WistarRat, 22211, 22215, "rats", "", 
+101413, PValue, 22217, 22224, "P<0.001", "", "<http://scio/data/PositiveSignificance_59322> <http://psink.de/scio/hasPValue> \"P<0.001\". <http://scio/data/PositiveSignificance_59334> <http://psink.de/scio/hasPValue> \"P<0.001\"."
+101425, StemCell, 23579, 23585, "hADSCs", "", 
+101422, Positive, 23595, 23606, "improvement", "", "<http://scio/data/Result_59300> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+101426, Lower, 23632, 23641, "reduction", "", 
+101427, CystVolumeTest, 23645, 23661, "volume of cavity", "", 
+101428, PositiveSignificance, 25830, 25841, "significant", "", 
+101429, CystVolumeTest, 25842, 25855, "cavity volume", "", 
+101430, Lower, 25856, 25865, "reduction", "", 
+101424, Positive, 25885, 25896, "improvement", "", "<http://scio/data/Result_59274> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+101431, ChondroitinaseABC, 25913, 25918, "ChABC", "", 
+101432, GroupName, 25913, 25924, "ChABC group", "E4", 

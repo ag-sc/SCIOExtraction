@@ -1,0 +1,25 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48682, Adult, 6310, 6315, "Adult", "", "<http://scio/data/OrganismModel_616> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48683, Female, 6316, 6322, "female", "", "<http://scio/data/OrganismModel_616> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48684, SpragueDawleyRat, 6323, 6337, "Sprague-Dawley", "", "<http://scio/data/OrganismModel_616> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+48685, Weight, 6361, 6370, "200–220 g", "", "<http://scio/data/OrganismModel_616> <http://psink.de/scio/hasWeight> \"200–220 g\"."
+54277, SpragueDawleyRat, 6432, 6443, "animalswere", "", 
+50176, Housing, 6451, 6483, "doubly in standard plastic cages", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+50177, Housing, 6522, 6543, "12-h light/dark cycle", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+50178, Nutrition, 6549, 6573, "ad libitum accessto food", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+50179, Hydration, 6578, 6583, "water", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+54278, AntibioticMedication, 6778, 6789, "Antibiotics", "", "<http://scio/data/AntibioticMedication_3864> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3864>."
+54280, SpragueDawleyRat, 7432, 7439, "Animals", "", 
+50182, KetamineAsAnaesthetic, 7476, 7484, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2722> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2722>."
+50183, Xylazine, 7485, 7497, "plusxylazine", "", "<http://scio/data/Xylazine_2732> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2732>."
+50192, DosageIntracorporal, 7499, 7501, "30", "", "<http://scio/data/KetamineAsAnaesthetic_2722> <http://psink.de/scio/hasDosage> \"30\"."
+50191, DosageIntracorporal, 7504, 7511, "3 mg/kg", "", "<http://scio/data/Xylazine_2732> <http://psink.de/scio/hasDosage> \"3 mg/kg\"."
+54281, IntraperitonealLocation, 7526, 7543, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_3862> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3863> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+57624, InjectionDelivery, 7526, 7543, "intraperitoneally", "", "<http://scio/data/InjectionDelivery_3862> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2722> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3862>. <http://scio/data/InjectionDelivery_3863> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2732> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3863>."
+50193, Laminectomy, 7548, 7560, "laminec-tomy", "", 
+50185, T10, 7603, 7606, "T10", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T10>."
+50186, Force, 7715, 7723, "250 kdyn", "", "<http://scio/data/InfiniteHorizonImpactor_2726> <http://psink.de/scio/hasForce> \"250 kdyn\"."
+50194, InfiniteHorizonImpactor, 7764, 7775, "IH impactor", "", "<http://scio/data/InfiniteHorizonImpactor_2726> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InfiniteHorizonImpactor>. <http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/InfiniteHorizonImpactor_2726>."
+54282, SevereInjury, 7855, 7861, "severe", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/SevereInjury>."
+50187, Contusion, 7862, 7871, "contusion", "", "<http://scio/data/Contusion_2719> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2719> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+50188, BladderExpression, 8270, 8278, "blad-der", "", "<http://scio/data/Contusion_2719> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."

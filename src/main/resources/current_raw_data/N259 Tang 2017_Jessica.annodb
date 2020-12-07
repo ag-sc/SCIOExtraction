@@ -1,0 +1,173 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+105041, Substance, 183, 198, "ginsenoside Rg1", "", 
+105042, OlfactoryEnsheathingGliaCell, 219, 246, "olfactory ensheathing cells", "", 
+105043, OlfactoryEnsheathingGliaCell, 248, 252, "OECs", "", 
+105044, OlfactoryEnsheathingGliaCell, 311, 315, "OECs", "", 
+105050, Contusion, 358, 376, "spinal cord injury", "", 
+105051, Contusion, 378, 381, "SCI", "", 
+105085, InVitroExperimentalProcedure, 384, 400, "Primary cultured", "", 
+105052, Purification, 405, 412, "puriﬁed", "", 
+105045, OlfactoryEnsheathingGliaCell, 413, 417, "OECs", "", 
+105053, SpragueDawleyRat, 433, 437, "rats", "", 
+105054, Substance, 457, 472, "ginsenoside Rg1", "", 
+105055, Substance, 512, 527, "ginsenoside Rg1", "", 
+105060, Positive, 528, 536, "promoted", "", 
+105046, OlfactoryEnsheathingGliaCell, 554, 558, "OECs", "", 
+105061, GeneExpressionAnalysis, 560, 576, "Real-time RT-PCR", "", 
+105056, Substance, 595, 610, "ginsenoside Rg1", "", 
+105062, Higher, 611, 622, "upregulated", "", 
+105063, TargetCompound, 641, 666, "migration-related factors", "", 
+105047, OlfactoryEnsheathingGliaCell, 670, 674, "OECs", "", 
+105064, Enzyme, 686, 713, "matrix metalloproteinases-2", "", 
+105117, Enzyme, 715, 720, "MMP-2", "", 
+105065, Enzyme, 723, 728, "MMP-9", "", 
+105068, Protein, 734, 765, "neural cell adhesion molecule 1", "", 
+105069, Protein, 767, 772, "NCAM 1", "", 
+105118, ProteinLevelAnalysis, 785, 806, "Western blot analysis", "", 
+105057, Substance, 822, 837, "ginsenoside Rg1", "", 
+105071, PositiveSignificance, 838, 850, "signiﬁcantly", "", 
+105072, Positive, 851, 859, "promoted", "", 
+105048, OlfactoryEnsheathingGliaCell, 877, 881, "OECs", "", 
+105073, Contusion, 943, 946, "SCI", "", 
+105074, SpragueDawleyRat, 947, 950, "rat", "", 
+105075, AllenWeightDropDevice, 993, 1007, "Allen’s method", "", 
+105076, BBBTest, 1013, 1042, "Basso, Beattie, and Bresnahan", "", 
+105077, BBBTest, 1044, 1047, "BBB", "", 
+105078, HistologicalInvestigationTest, 1060, 1081, "histological analysis", "", 
+105049, OlfactoryEnsheathingGliaCell, 1100, 1104, "OECs", "", 
+105058, Substance, 1130, 1145, "ginsenoside Rg1", "", 
+105079, PositiveSignificance, 1157, 1167, "signiﬁcant", "", 
+105080, Positive, 1168, 1179, "improvement", "", "<http://scio/data/Result_88969> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_88981> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+105081, Contusion, 1183, 1186, "SCI", "", 
+105082, GroupName, 1210, 1223, "control group", "", 
+105083, DefinedExperimentalGroup, 1232, 1241, "OEC group", "", 
+105059, Substance, 1249, 1264, "ginsenoside Rg1", "", 
+105084, Contusion, 1308, 1311, "SCI", "", 
+104885, OlfactoryEnsheathingGliaCell, 5484, 5488, "OECs", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_88813> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OlfactoryEnsheathingGliaCell>. <http://scio/data/CompoundTreatment_88803> <http://psink.de/scio/hasCompound> <http://scio/data/OlfactoryEnsheathingGliaCell_88813>."
+104886, Purification, 5517, 5524, "puriﬁed", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_88813> <http://psink.de/scio/hasExperimentalProcedure> <http://psink.de/scio/Purification>."
+104887, SpragueDawleyRat, 5610, 5629, "Sprague-Dawley rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_88813> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+104910, Allogeneic, 5610, 5629, "Sprague-Dawley rats", "", "<http://scio/data/OlfactoryEnsheathingGliaCell_88813> <http://psink.de/scio/hasCompoundBiologicalRelation> <http://psink.de/scio/Allogeneic>."
+104889, AnatomicalLocation, 5822, 5837, "olfactory bulbs", "", "<http://scio/data/AnatomicalLocation_88818> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/OlfactoryEnsheathingGliaCell_88813> <http://psink.de/scio/hasTissueSourceLocation> <http://scio/data/AnatomicalLocation_88818>."
+105003, GroupName, 7427, 7445, "experimental group", "E2", "<http://scio/data/DefinedExperimentalGroup_88907> <http://psink.de/scio/hasGroupName> \"experimental group\"."
+105005, DosageExtracorporal, 7463, 7471, "40 µg/mL", "", 
+105006, Substance, 7472, 7475, "Rg1", "", 
+105004, GroupName, 7557, 7570, "control group", "E3", "<http://scio/data/DefinedExperimentalGroup_88917> <http://psink.de/scio/hasGroupName> \"control group\"."
+105007, Vehicle, 7607, 7622, "DMEM/F12 medium", "", "<http://scio/data/Vehicle_88894> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_88882> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_88894>."
+104912, AllenWeightDropDevice, 12620, 12634, "Allen’s weight", "", "<http://scio/data/AllenWeightDropDevice_88791> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AllenWeightDropDevice>. <http://scio/data/Contusion_88784> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/AllenWeightDropDevice_88791>."
+104913, Contusion, 12620, 12650, "Allen’s weight dropping method", "", 
+104900, Adult, 12666, 12671, "adult", "", "<http://scio/data/OrganismModel_88777> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+104997, SpragueDawleyRat, 12672, 12691, "Sprague - Dawley rats", "", "<http://scio/data/OrganismModel_88777> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat>."
+104902, IntraperitonealLocation, 12752, 12767, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_88797> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+104903, InjectionDelivery, 12768, 12777, "injection", "", "<http://scio/data/InjectionDelivery_88797> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/ChloralHydrate_88789> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_88797>."
+104905, ChloralHydrate, 12784, 12799, "chloral hydrate", "", "<http://scio/data/ChloralHydrate_88789> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ChloralHydrate>. <http://scio/data/Contusion_88784> <http://psink.de/scio/hasMedication> <http://scio/data/ChloralHydrate_88789>."
+104998, VertebralArea, 12961, 12967, "T9–T10", "", "<http://scio/data/VertebralArea_88785> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea>. <http://scio/data/Contusion_88784> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_88785>."
+104999, T9, 12961, 12963, "T9", "", "<http://scio/data/VertebralArea_88785> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T9>."
+105000, T10, 12964, 12967, "T10", "", "<http://scio/data/VertebralArea_88785> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T10>."
+104907, AllenWeightDropDevice, 13010, 13021, "Allen’s hit", "", 
+104909, SpragueDawleyRat, 13046, 13049, "rat", "", 
+104908, Contusion, 13050, 13062, "injury model", "", 
+104914, Weight, 13117, 13121, "10 g", "", "<http://scio/data/AllenWeightDropDevice_88791> <http://psink.de/scio/hasWeight> \"10 g\"."
+104917, Distance, 13176, 13180, "4 cm", "", "<http://scio/data/AllenWeightDropDevice_88791> <http://psink.de/scio/hasDistance> \"4 cm\"."
+104918, SpragueDawleyRat, 13219, 13223, "rats", "", 
+104919, Contusion, 13293, 13296, "SCI", "", 
+104920, OlfactoryEnsheathingGliaCell, 13298, 13301, "OEC", "", 
+104921, DefinedExperimentalGroup, 13313, 13322, "OEC group", "E1", "<http://scio/data/DefinedExperimentalGroup_88898> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_88898> <http://www.w3.org/2000/01/rdf-schema#label> \"OEC group, E1\"."
+104931, OlfactoryEnsheathingGliaCell, 13313, 13316, "OEC", "", 
+104924, NNumber, 13326, 13328, "10", "", "<http://scio/data/DefinedExperimentalGroup_88898> <http://psink.de/scio/hasNNumber> \"10\"."
+104928, OlfactoryEnsheathingGliaCell, 13331, 13334, "OEC", "", 
+104933, Substance, 13339, 13342, "Rg1", "", 
+105119, Substance, 13354, 13357, "Rg1", "", 
+104922, DefinedExperimentalGroup, 13354, 13367, "Rg1+OEC group", "E2", "<http://scio/data/DefinedExperimentalGroup_88907> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_88907> <http://www.w3.org/2000/01/rdf-schema#label> \"Rg1 + OEC group, E2\"."
+104930, OlfactoryEnsheathingGliaCell, 13358, 13361, "OEC", "", 
+105002, AnatomicalLocation, 13369, 13373, "OECs", "", "<http://scio/data/AnatomicalLocation_88836> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/DeliveryMethod_88826> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_88836>. <http://scio/data/AnatomicalLocation_88886> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AnatomicalLocation>. <http://scio/data/DeliveryMethod_88884> <http://psink.de/scio/hasLocations> <http://scio/data/AnatomicalLocation_88886>."
+104929, OlfactoryEnsheathingGliaCell, 13369, 13373, "OECs", "", 
+104934, Substance, 13387, 13390, "Rg1", "", "<http://scio/data/Substance_88834> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Substance>. <http://scio/data/CompoundTreatment_88824> <http://psink.de/scio/hasCompound> <http://scio/data/Substance_88834>."
+104935, DosageExtracorporal, 13413, 13421, "40 µg/mL", "", "<http://scio/data/CompoundTreatment_88824> <http://psink.de/scio/hasDosage> \"40 µg/mL\"."
+104936, Duration, 13426, 13451, "72 h prior to the surgery", "", "<http://scio/data/TemporalInterval_88929> <http://psink.de/scio/hasDuration> \"72 h prior to the surgery\". <http://scio/data/TemporalInterval_88937> <http://psink.de/scio/hasDuration> \"72 h prior to the surgery\"."
+104926, NNumber, 13455, 13457, "10", "", "<http://scio/data/DefinedExperimentalGroup_88907> <http://psink.de/scio/hasNNumber> \"10\"."
+104937, Vehicle, 13463, 13471, "DMEM/F12", "", "<http://scio/data/Vehicle_88847> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Vehicle>. <http://scio/data/CompoundTreatment_88837> <http://psink.de/scio/hasCompound> <http://scio/data/Vehicle_88847>."
+104938, GroupName, 13489, 13502, "control group", "E3", 
+104923, DefinedExperimentalGroup, 13504, 13513, "SCI group", "E3", "<http://scio/data/DefinedExperimentalGroup_88917> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DefinedExperimentalGroup>. <http://scio/data/DefinedExperimentalGroup_88917> <http://www.w3.org/2000/01/rdf-schema#label> \"SCI group, E3\"."
+104927, NNumber, 13517, 13519, "10", "", "<http://scio/data/DefinedExperimentalGroup_88917> <http://psink.de/scio/hasNNumber> \"10\"."
+104932, OlfactoryEnsheathingGliaCell, 13541, 13545, "OECs", "", 
+104939, DosageExtracorporal, 13568, 13576, "5×107/mL", "", "<http://scio/data/CompoundTreatment_88803> <http://psink.de/scio/hasDosage> \"5×107/mL\"."
+104941, InjectionDelivery, 13582, 13590, "injected", "", "<http://scio/data/InjectionDelivery_88805> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_88803> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_88805>. <http://scio/data/InjectionDelivery_88839> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/CompoundTreatment_88837> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_88839>."
+105001, SpinalCord, 13600, 13611, "spinal cord", "", "<http://scio/data/SpinalCord_88823> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_88805> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_88823>. <http://scio/data/SpinalCord_88850> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/SpinalCord>. <http://scio/data/InjectionDelivery_88839> <http://psink.de/scio/hasLocations> <http://scio/data/SpinalCord_88850>."
+104943, LesionAdjacentTissue, 13612, 13634, "around the injury site", "", "<http://scio/data/LesionAdjacentTissue_88822> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InjectionDelivery_88805> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_88822>. <http://scio/data/LesionAdjacentTissue_88849> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LesionAdjacentTissue>. <http://scio/data/InjectionDelivery_88839> <http://psink.de/scio/hasLocations> <http://scio/data/LesionAdjacentTissue_88849>."
+104944, Micropipette, 13643, 13656, "microinjector", "", "<http://scio/data/CompoundTreatment_88803> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>. <http://scio/data/CompoundTreatment_88837> <http://psink.de/scio/hasApplicationInstrument> <http://psink.de/scio/Micropipette>."
+104947, SpragueDawleyRat, 13795, 13799, "rats", "", 
+104945, AntibioticMedication, 13846, 13856, "penicillin", "", "<http://scio/data/AntibioticMedication_88786> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_88784> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_88786>."
+104946, DosageExtracorporal, 13858, 13874, "4 U/mL, 0.5 mL/d", "", "<http://scio/data/AntibioticMedication_88786> <http://psink.de/scio/hasDosage> \"4 U/mL, 0.5 mL/d\"."
+104948, BBBTest, 13962, 13991, "Basso, Beattie, and Bresnahan", "", 
+104949, BBBTest, 13993, 13996, "BBB", "", 
+105112, SpinalCord, 14860, 14871, "spinal cord", "", 
+105113, SpragueDawleyRat, 14887, 14890, "rat", "", 
+105114, ApoptosisTest, 14948, 14983, "stained with hematoxylin–eosin (HE)", "", 
+104952, HistologicalInvestigationTest, 14948, 14983, "stained with hematoxylin–eosin (HE)", "", 
+104950, AstrogliosisTest, 14985, 15022, "glial ﬁbrillary acidic protein (GFAP)", "", 
+105110, NeuroprotectionTest, 15028, 15056, "neuron speciﬁc enolase ( NSE )", "", 
+105109, BBBTest, 18166, 18176, "BBB Scores", "IM16", "<http://scio/data/BBBTest_89208> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_89208> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB IM16\"."
+105099, Contusion, 18184, 18187, "SCI", "", 
+105100, SpragueDawleyRat, 18245, 18248, "rat", "", 
+105101, Substance, 18270, 18273, "Rg1", "", 
+105102, PositiveSignificance, 18274, 18286, "signiﬁcantly", "", "<http://scio/data/PositiveSignificance_89214> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_89205> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_89214>."
+105108, Positive, 18287, 18319, "promoted the functional recovery", "R16", "<http://scio/data/Result_89198> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+105115, Positive, 18311, 18319, "recovery", "", 
+105104, OlfactoryEnsheathingGliaCell, 18323, 18327, "OECs", "", 
+105105, Contusion, 18331, 18334, "SCI", "", 
+105106, PValue, 18358, 18364, "p<0.01", "", "<http://scio/data/PositiveSignificance_88989> <http://psink.de/scio/hasPValue> \"p<0.01\"."
+105107, PValue, 18388, 18394, "p<0.01", "", "<http://scio/data/PositiveSignificance_89214> <http://psink.de/scio/hasPValue> \"p<0.01\"."
+105097, LSDTest, 18397, 18405, "LSD test", "", "<http://scio/data/Result_88969> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/LSDTest>. <http://scio/data/Result_88981> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/LSDTest>. <http://scio/data/Result_89198> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/LSDTest>."
+105036, NeuroprotectionTest, 18576, 18600, "NSE positive cell number", "", 
+105037, Higher, 18605, 18611, "larger", "", 
+105038, DefinedExperimentalGroup, 18619, 18632, "Rg1+OEC group", "E2", 
+105039, AnalyzedExperimentalGroup, 18651, 18667, "other two groups", "", 
+105040, PValue, 18689, 18695, "p<0.01", "", "<http://scio/data/PositiveSignificance_89075> <http://psink.de/scio/hasPValue> \"p<0.01\"."
+105028, StainingDensity, 18702, 18718, "mean IOD of GFAP", "IM14", "<http://scio/data/AstrogliosisTest_89147> <http://psink.de/scio/hasHistologicalInvestigationParameter> <http://psink.de/scio/StainingDensity>."
+105029, DefinedExperimentalGroup, 18726, 18739, "Rg1+OEC group", "E2", 
+105032, PositiveSignificance, 18744, 18756, "signiﬁcantly", "", "<http://scio/data/PositiveSignificance_89163> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_89160> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_89163>. <http://scio/data/PositiveSignificance_89175> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_89174> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_89175>."
+105035, Lower, 18757, 18762, "lower", "R14, R15", "<http://scio/data/Trend_89160> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_89174> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+105030, GroupName, 18772, 18775, "OEC", "E1", "<http://scio/data/DefinedExperimentalGroup_88898> <http://psink.de/scio/hasGroupName> \"OEC\"."
+105031, GroupName, 18780, 18794, "control groups", "E3", "<http://scio/data/DefinedExperimentalGroup_88917> <http://psink.de/scio/hasGroupName> \"control groups\"."
+105034, PValue, 18816, 18822, "p<0.01", "", "<http://scio/data/PositiveSignificance_89163> <http://psink.de/scio/hasPValue> \"p<0.01\". <http://scio/data/PositiveSignificance_89175> <http://psink.de/scio/hasPValue> \"p<0.01\"."
+105087, Substance, 18848, 18851, "Rg1", "", 
+105088, Positive, 18852, 18881, "promoted the positive effects", "", "<http://scio/data/Result_89053> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>. <http://scio/data/Result_89077> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+105089, Positive, 18865, 18881, "positive effects", "", "<http://scio/data/Result_89091> <http://psink.de/scio/hasJudgement> <http://psink.de/scio/Positive>."
+105090, OlfactoryEnsheathingGliaCell, 18885, 18889, "OECs", "", 
+105091, Contusion, 18906, 18909, "SCI", "", 
+105092, Higher, 18914, 18923, "increased", "", 
+105093, NeuroprotectionTest, 18924, 18941, "neuronal survival", "", 
+105094, Lower, 18946, 18950, "less", "", 
+105096, HistologicalInvestigationTest, 18951, 18964, "tissue damage", "", 
+105086, LSDTest, 18966, 18974, "LSD test", "", "<http://scio/data/Result_89053> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/LSDTest>. <http://scio/data/Result_89077> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/LSDTest>. <http://scio/data/Result_89091> <http://psink.de/scio/hasStatisticalTest> <http://psink.de/scio/LSDTest>."
+104956, BBBTest, 22009, 22019, "BBB scores", "IM1", "<http://scio/data/BBBTest_88953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_88953> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB IM1\"."
+104958, None, 22024, 22034, "not differ", "R1", "<http://scio/data/Trend_88950> <http://psink.de/scio/hasDifference> <http://psink.de/scio/None>."
+104962, AnalyzedExperimentalGroup, 22043, 22059, "the three groups", "", 
+104957, BBBTest, 22078, 22088, "BBB scores", "IM2", "<http://scio/data/BBBTest_88963> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/BBBTest>. <http://scio/data/BBBTest_88963> <http://www.w3.org/2000/01/rdf-schema#label> \"BBB IM2\"."
+104960, PositiveSignificance, 22094, 22106, "signiﬁcantly", "", "<http://scio/data/PositiveSignificance_88979> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_88976> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_88979>. <http://scio/data/PositiveSignificance_88989> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_88988> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_88989>."
+104967, Higher, 22107, 22116, "increased", "R2, ,R3", "<http://scio/data/Trend_88976> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_88988> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+104964, DefinedExperimentalGroup, 22124, 22137, "Rg1+OEC group", "E2", 
+104965, GroupName, 22156, 22159, "OEC", "E1", 
+104966, GroupName, 22164, 22178, "control groups", "E3", 
+105008, Lower, 22404, 22408, "less", "R4-R7", "<http://scio/data/Trend_89000> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_89018> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_89030> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_89048> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+104968, ApoptosisTest, 22409, 22422, "cell necrosis", "", "<http://scio/data/ApoptosisTest_89003> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/ApoptosisTest>. <http://scio/data/ApoptosisTest_89003> <http://www.w3.org/2000/01/rdf-schema#label> \"Necrosis IM4\"."
+104973, HistologicalInvestigationTest, 22427, 22440, "vacuolization", "", "<http://scio/data/HistologicalInvestigationTest_89033> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/HistologicalInvestigationTest>. <http://scio/data/HistologicalInvestigationTest_89033> <http://www.w3.org/2000/01/rdf-schema#label> \"vacuolization IM6\"."
+104970, DefinedExperimentalGroup, 22448, 22461, "Rg1+OEC group", "E2", 
+104971, GroupName, 22480, 22483, "OEC", "E1", 
+104972, GroupName, 22488, 22502, "control groups", "E3", 
+104989, DefinedExperimentalGroup, 22728, 22741, "Rg1+OEC group", "E2", 
+104992, PositiveSignificance, 22754, 22766, "signiﬁcantly", "", "<http://scio/data/PositiveSignificance_89075> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_89060> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_89075>. <http://scio/data/PositiveSignificance_89085> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_89084> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_89085>. <http://scio/data/PositiveSignificance_89099> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PositiveSignificance>. <http://scio/data/Trend_89098> <http://psink.de/scio/hasSignificance> <http://scio/data/PositiveSignificance_89099>."
+105009, Higher, 22767, 22776, "increased", "R8, R9", "<http://scio/data/Trend_89060> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>. <http://scio/data/Trend_89084> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Higher>."
+105013, NeuroprotectionTest, 22777, 22805, "number of NSE positive cells", "IM8", "<http://scio/data/NeuroprotectionTest_89063> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuroprotectionTest>. <http://scio/data/NeuroprotectionTest_89063> <http://www.w3.org/2000/01/rdf-schema#label> \"Neuroprotection IM8\"."
+104990, DefinedExperimentalGroup, 22823, 22832, "OEC group", "E1", 
+105011, Lower, 22845, 22853, "very few", "R10", "<http://scio/data/Trend_89098> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+105014, NeuroprotectionTest, 22854, 22872, "NSE positive cells", "IM10", "<http://scio/data/NeuroprotectionTest_89069> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/NeuroprotectionTest>. <http://scio/data/NeuroprotectionTest_89069> <http://www.w3.org/2000/01/rdf-schema#label> \"Neuroprotection IM10\"."
+104995, GroupName, 22880, 22893, "control group", "E3", 
+104996, PValue, 22895, 22901, "p<0.05", "", "<http://scio/data/PositiveSignificance_89085> <http://psink.de/scio/hasPValue> \"p<0.05\". <http://scio/data/PositiveSignificance_89099> <http://psink.de/scio/hasPValue> \"p<0.05\"."
+104984, OlfactoryEnsheathingGliaCell, 23065, 23069, "OECs", "", 
+104985, Contusion, 23097, 23116, "injured spinal cord", "", 
+105015, SpinalCord, 23105, 23116, "spinal cord", "", 
+105023, AstrogliosisTest, 23118, 23141, "astrocyte proliferation", "IM11, IM14", "<http://scio/data/AstrogliosisTest_89105> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_89105> <http://www.w3.org/2000/01/rdf-schema#label> \"Astrogliosis IM11\". <http://scio/data/AstrogliosisTest_89147> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AstrogliosisTest>. <http://scio/data/AstrogliosisTest_89147> <http://www.w3.org/2000/01/rdf-schema#label> \"Astrogliosis IM14\"."
+105020, Lower, 23142, 23155, "was inhibited", "R11, R12", "<http://scio/data/Trend_89118> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>. <http://scio/data/Trend_89130> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+105022, Lower, 23162, 23196, "inhibitory effect was more obvious", "R13", "<http://scio/data/Trend_89142> <http://psink.de/scio/hasDifference> <http://psink.de/scio/Lower>."
+104988, DefinedExperimentalGroup, 23204, 23217, "Rg1+OEC group", "E2", 

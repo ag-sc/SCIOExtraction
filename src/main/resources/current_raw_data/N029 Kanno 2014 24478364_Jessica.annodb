@@ -1,0 +1,30 @@
+# AnnotationID, ClassType, DocCharOnset(incl), DocCharOffset(excl), Text, Meta, Instances
+48556, Adult, 14681, 14686, "Adult", "", "<http://scio/data/OrganismModel_417> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult>."
+48557, Female, 14687, 14693, "female", "", "<http://scio/data/OrganismModel_417> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female>."
+48559, FischerRat, 14694, 14706, "Fischer rats", "", "<http://scio/data/OrganismModel_417> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/FischerRat>."
+48558, Weight, 14723, 14733, "160 -180 g", "", "<http://scio/data/OrganismModel_417> <http://psink.de/scio/hasWeight> \"160 -180 g\"."
+49718, FischerRat, 15091, 15095, "Rats", "", 
+49697, DosageIntracorporal, 15115, 15123, "45 mg/kg", "", "<http://scio/data/KetamineAsAnaesthetic_2174> <http://psink.de/scio/hasDosage> \"45 mg/kg\"."
+49725, KetamineAsAnaesthetic, 15124, 15132, "ketamine", "", "<http://scio/data/KetamineAsAnaesthetic_2174> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/KetamineAsAnaesthetic>. <http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/KetamineAsAnaesthetic_2174>."
+49699, DosageIntracorporal, 15134, 15141, "5 mg/kg", "", "<http://scio/data/Xylazine_2194> <http://psink.de/scio/hasDosage> \"5 mg/kg\"."
+49700, Xylazine, 15142, 15150, "xylazine", "", "<http://scio/data/Xylazine_2194> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Xylazine>. <http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Xylazine_2194>."
+50794, IntraperitonealLocation, 15155, 15170, "intraperitoneal", "", "<http://scio/data/InjectionDelivery_3359> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>. <http://scio/data/InjectionDelivery_3360> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntraperitonealLocation>."
+50793, InjectionDelivery, 15171, 15180, "injection", "", "<http://scio/data/InjectionDelivery_3359> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/KetamineAsAnaesthetic_2174> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3359>. <http://scio/data/InjectionDelivery_3360> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery>. <http://scio/data/Xylazine_2194> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3360>."
+54209, FischerRat, 15389, 15393, "Rats", "", 
+49721, Housing, 15399, 15443, "housed two per cage at a temperature of 24°C", "", "<http://scio/data/Contusion_2171> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing>."
+49702, Hydration, 15449, 15475, "ad libitum access to water", "", "<http://scio/data/Contusion_2171> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Hydration>."
+49703, Nutrition, 15480, 15484, "food", "", "<http://scio/data/Contusion_2171> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Nutrition>."
+49704, Laminectomy, 15592, 15603, "laminectomy", "", 
+49705, T8, 15639, 15641, "T8", "", "<http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8>."
+49706, ModerateInjury, 15725, 15733, "Moderate", "", "<http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryIntensity> <http://psink.de/scio/ModerateInjury>."
+49709, Contusion, 15755, 15764, "contusion", "", "<http://scio/data/Contusion_2171> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Contusion>. <http://scio/data/Contusion_2171> <http://www.w3.org/2000/01/rdf-schema#label> \"contusion\"."
+49708, Force, 15775, 15802, "10 g weight dropped 12.5 mm", "", "<http://scio/data/MASCISImpactor_2178> <http://psink.de/scio/hasForce> \"10 g weight dropped 12.5 mm\"."
+49707, MASCISImpactor, 15827, 15852, "MASCIS weight-drop device", "", "<http://scio/data/MASCISImpactor_2178> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MASCISImpactor>. <http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryDevice> <http://scio/data/MASCISImpactor_2178>."
+54210, FischerRat, 16237, 16241, "rats", "", 
+50795, AntibioticMedication, 16306, 16316, "gentamicin", "", "<http://scio/data/AntibioticMedication_3361> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication>. <http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3361>."
+49711, DosageIntracorporal, 16318, 16325, "5 mg/kg", "", 
+49712, PostsurgicalMedication, 16364, 16372, "Buprenex", "", "<http://scio/data/PostsurgicalMedication_2204> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication>. <http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_2204>."
+49713, DosageIntracorporal, 16374, 16383, "0.3 mg/kg", "", "<http://scio/data/PostsurgicalMedication_2204> <http://psink.de/scio/hasDosage> \"0.3 mg/kg\". <http://scio/data/AntibioticMedication_3361> <http://psink.de/scio/hasDosage> \"0.3 mg/kg\"."
+50796, SubcutaneousLocation, 16385, 16397, "subcutaneous", "", 
+49724, PostSurgeryCondition, 16423, 16449, "lactated Ringer's solution", "", 
+49714, BladderExpression, 16473, 16481, "Bladders", "", "<http://scio/data/Contusion_2171> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression>."

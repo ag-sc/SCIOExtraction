@@ -1,0 +1,52 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_808> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_808> <http://www.w3.org/2000/01/rdf-schema#label> "cat" .
+<http://scio/data/OrganismModel_808> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/CatSpecies> .
+<http://scio/data/OrganismModel_808> <http://psink.de/scio/hasAgeCategory> <http://psink.de/scio/Adult> .
+<http://scio/data/OrganismModel_808> <http://psink.de/scio/hasWeight> "6–8 lbs" .
+<http://scio/data/OrganismModel_808> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/LateralHemisection_3002> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/LateralHemisection> .
+<http://scio/data/LateralHemisection_3002> <http://www.w3.org/2000/01/rdf-schema#label> "hemisection" .
+<http://scio/data/Isoflurane_3005> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_3005> .
+<http://scio/data/DeliveryMethod_3015> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/DeliveryMethod> .
+<http://scio/data/Isoflurane_3005> <http://psink.de/scio/hasDosage> "1–3.5%" .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryDevice> <http://psink.de/scio/Scissors> .
+<http://scio/data/Left_3018> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Left> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasDirection> <http://scio/data/Left_3018> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasAnimalCareCondition> <http://psink.de/scio/Housing> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://psink.de/scio/BladderExpression> .
+<http://scio/data/Anaesthetic_3026> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3026> .
+<http://scio/data/Anaesthetic_3026> <http://psink.de/scio/hasDosage> "0.04–0.06 mg/ kg" .
+<http://scio/data/InjectionDelivery_3952> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_3026> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3952> .
+<http://scio/data/InjectionDelivery_3952> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation> .
+<http://scio/data/Anaesthetic_3029> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Anaesthetic> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Anaesthetic_3029> .
+<http://scio/data/Anaesthetic_3029> <http://psink.de/scio/hasDosage> "0.4–0.5 mg/kg" .
+<http://scio/data/InjectionDelivery_3953> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/Anaesthetic_3029> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_3953> .
+<http://scio/data/InjectionDelivery_3953> <http://psink.de/scio/hasLocations> <http://psink.de/scio/SubcutaneousLocation> .
+<http://scio/data/VertebralArea_3947> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/VertebralArea> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryLocation> <http://scio/data/VertebralArea_3947> .
+<http://scio/data/VertebralArea_3947> <http://psink.de/scio/hasUpperVertebrae> <http://psink.de/scio/T9> .
+<http://scio/data/VertebralArea_3947> <http://psink.de/scio/hasLowerVertebrae> <http://psink.de/scio/T10> .
+<http://scio/data/PostsurgicalMedication_3950> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/PostsurgicalMedication> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/PostsurgicalMedication_3950> .
+<http://scio/data/PostsurgicalMedication_3950> <http://psink.de/scio/hasDosage> "0.01 mg/kg" .
+<http://scio/data/MedicationDuringSurgery_3957> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasMedication> <http://scio/data/MedicationDuringSurgery_3957> .
+<http://scio/data/InjectionDelivery_15184> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InjectionDelivery> .
+<http://scio/data/MedicationDuringSurgery_3957> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InjectionDelivery_15184> .
+<http://scio/data/InjectionDelivery_15184> <http://psink.de/scio/hasLocations> <http://psink.de/scio/IntramuscularLocation> .
+<http://scio/data/AntibioticMedication_3965> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/AntibioticMedication> .
+<http://scio/data/LateralHemisection_3002> <http://psink.de/scio/hasInjuryPostsurgicalCare> <http://scio/data/AntibioticMedication_3965> .
+<http://scio/data/AntibioticMedication_3965> <http://psink.de/scio/hasDosage> "40,000U/kg" .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices

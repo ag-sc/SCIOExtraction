@@ -1,0 +1,21 @@
+# RDF export of group: InvestigationMethod
+# RDF export of group: Results
+# RDF export of group: Observations
+# RDF export of group: Experimental groups
+# RDF export of group: Organism models
+<http://scio/data/OrganismModel_875> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/OrganismModel> .
+<http://scio/data/OrganismModel_875> <http://www.w3.org/2000/01/rdf-schema#label> "Rat" .
+<http://scio/data/OrganismModel_875> <http://psink.de/scio/hasOrganismSpecies> <http://psink.de/scio/SpragueDawleyRat> .
+<http://scio/data/OrganismModel_875> <http://psink.de/scio/hasWeight> "250–300 g" .
+<http://scio/data/OrganismModel_875> <http://psink.de/scio/hasGender> <http://psink.de/scio/Female> .
+# RDF export of group: Injuries
+<http://scio/data/CompleteTransection_4017> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/CompleteTransection> .
+<http://scio/data/CompleteTransection_4017> <http://www.w3.org/2000/01/rdf-schema#label> "complete transection" .
+<http://scio/data/CompleteTransection_4017> <http://psink.de/scio/hasInjuryLocation> <http://psink.de/scio/T8> .
+<http://scio/data/Isoflurane_4020> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/Isoflurane> .
+<http://scio/data/CompleteTransection_4017> <http://psink.de/scio/hasInjuryAnaesthesia> <http://scio/data/Isoflurane_4020> .
+<http://scio/data/InhalationDelivery_4026> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/InhalationDelivery> .
+<http://scio/data/Isoflurane_4020> <http://psink.de/scio/hasDeliveryMethod> <http://scio/data/InhalationDelivery_4026> .
+<http://scio/data/MedicationDuringSurgery_4022> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psink.de/scio/MedicationDuringSurgery> .
+# RDF export of group: Treatments
+# RDF export of group: Sacrifices
