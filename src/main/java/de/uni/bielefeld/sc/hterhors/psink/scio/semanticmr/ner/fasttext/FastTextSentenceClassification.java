@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import com.github.jfasttext.JFastText.ProbLabel;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
@@ -67,37 +68,41 @@ public class FastTextSentenceClassification {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
-//				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
+//				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
+				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
 				/**
 				 * Finally, we build the systems scope.
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(90)
-				.setTestProportion(10).setSeed(1000L).setCorpusSizeFraction(1F).build();
+//		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setTrainingProportion(90)
+//				.setTestProportion(10).setSeed(1000L).setCorpusSizeFraction(1F).build();
 
-//		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
-//		Collections.sort(docs);
-//
-//		Collections.shuffle(docs, new Random(100));
-//
-//		final int x = (int) (((double) docs.size() / 100D) * 80D);
-//		List<String> trainingInstanceNames = docs.subList(0, x);
-//		List<String> testInstanceNames = docs.subList(x, docs.size());
+		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
 
-//		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
-//				.setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();
+		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
+				.setTrainingInstanceNames(docs).build();
+		
+		
+
+		
 		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
-//		EntityType type = SCIOEntityTypes.investigationMethod;
-		EntityType type = SCIOEntityTypes.trend;
-
-		System.out.println("num of values " + type.getRelatedEntityTypes().size());
-
+		EntityType type = SCIOEntityTypes.investigationMethod;
+//		EntityType type = SCIOEntityTypes.trend;
+		
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(type), corpusDistributor);
+
+		
+		new FastTextSentenceClassification("Result_PREDICT", false, type,
+				instanceProvider .getTrainingInstances(), false);
+
+		System.exit(1);
+		
+		System.out.println("num of values " + type.getRelatedEntityTypes().size());
+
 		int a = 0;
 		Map<Integer, Integer> map = new HashMap<>();
 		System.out.println(instanceProvider.getInstances().size());
@@ -201,6 +206,7 @@ public class FastTextSentenceClassification {
 		String ftModelName = modelName +
 //				
 				"pretrained_" +
+//
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 				+ "_supervised.model";
 		jft = new JFastText();
@@ -226,7 +232,7 @@ public class FastTextSentenceClassification {
 			jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 					"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
 
-				"-pretrainedVectors", preTrainedvec,
+					"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 					"-dim", numberOfDimensions + "" });
@@ -360,7 +366,7 @@ public class FastTextSentenceClassification {
 					.add(toDocLinkedAnnotation(fastTextPrediction));
 
 		}
-		
+
 		return annotationsToWrite;
 	}
 

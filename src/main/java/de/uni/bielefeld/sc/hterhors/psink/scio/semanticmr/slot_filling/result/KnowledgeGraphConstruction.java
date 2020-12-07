@@ -60,11 +60,16 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimen
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.heuristics.LocalSentenceHeuristic;
 
-public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject {
+public class KnowledgeGraphConstruction extends AbstractSemReadProject {
 
 	public static void main(String[] args) throws Exception {
 
-		new ResultSlotFillingHeuristicPrediction(3);
+		if (args.length == 0)
+			new KnowledgeGraphConstruction("prediction/instances", "prediction/data/npchunks/",
+					"prediction/data/annotations", 57);
+		else
+			new KnowledgeGraphConstruction(args[0], args[1], args[2], Integer.parseInt(args[3]));
+
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -78,11 +83,11 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 	private List<Instance> instances;
 
 	private String modelName;
-	public boolean includeGroups = true;
 	public final int batchSize = 100;
 	final int batch;
 
-	public ResultSlotFillingHeuristicPrediction(int batchCount) throws Exception {
+	public KnowledgeGraphConstruction(final String inputDir, final String chunkDir, final String cacheDir, int batch)
+			throws Exception {
 
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).apply()
@@ -99,14 +104,19 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 				.registerNormalizationFunction(new DistanceNormalization())
 				//
 				.build();
-		this.batch = batchCount;
+		this.batch = batch;
 		this.scoreType = EScoreType.MACRO;
 
 		// this.objectiveFunction = new SlotFillingObjectiveFunction(scoreType,
 //				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.DOCUMENT_LINKED));
-		List<String> instanceNames = Arrays.asList(new File("prediction/instances").list());
+		List<String> instanceNames = Arrays.asList(new File(inputDir).list());
 		Collections.sort(instanceNames);
-		instanceNames = instanceNames.subList(batchCount * batchSize, (1 + batchCount) * batchSize);
+		if (batch * batchSize > instanceNames.size()) {
+			System.exit(1);
+		}
+
+		instanceNames = instanceNames.subList(batch * batchSize,
+				Math.min((1 + batch) * batchSize, instanceNames.size()));
 //		instanceNames =instanceNames.subList(0, 10);
 		readData(instanceNames);
 
@@ -129,7 +139,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 
 		for (Instance instance : instanceProvider.getInstances()) {
 			annotations.putIfAbsent(instance, new HashSet<>());
-			annotations.get(instance).addAll(getGroupNameCandidates(instance));
+			annotations.get(instance).addAll(getGroupNameCandidates(chunkDir, instance));
 		}
 
 		if (includeRegexData) {
@@ -142,20 +152,23 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		}
 
 		if (includeFastTextAnnotations) {
-			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName , false,
+
+			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
 					SCIOEntityTypes.investigationMethod, instances, true);
 			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(instances);
 			for (Instance instance : annotationsInvFT.keySet()) {
 				annotations.putIfAbsent(instance, new HashSet<>());
+				log.info(instance.getName() + " invM: " + annotationsInvFT.get(instance).size());
 				annotations.get(instance).addAll(annotationsInvFT.get(instance));
 			}
 
 			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
 					SCIOEntityTypes.trend, instances, true);
-			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(instances);
-			for (Instance instance : annotationsTredFT.keySet()) {
+			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTrendFT = trend.predictNerlas(instances);
+			for (Instance instance : annotationsTrendFT.keySet()) {
 				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(annotationsTredFT.get(instance));
+				log.info(instance.getName() + " trend: " + annotationsTrendFT.get(instance).size());
+				annotations.get(instance).addAll(annotationsTrendFT.get(instance));
 			}
 
 		}
@@ -204,7 +217,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		if (addDicitionaryBasedAnnotations)
 			addDictionaryBasedAnnotations(annotations);
 
-		expGroups = getPredictedGroups();
+		expGroups = getPredictedGroups(cacheDir, batch);
 
 		LocalSentenceHeuristic heuristic = new LocalSentenceHeuristic(annotations, expGroups, instances);
 
@@ -224,20 +237,23 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		for (Entry<Instance, State> instance : results.entrySet()) {
 			List<EntityTemplate> ans = new ArrayList<>();
 			for (AbstractAnnotation entityTemplate : instance.getValue().getCurrentPredictions().getAnnotations()) {
-				System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
+				if (Math.random() > 0.05)
+					System.out.println(instance.getKey() + "\t" + entityTemplate.toPrettyString());
 				ans.add(entityTemplate.asInstanceOfEntityTemplate());
 			}
 			ansMap.put(instance.getKey().getName(), ans);
 		}
 
-		File outPutFile = new File("result_batch_count_" + batchCount + "_" + batchSize + ".n-triples");
+		File outPutFile = new File("result_batch_count_" + batch + "_" + batchSize + ".n-triples");
 
 		new ConvertToRDF(outPutFile, ansMap);
 	}
 
-	private Map<Instance, Set<EntityTemplate>> getPredictedGroups() throws Exception {
+	private Map<Instance, Set<EntityTemplate>> getPredictedGroups(final String cacheDir, int batchIndex)
+			throws Exception {
 
-		File root = new File("prediction/data/annotations/slot_filling/experimental_group_Full" + modelName + "/");
+		File root = new File(
+				cacheDir + "/slot_filling/experimental_group_Full" + modelName + "/batch_" + batchIndex + "/");
 		Map<Instance, Set<EntityTemplate>> expGroups = new HashMap<>();
 		if (root.exists() && root.list().length != 0) {
 			// Cache
@@ -266,9 +282,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 			}
 		}
 
-		if (expGroups.isEmpty())
-
-		{
+		if (expGroups.isEmpty()) {
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
 			SlotType.includeAll();
 //			ExperimentalGroupSlotFillingPredictorFinalEvaluation.maxCacheSize = 800_000;
@@ -319,12 +333,12 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		return groupsMap;
 	}
 
-	private List<DocumentLinkedAnnotation> getGroupNameCandidates(Instance instance) {
+	private List<DocumentLinkedAnnotation> getGroupNameCandidates(final String chunkDir, Instance instance) {
 		List<DocumentLinkedAnnotation> list = GroupNameExtraction
 				.extractGroupNamesWithPattern(EDistinctGroupNamesMode.NOT_DISTINCT, instance);
 
-		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction.extractGroupNamesWithNPCHunks(
-				new File("prediction/data/npchunks/"), EDistinctGroupNamesMode.NOT_DISTINCT, instance);
+		List<DocumentLinkedAnnotation> list2 = GroupNameExtraction.extractGroupNamesWithNPCHunks(new File(chunkDir),
+				EDistinctGroupNamesMode.NOT_DISTINCT, instance);
 		list.addAll(list2);
 
 		return list;
@@ -379,10 +393,6 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 	}
 
 	private EntityTemplate sortResult(AbstractAnnotation result) {
-
-		if (!includeGroups) {
-			return result.asInstanceOfEntityTemplate();
-		}
 
 		AbstractAnnotation referenceFiller = result.asInstanceOfEntityTemplate()
 				.getSingleFillerSlot(SCIOSlotTypes.hasReferenceGroup).getSlotFiller();
@@ -558,33 +568,31 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 
 		SlotType.excludeAll();
 
-		if (includeGroups) {
-			SCIOSlotTypes.hasTargetGroup.include();
-			SCIOSlotTypes.hasReferenceGroup.include();
+		SCIOSlotTypes.hasTargetGroup.include();
+		SCIOSlotTypes.hasReferenceGroup.include();
 
-			SCIOSlotTypes.hasOrganismModel.includeRec();
-			SCIOSlotTypes.hasInjuryModel.includeRec();
-			SCIOSlotTypes.hasTreatmentType.include();
-			SCIOSlotTypes.hasCompound.include();
+		SCIOSlotTypes.hasOrganismModel.includeRec();
+		SCIOSlotTypes.hasInjuryModel.includeRec();
+		SCIOSlotTypes.hasTreatmentType.include();
+		SCIOSlotTypes.hasCompound.include();
 
-			SCIOSlotTypes.hasGroupName.include();
+		SCIOSlotTypes.hasGroupName.include();
 //			SCIOSlotTypes.hasOrganismModel.excludeRec();
 //			SCIOSlotTypes.hasInjuryModel.excludeRec();
 
-			SCIOSlotTypes.hasInjuryModel.excludeRec();
-			SCIOSlotTypes.hasTreatmentType.excludeRec();
+		SCIOSlotTypes.hasInjuryModel.excludeRec();
+		SCIOSlotTypes.hasTreatmentType.excludeRec();
 
-			SCIOSlotTypes.hasOrganismModel.include();
-			SCIOSlotTypes.hasInjuryModel.include();
-			SCIOSlotTypes.hasOrganismModel.includeRec();
-			SCIOSlotTypes.hasInjuryDevice.includeRec();
-			SCIOSlotTypes.hasInjuryLocation.includeRec();
-			SCIOSlotTypes.hasInjuryAnaesthesia.includeRec();
-			SCIOSlotTypes.hasDeliveryMethod.includeRec();
+		SCIOSlotTypes.hasOrganismModel.include();
+		SCIOSlotTypes.hasInjuryModel.include();
+		SCIOSlotTypes.hasOrganismModel.includeRec();
+		SCIOSlotTypes.hasInjuryDevice.includeRec();
+		SCIOSlotTypes.hasInjuryLocation.includeRec();
+		SCIOSlotTypes.hasInjuryAnaesthesia.includeRec();
+		SCIOSlotTypes.hasDeliveryMethod.includeRec();
 
-			SCIOSlotTypes.hasTreatmentType.include();
-			SCIOSlotTypes.hasCompound.include();
-		}
+		SCIOSlotTypes.hasTreatmentType.include();
+		SCIOSlotTypes.hasCompound.include();
 		SCIOSlotTypes.hasTrend.includeRec();
 		SCIOSlotTypes.hasInvestigationMethod.include();
 //		SCIOSlotTypes.hasJudgement.includeRec();

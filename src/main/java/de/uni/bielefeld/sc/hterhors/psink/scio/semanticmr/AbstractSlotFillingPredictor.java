@@ -142,7 +142,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Remove empty instances from corpus
 		 */
-		InstanceProvider.removeEmptyInstances = true;
+		InstanceProvider.removeEmptyInstances = false;
 
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)

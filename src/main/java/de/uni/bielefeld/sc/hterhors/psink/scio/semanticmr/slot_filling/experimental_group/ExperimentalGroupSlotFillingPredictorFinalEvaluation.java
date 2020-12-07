@@ -1987,6 +1987,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (orgModelPredictor == null) {
+			InstanceProvider.removeEmptyInstances = false;
 			orgModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel_"
 		+ modelName
 					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
@@ -2015,6 +2016,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (treatmentPredictor == null) {
+			InstanceProvider.removeEmptyInstances = false;
 			treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment_"
 		+ modelName
 					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
@@ -2044,6 +2046,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (injuryPredictor == null) {
+			InstanceProvider.removeEmptyInstances = false;
 			injuryPredictor = new InjurySlotFillingPredictor("InjuryModel_"
 		+ modelName
 					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);

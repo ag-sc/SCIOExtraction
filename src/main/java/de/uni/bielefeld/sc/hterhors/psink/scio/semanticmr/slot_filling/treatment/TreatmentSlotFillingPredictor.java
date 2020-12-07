@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.candidateretrieval.sf.SlotFillingCandidateRetrieval.IFilter;
+import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.exploration.constraints.AbstractHardConstraint;
 import de.hterhors.semanticmr.crf.exploration.constraints.HardConstraintsProvider;
@@ -165,6 +166,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 
 		if (deliveryMethodPrediction == null) {
 
+			InstanceProvider.removeEmptyInstances = false;
 			deliveryMethodPrediction = new DeliveryMethodPredictor(deliveryMethodModelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, EDeliveryMethodModifications.ROOT_LOCATION_DURATION,
 					modus);
