@@ -62,18 +62,18 @@ public class BuildAnnotationsJSONFromRawData {
 
 		SystemScope.Builder.getScopeHandler().addScopeSpecification(dataStructureReader).build();
 
-//		buildForOrganismModel();
-//		buildForInjuryModel();
-//		buildForAnaesthetic();
-//		buildForTreatment();
+		buildForOrganismModel();
+		buildForInjuryModel();
+		buildForAnaesthetic();
+		buildForTreatment();
 //		buildForVertebralArea();
 		buildForVertebralLocation();
-//		buildForDeliveryMethod();
-//		buildForInjuryDevice();
-//		buildForInvestigationMethod();
-//		buildForGroupName();
-//		buildForTrend();
-//		buildForResult();
+		buildForDeliveryMethod();
+		buildForInjuryDevice();
+		buildForInvestigationMethod();
+		buildForGroupName();
+		buildForTrend();
+		buildForResult();
 
 	}
 

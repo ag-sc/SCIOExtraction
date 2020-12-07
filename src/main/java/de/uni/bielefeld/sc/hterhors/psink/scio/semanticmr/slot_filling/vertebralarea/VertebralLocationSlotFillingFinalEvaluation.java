@@ -50,7 +50,7 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0)
-			new VertebralLocationSlotFillingFinalEvaluation(1001L, "GOLD");
+			new VertebralLocationSlotFillingFinalEvaluation(1001L, "PREDICT");
 		else
 			new VertebralLocationSlotFillingFinalEvaluation(1000L, args[0]);
 	}
@@ -122,7 +122,7 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 			instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					VertebralAreaRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_VertebralLocation_Final_" + seed;
+			String modelName = modusName + "_VertebralLocation_DissFinal_" + seed;
 
 			VertebralLocationPredictor predictor = new VertebralLocationPredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),
@@ -135,13 +135,13 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 			slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
 			slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
 //
-			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.vertebralLocation);
-
-			
-			for (SlotType slotType : slotTypesToConsider) {
-				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
-			}
-			System.exit(1);
+//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.vertebralLocation);
+//
+//			
+//			for (SlotType slotType : slotTypesToConsider) {
+//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//			}
+//			System.exit(1);
 			predictor.trainOrLoadModel();
 
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();

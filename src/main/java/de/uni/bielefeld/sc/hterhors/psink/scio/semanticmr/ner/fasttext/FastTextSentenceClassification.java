@@ -200,7 +200,7 @@ public class FastTextSentenceClassification {
 		binaryClassification = binary;
 		String ftModelName = modelName +
 //				
-//				"pretrained_" +
+				"pretrained_" +
 				type.name + "_" + binaryClassification + "_" + numberOfDimensions + "_" + numberOfEpochs
 				+ "_supervised.model";
 		jft = new JFastText();
@@ -226,7 +226,7 @@ public class FastTextSentenceClassification {
 			jft.runCmd(new String[] { "supervised", "-input", trainingDataFileName, "-output",
 					"fasttext/resources/models/" + ftModelName, "-epoch", numberOfEpochs + "",
 
-//				"-pretrainedVectors", preTrainedvec,
+				"-pretrainedVectors", preTrainedvec,
 //				"-wordNgrams" ,"1",
 
 					"-dim", numberOfDimensions + "" });

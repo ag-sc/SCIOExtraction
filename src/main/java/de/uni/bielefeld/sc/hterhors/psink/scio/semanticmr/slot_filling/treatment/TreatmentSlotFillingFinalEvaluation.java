@@ -53,9 +53,9 @@ public class TreatmentSlotFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
+//		new TreatmentSlotFillingFinalEvaluation(1000L, args[0]);
 //		new TreatmentSlotFillingFinalEvaluation(1000L, "GOLD");
-//		new TreatmentSlotFillingFinalEvaluation(1000L, "PREDICT");
+		new TreatmentSlotFillingFinalEvaluation(1000L, "PREDICT");
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -83,6 +83,9 @@ public class TreatmentSlotFillingFinalEvaluation {
 
 		instanceDirectory = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.treatment);
 
+		
+		
+		
 		/**
 		 * QUICK FIX in File : remove 9th annotation
 		 * 
@@ -117,7 +120,7 @@ public class TreatmentSlotFillingFinalEvaluation {
 			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 			dataRandomSeed = "" + seed;
-			String modelName = modusName + "_Treatment_Final_" + seed;
+			String modelName = modusName + "_Treatment_DissFinal_" + seed;
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();

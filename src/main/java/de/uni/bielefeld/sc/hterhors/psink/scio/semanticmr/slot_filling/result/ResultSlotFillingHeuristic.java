@@ -156,8 +156,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
 
-//		modelName = modus + "_Result" + rand;
-		modelName = "Result_PREDICTION"  ;
+		modelName = modus + "_Result" + rand;
+//		modelName = "Result_PREDICTION"  ;
 		log.info("Model name = " + modelName);
 
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();

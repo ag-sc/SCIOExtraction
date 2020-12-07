@@ -154,7 +154,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * And remove all instances that exceeds the maximum number.
 		 */
-		InstanceProvider.removeInstancesWithToManyAnnotations = true;
+		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
 		DeduplicationRule deduplicationRule = (a1, a2) -> {
 			return a1.evaluateEquals(predictionObjectiveFunction.getEvaluator(), a2);
@@ -193,17 +193,20 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		for (Instance instance : instanceProvider.getInstances()) {
 			instance.addCandidateAnnotations(nerlaJSONReader.getForInstance(instance));
 		}
-		
+
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
-		for (Instance instance : instanceProvider.getInstances()) {
-			instance.addCandidateAnnotations(
-					DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
-		}
+		if (this.modus != ENERModus.GOLD) {
 
-		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
-				.entrySet()) {
-			ap.getKey().addCandidateAnnotations(ap.getValue());
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(
+						DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
+			}
+
+			for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
+					.entrySet()) {
+				ap.getKey().addCandidateAnnotations(ap.getValue());
+			}
 		}
 
 //		IFilter goldFilter = new IFilter() {

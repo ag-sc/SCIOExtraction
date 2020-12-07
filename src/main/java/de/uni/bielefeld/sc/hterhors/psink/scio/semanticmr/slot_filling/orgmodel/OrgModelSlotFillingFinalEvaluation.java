@@ -58,7 +58,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0)
-			new OrgModelSlotFillingFinalEvaluation(1000L, "PREDICT");
+			new OrgModelSlotFillingFinalEvaluation(1000L, "GOLD");
 		else
 			new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
 //		new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);

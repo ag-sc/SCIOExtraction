@@ -146,7 +146,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 		SlotType.includeAll();
-		String injuryDeviceName = "InjuryDevice_PREDICT";// + modelName;
+		String injuryDeviceName = "InjuryDevice_" + modelName;
 
 		if (injuryDevicePrediction == null) {
 			injuryDevicePrediction = new InjuryDevicePredictor(injuryDeviceName, trainingInstanceNames,
@@ -166,7 +166,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 		Map<SlotType, Boolean> x = SlotType.storeExcludance();
 		SlotType.includeAll();
 
-		String anaestheticName = "Anaesthetic_PREDICT";// + modelName;
+		String anaestheticName = "Anaesthetic_" + modelName;
 		if (anaestheticPrediction == null) {
 
 			anaestheticPrediction = new AnaestheticPredictor(anaestheticName, trainingInstanceNames,
@@ -191,7 +191,7 @@ public class InjurySlotFillingPredictor extends AbstractSlotFillingPredictor {
 //				modelName: Injury5298992
 		Map<SlotType, Boolean> y = SlotType.storeExcludance();
 		SlotType.includeAll();
-		String injuryLocationModelName = "VertebralLocation_PREDICT";//  + modelName;
+		String injuryLocationModelName = "VertebralLocation_"  + modelName;
 
 		if (VertebralLocationPrediction == null) {
 

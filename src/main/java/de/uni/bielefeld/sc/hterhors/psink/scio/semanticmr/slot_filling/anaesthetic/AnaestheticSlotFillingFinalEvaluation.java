@@ -61,7 +61,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if( args.length==0)
-			new AnaestheticSlotFillingFinalEvaluation(1000L, "GOLD");
+			new AnaestheticSlotFillingFinalEvaluation(1000L, "PREDICT");
 		else
 		new AnaestheticSlotFillingFinalEvaluation(1000L, args[0]);
 	}
@@ -115,7 +115,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					AnaestheticRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_Anaesthetic_Final_" + seed;
+			String modelName = modusName + "_Anaesthetic_DissFinal_" + seed;
 
 			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
@@ -132,7 +132,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 			predictor.trainOrLoadModel();
 //
 			Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();
-////
+
 			Set<SlotType> slotTypesToConsider = new HashSet<>();
 			slotTypesToConsider.add(SCIOSlotTypes.hasDosage);
 			slotTypesToConsider.add(SCIOSlotTypes.hasDeliveryMethod);

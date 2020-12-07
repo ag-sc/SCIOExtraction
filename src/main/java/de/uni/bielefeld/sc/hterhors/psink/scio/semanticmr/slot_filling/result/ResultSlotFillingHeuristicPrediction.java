@@ -142,7 +142,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 		}
 
 		if (includeFastTextAnnotations) {
-			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName + "ION", false,
+			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName , false,
 					SCIOEntityTypes.investigationMethod, instances, true);
 			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlas(instances);
 			for (Instance instance : annotationsInvFT.keySet()) {
@@ -150,7 +150,7 @@ public class ResultSlotFillingHeuristicPrediction extends AbstractSemReadProject
 				annotations.get(instance).addAll(annotationsInvFT.get(instance));
 			}
 
-			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName + "ION", false,
+			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
 					SCIOEntityTypes.trend, instances, true);
 			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlas(instances);
 			for (Instance instance : annotationsTredFT.keySet()) {

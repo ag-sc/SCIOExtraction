@@ -161,7 +161,7 @@ public class TreatmentSlotFillingPredictor extends AbstractSlotFillingPredictor 
 	private void addPredictions(Map<Instance, Collection<AbstractAnnotation>> map, List<Instance> instances) {
 		Map<SlotType, Boolean> z = SlotType.storeExcludance();
 
-		String deliveryMethodModelName = "DeliveryMethod" + modelName;
+		String deliveryMethodModelName = "DeliveryMethod_" + modelName;
 
 		if (deliveryMethodPrediction == null) {
 

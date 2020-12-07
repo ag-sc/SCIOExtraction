@@ -37,6 +37,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.VolumeNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.WeightNormalization;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodSlotFillingFinalEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDeviceRestrictionProvider.EInjuryDeviceModifications;
 
@@ -55,7 +56,10 @@ public class InjuryDeviceFillingFinalEvaluation {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new InjuryDeviceFillingFinalEvaluation(1000L, args[0]);
+		if (args.length == 0)
+			new DeliveryMethodSlotFillingFinalEvaluation(1000L, "PREDICT");
+		else
+			new InjuryDeviceFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -123,7 +127,7 @@ public class InjuryDeviceFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryDeviceRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_InjuryDevice_Final_" + seed;
+			String modelName = modusName + "_InjuryDevice_DissFinal_" + seed;
 
 			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
