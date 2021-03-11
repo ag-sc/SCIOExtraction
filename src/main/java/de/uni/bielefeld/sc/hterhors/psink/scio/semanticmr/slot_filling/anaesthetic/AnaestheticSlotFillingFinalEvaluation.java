@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -61,7 +62,7 @@ public class AnaestheticSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if( args.length==0)
-			new AnaestheticSlotFillingFinalEvaluation(1000L, "PREDICT");
+			new AnaestheticSlotFillingFinalEvaluation(1000L, "GOLD");
 		else
 		new AnaestheticSlotFillingFinalEvaluation(1000L, args[0]);
 	}
@@ -102,20 +103,20 @@ public class AnaestheticSlotFillingFinalEvaluation {
 
 		EAnaestheticModifications rule = EAnaestheticModifications.ROOT_DELIVERY_METHOD_DOSAGE;
 
-		Random random = new Random(randomSeed);
+//		Random random = new Random(randomSeed);
 		modus = ENERModus.valueOf(modusName);
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
 
-			long seed = random.nextLong();
-			log.info("RUN SEED:" + seed);
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
+//			long seed = random.nextLong();
+//			log.info("RUN SEED:" + seed);
+			AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder().setSeed(randomSeed).setFold(i)
 					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					AnaestheticRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_Anaesthetic_DissFinal_" + seed;
+			String modelName = modusName + "_Anaesthetic_DissFinal_" + randomSeed+"_fold_"+i;
 
 			AnaestheticPredictor predictor = new AnaestheticPredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())

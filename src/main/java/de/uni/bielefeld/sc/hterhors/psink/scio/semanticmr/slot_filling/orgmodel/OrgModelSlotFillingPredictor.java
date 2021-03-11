@@ -15,6 +15,7 @@ import de.hterhors.semanticmr.crf.learner.optimizer.SGD;
 import de.hterhors.semanticmr.crf.learner.regularizer.L2;
 import de.hterhors.semanticmr.crf.sampling.AbstractSampler;
 import de.hterhors.semanticmr.crf.sampling.impl.EpochSwitchSampler;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
@@ -33,6 +34,8 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.OrganismModelRestrictionProvider.EOrgModelModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.OlfactoryContextTemplate;
 
 /**
  * Slot filling for organism models.
@@ -93,7 +96,30 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 	protected AdvancedLearner getLearner() {
 		return new AdvancedLearner(new SGD(0.001, 0), new L2(0.0001F));
 	}
-
+//	MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasAge = 0.250	0.250	0.250	1.000	1.000	1.000	0.250	0.250	0.250
+//			MACRO	hasWeight = 0.500	0.500	0.500	1.000	1.000	1.000	0.500	0.500	0.500
+//			MACRO	hasOrganismSpecies = 0.850	0.850	0.850	1.000	1.000	1.000	0.850	0.850	0.850
+//			MACRO	hasAgeCategory = 0.550	0.550	0.550	1.000	1.000	1.000	0.550	0.550	0.550
+//			MACRO	hasGender = 0.800	0.800	0.800	1.000	1.000	1.000	0.800	0.800	0.800
+//			MACRO	Cardinality = 1.000	1.000	1.000	1.000	1.000	1.000	1.000	1.000	1.000
+//			MACRO	Overall = 0.881	0.891	0.871	1.000	1.000	1.000	0.881	0.891	0.871
+//			Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE	0.87	0.87	0.88
+//			modelName: OrganismModel739813438
+//			CRFStatistics [context=Train, getTotalDuration()=14723]
+//			CRFStatistics [context=Test, getTotalDuration()=291]
+//	MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
+//			MACRO	hasAge = 0.250	0.250	0.250	1.000	1.000	1.000	0.250	0.250	0.250
+//			MACRO	hasWeight = 0.500	0.500	0.500	1.000	1.000	1.000	0.500	0.500	0.500
+//			MACRO	hasOrganismSpecies = 0.900	0.900	0.900	1.000	1.000	1.000	0.900	0.900	0.900
+//			MACRO	hasAgeCategory = 0.550	0.550	0.550	1.000	1.000	1.000	0.550	0.550	0.550
+//			MACRO	hasGender = 0.800	0.800	0.800	1.000	1.000	1.000	0.800	0.800	0.800
+//			MACRO	Cardinality = 1.000	1.000	1.000	1.000	1.000	1.000	1.000	1.000	1.000
+//			MACRO	Overall = 0.893	0.891	0.896	1.000	1.000	1.000	0.893	0.891	0.896
+//			Score: SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE	0.88	0.87	0.9
+//			modelName: OrganismModel-464471923
+//			CRFStatistics [context=Train, getTotalDuration()=18384]
+//			CRFStatistics [context=Test, getTotalDuration()=294]
 	@Override
 	protected List<AbstractFeatureTemplate<?>> getFeatureTemplates() {
 		List<AbstractFeatureTemplate<?>> featureTemplates = new ArrayList<>();
@@ -103,8 +129,8 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new SingleTokenContextTemplate());
 		featureTemplates.add(new ContextBetweenSlotFillerTemplate());
 		featureTemplates.add(new ClusterTemplate());
-//		featureTemplates.add(new EntityTypeContextTemplate());
-//		featureTemplates.add(new OlfactoryContextTemplate());
+		featureTemplates.add(new EntityTypeContextTemplate());
+		featureTemplates.add(new OlfactoryContextTemplate());
 //		featureTemplates.add(new LocalityTemplate());
 //		featureTemplates.add(new SlotIsFilledTemplate());
 //		featureTemplates.add(new DocumentPartTemplate());
@@ -134,10 +160,10 @@ public class OrgModelSlotFillingPredictor extends AbstractSlotFillingPredictor {
 
 	@Override
 	protected IStateInitializer getStateInitializer() {
-//		(instance -> {
-		//
+//	return	(instance -> {
+//		
 //						List<AbstractAnnotation> as = new ArrayList<>();
-		//
+//		
 //						for (int i = 0; i < instance.getGoldAnnotations().getAnnotations().size(); i++) {
 //							as.add(new EntityTemplate(AnnotationBuilder.toAnnotation("OrganismModel")));
 //						}

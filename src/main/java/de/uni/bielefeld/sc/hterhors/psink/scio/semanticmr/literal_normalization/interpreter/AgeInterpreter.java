@@ -23,6 +23,10 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
  */
 public class AgeInterpreter extends AbstractNumericInterpreter {
 
+	public static void main(String[] args) {
+		System.out.println(AgeInterpreter.PATTERN);
+	}
+	
 	/**
 	 * 
 	 */

@@ -22,6 +22,7 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.AnnotationBuilder;
 import de.hterhors.semanticmr.crf.structure.annotations.EntityTemplate;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
+import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.slot_filling.BuildCorpusFromRawData;
@@ -86,7 +87,7 @@ public class ConvertJSONToRDF {
 //		System.out.println("REMAINING_-------------");
 //		all.forEach(s -> System.out.println(Arrays.toString(s)));
 
-		new ConvertToRDF(idMap, new File("OEC.n-triples"), dataPoints);
+		new ConvertToRDF(idMap, new File("_TEST_OEC.n-triples"), dataPoints);
 
 		System.exit(1);
 
@@ -186,11 +187,16 @@ public class ConvertJSONToRDF {
 
 		publication.addMultiSlotFiller(SlotType.get("describes"), experiment);
 
+		System.out.println("------------");
+		System.out.println(docName);
+		System.out.println(results.size());
+
 		for (AbstractAnnotation result : results) {
 			setJudgement(docName, result);
 			experiment.addMultiSlotFiller(SlotType.get("hasResult"), result);
 		}
-
+		System.out.println(experiment.getMultiFillerSlot(SlotType.get("hasResult")).size());
+		System.out.println("------------");
 		return publication;
 	}
 
@@ -238,11 +244,13 @@ public class ConvertJSONToRDF {
 
 			Set<EntityType> r = ref.getRelevantTreatments().stream().map(e -> e.getEntityType())
 					.collect(Collectors.toSet());
+			
 			boolean bothOEC = containsOEC(t) && containsOEC(r);
 			boolean containsOEC = containsOEC(t) || containsOEC(r);
 
-			if (t.equals(r))
+			if (t.equals(r)) {
 				return;
+			}
 
 			AbstractAnnotation invest = result.asInstanceOfEntityTemplate()
 					.getSingleFillerSlot(SlotType.get("hasInvestigationMethod")).getSlotFiller();

@@ -2,6 +2,7 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.corpus.ner;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -67,11 +68,17 @@ public class BuildNERCorpusFromSlotFillingData {
 //		buildForTreatment();
 //		buildForVertebralArea();
 //		buildForDeliveryMethod();
-		buildForInvestigationMethod();
+//		buildForInvestigationMethod();
 //		buildForGroupName();
 //		buildForCompound();
-		buildForTrend();
+//		buildForTrend();
+		buildForResult();
 
+	}
+
+	private static void buildForResult() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.result);
+		buildInstances(SCIOEntityTypes.result);
 	}
 
 	private static void buildForTrend() throws Exception {
@@ -193,11 +200,11 @@ public class BuildNERCorpusFromSlotFillingData {
 		File finalDataStructureDir = new File(NERCorpusBuilderBib.NER_DIR, dataStructureDirName);
 		finalDataStructureDir.mkdirs();
 
-//		DataStructureWriter.writeEntityDataStructureFile(NERCorpusBuilderBib.buildEntitiesFile(rootEntityType),
-//				rootEntityType);
-//		NERCorpusBuilderBib.buildHierarchiesFile(rootEntityType).createNewFile();
-//		NERCorpusBuilderBib.buildSlotsFile(rootEntityType).createNewFile();
-//		NERCorpusBuilderBib.buildStructuresFile(rootEntityType).createNewFile();
+		DataStructureWriter.writeEntityDataStructureFile(NERCorpusBuilderBib.buildEntitiesFile(rootEntityType),
+				rootEntityType);
+		NERCorpusBuilderBib.buildHierarchiesFile(rootEntityType).createNewFile();
+		NERCorpusBuilderBib.buildSlotsFile(rootEntityType).createNewFile();
+		NERCorpusBuilderBib.buildStructuresFile(rootEntityType).createNewFile();
 
 		DataStructureWriter.writeEntityDataStructureFile(NERCorpusBuilderBib.buildEntitiesFile(rootEntityType),
 				rootEntityType);
@@ -214,50 +221,111 @@ public class BuildNERCorpusFromSlotFillingData {
 		buildInstances(entityType, entityType);
 	}
 
+	/**
+	 * Build instances with global projection
+	 * 
+	 * @param rootEntityType
+	 * @param entityTypeOfInterest
+	 * @throws Exception
+	 */
+//	private static void buildInstances(EntityType rootEntityType, EntityType entityTypeOfInterest) throws Exception {
+//
+//		NERCorpusBuilderBib.NER_DIR.mkdir();
+//
+//		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
+//				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(RANDOM_SEED).build();
+//		InstanceProvider.maxNumberOfAnnotations = 120;
+//		InstanceProvider instanceProvider = new InstanceProvider(
+//				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(rootEntityType),
+//				shuffleCorpusDistributor);
+//
+//		Set<DocumentLinkedAnnotation> allAnnotations = new HashSet<>();
+//
+//		Map<Instance, Set<DocumentLinkedAnnotation>> indivAnnotations = new HashMap<>();
+//		for (Instance instance : instanceProvider.getInstances()) {
+//
+//			Set<DocumentLinkedAnnotation> annotations = new HashSet<>();
+//
+//			for (EntityTemplate annotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
+//				extractAnnotations(annotations, annotation);
+//			}
+//
+//			if (entityTypeOfInterest != rootEntityType) {
+//				Set<DocumentLinkedAnnotation> unifyET = new HashSet<>();
+//
+//				for (DocumentLinkedAnnotation abstractAnnotation : annotations) {
+//					unifyET.add(new DocumentLinkedAnnotation(abstractAnnotation.document, entityTypeOfInterest,
+//							abstractAnnotation.textualContent, abstractAnnotation.documentPosition));
+//				}
+//
+//				annotations = unifyET;
+//			}
+//			indivAnnotations.put(instance, annotations);
+//			allAnnotations.addAll(annotations);
+//
+//		}
+//
+//		for (Instance instance : indivAnnotations.keySet()) {
+//
+//			List<Instance> newInstances = new ArrayList<>();
+//			indivAnnotations.get(instance).addAll(getProjectedAnnotations(instance.getDocument(), allAnnotations));
+//
+//			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
+//					new Annotations(new ArrayList<>(indivAnnotations.get(instance)))));
+//
+//			InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(newInstances);
+//
+//			File dir = NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityTypeOfInterest);
+//			dir.mkdirs();
+//
+//			JsonInstanceIO io = new JsonInstanceIO(true);
+//			io.writeInstances(new File(dir, instance.getName() + ".json"), conv.convertToWrapperInstances());
+//		}
+//	}
 	private static void buildInstances(EntityType rootEntityType, EntityType entityTypeOfInterest) throws Exception {
-
+		
 		NERCorpusBuilderBib.NER_DIR.mkdir();
-
+		
 		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
 				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(RANDOM_SEED).build();
 		InstanceProvider.maxNumberOfAnnotations = 120;
 		InstanceProvider instanceProvider = new InstanceProvider(
 				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(rootEntityType),
 				shuffleCorpusDistributor);
-
+		
 		for (Instance instance : instanceProvider.getInstances()) {
-
+			
 			List<Instance> newInstances = new ArrayList<>();
 			Set<DocumentLinkedAnnotation> annotations = new HashSet<>();
-
+			
 			for (EntityTemplate annotation : instance.getGoldAnnotations().<EntityTemplate>getAnnotations()) {
 				extractAnnotations(annotations, annotation);
 			}
-
+			
 			if (entityTypeOfInterest != rootEntityType) {
 				Set<DocumentLinkedAnnotation> unifyET = new HashSet<>();
-
+				
 				for (DocumentLinkedAnnotation abstractAnnotation : annotations) {
 					unifyET.add(new DocumentLinkedAnnotation(abstractAnnotation.document, entityTypeOfInterest,
 							abstractAnnotation.textualContent, abstractAnnotation.documentPosition));
 				}
-
+				
 				annotations = unifyET;
 			}
-
+			
 //			projectAnnotationsIntoDocument(instance.getDocument(), annotations);
-
+			
 			newInstances.add(new Instance(instance.getOriginalContext(), instance.getDocument(),
 					new Annotations(new ArrayList<>(annotations))));
-
+			
 			InstancesToJsonInstanceWrapper conv = new InstancesToJsonInstanceWrapper(newInstances);
-
+			
 			File dir = NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityTypeOfInterest);
 			dir.mkdirs();
-
+			
 			JsonInstanceIO io = new JsonInstanceIO(true);
 			io.writeInstances(new File(dir, instance.getName() + ".json"), conv.convertToWrapperInstances());
-
+			
 		}
 	}
 
@@ -315,6 +383,32 @@ public class BuildNERCorpusFromSlotFillingData {
 		}
 		System.out.println("Found additional annotation projections: " + additionalAnnotations.size());
 		annotations.addAll(additionalAnnotations);
+
+	}
+
+	private static Set<DocumentLinkedAnnotation> getProjectedAnnotations(Document document,
+			Set<DocumentLinkedAnnotation> annotations) {
+
+		Set<DocumentLinkedAnnotation> additionalAnnotations = new HashSet<>();
+
+		for (DocumentLinkedAnnotation abstractAnnotation : annotations) {
+
+			Matcher m = Pattern
+					.compile(Pattern.quote(abstractAnnotation.asInstanceOfDocumentLinkedAnnotation().getSurfaceForm()))
+					.matcher(document.documentContent);
+
+			while (m.find()) {
+				try {
+
+					additionalAnnotations.add(AnnotationBuilder.toAnnotation(document,
+							abstractAnnotation.getEntityType().name, m.group(), m.start()));
+				} catch (RuntimeException e) {
+					System.out.println("Could not map annotation to tokens!");
+				}
+			}
+		}
+		System.out.println("Found additional annotation projections: " + additionalAnnotations.size());
+		return additionalAnnotations;
 
 	}
 

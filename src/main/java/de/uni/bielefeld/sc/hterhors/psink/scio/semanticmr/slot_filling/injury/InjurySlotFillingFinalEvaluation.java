@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -43,13 +45,28 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.literal_normalization.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.InjuryRestrictionProvider.EInjuryModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
-/**
+/************************
+ * Cardinality-Coverage 0.996 1.000 0.993 hasInjuryAnaesthesia-Absolute 0.368
+ * 0.899 0.231 Cardinality-Absolute 0.970 1.000 0.942 Root-Coverage 0.937 0.940
+ * 0.935 hasInjuryAnaesthesia-Coverage 0.487 0.938 0.328
+ * hasInjuryLocation-Relative 0.804 0.768 0.844 Root-Absolute 0.891 0.920 0.864
+ * hasInjuryDevice-Relative 0.942 0.954 0.930 Overall-Relative 0.853 0.896 0.814
+ * Root-Relative 0.950 0.978 0.924 hasInjuryDevice-Absolute 0.717 0.826 0.634
+ * hasInjuryLocation-Absolute 0.678 0.737 0.627 hasInjuryDevice-Coverage 0.763
+ * 0.866 0.682 Overall-Coverage 0.662 0.982 0.500 Cardinality-Relative 0.974
+ * 1.000 0.949 hasInjuryLocation-Coverage 0.836 0.960 0.741 Overall-Absolute
+ * 0.557 0.880 0.407 hasInjuryAnaesthesia-Relative 0.807 0.957 0.697
+ *************************
  * Slot filling for injuries.
  */
 public class InjurySlotFillingFinalEvaluation {
 	public static void main(String[] args) throws IOException {
-		new InjurySlotFillingFinalEvaluation(1000L, args[0]);
+		if (args.length == 0)
+			new InjurySlotFillingFinalEvaluation(1000L, "GOLD");
+		else
+			new InjurySlotFillingFinalEvaluation(1000L, args[0]);
 	}
 
 	private static Logger log = LogManager.getFormatterLogger("SlotFilling");
@@ -83,14 +100,15 @@ public class InjurySlotFillingFinalEvaluation {
 
 		EInjuryModifications rule = EInjuryModifications.ROOT_DEVICE_LOCATION_ANAESTHESIA;
 
-		Random random = new Random(randomSeed);
+//		Random random = new Random(randomSeed);
 		modus = ENERModus.valueOf(modusName);
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
 
-			long seed = random.nextLong();
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
-					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
+//			long seed = random.nextLong();
+			AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder()
+					.setSeed(randomSeed).setFold(i).setTrainingProportion(90).setDevelopmentProportion(10)
+					.setCorpusSizeFraction(1F).build();
 
 //			AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder()
 //					.setCorpusSizeFraction(1F).build();
@@ -100,16 +118,19 @@ public class InjurySlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
 
-			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+//			Stats.countVariables(1, instanceProvider.getInstances());
+//			System.exit(1);
+
+			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
 			List<String> developInstanceNames = instanceProvider.getDevelopmentInstances().stream()
 					.map(t -> t.getName()).collect(Collectors.toList());
 
-			List<String> testInstanceNames = instanceProvider.getTestInstances().stream()
-					.map(t -> t.getName()).collect(Collectors.toList());
+			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
+					.collect(Collectors.toList());
 
-			String modelName = modusName + "_Injury_DissFinal_" + seed;
+			String modelName = modusName + "_Injury_DissFinal_" + randomSeed + "_fold_" + i;
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);
@@ -125,6 +146,7 @@ public class InjurySlotFillingFinalEvaluation {
 			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryDevice);
 			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryLocation);
 			slotTypesToConsider.add(SCIOSlotTypes.hasAnaesthesia);
+			slotTypesToConsider.add(SCIOSlotTypes.hasInjuryIntensity);
 
 			AbstractEvaluator evaluator = new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE,
 					EEvaluationDetail.LITERAL);

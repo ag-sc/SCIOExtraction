@@ -142,7 +142,7 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 		/**
 		 * Remove empty instances from corpus
 		 */
-		InstanceProvider.removeEmptyInstances = false;
+		InstanceProvider.removeEmptyInstances = true;
 
 		/**
 		 * Set maximum to maximum of Cartesian evaluator (8)
@@ -194,6 +194,40 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			instance.addCandidateAnnotations(nerlaJSONReader.getForInstance(instance));
 		}
 
+		/**
+		 * ADD CRF Annotations! Collect all and project into document. TODO: bad way of
+		 * applying CRF to all documents which is yet not tractable...
+		 */
+
+		if (this.modus != ENERModus.GOLD) {
+
+			JSONNerlaReader CRFnerlaJSONReader = new JSONNerlaReader(new File("data/nerla/crf"),
+					Streams.concat(trainingInstances.stream(), developmentInstances.stream(), testInstances.stream())
+							.collect(Collectors.toSet()));
+
+			Map<EntityType, Set<String>> CRFDictionary = new HashMap<>();
+
+			for (Instance instance : instanceProvider.getInstances()) {
+
+				for (DocumentLinkedAnnotation CRFann : CRFnerlaJSONReader.getForInstance(instance)) {
+
+					CRFDictionary.putIfAbsent(CRFann.entityType, new HashSet<>());
+					CRFDictionary.get(CRFann.entityType).add(CRFann.getSurfaceForm());
+
+				}
+
+			}
+
+			for (Instance instance : instanceProvider.getInstances()) {
+				instance.addCandidateAnnotations(
+						DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, CRFDictionary));
+			}
+
+		}
+
+		/**
+		 * ADD training dictionary !
+		 */
 		Map<EntityType, Set<String>> trainDictionary = DictionaryFromInstanceHelper.toDictionary(trainingInstances);
 
 		if (this.modus != ENERModus.GOLD) {
@@ -203,10 +237,11 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 						DictionaryFromInstanceHelper.getAnnotationsForInstance(instance, trainDictionary));
 			}
 
-			for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
-					.entrySet()) {
-				ap.getKey().addCandidateAnnotations(ap.getValue());
-			}
+		}
+
+		for (Entry<Instance, Collection<AbstractAnnotation>> ap : getAdditionalCandidateProvider(modificationRule)
+				.entrySet()) {
+			ap.getKey().addCandidateAnnotations(ap.getValue());
 		}
 
 //		IFilter goldFilter = new IFilter() {
@@ -573,13 +608,13 @@ public abstract class AbstractSlotFillingPredictor extends AbstractSemReadProjec
 			 * If the model exists load from the file system.
 			 */
 			model = Model.load(getModelBaseDir(), modelName);
-			log.info("Load model successfully!");
+			log.info("Load model successfully: " + modelName);
 		} else {
 			/**
 			 * If the model does not exists, create a new model.
 			 */
 			model = new Model(getFeatureTemplates(), getModelBaseDir(), modelName);
-			log.info("Create new untrained model!");
+			log.info("Create new untrained model: " + modelName);
 		}
 
 		model.setFeatureTemplateParameter(getFeatureTemplateParameters());

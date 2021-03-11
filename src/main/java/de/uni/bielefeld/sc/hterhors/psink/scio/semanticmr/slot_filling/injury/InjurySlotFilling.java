@@ -157,12 +157,15 @@ public class InjurySlotFilling {
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryRestrictionProvider.getByRule(rule));
-//
-//			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.injury);
-//
-//			for (SlotType slotType : slotTypesToConsider) {
-//				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
-//			}
+//Stats.countVariables(1,instanceProvider.getInstances());
+//Stats.countVariables(1,instanceProvider.getInstances(),slotTypesToConsider);
+//			
+//System.exit(1);		
+			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.injury);
+
+			for (SlotType slotType : slotTypesToConsider) {
+				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+			}
 //			System.exit(1);
 			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
@@ -177,10 +180,10 @@ public class InjurySlotFilling {
 //			String modelName = "Injury" + new Random().nextInt();
 
 			InjurySlotFillingPredictor predictor = new InjurySlotFillingPredictor(modelName, trainingInstanceNames,
-					developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
+					developInstanceNames, testInstanceNames, rule, ENERModus.GOLD);
 
-//			AnalyzeComplexity.analyze(SCIOEntityTypes.injury, slotTypesToConsider,
-//					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.injury, slotTypesToConsider,
+					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 

@@ -79,9 +79,15 @@ public class BuildNERCorpusFromRawData {
 //		buildForDeliveryMethod();
 //		buildForInvestigationMethod();
 //		buildForGroupName();
-		buildForCompound();
+//		buildForCompound();
 //		buildForTrend();
+		buildForResult();
 
+	}
+
+	private static void buildForResult() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.result);
+		buildInstances(SCIOEntityTypes.result, SCIOEntityTypes.result);
 	}
 
 	private static void buildForTrend() throws Exception {
@@ -213,9 +219,9 @@ public class BuildNERCorpusFromRawData {
 		NERCorpusBuilderBib.NER_DIR.mkdir();
 
 		AbstractCorpusDistributor shuffleCorpusDistributor = new ShuffleCorpusDistributor.Builder()
-				.setCorpusSizeFraction(1F).setTrainingProportion(80).setTestProportion(20).setSeed(RANDOM_SEED).build();
+				.setCorpusSizeFraction(1F).setTrainingProportion(90).setTestProportion(10).setSeed(RANDOM_SEED).build();
 
-		InstanceProvider.maxNumberOfAnnotations = 120;
+		InstanceProvider.maxNumberOfAnnotations = 50000;
 		InstanceProvider instanceProvider = new InstanceProvider(
 				SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(mainEntity), shuffleCorpusDistributor);
 
@@ -290,7 +296,7 @@ public class BuildNERCorpusFromRawData {
 						line[CLASS_TYPE_INDEX].trim(), line[TEXT_MENTION_INDEX].trim(),
 						Integer.parseInt(line[ONSET_INDEX].trim()));
 
-				if (rootEntityType.getHierarchicalEntityTypes().contains(annotation.getEntityType()))
+				if (rootEntityType.getRelatedEntityTypes().contains(annotation.getEntityType()))
 					annotations.add(annotation);
 
 				/**

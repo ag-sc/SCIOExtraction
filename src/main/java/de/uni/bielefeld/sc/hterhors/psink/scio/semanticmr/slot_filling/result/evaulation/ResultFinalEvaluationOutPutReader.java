@@ -123,7 +123,8 @@ public class ResultFinalEvaluationOutPutReader {
 	 */
 //	static String folder = "final_evaluation_results/result/reg_ex_results/evaluations";
 //	static String folder = "final_evaluation_results/result/fast_text_results/evaluations";
-	static String folder = "final_evaluation_results/result_new/evaluations";
+//	static String folder = "final_evaluation_results/result_new/evaluations";
+	static String folder = "dissertation_results/result/evaluations";
 
 	public static void main(String[] args) throws Exception {
 

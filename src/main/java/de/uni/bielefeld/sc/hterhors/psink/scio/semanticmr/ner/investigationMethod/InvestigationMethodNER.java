@@ -46,6 +46,12 @@ public class InvestigationMethodNER {
 	public static void main(String[] args) {
 		new InvestigationMethodNER();
 	}
+//	String modelName = "InvestigationMethod-123456789";
+//	Final Score: Score [getF1()=0.852, getPrecision()=1.000, getRecall()=0.742, tp=167, fp=0, fn=58, tn=0]
+
+//	N026 Garcia-Alias 2009 19668200: Score [getF1()=0.374, getPrecision()=0.551, getRecall()=0.283, tp=49, fp=40, fn=124, tn=0]
+//			-------------------
+//			Per sentence Score [getF1()=0.374, getPrecision()=0.551, getRecall()=0.283, tp=49, fp=40, fn=124, tn=0]
 
 	public InvestigationMethodNER() {
 		SystemScope.Builder.getScopeHandler()
@@ -58,16 +64,16 @@ public class InvestigationMethodNER {
 				 */
 				.build();
 //		String modelName = "NERLA1387292063";
-		String modelName = "InvestigationMethod" + new Random().nextInt();
+		String modelName = "InvestigationMethod-123456789";
+//		String modelName = "InvestigationMethod" + new Random().nextInt();
 		log.info("modelName: " + modelName);
 
 		AbstractCorpusDistributor originalCorpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1000L)
-				.setTrainingProportion(80).setDevelopmentProportion(20).setCorpusSizeFraction(0.1F).build();
+				.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(0.1F).build();
 //		AbstractCorpusDistributor originalCorpusDistributor = new OriginalCorpusDistributor.Builder()
 //				.setCorpusSizeFraction(1F).build();
-		SectionizedEntityRecLinkExplorer.MAX_WINDOW_SIZE = 4;
 		
-		InstanceProvider.maxNumberOfAnnotations = 50;
+		InstanceProvider.maxNumberOfAnnotations = 300;
 
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
@@ -103,11 +109,11 @@ public class InvestigationMethodNER {
 		 * Finally, we evaluate the produced states and print some statistics.
 		 */
 
-		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
-		log.info("Coverage Training: " + trainCoverage);
-
-		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
-		log.info("Coverage Development: " + devCoverage);
+//		final Score trainCoverage = predictor.computeCoverageOnTrainingInstances(false);
+//		log.info("Coverage Training: " + trainCoverage);
+//
+//		final Score devCoverage = predictor.computeCoverageOnDevelopmentInstances(false);
+//		log.info("Coverage Development: " + devCoverage);
 
 //		Score [getF1()=0.192, getPrecision()=0.385, getRecall()=0.128, tp=5, fp=8, fn=34, tn=0]
 

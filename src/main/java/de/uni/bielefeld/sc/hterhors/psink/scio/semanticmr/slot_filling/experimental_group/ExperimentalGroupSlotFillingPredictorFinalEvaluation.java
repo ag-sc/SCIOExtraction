@@ -76,6 +76,7 @@ import de.hterhors.semanticmr.json.nerla.JsonNerlaIO;
 import de.hterhors.semanticmr.json.nerla.wrapper.JsonEntityAnnotationWrapper;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -136,6 +137,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentRestrictionProvider.ETreatmentModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.TreatmentSlotFillingPredictor;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends AbstractSemReadProject {
 
@@ -164,39 +166,53 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		int modusIndex;
 		long dataRandomSeed;
-
+		int fold;
 		if (args.length == 0) {
 //			modusIndex = 17; // GOLD
-			modusIndex = 18; // PREDICTED
+//			modusIndex = 18; // PREDICTED
 //			modusIndex = 19; // COVERGAE GOLD
-//			modusIndex = 20; // COVERGAE PREDICT
+			modusIndex = 20; // COVERGAE PREDICT
 			dataRandomSeed = 1004L;
+			fold = 0;
 		} else {
 			modusIndex = Integer.parseInt(args[0]);
 			dataRandomSeed = Integer.parseInt(args[1]);
+			fold = Integer.parseInt(args[2]);
 		}
 
-		run(modusIndex, dataRandomSeed);
+		run(modusIndex, dataRandomSeed, fold);
 
 	}
 
-	private static void run(int modusIndex, long dataRandomSeed) throws Exception {
+	private static void run(int modusIndex, long dataRandomSeed, int fold) throws Exception {
 		List<String> docs = Files.readAllLines(new File("src/main/resources/corpus_docs.csv").toPath());
 //		List<String> trainingInstanceNames = docs;
 //		List<String> testInstanceNames = new ArrayList<>();
+
+		Collections.sort(docs);
+
+		Collections.shuffle(docs, new Random(dataRandomSeed));
+		final int x = (int) (((double) docs.size() / 100D) * 90D);
+
+		/*
+		 * Ten fold cross implementation
+		 */
+
+		int sum = (docs.size() - x);
+
+		List<String> testI = docs.subList(fold * sum, Math.min((fold + 1) * sum, docs.size()));
+		List<String> trainI = new ArrayList<>(docs);
+		trainI.removeAll(testI);
+		List<String> itr = new ArrayList<>();
+		itr.addAll(trainI);
+		itr.addAll(testI);
 
 		/**
 		 * TODO: FULL MODEL
 		 */
 
-		Collections.sort(docs);
-
-		Collections.shuffle(docs, new Random(dataRandomSeed));
-
-		
-		final int x = (int) (((double) docs.size() / 100D) * 80D);
-		List<String> trainingInstanceNames = docs.subList(0, x);
-		List<String> testInstanceNames = docs.subList(x, docs.size());
+		List<String> trainingInstanceNames = itr.subList(0, x);
+		List<String> testInstanceNames = itr.subList(x, docs.size());
 
 		List<Instance> trainingInstances;
 		List<Instance> devInstances;
@@ -216,7 +232,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		testInstances = instanceProvider.getTestInstances();
 
 		ExperimentalGroupSlotFillingPredictorFinalEvaluation a = new ExperimentalGroupSlotFillingPredictorFinalEvaluation(
-				modusIndex, dataRandomSeed,
+				modusIndex, dataRandomSeed, fold,
 				trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 				devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 				testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
@@ -532,8 +548,6 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		log.info("complexityMode: " + complexityMode);
 	}
 
-	private final String rand;
-
 	private File cacheDir = new File("data/cache/");
 	public static int maxCacheSize = 80_000_000;
 	public static int minCacheSize = 40_000_000;
@@ -541,7 +555,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 	private ENERModus modus;
 	public Map<Instance, Set<EntityTemplate>> extraction = new HashMap<>();
 
-	public ExperimentalGroupSlotFillingPredictorFinalEvaluation(int parameterID, long dataRandomSeed,
+	public ExperimentalGroupSlotFillingPredictorFinalEvaluation(int parameterID, long dataRandomSeed, int fold,
 			List<String> trainingInstanceNames, List<String> devInstanceNames, List<String> testInstanceNames)
 			throws Exception {
 		instanceDirectory = SlotFillingCorpusBuilderBib
@@ -555,6 +569,7 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 
 		SCIOSlotTypes.hasGroupName.slotMaxCapacity = 20;
 
+		final String rand;
 		rand = String.valueOf(new Random(dataRandomSeed).nextInt() + new Random(parameterID).nextInt());
 
 		setParameterByID(parameterID);
@@ -562,10 +577,12 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		modus = mainClassProviderMode == EMainClassMode.GOLD ? ENERModus.GOLD : ENERModus.PREDICT;
 
 //		modelName = modus + "_ExperimentalGroup_PREDICT";
-		modelName = modus + "_ExperimentalGroup_DissFinal_" + rand;
+		modelName = modus + "_ExperimentalGroup_DissFinal_" + rand + "_fold_" + fold;
+
 		log.info("Model name = " + modelName);
 
-		outputFile = new File(parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed);
+		outputFile = new File(
+				parameterID + "_ExperimentalGroupExtractionResults_" + rand + "_" + dataRandomSeed + "_" + fold);
 
 		trainingObjectiveFunction = new SlotFillingObjectiveFunction(scoreType,
 				new CartesianEvaluator(explorationMode == EExplorationMode.TYPE_BASED ? EEvaluationDetail.ENTITY_TYPE
@@ -587,13 +604,14 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		applyModesAndRestrictions();
 
 		getData(trainingInstanceNames, devInstanceNames, testInstanceNames);
-
+		Stats.countVariables(0,instanceProvider.getInstances());
+		System.exit(1);
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
 		slotTypesToConsider.add(SCIOSlotTypes.hasTreatmentType);
 //		
-//		AnalyzeComplexity.analyze(SCIOEntityTypes.definedExperimentalGroup
-//				,slotTypesToConsider, instanceProvider.getInstances(),
-//				predictionObjectiveFunction.getEvaluator());
+		AnalyzeComplexity.analyze(SCIOEntityTypes.definedExperimentalGroup
+				,slotTypesToConsider, instanceProvider.getInstances(),
+				predictionObjectiveFunction.getEvaluator());
 
 		SCIOSlotTypes.hasTreatmentType.slotMaxCapacity = 3;
 
@@ -1988,9 +2006,8 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (orgModelPredictor == null) {
 			InstanceProvider.removeEmptyInstances = false;
-			orgModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel_"
-		+ modelName
-					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+			orgModelPredictor = new OrgModelSlotFillingPredictor("OrganismModel_" + modelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, rule, modus);
 			orgModelPredictor.trainOrLoadModel();
 		}
 
@@ -2017,9 +2034,8 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (treatmentPredictor == null) {
 			InstanceProvider.removeEmptyInstances = false;
-			treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment_"
-		+ modelName
-					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+			treatmentPredictor = new TreatmentSlotFillingPredictor("Treatment_" + modelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, rule, modus);
 			treatmentPredictor.trainOrLoadModel();
 		}
 
@@ -2047,9 +2063,8 @@ public class ExperimentalGroupSlotFillingPredictorFinalEvaluation extends Abstra
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 		if (injuryPredictor == null) {
 			InstanceProvider.removeEmptyInstances = false;
-			injuryPredictor = new InjurySlotFillingPredictor("InjuryModel_"
-		+ modelName
-					, trainingInstanceNames, developInstanceNames, testInstanceNames, rule, modus);
+			injuryPredictor = new InjurySlotFillingPredictor("InjuryModel_" + modelName, trainingInstanceNames,
+					developInstanceNames, testInstanceNames, rule, modus);
 			injuryPredictor.trainOrLoadModel();
 		}
 		Map<Instance, Set<AbstractAnnotation>> injuryModelAnnotations = injuryPredictor.predictInstances(instances, k);

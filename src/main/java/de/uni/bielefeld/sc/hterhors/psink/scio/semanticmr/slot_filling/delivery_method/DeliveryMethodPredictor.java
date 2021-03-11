@@ -46,6 +46,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.delivery_method.DeliveryMethodRestrictionProvider.EDeliveryMethodModifications;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.hardconstraints.DistinctEntityTemplateConstraint;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.OrganismModelWrapper;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.wrapper.SCIOWrapper;
@@ -177,6 +178,7 @@ public class DeliveryMethodPredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new EntityTypeContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
+		featureTemplates.add(new DocumentSectionTemplate());
 
 		return featureTemplates;
 	}

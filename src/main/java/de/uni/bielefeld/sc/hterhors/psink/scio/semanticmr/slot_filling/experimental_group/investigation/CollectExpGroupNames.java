@@ -149,6 +149,13 @@ public class CollectExpGroupNames {
 	}
 
 	public static void main(String[] args) throws Exception {
+		
+		for (PatternIndexPair string : pattern) {
+			System.out.println(string.pattern);
+		}
+		
+		System.exit(1);
+		
 		CollectExpGroupNames pg = new CollectExpGroupNames(new File("src/main/resources/slotfilling/corpus_docs.csv"));
 
 		/**

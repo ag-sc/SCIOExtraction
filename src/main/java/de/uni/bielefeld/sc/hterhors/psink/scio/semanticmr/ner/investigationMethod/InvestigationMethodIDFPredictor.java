@@ -50,12 +50,15 @@ public class InvestigationMethodIDFPredictor extends AbstractIDFPredictor {
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod),
 				corpusDistributor);
+		
 		int count=0;
 		for (Instance instance : instanceProvider.getInstances()) {
 			AutomatedSectionifcation.getInstance(instance);
 			count+=instance.getGoldAnnotations().getAnnotations().size();
 		}
 		System.out.println(count);
+		System.out.println((double)count / instanceProvider.getInstances().size()
+				);
 		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.investigationMethod);
 
 		

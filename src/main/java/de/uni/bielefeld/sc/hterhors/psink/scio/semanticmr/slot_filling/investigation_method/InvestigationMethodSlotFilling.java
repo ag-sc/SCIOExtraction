@@ -30,6 +30,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.investigation_method.InvestigationMethodRestrictionProvider.EInvestigationMethodModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 /**
  * 
@@ -68,14 +69,13 @@ public class InvestigationMethodSlotFilling {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Trend"))
+				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("InvestigationMethod"))
 				/**
 				 * Finally, we build the systems scope.
 				 */
 				.build();
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
-				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.trend
-						);
+				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.investigationMethod);
 //		SpecificationWriter w = new SpecificationWriter(scope);
 //		w.writeEntitySpecificationFile(new File("src/main/resources/slotfilling/investigation_method/entities.csv"),
 //				EntityType.get("InvestigationMethod"));
@@ -89,7 +89,6 @@ public class InvestigationMethodSlotFilling {
 //				new File("src/main/resources/slotfilling/investigation_method/structures.csv"),
 //				EntityType.get("InvestigationMethod"));
 //
-//		System.exit(1);
 
 		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.build();
@@ -112,16 +111,19 @@ public class InvestigationMethodSlotFilling {
 
 		String modelName = "InvestigationMethod" + new Random().nextInt();
 
-		AnalyzeComplexity.analyze(SCIOEntityTypes.trend
-				,new HashSet<>(), instanceProvider.getInstances(),
+		Stats.countVariables(1, instanceProvider.getInstances());
+
+//		System.exit(1);
+
+		AnalyzeComplexity.analyze(SCIOEntityTypes.investigationMethod
+				, new HashSet<>(), instanceProvider.getInstances(),
 				new SlotFillingObjectiveFunction(EScoreType.MICRO,
 						new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.ENTITY_TYPE))
-				.getEvaluator());
+								.getEvaluator());
 
 		InvestigationMethodSlotFillingPredictor predictor = new InvestigationMethodSlotFillingPredictor(modelName,
 				trainingInstanceNames, developInstanceNames, testInstanceNames, EInvestigationMethodModifications.ROOT,
 				ENERModus.GOLD);
-
 
 //		predictor.trainOrLoadModel();
 //

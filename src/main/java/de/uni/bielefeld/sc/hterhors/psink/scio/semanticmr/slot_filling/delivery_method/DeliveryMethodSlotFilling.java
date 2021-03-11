@@ -101,7 +101,7 @@ public class DeliveryMethodSlotFilling {
 		SlotType.excludeAll();
 
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1000L).setTrainingProportion(100).setDevelopmentProportion(0).build();
+				.setSeed(1000L).setTrainingProportion(90).setDevelopmentProportion(10).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
@@ -131,11 +131,20 @@ public class DeliveryMethodSlotFilling {
 			 */
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					DeliveryMethodRestrictionProvider.getByRule(rule));
+			Stats.countVariables(1,instanceProvider.getInstances());
+			Set<SlotType> slotTypesToConsider = new HashSet<>();
+			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
+			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
+			
+//			Stats.countVariables(0,instanceProvider.getInstances(),slotTypesToConsider);
 
+//			Stats.computePropsVar(instanceProvider.getInstances(), slotTypesToConsider);
+
+//			System.exit(1);		
 //			dataRandomSeed = "123";// + new Random().nextInt();
 			dataRandomSeed = "" + new Random().nextInt();
-			 String modelName = "DeliveryMethod_PREDICT";
-//			String modelName = "DeliveryMethod" + dataRandomSeed;
+//			 String modelName = "DeliveryMethod_PREDICT";
+			String modelName = "DeliveryMethod" + dataRandomSeed;
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();
@@ -153,13 +162,9 @@ public class DeliveryMethodSlotFilling {
 							.collect(Collectors.toList()),
 					rule, ENERModus.GOLD);
 
-			Set<SlotType> slotTypesToConsider = new HashSet<>();
-			slotTypesToConsider.add(SCIOSlotTypes.hasDuration);
-			slotTypesToConsider.add(SCIOSlotTypes.hasLocations);
-			
 //			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.deliveryMethod);
-//
-//			
+////
+////			
 //			for (SlotType slotType : slotTypesToConsider) {
 //				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
 //			}
@@ -167,8 +172,8 @@ public class DeliveryMethodSlotFilling {
 //			
 ////			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 //			
-//			AnalyzeComplexity.analyze(SCIOEntityTypes.deliveryMethod,slotTypesToConsider, predictor.instanceProvider.getInstances(),
-//					predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.deliveryMethod,slotTypesToConsider, predictor.instanceProvider.getInstances(),
+					predictor.predictionObjectiveFunction.getEvaluator());
 //
 //			
 			

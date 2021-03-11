@@ -46,21 +46,21 @@ public class KwonSPARQLExtraction {
 ////
 //		getAnimalScore(EScoreTypes.PRIMATE, pubmedIds, getPrimateSpecies());
 //		getAnimalScore(EScoreTypes.LARGER_ANIMAL, pubmedIds, getLargerAnimalSpecies());
-//		getAnimalScore(EScoreTypes.RAT, pubmedIds, getRatSpecies());
+		getAnimalScore(EScoreTypes.RAT, pubmedIds, getRatSpecies());
 //		getAnimalScore(EScoreTypes.MOUSE, pubmedIds, getMouseSpecies());
 ////
 //		getContusionScore(pubmedIds);
 //		getClipCompressionScore(pubmedIds);
 //		getPartialTransectionSharpScore(pubmedIds);
 ////
-		timeWindowScore(pubmedIds);
+//		timeWindowScore(pubmedIds);
 ////
 //		clinicallyMeaningFullBBB();
 //		clinicallyMeaningFullOtherMotor();
 //		clinicallyMeaningFullCervicalMotor();
 //		clinicallyMeaningFullCervicalNonMotor();
 //		clinicallyMeaningFullDosageResponseResult();
-//		publicationReproduceability();
+		publicationReproduceability();
 	}
 
 	private int hourToMin(int hour) {

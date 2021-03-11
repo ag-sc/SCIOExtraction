@@ -1,18 +1,16 @@
 
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.iaa;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.eval.STDEvaluator;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.iaa.ComputeBagOfAnnotations.KappasSubject;
 
 public class ComputeBagOfSentenceAnnotations {
 
@@ -96,13 +94,13 @@ public class ComputeBagOfSentenceAnnotations {
 		Map<EntityType, Double> similarityMap = new HashMap<>();
 
 		for (EntityType entityType : mainTypes) {
-
+//			System.out.println("###ROOT = " + entityType);
 			double similarity = 0;
 
 			int count = 0;
 			// Make for each type separate and average over all.
 			for (EntityType rootEt : entityType.getRelatedEntityTypes()) {
-
+				System.out.println(rootEt);
 				Set<DocumentLinkedAnnotation> reducedBOE1 = boe1.stream().filter(et -> rootEt == et.getEntityType())
 						.collect(Collectors.toSet());
 				Set<DocumentLinkedAnnotation> reducedBOE2 = boe2.stream().filter(et -> rootEt == et.getEntityType())
@@ -113,9 +111,19 @@ public class ComputeBagOfSentenceAnnotations {
 
 				count++;
 
-				similarity += FleissKappa
-						.computeKappa(toMatrix(entityType.getRelatedEntityTypes(), reducedBOE1, reducedBOE2));
+				for (DocumentLinkedAnnotation documentLinkedAnnotation : reducedBOE1) {
+					System.out.println(documentLinkedAnnotation.toPrettyString());
+				}
+				System.out.println("------------------");
+				for (DocumentLinkedAnnotation documentLinkedAnnotation : reducedBOE2) {
+					System.out.println(documentLinkedAnnotation.toPrettyString());
+				}
+				double fk = FleissKappa.computeKappa(toMatrix(rootEt, reducedBOE1, reducedBOE2));
+				System.out.println("kappa = " + fk);
+				similarity += fk;
+//				System.out.println(similarity);
 			}
+			System.out.println("Final SIm  = " + similarity / count);
 
 			similarityMap.put(entityType, count == 0 ? 0 : similarity / count);
 		}
@@ -123,18 +131,16 @@ public class ComputeBagOfSentenceAnnotations {
 		return similarityMap;
 	}
 
-	private int[][] toMatrix(Set<EntityType> enitityTypes, Set<DocumentLinkedAnnotation> reducedBOE1,
+	private int[][] toMatrix(EntityType enitityType, Set<DocumentLinkedAnnotation> reducedBOE1,
 			Set<DocumentLinkedAnnotation> reducedBOE2) {
 
 		Map<String, Integer> etindex = new HashMap<>();
-		for (EntityType et : enitityTypes) {
-			etindex.put(et.name, etindex.size());
-		}
+		etindex.put(enitityType.name, etindex.size());
 		int lastindex = etindex.size();
 		etindex.put("MISSING", lastindex);
 
 		int numberOfEntityLabels = etindex.size();
-		int numberOfTokens = 0;
+		int numberOfSentences = 0;
 
 		Map<KappasSubject, EntityType> k1 = new HashMap<>();
 		Map<KappasSubject, EntityType> k2 = new HashMap<>();
@@ -150,7 +156,7 @@ public class ComputeBagOfSentenceAnnotations {
 					e.asInstanceOfDocumentLinkedAnnotation().getSentenceIndex()),
 					e.asInstanceOfDocumentLinkedAnnotation().getEntityType());
 		}
-		
+
 		Map<KappasSubject, Integer> ksindex = new HashMap<>();
 
 		for (KappasSubject kappasSubject : k1.keySet()) {
@@ -163,10 +169,11 @@ public class ComputeBagOfSentenceAnnotations {
 			ksindex.put(kappasSubject, ksindex.size());
 
 		}
+		numberOfSentences += ksindex.size();
 
-		numberOfTokens += ksindex.size();
+//		System.out.println(numberOfSentences);
 
-		int[][] matrix = new int[numberOfTokens][numberOfEntityLabels];
+		int[][] matrix = new int[numberOfSentences][numberOfEntityLabels];
 
 		for (Entry<KappasSubject, Integer> ksi : ksindex.entrySet()) {
 			if (k1.containsKey(ksi.getKey())) {
@@ -181,6 +188,8 @@ public class ComputeBagOfSentenceAnnotations {
 			}
 		}
 
+//		System.out.println(Arrays.deepToString(matrix));
+
 		return matrix;
 	}
 
@@ -188,7 +197,11 @@ public class ComputeBagOfSentenceAnnotations {
 
 		public KappasSubject(String docID, int sentenceID) {
 			super();
-			this.docID = docID;
+			if (docID.startsWith("Julia"))
+				this.docID = docID.replaceFirst("Julia_", "");
+			else
+				this.docID = docID.replaceFirst("Jessica_", "");
+
 			this.sentenceID = sentenceID;
 		}
 
@@ -225,7 +238,7 @@ public class ComputeBagOfSentenceAnnotations {
 
 		@Override
 		public String toString() {
-			return "KappasSubject [docID=" + docID + ", tokenID=" + sentenceID + "]";
+			return "KappasSubject [docID=" + docID + ", sentenceID=" + sentenceID + "]";
 		}
 
 	}

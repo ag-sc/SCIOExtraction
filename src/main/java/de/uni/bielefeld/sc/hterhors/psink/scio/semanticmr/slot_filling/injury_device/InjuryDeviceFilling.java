@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -17,8 +18,10 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
+import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
 import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.State;
@@ -105,10 +108,10 @@ public class InjuryDeviceFilling {
 				 */
 				.build();
 
-		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-				.setSeed(1001L).setTrainingProportion(100).build();
 //		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
-//				.setSeed(1001L).setTrainingProportion(80).setDevelopmentProportion(20).build();
+//				.setSeed(1001L).setTrainingProportion(100).build();
+		AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder().setCorpusSizeFraction(1F)
+				.setSeed(1000L).setFold(0).setTrainingProportion(90).setDevelopmentProportion(10).build();
 
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
@@ -139,8 +142,8 @@ public class InjuryDeviceFilling {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryDeviceRestrictionProvider.getByRule(rule));
 
-			String modelName = "InjuryDevice_PREDICT";
-//			String modelName = "InjuryDevice" + new Random().nextInt();
+//			String modelName = "InjuryDevice_PREDICT";
+			String modelName = "InjuryDevice" + new Random().nextInt();
 
 			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
@@ -152,11 +155,27 @@ public class InjuryDeviceFilling {
 					instanceProvider.getTestInstances().stream().map(t -> t.getName())
 //							.filter(n -> names.contains(n))
 							.collect(Collectors.toList()),
-					rule, ENERModus.GOLD);
-//
+					rule, ENERModus.PREDICT);
+
+			for (Instance slotType : instanceProvider.getInstances()) {
+				for (AbstractAnnotation slotType2 : slotType.getGoldAnnotations().getAbstractAnnotations()) {
+					System.out.println(slotType2.getEntityType().name);
+				}
+			}
+
+//			Stats.countVariables(1, instanceProvider.getInstances());
+//			Stats.computePropsVar(instanceProvider.getInstances(), slotTypesToConsider);
+//			Stats.countVariables(0,instanceProvider.getInstances(),slotTypesToConsider);
+			Stats.countVariables(0,instanceProvider.getInstances(),slotTypesToConsider);
+
+			System.exit(1);
+			
+			
+			
+			
+			
 //			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.injuryDevice);
 
-			
 //			AnalyzeComplexity.analyze(SCIOEntityTypes.injuryDevice,slotTypesToConsider, predictor.instanceProvider.getInstances(),predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
@@ -169,7 +188,7 @@ public class InjuryDeviceFilling {
 					EEvaluationDetail.LITERAL);
 
 			Map<Instance, State> coverageStates = predictor.coverageOnDevelopmentInstances(SCIOEntityTypes.injuryDevice,
-					true);
+					false);
 
 			System.out.println("---------------------------------------");
 

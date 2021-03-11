@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -50,7 +51,7 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0)
-			new VertebralLocationSlotFillingFinalEvaluation(1001L, "PREDICT");
+			new VertebralLocationSlotFillingFinalEvaluation(1000L, "PREDICT");
 		else
 			new VertebralLocationSlotFillingFinalEvaluation(1000L, args[0]);
 	}
@@ -91,7 +92,7 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 				 */
 				.build();
 
-		Random random = new Random(randomSeed);
+//		Random random = new Random(randomSeed);
 		Map<String, Score> scoreMap = new HashMap<>();
 		modus = ENERModus.valueOf(modusName);
 
@@ -103,9 +104,9 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 
 			EVertebralAreaModifications rule = EVertebralAreaModifications.NO_MODIFICATION;
 
-			long seed = random.nextLong();
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
-					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
+			AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder()
+					.setSeed(randomSeed).setFold(i).setTrainingProportion(90).setDevelopmentProportion(10)
+					.setCorpusSizeFraction(1F).build();
 
 //		InstanceProvider.removeEmptyInstances = false;
 
@@ -122,7 +123,7 @@ public class VertebralLocationSlotFillingFinalEvaluation {
 			instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					VertebralAreaRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_VertebralLocation_DissFinal_" + seed;
+			String modelName = modusName + "_VertebralLocation_DissFinal_" + randomSeed + "_fold_" + i;
 
 			VertebralLocationPredictor predictor = new VertebralLocationPredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),

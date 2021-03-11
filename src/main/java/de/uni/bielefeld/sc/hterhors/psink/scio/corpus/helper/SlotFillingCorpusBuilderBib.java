@@ -17,8 +17,10 @@ public class SlotFillingCorpusBuilderBib {
 	public static final String STRUCTURES_FILE_NAME = "structures.csv";
 	public static final String HIERARCHIES_FILE_NAME = "hierarchies.csv";
 	public static final File DATA_DIRECTORY = new File("data/");
+	public static final File IAA_DATA_DIRECTORY = new File("iaa/data/");
 
 	public final static File SLOT_FILLING_DIR = new File(DATA_DIRECTORY, SLOT_FILLING_DIR_NAME);
+	public final static File IAA_SLOT_FILLING_DIR = new File(IAA_DATA_DIRECTORY, SLOT_FILLING_DIR_NAME);
 
 	public static File getDefaultRegExNerlaDir(EntityType entityType) {
 		final String nerlaDirName = SlotFillingCorpusBuilderBib.toDirName(entityType)
@@ -27,6 +29,11 @@ public class SlotFillingCorpusBuilderBib {
 		return nerlaDiractory;
 	}
 
+	public static File getIAAInstanceDirectoryForEntity(EntityType entityType) {
+		final String instancesDirName = toDirName(entityType.name) + SlotFillingCorpusBuilderBib.INSTANCES_DIR_NAME;
+		File finalInstancesDir = new File(SlotFillingCorpusBuilderBib.IAA_SLOT_FILLING_DIR, instancesDirName);
+		return finalInstancesDir;
+	}
 	public static File getDefaultInstanceDirectoryForEntity(EntityType entityType) {
 		final String instancesDirName = toDirName(entityType.name) + SlotFillingCorpusBuilderBib.INSTANCES_DIR_NAME;
 		File finalInstancesDir = new File(SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR, instancesDirName);

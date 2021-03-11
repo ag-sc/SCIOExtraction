@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -106,13 +107,11 @@ public class InjuryDeviceFillingFinalEvaluation {
 
 		Map<String, Score> scoreMap = new HashMap<>();
 		modus = ENERModus.valueOf(modusName);
-		Random random = new Random(randomSeed);
 
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
 
-			long seed = random.nextLong();
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
+			AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder().setSeed(randomSeed).setFold(i)
 					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
 
 			EInjuryDeviceModifications rule = EInjuryDeviceModifications.NO_MODIFICATION;
@@ -127,7 +126,7 @@ public class InjuryDeviceFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					InjuryDeviceRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_InjuryDevice_DissFinal_" + seed;
+			String modelName = modusName + "_InjuryDevice_DissFinal_"  + randomSeed+"_fold_"+i;
 
 			InjuryDevicePredictor predictor = new InjuryDevicePredictor(modelName,
 					instanceProvider.getTrainingInstances().stream().map(t -> t.getName())

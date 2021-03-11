@@ -108,10 +108,10 @@ public class CoarseGrainedExpGroupEvaluation {
 		 * Get experimental groups and their assignments to get IDs
 		 */
 		List<EntityTemplate> goldData = new ArrayList<>(
-				goldAnnotations.stream().map(g -> new DefinedExperimentalGroup(g).getOrganisModel())
+				goldAnnotations.stream().map(g -> new DefinedExperimentalGroup(g).getOrganismModel())
 						.filter(a -> a != null).distinct().collect(Collectors.toSet()));
 		List<EntityTemplate> predictedData = new ArrayList<>(
-				predictedAnnotations.stream().map(g -> new DefinedExperimentalGroup(g).getOrganisModel())
+				predictedAnnotations.stream().map(g -> new DefinedExperimentalGroup(g).getOrganismModel())
 						.filter(a -> a != null).collect(Collectors.toSet()));
 
 		x: for (EntityTemplate gold : goldData) {

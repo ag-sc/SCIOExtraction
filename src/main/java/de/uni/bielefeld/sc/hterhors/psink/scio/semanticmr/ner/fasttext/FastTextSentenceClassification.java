@@ -68,8 +68,8 @@ public class FastTextSentenceClassification {
 				/**
 				 * We add a scope reader that reads and interprets the 4 specification files.
 				 */
-//				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
-				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
+				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("Trend"))
+//				.addScopeSpecification(DataStructureLoader.loadNERDataStructureReader("InvestigationMethod"))
 				/**
 				 * Finally, we build the systems scope.
 				 */
@@ -89,34 +89,34 @@ public class FastTextSentenceClassification {
 		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
-		EntityType type = SCIOEntityTypes.investigationMethod;
-//		EntityType type = SCIOEntityTypes.trend;
+//		EntityType type = SCIOEntityTypes.investigationMethod;
+		EntityType type = SCIOEntityTypes.trend;
 		
 		InstanceProvider instanceProvider = new InstanceProvider(
 				NERCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(type), corpusDistributor);
 
 		
-		new FastTextSentenceClassification("Result_PREDICT", false, type,
-				instanceProvider .getTrainingInstances(), false);
-
-		System.exit(1);
+//		new FastTextSentenceClassification("Result_PREDICT", false, type,
+//				instanceProvider .getTrainingInstances(), false);
+//
+//		System.exit(1);
 		
 		System.out.println("num of values " + type.getRelatedEntityTypes().size());
 
-		int a = 0;
-		Map<Integer, Integer> map = new HashMap<>();
-		System.out.println(instanceProvider.getInstances().size());
-		for (Instance instance : instanceProvider.getInstances()) {
-			final int s = instance.getGoldAnnotations().getAnnotations().size();
-			a += s;
-			map.put(s, map.getOrDefault(s, 0) + 1);
-			System.out.println(a + "\t" + s);
-		}
-		System.out.println(a);
-
-		for (Entry<Integer, Integer> string : map.entrySet()) {
-			System.out.println(string.getKey() + "\t" + string.getValue());
-		}
+//		int a = 0;
+//		Map<Integer, Integer> map = new HashMap<>();
+//		System.out.println(instanceProvider.getInstances().size());
+//		for (Instance instance : instanceProvider.getInstances()) {
+//			final int s = instance.getGoldAnnotations().getAnnotations().size();
+//			a += s;
+//			map.put(s, map.getOrDefault(s, 0) + 1);
+//			System.out.println(a + "\t" + s);
+//		}
+//		System.out.println(a);
+//
+//		for (Entry<Integer, Integer> string : map.entrySet()) {
+//			System.out.println(string.getKey() + "\t" + string.getValue());
+//		}
 
 		boolean binary = false;
 
@@ -155,7 +155,6 @@ public class FastTextSentenceClassification {
 
 			log.info(s);
 			mScore.add(s);
-			break;
 		}
 
 		return mScore;
@@ -211,7 +210,7 @@ public class FastTextSentenceClassification {
 				+ "_supervised.model";
 		jft = new JFastText();
 
-		if (!loadModel) {
+		if (!(new File("fasttext/resources/models/" + ftModelName + ".bin").exists() && loadModel)) {
 			final String trainingDataFileName = "fasttext/resources/data/" + modelName + "_" + type.name
 					+ "_train_labeled_data.txt";
 //		final String bertFileName = "bert/" + modelName + "_" + type.name + "_train.csv";
@@ -248,7 +247,7 @@ public class FastTextSentenceClassification {
 
 	}
 
-	private Score score(List<Instance> testInstances) {
+	public Score score(List<Instance> testInstances) {
 		List<FastTextInstance> testData = getLabledDocuments(testInstances, 1);
 //		List<String> testData = Files.readAllLines(new File("src/test/resources/data/test_labeled_data.txt").toPath());
 		for (Iterator<FastTextInstance> iterator = testData.iterator(); iterator.hasNext();) {
@@ -258,13 +257,13 @@ public class FastTextSentenceClassification {
 				iterator.remove();
 
 		}
-		try {
-			final String bertFileName = "fasttext/resources/" + modelName + "_" + type.name + "_test.csv";
-
-			printInstances(new File(bertFileName), testData);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			final String bertFileName = "fasttext/resources/" + modelName + "_" + type.name + "_test.csv";
+//
+//			printInstances(new File(bertFileName), testData);
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		log.info("Test Negative samples: " + testData.stream().filter(a -> a.goldLabel == NO_LABEL).count());
 		log.info("Test Positive Samples: "
 				+ (testData.size() - testData.stream().filter(a -> a.goldLabel == NO_LABEL).count()));
@@ -473,15 +472,15 @@ public class FastTextSentenceClassification {
 
 			String predLabel = fti.label;
 			String goldLabel = fti.fastTextInstance.goldLabel;
-			System.out.println(predLabel + "\t" + goldLabel);
-			if (!fti.label.equals(NO_LABEL))
-				predLabel = fti.getEntityType().getDirectSuperEntityTypes().iterator().next().name;
-
-			if (!fti.fastTextInstance.goldLabel.equals(NO_LABEL))
-				goldLabel = fti.fastTextInstance.getEntityType().getDirectSuperEntityTypes().iterator().next().name;
-
-			System.out.println(predLabel + "\t" + goldLabel);
-			System.out.println();
+//			System.out.println(predLabel + "\t" + goldLabel);
+//			if (!fti.label.equals(NO_LABEL))
+//				predLabel = fti.getEntityType().getDirectSuperEntityTypes().iterator().next().name;
+//
+//			if (!fti.fastTextInstance.goldLabel.equals(NO_LABEL))
+//				goldLabel = fti.fastTextInstance.getEntityType().getDirectSuperEntityTypes().iterator().next().name;
+//
+//			System.out.println(predLabel + "\t" + goldLabel);
+//			System.out.println();
 			if (predLabel.equals(goldLabel)) {
 				if (predLabel.equals(NO_LABEL)) {
 					score.increaseTrueNegative();

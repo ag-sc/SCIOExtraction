@@ -29,6 +29,7 @@ import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AnalyzeComplexity;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -126,8 +127,10 @@ public class OrgModelSlotFilling {
 
 			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
+//			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1)
+//					.setTrainingProportion(100).setCorpusSizeFraction(1F).build();
 			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(1)
-					.setTrainingProportion(100).setDevelopmentProportion(0).setCorpusSizeFraction(1F).build();
+					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getByRule(rule));
@@ -139,11 +142,32 @@ public class OrgModelSlotFilling {
 			slotTypesToConsider.add(SCIOSlotTypes.hasOrganismSpecies);
 			slotTypesToConsider.add(SCIOSlotTypes.hasGender);
 
+			/**
+			 * TEST AGAINST IAA
+			 */
+//			List<String> trainingInstanceNames = instanceProvider
+//					.getTrainingInstances().stream().map(t -> t.getName()).filter(n -> !(n.startsWith("N255")
+//							|| n.startsWith("N256") || n.startsWith("N258") || n.startsWith("N259")))
+//					.collect(Collectors.toList());
+//
+//			List<String> developInstanceNames = instanceProvider
+//					.getTrainingInstances().stream().map(t -> t.getName()).filter(n -> (n.startsWith("N255")
+//							|| n.startsWith("N256") || n.startsWith("N258") || n.startsWith("N259")))
+//					.collect(Collectors.toList());
+//
+//			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
+//					.collect(Collectors.toList());
+
+//			Stats.countVariables(0,instanceProvider.getInstances(),slotTypesToConsider);
+//			Stats.computePropsVar(instanceProvider.getInstances(), slotTypesToConsider);
+//			System.exit(1);
+
 //			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.organismModel);
-//			
+////			
 //			for (SlotType slotType : slotTypesToConsider) {
 //				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
 //			}
+//			
 			List<String> trainingInstanceNames = instanceProvider.getTrainingInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
@@ -153,18 +177,17 @@ public class OrgModelSlotFilling {
 			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
-			
 //			System.out.println(developInstanceNames);
-//			System.exit(1);
-			
-			String modelName = "OrganismModel_PREDICT" ;
-//			String modelName = "OrganismModel" + new Random().nextInt();
+
+//			String modelName = "OrganismModel_PREDICT" ;
+			String modelName = "OrganismModel" + new Random().nextInt();
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, ENERModus.PREDICT);
 
 //			AnalyzeComplexity.analyze(SCIOEntityTypes.organismModel, slotTypesToConsider,
 //					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
+//			System.exit(1);
 
 			predictor.trainOrLoadModel();
 

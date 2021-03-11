@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -49,7 +50,7 @@ public class VertebralLocationSlotFilling {
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0)
-			new VertebralLocationSlotFilling(1001L, "PREDICT");
+			new VertebralLocationSlotFilling(1000L, "PREDICT");
 		else
 			new VertebralLocationSlotFilling(1000L, args[0]);
 	}
@@ -113,24 +114,42 @@ public class VertebralLocationSlotFilling {
 		instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 				VertebralAreaRestrictionProvider.getByRule(rule));
 
-		String modelName =  "VertebralLocation_PREDICT";
+		String modelName = "VertebralLocation_PREDICT";
 
-		VertebralLocationPredictor predictor = new VertebralLocationPredictor(modelName,
-				instanceProvider.getTrainingInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),
-				instanceProvider.getDevelopmentInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),
-				instanceProvider.getTestInstances().stream().map(t -> t.getName()).collect(Collectors.toList()), rule,
-				modus);
+		List<String> trainingInstanceNames = instanceProvider
+				.getTrainingInstances().stream().map(t -> t.getName()).filter(n -> !(n.startsWith("N255")
+						|| n.startsWith("N256") || n.startsWith("N258") || n.startsWith("N259")))
+				.collect(Collectors.toList());
+
+		List<String> developInstanceNames = instanceProvider
+				.getTrainingInstances().stream().map(t -> t.getName()).filter(n -> (n.startsWith("N255")
+						|| n.startsWith("N256") || n.startsWith("N258") || n.startsWith("N259")))
+				.collect(Collectors.toList());
+
+		List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
+				.collect(Collectors.toList());
+
+		VertebralLocationPredictor predictor = new VertebralLocationPredictor(modelName, trainingInstanceNames,
+				developInstanceNames, testInstanceNames, rule, modus);
+//		VertebralLocationPredictor predictor = new VertebralLocationPredictor(modelName,
+//				instanceProvider.getTrainingInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),
+//				instanceProvider.getDevelopmentInstances().stream().map(t -> t.getName()).collect(Collectors.toList()),
+//				instanceProvider.getTestInstances().stream().map(t -> t.getName()).collect(Collectors.toList()), rule,
+//				modus);
 
 		Set<SlotType> slotTypesToConsider = new HashSet<>();
 		slotTypesToConsider.add(SCIOSlotTypes.hasUpperVertebrae);
 		slotTypesToConsider.add(SCIOSlotTypes.hasLowerVertebrae);
-//
-//		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.vertebralLocation);
-//
-//		for (SlotType slotType : slotTypesToConsider) {
-//			Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
-//		}
+
+//		Stats.countVariables(1,instanceProvider.getInstances(),slotTypesToConsider);
 //		System.exit(1);
+		//
+		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.vertebralLocation);
+
+		for (SlotType slotType : slotTypesToConsider) {
+			Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+		}
+		System.exit(1);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, State> finalStates = predictor.evaluateOnDevelopment();

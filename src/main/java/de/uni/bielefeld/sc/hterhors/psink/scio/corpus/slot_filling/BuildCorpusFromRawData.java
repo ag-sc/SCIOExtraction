@@ -87,28 +87,44 @@ public class BuildCorpusFromRawData {
 		SlotFillingCorpusBuilderBib.SLOT_FILLING_DIR.mkdir();
 		InstanceProvider.maxNumberOfAnnotations = Integer.MAX_VALUE;
 
-		buildCorpusForResult();
-		buildCorpusForDefinedExperimentalGroup();
-		buildCorpusForObservation();
+//		buildCorpusForIAA();
+//		buildCorpusForResult();
+//		buildCorpusForDefinedExperimentalGroup();
+//		buildCorpusForObservation();
 		buildCorpusForOrganismModel();
-		buildCorpusForInjuryModel();
-		buildCorpusForTreatmentType();
-		buildCorpusForInjuryLocation();
-		buildCorpusForVertebralArea();
-		buildCorpusForAnaesthesia();
-		buildCorpusForDeliveryMethod();
-		buildCorpusForInjuryDevice();
-		buildCorpusForInvestigationMethod();
-		buildCorpusForTrend();
+//		buildCorpusForInjuryModel();
+//		buildCorpusForTreatmentType();
+//		buildCorpusForInjuryLocation();
+//		buildCorpusForVertebralArea();
+//		buildCorpusForAnaesthesia();
+//		buildCorpusForDeliveryMethod();
+//		buildCorpusForInjuryDevice();
+//		buildCorpusForInvestigationMethod();
+//		buildCorpusForTrend();
 	}
 
-	private static void buildCorpusForTrend() throws Exception {
-		buildSubDataStructureFiles(SCIOEntityTypes.trend);
-		Set<String> annotatedDocuments = new HashSet<>(
-				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
-		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.trend, true, true,
-				true);
-		annotateWithRegularExpressions(new TrendPattern(SCIOEntityTypes.trend));
+	private static void buildCorpusForIAA() throws Exception {
+
+		convertFromSanto2JsonCorpus(
+				SlotFillingCorpusBuilderBib.getIAAInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				new File("iaa/corpus/"), Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.result, true,
+				true, true);
+
+		File tmpUnrolledRawDataDir = new File(SlotFillingCorpusBuilderBib.IAA_DATA_DIRECTORY,
+				SlotFillingCorpusBuilderBib.toDirName(SCIOEntityTypes.result) + "_tmp/");
+		tmpUnrolledRawDataDir.mkdirs();
+		tmpUnrolledRawDataDir.deleteOnExit();
+
+		new ResolvePairwiseComparedGroups(
+				SlotFillingCorpusBuilderBib.getIAAInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				SlotFillingCorpusBuilderBib.getIAAInstanceDirectoryForEntity(SCIOEntityTypes.observation),
+				tmpUnrolledRawDataDir);
+
+		convertFromSanto2JsonCorpus(
+				SlotFillingCorpusBuilderBib.getIAAInstanceDirectoryForEntity(SCIOEntityTypes.result),
+				tmpUnrolledRawDataDir, Collections.emptySet(), Collections.emptySet(), SCIOEntityTypes.result, true,
+				true, true);
+
 	}
 
 	private static void buildCorpusForResult() throws Exception {
@@ -133,6 +149,16 @@ public class BuildCorpusFromRawData {
 				SCIOEntityTypes.result, true, true, true);
 		annotateWithRegularExpressions(new ResultPattern(SCIOEntityTypes.result));
 
+	}
+
+	
+	private static void buildCorpusForTrend() throws Exception {
+		buildSubDataStructureFiles(SCIOEntityTypes.trend);
+		Set<String> annotatedDocuments = new HashSet<>(
+				Files.readAllLines(new File(SRC_MAIN_RESOURCES, CORPUS_DOCS).toPath()));
+		convertFromSanto2JsonCorpus(annotatedDocuments, Collections.emptySet(), SCIOEntityTypes.trend, true, true,
+				true);
+		annotateWithRegularExpressions(new TrendPattern(SCIOEntityTypes.trend));
 	}
 
 	private static void buildCorpusForObservation() throws Exception {
@@ -251,6 +277,7 @@ public class BuildCorpusFromRawData {
 
 	}
 
+	
 	private static void buildSubDataStructureFiles(EntityType rootEntityType) throws Exception {
 
 		final String dataStructureDirName = SlotFillingCorpusBuilderBib.toDirName(rootEntityType)
@@ -304,6 +331,7 @@ public class BuildCorpusFromRawData {
 						.flatMap(v -> v.stream()).map(d -> new JsonEntityAnnotationWrapper(d))
 						.collect(Collectors.toList());
 
+				
 				io.writeNerlas(new File(nerlaDiractory, instance.getName() + ".nerla.json"), wrappedAnnotation);
 
 			} catch (IOException e) {
@@ -312,10 +340,24 @@ public class BuildCorpusFromRawData {
 		}
 	}
 
+	
+	
+	
+	
 	private static void convertFromSanto2JsonCorpus(File rawDataFile, Set<String> filterNames,
 			Set<SlotType> filterSlotTypes, EntityType entityType, boolean includeSubEntities, boolean jsonPrettyString,
 			boolean deepRec) throws Exception {
-		File finalInstancesDir = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityType);
+		convertFromSanto2JsonCorpus(null, rawDataFile, filterNames, filterSlotTypes, entityType, includeSubEntities,
+				jsonPrettyString, deepRec);
+	}
+
+	private static void convertFromSanto2JsonCorpus(File finalInstancesDir, File rawDataFile, Set<String> filterNames,
+			Set<SlotType> filterSlotTypes, EntityType entityType, boolean includeSubEntities, boolean jsonPrettyString,
+			boolean deepRec) throws Exception {
+
+		if (finalInstancesDir == null) {
+			finalInstancesDir = SlotFillingCorpusBuilderBib.getDefaultInstanceDirectoryForEntity(entityType);
+		}
 		finalInstancesDir.mkdirs();
 
 		final Random random = new Random(RANDOM_SEED);
@@ -324,14 +366,13 @@ public class BuildCorpusFromRawData {
 				.map(f -> f.getName().substring(0, f.getName().length() - 11)).collect(Collectors.toList());
 
 		Collections.sort(fileNames);
-
 		for (String dataFileName : fileNames) {
 
-			if (!filterNames.isEmpty() && !(filterNames.contains(dataFileName))
-					|| !startsWith(filterNames, dataFileName)) {
-				log.info("Skip: " + dataFileName + "...");
-				continue;
-			}
+			if (!filterNames.isEmpty())
+				if (!filterNames.contains(dataFileName) || !startsWith(filterNames, dataFileName)) {
+					log.info("Skip: " + dataFileName + "...");
+					continue;
+				}
 
 			log.info("Convert: " + dataFileName + "...");
 

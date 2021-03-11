@@ -89,8 +89,8 @@ public class NPChunker {
 					.filter(t -> t.term.matches(".+(group|animals|rats|mice|rats|cats|dogs)"))
 					.collect(Collectors.toList());
 			vps = Files.readAllLines(chunks.toPath()).stream().filter(l->l.startsWith("@VP")).map(l -> l.split(SPLITTER))
-					.map(l -> new TermIndexPair(l[2], Integer.parseInt(l[2])))
-					.filter(t -> t.term.matches(".+(receiv|inject|contus|transplant|injur|train|treat).+"))
+					.map(l -> new TermIndexPair(l[1], Integer.parseInt(l[2])))
+					.filter(t -> t.term.matches(".*(receiv|inject|contus|transplant|injur|train|treat).*"))
 					.collect(Collectors.toList());
 		} else {
 			CoreDocument d = new CoreDocument(document.documentContent);
@@ -149,7 +149,7 @@ public class NPChunker {
 				if (term.length() > 80)
 					continue;
 
-				if (!term.matches(".+(receiv|inject|contus|transplant|injur|train|treat).+"))
+				if (!term.matches(".*(receiv|inject|contus|transplant|injur|train|treat).+"))
 					continue;
 
 				vps.add(new TermIndexPair(term, matcher.getMatch().yieldWords().get(0).beginPosition()));

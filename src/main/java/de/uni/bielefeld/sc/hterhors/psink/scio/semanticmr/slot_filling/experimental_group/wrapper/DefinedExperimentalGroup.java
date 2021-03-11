@@ -92,7 +92,7 @@ public class DefinedExperimentalGroup {
 	 * 
 	 * @return the annotation of the species or null
 	 */
-	public EntityTemplate getOrganisModel() {
+	public EntityTemplate getOrganismModel() {
 
 		if (SCIOSlotTypes.hasOrganismModel.isIncluded()) {
 			return (EntityTemplate) experimentalGroup.getSingleFillerSlot(SCIOSlotTypes.hasOrganismModel)
@@ -127,7 +127,7 @@ public class DefinedExperimentalGroup {
 	}
 
 	public boolean isEmpty() {
-		return getOrganisModel() == null && getInjury() == null
+		return getOrganismModel() == null && getInjury() == null
 				&& (getTreatments() == null || getTreatments().isEmpty());
 	}
 

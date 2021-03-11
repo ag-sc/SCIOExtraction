@@ -15,6 +15,8 @@ public class DurationInterpreter extends AbstractNumericInterpreter {
 	
 	public static void main(String[] args) {
 		
+		System.out.println(DurationInterpreter.PATTERN);
+		
 		System.out.println(new DurationInterpreter("30 min"));
 		
 	}

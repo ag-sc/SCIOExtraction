@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -121,28 +122,63 @@ public class ResultSlotFilling extends AbstractSemReadProject {
 		this.dataRandomSeed = dataRandomSeed;
 
 		readData();
-		int max = 1000;
+
+		double i = 0;
 		for (Instance instance : instanceProvider.getInstances()) {
-			int c = 0;
-			System.out.println(instance.getName());
-			for (AbstractAnnotation aa : instance.getGoldAnnotations().getAbstractAnnotations()) {
-
-				c += trainingObjectiveFunction.getEvaluator().scoreSingle(aa, aa).getTp();
-			}
-
-			System.out.println(instance.getGoldAnnotations().getAbstractAnnotations().size());
-			System.out.println(c);
-			System.out.println();
-			max = Math.min(max, c);
+			i += instance.getDocument().getSentenceByIndex(instance.getDocument().getNumberOfSentences() - 1).get(
+					instance.getDocument().getSentenceByIndex(instance.getDocument().getNumberOfSentences() - 1).size()
+							- 1)
+					.getDocTokenIndex();
 		}
-		System.out.println(max);
-		System.exit(1);
+		SCIOSlotTypes.hasGroupName.exclude();
 
-		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.result);
+//		int count = 0;
+//		for (SlotType slotType : EntityType.get("Result").getSlots()) {
+//
+//			if (slotType.isExcluded())
+//				continue;
+//			count++;
+//			System.out.println(slotType.name);
+//
+//		}
+//		System.out.println(count);
+		Set<SlotType> slotTypesToConsider = new HashSet<>(Arrays.asList(SCIOSlotTypes.hasTrend,
+				SCIOSlotTypes.hasTargetGroup, SCIOSlotTypes.hasReferenceGroup, SCIOSlotTypes.hasInvestigationMethod));
 
-		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOSlotTypes.hasInvestigationMethod);
+//		System.out.println(i / instanceProvider.getInstances().size());
+//		Stats.countVariables(0, instanceProvider.getInstances(), slotTypesToConsider);
+//
+		Stats.countVariables(0, instanceProvider.getInstances());
+//		System.exit(1);
+//
+//		int min = 1000;
+//		for (Instance instance : instanceProvider.getInstances()) {
+//			int c = 0;
+//			System.out.println(instance.getName());
+//			for (AbstractAnnotation aa : instance.getGoldAnnotations().getAbstractAnnotations()) {
+//
+//				c += trainingObjectiveFunction.getEvaluator().scoreSingle(aa, aa).getTp();
+//			}
+//
+//			System.out.println(instance.getGoldAnnotations().getAbstractAnnotations().size());
+//			System.out.println(c);
+//			System.out.println();
+//			min = Math.min(min, c);
+//		}
+//		System.out.println(min);
 
-		Set<SlotType> slotTypesToConsider = new HashSet<>();
+//		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.result);
+//
+//		
+//		for (SlotType slotType : slotTypesToConsider) {
+//			Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
+//		}
+//		
+//		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.result);
+//
+//		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOSlotTypes.hasInvestigationMethod);
+
+//		System.exit(1);
 		AnalyzeComplexity.analyze(SCIOEntityTypes.result, slotTypesToConsider, instanceProvider.getInstances(),
 				predictionObjectiveFunction.getEvaluator());
 

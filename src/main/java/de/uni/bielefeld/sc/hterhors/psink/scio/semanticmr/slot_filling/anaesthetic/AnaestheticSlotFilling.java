@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
@@ -112,9 +113,12 @@ public class AnaestheticSlotFilling {
 				 */
 				.build();
 
+		
+		System.out.println(EntityType.get("Anaesthetic").getTransitiveClosureSubEntityTypes().size());
+		
 		AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 				.setSeed(1000L).setTrainingProportion(100).build();
-		modus = ENERModus.PREDICT;
+		modus = ENERModus.GOLD;
 //		AbstractCorpusDistributor corpusDistributor = new OriginalCorpusDistributor.Builder().setCorpusSizeFraction(1F)
 //				.build();
 
@@ -158,7 +162,10 @@ public class AnaestheticSlotFilling {
 			 */
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					AnaestheticRestrictionProvider.getByRule(rule));
+//			Stats.countVariables(1,instanceProvider.getInstances());
+//			Stats.countVariables(1,instanceProvider.getInstances(),slotTypesToConsider);
 
+//			System.exit(1);		
 //			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.anaesthetic);
 //
 //			
@@ -189,8 +196,8 @@ public class AnaestheticSlotFilling {
 					rule, modus);
 
 //			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
-//			AnalyzeComplexity.analyze(SCIOEntityTypes.anaesthetic,slotTypesToConsider, predictor.instanceProvider.getInstances(),
-//					predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.anaesthetic,slotTypesToConsider, predictor.instanceProvider.getInstances(),
+					predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.trainOrLoadModel();
 //

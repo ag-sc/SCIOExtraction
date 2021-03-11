@@ -34,6 +34,7 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractSlotFillingPre
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury_device.InjuryDeviceRestrictionProvider.EInjuryDeviceModifications;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.DocumentSectionTemplate;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.templates.EntityTypeContextTemplate;
 
 /**
@@ -123,6 +124,7 @@ public class InjuryDevicePredictor extends AbstractSlotFillingPredictor {
 		featureTemplates.add(new EntityTypeContextTemplate());
 		featureTemplates.add(new LocalityTemplate());
 		featureTemplates.add(new SlotIsFilledTemplate());
+		featureTemplates.add(new DocumentSectionTemplate());
 
 		return featureTemplates;
 	}

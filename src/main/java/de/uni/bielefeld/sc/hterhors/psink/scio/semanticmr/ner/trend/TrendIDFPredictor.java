@@ -70,12 +70,16 @@ public class TrendIDFPredictor extends AbstractIDFPredictor {
 		slotTypesToConsider.add(SCIOSlotTypes.hasPValue);
 		slotTypesToConsider.add(SCIOSlotTypes.hasDifference);
 		
-		Stats.computeNormedVar(trendInstanceProvider.getInstances(), SCIOEntityTypes.trend);
-
-		for (SlotType slotType : slotTypesToConsider) {
-			Stats.computeNormedVar(trendInstanceProvider.getInstances(), slotType);
-		}
-		System.exit(1);
+//		Stats.countVariables(1,trendInstanceProvider.getInstances());
+//		System.exit(1);
+		
+		
+//		Stats.computeNormedVar(trendInstanceProvider.getInstances(), SCIOEntityTypes.trend);
+//
+//		for (SlotType slotType : slotTypesToConsider) {
+//			Stats.computeNormedVar(trendInstanceProvider.getInstances(), slotType);
+//		}
+//		System.exit(1);
 //		SystemScope.Builder.getScopeHandler()
 //				/**
 //				 * We add a scope reader that reads and interprets the 4 specification files.

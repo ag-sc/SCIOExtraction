@@ -118,10 +118,15 @@ public class TreatmentSlotFilling {
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					TreatmentRestrictionProvider.getByRule(rule));
+//			Stats.countVariables(0,instanceProvider.getInstances());
+		
+//			Stats.countVariables(0,instanceProvider.getInstances(),slotTypesToConsider);
 
+			
+//			System.exit(1);
 //			Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.treatment);
-//
-//			
+
+			
 //			for (SlotType slotType : slotTypesToConsider) {
 //				Stats.computeNormedVar(instanceProvider.getInstances(), slotType);
 //			}
@@ -167,8 +172,8 @@ public class TreatmentSlotFilling {
 //			log.info("Coverage Development: " + devCoverage);
 //
 //			log.info("results: " + toResults(rule, score));
-//			AnalyzeComplexity.analyze(SCIOEntityTypes.treatment, slotTypesToConsider,
-//					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
+			AnalyzeComplexity.analyze(SCIOEntityTypes.treatment, slotTypesToConsider,
+					predictor.instanceProvider.getInstances(), predictor.predictionObjectiveFunction.getEvaluator());
 
 			predictor.setOrganismModel(predictOrganismModel(instanceProvider.getInstances()));
 

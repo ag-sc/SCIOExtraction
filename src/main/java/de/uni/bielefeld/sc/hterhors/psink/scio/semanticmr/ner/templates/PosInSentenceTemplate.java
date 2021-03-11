@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import de.hterhors.semanticmr.crf.model.AbstractFactorScope;
 import de.hterhors.semanticmr.crf.model.Factor;
+import de.hterhors.semanticmr.crf.structure.EntityType;
 import de.hterhors.semanticmr.crf.structure.annotations.DocumentLinkedAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.Document;
@@ -18,85 +19,96 @@ import de.hterhors.semanticmr.crf.variables.State;
 
 public class PosInSentenceTemplate extends AbstractFeatureTemplate<PosInSentenceTemplate.PosInSentenceScope> {
 
-    public PosInSentenceTemplate() {
-        super();
-    }
+	public PosInSentenceTemplate() {
+		super();
+	}
 
-    public PosInSentenceTemplate(boolean cache) {
-        super(cache);
-    }
+	public PosInSentenceTemplate(boolean cache) {
+		super(cache);
+	}
 
+	static class PosInSentenceScope extends AbstractFactorScope {
 
-    static class PosInSentenceScope
-            extends AbstractFactorScope {
+		EntityType annotation;
+		double x;
 
-        DocumentLinkedAnnotation annotation;
-        int senLength;
+		public PosInSentenceScope(AbstractFeatureTemplate<?> template, EntityType annotation, double x) {
+			super(template);
+			this.annotation = annotation;
+			this.x = x;
+		}
 
-        public PosInSentenceScope(
-                AbstractFeatureTemplate<PosInSentenceScope> template, DocumentLinkedAnnotation annotation, int senLength) {
-            super(template);
-            this.annotation = annotation;
-            this.senLength = senLength;
-        }
+		@Override
+		public int implementHashCode() {
+			return 0;
+		}
 
-        @Override
-        public int implementHashCode() {
-            return 0;
-        }
+		@Override
+		public boolean implementEquals(Object obj) {
+			return false;
+		}
 
-        @Override
-        public boolean implementEquals(Object obj) {
-            return false;
-        }
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (!super.equals(obj))
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			PosInSentenceScope other = (PosInSentenceScope) obj;
+			if (annotation == null) {
+				if (other.annotation != null)
+					return false;
+			} else if (!annotation.equals(other.annotation))
+				return false;
+			if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+				return false;
+			return true;
+		}
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            if (!super.equals(o)) return false;
-            PosInSentenceScope that = (PosInSentenceScope) o;
-            return senLength == that.senLength &&
-                    Objects.equals(annotation, that.annotation);
-        }
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = super.hashCode();
+			result = prime * result + ((annotation == null) ? 0 : annotation.hashCode());
+			long temp;
+			temp = Double.doubleToLongBits(x);
+			result = prime * result + (int) (temp ^ (temp >>> 32));
+			return result;
+		}
+	}
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(super.hashCode(), annotation, senLength);
-        }
-    }
+	@Override
+	public List<PosInSentenceScope> generateFactorScopes(State state) {
+		List<PosInSentenceScope> factors = new ArrayList<>();
 
-    @Override
-    public List<PosInSentenceScope> generateFactorScopes(State state) {
-        List<PosInSentenceScope> factors = new ArrayList<>();
+		for (DocumentLinkedAnnotation annotation : super.<DocumentLinkedAnnotation>getPredictedAnnotations(state)) {
+			DocumentToken token = annotation.relatedTokens.get(annotation.relatedTokens.size() - 1);
+			int senLength = annotation.getSentenceOfAnnotation().length();
+			double x = token.getDocCharOffset() / senLength;
+			factors.add(new PosInSentenceScope(this, annotation.entityType, x));
+		}
+		return factors;
+	}
 
-        Document document = state.getInstance().getDocument();
+	@Override
+	public void generateFeatureVector(Factor<PosInSentenceScope> factor) {
+		double x = factor.getFactorScope().x;
+		for (double i = 0; i < 1; i+=0.1) {
+			if(x>i) {
+				factor.getFeatureVector().set(i+": " + factor.getFactorScope().annotation.name, true);
+				break;
+			}
+			
+		}
+//		
+//		if (x < 0.33) {
+//		} else if (x > 0.66) {
+//			factor.getFeatureVector().set("Im letzten Drittel: " + factor.getFactorScope().annotation.name, true);
+//		} else {
+//			factor.getFeatureVector().set("im zweiten Drittel:" + factor.getFactorScope().annotation.name, true);
+//		}
 
-        for (DocumentLinkedAnnotation annotation : super.<DocumentLinkedAnnotation>getPredictedAnnotations(state)) {
-            DocumentToken token = annotation.relatedTokens.get(annotation.relatedTokens.size() - 1);
-            factors.add(new PosInSentenceScope(this, annotation, annotation.getSentenceOfAnnotation().length())) ;
-        }
-        return factors;
-    }
-
-    @Override
-    public void generateFeatureVector(Factor<PosInSentenceScope> factor) {
-        DocumentLinkedAnnotation annotation = factor.getFactorScope().annotation;
-        int docLength = factor.getFactorScope().senLength;
-
-        double x = annotation.documentPosition.docCharOffset / docLength;
-
-        StringBuilder sb = new StringBuilder();
-        annotation.relatedTokens.forEach(p -> sb.append(p.getText()).append(" "));
-
-
-        if (x < 0.33) {
-            factor.getFeatureVector().set("Im ersten Drittel: " + sb.toString().trim(), true);
-        } else if (x > 0.66) {
-            factor.getFeatureVector().set("Im letzten Drittel: " + sb.toString().trim(), true);
-        } else {
-            factor.getFeatureVector().set("im zweiten Drittel:" + sb.toString().trim(), true);
-        }
-
-    }
+	}
 }

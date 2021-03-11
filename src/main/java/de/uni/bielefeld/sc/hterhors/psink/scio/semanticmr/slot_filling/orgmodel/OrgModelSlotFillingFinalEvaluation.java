@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
-import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.SlotType;
@@ -58,7 +57,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0)
-			new OrgModelSlotFillingFinalEvaluation(1000L, "GOLD");
+			new OrgModelSlotFillingFinalEvaluation(1000L, "PREDICT");
 		else
 			new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
 //		new OrgModelSlotFillingFinalEvaluation(1000L, args[0]);
@@ -136,7 +135,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 //null
 //CRFStatistics [context=Test, getTotalDuration()=258]
 
-		
 		/**
 		 * draw greedily from model
 		 */
@@ -154,7 +152,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 //
 //
 
-		
 		/**
 		 * mix
 		 */
@@ -185,9 +182,9 @@ public class OrgModelSlotFillingFinalEvaluation {
 //				CRFStatistics [context=Train, getTotalDuration()=6944]
 //				CRFStatistics [context=Test, getTotalDuration()=230]
 
-/**
- * draw from top k=2 model dist		
- */
+		/**
+		 * draw from top k=2 model dist
+		 */
 //		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
 //				MACRO	hasAge = 0.237	0.250	0.225	0.947	1.000	0.900	0.250	0.250	0.250
 //				MACRO	hasWeight = 0.737	0.750	0.725	0.983	1.000	0.967	0.750	0.750	0.750
@@ -202,7 +199,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 //
 
 		/**
-		 * draw from top k=10 model dist		
+		 * draw from top k=10 model dist
 		 */
 //		MACRO	Root = 0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000	0.000
 //				MACRO	hasAge = 0.237	0.250	0.225	0.947	1.000	0.900	0.250	0.250	0.250
@@ -216,20 +213,19 @@ public class OrgModelSlotFillingFinalEvaluation {
 //				CRFStatistics [context=Train, getTotalDuration()=40367]
 //				CRFStatistics [context=Test, getTotalDuration()=165]
 
-		
 		Map<String, Score> scoreMap = new HashMap<>();
-		Random random = new Random(randomSeed);
+//		Random random = new Random(randomSeed);
 		ENERModus modus = ENERModus.valueOf(modusName);
-
 		for (int i = 0; i < 10; i++) {
 			log.info(modus + " RUN ID:" + i);
 			EOrgModelModifications rule = EOrgModelModifications.SPECIES_GENDER_WEIGHT_AGE_CATEGORY_AGE;
 
 			OrganismModelRestrictionProvider.applySlotTypeRestrictions(rule);
 
-			long seed = random.nextLong();
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
-					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
+//			long seed = random.nextLong();
+			AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder()
+					.setSeed(randomSeed).setFold(i).setTrainingProportion(90).setDevelopmentProportion(10)
+					.setCorpusSizeFraction(1F).build();
 
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					OrganismModelRestrictionProvider.getByRule(rule));
@@ -243,7 +239,7 @@ public class OrgModelSlotFillingFinalEvaluation {
 			List<String> testInstanceNames = instanceProvider.getTestInstances().stream().map(t -> t.getName())
 					.collect(Collectors.toList());
 
-			String modelName = modusName + "_OrganismModel_DissFinal_" + seed;
+			String modelName = modusName + "_OrganismModel_DissFinal_" + randomSeed + "_fold_" + i;
 
 			OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(modelName, trainingInstanceNames,
 					developInstanceNames, testInstanceNames, rule, modus);
@@ -295,7 +291,6 @@ public class OrgModelSlotFillingFinalEvaluation {
 			 * more sophisticated feature-templates.
 			 */
 		}
-
 		log.info("\n\n\n*************************");
 
 		for (Entry<String, Score> sm : scoreMap.entrySet()) {

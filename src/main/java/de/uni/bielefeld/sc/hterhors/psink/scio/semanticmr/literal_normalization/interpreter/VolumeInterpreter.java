@@ -13,6 +13,9 @@ public class VolumeInterpreter extends AbstractNumericInterpreter {
 	private static final long serialVersionUID = 1L;
 
 	public static void main(String[] args) {
+		System.out.println(VolumeInterpreter.PATTERN);
+
+		
 		/**
 		 * Different µ symbols...
 		 */

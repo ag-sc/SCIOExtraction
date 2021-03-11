@@ -141,15 +141,16 @@ public class ExperimentalGroupFinalEvaluationOutPutReader {
 
 	}
 
-	static public EValue value = EValue.F1;
+//	static public EValue value = EValue.F1;
 //	static public EValue value = EValue.RECALL;
-//	static public EValue value = EValue.PRECISION;
+	static public EValue value = EValue.PRECISION;
 
 	/**
 	 * TODO: Run for F1 RECALL and PRECISION
 	 */
 //	static String folder = "iswc_baseline/results/";
-	static String folder = "final_evaluation_results/experimental_group/evaluations";
+//	static String folder = "final_evaluation_results/experimental_group/evaluations";
+	static String folder = "dissertation_results/experimental_group/evaluations";
 
 	public static void main(String[] args) throws Exception {
 

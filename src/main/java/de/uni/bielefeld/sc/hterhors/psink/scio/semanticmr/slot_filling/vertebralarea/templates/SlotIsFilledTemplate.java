@@ -83,7 +83,7 @@ public class SlotIsFilledTemplate extends AbstractFeatureTemplate<SlotIsFilledSc
 
 			if (SCIOSlotTypes.hasLowerVertebrae.isExcluded() || SCIOSlotTypes.hasUpperVertebrae.isExcluded())
 				continue;
-			
+
 			SingleFillerSlot lower = vertebralArea.getSingleFillerSlot(SCIOSlotTypes.hasLowerVertebrae);
 			SingleFillerSlot upper = vertebralArea.getSingleFillerSlot(SCIOSlotTypes.hasUpperVertebrae);
 

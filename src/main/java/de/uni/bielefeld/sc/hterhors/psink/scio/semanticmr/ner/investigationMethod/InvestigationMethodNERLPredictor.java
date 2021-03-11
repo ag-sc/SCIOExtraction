@@ -27,6 +27,9 @@ import de.hterhors.semanticmr.crf.variables.State;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.NERCorpusBuilderBib;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.AbstractNERLPredictor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.templates.BigramTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.templates.HeadTailTemplate;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.templates.PairwiseMentionLabelTemplate;
 
 /**
  * Example of how to perform named entity recognition and linking.
@@ -75,14 +78,20 @@ public class InvestigationMethodNERLPredictor extends AbstractNERLPredictor {
 //		featureTemplates.add(new ContextBetweenAnnotationsTemplate());
 //		featureTemplates.add(new LevenshteinTemplate());
 
-		featureTemplates.add(new MorphologicalNerlaTemplate());
+//		featureTemplates.add(new MorphologicalNerlaTemplate());
+//
+//		featureTemplates.add(new NGramTokenContextTemplate());
+//
+//		featureTemplates.add(new SingleTokenContextTemplate());
+//		featureTemplates.add(new SurfaceFormTemplate());
+//		featureTemplates.add(new IntraTokenTemplate());
 
-		featureTemplates.add(new NGramTokenContextTemplate());
-
-		featureTemplates.add(new SingleTokenContextTemplate());
-		featureTemplates.add(new SurfaceFormTemplate());
+		featureTemplates.add(new HeadTailTemplate());
+//		featureTemplates.add(new BigramTemplate());
+//		featureTemplates.add(new NGramTokenContextTemplate());
 		featureTemplates.add(new IntraTokenTemplate());
-
+		featureTemplates.add(new PairwiseMentionLabelTemplate());
+		
 		/**
 		 * 
 		 * 

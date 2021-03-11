@@ -1,7 +1,9 @@
 package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.SpecifiedDistributor;
 import de.hterhors.semanticmr.crf.NERSemanticParsingCRF;
+import de.hterhors.semanticmr.crf.exploration.EntityRecLinkExplorer;
 import de.hterhors.semanticmr.crf.exploration.IExplorationStrategy;
 import de.hterhors.semanticmr.crf.learner.AdvancedLearner;
 import de.hterhors.semanticmr.crf.model.FactorPoolCache;
@@ -37,11 +40,13 @@ import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
 import de.hterhors.semanticmr.crf.templates.AbstractFeatureTemplate;
 import de.hterhors.semanticmr.crf.variables.IStateInitializer;
 import de.hterhors.semanticmr.crf.variables.Instance;
+import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.projects.AbstractSemReadProject;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
+import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.hterhors.semanticmr.tools.KeyTermExtractor;
-import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.SectionizedEntityRecLinkExplorer;
 
 public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
@@ -57,10 +62,12 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 	public final Map<String, Set<AbstractAnnotation>> annotations = new HashMap<>();
 
-//	private final IObjectiveFunction objectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.LITERAL);
+//	private final IObjectiveFunction objectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.ENTITY_TYPE);
 	public final IObjectiveFunction objectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.DOCUMENT_LINKED);
 
-	public final IObjectiveFunction evaluationObjectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.LITERAL);
+	public final IObjectiveFunction evaluationObjectiveFunction = new NerlaObjectiveFunction(
+			EEvaluationDetail.ENTITY_TYPE);
+//	public final IObjectiveFunction evaluationObjectiveFunction = new NerlaObjectiveFunction(EEvaluationDetail.LITERAL);
 
 	public final InstanceProvider instanceProvider;
 
@@ -86,6 +93,25 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		InstanceProvider.maxNumberOfAnnotations = 300;
 		InstanceProvider.removeInstancesWithToManyAnnotations = false;
 
+		Collection<GoldModificationRule> modifyGoldRules = new ArrayList<>();
+
+		modifyGoldRules.add(new GoldModificationRule() {
+
+			@Override
+			public AbstractAnnotation modify(AbstractAnnotation currentAnnotation) {
+
+				if (!currentAnnotation.isInstanceOfDocumentLinkedAnnotation())
+					return null;
+
+				AutomatedSectionifcation sect = AutomatedSectionifcation
+						.getInstance(currentAnnotation.asInstanceOfDocumentLinkedAnnotation().document);
+
+				if (sect.getSection(currentAnnotation.asInstanceOfDocumentLinkedAnnotation()) != ESection.ABSTRACT) {
+					return null;
+				}
+				return currentAnnotation;
+			}
+		});
 		/**
 		 * The instance provider reads all json files in the given directory. We can set
 		 * the distributor in the constructor. If not all instances should be read from
@@ -94,7 +120,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 * ShuffleCorpusDistributor, we initially set a limit to the number of files
 		 * that should be read.
 		 */
-		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor);
+		instanceProvider = new InstanceProvider(getInstanceDirectory(), corpusDistributor, modifyGoldRules);
 
 		trainingInstances = instanceProvider.getTrainingInstances();
 		developmentInstances = instanceProvider.getDevelopmentInstances();
@@ -153,6 +179,7 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 
 			});
 		}
+
 		/**
 		 * For the entity recognition and linking problem, the EntityRecLinkExplorer is
 		 * added to perform changes during the exploration. This explorer is especially
@@ -160,9 +187,9 @@ public abstract class AbstractNERLPredictor extends AbstractSemReadProject {
 		 */
 //		EntityRecLinkExplorerIterator explorer = new EntityRecLinkExplorerIterator();
 //		explorer.MAX_WINDOW_SIZE = 3;
-//		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer();
-//		explorer.MAX_WINDOW_SIZE = 3;
-		SectionizedEntityRecLinkExplorer explorer = new SectionizedEntityRecLinkExplorer();
+		EntityRecLinkExplorer explorer = new EntityRecLinkExplorer(trainingInstances);
+		explorer.MAX_WINDOW_SIZE = 3;
+//		SectionizedEntityRecLinkExplorer explorer = new SectionizedEntityRecLinkExplorer();
 
 		explorerList = Arrays.asList(explorer);
 

@@ -3,13 +3,13 @@ package de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,6 +40,7 @@ import de.hterhors.semanticmr.crf.variables.Instance;
 import de.hterhors.semanticmr.crf.variables.Instance.DeduplicationRule;
 import de.hterhors.semanticmr.crf.variables.Instance.GoldModificationRule;
 import de.hterhors.semanticmr.crf.variables.State;
+import de.hterhors.semanticmr.eval.AbstractEvaluator;
 import de.hterhors.semanticmr.eval.BeamSearchEvaluator;
 import de.hterhors.semanticmr.eval.EEvaluationDetail;
 import de.hterhors.semanticmr.init.specifications.SystemScope;
@@ -52,7 +53,6 @@ import de.hterhors.semanticmr.projects.AbstractSemReadProject;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation;
 import de.hterhors.semanticmr.tools.AutomatedSectionifcation.ESection;
 import de.uni.bielefeld.sc.hterhors.psink.scio.corpus.helper.SlotFillingCorpusBuilderBib;
-import de.uni.bielefeld.sc.hterhors.psink.scio.rdf.ConvertToRDF;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.DataStructureLoader;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOEntityTypes;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.SCIOSlotTypes;
@@ -72,23 +72,34 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.investigationMetho
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.result_sentences.ExtractSentencesWithResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.ner.trend.TFIDFTrendExtractor;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.ENERModus;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.evaluation.PerSlotEvaluator;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.ExperimentalGroupSlotFillingPredictorFinalEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.modes.Modes.EDistinctGroupNamesMode;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.experimental_group.wrapper.DefinedExperimentalGroup;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.injury.wrapper.Injury;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.evaulation.CoarseGrainedResultEvaluation;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.goldmodrules.OnlyDefinedExpGroupResults;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.heuristics.LocalSentenceHeuristic;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Result;
 import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.result.wrapper.Trend;
+import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.treatment.wrapper.Treatment;
+import de.uni.bielefeld.sc.hterhors.psink.scio.tools.Stats;
 
 public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
+
+	/**
+	 * TODO: check which classes can be predicted best...
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 
 	public static void main(String[] args) throws Exception {
 
 		if (args != null && args.length > 0)
-			new ResultSlotFillingHeuristic(Long.parseLong(args[0]), args[1]);
+			new ResultSlotFillingHeuristic(Long.parseLong(args[0]), args[1], Integer.parseInt(args[2]));
 		else {
-			new ResultSlotFillingHeuristic(1000L, "PREDICT");
+			new ResultSlotFillingHeuristic(1000L, "GOLD", 1);
 //			new ResultSlotFillingHeuristic(1000L, "PREDICT_COVERAGE");
 //			new ResultSlotFillingHeuristic(1000L, "GOLD");
 //			new ResultSlotFillingHeuristic(1000L, "GOLD_COVERAGE");
@@ -101,18 +112,20 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 	private final IObjectiveFunction objectiveFunction;
 
 	private final long dataRandomSeed;
-	private final EScoreType scoreType;
-
+	final int fold;
+	static private final EScoreType scoreType = EScoreType.MACRO;
 	private InstanceProvider instanceProvider;
 
 	private List<Instance> trainingInstances;
 	private List<Instance> devInstances;
 	private List<Instance> testInstances;
 	private String modelName;
-	public boolean includeGroups = true;
+	public static boolean includeGroups = true;
 	private ENERModus modus;
 
-	public ResultSlotFillingHeuristic(long dataRandomSeed, String modusName) throws Exception {
+//	static Map<EntityType, Score> countInvest = new HashMap<>();
+
+	public ResultSlotFillingHeuristic(long dataRandomSeed, String modusName, int fold) throws Exception {
 
 		SystemScope.Builder.getScopeHandler()
 				.addScopeSpecification(DataStructureLoader.loadSlotFillingDataStructureReader("Result")).apply()
@@ -133,20 +146,22 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		this.instanceDirectory = SlotFillingCorpusBuilderBib
 				.getDefaultInstanceDirectoryForEntity(SCIOEntityTypes.result);
 
-		this.scoreType = EScoreType.MACRO;
-
 //		this.objectiveFunction = new SlotFillingObjectiveFunction(scoreType,
 //				new CartesianEvaluator(EEvaluationDetail.ENTITY_TYPE, EEvaluationDetail.DOCUMENT_LINKED));
 
 		this.objectiveFunction = new SlotFillingObjectiveFunction(scoreType,
 				new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 10));
 
+		this.fold = fold;
 		this.dataRandomSeed = dataRandomSeed;
 		modus = ENERModus.valueOf(modusName.split("_")[0]);
 
 		boolean isCoverage = modusName.contains("COVERAGE");
 
 		readData();
+//		Stats.countVariables(0, instanceProvider.getInstances());
+
+//		analyze();
 
 		boolean includeFastTextAnnotations = true;
 		boolean includeIDFAnnotations = false;
@@ -154,10 +169,10 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		boolean includeRegexData = false;
 
 		Map<Instance, Set<EntityTemplate>> expGroups;
-		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
+//		String rand = String.valueOf(new Random(dataRandomSeed).nextLong());
 
-		modelName = modus + "_Result" + rand;
-//		modelName = "Result_PREDICTION"  ;
+		modelName = modus + "_Result_FinalDiss_" + dataRandomSeed + "_fold_" + fold;
+//		modelName = "Result_PREDICT";
 		log.info("Model name = " + modelName);
 
 		Map<Instance, Set<DocumentLinkedAnnotation>> annotations = new HashMap<>();
@@ -171,9 +186,41 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 			for (Instance instance : goldAnnotations.keySet()) {
 				annotations.putIfAbsent(instance, new HashSet<>());
-				annotations.get(instance).addAll(goldAnnotations.get(instance));
+
+				for (DocumentLinkedAnnotation instance2 : goldAnnotations.get(instance)) {
+//					if (!EntityType.get("InvestigationMethod").getRelatedEntityTypes()
+//							.contains(instance2.getEntityType()))
+					annotations.get(instance).add(instance2);
+				}
 			}
 		}
+
+//		{
+//			FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
+//					SCIOEntityTypes.investigationMethod, trainingInstances, false);
+//			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlasEvaluate(testInstances);
+//
+//			for (Instance instance : annotationsInvFT.keySet()) {
+//				System.out.println(annotationsInvFT.get(instance).size());
+//				annotations.putIfAbsent(instance, new HashSet<>());
+//				annotations.get(instance).addAll(annotationsInvFT.get(instance));
+//			}
+//		}
+
+//		{
+//			
+//
+//			FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
+//					SCIOEntityTypes.trend, trainingInstances, false);
+//			Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend
+//					.predictNerlasEvaluate(testInstances);
+//			for (Instance instance : annotationsTredFT.keySet()) {
+//				annotations.putIfAbsent(instance, new HashSet<>());
+//				System.out.println(annotationsTredFT.get(instance).size());
+//				annotations.get(instance).addAll(annotationsTredFT.get(instance));
+//			}
+//
+//		}
 		/*
 		 * TEST ALL GOLD BUT IDF PREDICT FOR TREND AND INV M
 		 */
@@ -228,6 +275,9 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 //
 //		}
 
+		Score invmScore = new Score();
+		Score trendmScore = new Score();
+
 		if (modus == ENERModus.PREDICT) {
 			for (Instance instance : instanceProvider.getInstances()) {
 				annotations.putIfAbsent(instance, new HashSet<>());
@@ -245,8 +295,12 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 			if (includeFastTextAnnotations) {
 				FastTextSentenceClassification invest = new FastTextSentenceClassification(modelName, false,
-						SCIOEntityTypes.investigationMethod, trainingInstances,false);
-				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest.predictNerlasEvaluate(testInstances);
+						SCIOEntityTypes.investigationMethod, trainingInstances, true);
+				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsInvFT = invest
+						.predictNerlasEvaluate(testInstances);
+
+				invmScore = invest.score(testInstances).toMacro();
+
 				for (Instance instance : annotationsInvFT.keySet()) {
 					System.out.println(annotationsInvFT.get(instance).size());
 					annotations.putIfAbsent(instance, new HashSet<>());
@@ -254,8 +308,11 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				}
 
 				FastTextSentenceClassification trend = new FastTextSentenceClassification(modelName, false,
-						SCIOEntityTypes.trend, trainingInstances,false);
-				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend.predictNerlasEvaluate(testInstances);
+						SCIOEntityTypes.trend, trainingInstances, true);
+				trendmScore = trend.score(testInstances).toMacro();
+
+				Map<Instance, Set<DocumentLinkedAnnotation>> annotationsTredFT = trend
+						.predictNerlasEvaluate(testInstances);
 				for (Instance instance : annotationsTredFT.keySet()) {
 					annotations.putIfAbsent(instance, new HashSet<>());
 					System.out.println(annotationsTredFT.get(instance).size());
@@ -328,13 +385,216 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		SCIOSlotTypes.hasGroupName.exclude();
 
 		Score score = evaluate(log, results, this.objectiveFunction);
+		log.info("inv performance: " + invmScore);
+		log.info("trend performance: " + trendmScore);
 		log.info("Unsorted Score: " + score);
 
-		scoreDetailed(results);
+		scoreDetailed(EvalPair.toListOf(results), this.objectiveFunction);
+
+//		System.out.println(countInvest);
 
 		Score coarseGrained = CoarseGrainedResultEvaluation.evaluateCoarsGrained(objectiveFunction, results);
 		log.info("CoarseGrainedResultEvaluation Score: " + coarseGrained);
 
+		Map<Instance, Set<AbstractAnnotation>> goldTrends = new HashMap<>();
+		Map<Instance, Set<AbstractAnnotation>> predictTrends = new HashMap<>();
+
+		for (Entry<Instance, State> instance : results.entrySet()) {
+			predictTrends.put(instance.getKey(), new HashSet<>());
+			for (AbstractAnnotation result : instance.getValue().getCurrentPredictions().getAnnotations()) {
+				Result r = new Result(result);
+				AbstractAnnotation t = r.getTrend();
+				if (t != null)
+					predictTrends.get(instance.getKey()).add(t);
+			}
+
+		}
+		for (Entry<Instance, State> instance : results.entrySet()) {
+			goldTrends.put(instance.getKey(), new HashSet<>());
+			for (AbstractAnnotation result : instance.getValue().getGoldAnnotations().getAnnotations()) {
+				Result r = new Result(result);
+				AbstractAnnotation t = r.getTrend();
+				if (t != null)
+					goldTrends.get(instance.getKey()).add(t);
+			}
+
+		}
+
+//		System.exit(1);
+		/**
+		 * TREND EVALUATION
+		 */
+
+		SlotType.excludeAll();
+
+		Set<SlotType> slotTypesToConsider = new HashSet<>();
+		slotTypesToConsider.add(SCIOSlotTypes.hasSignificance);
+		slotTypesToConsider.add(SCIOSlotTypes.hasPValue);
+		slotTypesToConsider.add(SCIOSlotTypes.hasDifference);
+
+		for (SlotType slotType : slotTypesToConsider) {
+			slotType.include();
+		}
+
+		Map<Instance, State> finalStates = new HashMap<>();
+		Map<Instance, State> coverageStates = new HashMap<>();
+
+		for (Instance instance : results.keySet()) {
+
+			List<AbstractAnnotation> coverageTrends = new ArrayList<>();
+			List<AbstractAnnotation> trends = new ArrayList<>(predictTrends.get(instance));
+
+			List<AbstractAnnotation> gt = new ArrayList<>(goldTrends.get(instance));
+
+			log.info("########PREDICTED########");
+			for (AbstractAnnotation string : trends) {
+				log.info(string.toPrettyString());
+			}
+
+			log.info("########GOLD########");
+			for (AbstractAnnotation string : gt) {
+				log.info(string.toPrettyString());
+			}
+
+			Instance instanceT = new Instance(instance.getOriginalContext(), instance.getDocument(), new Annotations(gt));
+
+			Annotations currentPredictions = new Annotations(trends);
+			finalStates.put(instanceT, new State(instanceT, currentPredictions));
+
+			Annotations coveragePredictions = new Annotations(coverageTrends);
+			coverageStates.put(instanceT, new State(instanceT, coveragePredictions));
+
+		}
+
+		AbstractEvaluator eval = new BeamSearchEvaluator(EEvaluationDetail.ENTITY_TYPE, 20);
+
+		Score allScore = new Score();
+		Map<String, Score> scoreMap = new HashMap<>();
+//
+		PerSlotEvaluator.evalRoot(EScoreType.MACRO, finalStates, coverageStates, eval, scoreMap);
+
+		PerSlotEvaluator.evalProperties(EScoreType.MACRO, finalStates, coverageStates, slotTypesToConsider, eval,
+				scoreMap);
+
+		PerSlotEvaluator.evalCardinality(EScoreType.MACRO, finalStates, coverageStates, scoreMap);
+
+		PerSlotEvaluator.evalOverall(EScoreType.MACRO, finalStates, coverageStates, eval, scoreMap);
+
+		log.info("\n\n\n*************************");
+
+		for (Entry<String, Score> sm : scoreMap.entrySet()) {
+			log.info(sm.getKey() + "\t" + sm.getValue().toTSVString());
+		}
+
+		log.info("*************************");
+
+		log.info(allScore);
+
+	}
+
+	/**
+	 * 
+	 * Analyze towards variable and individual complexity
+	 */
+	private void analyze() {
+		double org = 0;
+		double avgIndPerDoc = 0;
+		double avgTotalPerDoc = 0;
+
+		for (Instance instance : instanceProvider.getInstances()) {
+
+			int g = 0;
+			Set<AbstractAnnotation> orgM = new HashSet<>();
+
+//			orgM.addAll(instance.getGoldAnnotations().getAnnotations());
+//			g += instance.getGoldAnnotations().getAnnotations().size();
+
+			for (AbstractAnnotation instance2 : instance.getGoldAnnotations().getAnnotations()) {
+
+				Result r = new Result(instance2);
+
+				{
+////					List<AbstractAnnotation> aa = Arrays.asList(r.getTrend());
+//					List<AbstractAnnotation> aa = Arrays.asList(r.getInvestigationMethod());
+////					List<AbstractAnnotation> aa = new ArrayList<>(
+////							r.getDefinedExperimentalGroups().stream().map(a -> a.get()).collect(Collectors.toList()));
+//
+//					orgM.addAll(aa);
+//					g += aa.size();
+				}
+
+				{
+					/**
+					 * props of exp
+					 */
+					for (DefinedExperimentalGroup instance3 : r.getDefinedExperimentalGroups()) {
+
+//					List<AbstractAnnotation> aa = Arrays.asList(instance3.getOrganismModel());
+//					List<AbstractAnnotation> aa = new ArrayList<>(instance3.getTreatments());
+//						List<AbstractAnnotation> aa = Arrays.asList(instance3.getInjury());
+
+						List<AbstractAnnotation> ab = Arrays.asList(instance3.getInjury());
+
+						List<AbstractAnnotation> aa = ab.stream().filter(i -> i != null)
+								.map(et -> et.asInstanceOfEntityTemplate()).map(et -> new Injury(et))
+								.filter(i -> i != null).flatMap(i -> i.getDeliveryMethods().stream())
+								.filter(i -> i != null).collect(Collectors.toList());
+
+						aa.addAll(instance3.getTreatments().stream().filter(i -> i != null)
+								.map(et -> et.asInstanceOfEntityTemplate()).map(et -> new Treatment(et))
+								.filter(i -> i != null).map(i -> i.getDeliveryMethod()).filter(i -> i != null)
+								.collect(Collectors.toList()));
+
+//						List<AbstractAnnotation> aa = ab.stream().filter(i -> i != null)
+//								.map(et -> et.asInstanceOfEntityTemplate()).map(et -> new Injury(et))
+//								.filter(i -> i != null).flatMap(i -> i.getAnaesthetics().stream())
+//								.filter(i -> i != null).collect(Collectors.toList());
+
+//						List<AbstractAnnotation> aa = ab.stream().filter(i -> i != null)
+//								.map(et -> et.asInstanceOfEntityTemplate()).map(et -> new Injury(et))
+//								.filter(i -> i != null).map(i -> i.getInjuryDevice()).filter(i -> i != null)
+//								.collect(Collectors.toList());
+
+						// List<AbstractAnnotation> aa = ab.stream().filter(i -> i != null)
+//								.map(et -> et.asInstanceOfEntityTemplate()).map(et -> new Injury(et))
+//								.filter(i -> i != null).map(i -> i.getInjuryLocation()).filter(i -> i != null)
+//								.collect(Collectors.toList());
+
+						orgM.addAll(aa);
+						g += aa.size();
+					}
+				}
+			}
+
+			avgIndPerDoc += orgM.size();
+			avgTotalPerDoc += g;
+
+			org += ((double) orgM.size()) / (g == 0 ? 1 : g);
+//			System.out.println(((double) orgM.size()) / g);
+
+		}
+		System.out.println("avgTotalPerDoc = " + avgTotalPerDoc / instanceProvider.getInstances().size());
+		System.out.println("avgIndPerDoc = " + avgIndPerDoc / instanceProvider.getInstances().size());
+		System.out.println("org = " + org);
+		System.out.println("avg. org = " + (org / instanceProvider.getInstances().size()));
+		System.out.println(new DecimalFormat("0.00").format(avgTotalPerDoc / instanceProvider.getInstances().size())
+				+ " & " + new DecimalFormat("0.00").format(avgIndPerDoc / instanceProvider.getInstances().size())
+				+ " & " + new DecimalFormat("0.00").format(org / instanceProvider.getInstances().size()));
+		System.exit(1);
+
+		Stats.countVariables(0, instanceProvider.getInstances());
+
+		int count = 0;
+		for (SlotType slotType : EntityType.get("Result").getSlots()) {
+
+			if (slotType.isExcluded())
+				continue;
+			count++;
+			System.out.println(slotType.name);
+
+		}
+		System.out.println(count);
+		System.exit(1);
 	}
 
 	private Map<Instance, State> computeCoverage(Map<Instance, Set<DocumentLinkedAnnotation>> annotations,
@@ -529,7 +789,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 	private Map<Instance, Set<EntityTemplate>> getPredictedGroups() throws Exception {
 
-		File root = new File("data/annotations/slot_filling/experimental_group_Full" + modelName + "/");
+		File root = new File("data/annotations/slot_filling/experimental_group_" + modelName + "/");
 		Map<Instance, Set<EntityTemplate>> expGroups;
 		if (root.exists() && root.list().length != 0) {
 			// Cache
@@ -555,7 +815,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 			int modusIndex = modus == ENERModus.GOLD ? 17 : 18; // here only PREDICT
 			ExperimentalGroupSlotFillingPredictorFinalEvaluation a = new ExperimentalGroupSlotFillingPredictorFinalEvaluation(
-					modusIndex, dataRandomSeed,
+					modusIndex, dataRandomSeed, fold,
 					trainingInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					devInstances.stream().map(i -> i.getName()).collect(Collectors.toList()),
 					testInstances.stream().map(i -> i.getName()).collect(Collectors.toList()));
@@ -681,7 +941,8 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		return groupsMap;
 	}
 
-	private Score scoreCardinality(List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations) {
+	public static Score scoreCardinality(List<EntityTemplate> goldAnnotations,
+			List<EntityTemplate> predictedAnnotations) {
 		int tp = Math.min(goldAnnotations.size(), predictedAnnotations.size());
 		int fp = predictedAnnotations.size() > goldAnnotations.size()
 				? predictedAnnotations.size() - goldAnnotations.size()
@@ -692,8 +953,9 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		return new Score(tp, fp, fn);
 	}
 
-	private Score scoreIndividualProperty(SlotType property, List<Integer> bestAssignment,
-			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations) {
+	public static Score scoreIndividualProperty(SlotType property, List<Integer> bestAssignment,
+			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations,
+			IObjectiveFunction objectiveFunction) {
 
 		Score score = new Score();
 
@@ -715,8 +977,21 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 				predictedProperty = predictedAnnotation.getSingleFillerSlot(property).getSlotFiller();
 			}
 			if (goldAnnotation != null || predictedAnnotation != null) {
-				Score s = this.objectiveFunction.getEvaluator().scoreSingle(goldProperty, predictedProperty);
+				Score s = objectiveFunction.getEvaluator().scoreSingle(goldProperty, predictedProperty);
 				score.add(s);
+				if (property == SCIOSlotTypes.hasInvestigationMethod) {
+
+					EntityType e;
+					if (goldProperty != null) {
+						e = goldProperty.getEntityType();
+					} else {
+						e = predictedProperty.getEntityType();
+					}
+//					countInvest.putIfAbsent(e, new Score());
+//					countInvest.get(e)
+//							.add(objectiveFunction.getEvaluator().scoreSingle(goldAnnotation, predictedAnnotation));
+				}
+
 			}
 
 		}
@@ -724,7 +999,69 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		return score.toMacro();
 	}
 
-	private void scoreDetailed(Map<Instance, State> results) {
+	public static void countCorrectEntityTypes(SlotType property, List<Integer> bestAssignment,
+			List<EntityTemplate> goldAnnotations, List<EntityTemplate> predictedAnnotations,
+			IObjectiveFunction objectiveFunction) {
+
+		for (int goldIndex = 0; goldIndex < bestAssignment.size(); goldIndex++) {
+			final int predictionIndex = bestAssignment.get(goldIndex);
+
+			EntityTemplate goldAnnotation = goldAnnotations.size() > goldIndex ? goldAnnotations.get(goldIndex) : null;
+			EntityTemplate predictedAnnotation = predictedAnnotations.size() > predictionIndex
+					? predictedAnnotations.get(predictionIndex)
+					: null;
+
+			AbstractAnnotation goldProperty = null;
+			AbstractAnnotation predictedProperty = null;
+
+			if (goldAnnotation != null) {
+				goldProperty = goldAnnotation.getSingleFillerSlot(property).getSlotFiller();
+			}
+			if (predictedAnnotation != null) {
+				predictedProperty = predictedAnnotation.getSingleFillerSlot(property).getSlotFiller();
+			}
+			if (goldAnnotation != null || predictedAnnotation != null) {
+				Score s = objectiveFunction.getEvaluator().scoreSingle(goldProperty, predictedProperty);
+//				score.add(s);
+			}
+
+		}
+
+	}
+
+	public static class EvalPair {
+
+		final public Instance instance;
+
+		final public List<AbstractAnnotation> gold;
+		final public List<AbstractAnnotation> pred;
+
+		public EvalPair(Instance instance, List<AbstractAnnotation> gold, List<AbstractAnnotation> pred) {
+			this.instance = instance;
+			this.gold = gold;
+			this.pred = pred;
+		}
+
+		public static List<EvalPair> toListOf(Map<Instance, State> results) {
+
+			List<EvalPair> list = new ArrayList<>();
+
+			for (Entry<Instance, State> r : results.entrySet()) {
+				list.add(new EvalPair(r.getKey(), r.getValue().getGoldAnnotations().getAnnotations(),
+						r.getValue().getCurrentPredictions().getAnnotations()));
+			}
+
+			return list;
+		}
+
+		@Override
+		public String toString() {
+			return "EvalPair [instance=" + instance + ", gold=" + gold + ", pred=" + pred + "]";
+		}
+
+	}
+
+	public static void scoreDetailed(List<EvalPair> pairs, IObjectiveFunction objectiveFunction) {
 		Map<Instance, List<EntityTemplate>> goldResults = new HashMap<>();
 		Map<Instance, List<EntityTemplate>> predictedResults = new HashMap<>();
 
@@ -733,66 +1070,76 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		Score macroTrendScore = new Score(EScoreType.MACRO);
 		Score macroInvestScore = new Score(EScoreType.MACRO);
 		Score macroCardinalScore = new Score(EScoreType.MACRO);
+		Score microCardinalScore = new Score(EScoreType.MICRO);
 
 		Score macroFullScore = new Score(EScoreType.MACRO);
 		Score microFullScore = new Score(EScoreType.MICRO);
 
 		Score macroBothScore = new Score(EScoreType.MACRO);
 		Score macroResultSentenceScore = new Score(EScoreType.MACRO);
-		for (State finalState : results.values()) {
-			goldResults.put(finalState.getInstance(), new ArrayList<>());
-			predictedResults.put(finalState.getInstance(), new ArrayList<>());
 
-			for (AbstractAnnotation result : finalState.getGoldAnnotations().getAnnotations()) {
+		for (EvalPair evalPair : pairs) {
 
-				goldResults.get(finalState.getInstance()).add(sortResult(result));
+			goldResults.put(evalPair.instance, new ArrayList<>());
+			predictedResults.put(evalPair.instance, new ArrayList<>());
 
-			}
-			for (AbstractAnnotation result : finalState.getCurrentPredictions().getAnnotations()) {
+			for (AbstractAnnotation result : evalPair.gold) {
 
-				predictedResults.get(finalState.getInstance()).add(sortResult(result));
+				goldResults.get(evalPair.instance).add(sortResult(result));
 
 			}
+			for (AbstractAnnotation result : evalPair.pred) {
 
-			macroResultSentenceScore.add(evaluateResultSentences(goldResults.get(finalState.getInstance()),
-					predictedResults.get(finalState.getInstance())).toMacro());
+				predictedResults.get(evalPair.instance).add(sortResult(result));
 
-			Score scoreFullPart = objectiveFunction.getEvaluator().scoreMultiValues(
-					goldResults.get(finalState.getInstance()), predictedResults.get(finalState.getInstance()),
-					EScoreType.MICRO);
+			}
+
+			macroResultSentenceScore.add(
+					evaluateResultSentences(goldResults.get(evalPair.instance), predictedResults.get(evalPair.instance))
+							.toMacro());
+
+			Score scoreFullPart = objectiveFunction.getEvaluator().scoreMultiValues(goldResults.get(evalPair.instance),
+					predictedResults.get(evalPair.instance), EScoreType.MICRO);
+
 			microFullScore.add(scoreFullPart);
 			macroFullScore.add(scoreFullPart.toMacro());
 
-			List<EntityTemplate> goldAnnotations = finalState.getInstance().getGoldAnnotations().getAnnotations();
+			List<EntityTemplate> goldAnnotations = evalPair.instance.getGoldAnnotations().getAnnotations();
 
-			List<EntityTemplate> predictedAnnotations = predictedResults.get(finalState.getInstance());
+			List<EntityTemplate> predictedAnnotations = predictedResults.get(evalPair.instance);
 
-			List<Integer> bestAssignment = ((BeamSearchEvaluator) objectiveFunction.getEvaluator())
-					.getBestAssignment(goldAnnotations, predictedAnnotations, scoreType);
+			List<Integer> bestAssignment = (objectiveFunction.getEvaluator()).getBestAssignment(goldAnnotations,
+					predictedAnnotations, scoreType);
 
 			Score macroFlatPart = new Score(EScoreType.MACRO);
 
 			if (includeGroups) {
 				Score referenceGroupScore = scoreIndividualProperty(SCIOSlotTypes.hasReferenceGroup, bestAssignment,
-						goldAnnotations, predictedAnnotations);
+						goldAnnotations, predictedAnnotations, objectiveFunction);
 				macroRefScore.add(referenceGroupScore);
 
 				Score targetGroupScore = scoreIndividualProperty(SCIOSlotTypes.hasTargetGroup, bestAssignment,
-						goldAnnotations, predictedAnnotations);
+						goldAnnotations, predictedAnnotations, objectiveFunction);
 				macroTargetScore.add(targetGroupScore);
 				macroFlatPart.add(referenceGroupScore);
 				macroFlatPart.add(targetGroupScore);
 			}
 
+			/**
+			 * TODO: Check if it works... and implement based on best assignment.
+			 */
+
 			Score trendScore = scoreIndividualProperty(SCIOSlotTypes.hasTrend, bestAssignment, goldAnnotations,
-					predictedAnnotations);
+					predictedAnnotations, objectiveFunction);
 			macroTrendScore.add(trendScore);
+
 			Score investigationMethodScore = scoreIndividualProperty(SCIOSlotTypes.hasInvestigationMethod,
-					bestAssignment, goldAnnotations, predictedAnnotations);
+					bestAssignment, goldAnnotations, predictedAnnotations, objectiveFunction);
+
 			macroInvestScore.add(investigationMethodScore);
 			Score cardinality = scoreCardinality(goldAnnotations, predictedAnnotations);
+			microCardinalScore.add(cardinality);
 			macroCardinalScore.add(cardinality.toMacro());
-
 			macroFlatPart.add(trendScore);
 			macroFlatPart.add(investigationMethodScore);
 			macroFlatPart.add(cardinality);
@@ -800,6 +1147,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 			macroBothScore.add(macroFlatPart);
 		}
 		log.info("Sorted macro Result Sentence Score = " + macroResultSentenceScore);
+		log.info("Sorted micro Cardinality score = " + microCardinalScore);
 		log.info("Sorted micro Full score = " + microFullScore);
 		log.info("Sorted macro Full score = " + macroFullScore);
 		log.info("Sorted macro Reference score = " + macroRefScore);
@@ -810,7 +1158,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		log.info("Sorted macro Both score = " + macroBothScore);
 	}
 
-	private Score evaluateResultSentences(List<EntityTemplate> gold, List<EntityTemplate> pred) {
+	public static Score evaluateResultSentences(List<EntityTemplate> gold, List<EntityTemplate> pred) {
 
 		List<Integer> goldSentences = gold.stream().filter(a -> a != null).map(a -> new Result(a).getTrend())
 				.filter(a -> a != null).flatMap(a -> new Trend(a).getRelevantSentenceIndexes().stream()).distinct()
@@ -823,7 +1171,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 		return prf1(goldSentences, predSentences);
 	}
 
-	public Score prf1(Collection<Integer> annotations, Collection<Integer> otherAnnotations) {
+	public static Score prf1(Collection<Integer> annotations, Collection<Integer> otherAnnotations) {
 
 		int tp = 0;
 		int fp = 0;
@@ -846,7 +1194,7 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 	}
 
-	private EntityTemplate sortResult(AbstractAnnotation result) {
+	public static EntityTemplate sortResult(AbstractAnnotation result) {
 
 		if (!includeGroups) {
 			return result.asInstanceOfEntityTemplate();
@@ -1065,11 +1413,28 @@ public class ResultSlotFillingHeuristic extends AbstractSemReadProject {
 
 		Collections.shuffle(docs, new Random(dataRandomSeed));
 
-		final int x = (int) (((double) docs.size() / 100D) * 80D);
+		final int x = (int) (((double) docs.size() / 100D) * 90D);
+
+		int sum = (docs.size() - x);
+
+		List<String> testI = docs.subList(fold * sum, Math.min((fold + 1) * sum, docs.size()));
+		List<String> trainI = new ArrayList<>(docs);
+		trainI.removeAll(testI);
+		List<String> itr = new ArrayList<>();
+		itr.addAll(trainI);
+		itr.addAll(testI);
+
+		/**
+		 * TODO: FULL MODEL
+		 */
+
+		trainingInstanceNames = itr.subList(0, x);
+		testInstanceNames = itr.subList(x, docs.size());
+
 //		List<String> trainingInstanceNames = docs.subList(0, 10);
 //		List<String> testInstanceNames = docs.subList(10, 15);
-		trainingInstanceNames = docs.subList(0, x);
-		testInstanceNames = docs.subList(x, docs.size());
+//		trainingInstanceNames = docs.subList(0, x);
+//		testInstanceNames = docs.subList(x, docs.size());
 
 		AbstractCorpusDistributor corpusDistributor = new SpecifiedDistributor.Builder()
 				.setTrainingInstanceNames(trainingInstanceNames).setTestInstanceNames(testInstanceNames).build();

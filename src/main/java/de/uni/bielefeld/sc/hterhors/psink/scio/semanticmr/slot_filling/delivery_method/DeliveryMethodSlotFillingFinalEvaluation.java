@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import de.hterhors.semanticmr.corpus.InstanceProvider;
 import de.hterhors.semanticmr.corpus.distributor.AbstractCorpusDistributor;
 import de.hterhors.semanticmr.corpus.distributor.ShuffleCorpusDistributor;
+import de.hterhors.semanticmr.corpus.distributor.TenFoldCrossCorpusDistributor;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score;
 import de.hterhors.semanticmr.crf.structure.IEvaluatable.Score.EScoreType;
 import de.hterhors.semanticmr.crf.structure.annotations.AbstractAnnotation;
@@ -94,7 +95,6 @@ import de.uni.bielefeld.sc.hterhors.psink.scio.semanticmr.slot_filling.orgmodel.
 //modelName: PREDICT_DeliveryMethod_Final_-470456323649602622
 //
 
-
 public class DeliveryMethodSlotFillingFinalEvaluation {
 	/**
 	 * Start the slot filling procedure.
@@ -120,7 +120,7 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 	List<Instance> trainingInstances;
 	List<Instance> devInstances;
 	List<Instance> testInstances;
-	long seed;
+//	long seed;
 	ENERModus modus;
 
 	public DeliveryMethodSlotFillingFinalEvaluation(long randomSeed, String modusName) throws IOException {
@@ -154,14 +154,15 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 		SCIOSlotTypes.hasDuration.include();
 		SCIOSlotTypes.hasLocations.include();
 		modus = ENERModus.valueOf(modusName);
-		Random random = new Random(randomSeed);
+//		Random random = new Random(randomSeed);
 
 		for (int i = 0; i < 10; i++) {
 			log.info("RUN ID:" + i);
 
-			seed = random.nextLong();
-			AbstractCorpusDistributor corpusDistributor = new ShuffleCorpusDistributor.Builder().setSeed(seed)
-					.setTrainingProportion(90).setDevelopmentProportion(10).setCorpusSizeFraction(1F).build();
+//			seed = random.nextLong();
+			AbstractCorpusDistributor corpusDistributor = new TenFoldCrossCorpusDistributor.Builder()
+					.setSeed(randomSeed).setFold(i).setTrainingProportion(90).setDevelopmentProportion(10)
+					.setCorpusSizeFraction(1F).build();
 
 			/**
 			 * The instance provider reads all json files in the given directory. We can set
@@ -174,7 +175,7 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 			InstanceProvider instanceProvider = new InstanceProvider(instanceDirectory, corpusDistributor,
 					DeliveryMethodRestrictionProvider.getByRule(rule));
 
-			String modelName = modusName + "_DeliveryMethod_DissFinal_" + seed;
+			String modelName = modusName + "_DeliveryMethod_DissFinal_" + randomSeed + "_fold_" + i;
 
 			trainingInstances = instanceProvider.getTrainingInstances();
 			devInstances = instanceProvider.getDevelopmentInstances();
@@ -237,7 +238,8 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 
 	}
 
-	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances) {
+	private Map<Instance, Set<AbstractAnnotation>> predictOrganismModel(List<Instance> instances, long randomSeed,
+			int i) {
 
 		/**
 		 * TODO: FULL MODEL EXTRACTION CAUSE THIS IS BEST TO PREDICT SPECIES
@@ -258,8 +260,8 @@ public class DeliveryMethodSlotFillingFinalEvaluation {
 		List<String> testInstanceNames = testInstances.stream().map(t -> t.getName()).collect(Collectors.toList());
 //	+ modelName
 		OrgModelSlotFillingPredictor predictor = new OrgModelSlotFillingPredictor(
-				"OrganismModel_DeliveryMethod_" + seed, trainingInstanceNames, developInstanceNames, testInstanceNames,
-				rule, modus);
+				"OrganismModel_DeliveryMethod_" + randomSeed + "_fold_" + i, trainingInstanceNames,
+				developInstanceNames, testInstanceNames, rule, modus);
 		predictor.trainOrLoadModel();
 
 		Map<Instance, Set<AbstractAnnotation>> organismModelAnnotations = predictor.predictInstances(instances, 1);

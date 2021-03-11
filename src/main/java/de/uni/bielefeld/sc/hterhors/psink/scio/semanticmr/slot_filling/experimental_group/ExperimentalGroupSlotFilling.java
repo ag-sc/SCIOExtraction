@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -460,11 +461,15 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 		 * Apply different modes that were previously set.
 		 */
 		applyModesAndRestrictions();
-	
 
 		getData(dataRandomSeed);
-		
+		Set<SlotType> slotTypesToConsider = new HashSet<>(Arrays.asList(SCIOSlotTypes.hasInjuryModel,
+				SCIOSlotTypes.hasTreatmentType, SCIOSlotTypes.hasOrganismModel));
+		// Stats.countVariables(0,instanceProvider.getInstances());
+//		Stats.countVariables(0, instanceProvider.getInstances(), slotTypesToConsider);
+
 		Stats.computeNormedVar(instanceProvider.getInstances(), SCIOEntityTypes.experimentalGroup);
+		System.exit(1);
 
 		addGroupNameCandidates();
 
@@ -1581,9 +1586,9 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			return new GoldCardinalityInitializer(groupNameProviderMode, groupNameClusteringMode);
 
 		if (cardinalityMode == ECardinalityMode.RSS_PREDICTED_SAMPLE) {
-			PredictKMultiCardinalityInitializer init = new PredictKMultiCardinalityInitializer(modelName,cardinalityMode,
-					groupNameProviderMode, groupNameClusteringMode, instanceProvider.getInstances(), 1, 8,
-					trainingInstances);
+			PredictKMultiCardinalityInitializer init = new PredictKMultiCardinalityInitializer(modelName,
+					cardinalityMode, groupNameProviderMode, groupNameClusteringMode, instanceProvider.getInstances(), 1,
+					8, trainingInstances);
 			RootTemplateCardinalityExplorer.MAX_NUMBER_OF_ANNOTATIONS = init.max;
 			RootTemplateCardinalityExplorer.MIN_NUMBER_OF_ANNOTATIONS = init.min;
 
@@ -1591,7 +1596,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 
 		}
 		if (cardinalityMode == ECardinalityMode.GOLD || cardinalityMode == ECardinalityMode.RSS_PREDICTED) {
-			return new PredictKMultiCardinalityInitializer(modelName,cardinalityMode, groupNameProviderMode,
+			return new PredictKMultiCardinalityInitializer(modelName, cardinalityMode, groupNameProviderMode,
 					groupNameClusteringMode, instanceProvider.getInstances(), 1, 8, trainingInstances);
 
 		}
@@ -1600,7 +1605,7 @@ public class ExperimentalGroupSlotFilling extends AbstractSemReadProject {
 			return new SampleCardinalityInitializer(SCIOEntityTypes.definedExperimentalGroup, 1);
 
 		if (cardinalityMode == ECardinalityMode.PARALLEL || cardinalityMode == ECardinalityMode.PARALLEL_MODEL_UPDATE)
-			return new MultiCardinalityInitializer(modelName,groupNameProviderMode, groupNameClusteringMode,
+			return new MultiCardinalityInitializer(modelName, groupNameProviderMode, groupNameClusteringMode,
 					instanceProvider.getInstances(), trainingInstances);
 
 		return null;

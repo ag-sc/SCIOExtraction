@@ -106,24 +106,20 @@ public class PerSlotEvaluator {
 			Map<String, Score> scoreMap) {
 		for (SlotType consideredSlotType : slotTypesToConsider) {
 			Map<SlotType, Boolean> storage = SlotType.storeExcludance();
-		
+
 			SlotType.excludeAll();
-			
-			
-			
-		
-			
+
 			/**
-			 *TODO: Extra eval for significance and trend and pvalue...
+			 * TODO: Extra eval for significance and trend and pvalue...
 			 */
-//			if (consideredSlotType == SCIOSlotTypes.hasPValue)
-//				SCIOSlotTypes.hasSignificance.include();
-//			consideredSlotType.include();
+			if (consideredSlotType == SCIOSlotTypes.hasPValue)
+				SCIOSlotTypes.hasSignificance.include();
+			consideredSlotType.include();
 			/**
 			 * ELSE
 			 */
-			consideredSlotType.includeRec();
-			
+//			consideredSlotType.includeRec();
+
 			Score score = new Score(scoreType);
 
 			Score coverageRootScore = new Score(scoreType);
@@ -152,23 +148,29 @@ public class PerSlotEvaluator {
 
 				coverageAdder.sub(coverageRootSub);
 
-				if (scoreType == EScoreType.MACRO)
-					coverageAdder.toMacro();
+				if (!(coverageAdder.getTp() == 0 && coverageAdder.getFn() == 0 && coverageAdder.getFp() == 0)) {
 
-				coverageRootScore.add(coverageAdder);
+					if (scoreType == EScoreType.MACRO)
+						coverageAdder.toMacro();
+
+					coverageRootScore.add(coverageAdder);
+				}
 
 				Score adder = finalState.getGoldAnnotations().evaluate(evaluator, finalState.getCurrentPredictions(),
 						EScoreType.MICRO);
 
 				adder.sub(rootSub);
 
-				if (scoreType == EScoreType.MACRO)
-					adder.toMacro();
+				if (!(adder.getTp() == 0 && adder.getFn() == 0 && adder.getFp() == 0)) {
 
-				score.add(adder);
+//				
+					if (scoreType == EScoreType.MACRO)
+						adder.toMacro();
+
+					score.add(adder);
+				}
 
 			}
-
 			log.info(scoreType.name() + "\t" + consideredSlotType.name + " = " + score.toTSVString() + "\t"
 					+ Score.SCORE_FORMAT.format(coverageRootScore.getF1() == 0D ? 0
 							: (score.getF1() / Math.max(score.getF1(), coverageRootScore.getF1())))
